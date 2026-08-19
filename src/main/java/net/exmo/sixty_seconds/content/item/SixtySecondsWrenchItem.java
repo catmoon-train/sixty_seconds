@@ -1,0 +1,137 @@
+package net.exmo.sixty_seconds.content.item;
+
+import net.exmo.sixty_seconds.bridge.AdventureUsable;
+import net.exmo.sixty_seconds.SixtySecondsMod;
+import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
+import net.exmo.sixty_seconds.content.block.SixtySecondsBarricadeBlock;
+import net.exmo.sixty_seconds.content.block.SixtySecondsGeneratorBlock;
+import net.exmo.sixty_seconds.content.block.SixtySecondsLampBlock;
+import net.exmo.sixty_seconds.content.block.SixtySecondsSpikeTrapBlock;
+import net.exmo.sixty_seconds.logic.SixtySecondsBuildRules;
+import net.exmo.sixty_seconds.state.SixtySecondsState;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+
+import java.util.List;
+
+/**
+ * 扳手：右键拆除 60s 功能方块，拆除后返还对应物品。
+ * 蹲下 + 右键：拆除白色混凝土上方 2 格内的任意方块（掉落为物品形式）。
+ */
+public class SixtySecondsWrenchItem extends Item implements AdventureUsable {
+
+    public SixtySecondsWrenchItem(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, context, tooltip, flag);
+        tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds_detach_wrench")
+                .withStyle(ChatFormatting.GRAY));
+    }
+
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        if (!(context.getLevel() instanceof ServerLevel level)
+                || !(context.getPlayer() instanceof ServerPlayer player)) {
+            return InteractionResult.SUCCESS;
+        }
+        if (!SixtySecondsMod.isActive(level) && !player.isCreative()) {
+            return InteractionResult.PASS;
+        }
+        BlockPos pos = context.getClickedPos();
+        BlockState state = level.getBlockState(pos);
+
+        // ── 蹲下 + 右键：拆卸白色混凝土上的任意方块（掉落为物品）──
+        if (player.isShiftKeyDown() && SixtySecondsBuildRules.canPlaceAt(level, pos)) {
+            // 不拆白色混凝土本身和不可破坏方块（基岩等）
+            if (state.is(Blocks.WHITE_CONCRETE) || state.getDestroySpeed(level, pos) < 0) {
+                return InteractionResult.PASS;
+            }
+            ItemStack drop = new ItemStack(state.getBlock().asItem());
+            level.removeBlock(pos, false);
+            if (!player.getInventory().add(drop)) {
+                player.drop(drop, false);
+            }
+            level.playSound(null, pos, SoundEvents.IRON_TRAPDOOR_OPEN, SoundSource.BLOCKS, 0.6F, 1.3F);
+            context.getItemInHand().hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+            return InteractionResult.SUCCESS;
+        }
+
+        // ── 阻止拆别人避难所里的功能方块 ──
+        if (isInsideOtherShelter(level, pos, player)) {
+            player.displayClientMessage(
+                    Component.translatable("message.sixty_seconds.sixty_seconds.wrench.other_shelter")
+                            .withStyle(ChatFormatting.RED), true);
+            return InteractionResult.SUCCESS;
+        }
+
+        // ── 原有逻辑：右键拆卸 60s 功能方块 ──
+        if (!isFunctionalBlock(state)) {
+            return InteractionResult.PASS;
+        }
+        ItemStack drop;
+        if (state.is(Blocks.TORCH) || state.is(Blocks.WALL_TORCH)) {
+            drop = new ItemStack(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_TORCH);
+        } else {
+            drop = new ItemStack(state.getBlock().asItem());
+        }
+        level.removeBlock(pos, false); // onRemove 会注销登记
+        if (!player.getInventory().add(drop)) {
+            player.drop(drop, false);
+        }
+        level.playSound(null, pos, SoundEvents.IRON_TRAPDOOR_OPEN, SoundSource.BLOCKS, 0.6F, 1.3F);
+        // 消耗 1 点耐久
+        context.getItemInHand().hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+        return InteractionResult.SUCCESS;
+    }
+
+    private static boolean isFunctionalBlock(BlockState state) {
+        Block block = state.getBlock();
+        return block instanceof SixtySecondsBarricadeBlock
+                || block instanceof SixtySecondsSpikeTrapBlock
+                || block instanceof SixtySecondsGeneratorBlock
+                || block instanceof SixtySecondsLampBlock
+                || block instanceof net.exmo.sixty_seconds.content.block.SixtySecondsStationBlock
+                || state.is(net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_DISMANTLER)
+                || state.is(Blocks.TORCH)
+                || state.is(Blocks.WALL_TORCH);
+    }
+
+    /** 目标方块是否在「别队避难所」盒内（自己队伍的避难所不阻止）。 */
+    private static boolean isInsideOtherShelter(ServerLevel level, BlockPos pos, ServerPlayer player) {
+        int playerTeamId = SixtySecondsStatsComponent.KEY.get(player).teamId;
+        if (playerTeamId == -1) {
+            return false; // 未编队 → 不阻止（管理员建图时要用）
+        }
+        double x = pos.getX() + 0.5;
+        double y = pos.getY() + 0.5;
+        double z = pos.getZ() + 0.5;
+        SixtySecondsState.Data data = SixtySecondsState.get(level);
+        for (SixtySecondsState.TeamData team : data.teams.values()) {
+            if (team.teamId == playerTeamId) {
+                continue; // 自己的避难所，允许
+            }
+            if (team.shelterBox != null && team.shelterBox.contains(x, y, z)) {
+                return true; // 在别人的避难所盒内
+            }
+        }
+        return false;
+    }
+}

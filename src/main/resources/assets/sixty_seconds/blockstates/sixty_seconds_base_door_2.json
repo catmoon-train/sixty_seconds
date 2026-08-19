@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "sixty_seconds:block/sixty_seconds_base_door_2"
+    },
+    "facing=south": {
+      "model": "sixty_seconds:block/sixty_seconds_base_door_2",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "sixty_seconds:block/sixty_seconds_base_door_2",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "sixty_seconds:block/sixty_seconds_base_door_2",
+      "y": 90
+    }
+  }
+}

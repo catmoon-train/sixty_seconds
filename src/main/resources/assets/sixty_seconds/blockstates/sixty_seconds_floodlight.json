@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "sixty_seconds:block/sixty_seconds_floodlight"
+    },
+    "lit=true": {
+      "model": "sixty_seconds:block/sixty_seconds_floodlight_on"
+    }
+  }
+}

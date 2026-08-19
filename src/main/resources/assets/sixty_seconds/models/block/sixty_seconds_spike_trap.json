@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/pressure_plate_up",
+  "textures": {
+    "texture": "sixty_seconds:block/sixty_seconds_spike_trap",
+    "particle": "sixty_seconds:block/sixty_seconds_spike_trap"
+  }
+}

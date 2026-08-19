@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": { "all": "sixty_seconds:block/sixty_seconds_tailor_table", "particle": "sixty_seconds:block/sixty_seconds_tailor_table" }
+}

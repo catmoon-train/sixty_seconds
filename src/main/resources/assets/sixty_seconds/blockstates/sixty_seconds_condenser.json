@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "water=0": { "model": "sixty_seconds:block/sixty_seconds_condenser" },
+    "water=1": { "model": "sixty_seconds:block/sixty_seconds_condenser_full" },
+    "water=2": { "model": "sixty_seconds:block/sixty_seconds_condenser_full" },
+    "water=3": { "model": "sixty_seconds:block/sixty_seconds_condenser_full" },
+    "water=4": { "model": "sixty_seconds:block/sixty_seconds_condenser_full" },
+    "water=5": { "model": "sixty_seconds:block/sixty_seconds_condenser_full" },
+    "water=6": { "model": "sixty_seconds:block/sixty_seconds_condenser_full" }
+  }
+}

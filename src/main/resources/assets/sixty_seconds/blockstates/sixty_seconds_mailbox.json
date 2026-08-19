@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "sixty_seconds:block/sixty_seconds_mailbox", "y": 0 },
+    "facing=east":  { "model": "sixty_seconds:block/sixty_seconds_mailbox", "y": 90 },
+    "facing=south": { "model": "sixty_seconds:block/sixty_seconds_mailbox", "y": 180 },
+    "facing=west":  { "model": "sixty_seconds:block/sixty_seconds_mailbox", "y": 270 }
+  }
+}

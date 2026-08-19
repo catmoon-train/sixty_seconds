@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "sixty_seconds:block/sixty_seconds_planter_top_1",
+    "side": "sixty_seconds:block/sixty_seconds_planter_side",
+    "bottom": "sixty_seconds:block/sixty_seconds_planter_side",
+    "particle": "sixty_seconds:block/sixty_seconds_planter_side"
+  }
+}

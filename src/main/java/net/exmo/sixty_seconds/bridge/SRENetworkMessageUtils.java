@@ -1,0 +1,29 @@
+package net.exmo.sixty_seconds.bridge;
+
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+
+import java.util.List;
+import java.util.Optional;
+
+public final class SRENetworkMessageUtils {
+    private SRENetworkMessageUtils() {
+    }
+
+    public static void sendBroadcast(ServerPlayer player, Component message) {
+        if (player != null) {
+            player.displayClientMessage(message, false);
+        }
+    }
+
+    public static void sendNewspaper(ServerPlayer player, List<Component> sections,
+            Optional<Component> title, Optional<Component> author) {
+        if (player == null) {
+            return;
+        }
+        title.ifPresent(player::sendSystemMessage);
+        for (Component section : sections) {
+            player.sendSystemMessage(section);
+        }
+    }
+}

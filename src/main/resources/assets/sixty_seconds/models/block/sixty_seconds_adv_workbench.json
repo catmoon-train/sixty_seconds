@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "sixty_seconds:block/sixty_seconds_adv_workbench",
+    "particle": "sixty_seconds:block/sixty_seconds_adv_workbench"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "sixty_seconds:block/sixty_seconds_generator"
+    },
+    "lit=true": {
+      "model": "sixty_seconds:block/sixty_seconds_generator_on"
+    }
+  }
+}

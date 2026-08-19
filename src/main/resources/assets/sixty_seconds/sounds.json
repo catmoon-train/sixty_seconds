@@ -1,0 +1,6 @@
+{
+  "item.revolver.click": { "sounds": ["minecraft:block/dispenser/fail"] },
+  "item.revolver.shoot": { "sounds": ["minecraft:item/crossbow/shoot"] },
+  "item.grenade.throw": { "sounds": ["minecraft:entity/snowball/throw"] },
+  "broken_alarm": { "sounds": ["minecraft:block/note_block/bell"] }
+}

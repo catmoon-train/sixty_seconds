@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "sixty_seconds:block/sixty_seconds_lamp",
+    "particle": "sixty_seconds:block/sixty_seconds_lamp"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "bottom": "sixty_seconds:block/sixty_seconds_hydroponic_box_side",
+    "side": "sixty_seconds:block/sixty_seconds_hydroponic_box_side",
+    "top": "sixty_seconds:block/sixty_seconds_hydroponic_box_top_0",
+    "particle": "sixty_seconds:block/sixty_seconds_hydroponic_box_side"
+  }
+}

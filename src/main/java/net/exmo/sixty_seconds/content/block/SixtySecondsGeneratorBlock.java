@@ -1,0 +1,196 @@
+package net.exmo.sixty_seconds.content.block;
+
+import net.exmo.sixty_seconds.SixtySecondsMod;
+import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
+import net.exmo.sixty_seconds.logic.SixtySecondsPowerSystem;
+import net.exmo.sixty_seconds.state.SixtySecondsState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.BlockHitResult;
+
+/**
+ * 发电机：手持燃料右键投喂，每份为全队供电
+ * （{@link SixtySecondsPowerSystem}）；供电中 LIT 点亮。放置登记归属队伍，拆除注销。
+ *
+ * <h3>燃料换算表</h3>
+ * <ul>
+ *   <li>废料 = 2 份（20 秒）</li>
+ *   <li>煤炭/木炭 = 6 份（60 秒）</li>
+ *   <li>报纸 = 1.5 份（15 秒，直接烧毁）</li>
+ *   <li>电池 = 12 份（120 秒）</li>
+ *   <li>燃料罐 = 45 份（450 秒）</li>
+ *   <li>柴油罐 = 90 份（900 秒）</li>
+ *   <li>大型电池 = 36 份（360 秒，= 电池 ×3）</li>
+ *   <li>太阳能板 = 108 份（1080 秒，= 大型电池 ×3，仅白天）</li>
+ *   <li>便携储蓄电池 = 储存电量（充电/取电双向）</li>
+ * </ul>
+ * <p>发电增幅板（上方）可使普通燃料增幅 20 倍（便携电池和报纸不触发增幅）。</p>
+ */
+public class SixtySecondsGeneratorBlock extends Block {
+
+    public SixtySecondsGeneratorBlock(Properties properties) {
+        super(properties);
+        registerDefaultState(stateDefinition.any().setValue(BlockStateProperties.LIT, false));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(BlockStateProperties.LIT);
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+        if (level instanceof ServerLevel serverLevel && placer instanceof ServerPlayer player) {
+            SixtySecondsPowerSystem.registerGenerator(serverLevel, pos,
+                    SixtySecondsStatsComponent.KEY.get(player).teamId);
+        }
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock()) && level instanceof ServerLevel serverLevel) {
+            SixtySecondsPowerSystem.unregister(serverLevel, pos);
+        }
+        super.onRemove(state, level, pos, newState, movedByPiston);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+            Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (!(level instanceof ServerLevel serverLevel) || !(player instanceof ServerPlayer serverPlayer)
+                || !SixtySecondsMod.isActive(level)) {
+            return ItemInteractionResult.SUCCESS;
+        }
+        SixtySecondsState.Data data = SixtySecondsState.get(serverLevel);
+        SixtySecondsState.TeamData team =
+                data.teams.get(SixtySecondsStatsComponent.KEY.get(serverPlayer).teamId);
+        if (team == null) {
+            return ItemInteractionResult.SUCCESS;
+        }
+        int units = 0;
+        if (stack.is(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_BATTERY)) {
+            units = 12; // 电池 = 120 秒
+        } else if (stack.is(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_BATTERY_LARGE)) {
+            units = 36; // 大型电池 = 电池 ×3 = 360 秒
+        } else if (stack.is(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_FUEL_CAN)) {
+            units = 45; // 燃料罐 = 450 秒
+        } else if (stack.is(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_DIESEL_CAN)) {
+            units = 90; // 柴油罐 = 900 秒
+        } else if (stack.is(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_SOLAR_PANEL)) {
+            // 太阳能板：仅白天（清晨/白天子相位）可用，= 大型电池 ×3 = 1080 秒
+            SixtySecondsState.Data solarData = SixtySecondsState.get(serverLevel);
+            if (net.exmo.sixty_seconds.SixtySecondsDayCycle.isNight(solarData, serverLevel.getGameTime())) {
+                serverPlayer.displayClientMessage(Component.translatable(
+                        "message.sixty_seconds.sixty_seconds.solar_no_sun"), true);
+                return ItemInteractionResult.SUCCESS;
+            }
+            units = 108;
+        } else if (stack.is(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_SCRAP)) {
+            units = 2; // 废料 = 20 秒
+        } else if (stack.is(Items.COAL) || stack.is(Items.CHARCOAL)) {
+            units = 6; // 煤炭/木炭 = 60 秒
+        } else if (stack.is(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_PORTABLE_BATTERY)) {
+            // 便携储蓄电池：读取储存的电量，充电到发电机
+            var customData = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+            if (customData != null) {
+                long stored = customData.copyTag().getLong("StoredPower");
+                if (stored > 0) {
+                    team.powerEndTick = Math.max(team.powerEndTick, level.getGameTime()) + stored;
+                    if (!serverPlayer.isCreative()) stack.shrink(1);
+                    serverLevel.playSound(null, pos, SoundEvents.BLAZE_SHOOT, SoundSource.BLOCKS, 0.6F, 0.6F);
+                    serverPlayer.displayClientMessage(Component.translatable(
+                            "message.sixty_seconds.sixty_seconds.generator_fueled",
+                            Math.max(0, (team.powerEndTick - level.getGameTime()) / 20)), true);
+                    return ItemInteractionResult.SUCCESS;
+                }
+            }
+            // 空电池：从发电机储存电力
+            long currentPower = team.powerEndTick - level.getGameTime();
+            if (currentPower > 0) {
+                long take = Math.min(currentPower, 20 * 90); // 最多90秒
+                team.powerEndTick -= take;
+                net.minecraft.nbt.CompoundTag tag = new net.minecraft.nbt.CompoundTag();
+                tag.putLong("StoredPower", take);
+                stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                        net.minecraft.world.item.component.CustomData.of(tag));
+                if (!serverPlayer.isCreative()) stack.shrink(0); // 不消耗电池
+                serverLevel.playSound(null, pos, net.minecraft.sounds.SoundEvents.AMETHYST_BLOCK_CHIME,
+                        SoundSource.BLOCKS, 0.6F, 1.0F);
+                serverPlayer.displayClientMessage(Component.translatable(
+                        "message.sixty_seconds.sixty_seconds.battery_charged", take / 20), true);
+                return ItemInteractionResult.SUCCESS;
+            }
+            units = 0; // fallthrough to open panel
+        } else if (stack.is(net.exmo.sixty_seconds.registry.ModItems.NEWSPAPER)) {
+            // 报纸：发电约 15 秒（1.5 份）
+            if (!serverPlayer.isCreative()) {
+                stack.shrink(1);
+            }
+            team.powerEndTick = Math.max(team.powerEndTick, level.getGameTime()) + 20 * 15;
+            serverLevel.playSound(null, pos, SoundEvents.BLAZE_SHOOT, SoundSource.BLOCKS, 0.6F, 0.6F);
+            serverPlayer.displayClientMessage(Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.generator_fueled",
+                    Math.max(0, (team.powerEndTick - level.getGameTime()) / 20)), true);
+            return ItemInteractionResult.SUCCESS;
+        }
+        if (units > 0) {
+            if (!serverPlayer.isCreative()) {
+                stack.shrink(1);
+            }
+            // 发电增幅板：检查发电机上方是否放置了增幅板
+            BlockState above = level.getBlockState(pos.above());
+            if (above.is(net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_POWER_AMPLIFIER)) {
+                units *= 20; // 20倍增幅（便携电池不触发此逻辑）
+            }
+            for (int i = 0; i < units; i++) {
+                SixtySecondsPowerSystem.addFuel(serverLevel, team);
+            }
+            serverLevel.playSound(null, pos, SoundEvents.BLAZE_SHOOT, SoundSource.BLOCKS, 0.6F, 0.6F);
+            serverPlayer.displayClientMessage(Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.generator_fueled",
+                    Math.max(0, (team.powerEndTick - serverLevel.getGameTime()) / 20)), true);
+        } else {
+            // 非燃料：打开电力面板 GUI（实时倒计时 + 燃料换算表）
+            openPowerPanel(serverLevel, serverPlayer, team);
+        }
+        return ItemInteractionResult.SUCCESS;
+    }
+
+    /** 空手右键：打开电力面板 GUI。 */
+    @Override
+    protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+            Player player, BlockHitResult hitResult) {
+        if (level instanceof ServerLevel serverLevel && player instanceof ServerPlayer serverPlayer
+                && SixtySecondsMod.isActive(level)) {
+            SixtySecondsState.TeamData team = SixtySecondsState.get(serverLevel).teams
+                    .get(SixtySecondsStatsComponent.KEY.get(serverPlayer).teamId);
+            if (team != null) {
+                openPowerPanel(serverLevel, serverPlayer, team);
+            }
+        }
+        return net.minecraft.world.InteractionResult.SUCCESS;
+    }
+
+    private static void openPowerPanel(ServerLevel level, ServerPlayer player, SixtySecondsState.TeamData team) {
+        long remaining = Math.max(0, team.powerEndTick - level.getGameTime());
+        net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking.send(player,
+                new net.exmo.sixty_seconds.network.OpenPowerPanelS2CPacket(remaining));
+    }
+}

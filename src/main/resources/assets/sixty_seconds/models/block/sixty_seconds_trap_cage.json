@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "sixty_seconds:block/sixty_seconds_trap_cage"
+  }
+}
