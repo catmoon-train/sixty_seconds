@@ -492,7 +492,7 @@ public final class SixtySecondsManager {
                 }
                 roster.append(Component.literal(member.getGameProfile().getName()))
                         .append(Component.literal("("))
-                        .append(Component.translatable("hud.noellesroles.sixty_seconds.family."
+                        .append(Component.translatable("hud.sixty_seconds.sixty_seconds.family."
                                 + FamilyPosition.byIndex(i).name().toLowerCase(java.util.Locale.ROOT)))
                         .append(Component.literal(")"));
             }

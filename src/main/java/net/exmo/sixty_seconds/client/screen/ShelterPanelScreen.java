@@ -118,7 +118,7 @@ public class ShelterPanelScreen extends Screen {
                 techY += 10;
                 break;
             }
-            g.drawString(this.font, Component.translatable("tech.noellesroles.sixty_seconds." + id),
+            g.drawString(this.font, Component.translatable("tech.sixty_seconds.sixty_seconds." + id),
                     rx, techY, TEXT);
             techY += 10;
             shown++;

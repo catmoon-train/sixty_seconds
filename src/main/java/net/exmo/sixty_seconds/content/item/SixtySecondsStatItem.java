@@ -170,7 +170,7 @@ public class SixtySecondsStatItem extends Item {
         super.appendHoverText(stack, context, tooltip, flag);
         // 显示使用时间
         float seconds = useDuration / 20.0F;
-        tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.use_time",
+        tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.use_time",
                 String.format("%.1f", seconds)).withStyle(ChatFormatting.GRAY));
         if (health > 0) {
             tooltip.add(line("stat_health", health, ChatFormatting.RED));
@@ -185,39 +185,39 @@ public class SixtySecondsStatItem extends Item {
             tooltip.add(line("stat_sanity", sanity, ChatFormatting.LIGHT_PURPLE));
         }
         if (sanityMaxBonus > 0) {
-            tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.stat_sanity_max",
+            tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.stat_sanity_max",
                     sanityMaxBonus, SANITY_MAX_CAP).withStyle(ChatFormatting.DARK_PURPLE));
         }
         if (healthMaxBonus > 0) {
-            tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.stat_health_max",
+            tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.stat_health_max",
                     healthMaxBonus, SixtySecondsStatsComponent.HEALTH_MAX_CAP).withStyle(ChatFormatting.RED));
         }
         if (hungerMaxBonus > 0) {
-            tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.stat_hunger_max",
+            tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.stat_hunger_max",
                     hungerMaxBonus, GENERIC_MAX_CAP).withStyle(ChatFormatting.GOLD));
         }
         if (thirstMaxBonus > 0) {
-            tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.stat_thirst_max",
+            tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.stat_thirst_max",
                     thirstMaxBonus, GENERIC_MAX_CAP).withStyle(ChatFormatting.AQUA));
         }
         if (pollutionMaxBonus > 0) {
-            tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.stat_pollution_max",
+            tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.stat_pollution_max",
                     pollutionMaxBonus, GENERIC_MAX_CAP).withStyle(ChatFormatting.GREEN));
         }
         if (pollutionReduce > 0) {
             tooltip.add(line("stat_pollution", pollutionReduce, ChatFormatting.GREEN));
         }
         if (cure) {
-            tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.stat_cure")
+            tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.stat_cure")
                     .withStyle(ChatFormatting.GREEN));
         }
         if (effect != null) {
-            tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.stat_effect")
+            tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.stat_effect")
                     .withStyle(ChatFormatting.YELLOW));
         }
     }
 
     private static Component line(String key, int value, ChatFormatting color) {
-        return Component.translatable("tooltip.noellesroles.sixty_seconds." + key, value).withStyle(color);
+        return Component.translatable("tooltip.sixty_seconds.sixty_seconds." + key, value).withStyle(color);
     }
 }

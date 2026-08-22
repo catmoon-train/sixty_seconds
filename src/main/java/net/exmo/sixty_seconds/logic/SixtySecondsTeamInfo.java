@@ -78,7 +78,7 @@ public final class SixtySecondsTeamInfo {
                 if (!first) {
                     tech.append(Component.literal(", "));
                 }
-                tech.append(Component.translatable("tech.noellesroles.sixty_seconds." + id));
+                tech.append(Component.translatable("tech.sixty_seconds.sixty_seconds." + id));
                 first = false;
             }
             player.displayClientMessage(Component.translatable(

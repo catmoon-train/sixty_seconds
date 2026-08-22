@@ -58,7 +58,7 @@ public class AirdropLootEditScreen extends Screen {
     private int contentTop, listBottom, detailTop;
 
     public AirdropLootEditScreen(SixtySecondsLootTable fullTable) {
-        super(Component.translatable("screen.noellesroles.sixty_seconds.airdrop_edit.title"));
+        super(Component.translatable("screen.sixty_seconds.sixty_seconds.airdrop_edit.title"));
         List<SixtySecondsLootTable.Entry> airdrop = fullTable.categories.get("airdrop");
         if (airdrop != null) {
             for (var e : airdrop) {
@@ -147,7 +147,7 @@ public class AirdropLootEditScreen extends Screen {
         g.renderOutline(leftX - 1, contentTop - 1, leftW + 2, listBottom - contentTop + 2, IDLE_BORDER);
         if (entries.isEmpty()) {
             String hint = Component.translatable(
-                    "screen.noellesroles.sixty_seconds.airdrop_edit.empty").getString();
+                    "screen.sixty_seconds.sixty_seconds.airdrop_edit.empty").getString();
             g.drawCenteredString(this.font, hint, leftX + leftW / 2,
                     (contentTop + listBottom) / 2 - 4, MUTED);
             return;
@@ -171,7 +171,7 @@ public class AirdropLootEditScreen extends Screen {
             if (!icon.isEmpty()) g.renderItem(icon, x + 4, y + 6);
             else g.drawString(this.font, "?", x + 9, y + 10, RED, false);
             Component name = !icon.isEmpty() ? icon.getHoverName()
-                    : Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.unknown_item");
+                    : Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.unknown_item");
             g.drawString(this.font, name, x + 26, y + 5, !icon.isEmpty() ? TEXT : RED, false);
             g.drawString(this.font, e.itemId, x + 26, y + 17, MUTED, false);
             String meta = "×" + e.count + "  w" + trimFloat(e.weight);
@@ -189,14 +189,14 @@ public class AirdropLootEditScreen extends Screen {
 
     private void drawInventory(GuiGraphics g, int mx, int my) {
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.inventory"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.inventory"),
                 rightX, contentTop - 1, GOLD, false);
         int gt = contentTop + 11, gb = panelY + panelH - 28;
         g.renderOutline(rightX - 1, gt - 1, rightW + 2, gb - gt + 2, IDLE_BORDER);
         List<ItemStack> items = invItems();
         if (items.isEmpty()) {
             g.drawCenteredString(this.font,
-                    Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.inventory_empty"),
+                    Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.inventory_empty"),
                     rightX + rightW / 2, (gt + gb) / 2 - 4, MUTED);
             return;
         }
@@ -219,18 +219,18 @@ public class AirdropLootEditScreen extends Screen {
     private void drawEditor(GuiGraphics g) {
         if (selected == null) {
             g.drawString(this.font,
-                    Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.select_hint"),
+                    Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.select_hint"),
                     leftX, detailTop + 14, MUTED, false);
             return;
         }
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.item_id"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.item_id"),
                 idBox.getX(), detailTop + 1, MUTED, false);
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.count"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.count"),
                 countBox.getX(), detailTop + 1, MUTED, false);
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.weight"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.weight"),
                 weightBox.getX(), detailTop + 1, MUTED, false);
     }
 
@@ -241,7 +241,7 @@ public class AirdropLootEditScreen extends Screen {
         g.fill(sx, y, sx + 64, y + 18, sH ? blend(0xFF1A1008, GOLD, 0.35F) : 0x551A1008);
         g.renderOutline(sx, y, 64, 18, sH ? GOLD : BORDER);
         g.drawCenteredString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.airdrop_edit.save"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.airdrop_edit.save"),
                 sx + 32, y + 5, GOLD);
         int dx = sx + 72;
         boolean dH = inRect(mx, my, dx, y, 64, 18);

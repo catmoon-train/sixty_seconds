@@ -188,7 +188,7 @@ public class SixtySecondsUtilityItem extends Item {
         SixtySecondsTechTree.TechNode node = candidates.get(level.getRandom().nextInt(candidates.size()));
         team.unlockedTech.add(node.id());
         SixtySecondsTechTree.applyUnlockSideEffects(team, node.id());
-        Component name = Component.translatable("tech.noellesroles.sixty_seconds." + node.id());
+        Component name = Component.translatable("tech.sixty_seconds.sixty_seconds." + node.id());
         for (UUID uuid : team.members) {
             if (level.getPlayerByUUID(uuid) instanceof ServerPlayer member) {
                 member.displayClientMessage(Component.translatable(

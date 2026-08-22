@@ -45,8 +45,8 @@ public final class SixtySecondsTechTree {
 
     /**
      * 科技节点：父节点未解锁不能解锁本节点（分支链 + 跨分支门控统一用 parentId）。
-     * 名称/描述用 {@code tech.noellesroles.sixty_seconds.<id>} 键。
-     * category 为展示大类 id（{@code techcat.noellesroles.sixty_seconds.<category>} 键）。
+     * 名称/描述用 {@code tech.sixty_seconds.sixty_seconds.<id>} 键。
+     * category 为展示大类 id（{@code techcat.sixty_seconds.sixty_seconds.<category>} 键）。
      */
     public record TechNode(String id, int scrapCost, String parentId, String category) {
     }
@@ -401,7 +401,7 @@ public final class SixtySecondsTechTree {
         team.unlockedTech.add(techId);
         applyUnlockSideEffects(team, techId);
         player.playNotifySound(SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.8F, 1.2F);
-        Component name = Component.translatable("tech.noellesroles.sixty_seconds." + techId);
+        Component name = Component.translatable("tech.sixty_seconds.sixty_seconds." + techId);
         for (UUID uuid : team.members) {
             if (level.getPlayerByUUID(uuid) instanceof ServerPlayer member) {
                 member.displayClientMessage(Component.translatable(

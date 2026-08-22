@@ -82,8 +82,6 @@ public final class SixtySecondsMod {
         net.exmo.sixty_seconds.command.SixtySecondsAreaCommand.register();
         net.exmo.sixty_seconds.command.SixtySecondsHelicopterCommand.register();
         net.exmo.sixty_seconds.command.OceanCreatureCommand.register();
-        org.agmas.noellesroles.commands.NewspaperCommand.register();
-        org.agmas.noellesroles.commands.WheelchairFieldItemCommand.register();
     }
 
     /** 当前世界是否正在运行本模式。 */

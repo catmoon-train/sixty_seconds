@@ -31,7 +31,7 @@ import java.util.Map;
  * 触发，与文字同一时钟，保证同步。
  *
  * <p><b>图片素材</b>：镜头图从
- * {@code assets/noellesroles/textures/cinematic/sixty_seconds/s1.png … s7.png} 读取；
+ * {@code assets/sixty_seconds/textures/cinematic/sixty_seconds/s1.png … s7.png} 读取；
  * 素材缺失时该镜头自动降级为纯黑（不显示紫色缺失纹理），文字与音效照常。
  *
  * <p><b>音效</b>：全部复用原版 {@link SoundEvents}，不新增 ogg 资源（遵循 CLAUDE.md）。
@@ -416,7 +416,7 @@ public class SixtySecondsIntroScreen extends Screen {
 
         static Shot image(long s, long e, String img, String... lineKeys) {
             ResourceLocation rl = ResourceLocation.fromNamespaceAndPath(
-                    "noellesroles", "textures/cinematic/sixty_seconds/" + img + ".png");
+                    "sixty_seconds", "textures/cinematic/sixty_seconds/" + img + ".png");
             return new Shot(Type.IMAGE, s, e, rl, List.of(lineKeys));
         }
 

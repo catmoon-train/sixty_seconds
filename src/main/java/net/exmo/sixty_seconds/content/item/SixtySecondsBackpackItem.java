@@ -61,7 +61,7 @@ public class SixtySecondsBackpackItem extends Item {
         super.appendHoverText(stack, context, tooltip, flag);
         int used = (int) stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY)
                 .nonEmptyStream().count();
-        tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.backpack", used, rows * 9)
+        tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.backpack", used, rows * 9)
                 .withStyle(ChatFormatting.GRAY));
     }
 

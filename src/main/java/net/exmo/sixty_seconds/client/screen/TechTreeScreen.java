@@ -246,7 +246,7 @@ public class TechTreeScreen extends Screen {
                 g.renderOutline(r[0], r[1], r[2], r[3], GOLD);
             }
             String label = Component.translatable(
-                    "techcat.noellesroles.sixty_seconds." + e.getKey()).getString();
+                    "techcat.sixty_seconds.sixty_seconds." + e.getKey()).getString();
             g.drawCenteredString(this.font, ellipsize(label, r[2] - 4),
                     r[0] + r[2] / 2, r[1] + (r[3] - this.font.lineHeight) / 2 + 1,
                     active ? GOLD : MUTED);
@@ -493,7 +493,7 @@ public class TechTreeScreen extends Screen {
         g.renderOutline(sx, sy, sw, sh, edge);
 
         // 名称
-        String name = Component.translatable("tech.noellesroles.sixty_seconds." + node.id()).getString();
+        String name = Component.translatable("tech.sixty_seconds.sixty_seconds." + node.id()).getString();
         int nameColor = isUnlocked ? GREEN : (parentOk ? TEXT : MUTED);
         if (zoom < 1.5f) {
             // 缩放文字大小：使用 pose stack
@@ -567,13 +567,13 @@ public class TechTreeScreen extends Screen {
         int sy = toScreenY(worldRects.get(hovered.id())[1]);
 
         List<Component> lines = new ArrayList<>();
-        lines.add(Component.translatable("tech.noellesroles.sixty_seconds." + hovered.id())
+        lines.add(Component.translatable("tech.sixty_seconds.sixty_seconds." + hovered.id())
                 .withStyle(ChatFormatting.GOLD));
-        lines.add(Component.translatable("tech.noellesroles.sixty_seconds." + hovered.id() + ".desc")
+        lines.add(Component.translatable("tech.sixty_seconds.sixty_seconds." + hovered.id() + ".desc")
                 .withStyle(ChatFormatting.GRAY));
         if (hovered.parentId() != null && !unlocked.contains(hovered.parentId())) {
             lines.add(Component.translatable("message.sixty_seconds.sixty_seconds.tech_requires",
-                    Component.translatable("tech.noellesroles.sixty_seconds." + hovered.parentId()))
+                    Component.translatable("tech.sixty_seconds.sixty_seconds." + hovered.parentId()))
                     .withStyle(ChatFormatting.RED));
         }
         // 额外前置（「前置：A 和 B」里的 B，parentId 之外）：未解锁的逐条列出
@@ -581,7 +581,7 @@ public class TechTreeScreen extends Screen {
                 .getOrDefault(hovered.id(), List.of())) {
             if (!unlocked.contains(extra)) {
                 lines.add(Component.translatable("message.sixty_seconds.sixty_seconds.tech_requires",
-                        Component.translatable("tech.noellesroles.sixty_seconds." + extra))
+                        Component.translatable("tech.sixty_seconds.sixty_seconds." + extra))
                         .withStyle(ChatFormatting.RED));
             }
         }

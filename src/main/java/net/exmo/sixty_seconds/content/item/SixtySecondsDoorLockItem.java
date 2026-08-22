@@ -102,10 +102,10 @@ public class SixtySecondsDoorLockItem extends Item {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
         String baseKey = switch (tier) {
-            case 2 -> "tooltip.noellesroles.sixty_seconds.door_lock_reinforced";
-            case 3 -> "tooltip.noellesroles.sixty_seconds.door_lock_ultimate";
-            case 4 -> "tooltip.noellesroles.sixty_seconds.door_lock_alloy";
-            default -> "tooltip.noellesroles.sixty_seconds.door_lock";
+            case 2 -> "tooltip.sixty_seconds.sixty_seconds.door_lock_reinforced";
+            case 3 -> "tooltip.sixty_seconds.sixty_seconds.door_lock_ultimate";
+            case 4 -> "tooltip.sixty_seconds.sixty_seconds.door_lock_alloy";
+            default -> "tooltip.sixty_seconds.sixty_seconds.door_lock";
         };
         tooltip.add(Component.translatable(baseKey)
                 .withStyle(ChatFormatting.GRAY));

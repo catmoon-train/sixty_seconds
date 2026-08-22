@@ -386,7 +386,7 @@ public class StationCraftScreen extends Screen {
 
     private Component tabLabel(SixtySecondsRecipes.Category tab) {
         return tab == null
-                ? Component.translatable("category.noellesroles.sixty_seconds.all")
+                ? Component.translatable("category.sixty_seconds.sixty_seconds.all")
                 : Component.translatable(tab.translationKey());
     }
 
@@ -587,7 +587,7 @@ public class StationCraftScreen extends Screen {
         if (!unlockedTech.contains(recipe.techId())) {
             for (var line : this.font.split(Component.translatable(
                             "message.sixty_seconds.sixty_seconds.tech_requires",
-                            Component.translatable("tech.noellesroles.sixty_seconds." + recipe.techId())),
+                            Component.translatable("tech.sixty_seconds.sixty_seconds." + recipe.techId())),
                     detailW)) {
                 g.drawString(this.font, line, x, y, RED);
                 y += this.font.lineHeight + 1;
@@ -639,7 +639,7 @@ public class StationCraftScreen extends Screen {
         }
         if (entry.state() == EntryState.LOCKED) {
             lines.add(Component.translatable("message.sixty_seconds.sixty_seconds.tech_requires",
-                            Component.translatable("tech.noellesroles.sixty_seconds." + recipe.techId()))
+                            Component.translatable("tech.sixty_seconds.sixty_seconds." + recipe.techId()))
                     .withStyle(ChatFormatting.RED));
         }
         g.renderComponentTooltip(this.font, lines, mouseX, mouseY);
@@ -648,10 +648,10 @@ public class StationCraftScreen extends Screen {
     /** 物品介绍翻译键（与 {@code SixtySecondsTooltips} 一致）；未定义返回 null。 */
     private static String descriptionKey(ItemStack stack) {
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        if (!"noellesroles".equals(id.getNamespace()) || !id.getPath().startsWith("sixty_seconds_")) {
+        if (!"sixty_seconds".equals(id.getNamespace()) || !id.getPath().startsWith("sixty_seconds_")) {
             return null;
         }
-        String key = "tooltip.noellesroles." + id.getPath();
+        String key = "tooltip.sixty_seconds." + id.getPath();
         return I18n.exists(key) ? key : null;
     }
 

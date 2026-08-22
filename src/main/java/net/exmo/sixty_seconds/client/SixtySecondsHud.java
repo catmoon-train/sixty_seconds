@@ -121,7 +121,7 @@ public final class SixtySecondsHud {
 
         // 第 X/N 天
         graphics.drawString(client.font,
-                Component.translatable("hud.noellesroles.sixty_seconds.day",
+                Component.translatable("hud.sixty_seconds.sixty_seconds.day",
                         Math.max(0, stats.dayNumber), stats.totalDays),
                 x, y, COL_TITLE);
         y += INFO_LINE_H;
@@ -129,7 +129,7 @@ public final class SixtySecondsHud {
         // 家庭身份
         if (hasFamily) {
             graphics.drawString(client.font,
-                    Component.translatable("hud.noellesroles.sixty_seconds.family."
+                    Component.translatable("hud.sixty_seconds.sixty_seconds.family."
                             + stats.familyPosition.name().toLowerCase()),
                     x, y, COL_FAMILY);
             y += INFO_LINE_H;
@@ -139,7 +139,7 @@ public final class SixtySecondsHud {
         if (hasClock) {
             boolean sleep = net.exmo.sixty_seconds.SixtySecondsDayCycle.isSleepWindowByRemaining(remaining);
             Component subName = sleep
-                    ? Component.translatable("hud.noellesroles.sixty_seconds.subphase.sleep")
+                    ? Component.translatable("hud.sixty_seconds.sixty_seconds.subphase.sleep")
                     : Component.translatable(net.exmo.sixty_seconds.SixtySecondsDayCycle
                             .subPhaseByRemaining(remaining).translationKey());
             long left = net.exmo.sixty_seconds.SixtySecondsDayCycle.subPhaseRemainingByRemaining(remaining);
@@ -159,7 +159,7 @@ public final class SixtySecondsHud {
             int seconds = (int) Math.ceil(remaining / 20.0);
             int color = seconds <= 10 ? (((int) (0x80 + 0x7F * pulse)) << 24 | 0xFF5050) : 0xFFFFD08A;
             graphics.drawString(client.font,
-                    Component.translatable("hud.noellesroles.sixty_seconds.prep_countdown", seconds), x, y, color);
+                    Component.translatable("hud.sixty_seconds.sixty_seconds.prep_countdown", seconds), x, y, color);
             y += INFO_LINE_H;
         }
 
@@ -167,14 +167,14 @@ public final class SixtySecondsHud {
         if (stats.sick) {
             int color = ((int) (0x90 + 0x6F * pulse)) << 24 | 0xFF6060;
             graphics.drawString(client.font,
-                    Component.translatable("hud.noellesroles.sixty_seconds.sick_warning"), x, y, color);
+                    Component.translatable("hud.sixty_seconds.sixty_seconds.sick_warning"), x, y, color);
             y += INFO_LINE_H;
         }
 
         // 探索归来冷却
         if (hasExploreCd) {
             graphics.drawString(client.font,
-                    Component.translatable("hud.noellesroles.sixty_seconds.explore_cooldown",
+                    Component.translatable("hud.sixty_seconds.sixty_seconds.explore_cooldown",
                             (int) Math.ceil(exploreCd / 20.0)), x, y, COL_FAMILY);
             y += INFO_LINE_H;
         }
@@ -278,7 +278,7 @@ public final class SixtySecondsHud {
         int cx = graphics.guiWidth() / 2;
         int cy = graphics.guiHeight() / 2;
 
-        Component title = Component.translatable("hud.noellesroles.sixty_seconds.downed_title");
+        Component title = Component.translatable("hud.sixty_seconds.sixty_seconds.downed_title");
         graphics.pose().pushPose();
         graphics.pose().translate(cx, cy + 28, 0);
         graphics.pose().scale(1.5f, 1.5f, 1f);
@@ -288,12 +288,12 @@ public final class SixtySecondsHud {
 
         int y = cy + 46;
         int health = stats.health;
-        Component healthText = Component.translatable("hud.noellesroles.sixty_seconds.downed_health", health);
+        Component healthText = Component.translatable("hud.sixty_seconds.sixty_seconds.downed_health", health);
         int healthColor = health > 15 ? 0xFFFFA0A0 : 0xFFFF4040;
         graphics.drawString(client.font, healthText, cx - client.font.width(healthText) / 2, y, healthColor);
         y += 11;
 
-        Component hint = Component.translatable("hud.noellesroles.sixty_seconds.downed_hint",
+        Component hint = Component.translatable("hud.sixty_seconds.sixty_seconds.downed_hint",
                 net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem.REVIVE_TICKS / 20);
         graphics.drawString(client.font, hint, cx - client.font.width(hint) / 2, y, 0xFFB0B8C0);
     }
@@ -311,7 +311,7 @@ public final class SixtySecondsHud {
         int cx = graphics.guiWidth() / 2;
         int cy = graphics.guiHeight() / 2;
 
-        Component title = Component.translatable("hud.noellesroles.sixty_seconds.revive_title");
+        Component title = Component.translatable("hud.sixty_seconds.sixty_seconds.revive_title");
         graphics.pose().pushPose();
         graphics.pose().translate(cx, cy - 60, 0);
         graphics.pose().scale(1.4f, 1.4f, 1f);
@@ -321,7 +321,7 @@ public final class SixtySecondsHud {
         boolean soon = totalSeconds <= 10;
         float pulse = 0.6f + 0.4f * Mth.sin(player.tickCount * 0.4f);
         int color = soon ? ((Mth.clamp((int) (0xC0 + 0x3F * pulse), 0, 0xFF) << 24) | 0x60FF60) : 0xFFFFFFFF;
-        Component time = Component.translatable("hud.noellesroles.sixty_seconds.revive_countdown",
+        Component time = Component.translatable("hud.sixty_seconds.sixty_seconds.revive_countdown",
                 totalSeconds / 60, String.format("%02d", totalSeconds % 60));
         graphics.pose().pushPose();
         graphics.pose().translate(cx, cy - 40, 0);
@@ -329,7 +329,7 @@ public final class SixtySecondsHud {
         graphics.drawString(client.font, time, -client.font.width(time) / 2, 0, color);
         graphics.pose().popPose();
 
-        Component hint = Component.translatable("hud.noellesroles.sixty_seconds.revive_hint");
+        Component hint = Component.translatable("hud.sixty_seconds.sixty_seconds.revive_hint");
         graphics.drawString(client.font, hint, cx - client.font.width(hint) / 2, cy - 16, 0xFFAAAAAA);
     }
 

@@ -69,7 +69,7 @@ public class SixtySecondsClockItem extends Item {
         }
         SixtySecondsDayCycle.SubPhase sub = SixtySecondsDayCycle.subPhase(data, now);
         Component subName = SixtySecondsDayCycle.isSleepWindow(data, now)
-                ? Component.translatable("hud.noellesroles.sixty_seconds.subphase.sleep")
+                ? Component.translatable("hud.sixty_seconds.sixty_seconds.subphase.sleep")
                 : Component.translatable(sub.translationKey());
         return Component.translatable("message.sixty_seconds.sixty_seconds.clock_time",
                 data.dayNumber, SixtySecondsManager.totalDays(level), subName,

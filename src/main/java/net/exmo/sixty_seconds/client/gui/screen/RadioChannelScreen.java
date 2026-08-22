@@ -32,7 +32,7 @@ public class RadioChannelScreen extends Screen {
     private EditBox channelBox;
 
     public RadioChannelScreen(int currentChannel) {
-        super(Component.translatable("gui.noellesroles.radio.title"));
+        super(Component.translatable("gui.sixty_seconds.radio.title"));
         this.currentChannel = currentChannel;
     }
 
@@ -42,10 +42,10 @@ public class RadioChannelScreen extends Screen {
         int py = (this.height - PANEL_H) / 2;
 
         channelBox = new EditBox(this.font, px + 20, py + 44, PANEL_W - 40, 20,
-                Component.translatable("gui.noellesroles.radio.channel"));
+                Component.translatable("gui.sixty_seconds.radio.channel"));
         channelBox.setMaxLength(4);
         channelBox.setFilter(s -> s.isEmpty() || s.matches("\\d{1,4}"));
-        channelBox.setHint(Component.translatable("gui.noellesroles.radio.hint").withStyle(ChatFormatting.DARK_GRAY));
+        channelBox.setHint(Component.translatable("gui.sixty_seconds.radio.hint").withStyle(ChatFormatting.DARK_GRAY));
         if (currentChannel >= RadioItem.MIN_CHANNEL) {
             channelBox.setValue(String.valueOf(currentChannel));
         }
@@ -54,10 +54,10 @@ public class RadioChannelScreen extends Screen {
 
         int by = py + PANEL_H - 30;
         addRenderableWidget(Button.builder(
-                Component.translatable("gui.noellesroles.radio.join"), b -> join())
+                Component.translatable("gui.sixty_seconds.radio.join"), b -> join())
                 .bounds(px + 16, by, 88, 20).build());
         addRenderableWidget(Button.builder(
-                Component.translatable("gui.noellesroles.radio.leave"), b -> {
+                Component.translatable("gui.sixty_seconds.radio.leave"), b -> {
                     ClientPlayNetworking.send(new RadioChannelC2SPacket(0, true));
                     onClose();
                 })
@@ -98,13 +98,13 @@ public class RadioChannelScreen extends Screen {
         int px = (this.width - PANEL_W) / 2;
         int py = (this.height - PANEL_H) / 2;
         g.drawCenteredString(this.font,
-                Component.translatable("gui.noellesroles.radio.title").withStyle(ChatFormatting.BOLD),
+                Component.translatable("gui.sixty_seconds.radio.title").withStyle(ChatFormatting.BOLD),
                 this.width / 2, py + 12, GOLD);
-        g.drawString(this.font, Component.translatable("gui.noellesroles.radio.channel"), px + 20, py + 32, TEXT);
+        g.drawString(this.font, Component.translatable("gui.sixty_seconds.radio.channel"), px + 20, py + 32, TEXT);
         // 当前频道状态
         Component status = currentChannel >= RadioItem.MIN_CHANNEL
-                ? Component.translatable("gui.noellesroles.radio.current", currentChannel)
-                : Component.translatable("gui.noellesroles.radio.offline");
+                ? Component.translatable("gui.sixty_seconds.radio.current", currentChannel)
+                : Component.translatable("gui.sixty_seconds.radio.offline");
         g.drawCenteredString(this.font,
                 status.copy().withStyle(currentChannel >= RadioItem.MIN_CHANNEL ? ChatFormatting.GREEN : ChatFormatting.GRAY),
                 this.width / 2, py + PANEL_H - 44, currentChannel >= RadioItem.MIN_CHANNEL ? GREEN : MUTED);

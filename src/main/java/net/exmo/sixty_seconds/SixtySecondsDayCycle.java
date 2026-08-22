@@ -17,7 +17,7 @@ public final class SixtySecondsDayCycle {
         MORNING, DAYTIME, NIGHT;
 
         public String translationKey() {
-            return "hud.noellesroles.sixty_seconds.subphase." + name().toLowerCase(java.util.Locale.ROOT);
+            return "hud.sixty_seconds.sixty_seconds.subphase." + name().toLowerCase(java.util.Locale.ROOT);
         }
     }
 

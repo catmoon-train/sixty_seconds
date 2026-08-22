@@ -56,6 +56,6 @@ public enum AreaMapPointCategory {
     }
 
     public Component getName() {
-        return Component.translatable("gui.noellesroles.area_map.cat." + name().toLowerCase(Locale.ROOT));
+        return Component.translatable("gui.sixty_seconds.area_map.cat." + name().toLowerCase(Locale.ROOT));
     }
 }

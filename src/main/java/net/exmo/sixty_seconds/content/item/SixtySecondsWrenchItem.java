@@ -42,7 +42,7 @@ public class SixtySecondsWrenchItem extends Item implements AdventureUsable {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
-        tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds_detach_wrench")
+        tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds_detach_wrench")
                 .withStyle(ChatFormatting.GRAY));
     }
 

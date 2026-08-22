@@ -105,7 +105,7 @@ public class SixtySecondsMailboxBlock extends BaseEntityBlock {
         }
         serverPlayer.openMenu(new SimpleMenuProvider(
                 (syncId, inventory, p) -> new ChestMenu(MenuType.GENERIC_9x3, syncId, inventory, mailbox, 3),
-                Component.translatable("container.noellesroles.sixty_seconds_mailbox")));
+                Component.translatable("container.sixty_seconds.sixty_seconds_mailbox")));
     }
 
     @Override

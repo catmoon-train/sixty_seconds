@@ -212,10 +212,10 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
     public ResourceLocation textureLocation() {
         // 所有变体统一使用基础纹理（变体专用纹理待后续美术产出后替换）
         if (isApex()) {
-            return ResourceLocation.fromNamespaceAndPath("noellesroles",
+            return ResourceLocation.fromNamespaceAndPath("sixty_seconds",
                     "textures/entity/sixty_seconds_boss_apex.png");
         }
-        return ResourceLocation.fromNamespaceAndPath("noellesroles",
+        return ResourceLocation.fromNamespaceAndPath("sixty_seconds",
                 "textures/entity/sixty_seconds_boss.png");
     }
 

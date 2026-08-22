@@ -110,8 +110,8 @@ public final class SixtySecondsSearchHud {
                 drawBarFrame(g, x, y, done ? 1f : lastProgress);
                 // 半透明绿/红覆盖，随时间淡出
                 g.fill(x, y, x + BAR_W, y + BAR_H, overlayAlpha | (done ? 0x5CE06A : 0xE05C5C));
-                String key = done ? "hud.noellesroles.sixty_seconds.search_done"
-                        : "hud.noellesroles.sixty_seconds.search_cancel";
+                String key = done ? "hud.sixty_seconds.sixty_seconds.search_done"
+                        : "hud.sixty_seconds.sixty_seconds.search_cancel";
                 Component text = Component.translatable(key);
                 g.drawString(mc.font, text, cx - mc.font.width(text) / 2, y - 12,
                         done ? 0xFF7CE08A : 0xFFE07C7C);
@@ -144,7 +144,7 @@ public final class SixtySecondsSearchHud {
 
         // 文字：搜刮中 xx%
         int pct = (int) (progress * 100);
-        Component label = Component.translatable("hud.noellesroles.sixty_seconds.searching", pct);
+        Component label = Component.translatable("hud.sixty_seconds.sixty_seconds.searching", pct);
         g.drawString(mc.font, label, cx - mc.font.width(label) / 2, y - 12, 0xFFFFE066);
     }
 
@@ -174,7 +174,7 @@ public final class SixtySecondsSearchHud {
         for (ItemStack stack : revealItems) {
             textW = Math.max(textW, mc.font.width(rowLabel(stack)));
         }
-        Component title = Component.translatable("hud.noellesroles.sixty_seconds.loot_gained");
+        Component title = Component.translatable("hud.sixty_seconds.sixty_seconds.loot_gained");
         textW = Math.max(textW, mc.font.width(title) - 22);
         int panelW = Mth.clamp(6 + 18 + 4 + textW + 8, 120, 240);
         int panelH = 6 + 12 + revealItems.size() * ROW_H + 4;

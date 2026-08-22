@@ -36,7 +36,7 @@ public class SixtySecondsEndScreen extends Screen {
     private int maxScroll = 0;
 
     public SixtySecondsEndScreen(SixtySecondsEndGamePayload data) {
-        super(Component.translatable("screen.noellesroles.sixty_seconds.end_title"));
+        super(Component.translatable("screen.sixty_seconds.sixty_seconds.end_title"));
         this.data = data;
         this.teams = buildTeamGroups(data.players());
     }
@@ -84,8 +84,8 @@ public class SixtySecondsEndScreen extends Screen {
 
         // ── 标题 ──
         Component title = data.winStatus() == net.exmo.sixty_seconds.bridge.GameUtils.WinStatus.PASSENGERS
-                ? Component.translatable("screen.noellesroles.sixty_seconds.end_win")
-                : Component.translatable("screen.noellesroles.sixty_seconds.end_lose");
+                ? Component.translatable("screen.sixty_seconds.sixty_seconds.end_win")
+                : Component.translatable("screen.sixty_seconds.sixty_seconds.end_lose");
         int titleColor = data.winStatus() == net.exmo.sixty_seconds.bridge.GameUtils.WinStatus.PASSENGERS ? GOLD : RED;
         graphics.pose().pushPose();
         graphics.pose().scale(2.0F, 2.0F, 1.0F);
@@ -95,7 +95,7 @@ public class SixtySecondsEndScreen extends Screen {
         y += 28;
 
         // ── 天数 ──
-        Component dayText = Component.translatable("screen.noellesroles.sixty_seconds.end_day",
+        Component dayText = Component.translatable("screen.sixty_seconds.sixty_seconds.end_day",
                 data.dayNumber(), net.exmo.sixty_seconds.logic.SixtySecondsManager.DEFAULT_TOTAL_DAYS);
         int dayW = font.width(dayText);
         graphics.drawString(font, dayText, centerX - dayW / 2, y, 0xCCCCCC, false);
@@ -112,16 +112,16 @@ public class SixtySecondsEndScreen extends Screen {
         int statStartX = centerX - (statGap * 3) / 2;
 
         drawStat(graphics, statStartX, statY, GREEN, "☗", survived,
-                Component.translatable("screen.noellesroles.sixty_seconds.end_survived"));
+                Component.translatable("screen.sixty_seconds.sixty_seconds.end_survived"));
         drawStat(graphics, statStartX + statGap, statY, GRAY, "☠", dead,
-                Component.translatable("screen.noellesroles.sixty_seconds.end_dead"));
+                Component.translatable("screen.sixty_seconds.sixty_seconds.end_dead"));
         drawStat(graphics, statStartX + statGap * 2, statY, RED, "☣", monsters,
-                Component.translatable("screen.noellesroles.sixty_seconds.end_monster"));
+                Component.translatable("screen.sixty_seconds.sixty_seconds.end_monster"));
 
         y = statY + 18;
 
         // ── 撤离统计 ──
-        Component evacText = Component.translatable("screen.noellesroles.sixty_seconds.end_evacuated", evac, 8);
+        Component evacText = Component.translatable("screen.sixty_seconds.sixty_seconds.end_evacuated", evac, 8);
         int evacW = font.width(evacText);
         graphics.drawString(font, evacText, centerX - evacW / 2, y, GOLD, false);
         y += 18;
@@ -143,7 +143,7 @@ public class SixtySecondsEndScreen extends Screen {
             }
 
             // 队伍头
-            Component teamHeader = Component.translatable("screen.noellesroles.sixty_seconds.end_team",
+            Component teamHeader = Component.translatable("screen.sixty_seconds.sixty_seconds.end_team",
                     team.teamId() + 1);
             int teamHW = font.width(teamHeader);
             graphics.drawString(font, teamHeader, centerX - teamHW / 2, renderY, 0xAAFFFF, false);
@@ -173,10 +173,10 @@ public class SixtySecondsEndScreen extends Screen {
 
                 // 状态标记
                 Component statusTag = switch (player.category()) {
-                    case SURVIVED -> Component.translatable("screen.noellesroles.sixty_seconds.end_tag_survived");
-                    case EVACUATED -> Component.translatable("screen.noellesroles.sixty_seconds.end_tag_evacuated");
-                    case DEAD -> Component.translatable("screen.noellesroles.sixty_seconds.end_tag_dead");
-                    case MONSTER -> Component.translatable("screen.noellesroles.sixty_seconds.end_tag_monster");
+                    case SURVIVED -> Component.translatable("screen.sixty_seconds.sixty_seconds.end_tag_survived");
+                    case EVACUATED -> Component.translatable("screen.sixty_seconds.sixty_seconds.end_tag_evacuated");
+                    case DEAD -> Component.translatable("screen.sixty_seconds.sixty_seconds.end_tag_dead");
+                    case MONSTER -> Component.translatable("screen.sixty_seconds.sixty_seconds.end_tag_monster");
                 };
                 graphics.drawString(font, statusTag, centerX + 30, renderY + 1, statusColor, false);
 
@@ -186,7 +186,7 @@ public class SixtySecondsEndScreen extends Screen {
         }
 
         // ── 底部提示 ──
-        Component tip = Component.translatable("screen.noellesroles.sixty_seconds.end_tip")
+        Component tip = Component.translatable("screen.sixty_seconds.sixty_seconds.end_tip")
                 .withStyle(ChatFormatting.GRAY);
         int tipW = font.width(tip);
         graphics.drawString(font, tip, centerX - tipW / 2, this.height - 20, 0x888888, false);
@@ -253,7 +253,7 @@ public class SixtySecondsEndScreen extends Screen {
     @Override
     protected void init() {
         // 短暂延迟后才可关闭（防止玩家误触跳过结算）
-        addRenderableWidget(Button.builder(Component.translatable("screen.noellesroles.sixty_seconds.end_continue"),
+        addRenderableWidget(Button.builder(Component.translatable("screen.sixty_seconds.sixty_seconds.end_continue"),
                 btn -> this.onClose()).bounds(this.width / 2 - 50, this.height - 40, 100, 20).build());
     }
 

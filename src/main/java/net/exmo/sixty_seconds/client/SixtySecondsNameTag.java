@@ -33,13 +33,13 @@ public final class SixtySecondsNameTag {
                 return;
             }
             boolean sameTeam = SixtySecondsStatsComponent.KEY.get(self).teamId == stats.teamId;
-            MutableComponent text = Component.translatable("hud.noellesroles.sixty_seconds.nametag_family",
+            MutableComponent text = Component.translatable("hud.sixty_seconds.sixty_seconds.nametag_family",
                     stats.teamId + 1,
-                    Component.translatable("hud.noellesroles.sixty_seconds.family."
+                    Component.translatable("hud.sixty_seconds.sixty_seconds.family."
                             + stats.familyPosition.name().toLowerCase(Locale.ROOT)));
             if (stats.downed) {
                 text = text.append(Component.literal(" "))
-                        .append(Component.translatable("hud.noellesroles.sixty_seconds.nametag_downed"));
+                        .append(Component.translatable("hud.sixty_seconds.sixty_seconds.nametag_downed"));
             }
             int color = stats.downed ? 0xFFFF6060 : sameTeam ? 0xFF7CE87C : 0xFFA9D4FF;
             // 名字画在 y=16（RoleNameRenderer 已平移到准星中心并缩放 0.6），这行紧跟其下

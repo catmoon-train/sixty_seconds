@@ -52,7 +52,7 @@ public final class SixtySecondsBlockNameHud {
 
     private static boolean isFunctional(BlockState state) {
         ResourceLocation id = BuiltInRegistries.BLOCK.getKey(state.getBlock());
-        if ("noellesroles".equals(id.getNamespace()) && id.getPath().startsWith("sixty_seconds_")) {
+        if ("sixty_seconds".equals(id.getNamespace()) && id.getPath().startsWith("sixty_seconds_")) {
             return true;
         }
         // 合成台（原版方块被本模式复用）：仅在 60s 模式激活时提示

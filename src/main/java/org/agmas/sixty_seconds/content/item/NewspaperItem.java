@@ -1,4 +1,4 @@
-package org.agmas.noellesroles.content.item;
+package org.agmas.sixty_seconds.content.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -55,12 +55,12 @@ public class NewspaperItem extends Item {
             String shortTitle = title;
             if (shortTitle.length() >= 20)
                 shortTitle = shortTitle.substring(0, 18) + "...";
-            list.add(Component.translatable("item.noellesroles.newspaper.title", shortTitle)
+            list.add(Component.translatable("item.sixty_seconds.newspaper.title", shortTitle)
                     .withStyle(ChatFormatting.GRAY));
-            list.add(Component.translatable("item.noellesroles.newspaper.author", author)
+            list.add(Component.translatable("item.sixty_seconds.newspaper.author", author)
                     .withStyle(ChatFormatting.GRAY));
         } else if (itemStack.has(SREDataComponentTypes.WRITABLE_BOOK_CONTENT)) {
-            list.add(Component.translatable("item.noellesroles.newspaper.lore.draft").withStyle(ChatFormatting.GRAY,
+            list.add(Component.translatable("item.sixty_seconds.newspaper.lore.draft").withStyle(ChatFormatting.GRAY,
                     ChatFormatting.ITALIC));
         }
     }

@@ -104,7 +104,7 @@ public final class OceanCreatureCommand {
                 level.getRandom(), 1.0);
         if (shark != null) {
             shark.applyVariant(variant);
-            src.sendSuccess(() -> Component.translatable("command.noellesroles.ocean.shark_spawned",
+            src.sendSuccess(() -> Component.translatable("command.sixty_seconds.ocean.shark_spawned",
                             Component.translatable(variant.nameKey()))
                     .withStyle(ChatFormatting.AQUA), true);
             return 1;
@@ -135,7 +135,7 @@ public final class OceanCreatureCommand {
                 level.getRandom(), 1.0);
         if (monster != null) {
             monster.applyVariant(variant);
-            src.sendSuccess(() -> Component.translatable("command.noellesroles.ocean.monster_spawned",
+            src.sendSuccess(() -> Component.translatable("command.sixty_seconds.ocean.monster_spawned",
                             Component.translatable(variant.nameKey()))
                     .withStyle(ChatFormatting.DARK_PURPLE), true);
             return 1;
@@ -155,7 +155,7 @@ public final class OceanCreatureCommand {
         configOpt.get().oceanCreaturesEnabled = enabled;
         SixtySecondsConfigStore.save(level, configOpt.get());
         ctx.getSource().sendSuccess(() -> Component.translatable(
-                "command.noellesroles.ocean.toggle_" + (enabled ? "on" : "off"))
+                "command.sixty_seconds.ocean.toggle_" + (enabled ? "on" : "off"))
                 .withStyle(enabled ? ChatFormatting.GREEN : ChatFormatting.RED), true);
         return 1;
     }
@@ -165,10 +165,10 @@ public final class OceanCreatureCommand {
         var configOpt = SixtySecondsConfigStore.current(level);
         boolean enabled = configOpt.map(c -> c.oceanCreaturesEnabled).orElse(false);
         ctx.getSource().sendSuccess(() -> Component.translatable(
-                "command.noellesroles.ocean.status",
-                enabled ? Component.translatable("command.noellesroles.ocean.on")
+                "command.sixty_seconds.ocean.status",
+                enabled ? Component.translatable("command.sixty_seconds.ocean.on")
                         .withStyle(ChatFormatting.GREEN)
-                        : Component.translatable("command.noellesroles.ocean.off")
+                        : Component.translatable("command.sixty_seconds.ocean.off")
                         .withStyle(ChatFormatting.RED))
                 .withStyle(ChatFormatting.YELLOW), false);
         return 1;

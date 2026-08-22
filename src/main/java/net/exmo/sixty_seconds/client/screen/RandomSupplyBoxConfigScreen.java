@@ -48,7 +48,7 @@ public class RandomSupplyBoxConfigScreen extends Screen {
             String tier,
             java.util.List<String> allCategories,
             java.util.Set<String> enabledCategories) {
-        super(Component.translatable("screen.noellesroles.sixty_seconds.random_supply_box_config.title"));
+        super(Component.translatable("screen.sixty_seconds.sixty_seconds.random_supply_box_config.title"));
         this.pos = pos;
         this.tier = tier;
         this.allCategories = new ArrayList<>(allCategories);
@@ -97,9 +97,9 @@ public class RandomSupplyBoxConfigScreen extends Screen {
 
         // 等级标签
         String tierLabel = "low".equals(tier)
-                ? Component.translatable("screen.noellesroles.sixty_seconds.random_supply_box_config.low_tier")
+                ? Component.translatable("screen.sixty_seconds.sixty_seconds.random_supply_box_config.low_tier")
                         .getString()
-                : Component.translatable("screen.noellesroles.sixty_seconds.random_supply_box_config.high_tier")
+                : Component.translatable("screen.sixty_seconds.sixty_seconds.random_supply_box_config.high_tier")
                         .getString();
         int tierColor = "low".equals(tier) ? 0xFF72C17B : 0xFFE06B65;
         g.drawString(this.font, tierLabel, panelX + panelW - PAD - this.font.width(tierLabel), panelY + 8,
@@ -163,7 +163,7 @@ public class RandomSupplyBoxConfigScreen extends Screen {
                 saveHover ? blendColors(0xFF1A1008, GOLD, 0.35F) : 0x551A1008);
         g.renderOutline(saveX, y, 64, 18, saveHover ? GOLD : BORDER);
         g.drawCenteredString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.save"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.save"),
                 saveX + 32, y + 5, GOLD);
 
         // 完成

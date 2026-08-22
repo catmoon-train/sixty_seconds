@@ -121,10 +121,10 @@ public class SixtySecondsGunItem extends Item implements SREItemProperties.HeldL
         // 枪械面板没有原版"攻击伤害"属性（不是 SwordItem），统一在 tooltip 显示命中健康伤害 +
         // PvP 后实际扣减值。与近战武器 tooltip 风格一致，便于玩家横向对比枪/刀伤害。
         int dmg = playerDamage();
-        tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.health_damage",
+        tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.health_damage",
                 Integer.toString(dmg)).withStyle(ChatFormatting.RED));
         int pvpActual = Math.max(1, (int) Math.round(dmg * SixtySecondsBalance.PVP_DAMAGE_MULT));
-        tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.pvp_damage",
+        tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.pvp_damage",
                 Integer.toString(pvpActual)).withStyle(ChatFormatting.DARK_RED));
     }
 

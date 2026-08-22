@@ -61,7 +61,7 @@ public class SixtySecondsBreakInItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
-        tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.breakin_tier", tier)
+        tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.breakin_tier", tier)
                 .withStyle(ChatFormatting.GRAY));
     }
 }

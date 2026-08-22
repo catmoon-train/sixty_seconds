@@ -395,7 +395,7 @@ public class SixtySecondsSeaVehicleEntity extends Boat {
     private void openStorage(Player player) {
         MenuProvider provider = new SimpleMenuProvider(
                 (id, inv, p) -> ChestMenu.threeRows(id, inv, storage),
-                Component.translatable("container.noellesroles.sixty_seconds_fishing_boat"));
+                Component.translatable("container.sixty_seconds.sixty_seconds_fishing_boat"));
         player.openMenu(provider);
     }
 

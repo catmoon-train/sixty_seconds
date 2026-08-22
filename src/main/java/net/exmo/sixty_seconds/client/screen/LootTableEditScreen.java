@@ -85,7 +85,7 @@ public class LootTableEditScreen extends Screen {
     private int leftX, leftW, rightX, rightW, contentTop, listBottom, detailTop;
 
     public LootTableEditScreen(SixtySecondsLootTable table) {
-        super(Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.title"));
+        super(Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.title"));
         for (Map.Entry<String, List<SixtySecondsLootTable.Entry>> e : table.categories.entrySet()) {
             List<RowData> rows = new ArrayList<>();
             if (e.getValue() != null) {
@@ -140,7 +140,7 @@ public class LootTableEditScreen extends Screen {
             }
         });
         newCatBox = editor(panelX + panelW - PAD - 96, panelY + 22, 96, 24);
-        newCatBox.setHint(Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.new_category")
+        newCatBox.setHint(Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.new_category")
                 .withStyle(ChatFormatting.DARK_GRAY));
         refreshEditors();
     }
@@ -299,7 +299,7 @@ public class LootTableEditScreen extends Screen {
         g.renderOutline(leftX - 1, contentTop - 1, leftW + 2, listBottom - contentTop + 2, IDLE_BORDER);
         if (rows.isEmpty()) {
             g.drawCenteredString(this.font,
-                    Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.entries_empty"),
+                    Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.entries_empty"),
                     leftX + leftW / 2, (contentTop + listBottom) / 2 - 4, MUTED);
             return;
         }
@@ -332,7 +332,7 @@ public class LootTableEditScreen extends Screen {
                 g.drawString(this.font, "?", x + 9, y + 10, RED, false);
             }
             Component name = valid ? icon.getHoverName()
-                    : Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.unknown_item");
+                    : Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.unknown_item");
             g.drawString(this.font, name, x + 26, y + 5, valid ? TEXT : RED, false);
             g.drawString(this.font, row.itemId, x + 26, y + 17, MUTED, false);
             String meta = "×" + row.count + "  w" + trimFloat(row.weight);
@@ -353,7 +353,7 @@ public class LootTableEditScreen extends Screen {
     /** 右侧背包物品选择器：点击加入当前类别。 */
     private void drawInventoryGrid(GuiGraphics g, int mouseX, int mouseY) {
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.inventory"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.inventory"),
                 rightX, contentTop - 1, GOLD, false);
         int gridTop = contentTop + 11;
         int gridBottom = panelY + panelH - 28;
@@ -362,7 +362,7 @@ public class LootTableEditScreen extends Screen {
         List<ItemStack> items = inventoryItems();
         if (items.isEmpty()) {
             g.drawCenteredString(this.font,
-                    Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.inventory_empty"),
+                    Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.inventory_empty"),
                     rightX + rightW / 2, (gridTop + gridBottom) / 2 - 4, MUTED);
             return;
         }
@@ -393,7 +393,7 @@ public class LootTableEditScreen extends Screen {
         drawScrollbar(g, rightX + rightW - 3, gridTop, gridBottom, totalRows * CELL, gridScroll * CELL);
         // 底部提示 + hover 物品 tooltip
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.hint"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.hint"),
                 rightX, gridBottom + 4, MUTED, false);
         if (!hovered.isEmpty()) {
             g.renderTooltip(this.font, hovered, mouseX, mouseY);
@@ -404,18 +404,18 @@ public class LootTableEditScreen extends Screen {
     private void drawDetailEditor(GuiGraphics g) {
         if (selected == null) {
             g.drawString(this.font,
-                    Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.select_hint"),
+                    Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.select_hint"),
                     leftX, detailTop + 14, MUTED, false);
             return;
         }
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.item_id"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.item_id"),
                 idBox.getX(), detailTop + 1, MUTED, false);
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.count"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.count"),
                 countBox.getX(), detailTop + 1, MUTED, false);
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.weight"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.weight"),
                 weightBox.getX(), detailTop + 1, MUTED, false);
     }
 
@@ -430,7 +430,7 @@ public class LootTableEditScreen extends Screen {
                 exportHover ? blendColors(0xFF1A1008, GOLD, 0.35F) : 0x551A1008);
         g.renderOutline(exportX, y, 64, 18, exportHover ? GOLD : BORDER);
         g.drawCenteredString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.export"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.export"),
                 exportX + 32, y + 5, GOLD);
 
         // 导入
@@ -440,7 +440,7 @@ public class LootTableEditScreen extends Screen {
                 importHover ? blendColors(0xFF1A1008, GOLD, 0.35F) : 0x551A1008);
         g.renderOutline(importX, y, 64, 18, importHover ? GOLD : BORDER);
         g.drawCenteredString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.import"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.import"),
                 importX + 32, y + 5, GOLD);
 
         // 保存
@@ -450,7 +450,7 @@ public class LootTableEditScreen extends Screen {
                 saveHover ? blendColors(0xFF1A1008, GOLD, 0.35F) : 0x551A1008);
         g.renderOutline(saveX, y, 64, 18, saveHover ? GOLD : BORDER);
         g.drawCenteredString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.loot_edit.save"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.save"),
                 saveX + 32, y + 5, GOLD);
 
         // 完成

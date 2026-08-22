@@ -1,4 +1,4 @@
-package org.agmas.noellesroles.content.entity;
+package org.agmas.sixty_seconds.content.entity;
 
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.content.entity.WheelchairEntity;

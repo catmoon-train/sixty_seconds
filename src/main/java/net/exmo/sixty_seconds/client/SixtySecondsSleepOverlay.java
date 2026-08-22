@@ -123,7 +123,7 @@ public final class SixtySecondsSleepOverlay {
             }
             boolean good = i == 4 ? delta < 0 : delta > 0; // 污染降=好，其余升=好
             Component text = Component.empty()
-                    .append(Component.translatable("hud.noellesroles.sixty_seconds." + keys[i]))
+                    .append(Component.translatable("hud.sixty_seconds.sixty_seconds." + keys[i]))
                     .append(Component.literal((delta > 0 ? " +" : " ") + delta));
             g.drawString(mc.font, text, w / 2 - mc.font.width(text) / 2, y,
                     (textAlpha << 24) | (good ? 0x8AE08A : 0xE08A8A), false);

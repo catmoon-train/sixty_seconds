@@ -75,9 +75,9 @@ public class SixtySecondsDoorTrapItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
-        tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.door_trap")
+        tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.door_trap")
                 .withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.door_trap.desc")
+        tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.door_trap.desc")
                 .withStyle(ChatFormatting.DARK_GRAY));
     }
 }

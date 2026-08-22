@@ -55,7 +55,7 @@ public class DismantleScreen extends Screen {
     private int hoveredRow = -1;
 
     public DismantleScreen(OpenDismantleS2CPacket data) {
-        super(Component.translatable("station.noellesroles.sixty_seconds.dismantler"));
+        super(Component.translatable("station.sixty_seconds.sixty_seconds.dismantler"));
         this.pos = data.pos();
     }
 

@@ -1,4 +1,4 @@
-package org.agmas.noellesroles.utils;
+package org.agmas.sixty_seconds.utils;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;

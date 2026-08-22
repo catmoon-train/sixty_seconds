@@ -47,10 +47,10 @@ public class SixtySecondsMeleeWeaponItem extends Item implements SREItemProperti
         super.appendHoverText(stack, context, tooltip, flag);
         // 60s 模式下，tooltip 显示真实健康伤害（玩家对玩家 PvP 后还会被 ×0.5，但面板上看到的"攻击伤害"
         // 是基线值，便于心算 ×3 得健康伤害）。展示真实健康伤害 + PvP 后实际扣减值，避免玩家误判。
-        tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.health_damage",
+        tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.health_damage",
                 Integer.toString(healthDamage)).withStyle(ChatFormatting.RED));
         int pvpActual = Math.max(1, (int) Math.round(healthDamage * SixtySecondsBalance.PVP_DAMAGE_MULT));
-        tooltip.add(Component.translatable("tooltip.noellesroles.sixty_seconds.pvp_damage",
+        tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.pvp_damage",
                 Integer.toString(pvpActual)).withStyle(ChatFormatting.DARK_RED));
     }
 

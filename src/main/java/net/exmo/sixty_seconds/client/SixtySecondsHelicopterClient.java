@@ -112,13 +112,13 @@ public final class SixtySecondsHelicopterClient {
         int timeColor = remainingSeconds <= 30 ? 0xFFFF5555 : 0xFF55FF55;
 
         String line1 = "§e§l🚁 "
-                + Component.translatable("hud.noellesroles.sixty_seconds.helicopter_title").getString()
+                + Component.translatable("hud.sixty_seconds.sixty_seconds.helicopter_title").getString()
                 + " §r§e🚁";
         String line2 = "§7"
-                + Component.translatable("hud.noellesroles.sixty_seconds.helicopter_pos",
+                + Component.translatable("hud.sixty_seconds.sixty_seconds.helicopter_pos",
                         landingPos.getX(), landingPos.getZ()).getString();
         String line3 = "§a§l" + timeStr + " §7"
-                + Component.translatable("hud.noellesroles.sixty_seconds.helicopter_countdown").getString();
+                + Component.translatable("hud.sixty_seconds.sixty_seconds.helicopter_countdown").getString();
 
         int y = screenH / 2 - 50;
         g.drawCenteredString(font, line1, screenW / 2, y, 0xFFAA00);

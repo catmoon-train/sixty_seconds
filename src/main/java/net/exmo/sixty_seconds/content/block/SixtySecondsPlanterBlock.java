@@ -149,7 +149,7 @@ public class SixtySecondsPlanterBlock extends Block implements EntityBlock {
         }
         if (crop.techId() != null && !SixtySecondsTechTree.isUnlocked(team, crop.techId())) {
             player.displayClientMessage(Component.translatable(LANG + "tech_locked",
-                    Component.translatable("tech.noellesroles.sixty_seconds." + crop.techId()))
+                    Component.translatable("tech.sixty_seconds.sixty_seconds." + crop.techId()))
                     .withStyle(ChatFormatting.RED), true);
             return;
         }

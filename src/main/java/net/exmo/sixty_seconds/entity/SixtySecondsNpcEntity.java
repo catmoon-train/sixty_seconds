@@ -243,7 +243,7 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
 
     /** 客户端渲染取贴图（按变体）。 */
     public ResourceLocation textureLocation() {
-        return ResourceLocation.fromNamespaceAndPath("noellesroles",
+        return ResourceLocation.fromNamespaceAndPath("sixty_seconds",
                 "textures/entity/" + getVariant().textureName + ".png");
     }
 

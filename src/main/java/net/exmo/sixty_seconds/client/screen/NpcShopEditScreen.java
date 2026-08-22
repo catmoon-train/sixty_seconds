@@ -76,7 +76,7 @@ public class NpcShopEditScreen extends Screen {
     private int leftX, leftW, rightX, rightW, contentTop, listBottom, detailTop;
 
     public NpcShopEditScreen(OpenNpcShopEditS2CPacket data) {
-        super(Component.translatable("screen.noellesroles.sixty_seconds.npc.shop_edit.title"));
+        super(Component.translatable("screen.sixty_seconds.sixty_seconds.npc.shop_edit.title"));
         for (Map.Entry<String, List<SixtySecondsShopTable.Entry>> e : data.table().profiles.entrySet()) {
             List<RowData> rows = new ArrayList<>();
             if (e.getValue() != null) {
@@ -141,7 +141,7 @@ public class NpcShopEditScreen extends Screen {
         });
         newProfileBox = editor(panelX + panelW - PAD - 96, panelY + 22, 96, 24);
         newProfileBox.setHint(Component.translatable(
-                        "screen.noellesroles.sixty_seconds.npc.shop_edit.new_profile")
+                        "screen.sixty_seconds.sixty_seconds.npc.shop_edit.new_profile")
                 .withStyle(ChatFormatting.DARK_GRAY));
         refreshEditors();
     }
@@ -301,7 +301,7 @@ public class NpcShopEditScreen extends Screen {
         g.renderOutline(leftX - 1, contentTop - 1, leftW + 2, listBottom - contentTop + 2, IDLE_BORDER);
         if (rows.isEmpty()) {
             g.drawCenteredString(this.font,
-                    Component.translatable("screen.noellesroles.sixty_seconds.npc.shop_edit.entries_empty"),
+                    Component.translatable("screen.sixty_seconds.sixty_seconds.npc.shop_edit.entries_empty"),
                     leftX + leftW / 2, (contentTop + listBottom) / 2 - 4, MUTED);
             return;
         }
@@ -334,7 +334,7 @@ public class NpcShopEditScreen extends Screen {
                 g.drawString(this.font, "?", x + 9, y + 10, RED, false);
             }
             Component name = valid ? icon.getHoverName()
-                    : Component.translatable("screen.noellesroles.sixty_seconds.npc.shop_edit.unknown_item");
+                    : Component.translatable("screen.sixty_seconds.sixty_seconds.npc.shop_edit.unknown_item");
             g.drawString(this.font, name, x + 26, y + 5, valid ? TEXT : RED, false);
             g.drawString(this.font, row.itemId, x + 26, y + 17, MUTED, false);
             String meta = "×" + row.count + "  ¤" + row.price + "  x" + row.stock;
@@ -354,7 +354,7 @@ public class NpcShopEditScreen extends Screen {
     /** 右侧背包物品选择器：点击加入当前档案。 */
     private void drawInventoryGrid(GuiGraphics g, int mouseX, int mouseY) {
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.npc.shop_edit.inventory"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.npc.shop_edit.inventory"),
                 rightX, contentTop - 1, GOLD, false);
         int gridTop = contentTop + 11;
         int gridBottom = panelY + panelH - 28;
@@ -363,7 +363,7 @@ public class NpcShopEditScreen extends Screen {
         List<ItemStack> items = inventoryItems();
         if (items.isEmpty()) {
             g.drawCenteredString(this.font,
-                    Component.translatable("screen.noellesroles.sixty_seconds.npc.shop_edit.inventory_empty"),
+                    Component.translatable("screen.sixty_seconds.sixty_seconds.npc.shop_edit.inventory_empty"),
                     rightX + rightW / 2, (gridTop + gridBottom) / 2 - 4, MUTED);
             return;
         }
@@ -393,7 +393,7 @@ public class NpcShopEditScreen extends Screen {
         g.disableScissor();
         drawScrollbar(g, rightX + rightW - 3, gridTop, gridBottom, totalRows * CELL, gridScroll * CELL);
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.npc.shop_edit.hint"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.npc.shop_edit.hint"),
                 rightX, gridBottom + 4, MUTED, false);
         if (!hovered.isEmpty()) {
             g.renderTooltip(this.font, hovered, mouseX, mouseY);
@@ -404,21 +404,21 @@ public class NpcShopEditScreen extends Screen {
     private void drawDetailEditor(GuiGraphics g) {
         if (selected == null) {
             g.drawString(this.font,
-                    Component.translatable("screen.noellesroles.sixty_seconds.npc.shop_edit.select_hint"),
+                    Component.translatable("screen.sixty_seconds.sixty_seconds.npc.shop_edit.select_hint"),
                     leftX, detailTop + 14, MUTED, false);
             return;
         }
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.npc.shop_edit.item_id"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.npc.shop_edit.item_id"),
                 idBox.getX(), detailTop + 1, MUTED, false);
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.npc.shop_edit.price"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.npc.shop_edit.price"),
                 priceBox.getX(), detailTop + 1, MUTED, false);
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.npc.shop_edit.stock"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.npc.shop_edit.stock"),
                 stockBox.getX(), detailTop + 1, MUTED, false);
         g.drawString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.npc.shop_edit.restock"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.npc.shop_edit.restock"),
                 restockBox.getX(), detailTop + 1, MUTED, false);
     }
 
@@ -431,7 +431,7 @@ public class NpcShopEditScreen extends Screen {
                 saveHover ? blendColors(0xFF1A1008, GOLD, 0.35F) : 0x551A1008);
         g.renderOutline(saveX, y, 64, 18, saveHover ? GOLD : BORDER);
         g.drawCenteredString(this.font,
-                Component.translatable("screen.noellesroles.sixty_seconds.npc.shop_edit.save"),
+                Component.translatable("screen.sixty_seconds.sixty_seconds.npc.shop_edit.save"),
                 saveX + 32, y + 5, GOLD);
 
         int doneX = saveX + 72;

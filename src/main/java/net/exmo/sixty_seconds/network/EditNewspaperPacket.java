@@ -62,8 +62,8 @@ public record EditNewspaperPacket(List<String> pages, Optional<String> title) im
             mainHandItem.set(SREDataComponentTypes.WRITTEN_BOOK_CONTENT,
                     new SREWrittenBookContent(Filterable.passThrough(title), player.getScoreboardName(), list, true));
             mainHandItem.set(DataComponents.ITEM_NAME,
-                    Component.translatable("item.noellesroles.newspaper.name",
-                            Component.translatable("item.noellesroles.newspaper.title.warp", shortTitle)
+                    Component.translatable("item.sixty_seconds.newspaper.name",
+                            Component.translatable("item.sixty_seconds.newspaper.title.warp", shortTitle)
                                     .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)));
 
             if (mainHandItem.has(SREDataComponentTypes.WRITABLE_BOOK_CONTENT)) {
@@ -75,8 +75,8 @@ public record EditNewspaperPacket(List<String> pages, Optional<String> title) im
                 list.add(Filterable.passThrough(p));
             }
             mainHandItem.set(DataComponents.ITEM_NAME,
-                    Component.translatable("item.noellesroles.newspaper.draft",
-                            Component.translatable("item.noellesroles.newspaper.draft.warp", player.getName())
+                    Component.translatable("item.sixty_seconds.newspaper.draft",
+                            Component.translatable("item.sixty_seconds.newspaper.draft.warp", player.getName())
                                     .withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY)));
             mainHandItem.set(SREDataComponentTypes.WRITABLE_BOOK_CONTENT, new SREWritableBookContent(list));
         }

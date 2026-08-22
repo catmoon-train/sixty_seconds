@@ -28,8 +28,8 @@ public class SixtySecondsRvPartItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        // 说明文案统一放 lang：tooltip.noellesroles.<id>（缺省则不显示，不报错）
-        tooltip.add(Component.translatable("tooltip.noellesroles." + registryId())
+        // 说明文案统一放 lang：tooltip.sixty_seconds.<id>（缺省则不显示，不报错）
+        tooltip.add(Component.translatable("tooltip.sixty_seconds." + registryId())
                 .withStyle(ChatFormatting.GRAY));
     }
 

@@ -53,7 +53,7 @@ public class RadioItem extends Item {
         int ch = Math.max(MIN_CHANNEL, Math.min(MAX_CHANNEL, channel));
         CHANNELS.put(player.getUUID(), ch);
         player.displayClientMessage(
-                Component.translatable("message.noellesroles.radio.joined", ch)
+                Component.translatable("message.sixty_seconds.radio.joined", ch)
                         .withStyle(net.minecraft.ChatFormatting.GREEN), true);
     }
 
@@ -61,7 +61,7 @@ public class RadioItem extends Item {
     public static void leave(ServerPlayer player) {
         if (CHANNELS.remove(player.getUUID()) != null) {
             player.displayClientMessage(
-                    Component.translatable("message.noellesroles.radio.left")
+                    Component.translatable("message.sixty_seconds.radio.left")
                             .withStyle(net.minecraft.ChatFormatting.RED), true);
         }
     }

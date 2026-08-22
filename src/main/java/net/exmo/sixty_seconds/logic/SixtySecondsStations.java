@@ -150,7 +150,7 @@ public final class SixtySecondsStations {
         if (!SixtySecondsTechTree.isUnlocked(team, recipe.techId())) {
             player.displayClientMessage(Component.translatable(
                     "message.sixty_seconds.sixty_seconds.craft_tech_locked",
-                    Component.translatable("tech.noellesroles.sixty_seconds." + recipe.techId())), true);
+                    Component.translatable("tech.sixty_seconds.sixty_seconds." + recipe.techId())), true);
             return;
         }
         if (recipe.needsPower() && !SixtySecondsPowerSystem.isPowered(level, team)) {

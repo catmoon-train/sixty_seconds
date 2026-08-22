@@ -49,7 +49,7 @@ public final class AreaMapHud {
         g.fill(x - 2, y - 2, x + SIZE + 2, y - 1, 0x33FFE8C0);
 
         if (!AreaMapManager.hasData()) {
-            Component text = Component.translatable("gui.noellesroles.area_map.scanning");
+            Component text = Component.translatable("gui.sixty_seconds.area_map.scanning");
             g.drawCenteredString(mc.font, text, x + SIZE / 2, y + SIZE / 2 - 4, 0xFF9E8B6E);
             return;
         }

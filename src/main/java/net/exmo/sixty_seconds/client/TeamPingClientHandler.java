@@ -31,9 +31,9 @@ public final class TeamPingClientHandler {
 
     /** 标点按键：V 键（默认未占用、方便一只手操作）。 */
     public static final KeyMapping PING_KEY = KeyBindingHelper.registerKeyBinding(new KeyMapping(
-            "key.noellesroles.team_ping",
+            "key.sixty_seconds.team_ping",
             GLFW.GLFW_KEY_V,
-            "category.noellesroles.sixty_seconds"));
+            "category.sixty_seconds.sixty_seconds"));
 
     /** 标点冷却 tick（防止连按刷标点），默认 2 秒。 */
     private static final int PING_COOLDOWN_TICKS = 40;

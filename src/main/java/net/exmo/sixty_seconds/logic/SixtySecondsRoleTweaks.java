@@ -9,7 +9,7 @@ import net.minecraft.world.entity.player.Player;
  * <p>
  * 无统一冷却/消耗倍率字段，各职业的冷却/消耗散在各自硬编码点。这里提供<b>单行委托</b>供那些点调用：
  * 都以 {@code SixtySecondsMod.isActive(level)} 为门控——60s 模式下这些职业必为觉醒所得，故直接按模式判定即可，
- * 无需 per-player 状态。所有数值集中在 {@link SixtySecondsBalance}，io.wifi/noellesroles 端只留一句调用。
+ * 无需 per-player 状态。所有数值集中在 {@link SixtySecondsBalance}，io.wifi/sixty_seconds 端只留一句调用。
  */
 public final class SixtySecondsRoleTweaks {
     private SixtySecondsRoleTweaks() {

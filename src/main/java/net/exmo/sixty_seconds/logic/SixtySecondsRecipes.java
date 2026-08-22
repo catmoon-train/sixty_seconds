@@ -30,7 +30,7 @@ import java.util.function.Supplier;
  * <b>冶金炉每件 4 秒制作时间</b>（见 {@link SixtySecondsStations}）。
  * <p>
  * 配料支持「任意 X」组（{@link Ingredient#items} 多选一，展示名用
- * {@code group.noellesroles.sixty_seconds.<groupKey>}）；产物支持 {@link Recipe#outputFactory}
+ * {@code group.sixty_seconds.sixty_seconds.<groupKey>}）；产物支持 {@link Recipe#outputFactory}
  * 覆写（酿造台产原版药水、第三方物品）。
  */
 public final class SixtySecondsRecipes {
@@ -50,7 +50,7 @@ public final class SixtySecondsRecipes {
         ALTAR;         // 祭坛（神秘技术，须放白色混凝土上）
 
         public String translationKey() {
-            return "station.noellesroles.sixty_seconds." + name().toLowerCase(java.util.Locale.ROOT);
+            return "station.sixty_seconds.sixty_seconds." + name().toLowerCase(java.util.Locale.ROOT);
         }
     }
 
@@ -69,7 +69,7 @@ public final class SixtySecondsRecipes {
         }
 
         public String translationKey() {
-            return "category.noellesroles.sixty_seconds." + name().toLowerCase(java.util.Locale.ROOT);
+            return "category.sixty_seconds.sixty_seconds." + name().toLowerCase(java.util.Locale.ROOT);
         }
     }
 
@@ -97,7 +97,7 @@ public final class SixtySecondsRecipes {
         /** 展示名：组配料用 group 键（如「任意水果」），普通配料用物品名。 */
         public Component displayName() {
             if (groupKey != null) {
-                return Component.translatable("group.noellesroles.sixty_seconds." + groupKey);
+                return Component.translatable("group.sixty_seconds.sixty_seconds." + groupKey);
             }
             return item().getDescription();
         }
@@ -1568,7 +1568,7 @@ public final class SixtySecondsRecipes {
         return new Ingredient(List.of(item), count, null);
     }
 
-    /** 「任意 X」组配料：groupKey 对应 {@code group.noellesroles.sixty_seconds.<key>} 展示名。 */
+    /** 「任意 X」组配料：groupKey 对应 {@code group.sixty_seconds.sixty_seconds.<key>} 展示名。 */
     private static Ingredient any(String groupKey, int count, List<Item> items) {
         return new Ingredient(items, count, groupKey);
     }

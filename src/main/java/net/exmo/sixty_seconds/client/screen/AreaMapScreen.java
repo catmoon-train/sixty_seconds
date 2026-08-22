@@ -66,7 +66,7 @@ public class AreaMapScreen extends Screen {
     private int catListY0, catListY1;
 
     public AreaMapScreen() {
-        super(Component.translatable("gui.noellesroles.area_map.title"));
+        super(Component.translatable("gui.sixty_seconds.area_map.title"));
     }
 
     @Override
@@ -139,9 +139,9 @@ public class AreaMapScreen extends Screen {
         // 底部操作提示（60s 模式追加标注操作说明）
         Component hint = Component.translatable(
                 net.exmo.sixty_seconds.client.SixtySecondsClientMapZone.isActive() && !AreaMapManager.mode3d
-                        ? "gui.noellesroles.area_map.hint_marker"
-                        : AreaMapManager.mode3d ? "gui.noellesroles.area_map.hint3d"
-                                : "gui.noellesroles.area_map.hint");
+                        ? "gui.sixty_seconds.area_map.hint_marker"
+                        : AreaMapManager.mode3d ? "gui.sixty_seconds.area_map.hint3d"
+                                : "gui.sixty_seconds.area_map.hint");
         g.drawString(font, hint, canvasX0 + 4, height - PAD - 12, MUTED, false);
     }
 
@@ -149,7 +149,7 @@ public class AreaMapScreen extends Screen {
 
     private void renderCanvas(GuiGraphics g, int mouseX, int mouseY) {
         if (!AreaMapManager.hasData()) {
-            Component text = Component.translatable("gui.noellesroles.area_map.scanning");
+            Component text = Component.translatable("gui.sixty_seconds.area_map.scanning");
             g.drawCenteredString(font, text, (canvasX0 + canvasX1) / 2, (canvasY0 + canvasY1) / 2 - 4, MUTED);
             return;
         }
@@ -193,7 +193,7 @@ public class AreaMapScreen extends Screen {
                 g.fill(sx - 1, sy - 4, sx + 1, sy - 2, GOLD);
                 if (Math.abs(mouseX - sx) <= 4 && Math.abs(mouseY - sy) <= 4) {
                     g.renderTooltip(font,
-                            Component.translatable("gui.noellesroles.area_map.home_point").withStyle(ChatFormatting.GOLD),
+                            Component.translatable("gui.sixty_seconds.area_map.home_point").withStyle(ChatFormatting.GOLD),
                             mouseX, mouseY);
                 }
             }
@@ -223,7 +223,7 @@ public class AreaMapScreen extends Screen {
 
         // 首遍扫描进度
         if (!AreaMapManager.isFirstPassDone()) {
-            Component text = Component.translatable("gui.noellesroles.area_map.scan_progress",
+            Component text = Component.translatable("gui.sixty_seconds.area_map.scan_progress",
                     (int) (AreaMapManager.scanProgress() * 100));
             g.drawString(font, text, canvasX0 + 4, canvasY0 + 4, MUTED, false);
         }
@@ -293,7 +293,7 @@ public class AreaMapScreen extends Screen {
             g.fill(sx - 3, sy - 2, sx + 3, sy + 3, GOLD);
             g.fill(sx - 1, sy - 4, sx + 1, sy - 2, GOLD);
             if (Math.abs(mouseX - sx) <= 4 && Math.abs(mouseY - sy) <= 4) {
-                tooltip = Component.translatable("gui.noellesroles.area_map.home_point").withStyle(ChatFormatting.GOLD);
+                tooltip = Component.translatable("gui.sixty_seconds.area_map.home_point").withStyle(ChatFormatting.GOLD);
             }
         }
         // 所有避难所门（创造模式可见，青色方块）
@@ -326,7 +326,7 @@ public class AreaMapScreen extends Screen {
             g.fill(sx - 1, sy - 2, sx + 1, sy + 2, marker.color());
             g.fill(sx - 2, sy - 1, sx + 2, sy + 1, marker.color());
             if (Math.abs(mouseX - sx) <= 4 && Math.abs(mouseY - sy) <= 4) {
-                tooltip = Component.translatable("gui.noellesroles.area_map.marker_tip",
+                tooltip = Component.translatable("gui.sixty_seconds.area_map.marker_tip",
                         (int) marker.worldX(), (int) marker.worldZ()).withStyle(ChatFormatting.GRAY);
             }
         }
@@ -376,47 +376,47 @@ public class AreaMapScreen extends Screen {
         int y = sideY0 + 6;
 
         // 视图模式
-        g.drawString(font, Component.translatable("gui.noellesroles.area_map.mode")
+        g.drawString(font, Component.translatable("gui.sixty_seconds.area_map.mode")
                 .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), x, y, GOLD, false);
         y += 12;
         int btnW = (sideX1 - sideX0 - 12 - 4) / 2;
         drawToggleButton(g, x, y, btnW, 16,
-                Component.translatable("gui.noellesroles.area_map.mode.2d"),
+                Component.translatable("gui.sixty_seconds.area_map.mode.2d"),
                 !AreaMapManager.mode3d, mouseX, mouseY);
         drawToggleButton(g, x + btnW + 4, y, btnW, 16,
-                Component.translatable("gui.noellesroles.area_map.mode.3d"),
+                Component.translatable("gui.sixty_seconds.area_map.mode.3d"),
                 AreaMapManager.mode3d, mouseX, mouseY);
         y += 20;
 
         // 回到玩家
         drawToggleButton(g, x, y, sideX1 - sideX0 - 12, 14,
-                Component.translatable("gui.noellesroles.area_map.recenter"), false, mouseX, mouseY);
+                Component.translatable("gui.sixty_seconds.area_map.recenter"), false, mouseX, mouseY);
         y += 18;
 
         // 60s 模式：任务点区域改为标注说明（不显示任务点分类）
         if (net.exmo.sixty_seconds.client.SixtySecondsClientMapZone.isActive()) {
-            g.drawString(font, Component.translatable("gui.noellesroles.area_map.markers_title")
+            g.drawString(font, Component.translatable("gui.sixty_seconds.area_map.markers_title")
                     .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), x, y, GOLD, false);
             int helpY = y + 14;
             for (int i = 1; i <= 3; i++) {
                 for (var seq : font.split(Component.translatable(
-                        "gui.noellesroles.area_map.markers_help" + i), sideX1 - sideX0 - 12)) {
+                        "gui.sixty_seconds.area_map.markers_help" + i), sideX1 - sideX0 - 12)) {
                     g.drawString(font, seq, x, helpY, MUTED, false);
                     helpY += 10;
                 }
                 helpY += 2;
             }
-            g.drawString(font, Component.translatable("gui.noellesroles.area_map.markers_count",
+            g.drawString(font, Component.translatable("gui.sixty_seconds.area_map.markers_count",
                     net.exmo.sixty_seconds.client.SixtySecondsClientMapZone.markers().size()),
                     x, helpY + 2, TEXT, false);
             return;
         }
 
         // 任务点标题 + 全选/清空
-        g.drawString(font, Component.translatable("gui.noellesroles.area_map.points")
+        g.drawString(font, Component.translatable("gui.sixty_seconds.area_map.points")
                 .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), x, y, GOLD, false);
-        Component all = Component.translatable("gui.noellesroles.area_map.all");
-        Component none = Component.translatable("gui.noellesroles.area_map.none");
+        Component all = Component.translatable("gui.sixty_seconds.area_map.all");
+        Component none = Component.translatable("gui.sixty_seconds.area_map.none");
         int noneX = sideX1 - 6 - font.width(none);
         int allX = noneX - 6 - font.width(all);
         boolean hoverAll = isInRect(mouseX, mouseY, allX - 1, y - 1, font.width(all) + 2, 10);
@@ -504,8 +504,8 @@ public class AreaMapScreen extends Screen {
         boolean sixtySecondsPanel = net.exmo.sixty_seconds.client.SixtySecondsClientMapZone.isActive();
         // 全选/清空
         int headY = y + 38;
-        Component all = Component.translatable("gui.noellesroles.area_map.all");
-        Component none = Component.translatable("gui.noellesroles.area_map.none");
+        Component all = Component.translatable("gui.sixty_seconds.area_map.all");
+        Component none = Component.translatable("gui.sixty_seconds.area_map.none");
         int noneX = sideX1 - 6 - font.width(none);
         int allX = noneX - 6 - font.width(all);
         if (!sixtySecondsPanel && button == 0

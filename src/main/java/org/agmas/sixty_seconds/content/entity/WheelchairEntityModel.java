@@ -1,4 +1,4 @@
-package org.agmas.noellesroles.content.entity;
+package org.agmas.sixty_seconds.content.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
