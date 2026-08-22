@@ -2003,7 +2003,7 @@ public final class ModItems {
     private ModItems() {}
 
     public static void register(IEventBus bus) {
-        net.exmo.sixty_seconds.index.SixtySecDataComponentTypes.register(); // 报纸数据组件（须在 registry 冻结前）
+        net.exmo.sixty_seconds.index.SixtySecDataComponentTypes.register(bus); // 报纸数据组件（RegisterEvent 时注册）
         ITEMS.register(bus);
     }
 }
