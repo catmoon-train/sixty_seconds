@@ -98,10 +98,12 @@ public class SixtySecondsGameMode extends GameMode {
     public void tickServerGameLoop(ServerLevel serverWorld, SixtySecGameWorldComponent gameWorldComponent) {
         super.tickServerGameLoop(serverWorld, gameWorldComponent);
         SixtySecondsManager.tick(serverWorld, gameWorldComponent);
+        net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.autoSaveIfNeeded(serverWorld);
     }
 
     @Override
     public void stopGame(ServerLevel world) {
+        net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.delete(world); // 一局结束：删除上一局存档
         net.exmo.sixty_seconds.SixtySecondsMod.RUNNING = false;
         net.exmo.sixty_seconds.logic.SixtySecondsInventoryLimit.clear(world);
         net.exmo.sixty_seconds.logic.SixtySecondsVisitSystem.reset();

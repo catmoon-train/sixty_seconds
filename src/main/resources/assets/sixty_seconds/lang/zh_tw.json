@@ -1,4 +1,8 @@
 {
+  "message.sixty_seconds.sixty_seconds.save_no_game": "目前沒有進行中的遊戲，無法儲存。",
+  "message.sixty_seconds.sixty_seconds.save_done": "已儲存目前遊戲進度（含玩家狀態與物品欄）。",
+  "message.sixty_seconds.sixty_seconds.stop_no_game": "目前沒有進行中的遊戲，無須停止。",
+  "message.sixty_seconds.sixty_seconds.stop_done": "本局遊戲已結束。",
   "message.sixty_seconds.sixty_seconds.config_incomplete": "⚠ 60s 區域配置不完整（缺模板/出生點），無法建圖——已終止開局。管理員請用 /60s_area show 檢查。",
   "message.sixty_seconds.sixty_seconds.wand.quick_bound": "快速綁定完成：以出生點為中心 ±%1$s 格（垂直 -4..+16）",
   "message.sixty_seconds.sixty_seconds.rope_placed": "繩索已展開（%1$s 格，%2$s 秒後消失）",

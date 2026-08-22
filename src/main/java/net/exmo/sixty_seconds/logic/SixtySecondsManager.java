@@ -180,6 +180,8 @@ public final class SixtySecondsManager {
         data.phaseEndTick = level.getGameTime() + PREP_TICKS;
         syncDayNumber(level, data, 0); // 同步 phaseEndTick：客户端 HUD 显示 90s 准备倒计时
         broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.prep_start"));
+        // 若本次开局是“重载世界后恢复上一局”，把存档进度覆盖回本局
+        net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.applyPendingOverlay(level, data);
     }
 
     /** 扫描各队避难所 / 住宅区盒内的邮箱方块并注册到报纸投递系统。模板克隆不触发 setPlacedBy，须开局补注册。 */
@@ -867,7 +869,7 @@ public final class SixtySecondsManager {
      * 换日时把 dayNumber + totalDays + phaseEndTick 同步给各队成员，供客户端 HUD 本地推算时钟
      * （每日一次，低频）。totalDays 随之下发——客户端读不到服务端配置，HUD 的「第 X/N 天」靠它。
      */
-    private static void syncDayNumber(ServerLevel level, SixtySecondsState.Data data, int day) {
+    static void syncDayNumber(ServerLevel level, SixtySecondsState.Data data, int day) {
         int total = totalDays(level);
         for (SixtySecondsState.TeamData team : data.teams.values()) {
             for (UUID uuid : team.members) {
@@ -959,7 +961,7 @@ public final class SixtySecondsManager {
         }
     }
 
-    private static void broadcast(ServerLevel level, Component message) {
+    static void broadcast(ServerLevel level, Component message) {
         for (ServerPlayer player : level.players()) {
             player.displayClientMessage(message, false);
         }

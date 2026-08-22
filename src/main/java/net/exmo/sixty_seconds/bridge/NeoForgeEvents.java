@@ -177,6 +177,8 @@ public final class NeoForgeEvents {
             for (ServerPlayConnectionEvents.Join listener : ServerPlayConnectionEvents.JOIN.invokers()) {
                 listener.onPlayReady(handler, null, player.getServer());
             }
+            // 重载世界后，首位玩家加入时自动恢复上一局存档
+            net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.onPlayerJoin(player);
         }
     }
 

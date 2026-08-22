@@ -111,6 +111,20 @@ public class SixtySecGameWorldComponent implements AutoSyncedComponent {
         clearRoleMap(true);
     }
 
+    /** 读取当前职业分配（用于存档恢复）。 */
+    public Map<UUID, SixtySecRole> getRoles() {
+        return new java.util.HashMap<>(roles);
+    }
+
+    /** 覆盖职业分配（用于存档恢复）。 */
+    public void setRoles(Map<UUID, SixtySecRole> newRoles) {
+        roles.clear();
+        if (newRoles != null) {
+            roles.putAll(newRoles);
+        }
+        sync();
+    }
+
     public void sync() {
         KEY.sync(this.world);
     }
