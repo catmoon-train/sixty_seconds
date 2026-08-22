@@ -46,6 +46,8 @@ public class DismantleScreen extends Screen {
     private static final int HEADER_H = 52;
 
     private final BlockPos pos;
+    /** 只读预览：非 60s 对局打开（冒险模式），可查看拆解表但禁止拆解。 */
+    private final boolean readonly;
     /** 当前可拆解的行（背包里持有且在拆解表中的物品）。 */
     private List<SixtySecondsDismantle.Entry> rows = List.of();
 
@@ -57,6 +59,7 @@ public class DismantleScreen extends Screen {
     public DismantleScreen(OpenDismantleS2CPacket data) {
         super(Component.translatable("station.sixty_seconds.sixty_seconds.dismantler"));
         this.pos = data.pos();
+        this.readonly = data.readonly();
     }
 
     // ── 行数据：背包持有 ∩ 拆解表（保持拆解表顺序，两端一致）────────
@@ -140,6 +143,10 @@ public class DismantleScreen extends Screen {
             String itemId = BuiltInRegistries.ITEM.getKey(entry.input()).toString();
             int btnX = panelX + panelW - PAD - 64;
             int btnRowY = listTop + row * ROW_H + 4;
+            if (readonly) {
+                // 只读预览：不放拆解按钮，仅保留关闭按钮
+                continue;
+            }
             addRenderableWidget(Button.builder(
                     Component.translatable("message.sixty_seconds.sixty_seconds.dismantle_btn"),
                     b -> ClientPlayNetworking.send(new DismantleC2SPacket(itemId, pos)))
@@ -198,8 +205,10 @@ public class DismantleScreen extends Screen {
         g.drawCenteredString(this.font, this.title,
                 panelX + panelW / 2, panelY + PAD + 2, GOLD);
         g.drawCenteredString(this.font,
-                Component.translatable("message.sixty_seconds.sixty_seconds.dismantle_hint"),
-                panelX + panelW / 2, panelY + PAD + 16, MUTED);
+                Component.translatable(readonly
+                        ? "message.sixty_seconds.sixty_seconds.dismantle_hint_readonly"
+                        : "message.sixty_seconds.sixty_seconds.dismantle_hint"),
+                panelX + panelW / 2, panelY + PAD + 16, readonly ? 0xFFE8C850 : MUTED);
         int sepY = panelY + HEADER_H;
         g.fill(panelX + PAD, sepY, panelX + panelW - PAD, sepY + 1, ROW_SEPARATOR);
     }

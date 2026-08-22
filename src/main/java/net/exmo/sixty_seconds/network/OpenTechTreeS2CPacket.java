@@ -5,8 +5,8 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.exmo.sixty_seconds.SixtySeconds;
 
-/** 服务端→客户端：打开科技树界面（科技定义两端共享，只发本队已解锁 id）。 */
-public record OpenTechTreeS2CPacket(String[] unlockedIds) implements CustomPacketPayload {
+/** 服务端→客户端：打开科技树界面（科技定义两端共享，只发本队已解锁 id + 是否只读）。 */
+public record OpenTechTreeS2CPacket(String[] unlockedIds, boolean readonly) implements CustomPacketPayload {
     public static final Type<OpenTechTreeS2CPacket> ID = new Type<>(SixtySeconds.id("open_tech_tree"));
     public static final StreamCodec<RegistryFriendlyByteBuf, OpenTechTreeS2CPacket> CODEC =
             StreamCodec.ofMember(OpenTechTreeS2CPacket::encode, OpenTechTreeS2CPacket::decode);
@@ -16,6 +16,7 @@ public record OpenTechTreeS2CPacket(String[] unlockedIds) implements CustomPacke
         for (String id : unlockedIds) {
             buf.writeUtf(id);
         }
+        buf.writeBoolean(readonly);
     }
 
     public static OpenTechTreeS2CPacket decode(RegistryFriendlyByteBuf buf) {
@@ -24,7 +25,7 @@ public record OpenTechTreeS2CPacket(String[] unlockedIds) implements CustomPacke
         for (int i = 0; i < n; i++) {
             ids[i] = buf.readUtf();
         }
-        return new OpenTechTreeS2CPacket(ids);
+        return new OpenTechTreeS2CPacket(ids, buf.readBoolean());
     }
 
     @Override

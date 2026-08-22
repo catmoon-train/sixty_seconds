@@ -118,14 +118,14 @@ public final class ModBlocks {
 
     public static Block SIXTY_SECONDS_RESEARCH_TABLE;
     public static final DeferredBlock<Block> HOLD_SIXTY_SECONDS_RESEARCH_TABLE = BLOCKS.register("sixty_seconds_research_table", () -> {
-        SIXTY_SECONDS_RESEARCH_TABLE = new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).strength(2.5F));
+        SIXTY_SECONDS_RESEARCH_TABLE = new net.exmo.sixty_seconds.content.block.SixtySecondsUsableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).strength(2.5F));
         return SIXTY_SECONDS_RESEARCH_TABLE;
     });
     public static final DeferredItem<Item> ITEM_SIXTY_SECONDS_RESEARCH_TABLE = ITEMS.register("sixty_seconds_research_table", () -> new net.exmo.sixty_seconds.content.item.SixtySecondsPlaceableBlockItem(HOLD_SIXTY_SECONDS_RESEARCH_TABLE.get(), new Item.Properties()));
 
     public static Block SIXTY_SECONDS_DISMANTLER;
     public static final DeferredBlock<Block> HOLD_SIXTY_SECONDS_DISMANTLER = BLOCKS.register("sixty_seconds_dismantler", () -> {
-        SIXTY_SECONDS_DISMANTLER = new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).strength(2.5F));
+        SIXTY_SECONDS_DISMANTLER = new net.exmo.sixty_seconds.content.block.SixtySecondsUsableBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).strength(2.5F));
         return SIXTY_SECONDS_DISMANTLER;
     });
     public static final DeferredItem<Item> ITEM_SIXTY_SECONDS_DISMANTLER = ITEMS.register("sixty_seconds_dismantler", () -> new net.exmo.sixty_seconds.content.item.SixtySecondsPlaceableBlockItem(HOLD_SIXTY_SECONDS_DISMANTLER.get(), new Item.Properties()));

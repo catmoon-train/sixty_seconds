@@ -1,3 +1,18 @@
 {
-  "parent": "trainmurdermystery:item/revolver"
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "sixty_seconds:item/sixty_seconds_pistol"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [0, -90, 0],
+      "translation": [0, -1, 0],
+      "scale": [1, 1, 1]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [0, 90, 0],
+      "translation": [0, -1, 0],
+      "scale": [1, 1, 1]
+    }
+  }
 }

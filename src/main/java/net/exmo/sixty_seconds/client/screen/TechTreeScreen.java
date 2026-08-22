@@ -59,6 +59,8 @@ public class TechTreeScreen extends Screen {
 
     // ── 状态 ──────────────────────────────────────────────────────
     private Set<String> unlocked;
+    /** 只读预览：非 60s 对局打开（研究台冒险模式），可查看科技树但禁止解锁。 */
+    private boolean readonly;
     /** 世界坐标空间中的节点矩形：id → {x, y, w, h} */
     private final Map<String, int[]> worldRects = new LinkedHashMap<>();
     /** 整个世界空间布局的边界 */
@@ -94,6 +96,7 @@ public class TechTreeScreen extends Screen {
     public TechTreeScreen(OpenTechTreeS2CPacket data) {
         super(Component.translatable("message.sixty_seconds.sixty_seconds.tech_title"));
         this.unlocked = new HashSet<>(Arrays.asList(data.unlockedIds()));
+        this.readonly = data.readonly();
         for (var recipe : SixtySecondsRecipes.all()) {
             techUnlocks.computeIfAbsent(recipe.techId(), k -> new ArrayList<>())
                     .add(new Unlock(SixtySecondsRecipes.outputStack(recipe), recipe.station()));
@@ -102,6 +105,7 @@ public class TechTreeScreen extends Screen {
 
     public void refresh(OpenTechTreeS2CPacket data) {
         this.unlocked = new HashSet<>(Arrays.asList(data.unlockedIds()));
+        this.readonly = data.readonly();
     }
 
     // ── 布局计算（世界空间）────────────────────────────────────────
@@ -293,14 +297,14 @@ public class TechTreeScreen extends Screen {
                     return true;
                 }
             }
-            // 再检查是否点在节点上
+            // 再检查是否点在节点上（只读预览禁止解锁）
             double wx = toWorldX(mouseX);
             double wy = toWorldY(mouseY);
             int scrap = countScrap();
             for (TechNode node : visibleNodes()) {
                 int[] r = worldRects.get(node.id());
                 if (r != null && wx >= r[0] && wx < r[0] + r[2] && wy >= r[1] && wy < r[1] + r[3]
-                        && available(node, scrap)) {
+                        && !readonly && available(node, scrap)) {
                     ClientPlayNetworking.send(new TechUnlockC2SPacket(node.id()));
                     playClick();
                     return true;
@@ -632,6 +636,13 @@ public class TechTreeScreen extends Screen {
         g.drawCenteredString(this.font,
                 this.title.copy().withStyle(ChatFormatting.BOLD),
                 this.width / 2, 8, GOLD);
+        // 只读预览标记（右上角）
+        if (readonly) {
+            g.drawCenteredString(this.font,
+                    Component.translatable("message.sixty_seconds.sixty_seconds.readonly_hint")
+                            .withStyle(ChatFormatting.YELLOW),
+                    this.width - 48, 8, 0xFFE8C850);
+        }
 
         // 底部状态栏
         g.fill(0, this.height - 30, this.width, this.height, HUD_BG);
@@ -641,7 +652,9 @@ public class TechTreeScreen extends Screen {
                 .append(Component.literal("  |  "))
                 .append(Component.literal("zoom: " + (int) (zoom * 100) + "%").withStyle(ChatFormatting.GRAY))
                 .append(Component.literal("  |  "))
-                .append(Component.literal("拖拽移动 | 滚轮缩放 | R重置").withStyle(ChatFormatting.DARK_GRAY));
+                .append(Component.literal(readonly
+                        ? "只读预览（禁止解锁）"
+                        : "拖拽移动 | 滚轮缩放 | R重置").withStyle(ChatFormatting.DARK_GRAY));
         g.drawCenteredString(this.font, info, this.width / 2, this.height - 20, TEXT);
     }
 

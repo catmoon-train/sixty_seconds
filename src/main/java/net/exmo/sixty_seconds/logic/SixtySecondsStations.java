@@ -6,7 +6,6 @@ import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.content.block_entity.SixtySecondsVaultBlockEntity;
 import net.exmo.sixty_seconds.network.OpenStationS2CPacket;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
-import net.exmo.sixty_seconds.bridge.fabric.UseBlockCallback;
 import net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -16,8 +15,12 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.chunk.LevelChunk;
 
 import java.util.ArrayList;
@@ -42,52 +45,60 @@ public final class SixtySecondsStations {
     public static void register() {
         net.exmo.sixty_seconds.bridge.fabric.ServerTickEvents.END_WORLD_TICK
                 .register(SixtySecondsStations::tickSmelts); // 冶金炉延迟发放
-        UseBlockCallback.EVENT.register((player, level, hand, hitResult) -> {
-            if (level.isClientSide() || !(player instanceof ServerPlayer serverPlayer)
-                    || !SixtySecondsMod.isActive(level)) {
-                return InteractionResult.PASS;
+    }
+
+    /**
+     * 方块自身右键打开合成/研究/拆解界面。由 {@code SixtySecondsStationBlock} 与
+     * {@code SixtySecondsUsableBlock} 的 {@code useWithoutItem} 调用。
+     * <p>
+     * <b>为什么走 useWithoutItem 而非 UseBlockCallback</b>：60s 模式把玩家强制设为冒险模式，
+     * 而冒险模式下方块交互的规范入口就是 {@code useWithoutItem}（箱子/熔炉同理）；事件层在
+     * 某些环境下不稳定，故直接在方块上处理，保证冒险模式也能稳定打开界面。
+     */
+    public static InteractionResult serverOpen(Player player, Level level, BlockState state, BlockHitResult hitResult) {
+        if (level.isClientSide() || !(player instanceof ServerPlayer serverPlayer)) {
+            return InteractionResult.PASS;
+        }
+        // 非 60s 对局（冒险模式预览）：页面只读，可查看配方但禁止合成/解锁/拆解。
+        // 服务端 handleCraft/handleUnlock/handleDismantle 的 isActive 校验作为兜底。
+        boolean readonly = !SixtySecondsMod.isActive(level);
+        // 扳手拆除功能方块走物品自身 useOn；潜行放行原版交互（管理员配置）
+        if (player.isShiftKeyDown()
+                || player.getMainHandItem().getItem()
+                        instanceof net.exmo.sixty_seconds.content.item.SixtySecondsWrenchItem) {
+            return InteractionResult.PASS;
+        }
+        // 研究台：右键打开科技树（废料解锁配方）
+        if (state.is(net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_RESEARCH_TABLE)) {
+            if (GameUtils.isPlayerAliveAndSurvival(serverPlayer)) {
+                SixtySecondsTechTree.open(serverPlayer, readonly);
+                return InteractionResult.SUCCESS;
             }
-            // 扳手拆除功能方块走物品自身 useOn；创造/潜行放行原版交互（管理员配置）
-            if (player.isShiftKeyDown()
-                    || player.getMainHandItem().getItem()
-                            instanceof net.exmo.sixty_seconds.content.item.SixtySecondsWrenchItem) {
-                return InteractionResult.PASS;
+            return InteractionResult.PASS;
+        }
+        // 拆解台：右键打开拆解界面（可合成物品按 -60% 拆回基础资源）
+        if (state.is(net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_DISMANTLER)) {
+            if (GameUtils.isPlayerAliveAndSurvival(serverPlayer)) {
+                ServerPlayNetworking.send(serverPlayer, new net.exmo.sixty_seconds.network
+                        .OpenDismantleS2CPacket(hitResult.getBlockPos(), readonly));
+                return InteractionResult.SUCCESS;
             }
-            // 研究台：右键打开科技树（废料解锁配方）
-            if (level.getBlockState(hitResult.getBlockPos())
-                    .is(net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_RESEARCH_TABLE)) {
-                if (GameUtils.isPlayerAliveAndSurvival(serverPlayer)) {
-                    SixtySecondsTechTree.open(serverPlayer);
-                    return InteractionResult.SUCCESS;
-                }
-                return InteractionResult.PASS;
-            }
-            // 拆解台：右键打开拆解界面（可合成物品按 -60% 拆回基础资源）
-            if (level.getBlockState(hitResult.getBlockPos())
-                    .is(net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_DISMANTLER)) {
-                if (GameUtils.isPlayerAliveAndSurvival(serverPlayer)) {
-                    ServerPlayNetworking.send(serverPlayer, new net.exmo.sixty_seconds.network
-                            .OpenDismantleS2CPacket(hitResult.getBlockPos()));
-                    return InteractionResult.SUCCESS;
-                }
-                return InteractionResult.PASS;
-            }
-            SixtySecondsRecipes.Station station =
-                    SixtySecondsRecipes.stationOf(level.getBlockState(hitResult.getBlockPos()));
-            if (station == null || !GameUtils.isPlayerAliveAndSurvival(serverPlayer)) {
-                return InteractionResult.PASS;
-            }
-            SixtySecondsState.Data data = SixtySecondsState.get(serverPlayer.serverLevel());
-            SixtySecondsState.TeamData team =
-                    data.teams.get(SixtySecondsStatsComponent.KEY.get(serverPlayer).teamId);
-            String[] unlocked = team == null ? new String[0] : team.unlockedTech.toArray(new String[0]);
-            boolean powered = SixtySecondsPowerSystem.isPowered(serverPlayer.serverLevel(), team);
-            ServerPlayNetworking.send(serverPlayer,
-                    new OpenStationS2CPacket(station.ordinal(), hitResult.getBlockPos(), unlocked, powered));
-            // 合成终端：把「家里容器」的库存快照一并下发（客户端读不到容器内容，GUI 判定全靠它）
-            sendStock(serverPlayer, station);
-            return InteractionResult.SUCCESS;
-        });
+            return InteractionResult.PASS;
+        }
+        SixtySecondsRecipes.Station station = SixtySecondsRecipes.stationOf(state);
+        if (station == null || !GameUtils.isPlayerAliveAndSurvival(serverPlayer)) {
+            return InteractionResult.PASS;
+        }
+        SixtySecondsState.Data data = SixtySecondsState.get(serverPlayer.serverLevel());
+        SixtySecondsState.TeamData team =
+                data.teams.get(SixtySecondsStatsComponent.KEY.get(serverPlayer).teamId);
+        String[] unlocked = team == null ? new String[0] : team.unlockedTech.toArray(new String[0]);
+        boolean powered = SixtySecondsPowerSystem.isPowered(serverPlayer.serverLevel(), team);
+        ServerPlayNetworking.send(serverPlayer,
+                new OpenStationS2CPacket(station.ordinal(), hitResult.getBlockPos(), unlocked, powered, readonly));
+        // 合成终端：把「家里容器」的库存快照一并下发（客户端读不到容器内容，GUI 判定全靠它）
+        sendStock(serverPlayer, station);
+        return InteractionResult.SUCCESS;
     }
 
     /**

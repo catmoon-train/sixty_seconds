@@ -78,6 +78,8 @@ public class StationCraftScreen extends Screen {
     private final BlockPos pos;
     private final Set<String> unlockedTech;
     private final boolean powered;
+    /** 只读预览：非 60s 对局打开（冒险模式），可查看配方但禁止合成。 */
+    private final boolean readonly;
     private final List<SixtySecondsRecipes.Recipe> recipes;
     private final List<SixtySecondsRecipes.Category> tabs = new ArrayList<>();
 
@@ -116,6 +118,7 @@ public class StationCraftScreen extends Screen {
         this.pos = data.pos();
         this.unlockedTech = new HashSet<>(Arrays.asList(data.unlockedTech()));
         this.powered = data.powered();
+        this.readonly = data.readonly();
         this.recipes = SixtySecondsRecipes.forStation(station);
         // 本站出现过的分类才生成标签（按枚举声明序）
         Set<SixtySecondsRecipes.Category> present = new LinkedHashSet<>();
@@ -187,17 +190,19 @@ public class StationCraftScreen extends Screen {
         addRenderableWidget(Button.builder(Component.literal("✕"), b -> onClose())
                 .bounds(panelX + panelW - 18, panelY + 3, 15, 14).build());
 
-        // 合成按钮：详情面板底部
-        int btnY = panelY + panelH - PAD - 20;
-        int half = (detailW - 4) / 2;
-        craftBtn = Button.builder(
-                Component.translatable("message.sixty_seconds.sixty_seconds.craft_btn"),
-                b -> sendCraft(1)).bounds(detailX, btnY, half, 20).build();
-        craft5Btn = Button.builder(
-                Component.translatable("message.sixty_seconds.sixty_seconds.craft_x5"),
-                b -> sendCraft(5)).bounds(detailX + half + 4, btnY, half, 20).build();
-        addRenderableWidget(craftBtn);
-        addRenderableWidget(craft5Btn);
+        // 合成按钮：详情面板底部（只读预览不创建）
+        if (!readonly) {
+            int btnY = panelY + panelH - PAD - 20;
+            int half = (detailW - 4) / 2;
+            craftBtn = Button.builder(
+                    Component.translatable("message.sixty_seconds.sixty_seconds.craft_btn"),
+                    b -> sendCraft(1)).bounds(detailX, btnY, half, 20).build();
+            craft5Btn = Button.builder(
+                    Component.translatable("message.sixty_seconds.sixty_seconds.craft_x5"),
+                    b -> sendCraft(5)).bounds(detailX + half + 4, btnY, half, 20).build();
+            addRenderableWidget(craftBtn);
+            addRenderableWidget(craft5Btn);
+        }
 
         rebuildEntries();
     }
@@ -301,7 +306,7 @@ public class StationCraftScreen extends Screen {
             if (!id.equals(selectedId)) {
                 selectedId = id;
                 playClick();
-            } else if (hasShiftDown() && entry.state() == EntryState.CRAFTABLE) {
+            } else if (!readonly && hasShiftDown() && entry.state() == EntryState.CRAFTABLE) {
                 sendCraft(1); // 已选中时 Shift+点击 快速合成
             }
             return true;
@@ -356,8 +361,10 @@ public class StationCraftScreen extends Screen {
         if (sel != null) {
             canCraftSel = stateOf(sel) == EntryState.CRAFTABLE;
         }
-        craftBtn.visible = craft5Btn.visible = sel != null;
-        craftBtn.active = craft5Btn.active = canCraftSel;
+        if (!readonly) {
+            craftBtn.visible = craft5Btn.visible = sel != null;
+            craftBtn.active = craft5Btn.active = canCraftSel;
+        }
 
         super.render(g, mouseX, mouseY, partialTick);
         drawHeader(g);
@@ -370,6 +377,15 @@ public class StationCraftScreen extends Screen {
     private void drawHeader(GuiGraphics g) {
         g.drawString(this.font, this.title.copy().withStyle(ChatFormatting.BOLD),
                 panelX + PAD, panelY + 8, GOLD);
+        // 只读预览提示（右上角，优先于供电状态显示）
+        if (readonly) {
+            Component readonlyTag = Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.readonly_hint")
+                    .withStyle(ChatFormatting.YELLOW);
+            int w = this.font.width(readonlyTag);
+            g.drawString(this.font, readonlyTag, panelX + panelW - PAD - w, panelY + 8, 0xFFE8C850);
+            return;
+        }
         Component powerLine = Component.translatable(powered
                 ? "message.sixty_seconds.sixty_seconds.station_powered"
                 : "message.sixty_seconds.sixty_seconds.station_unpowered");

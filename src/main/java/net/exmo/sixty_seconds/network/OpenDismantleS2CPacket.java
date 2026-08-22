@@ -6,18 +6,19 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.exmo.sixty_seconds.SixtySeconds;
 
-/** 服务端→客户端：打开拆解台界面（拆解表两端共享静态定义，只需站点坐标）。 */
-public record OpenDismantleS2CPacket(BlockPos pos) implements CustomPacketPayload {
+/** 服务端→客户端：打开拆解台界面（拆解表两端共享静态定义，只需站点坐标 + 是否只读）。 */
+public record OpenDismantleS2CPacket(BlockPos pos, boolean readonly) implements CustomPacketPayload {
     public static final Type<OpenDismantleS2CPacket> ID = new Type<>(SixtySeconds.id("open_dismantle"));
     public static final StreamCodec<RegistryFriendlyByteBuf, OpenDismantleS2CPacket> CODEC =
             StreamCodec.ofMember(OpenDismantleS2CPacket::encode, OpenDismantleS2CPacket::decode);
 
     public void encode(RegistryFriendlyByteBuf buf) {
         buf.writeBlockPos(pos);
+        buf.writeBoolean(readonly);
     }
 
     public static OpenDismantleS2CPacket decode(RegistryFriendlyByteBuf buf) {
-        return new OpenDismantleS2CPacket(buf.readBlockPos());
+        return new OpenDismantleS2CPacket(buf.readBlockPos(), buf.readBoolean());
     }
 
     @Override

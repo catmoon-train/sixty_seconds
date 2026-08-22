@@ -1,7 +1,7 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "starrailexpress:item/sniper_rifle_old"
+    "layer0": "sixty_seconds:item/sixty_seconds_sniper"
   },
   "display": {
     "thirdperson_righthand": {

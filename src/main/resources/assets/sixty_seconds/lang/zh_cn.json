@@ -1265,6 +1265,8 @@
   "message.sixty_seconds.sixty_seconds.craft_done": "合成完成：%1$s",
   "message.sixty_seconds.sixty_seconds.dismantle_btn": "拆解",
   "message.sixty_seconds.sixty_seconds.dismantle_hint": "拆解返还约 40% 基础材料（-60% 损耗）；食物/药品/水不可拆解",
+  "message.sixty_seconds.sixty_seconds.dismantle_hint_readonly": "只读预览：仅查看拆解表，无法进行拆解",
+  "message.sixty_seconds.sixty_seconds.readonly_hint": "只读预览",
   "message.sixty_seconds.sixty_seconds.dismantle_none": "背包里没有可拆解的物品",
   "message.sixty_seconds.sixty_seconds.dismantle_done": "已拆解：%1$s（材料已入包）",
   "message.sixty_seconds.sixty_seconds.generator_fueled": "发电机已加燃料，供电剩余 %1$s 秒",

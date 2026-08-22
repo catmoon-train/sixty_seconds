@@ -1243,6 +1243,8 @@
   "message.sixty_seconds.sixty_seconds.craft_done": "Crafted: %1$s",
   "message.sixty_seconds.sixty_seconds.dismantle_btn": "Scrap",
   "message.sixty_seconds.sixty_seconds.dismantle_hint": "Returns ~40% of base materials (-60% loss); food/medicine/water cannot be dismantled",
+  "message.sixty_seconds.sixty_seconds.dismantle_hint_readonly": "Read-only preview: view the dismantle table, dismantling disabled",
+  "message.sixty_seconds.sixty_seconds.readonly_hint": "Read-only Preview",
   "message.sixty_seconds.sixty_seconds.dismantle_none": "No dismantlable items in your inventory",
   "message.sixty_seconds.sixty_seconds.dismantle_done": "Dismantled: %1$s (materials added to inventory)",
   "message.sixty_seconds.sixty_seconds.generator_fueled": "Generator fueled, %1$s s of power left",

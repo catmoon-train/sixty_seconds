@@ -357,21 +357,27 @@ public final class SixtySecondsTechTree {
         }
     }
 
-    /** 打开科技树界面（命令入口）。 */
+    /** 打开科技树界面（命令入口，需 60s 对局进行中）。 */
     public static void open(ServerPlayer player) {
         if (!SixtySecondsMod.isActive(player.level())) {
             player.displayClientMessage(
                     Component.translatable("message.sixty_seconds.sixty_seconds.cmd_not_running"), false);
             return;
         }
-        sendState(player);
+        sendState(player, false);
     }
 
-    private static void sendState(ServerPlayer player) {
+    /** 打开科技树界面（方块入口）。readonly=true 表示非 60s 对局（只读预览，禁止解锁）。 */
+    public static void open(ServerPlayer player, boolean readonly) {
+        sendState(player, readonly);
+    }
+
+    private static void sendState(ServerPlayer player, boolean readonly) {
         SixtySecondsState.Data data = SixtySecondsState.get(player.serverLevel());
         SixtySecondsState.TeamData team = data.teams.get(SixtySecondsStatsComponent.KEY.get(player).teamId);
         List<String> unlocked = team == null ? List.of() : new ArrayList<>(team.unlockedTech);
-        ServerPlayNetworking.send(player, new OpenTechTreeS2CPacket(unlocked.toArray(new String[0])));
+        ServerPlayNetworking.send(player,
+                new OpenTechTreeS2CPacket(unlocked.toArray(new String[0]), readonly));
     }
 
     /** C2S 解锁请求：校验前置科技 + 特殊门控 + 背包废料，消耗后解锁并通知全队。 */
@@ -409,7 +415,7 @@ public final class SixtySecondsTechTree {
                         player.getGameProfile().getName(), name).withStyle(ChatFormatting.GREEN), false);
             }
         }
-        sendState(player); // 刷新界面
+        sendState(player, false); // 刷新界面
     }
 
     /** 统计并消耗背包中的指定物品；不足则不动返回 false。 */

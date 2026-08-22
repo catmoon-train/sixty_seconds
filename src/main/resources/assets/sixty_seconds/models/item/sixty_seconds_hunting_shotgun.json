@@ -1,7 +1,7 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "sixty_seconds:item/short_shotgun"
+    "layer0": "sixty_seconds:item/sixty_seconds_hunting_shotgun"
   },
   "display": {
     "thirdperson_righthand": {
