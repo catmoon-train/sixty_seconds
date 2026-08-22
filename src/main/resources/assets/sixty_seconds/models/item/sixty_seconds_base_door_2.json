@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "wathe:item/anthracite_steel_door"
+    "layer0": "sixty_seconds:item/sixty_seconds_base_door_2"
   }
 }

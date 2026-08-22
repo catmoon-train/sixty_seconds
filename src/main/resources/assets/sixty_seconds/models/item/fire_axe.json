@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "sixty_seconds:item/sixty_seconds_base_door_3"
+    "layer0": "sixty_seconds:item/fire_axe"
   }
 }
