@@ -12,6 +12,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /**
  * 胜负判定：
  * <ul>
@@ -118,6 +121,60 @@ public final class SixtySecondsWinConditions {
         for (ServerPlayer player : level.players()) {
             ServerPlayNetworking.send(player, payload);
         }
+
+        // 把结算内容同步发一份到聊天栏（与结算界面内容一致）
+        boolean win = status == GameUtils.WinStatus.PASSENGERS;
+        broadcast(level, Component.translatable(win
+                        ? "screen.sixty_seconds.sixty_seconds.end_win"
+                        : "screen.sixty_seconds.sixty_seconds.end_lose")
+                .withStyle(win ? ChatFormatting.GOLD : ChatFormatting.RED));
+        broadcast(level, Component.translatable("screen.sixty_seconds.sixty_seconds.end_day", payload.dayNumber(), 7)
+                .withStyle(ChatFormatting.YELLOW));
+        broadcast(level, Component.literal("==========").withStyle(ChatFormatting.GRAY));
+        int survived = 0, dead = 0, monster = 0, evac = 0;
+        for (var pr : payload.players()) {
+            if (pr.helicopterEvacuated()) evac++;
+            else if (pr.isMonster()) monster++;
+            else if (pr.wasDead()) dead++;
+            else survived++;
+        }
+        broadcast(level, Component.translatable("screen.sixty_seconds.sixty_seconds.end_survived")
+                .append(": ").append(Component.literal(String.valueOf(survived)).withStyle(ChatFormatting.GREEN))
+                .append("   ").append(Component.translatable("screen.sixty_seconds.sixty_seconds.end_dead"))
+                .append(": ").append(Component.literal(String.valueOf(dead)).withStyle(ChatFormatting.RED))
+                .append("   ").append(Component.translatable("screen.sixty_seconds.sixty_seconds.end_monster"))
+                .append(": ").append(Component.literal(String.valueOf(monster)).withStyle(ChatFormatting.DARK_PURPLE))
+                .withStyle(ChatFormatting.WHITE));
+        broadcast(level, Component.translatable("screen.sixty_seconds.sixty_seconds.end_evacuated", evac, payload.players().size())
+                .withStyle(ChatFormatting.AQUA));
+        broadcast(level, Component.literal("==========").withStyle(ChatFormatting.GRAY));
+        payload.players().stream()
+                .collect(Collectors.groupingBy(SixtySecondsEndGamePayload.PlayerResult::teamId))
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .forEach(entry -> {
+                    broadcast(level, Component.translatable("screen.sixty_seconds.sixty_seconds.end_team", entry.getKey())
+                            .withStyle(ChatFormatting.BLUE));
+                    for (var pr : entry.getValue()) {
+                        String tagKey;
+                        ChatFormatting tagColor;
+                        if (pr.helicopterEvacuated()) {
+                            tagKey = "screen.sixty_seconds.sixty_seconds.end_tag_evacuated";
+                            tagColor = ChatFormatting.AQUA;
+                        } else if (pr.isMonster()) {
+                            tagKey = "screen.sixty_seconds.sixty_seconds.end_tag_monster";
+                            tagColor = ChatFormatting.DARK_PURPLE;
+                        } else if (pr.wasDead()) {
+                            tagKey = "screen.sixty_seconds.sixty_seconds.end_tag_dead";
+                            tagColor = ChatFormatting.RED;
+                        } else {
+                            tagKey = "screen.sixty_seconds.sixty_seconds.end_tag_survived";
+                            tagColor = ChatFormatting.GREEN;
+                        }
+                        broadcast(level, Component.literal("  • ").append(Component.literal(pr.name()))
+                                .append(" ").append(Component.translatable(tagKey).withStyle(tagColor)));
+                    }
+                });
 
         GameUtils.stopGame(level);
     }
