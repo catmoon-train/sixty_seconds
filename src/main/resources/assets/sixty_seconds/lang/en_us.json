@@ -1478,6 +1478,7 @@
   "tooltip.sixty_seconds.sixty_seconds_radio": "Right-click to listen: reports the current environmental event.",
   "item.sixty_seconds.newspaper": "Newspaper",
   "item.sixty_seconds.wheelchair": "Wheelchair",
+  "entity.sixty_seconds.wheelchair": "Wheelchair",
   "item.sixty_seconds.radio": "Radio",
   "item.sixty_seconds.sixty_seconds_compass": "Survivor Compass",
   "tooltip.sixty_seconds.sixty_seconds_compass": "Right-click to point the way and distance back to your shelter.",

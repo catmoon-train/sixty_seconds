@@ -1415,6 +1415,7 @@
   "tooltip.sixty_seconds.sixty_seconds_radio": "右鍵收聽廣播：播報當前的環境事件。",
   "item.sixty_seconds.newspaper": "報紙",
   "item.sixty_seconds.wheelchair": "輪椅",
+  "entity.sixty_seconds.wheelchair": "輪椅",
   "item.sixty_seconds.radio": "收音機",
   "item.sixty_seconds.sixty_seconds_compass": "求生羅盤",
   "tooltip.sixty_seconds.sixty_seconds_compass": "右鍵指示回本隊避難所的方向與距離。",
