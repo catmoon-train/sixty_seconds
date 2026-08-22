@@ -1,10 +1,10 @@
 package net.exmo.sixty_seconds.logic;
 
 import net.exmo.sixty_seconds.bridge.AreasWorldComponent;
-import net.exmo.sixty_seconds.bridge.SREGameTimeComponent;
-import net.exmo.sixty_seconds.bridge.SREGameWorldComponent;
-import net.exmo.sixty_seconds.bridge.stubs.SREPlayerMoodComponent;
-import net.exmo.sixty_seconds.bridge.stubs.SREPlayerShopComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecGameTimeComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecPlayerMoodComponent;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecPlayerShopComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
@@ -27,7 +27,7 @@ public final class SixtySecondsGameSetup {
     private SixtySecondsGameSetup() {
     }
 
-    public static void prepareWorld(ServerLevel serverWorld, SREGameWorldComponent gameWorldComponent,
+    public static void prepareWorld(ServerLevel serverWorld, SixtySecGameWorldComponent gameWorldComponent,
             List<ServerPlayer> players) {
         gameWorldComponent.setPlayerCount(players.size());
         applyGameRules(serverWorld);
@@ -57,17 +57,17 @@ public final class SixtySecondsGameSetup {
         // 清空背包、局内组件（金币/代币/情绪/动态价格）与物品冷却
         for (ServerPlayer player : players) {
             player.getInventory().clearContent();
-            SREPlayerMoodComponent.KEY.get(player).init();
-            SREPlayerShopComponent.KEY.get(player).init();
+            SixtySecPlayerMoodComponent.KEY.get(player).init();
+            SixtySecPlayerShopComponent.KEY.get(player).init();
             net.exmo.sixty_seconds.bridge.stubs.DynamicShopComponent.KEY.get(player).init();
-            net.exmo.sixty_seconds.bridge.SREPlayerMinigameTaskComponent.KEY.get(player).init();
+            net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent.KEY.get(player).init();
             HashSet<Item> copy = new HashSet<>(player.getCooldowns().cooldowns.keySet());
             for (Item item : copy) {
                 player.getCooldowns().removeCooldown(item);
             }
         }
         gameWorldComponent.clearRoleMap(true);
-        SREGameTimeComponent.KEY.get(serverWorld).reset();
+        SixtySecGameTimeComponent.KEY.get(serverWorld).reset();
     }
 
     private static void applyGameRules(ServerLevel serverWorld) {

@@ -8,8 +8,8 @@ import net.minecraft.server.level.ServerPlayer;
 import java.util.List;
 import java.util.Optional;
 
-public final class SRENetworkMessageUtils {
-    private SRENetworkMessageUtils() {
+public final class SixtySecNetworkMessageUtils {
+    private SixtySecNetworkMessageUtils() {
     }
 
     public static void sendBroadcast(ServerPlayer player, Component message) {

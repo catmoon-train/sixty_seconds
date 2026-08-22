@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.client;
 
-import net.exmo.sixty_seconds.bridge.client.SREClient;
+import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.client.FakeGuiGraphics;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.logic.SixtySecondsRecipes;
@@ -56,8 +56,8 @@ public final class SixtySecondsBlockNameHud {
             return true;
         }
         // 合成台（原版方块被本模式复用）：仅在 60s 模式激活时提示
-        boolean inMode = SREClient.gameComponent != null && SixtySecondsMod.MODE != null
-                && SREClient.gameComponent.getGameMode() == SixtySecondsMod.MODE;
+        boolean inMode = SixtySecBridgeClient.gameComponent != null && SixtySecondsMod.MODE != null
+                && SixtySecBridgeClient.gameComponent.getGameMode() == SixtySecondsMod.MODE;
         return inMode && SixtySecondsRecipes.stationOf(state) != null;
     }
 }

@@ -119,7 +119,7 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
     /** 战场 NPC（夜袭强盗）：无人也不自散。 */
     private boolean battleMob = false;
     /**
-     * 搭图预览 NPC（NPC 放置器 / {@code /sre:60s npc} 指令放下的样板）：<b>模式外也不自毁</b>。
+     * 搭图预览 NPC（NPC 放置器 / {@code /60s npc} 指令放下的样板）：<b>模式外也不自毁</b>。
      * <p>
      * 普通 NPC 在 {@link #tick} 里发现模式未激活就 discard——而放置器是<b>开局前</b>用的搭图工具，
      * 预览下一 tick 就被这条规则清掉，表现为「放下来一瞬间就消失」（本次修的 BUG）。

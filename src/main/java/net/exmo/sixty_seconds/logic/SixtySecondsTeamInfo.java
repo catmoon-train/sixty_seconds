@@ -13,7 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import java.util.UUID;
 
 /**
- * {@code /sre:60s info}：向玩家汇总本队状态——成员健康、家门耐久/等级、供电剩余、
+ * {@code /60s info}：向玩家汇总本队状态——成员健康、家门耐久/等级、供电剩余、
  * 已解锁科技、个人游戏币（全部服务端现成数据，零额外同步）。
  */
 public final class SixtySecondsTeamInfo {
@@ -66,7 +66,7 @@ public final class SixtySecondsTeamInfo {
                 "message.sixty_seconds.sixty_seconds.info_power", powerLeft), false);
         player.displayClientMessage(Component.translatable(
                 "message.sixty_seconds.sixty_seconds.info_tokens",
-                net.exmo.sixty_seconds.bridge.SREPlayerMinigameTaskComponent.KEY.get(player).getTokens()), false);
+                net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent.KEY.get(player).getTokens()), false);
         // 科技
         if (team.unlockedTech.isEmpty()) {
             player.displayClientMessage(Component.translatable(

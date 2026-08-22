@@ -51,7 +51,7 @@ public final class SixtySecondsRoleTweaks {
     // ── 小透明：技能隐身直接解锁 ─────────────────────────────────────────────
     /**
      * 60s 模式下小透明的隐身<b>技能</b>无需等原版「剩 3 分钟」条件、觉醒即解锁
-     * （原版解锁看 {@code SREGameTimeComponent} 剩余时间，60s 全程 7 天基本不会触达）。
+     * （原版解锁看 {@code SixtySecGameTimeComponent} 剩余时间，60s 全程 7 天基本不会触达）。
      * 隐身仍走技能本身（150 金币 / 8s / 冷却 20s），<b>不再</b>由本类每 tick 强加常驻隐身。
      */
     public static boolean ghostSkillAlwaysUnlocked(Player player) {

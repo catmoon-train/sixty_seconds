@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.client.map;
 
-import net.exmo.sixty_seconds.bridge.client.SREClient;
+import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.client.FakeGuiGraphics;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -126,7 +126,7 @@ public final class AreaMapHud {
 
     /** 获取非 60s 模式的出生点（家）位置，无可返回 null。 */
     private static BlockPos getSpawnPos() {
-        var area = SREClient.areaComponent;
+        var area = SixtySecBridgeClient.areaComponent;
         if (area == null) return null;
         var spawn = area.getSpawnPos();
         return spawn != null ? BlockPos.containing(spawn.pos) : null;

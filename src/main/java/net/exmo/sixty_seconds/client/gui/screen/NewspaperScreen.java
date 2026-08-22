@@ -1,9 +1,9 @@
 package net.exmo.sixty_seconds.client.gui.screen;
 
 import net.exmo.sixty_seconds.bridge.fabric.ClientPlayNetworking;
-import net.exmo.sixty_seconds.content.item.component.SREWritableBookContent;
-import net.exmo.sixty_seconds.content.item.component.SREWrittenBookContent;
-import net.exmo.sixty_seconds.index.SREDataComponentTypes;
+import net.exmo.sixty_seconds.content.item.component.SixtySecWritableBookContent;
+import net.exmo.sixty_seconds.content.item.component.SixtySecWrittenBookContent;
+import net.exmo.sixty_seconds.index.SixtySecDataComponentTypes;
 import net.exmo.sixty_seconds.network.EditNewspaperPacket;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.ChatFormatting;
@@ -117,7 +117,7 @@ public class NewspaperScreen extends Screen {
                 this::setClipboard,
                 s -> s.length() < 50);
 
-        SREWrittenBookContent written = book.get(SREDataComponentTypes.WRITTEN_BOOK_CONTENT);
+        SixtySecWrittenBookContent written = book.get(SixtySecDataComponentTypes.WRITTEN_BOOK_CONTENT);
         if (written != null) {
             this.editable = false;
             this.stringPages = null;
@@ -128,9 +128,9 @@ public class NewspaperScreen extends Screen {
             String titleText = written.title().raw();
             String authorText = written.author();
             if (titleText.isBlank())
-                titleText = Component.translatable("gui.sre.newspaper.unnamed").getString();
+                titleText = Component.translatable("gui.60s.newspaper.unnamed").getString();
             if (authorText.isBlank())
-                authorText = Component.translatable("gui.sre.newspaper.unauthored").getString();
+                authorText = Component.translatable("gui.60s.newspaper.unauthored").getString();
             this.titleComponent = Component.literal(titleText);
             this.authorComponent = Component.literal(authorText).withStyle(ChatFormatting.DARK_GRAY);
             this.pageEdit = null;
@@ -138,7 +138,7 @@ public class NewspaperScreen extends Screen {
             this.editable = true;
             this.componentPages = null;
             this.stringPages = new ArrayList<>();
-            SREWritableBookContent writable = book.get(SREDataComponentTypes.WRITABLE_BOOK_CONTENT);
+            SixtySecWritableBookContent writable = book.get(SixtySecDataComponentTypes.WRITABLE_BOOK_CONTENT);
             if (writable != null) {
                 for (Filterable<String> filtered : writable.pages()) {
                     this.stringPages.add(filtered.raw());

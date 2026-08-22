@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * 管理员搭图工具：<b>调校</b>已登记的 NPC 生成点——放置器（{@link SixtySecondsNpcPlacerItem}）只能加/删，
- * 改档案与半径原先得手改 JSON 或敲 {@code /sre:60s npc profile|radius}，本工具让它变成指哪调哪。
+ * 改档案与半径原先得手改 JSON 或敲 {@code /60s npc profile|radius}，本工具让它变成指哪调哪。
  * <ul>
  *   <li><b>右键生成点附近</b>：切换该点的商人货架档案（在 {@code sixty_seconds_npc_shop.json} 的档案名之间循环）。</li>
  *   <li><b>潜行右键</b>：驻守半径 +2（到 {@link #MAX_RADIUS} 回绕到 {@link #MIN_RADIUS}）。</li>

@@ -612,7 +612,7 @@ public class SeaChartFullScreen extends Screen {
                             Component.translatable(LANG + "sail_teleport_disabled").withStyle(ChatFormatting.RED),
                             true);
                 } else {
-                    minecraft.player.connection.sendCommand("sre:60s island sail " + entry.id());
+                    minecraft.player.connection.sendCommand("60s island sail " + entry.id());
                     onClose();
                 }
                 return true;

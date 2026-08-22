@@ -21,16 +21,16 @@ import net.minecraft.world.item.component.BookContent;
 
 import org.jetbrains.annotations.Nullable;
 
-public record SREWrittenBookContent(Filterable<String> title, String author,
-        List<Filterable<Component>> pages, boolean resolved) implements BookContent<Component, SREWrittenBookContent> {
-    public static final SREWrittenBookContent EMPTY = new SREWrittenBookContent(Filterable.passThrough(""), "",
+public record SixtySecWrittenBookContent(Filterable<String> title, String author,
+        List<Filterable<Component>> pages, boolean resolved) implements BookContent<Component, SixtySecWrittenBookContent> {
+    public static final SixtySecWrittenBookContent EMPTY = new SixtySecWrittenBookContent(Filterable.passThrough(""), "",
             List.of(), true);
     public static final int PAGE_LENGTH = 32767;
     public static final int TITLE_MAX_LENGTH = 64;
     public static final Codec<Component> CONTENT_CODEC = ComponentSerialization.flatCodec(32767);
     public static final Codec<List<Filterable<Component>>> PAGES_CODEC;
-    public static final Codec<SREWrittenBookContent> CODEC;
-    public static final StreamCodec<RegistryFriendlyByteBuf, SREWrittenBookContent> STREAM_CODEC;
+    public static final Codec<SixtySecWrittenBookContent> CODEC;
+    public static final StreamCodec<RegistryFriendlyByteBuf, SixtySecWrittenBookContent> STREAM_CODEC;
 
     private static Codec<Filterable<Component>> pageCodec(Codec<Component> codec) {
         return Filterable.codec(codec);
@@ -41,7 +41,7 @@ public record SREWrittenBookContent(Filterable<String> title, String author,
     }
 
     @Nullable
-    public SREWrittenBookContent resolve(CommandSourceStack commandSourceStack, @Nullable Player player) {
+    public SixtySecWrittenBookContent resolve(CommandSourceStack commandSourceStack, @Nullable Player player) {
         if (this.resolved) {
             return null;
         } else {
@@ -57,12 +57,12 @@ public record SREWrittenBookContent(Filterable<String> title, String author,
                 builder.add(optional.get());
             }
 
-            return new SREWrittenBookContent(this.title, this.author, builder.build(), true);
+            return new SixtySecWrittenBookContent(this.title, this.author, builder.build(), true);
         }
     }
 
-    public SREWrittenBookContent markResolved() {
-        return new SREWrittenBookContent(this.title, this.author, this.pages, true);
+    public SixtySecWrittenBookContent markResolved() {
+        return new SixtySecWrittenBookContent(this.title, this.author, this.pages, true);
     }
 
     private static Optional<Filterable<Component>> resolvePage(CommandSourceStack commandSourceStack,
@@ -86,23 +86,23 @@ public record SREWrittenBookContent(Filterable<String> title, String author,
         return Lists.transform(this.pages, (filterable) -> (Component) filterable.get(bl));
     }
 
-    public SREWrittenBookContent withReplacedPages(List<Filterable<Component>> list) {
-        return new SREWrittenBookContent(this.title, this.author, list, false);
+    public SixtySecWrittenBookContent withReplacedPages(List<Filterable<Component>> list) {
+        return new SixtySecWrittenBookContent(this.title, this.author, list, false);
     }
 
     static {
         PAGES_CODEC = pagesCodec(CONTENT_CODEC);
         CODEC = RecordCodecBuilder.create((instance) -> instance
                 .group(Filterable.codec(Codec.string(0, TITLE_MAX_LENGTH)).fieldOf("title")
-                        .forGetter(SREWrittenBookContent::title),
-                        Codec.STRING.fieldOf("author").forGetter(SREWrittenBookContent::author),
-                        PAGES_CODEC.optionalFieldOf("pages", List.of()).forGetter(SREWrittenBookContent::pages),
-                        Codec.BOOL.optionalFieldOf("resolved", false).forGetter(SREWrittenBookContent::resolved))
-                .apply(instance, SREWrittenBookContent::new));
+                        .forGetter(SixtySecWrittenBookContent::title),
+                        Codec.STRING.fieldOf("author").forGetter(SixtySecWrittenBookContent::author),
+                        PAGES_CODEC.optionalFieldOf("pages", List.of()).forGetter(SixtySecWrittenBookContent::pages),
+                        Codec.BOOL.optionalFieldOf("resolved", false).forGetter(SixtySecWrittenBookContent::resolved))
+                .apply(instance, SixtySecWrittenBookContent::new));
         STREAM_CODEC = StreamCodec.composite(Filterable.streamCodec(ByteBufCodecs.stringUtf8(TITLE_MAX_LENGTH)),
-                SREWrittenBookContent::title, ByteBufCodecs.STRING_UTF8, SREWrittenBookContent::author,
+                SixtySecWrittenBookContent::title, ByteBufCodecs.STRING_UTF8, SixtySecWrittenBookContent::author,
                 Filterable.streamCodec(ComponentSerialization.STREAM_CODEC).apply(ByteBufCodecs.list()),
-                SREWrittenBookContent::pages, ByteBufCodecs.BOOL, SREWrittenBookContent::resolved,
-                SREWrittenBookContent::new);
+                SixtySecWrittenBookContent::pages, ByteBufCodecs.BOOL, SixtySecWrittenBookContent::resolved,
+                SixtySecWrittenBookContent::new);
     }
 }

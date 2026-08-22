@@ -2,7 +2,7 @@ package net.exmo.sixty_seconds.content.item;
 
 import de.maxhenkel.voicechat.api.VoicechatConnection;
 import de.maxhenkel.voicechat.api.events.MicrophonePacketEvent;
-import net.exmo.sixty_seconds.bridge.SREGameWorldComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
 import net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking;
 import net.exmo.sixty_seconds.network.OpenRadioChannelS2CPacket;
 import net.minecraft.network.chat.Component;
@@ -81,7 +81,7 @@ public class RadioItem extends Item {
         return null;
     }
 
-    public static void vcparanoidEvent(SREGameWorldComponent gameWorldComponent, ServerPlayer player,
+    public static void vcparanoidEvent(SixtySecGameWorldComponent gameWorldComponent, ServerPlayer player,
             MicrophonePacketEvent event) {
         if (player.isSpectator()) {
             return;

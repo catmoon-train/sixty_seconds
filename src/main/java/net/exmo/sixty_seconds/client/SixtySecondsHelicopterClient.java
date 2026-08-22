@@ -127,9 +127,9 @@ public final class SixtySecondsHelicopterClient {
     }
 
     private static boolean isSixtySeconds(Minecraft client) {
-        return net.exmo.sixty_seconds.bridge.client.SREClient.gameComponent != null
-                && net.exmo.sixty_seconds.bridge.client.SREClient.gameComponent.isRunning()
+        return net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient.gameComponent != null
+                && net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient.gameComponent.isRunning()
                 && SixtySecondsMod.MODE != null
-                && net.exmo.sixty_seconds.bridge.client.SREClient.gameComponent.getGameMode() == SixtySecondsMod.MODE;
+                && net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient.gameComponent.getGameMode() == SixtySecondsMod.MODE;
     }
 }

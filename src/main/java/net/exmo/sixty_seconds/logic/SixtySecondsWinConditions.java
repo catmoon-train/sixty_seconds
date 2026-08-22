@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.logic;
 
-import net.exmo.sixty_seconds.bridge.stubs.SREGameRoundEndComponent;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecGameRoundEndComponent;
 import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.SixtySecondsPhase;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
@@ -88,7 +88,7 @@ public final class SixtySecondsWinConditions {
             return;
         }
         data.phase = SixtySecondsPhase.FINISHED;
-        SREGameRoundEndComponent roundEnd = SREGameRoundEndComponent.KEY.get(level);
+        SixtySecGameRoundEndComponent roundEnd = SixtySecGameRoundEndComponent.KEY.get(level);
         GameUtils.WinStatus status = survivorsWin ? GameUtils.WinStatus.PASSENGERS : GameUtils.WinStatus.KILLERS;
         roundEnd.setRoundEndData(level.players(), status);
 

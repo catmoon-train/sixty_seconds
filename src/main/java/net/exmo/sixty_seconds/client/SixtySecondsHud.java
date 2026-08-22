@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.client;
 
-import net.exmo.sixty_seconds.bridge.client.SREClient;
+import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.client.FakeGuiGraphics;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
@@ -65,10 +65,10 @@ public final class SixtySecondsHud {
 
     private static void render(FakeGuiGraphics graphics) {
         Minecraft client = Minecraft.getInstance();
-        if (client.player == null || client.level == null || SREClient.gameComponent == null
-                || !SREClient.gameComponent.isRunning()
+        if (client.player == null || client.level == null || SixtySecBridgeClient.gameComponent == null
+                || !SixtySecBridgeClient.gameComponent.isRunning()
                 || SixtySecondsMod.MODE == null
-                || SREClient.gameComponent.getGameMode() != SixtySecondsMod.MODE) {
+                || SixtySecBridgeClient.gameComponent.getGameMode() != SixtySecondsMod.MODE) {
             SixtySecondsStateAlerts.reset();
             return;
         }

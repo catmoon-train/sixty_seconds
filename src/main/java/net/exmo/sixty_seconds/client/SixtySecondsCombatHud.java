@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.client;
 
-import net.exmo.sixty_seconds.bridge.client.SREClient;
+import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.client.FakeGuiGraphics;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
@@ -81,8 +81,8 @@ public final class SixtySecondsCombatHud {
     private static void render(FakeGuiGraphics graphics) {
         Minecraft client = Minecraft.getInstance();
         if (client.player == null || client.level == null) return;
-        if (SREClient.gameComponent == null || !SREClient.gameComponent.isRunning()) return;
-        if (SixtySecondsMod.MODE == null || SREClient.gameComponent.getGameMode() != SixtySecondsMod.MODE) return;
+        if (SixtySecBridgeClient.gameComponent == null || !SixtySecBridgeClient.gameComponent.isRunning()) return;
+        if (SixtySecondsMod.MODE == null || SixtySecBridgeClient.gameComponent.getGameMode() != SixtySecondsMod.MODE) return;
         if (client.player.isSpectator()) return;
 
         LocalPlayer player = client.player;

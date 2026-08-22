@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.client;
 
-import net.exmo.sixty_seconds.bridge.client.SREClient;
+import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.logic.SixtySecondsConsumables;
 import net.exmo.sixty_seconds.bridge.fabric.ItemTooltipCallback;
@@ -27,8 +27,8 @@ public final class SixtySecondsTooltips {
     public static void register() {
         ItemTooltipCallback.EVENT.register((stack, context, type, lines) -> {
             appendDescription(stack, lines);
-            if (SREClient.gameComponent == null || SixtySecondsMod.MODE == null
-                    || SREClient.gameComponent.getGameMode() != SixtySecondsMod.MODE) {
+            if (SixtySecBridgeClient.gameComponent == null || SixtySecondsMod.MODE == null
+                    || SixtySecBridgeClient.gameComponent.getGameMode() != SixtySecondsMod.MODE) {
                 return;
             }
             int thirst = SixtySecondsConsumables.thirstRestoreOf(stack);

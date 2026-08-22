@@ -1,8 +1,8 @@
 package net.exmo.sixty_seconds.logic;
 
-import net.exmo.sixty_seconds.bridge.SREGameWorldComponent;
-import net.exmo.sixty_seconds.bridge.SREPlayerMinigameTaskComponent;
-import net.exmo.sixty_seconds.bridge.stubs.SREPlayerShopComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecPlayerShopComponent;
 import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.bridge.stubs.PacketTracker;
 import net.exmo.sixty_seconds.bridge.stubs.AdvancedCameraCommand;
@@ -77,7 +77,7 @@ public final class SixtySecondsManager {
     }
 
     /** 开局：先分队槽位 → 异步建图（聊天栏广播进度）→ 建完分配家庭身份 → 传住宅 → 进 PREPARATION。 */
-    public static void begin(ServerLevel level, SREGameWorldComponent gameWorldComponent, List<ServerPlayer> players) {
+    public static void begin(ServerLevel level, SixtySecGameWorldComponent gameWorldComponent, List<ServerPlayer> players) {
         SixtySecondsState.Data data = SixtySecondsState.get(level);
         data.teams.clear();
         net.exmo.sixty_seconds.SixtySecondsMod.RUNNING = true;
@@ -118,7 +118,7 @@ public final class SixtySecondsManager {
         if (config == null || !config.isComplete()) {
             broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.config_incomplete")
                     .withStyle(net.minecraft.ChatFormatting.RED));
-            SixtySeconds.LOGGER.warn("[60s] 区域配置不完整（sixty_seconds_config.json），终止开局。用 /sre:60s_area show 检查。");
+            SixtySeconds.LOGGER.warn("[60s] 区域配置不完整（sixty_seconds_config.json），终止开局。用 /60s_area show 检查。");
             net.exmo.sixty_seconds.SixtySecondsMod.RUNNING = false;
             // 延迟一 tick 停止：此刻仍处于核心 initializeGame 中途，直接 stopGame 会被随后的
             // setGameStatus(ACTIVE) 覆盖；等本次开局流程走完再完整地走停止流程。
@@ -144,7 +144,7 @@ public final class SixtySecondsManager {
         // 2) 异步建图（聊天栏广播进度）；期间 phase=INACTIVE 空转、玩家原地待命（beforeInitializeGame
         // 已覆写掉 baseInitialize 的房间传送），建完在回调里分配身份 → 传送 → 进准备阶段。
         data.phase = SixtySecondsPhase.INACTIVE;
-        // 建图前的一次性提示与后续进度条同走 actionbar（黄色），与其他模式（tmm:start）的地图初始化观感一致，
+        // 建图前的一次性提示与后续进度条同走 actionbar（黄色），与其他模式（60s start）的地图初始化观感一致，
         // 不再往聊天栏留痕；随后 SixtySecondsArena.build 的 BuildTask 会在同一条 actionbar 上刷新百分比。
         Component buildingHint = Component.translatable("message.sixty_seconds.sixty_seconds.building_start")
                 .withStyle(net.minecraft.ChatFormatting.YELLOW);
@@ -227,7 +227,7 @@ public final class SixtySecondsManager {
         }
     }
 
-    public static void tick(ServerLevel level, SREGameWorldComponent gameWorldComponent) {
+    public static void tick(ServerLevel level, SixtySecGameWorldComponent gameWorldComponent) {
         SixtySecondsState.Data data = SixtySecondsState.get(level);
         // 建图期间（异步）phase=INACTIVE：空转，等 onBuildComplete 切到 PREPARATION。
         if (data.phase == SixtySecondsPhase.INACTIVE) {
@@ -290,7 +290,7 @@ public final class SixtySecondsManager {
                 SixtySecondsAreaLevels.tickAnnouncements(level); // 星级区域覆盖切换报幕
                 SixtySecondsPowerSystem.tick(level);     // 发电机断电边沿
                 // 小游戏代币不再全队共享（SixtySecondsTokenShare 已移除）：
-                // SREPlayerMinigameTaskComponent.tokens 本就按玩家独立存储/同步
+                // SixtySecPlayerMinigameTaskComponent.tokens 本就按玩家独立存储/同步
 
                 reconcileHomeMapZones(level, data);      // 兜底：已回到家的玩家若区域地图未同步则补发（修复回来地图不显示坐标）
                 net.exmo.sixty_seconds.content.item.SixtySecondsClockItem.tickHeld(level);
@@ -516,10 +516,10 @@ public final class SixtySecondsManager {
                     SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
                     stats.downedCountToday = 0;
                     stats.sync();
-                    SREPlayerShopComponent.KEY.get(player).addToBalance(COINS_PER_DAY);
+                    SixtySecPlayerShopComponent.KEY.get(player).addToBalance(COINS_PER_DAY);
                     int todayTokens = DAILY_TOKENS_MIN + level.getRandom().nextInt(
                             DAILY_TOKENS_MAX - DAILY_TOKENS_MIN + 1);
-                    SREPlayerMinigameTaskComponent.KEY.get(player).addTokens(todayTokens);
+                    SixtySecPlayerMinigameTaskComponent.KEY.get(player).addTokens(todayTokens);
                 }
             }
         }
@@ -527,7 +527,7 @@ public final class SixtySecondsManager {
 
     /** 准备结束：在各队避难所出生点旁放置箱子，装入 开局保底物资（按图开关，默认关）+ 本队搜刮记录的物资。 */
     private static void placeSupplyChests(ServerLevel level, SixtySecondsState.Data data) {
-        // 保底物资开关：按图配置 starterSuppliesEnabled（/sre:60s starter on|off，默认关=全靠搜刮）
+        // 保底物资开关：按图配置 starterSuppliesEnabled（/60s starter on|off，默认关=全靠搜刮）
         boolean starterEnabled = SixtySecondsConfigStore.current(level)
                 .map(config -> config.starterSuppliesEnabled).orElse(false);
         for (SixtySecondsState.TeamData team : data.teams.values()) {
@@ -883,7 +883,7 @@ public final class SixtySecondsManager {
     }
 
     /**
-     * 局中用 {@code /sre:60s days <n>} 改总日数后，把新值补发给全场玩家（HUD 的「第 X/N 天」立即更新）。
+     * 局中用 {@code /60s days <n>} 改总日数后，把新值补发给全场玩家（HUD 的「第 X/N 天」立即更新）。
      * 不改 dayNumber/phaseEndTick——只刷总数；是否已到最终日由 tick 里的 {@code dayNumber >= totalDays(level)} 自然判定。
      */
     public static void resyncTotalDays(ServerLevel level) {

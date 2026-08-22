@@ -54,23 +54,23 @@ public abstract class GameMode {
         return true;
     }
 
-    public void beforeInitializeGame(ServerLevel serverWorld, SREGameWorldComponent gameWorldComponent,
+    public void beforeInitializeGame(ServerLevel serverWorld, SixtySecGameWorldComponent gameWorldComponent,
             List<ServerPlayer> players) {
     }
 
-    public void initializeGame(ServerLevel serverWorld, SREGameWorldComponent gameWorldComponent,
+    public void initializeGame(ServerLevel serverWorld, SixtySecGameWorldComponent gameWorldComponent,
             List<ServerPlayer> players) {
     }
 
-    public void afterInitializeGame(ServerLevel serverWorld, SREGameWorldComponent gameWorldComponent,
+    public void afterInitializeGame(ServerLevel serverWorld, SixtySecGameWorldComponent gameWorldComponent,
             List<ServerPlayer> players) {
     }
 
-    public void gameStarted(ServerLevel serverWorld, SREGameWorldComponent gameComponent,
+    public void gameStarted(ServerLevel serverWorld, SixtySecGameWorldComponent gameComponent,
             ArrayList<ServerPlayer> readyPlayerList) {
     }
 
-    public void tickServerGameLoop(ServerLevel serverWorld, SREGameWorldComponent gameWorldComponent) {
+    public void tickServerGameLoop(ServerLevel serverWorld, SixtySecGameWorldComponent gameWorldComponent) {
     }
 
     public void tickCommonGameLoop(Level level) {
@@ -82,7 +82,7 @@ public abstract class GameMode {
     public void stopGame(ServerLevel world) {
     }
 
-    public void limitSpectatorPlayer(ServerPlayer player, SREGameWorldComponent gameWorldComponent,
+    public void limitSpectatorPlayer(ServerPlayer player, SixtySecGameWorldComponent gameWorldComponent,
             AreasWorldComponent areas) {
     }
 

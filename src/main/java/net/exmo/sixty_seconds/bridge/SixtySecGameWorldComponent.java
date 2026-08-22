@@ -13,9 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class SREGameWorldComponent implements AutoSyncedComponent {
-    public static final ComponentKey<SREGameWorldComponent> KEY = ComponentRegistry.getOrCreate(
-            SixtySeconds.id("game"), SREGameWorldComponent.class);
+public class SixtySecGameWorldComponent implements AutoSyncedComponent {
+    public static final ComponentKey<SixtySecGameWorldComponent> KEY = ComponentRegistry.getOrCreate(
+            SixtySeconds.id("game"), SixtySecGameWorldComponent.class);
 
     public enum GameStatus {
         INACTIVE, STARTING, ACTIVE, STOPPING
@@ -29,9 +29,9 @@ public class SREGameWorldComponent implements AutoSyncedComponent {
     private boolean canJump = true;
     private int startingPlayerCount = 0;
     private int playerCount = 0;
-    private final Map<UUID, SRERole> roles = new HashMap<>();
+    private final Map<UUID, SixtySecRole> roles = new HashMap<>();
 
-    public SREGameWorldComponent(Level world) {
+    public SixtySecGameWorldComponent(Level world) {
         this.world = world;
     }
 
@@ -80,15 +80,15 @@ public class SREGameWorldComponent implements AutoSyncedComponent {
         sync();
     }
 
-    public SRERole getRole(Player player) {
+    public SixtySecRole getRole(Player player) {
         return player == null ? null : roles.get(player.getUUID());
     }
 
-    public SRERole getRole(UUID uuid) {
+    public SixtySecRole getRole(UUID uuid) {
         return uuid == null ? null : roles.get(uuid);
     }
 
-    public void setRole(Player player, SRERole role) {
+    public void setRole(Player player, SixtySecRole role) {
         if (player == null) {
             return;
         }
@@ -138,8 +138,8 @@ public class SREGameWorldComponent implements AutoSyncedComponent {
             gameMode.tickClientGameLoop(world);
         }
         if (world != null && world.isClientSide()) {
-            net.exmo.sixty_seconds.bridge.client.SREClient.gameComponent = this;
-            net.exmo.sixty_seconds.bridge.client.SREClient.areaComponent = AreasWorldComponent.KEY.get(world);
+            net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient.gameComponent = this;
+            net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient.areaComponent = AreasWorldComponent.KEY.get(world);
         }
     }
 }

@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.client;
 
-import net.exmo.sixty_seconds.bridge.client.SREClient;
+import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.content.block.ShelterDoorBlock;
 import net.exmo.sixty_seconds.bridge.fabric.WorldRenderContext;
@@ -38,9 +38,9 @@ public final class SixtySecondsDoorOverlay {
         if (mc.player == null || mc.level == null) {
             return;
         }
-        if (SREClient.gameComponent == null || !SREClient.gameComponent.isRunning()
+        if (SixtySecBridgeClient.gameComponent == null || !SixtySecBridgeClient.gameComponent.isRunning()
                 || SixtySecondsMod.MODE == null
-                || SREClient.gameComponent.getGameMode() != SixtySecondsMod.MODE) {
+                || SixtySecBridgeClient.gameComponent.getGameMode() != SixtySecondsMod.MODE) {
             if (!doors.isEmpty()) {
                 doors = List.of();
                 lastScanGameTime = Long.MIN_VALUE;

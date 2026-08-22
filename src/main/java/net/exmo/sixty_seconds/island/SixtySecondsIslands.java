@@ -50,7 +50,7 @@ import java.util.WeakHashMap;
 /**
  * 60s 海岛远征总控（指令开关，独立于对局；对局中提供玩法钩子）：
  * <ul>
- *   <li><b>生成/还原</b>：{@code /sre:60s island start|stop} 异步建造/回滚整片群岛
+ *   <li><b>生成/还原</b>：{@code /60s island start|stop} 异步建造/回滚整片群岛
  *       （{@link SixtySecondsIslandGenerator}）；元数据落盘 {@code sixty_seconds_islands.json}，重启不丢。</li>
  *   <li><b>登岛提示</b>：踏上新岛 → SubTitle 报幕岛名+危险等级，4 级以上红色特别警报 + 音效；
  *       首次登岛为全队解锁该岛并刷一小队守岛怪。</li>
@@ -156,7 +156,7 @@ public final class SixtySecondsIslands {
                 .orElse(false);
     }
 
-    /** {@code /sre:60s sea_teleport off} 时把在途的扬帆/返航一并作废，并重发海图刷新客户端按钮态。 */
+    /** {@code /60s sea_teleport off} 时把在途的扬帆/返航一并作废，并重发海图刷新客户端按钮态。 */
     public static void onTeleportToggled(ServerLevel level, boolean enabled) {
         Data data = STATES.get(level);
         if (data != null && !enabled) {
@@ -262,7 +262,7 @@ public final class SixtySecondsIslands {
                                     .withUnderlined(true)
                                     .withClickEvent(new net.minecraft.network.chat.ClickEvent(
                                             net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND,
-                                            "/sre:60s island map"))));
+                                            "/60s island map"))));
             for (ServerPlayer player : level.players()) {
                 player.displayClientMessage(hint, false);
                 player.playNotifySound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS, 0.6F, 1.2F);

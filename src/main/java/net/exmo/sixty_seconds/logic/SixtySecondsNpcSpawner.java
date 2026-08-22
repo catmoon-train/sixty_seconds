@@ -72,7 +72,7 @@ public final class SixtySecondsNpcSpawner {
     }
 
     /**
-     * 搭图预览生成（NPC 放置器 / {@code /sre:60s npc} 指令）：立在登记点当立牌，
+     * 搭图预览生成（NPC 放置器 / {@code /60s npc} 指令）：立在登记点当立牌，
      * 模式外不自毁、不自散、不参与局内逻辑；开局由 {@link #spawnConfigured} 清掉并按配置重生成。
      */
     public static SixtySecondsNpcEntity spawnPreview(ServerLevel level, BlockPos pos,

@@ -21,10 +21,10 @@ import net.minecraft.ChatFormatting;
  * 海洋生物管理命令：生成/开关海洋生物（鲨鱼/海怪）。
  *
  * <pre>{@code
- * /sre:ocean spawn shark <type>            — 在自己位置生成指定鲨鱼
- * /sre:ocean spawn monster <type>          — 生成指定海怪
- * /sre:ocean toggle on|off                 — 开关海洋生物自然刷新（默认开）
- * /sre:ocean status                        — 查看当前开关状态
+ * /60s_ocean spawn shark <type>            — 在自己位置生成指定鲨鱼
+ * /60s_ocean spawn monster <type>          — 生成指定海怪
+ * /60s_ocean toggle on|off                 — 开关海洋生物自然刷新（默认开）
+ * /60s_ocean status                        — 查看当前开关状态
  * }</pre>
  */
 public final class OceanCreatureCommand {
@@ -40,10 +40,10 @@ public final class OceanCreatureCommand {
 
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            var root = Commands.literal("sre:ocean")
+            var root = Commands.literal("60s_ocean")
                 .requires(src -> src.hasPermission(2));
 
-        // /sre:ocean spawn shark <type>
+        // /60s_ocean spawn shark <type>
         root.then(Commands.literal("spawn")
                 .then(Commands.literal("shark")
                         .then(Commands.argument("type", StringArgumentType.word())
@@ -67,12 +67,12 @@ public final class OceanCreatureCommand {
                         ))
         );
 
-        // /sre:ocean toggle on|off
+        // /60s_ocean toggle on|off
         root.then(Commands.literal("toggle")
                 .then(Commands.argument("enabled", BoolArgumentType.bool())
                         .executes(OceanCreatureCommand::toggleOceanCreatures)));
 
-        // /sre:ocean status
+        // /60s_ocean status
         root.then(Commands.literal("status")
                 .executes(OceanCreatureCommand::showStatus));
 

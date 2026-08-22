@@ -1,7 +1,7 @@
 package net.exmo.sixty_seconds.client;
 
 import net.exmo.sixty_seconds.SixtySeconds;
-import net.exmo.sixty_seconds.bridge.SREGameWorldComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
 import net.exmo.sixty_seconds.bridge.client.CommonHudRenderCallback;
 import net.exmo.sixty_seconds.bridge.client.FakeGuiGraphics;
 import net.exmo.sixty_seconds.bridge.client.TaskBlockOverlayRenderer;
@@ -239,7 +239,7 @@ public final class SixtySecondsClient {
     private static void onClientTick(ClientTickEvent.Post event) {
         Minecraft client = Minecraft.getInstance();
         if (client.level != null) {
-            SREGameWorldComponent.KEY.get(client.level).clientTick();
+            SixtySecGameWorldComponent.KEY.get(client.level).clientTick();
         }
         for (ClientTickEvents.EndTick listener : ClientTickEvents.END_CLIENT_TICK.invokers()) {
             listener.onEndTick(client);

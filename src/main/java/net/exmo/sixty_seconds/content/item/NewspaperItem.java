@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import net.exmo.sixty_seconds.index.SREDataComponentTypes;
+import net.exmo.sixty_seconds.index.SixtySecDataComponentTypes;
 
 /**
  * 传递盒物品
@@ -48,8 +48,8 @@ public class NewspaperItem extends Item {
 
     public void appendHoverText(ItemStack itemStack, TooltipContext tooltipContext, List<Component> list,
             TooltipFlag tooltipFlag) {
-        if (itemStack.has(SREDataComponentTypes.WRITTEN_BOOK_CONTENT)) {
-            var writtenContent = itemStack.get(SREDataComponentTypes.WRITTEN_BOOK_CONTENT);
+        if (itemStack.has(SixtySecDataComponentTypes.WRITTEN_BOOK_CONTENT)) {
+            var writtenContent = itemStack.get(SixtySecDataComponentTypes.WRITTEN_BOOK_CONTENT);
             var author = writtenContent.author();
             var title = writtenContent.title().raw();
             String shortTitle = title;
@@ -59,7 +59,7 @@ public class NewspaperItem extends Item {
                     .withStyle(ChatFormatting.GRAY));
             list.add(Component.translatable("item.sixty_seconds.newspaper.author", author)
                     .withStyle(ChatFormatting.GRAY));
-        } else if (itemStack.has(SREDataComponentTypes.WRITABLE_BOOK_CONTENT)) {
+        } else if (itemStack.has(SixtySecDataComponentTypes.WRITABLE_BOOK_CONTENT)) {
             list.add(Component.translatable("item.sixty_seconds.newspaper.lore.draft").withStyle(ChatFormatting.GRAY,
                     ChatFormatting.ITALIC));
         }

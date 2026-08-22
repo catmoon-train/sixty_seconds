@@ -23,7 +23,7 @@ public class SixtySecondsConfig {
 
     /**
      * 房车模式：每队生成一辆常驻房车，并让避难所与住宅一样按 {@link #teamBase} 网格克隆，
-     * 不再依赖探索区出口门或避难所锚点。由 {@code /sre:60s_area rv} 配置。
+     * 不再依赖探索区出口门或避难所锚点。由 {@code /60s_area rv} 配置。
      */
     @SerializedName("rvEnabled")
     public boolean rvEnabled = false;
@@ -66,7 +66,7 @@ public class SixtySecondsConfig {
      * 探索区里的<b>出口门</b>（{@link #searchDoorBindings} 中落在模板盒<b>外</b>的那类，按队序号分配）对齐——
      * 整座避难所按 {@code 出口门 - 锚点门} 的差值平移克隆过去，玩家推门即是探索区，不再跨空间传送。
      * 未登记时该开关失效、回退网格克隆（{@code SixtySecondsArena.build} 会告警）。
-     * 用 {@code /sre:60s_area anchor <x y z>} 登记（写模板内那扇门的绝对坐标）。
+     * 用 {@code /60s_area anchor <x y z>} 登记（写模板内那扇门的绝对坐标）。
      */
     @SerializedName("shelterAnchorDoor")
     public Vec shelterAnchorDoor;
@@ -75,7 +75,7 @@ public class SixtySecondsConfig {
      * 避难所是否直接生成在探索区登记的门位置（默认<b>开</b>）：以「避难所锚点门 ↔ 探索区出口门」为锚点平移克隆，
      * 「外出探索」即字面意义的出门（门是实心方块，仍走门菜单传送到门外落点）。
      * 关闭时按 {@link #teamBase} 网格克隆（旧行为）。需 {@link #shelterAnchorDoor} 与探索区出口门绑定齐备，缺一回退网格。
-     * 与 {@link #seaChartTeleportEnabled} 互不影响。{@code /sre:60s shelter_at_door on|off} 切换（按图持久化）。
+     * 与 {@link #seaChartTeleportEnabled} 互不影响。{@code /60s shelter_at_door on|off} 切换（按图持久化）。
      */
     @SerializedName("shelterAtSearchDoorEnabled")
     public boolean shelterAtSearchDoorEnabled = true;
@@ -84,17 +84,17 @@ public class SixtySecondsConfig {
      * 海图是否允许<b>扬帆传送</b>与<b>返回住所</b>（默认<b>关</b>）：关闭时海图退化为纯导航图——岛屿轮廓、解锁迷雾、
      * 庇护所与队友点位<b>照常显示</b>，但点岛不再传送、「返回住所」按钮置灰，玩家须自己乘船去岛、走门回家。
      * 创造模式不受限。与 {@link #shelterAtSearchDoorEnabled} 互不影响。
-     * {@code /sre:60s sea_teleport on|off} 切换（按图持久化）。
+     * {@code /60s sea_teleport on|off} 切换（按图持久化）。
      */
     @SerializedName("seaChartTeleportEnabled")
     public boolean seaChartTeleportEnabled = false;
 
     /**
      * 生成海岛时是否在<b>一级岛</b>上自动放置一扇避难所门并登记为门绑定/锚点（默认<b>开</b>）：
-     * 开启后 {@code /sre:60s island start} 会给每座 1 级岛在地表合适位置建一扇 {@code ShelterDoorBlock}，
+     * 开启后 {@code /60s island start} 会给每座 1 级岛在地表合适位置建一扇 {@code ShelterDoorBlock}，
      * 并向 {@link #searchDoorBindings} 追加一条 {@code auto=true} 的绑定（门=该门、box=门周围危险区、
      * 等级=岛屿等级）——这样开局建图时各队避难所可锚定到岛门上。{@code island stop/delete} 会自动移除这些
-     * 绑定；门方块随地形回滚一并清除。{@code /sre:60s_area clearbindings} 可手动清掉全部门绑定。
+     * 绑定；门方块随地形回滚一并清除。{@code /60s_area clearbindings} 可手动清掉全部门绑定。
      */
     @SerializedName("islandShelterDoorEnabled")
     public boolean islandShelterDoorEnabled = true;
@@ -109,7 +109,7 @@ public class SixtySecondsConfig {
 
     /**
      * 晚上是否自动刷新夜袭者冲门（默认<b>关</b>）。关闭时仍可用「夜袭者召唤哨」
-     * （{@code sixty_seconds_assault_spawner_*}）手动放怪。{@code /sre:60s assault on|off} 切换（按图持久化）。
+     * （{@code sixty_seconds_assault_spawner_*}）手动放怪。{@code /60s assault on|off} 切换（按图持久化）。
      */
     @SerializedName("nightAssaultEnabled")
     public boolean nightAssaultEnabled = false;
@@ -117,14 +117,14 @@ public class SixtySecondsConfig {
     /**
      * 是否发放开局保底物资（人均水/罐头/绷带 + 每队废料/破布/火把/污染水，随搜刮所得装进
      * 避难所补给箱；见 {@code SixtySecondsManager.starterSupplies}）。默认<b>关</b>——
-     * 全靠准备阶段搜刮。{@code /sre:60s starter on|off} 切换（按图持久化）。
+     * 全靠准备阶段搜刮。{@code /60s starter on|off} 切换（按图持久化）。
      */
     @SerializedName("starterSuppliesEnabled")
     public boolean starterSuppliesEnabled = false;
 
     /**
      * PVE 开关（默认<b>开</b>）：探索区游荡怪 + 夜晚 Boss 尸潮领主（{@code SixtySecondsPveSystem}）。
-     * 与夜袭开关 {@link #nightAssaultEnabled} 相互独立。{@code /sre:60s pve on|off} 切换（按图持久化）。
+     * 与夜袭开关 {@link #nightAssaultEnabled} 相互独立。{@code /60s pve on|off} 切换（按图持久化）。
      */
     @SerializedName("pveEnabled")
     public boolean pveEnabled = true;
@@ -132,7 +132,7 @@ public class SixtySecondsConfig {
     /**
      * 海洋生物自然刷新开关（默认<b>开</b>）：鲨鱼/海怪在海上自然刷新。
      * 与 PVE 开关 {@link #pveEnabled} 相互独立。
-     * {@code /sre:ocean toggle on|off} 切换（按图持久化）。
+     * {@code /60s_ocean toggle on|off} 切换（按图持久化）。
      */
     @SerializedName("oceanCreaturesEnabled")
     public boolean oceanCreaturesEnabled = true;
@@ -141,7 +141,7 @@ public class SixtySecondsConfig {
      * 中途自动入队开关（默认<b>开</b>）：游戏进行中新加入服务器（且无重连备份）的玩家，
      * 自动补入一支<b>在线不满 {@link net.exmo.sixty_seconds.logic.SixtySecondsTeamAllocator#TEAM_SIZE 四人}</b>
      * 的队伍（选在线人数最少的未满队），传送到该队住宅并发身份。所有队伍都满则留观战。
-     * {@code /sre:60s autojoin on|off} 切换（按图持久化）。见 {@code SixtySecondsAutoJoin}。
+     * {@code /60s autojoin on|off} 切换（按图持久化）。见 {@code SixtySecondsAutoJoin}。
      */
     @SerializedName("autoJoinEnabled")
     public boolean autoJoinEnabled = true;
@@ -152,20 +152,20 @@ public class SixtySecondsConfig {
      * <p>
      * 开启时「无存活幸存者 → 提前败」<b>不会</b>因为一波团灭就触发——等待复活的玩家算「未阵亡」
      * （见 {@code SixtySecondsWinConditions}）；胜负仍由「撑到最后一天 / 救援信标 / 幸存者阵营」决定。
-     * {@code /sre:60s autorevive on|off} 切换（按图持久化）。见 {@code SixtySecondsAutoRevive}。
+     * {@code /60s autorevive on|off} 切换（按图持久化）。见 {@code SixtySecondsAutoRevive}。
      */
     @SerializedName("autoReviveEnabled")
     public boolean autoReviveEnabled = true;
 
     /**
-     * 自动复活间隔（秒，默认 240=4 分钟）。{@code /sre:60s autorevive interval <秒>} 设置（按图持久化）。
+     * 自动复活间隔（秒，默认 240=4 分钟）。{@code /60s autorevive interval <秒>} 设置（按图持久化）。
      * 局中改只影响<b>此后</b>的死亡——已在倒计时中的玩家按死亡当时的间隔走完，免得改一下把在等的人瞬间拉活或永久卡住。
      */
     @SerializedName("autoReviveIntervalSeconds")
     public int autoReviveIntervalSeconds = 240;
 
     /**
-     * 本局自动复活次数上限（默认 -1=无限）。{@code /sre:60s autorevive limit <次数>} 设置（按图持久化）。
+     * 本局自动复活次数上限（默认 -1=无限）。{@code /60s autorevive limit <次数>} 设置（按图持久化）。
      * <ul>
      *   <li>{@code -1}：无限复活（默认，旧行为）。</li>
      *   <li>{@code 0}：等同关闭自动复活（任何死亡都不复活，与 {@link #autoReviveEnabled}=off 效果一致）。</li>
@@ -180,7 +180,7 @@ public class SixtySecondsConfig {
     /**
      * 本局总游戏日数（默认 {@value net.exmo.sixty_seconds.logic.SixtySecondsManager#DEFAULT_TOTAL_DAYS}）：
      * 撑过最后一天即幸存者胜利。终极 Boss「终焉之王」固定在<b>最后一天</b>降临（随本值浮动）。
-     * {@code /sre:60s days <1..30>} 设置（按图持久化）。见 {@code SixtySecondsManager.totalDays}。
+     * {@code /60s days <1..30>} 设置（按图持久化）。见 {@code SixtySecondsManager.totalDays}。
      */
     @SerializedName("totalDays")
     public int totalDays = 7;
@@ -188,7 +188,7 @@ public class SixtySecondsConfig {
     /**
      * 全局危险等级基线 1..5（{@code SixtySecondsAreaLevels}）：不在任何门绑定危险区、也不在岛屿上的坐标
      * 一律取此值。等级越高，物资箱稀有物越常见、掷出件数越多，但游荡怪更多更强。
-     * {@code /sre:60s_area level <1..5>} 设置。
+     * {@code /60s_area level <1..5>} 设置。
      */
     @SerializedName("searchZoneLevel")
     public int searchZoneLevel = 1;
@@ -196,29 +196,29 @@ public class SixtySecondsConfig {
     /**
      * <b>星级区域覆盖</b>：任意盒 → 危险等级 1..5，独立于门绑定，可放在世界任何地方（含岛屿上，用来「魔改」
      * 某片区域的星级）。{@link SixtySecondsAreaLevels#levelAt} 里<b>优先级最高</b>——覆盖岛屿等级与门绑定区。
-     * 重叠时取列表中<b>靠后</b>那条（后加的覆盖先加的）。用 {@code /sre:60s_area region ...} 或星级区域魔杖
+     * 重叠时取列表中<b>靠后</b>那条（后加的覆盖先加的）。用 {@code /60s_area region ...} 或星级区域魔杖
      * （{@code sixty_seconds_level_wand}）编辑。
      */
     @SerializedName("areaLevelOverrides")
     public java.util.List<LevelRegion> areaLevelOverrides = new java.util.ArrayList<>();
 
     /**
-     * 用 {@code /sre:60s_area region add/here} 登记星级区域时，是否在区域内<b>自动撒随机物资箱</b>
+     * 用 {@code /60s_area region add/here} 登记星级区域时，是否在区域内<b>自动撒随机物资箱</b>
      * （低级随机 / 上锁高级 / 高级随机；数量按区域等级缩放，默认<b>开</b>）。
-     * {@code /sre:60s_area region autosupply on|off} 切换。
+     * {@code /60s_area region autosupply on|off} 切换。
      */
     @SerializedName("regionAutoSupplyEnabled")
     public boolean regionAutoSupplyEnabled = true;
 
     /**
      * 区域自动撒箱的<b>基准数量</b>（1 级区域的箱子数；更高等级按 {@code base + (level-1)*max(1,base/2)} 缩放）。
-     * {@code /sre:60s_area region autosupply count <n>} 设置。
+     * {@code /60s_area region autosupply count <n>} 设置。
      */
     @SerializedName("regionSupplyBoxBaseCount")
     public int regionSupplyBoxBaseCount = 6;
 
     /**
-     * 手动登记的 <b>Boss 刷新点</b>（世界绝对坐标，管理员搭图用）。{@code /sre:60s boss_spawn add/remove/list/clear}
+     * 手动登记的 <b>Boss 刷新点</b>（世界绝对坐标，管理员搭图用）。{@code /60s boss_spawn add/remove/list/clear}
      * 或 {@code sixty_seconds_boss_wand} 物品编辑。生成 4-5 星区域固定 Boss / 1-5 星区域「伤害 Boss」时，
      * 系统会优先在目标区域盒内寻找已登记的刷新点；找不到则在该区域随机选合理落点。
      */
@@ -237,13 +237,13 @@ public class SixtySecondsConfig {
     /**
      * 直升机撤离开关（默认<b>开</b>）：本局最后一天（见 {@link #totalDays}）在 {@link #helicopterLandingPos}
      * 处刷出救援直升机，最先抵达撤离区的 8 名幸存者可乘直升机撤离获胜。全局单架，先到先得。
-     * <p>{@code /sre:60s helicopter on|off} 切换（按图持久化）。
+     * <p>{@code /60s helicopter on|off} 切换（按图持久化）。
      */
     @SerializedName("helicopterEnabled")
     public boolean helicopterEnabled = true;
 
     /**
-     * 直升机降落点（世界绝对坐标）。用 {@code /sre:60s helicopter_set <x> <y> <z>} 设置。
+     * 直升机降落点（世界绝对坐标）。用 {@code /60s helicopter_set <x> <y> <z>} 设置。
      * 未设置（(0,0,0)）时随机选大片空地或依赖管理员设置。
      */
     @SerializedName("helicopterLandingPos")
@@ -317,7 +317,7 @@ public class SixtySecondsConfig {
         public Vec boxMax;
         @SerializedName("spawn")
         public Vec spawn;
-        /** 该绑定探索区的危险等级 1..5；0=继承全局 {@code searchZoneLevel}。{@code /sre:60s_area level <n> <x y z>} 设置。 */
+        /** 该绑定探索区的危险等级 1..5；0=继承全局 {@code searchZoneLevel}。{@code /60s_area level <n> <x y z>} 设置。 */
         @SerializedName("level")
         public int level = 0;
         /**

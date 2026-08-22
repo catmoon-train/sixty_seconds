@@ -3,7 +3,7 @@ package net.exmo.sixty_seconds.logic;
 import net.exmo.sixty_seconds.bridge.event.AllowPlayerDeathWithKiller;
 import net.exmo.sixty_seconds.bridge.GameConstants;
 import net.exmo.sixty_seconds.bridge.GameUtils;
-import net.exmo.sixty_seconds.bridge.stubs.TMMItems;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecItems;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.SixtySecondsPhase;
@@ -509,14 +509,14 @@ public final class SixtySecondsHealthSystem {
             Item item = weapon.getItem();
 
             // ── 枪械 ──
-            if (item == TMMItems.REVOLVER || item == TMMItems.STANDARD_REVOLVER
+            if (item == SixtySecItems.REVOLVER || item == SixtySecItems.STANDARD_REVOLVER
                     || item == ModItems.SIXTY_SECONDS_PISTOL || item == ModItems.SIXTY_SECONDS_RIFLE) {
                 return GameConstants.DeathReasons.REVOLVER;
             }
-            if (item == TMMItems.DERRINGER) {
+            if (item == SixtySecItems.DERRINGER) {
                 return GameConstants.DeathReasons.DERRINGER;
             }
-            if (item == TMMItems.SNIPER_RIFLE) {
+            if (item == SixtySecItems.SNIPER_RIFLE) {
                 return GameConstants.DeathReasons.SNIPER_RIFLE;
             }
             if (item == ModItems.SIXTY_SECONDS_RPG) {

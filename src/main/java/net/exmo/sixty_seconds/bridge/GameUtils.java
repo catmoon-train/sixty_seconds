@@ -80,13 +80,13 @@ public final class GameUtils {
         if (isStartingGame) {
             return;
         }
-        SREGameWorldComponent game = SREGameWorldComponent.KEY.get(world);
+        SixtySecGameWorldComponent game = SixtySecGameWorldComponent.KEY.get(world);
         if (game.isRunning()) {
             return;
         }
         isStartingGame = true;
         game.gameMode = gameMode;
-        SREGameTimeComponent.KEY.get(world).setResetTime(time);
+        SixtySecGameTimeComponent.KEY.get(world).setResetTime(time);
         List<ServerPlayer> players = getStartingPlayers(world);
         if (players.size() < gameMode.minPlayerCount) {
             for (ServerPlayer player : world.getServer().getPlayerList().getPlayers()) {
@@ -96,12 +96,12 @@ public final class GameUtils {
             isStartingGame = false;
             return;
         }
-        game.setGameStatus(SREGameWorldComponent.GameStatus.STARTING);
+        game.setGameStatus(SixtySecGameWorldComponent.GameStatus.STARTING);
     }
 
     public static void initializeGame(ServerLevel serverWorld) {
         isStartingGame = false;
-        SREGameWorldComponent gameComponent = SREGameWorldComponent.KEY.get(serverWorld);
+        SixtySecGameWorldComponent gameComponent = SixtySecGameWorldComponent.KEY.get(serverWorld);
         ArrayList<ServerPlayer> readyPlayerList = new ArrayList<>(getStartingPlayers(serverWorld));
         gameComponent.setStartingPlayerCount(readyPlayerList.size());
         clearForcedReadyPlayers();
@@ -112,23 +112,23 @@ public final class GameUtils {
         }
         mode.beforeInitializeGame(serverWorld, gameComponent, readyPlayerList);
         mode.initializeGame(serverWorld, gameComponent, readyPlayerList);
-        gameComponent.setGameStatus(SREGameWorldComponent.GameStatus.ACTIVE);
+        gameComponent.setGameStatus(SixtySecGameWorldComponent.GameStatus.ACTIVE);
         SixtySecondsMod.RUNNING = true;
         mode.gameStarted(serverWorld, gameComponent, readyPlayerList);
         isGameStarted = true;
     }
 
     public static void stopGame(ServerLevel world) {
-        SREGameWorldComponent component = SREGameWorldComponent.KEY.get(world);
-        component.setGameStatus(SREGameWorldComponent.GameStatus.STOPPING);
+        SixtySecGameWorldComponent component = SixtySecGameWorldComponent.KEY.get(world);
+        component.setGameStatus(SixtySecGameWorldComponent.GameStatus.STOPPING);
         if (component.gameMode != null) {
             component.gameMode.stopGame(world);
         }
     }
 
     public static void finalizeGame(ServerLevel world) {
-        SREGameWorldComponent component = SREGameWorldComponent.KEY.get(world);
-        component.setGameStatus(SREGameWorldComponent.GameStatus.INACTIVE);
+        SixtySecGameWorldComponent component = SixtySecGameWorldComponent.KEY.get(world);
+        component.setGameStatus(SixtySecGameWorldComponent.GameStatus.INACTIVE);
         SixtySecondsMod.RUNNING = false;
         isGameStarted = false;
         isStartingGame = false;
@@ -201,7 +201,7 @@ public final class GameUtils {
     }
 
     public static boolean isGameRunning(Level level) {
-        return level != null && SREGameWorldComponent.KEY.get(level).isRunning();
+        return level != null && SixtySecGameWorldComponent.KEY.get(level).isRunning();
     }
 
     public static PlayerBodyEntity findPlayerBodyEntity(ServerPlayer player) {
@@ -232,7 +232,7 @@ public final class GameUtils {
         if (victim == null || !(victim.level() instanceof ServerLevel level)) {
             return;
         }
-        GameMode mode = SREGameWorldComponent.KEY.get(level).getGameMode();
+        GameMode mode = SixtySecGameWorldComponent.KEY.get(level).getGameMode();
         if (mode != null) {
             mode.killPlayer(victim, spawnBody, killer, deathReason, forceDeath);
         } else {

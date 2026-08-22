@@ -50,7 +50,7 @@ import java.util.WeakHashMap;
  *   <li><b>陷阱对玩家</b>：尖刺/铁丝网对<b>敌队</b>玩家同样生效（{@link #tickTraps}，对怪的结算也在这里统一做，
  *       覆盖夜袭怪之外的游荡怪）。</li>
  * </ul>
- * 开关：按图配置 {@code pveEnabled}（默认开），{@code /sre:60s pve on|off} 切换。
+ * 开关：按图配置 {@code pveEnabled}（默认开），{@code /60s pve on|off} 切换。
  * 全部怪物为 {@link SixtySecondsMonsterEntity} 自研实体：和平难度不被清、可正常攻击玩家。
  */
 public final class SixtySecondsPveSystem {
@@ -404,7 +404,7 @@ public final class SixtySecondsPveSystem {
         return SixtySecondsBossEntity.BossVariant.RAVAGER;
     }
 
-    /** 生成普通尸潮领主（管理指令 {@code /sre:60s boss} 默认）。 */
+    /** 生成普通尸潮领主（管理指令 {@code /60s boss} 默认）。 */
     public static SixtySecondsBossEntity spawnBoss(ServerLevel level, BlockPos pos, int bossLevel) {
         return spawnBoss(level, pos, bossLevel, false, SixtySecondsBossEntity.BossVariant.RAVAGER);
     }

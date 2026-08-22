@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.content.item;
 
-import net.exmo.sixty_seconds.bridge.SREPlayerMinigameTaskComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
  *   <li>兑出：E 背包「兑换实体币」按钮 → {@code TokenExchangeScreen} →
  *       {@code TokenExchangeC2SPacket}（余额 → 实体币）。</li>
  *   <li>存回：<b>右键使用</b>把手中整组存回自己的余额
- *       （{@link SREPlayerMinigameTaskComponent#addTokens}，按玩家独立，CCA 自动同步）。</li>
+ *       （{@link SixtySecPlayerMinigameTaskComponent#addTokens}，按玩家独立，CCA 自动同步）。</li>
  * </ul>
  * 游戏币不再全队共享后，实体币是队内/跨队转账的手段（可直接丢给队友或经拜访「交易」换给别队）。
  */
@@ -37,7 +37,7 @@ public class SixtySecondsCoinItem extends Item {
             return InteractionResultHolder.consume(stack);
         }
         int amount = stack.getCount();
-        SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(player);
+        SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(player);
         tokens.addTokens(amount);
         stack.shrink(amount);
         player.displayClientMessage(Component.translatable(

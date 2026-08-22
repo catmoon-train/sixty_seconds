@@ -2,7 +2,7 @@ package net.exmo.sixty_seconds.client.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.exmo.sixty_seconds.bridge.client.SREClient;
+import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.client.FakeGuiGraphics;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -678,7 +678,7 @@ public class AreaMapScreen extends Screen {
 
     /** 获取非 60s 模式的出生点（家）位置，无可返回 null。 */
     private static BlockPos getSpawnPos() {
-        var area = SREClient.areaComponent;
+        var area = SixtySecBridgeClient.areaComponent;
         if (area == null) return null;
         var spawn = area.getSpawnPos();
         return spawn != null ? BlockPos.containing(spawn.pos) : null;

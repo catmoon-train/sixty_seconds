@@ -1,9 +1,9 @@
 package net.exmo.sixty_seconds.logic;
 
-import net.exmo.sixty_seconds.bridge.SRERole;
-import net.exmo.sixty_seconds.bridge.stubs.TMMRoles;
+import net.exmo.sixty_seconds.bridge.SixtySecRole;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecRoles;
 import net.exmo.sixty_seconds.bridge.stubs.DynamicShopComponent;
-import net.exmo.sixty_seconds.bridge.SREGameWorldComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
 import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.bridge.stubs.ShopContent;
 import net.exmo.sixty_seconds.bridge.stubs.AnnounceWelcomePayload;
@@ -53,7 +53,7 @@ public final class SixtySecondsRoleAwakening {
     }
 
     public static void awaken(ServerLevel level, SixtySecondsState.Data data) {
-        SREGameWorldComponent gameWorldComponent = SREGameWorldComponent.KEY.get(level);
+        SixtySecGameWorldComponent gameWorldComponent = SixtySecGameWorldComponent.KEY.get(level);
         List<ServerPlayer> roleless = new ArrayList<>();
         for (ServerPlayer player : level.players()) {
             if (GameUtils.isPlayerAliveAndSurvival(player) && gameWorldComponent.getRole(player) == null) {
@@ -75,7 +75,7 @@ public final class SixtySecondsRoleAwakening {
             if (roleId == null) {
                 break; // 职业池已抽完
             }
-            SRERole role = TMMRoles.ROLES.get(roleId);
+            SixtySecRole role = SixtySecRoles.ROLES.get(roleId);
             if (role == null) {
                 continue;
             }
@@ -143,7 +143,7 @@ public final class SixtySecondsRoleAwakening {
     /** 记者觉醒时补发便签（便签×2 = {@link SixtySecondsBalance#REPORTER_NOTE_COUNT} 张）。 */
     private static void giveReporterNotes(ServerPlayer player) {
         net.minecraft.world.item.ItemStack notes =
-                net.exmo.sixty_seconds.bridge.stubs.TMMItems.NOTE.getDefaultInstance();
+                net.exmo.sixty_seconds.bridge.stubs.SixtySecItems.NOTE.getDefaultInstance();
         notes.setCount(SixtySecondsBalance.REPORTER_NOTE_COUNT);
         if (!player.getInventory().add(notes)) {
             player.drop(notes, false);

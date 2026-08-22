@@ -4,8 +4,8 @@ import net.exmo.sixty_seconds.registry.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 
-public final class TMMSounds {
-    private TMMSounds() {}
+public final class SixtySecSounds {
+    private SixtySecSounds() {}
     public static SoundEvent ITEM_REVOLVER_CLICK = SoundEvents.DISPENSER_FAIL;
     public static SoundEvent ITEM_REVOLVER_SHOOT = SoundEvents.CROSSBOW_SHOOT;
     public static SoundEvent ITEM_GRENADE_THROW = SoundEvents.SNOWBALL_THROW;

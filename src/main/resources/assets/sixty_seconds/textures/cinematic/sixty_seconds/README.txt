@@ -16,5 +16,5 @@
   并显示紫色马赛克。若手上是 JPG，请先转成 PNG。
 - 素材缺失时该镜头自动降级为纯黑（不会报错、不显示紫块），文字与音效照常播放，
   方便先跑通流程再逐张补图。
-- 触发指令（客户端）： /sre:client screen intro_sixty_seconds
+- 触发指令（客户端）： /60s_client screen intro_sixty_seconds
 - 出图提示词见对话记录 / 可整理进 docs/。

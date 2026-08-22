@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.network;
 
-import net.exmo.sixty_seconds.bridge.SREPlayerMinigameTaskComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -42,7 +42,7 @@ public record TokenExchangeC2SPacket(int amount) implements CustomPacketPayload 
         if (!SixtySecondsMod.isActive(player.level())) {
             return;
         }
-        SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(player);
+        SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(player);
         int amount = Math.min(payload.amount(), tokens.getTokens());
         if (amount <= 0) {
             player.displayClientMessage(Component.translatable(

@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.client;
 
-import net.exmo.sixty_seconds.bridge.client.SREClient;
+import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.event.OnRenderRoleName;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
@@ -23,9 +23,9 @@ public final class SixtySecondsNameTag {
 
     public static void register() {
         OnRenderRoleName.RENDER_PLAYER_EXTRA.register((self, target, context, tickCounter, font) -> {
-            if (SREClient.gameComponent == null || !SREClient.gameComponent.isRunning()
+            if (SixtySecBridgeClient.gameComponent == null || !SixtySecBridgeClient.gameComponent.isRunning()
                     || SixtySecondsMod.MODE == null
-                    || SREClient.gameComponent.getGameMode() != SixtySecondsMod.MODE) {
+                    || SixtySecBridgeClient.gameComponent.getGameMode() != SixtySecondsMod.MODE) {
                 return;
             }
             SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(target);

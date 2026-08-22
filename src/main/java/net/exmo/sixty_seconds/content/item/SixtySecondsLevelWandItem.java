@@ -35,7 +35,7 @@ import java.util.UUID;
  *   <li><b>右键</b>一个方块 = 设为盒角 A。</li>
  *   <li>再<b>右键</b>对角方块 = 设为盒角 B 并<b>提交</b>该星级区域，落盘。</li>
  * </ol>
- * 只对管理员/创造模式生效。清理用 {@code /sre:60s_area region clear|remove <index>}。
+ * 只对管理员/创造模式生效。清理用 {@code /60s_area region clear|remove <index>}。
  */
 public class SixtySecondsLevelWandItem extends Item {
     private static final String LANG = "message.sixty_seconds.sixty_seconds.level_wand.";

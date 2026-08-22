@@ -1,7 +1,7 @@
 package net.exmo.sixty_seconds.content.item;
 
 import net.exmo.sixty_seconds.registry.ModSounds;
-import net.exmo.sixty_seconds.bridge.stubs.TMMSounds;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecSounds;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.content.entity.SixtySecondsGrenadeEntity;
 import net.exmo.sixty_seconds.logic.SixtySecondsDefenseSystem;
@@ -56,7 +56,7 @@ public class SixtySecondsGrenadeItem extends Item {
             return InteractionResultHolder.pass(stack);
         }
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                TMMSounds.ITEM_GRENADE_THROW, SoundSource.NEUTRAL,
+                SixtySecSounds.ITEM_GRENADE_THROW, SoundSource.NEUTRAL,
                 0.6F, 1.0F + (level.random.nextFloat() - 0.5F) / 10F);
         if (!level.isClientSide()) {
             SixtySecondsGrenadeEntity grenade = new SixtySecondsGrenadeEntity(

@@ -57,7 +57,7 @@ public final class NeoForgeEvents {
     @SubscribeEvent
     public static void onLevelTick(LevelTickEvent.Post event) {
         if (event.getLevel() instanceof ServerLevel level) {
-            SREGameWorldComponent.KEY.get(level).serverTick();
+            SixtySecGameWorldComponent.KEY.get(level).serverTick();
             for (ServerTickEvents.EndWorldTick listener : ServerTickEvents.END_WORLD_TICK.invokers()) {
                 listener.onEndTick(level);
             }

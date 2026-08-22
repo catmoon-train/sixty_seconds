@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.logic;
 
-import net.exmo.sixty_seconds.bridge.SREGameWorldComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
 import net.exmo.sixty_seconds.network.OpenTeamLobbyS2CPacket;
 import net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking;
 import net.minecraft.network.chat.Component;
@@ -17,7 +17,7 @@ import java.util.UUID;
 /**
  * 末日60秒赛前组队大厅（服务端，全服静态态；游戏未开始时可用）。
  *
- * <p>玩家通过 {@code /sre:60s team} 打开组队页面，可创建/加入/离开最多
+ * <p>玩家通过 {@code /60s team} 打开组队页面，可创建/加入/离开最多
  * {@link SixtySecondsTeamAllocator#TEAM_SIZE} 人的预组队伍。这里只是「偏好登记」：
  * 真正的分队在开局时由 {@link SixtySecondsTeamAllocator} 完成——不参与本局的成员会被
  * 剔除出分配池，未满队伍用散人补足，3 人队可能被拆散（界面上有提示）。
@@ -50,7 +50,7 @@ public final class SixtySecondsTeamLobby {
 
     /** 打开组队页面（命令入口）。游戏进行中不可用。 */
     public static void open(ServerPlayer player) {
-        if (SREGameWorldComponent.KEY.get(player.serverLevel()).isRunning()) {
+        if (SixtySecGameWorldComponent.KEY.get(player.serverLevel()).isRunning()) {
             player.displayClientMessage(
                     Component.translatable("message.sixty_seconds.sixty_seconds.team_lobby_in_game"), false);
             return;
@@ -61,7 +61,7 @@ public final class SixtySecondsTeamLobby {
 
     /** 客户端组队操作入口（C2S 包处理）。 */
     public static void handleAction(ServerPlayer player, int action, int partyId) {
-        if (SREGameWorldComponent.KEY.get(player.serverLevel()).isRunning()) {
+        if (SixtySecGameWorldComponent.KEY.get(player.serverLevel()).isRunning()) {
             return;
         }
         prune(player.server);

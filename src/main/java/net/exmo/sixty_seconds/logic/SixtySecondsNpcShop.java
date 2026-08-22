@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.logic;
 
-import net.exmo.sixty_seconds.bridge.SREPlayerMinigameTaskComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.SixtySecondsPhase;
@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * 商人交易（服务端）：每日库存/价格惰性刷新 + 购买结算。
  * <p>范式：S2C 开屏 → C2S 动作 → 服务端改状态 → <b>重推 S2C</b>（照抄 {@code RepairRoleShopScreen} 链路）。
- * <p>结算货币是游戏币（{@link SREPlayerMinigameTaskComponent}）；余额不足时自动消耗背包里的
+ * <p>结算货币是游戏币（{@link SixtySecPlayerMinigameTaskComponent}）；余额不足时自动消耗背包里的
  * 实体币 {@code sixty_seconds_coin}（1 枚 = 1 币）补足——仍不足则<b>一分不扣</b>并提示。
  */
 public final class SixtySecondsNpcShop {
@@ -171,7 +171,7 @@ public final class SixtySecondsNpcShop {
 
     /** 可用资金 = 游戏币余额 + 背包里的实体币枚数（1 枚 = 1 币）。 */
     public static int totalFunds(ServerPlayer player) {
-        return SREPlayerMinigameTaskComponent.KEY.get(player).getTokens() + countCoins(player);
+        return SixtySecPlayerMinigameTaskComponent.KEY.get(player).getTokens() + countCoins(player);
     }
 
     private static int countCoins(ServerPlayer player) {
@@ -194,7 +194,7 @@ public final class SixtySecondsNpcShop {
         if (amount <= 0) {
             return true;
         }
-        SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(player);
+        SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(player);
         int balance = tokens.getTokens();
         int fromBalance = Math.min(balance, amount);
         int remaining = amount - fromBalance;

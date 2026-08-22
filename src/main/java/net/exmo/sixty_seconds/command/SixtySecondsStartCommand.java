@@ -2,9 +2,9 @@ package net.exmo.sixty_seconds.command;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
-import net.exmo.sixty_seconds.bridge.SREConfig;
+import net.exmo.sixty_seconds.bridge.SixtySecConfig;
 import net.exmo.sixty_seconds.bridge.ParticipationComponent;
-import net.exmo.sixty_seconds.bridge.SREGameWorldComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
 import net.exmo.sixty_seconds.bridge.GameConstants;
 import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.SixtySecondsMod;
@@ -23,7 +23,7 @@ import java.util.UUID;
 import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
 
-/** {@code /sre:60s start [minutes]} 启动末日60秒模式（也可 {@code /tmm:start sre:sixty_seconds}）。同时包含 sick/cure 调试指令。 */
+/** {@code /60s start [minutes]} 启动末日60秒模式（也可 {@code /60s start}）。同时包含 sick/cure 调试指令。 */
 public final class SixtySecondsStartCommand {
     private SixtySecondsStartCommand() {
     }
@@ -32,14 +32,14 @@ public final class SixtySecondsStartCommand {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
                 literal("60s")
                         .then(literal("start")
-                                .requires(source -> source.hasPermission(SREConfig.instance().startGameRequiredPermission))
-                                // sre:60s start force_all_players [minutes] — 强制所有参与中的玩家加入，无视位置
+                                .requires(source -> source.hasPermission(SixtySecConfig.instance().startGameRequiredPermission))
+                                // 60s start force_all_players [minutes] — 强制所有参与中的玩家加入，无视位置
                                 .then(literal("force_all_players")
                                         .then(argument("minutes", IntegerArgumentType.integer(1))
                                                 .executes(context -> start(context.getSource(),
                                                         IntegerArgumentType.getInteger(context, "minutes"), true)))
                                         .executes(context -> start(context.getSource(), -1, true)))
-                                // sre:60s start [minutes] — 常规启动，仅准备区域内的玩家加入
+                                // 60s start [minutes] — 常规启动，仅准备区域内的玩家加入
                                 .then(argument("minutes", IntegerArgumentType.integer(1))
                                         .executes(context -> start(context.getSource(),
                                                 IntegerArgumentType.getInteger(context, "minutes"), false)))
@@ -63,9 +63,9 @@ public final class SixtySecondsStartCommand {
                                 .then(literal("night").executes(c -> setTime(c.getSource(), "night")))
                                 .then(literal("sleep").executes(c -> setTime(c.getSource(), "sleep"))))
                         // 管理指令：直接设置玩家的生存状态值 / 状态位
-                        // /sre:60s set <player> health|hunger|thirst|sanity|pollution <0..100>
-                        // /sre:60s set <player> downed|monster|sick <true|false>
-                        // /sre:60s set <player> revive — 救起倒地玩家（等价 downed false）
+                        // /60s set <player> health|hunger|thirst|sanity|pollution <0..100>
+                        // /60s set <player> downed|monster|sick <true|false>
+                        // /60s set <player> revive — 救起倒地玩家（等价 downed false）
                         .then(buildSetCommand())
                         // 自我解脱：san 归零变怪倒计时中，玩家可牺牲以换队伍安全（对所有玩家开放）
                         .then(literal("sacrifice").executes(context -> sacrifice(context.getSource())))
@@ -73,7 +73,7 @@ public final class SixtySecondsStartCommand {
                         .then(literal("reach_survivors")
                                 .requires(source -> source.hasPermission(2))
                                 .executes(context -> reachSurvivors(context.getSource())))
-                        // 玩家NPC 敲门喊话：/sre:60s ask <文字>（创造模式，先右键敲避难所门）
+                        // 玩家NPC 敲门喊话：/60s ask <文字>（创造模式，先右键敲避难所门）
                         .then(literal("ask")
                                 .then(argument("text", com.mojang.brigadier.arguments.StringArgumentType.greedyString())
                                         .executes(context -> npcAsk(context.getSource(),
@@ -83,7 +83,7 @@ public final class SixtySecondsStartCommand {
                         .then(literal("newspaper")
                                 .executes(context -> openNewspaper(context.getSource()))
                                 .then(literal("give").executes(context -> giveNewspaper(context.getSource()))))
-                        // 热线电话：聊天栏按钮回调（/sre:60s hotline <type> <action> [args]）
+                        // 热线电话：聊天栏按钮回调（/60s hotline <type> <action> [args]）
                         .then(literal("hotline")
                                 .then(literal("express")
                                         .then(literal("send").executes(context -> hotlineExpressSend(context.getSource())))
@@ -110,7 +110,7 @@ public final class SixtySecondsStartCommand {
                                 .then(literal("recycle")
                                         .then(literal("confirm").executes(context -> hotlineRecycleConfirm(context.getSource())))
                                         .then(literal("cancel").executes(context -> hotlineRecycleCancel(context.getSource())))))
-                        // 每日事件门：玩家点击聊天栏选项（/sre:60s event <token> <option>）+ 管理员强制触发
+                        // 每日事件门：玩家点击聊天栏选项（/60s event <token> <option>）+ 管理员强制触发
                         .then(literal("event")
                                 .then(literal("force")
                                         .requires(source -> source.hasPermission(2))
@@ -182,7 +182,7 @@ public final class SixtySecondsStartCommand {
                                 .then(literal("on").executes(c -> setAutoJoin(c.getSource(), true)))
                                 .then(literal("off").executes(c -> setAutoJoin(c.getSource(), false)))
                                 .executes(c -> showAutoJoin(c.getSource())))
-                        // 海岛远征：/sre:60s island start|stop（OP，独立于对局的地图机制开关）
+                        // 海岛远征：/60s island start|stop（OP，独立于对局的地图机制开关）
                         // map=打开海图（所有玩家）、sail <id>=扬帆（海图点击触发）、home=返回住所
                         .then(literal("island")
                                 .then(literal("start")
@@ -570,7 +570,7 @@ public final class SixtySecondsStartCommand {
     private static final String[] FLAG_FIELDS = { "downed", "monster", "sick" };
 
     /**
-     * {@code /sre:60s set <player> <field> <value>} 管理指令树：
+     * {@code /60s set <player> <field> <value>} 管理指令树：
      * 五个数值状态（0..100）+ 三个状态位（downed/monster/sick）+ revive 快捷救起。
      */
     private static com.mojang.brigadier.builder.LiteralArgumentBuilder<CommandSourceStack> buildSetCommand() {
@@ -675,7 +675,7 @@ public final class SixtySecondsStartCommand {
             source.sendFailure(Component.literal("60s mode not initialized"));
             return 0;
         }
-        if (SREGameWorldComponent.KEY.get(source.getLevel()).isRunning()) {
+        if (SixtySecGameWorldComponent.KEY.get(source.getLevel()).isRunning()) {
             source.sendFailure(Component.translatable("game.start_error.game_running"));
             return 0;
         }
@@ -694,7 +694,7 @@ public final class SixtySecondsStartCommand {
 
         int resolved = minutes >= 0 ? minutes : SixtySecondsMod.MODE.defaultStartTime;
         GameUtils.startGame(source.getLevel(), SixtySecondsMod.MODE, GameConstants.getInTicks(resolved, 0));
-        source.sendSuccess(() -> Component.translatable("commands.sre.start",
+        source.sendSuccess(() -> Component.translatable("commands.60s.start",
                 SixtySecondsMod.MODE.toString(), resolved).withStyle(ChatFormatting.GREEN), true);
         return 1;
     }
@@ -904,7 +904,7 @@ public final class SixtySecondsStartCommand {
     }
 
     // ═══════════════════════════════════════════════════════════
-    // NPC 搭图指令（/sre:60s npc ...）——与 NPC 放置器/调校器等价的键盘操作
+    // NPC 搭图指令（/60s npc ...）——与 NPC 放置器/调校器等价的键盘操作
     // ═══════════════════════════════════════════════════════════
 
     private static final String NPC_LANG = "message.sixty_seconds.sixty_seconds.npc.";
@@ -919,7 +919,7 @@ public final class SixtySecondsStartCommand {
     }
 
     /**
-     * {@code /sre:60s npc ...} 指令树（全 OP）：
+     * {@code /60s npc ...} 指令树（全 OP）：
      * <ul>
      *   <li>{@code add <variant> [profile] [radius]} —— 在脚下登记一个生成点并放预览（=放置器右键）</li>
      *   <li>{@code list} —— 列出全部生成点（点击传送）</li>

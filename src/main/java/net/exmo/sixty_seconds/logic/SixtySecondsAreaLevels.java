@@ -21,15 +21,15 @@ import java.util.WeakHashMap;
  * 探索区「危险等级」（0..{@link SixtySecondsBalance#AREA_LEVEL_MAX}）：
  * <ul>
  *   <li><b>0 级 = 安全区</b>：区域内禁止一切 PvP（攻击不了别人、也不会被攻击），不刷游荡怪/Boss，
- *       物资箱按最低档搜刮（无连锁额外件）。用星级区域魔杖或 {@code /sre:60s_area region ...} 把一块盒设为 0 级即可。</li>
+ *       物资箱按最低档搜刮（无连锁额外件）。用星级区域魔杖或 {@code /60s_area region ...} 把一块盒设为 0 级即可。</li>
  *   <li>等级越高（1..5），物资箱抽取时<b>低权重（稀有）条目越容易出</b>（{@code SixtySecondsLootTable.roll}
  *       按等级压平权重差）且掷出件数越多；</li>
  *   <li>等级越高，周围刷出的怪更多更强（{@code SixtySecondsPveSystem}）。</li>
  * </ul>
  * 等级按<b>坐标反查</b>（门绑定危险区盒都是世界绝对坐标）：先匹配星级区域覆盖，再匹配岛屿单元格，再匹配门绑定危险区
  * （{@code DoorBinding.level}，0=继承全局），都不在则取全局基线（{@code searchZoneLevel}）。
- * 配置命令：{@code /sre:60s_area level <1..5>}（全局）、{@code /sre:60s_area level <1..5> <x y z>}（该点所在绑定区）；
- * 安全区只能通过 {@code /sre:60s_area region add ... 0} 或星级区域魔杖设 0 级实现（全局/门绑定不支持 0）。
+ * 配置命令：{@code /60s_area level <1..5>}（全局）、{@code /60s_area level <1..5> <x y z>}（该点所在绑定区）；
+ * 安全区只能通过 {@code /60s_area region add ... 0} 或星级区域魔杖设 0 级实现（全局/门绑定不支持 0）。
  */
 public final class SixtySecondsAreaLevels {
     private static final Map<ServerLevel, Map<UUID, String>> LAST_ANNOUNCED_REGIONS = new WeakHashMap<>();

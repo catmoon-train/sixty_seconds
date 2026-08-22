@@ -30,7 +30,7 @@ public class SixtySecondsShopTable {
         /** 基准价（代币）；实际售价 = 基准价 × (1 ± priceJitter)，每商人每日一掷。 */
         public int price = 5;
         /**
-         * 结算货币。当前只实现 {@code MINIGAME_TOKEN}（= SREPlayerMinigameTaskComponent 代币，
+         * 结算货币。当前只实现 {@code MINIGAME_TOKEN}（= SixtySecPlayerMinigameTaskComponent 代币，
          * 亦即 60s 的实体币 sixty_seconds_coin）。留字符串口子给以后接 ShopEntry.Currency.MONEY。
          */
         public String currency = "MINIGAME_TOKEN";

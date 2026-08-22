@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * 管理员搭图工具：登记<b>避难所锚点门</b>，并当场预演「避难所锚定到探索区出口门」的落位
- * （开关见 {@code /sre:60s shelter_at_door}）。取代手敲 {@code /sre:60s_area anchor <x y z>}——
+ * （开关见 {@code /60s shelter_at_door}）。取代手敲 {@code /60s_area anchor <x y z>}——
  * 指哪打哪，不用先去抄坐标。
  * <ul>
  *   <li><b>右键避难所模板内的门</b>：登记为 {@link SixtySecondsConfig#shelterAnchorDoor}（立刻落盘）。</li>

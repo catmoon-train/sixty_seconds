@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.client;
 
-import net.exmo.sixty_seconds.bridge.client.SREClient;
+import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.client.FakeGuiGraphics;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
@@ -56,9 +56,9 @@ public final class SixtySecondsStateAlerts {
     public static SixtySecondsStatsComponent localStats() {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null || SixtySecondsMod.MODE == null
-                || SREClient.gameComponent == null || !SREClient.gameComponent.isRunning()
-                || SREClient.gameComponent.getGameMode() != SixtySecondsMod.MODE
-                || !SREClient.isPlayerAliveAndInSurvivalIgnoreShitSplit()) {
+                || SixtySecBridgeClient.gameComponent == null || !SixtySecBridgeClient.gameComponent.isRunning()
+                || SixtySecBridgeClient.gameComponent.getGameMode() != SixtySecondsMod.MODE
+                || !SixtySecBridgeClient.isPlayerAliveAndInSurvivalIgnoreShitSplit()) {
             return null;
         }
         return SixtySecondsStatsComponent.KEY.get(mc.player);
@@ -77,7 +77,7 @@ public final class SixtySecondsStateAlerts {
     /** 每 tick 由 {@link SixtySecondsHud} 调用（HUD 已保证在 60s 局内）。 */
     public static void tick(FakeGuiGraphics graphics, Minecraft client, LocalPlayer player,
             SixtySecondsStatsComponent stats) {
-        if (!SREClient.isPlayerAliveAndInSurvivalIgnoreShitSplit()) {
+        if (!SixtySecBridgeClient.isPlayerAliveAndInSurvivalIgnoreShitSplit()) {
             reset();
             return;
         }

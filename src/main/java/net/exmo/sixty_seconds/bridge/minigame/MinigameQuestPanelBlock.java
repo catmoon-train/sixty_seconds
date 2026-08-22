@@ -3,7 +3,7 @@ package net.exmo.sixty_seconds.bridge.minigame;
 import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
 
-import net.exmo.sixty_seconds.bridge.SREPlayerMinigameTaskComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent;
 import net.exmo.sixty_seconds.bridge.minigame.TaskInstinctShowableInterface;
 import net.exmo.sixty_seconds.bridge.minigame.MinigameQuestBlockEntity;
 import net.exmo.sixty_seconds.registry.ModBlocks;
@@ -101,14 +101,14 @@ public class MinigameQuestPanelBlock extends BaseEntityBlock
             } else if (player instanceof ServerPlayer sp) {
                 // 破坏任务触发点：杀手 + canUseSabotage 角色可右键
                 if (questBe.isSabotageTrigger()) {
-                    var role = net.exmo.sixty_seconds.bridge.SREGameWorldComponent.KEY.get(sp.level())
+                    var role = net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent.KEY.get(sp.level())
                             .getRole(sp);
                     if (role == null || (!role.isKiller() && !role.canUseSabotage())) {
                         return InteractionResult.SUCCESS;
                     }
                     if (questBe.isSabotageOnCooldown(sp.level().getGameTime())) {
                         sp.displayClientMessage(
-                                net.minecraft.network.chat.Component.translatable("message.sre.sabotage_cooldown"),
+                                net.minecraft.network.chat.Component.translatable("message.60s.sabotage_cooldown"),
                                 true);
                         return InteractionResult.SUCCESS;
                     }
@@ -121,17 +121,17 @@ public class MinigameQuestPanelBlock extends BaseEntityBlock
                 String minigameId = questBe.getMinigameId();
                 if (minigameId != null && !minigameId.isEmpty()) {
                     // 游戏运行中：校验任务和冷却
-                    if (net.exmo.sixty_seconds.bridge.SREGameWorldComponent.KEY.get(sp.level()).isRunning()) {
-                        var mgComp = net.exmo.sixty_seconds.bridge.SREPlayerMinigameTaskComponent.KEY.get(sp);
+                    if (net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent.KEY.get(sp.level()).isRunning()) {
+                        var mgComp = net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent.KEY.get(sp);
                         if (!mgComp.hasPendingTask()) {
                             sp.displayClientMessage(
-                                    net.minecraft.network.chat.Component.translatable("message.sre.minigame_no_task"),
+                                    net.minecraft.network.chat.Component.translatable("message.60s.minigame_no_task"),
                                     true);
                             return InteractionResult.SUCCESS;
                         }
                         if (mgComp.isBlockUsed(pos)) {
                             sp.displayClientMessage(
-                                    net.minecraft.network.chat.Component.translatable("message.sre.minigame_cooldown"),
+                                    net.minecraft.network.chat.Component.translatable("message.60s.minigame_cooldown"),
                                     true);
                             return InteractionResult.SUCCESS;
                         }
@@ -139,7 +139,7 @@ public class MinigameQuestPanelBlock extends BaseEntityBlock
                         if (mgComp.targetMinigameId != null && !mgComp.targetMinigameId.isEmpty()
                                 && !mgComp.targetMinigameId.equals(minigameId)) {
                             sp.displayClientMessage(
-                                    net.minecraft.network.chat.Component.translatable("message.sre.minigame_wrong_type",
+                                    net.minecraft.network.chat.Component.translatable("message.60s.minigame_wrong_type",
                                             net.minecraft.network.chat.Component.translatable(
                                                     "minigame.starrailexpress." + mgComp.targetMinigameId)),
                                     true);
@@ -210,7 +210,7 @@ public class MinigameQuestPanelBlock extends BaseEntityBlock
         boolean isMinigamePoint = level.getBlockEntity(pos) instanceof MinigameQuestBlockEntity questBe
                 && !questBe.isSabotageTrigger();
         if (isMinigamePoint) {
-            var mgComp = SREPlayerMinigameTaskComponent.KEY.get(player);
+            var mgComp = SixtySecPlayerMinigameTaskComponent.KEY.get(player);
             if (mgComp != null && mgComp.hasPendingTask() && !mgComp.isBlockUsed(pos)) {
                 // 读取该方块的小游戏类型
                 boolean typeMatches = true;
@@ -236,7 +236,7 @@ public class MinigameQuestPanelBlock extends BaseEntityBlock
                     if (questBe.isSabotageOnCooldown(level.getGameTime())) {
                         return false;
                     }
-                    var role = net.exmo.sixty_seconds.bridge.SREGameWorldComponent.KEY.get(level)
+                    var role = net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent.KEY.get(level)
                             .getRole(player);
                     return role != null && (role.isKiller() || role.canUseSabotage());
                 }

@@ -12,7 +12,7 @@ import net.exmo.sixty_seconds.SixtySeconds;
 /**
  * 末日60秒开场演出的广播 payload（双向注册，无字段）：
  * <ul>
- *   <li><b>C2S</b>：OP 玩家经 {@code /sre:client screen intro_sixty_seconds all} 请求全员播放（服务端权限校验）。</li>
+ *   <li><b>C2S</b>：OP 玩家经 {@code /60s_client screen intro_sixty_seconds all} 请求全员播放（服务端权限校验）。</li>
  *   <li><b>S2C</b>：客户端收到后打开 {@code SixtySecondsIntroScreen}。</li>
  * </ul>
  */

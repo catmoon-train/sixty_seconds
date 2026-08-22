@@ -17,7 +17,7 @@ public class WheelchairFieldItemCommand {
 
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            var fieldItemCommand = Commands.literal("60s:nr")
+            var fieldItemCommand = Commands.literal("60s_nr")
                     .then(Commands.literal("fielditem")
                             .requires(source -> source.hasPermission(2))
                             .then(Commands.argument("pos", BlockPosArgument.blockPos())

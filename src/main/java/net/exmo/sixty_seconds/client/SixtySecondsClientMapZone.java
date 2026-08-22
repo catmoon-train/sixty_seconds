@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.client;
 
-import net.exmo.sixty_seconds.bridge.client.SREClient;
+import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.bridge.fabric.ClientPlayConnectionEvents;
 import net.minecraft.core.BlockPos;
@@ -47,9 +47,9 @@ public final class SixtySecondsClientMapZone {
 
     /** 60s 模式进行中且服务端已推送区域。 */
     public static boolean isActive() {
-        return zone != null && SREClient.gameComponent != null && SREClient.gameComponent.isRunning()
+        return zone != null && SixtySecBridgeClient.gameComponent != null && SixtySecBridgeClient.gameComponent.isRunning()
                 && SixtySecondsMod.MODE != null
-                && SREClient.gameComponent.getGameMode() == SixtySecondsMod.MODE;
+                && SixtySecBridgeClient.gameComponent.getGameMode() == SixtySecondsMod.MODE;
     }
 
     public static AABB activeZone() {

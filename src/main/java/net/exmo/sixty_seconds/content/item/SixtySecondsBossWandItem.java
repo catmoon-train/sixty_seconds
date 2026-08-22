@@ -23,7 +23,7 @@ import net.minecraft.world.level.Level;
  *   <li><b>右键</b>方块 = 在该位置登记 Boss 刷新点并落盘。</li>
  *   <li><b>潜行右键</b>方块 = 移除距离最近（≤8 格）的已登记刷新点。</li>
  * </ul>
- * 只对管理员/创造模式生效。清理用 {@code /sre:60s boss_spawn list|remove|clear}。
+ * 只对管理员/创造模式生效。清理用 {@code /60s boss_spawn list|remove|clear}。
  */
 public class SixtySecondsBossWandItem extends Item {
     private static final String LANG = "message.sixty_seconds.sixty_seconds.boss_wand.";

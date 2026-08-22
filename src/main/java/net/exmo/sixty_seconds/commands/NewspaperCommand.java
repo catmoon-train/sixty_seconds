@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.commands;
 
-import net.exmo.sixty_seconds.bridge.SRENetworkMessageUtils;
+import net.exmo.sixty_seconds.bridge.SixtySecNetworkMessageUtils;
 import net.exmo.sixty_seconds.bridge.fabric.CommandRegistrationCallback;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.ComponentArgument;
@@ -39,7 +39,7 @@ public class NewspaperCommand {
                               Component author = ComponentUtils.updateForEntity(
                                   commandContext.getSource(),
                                   ComponentArgument.getComponent(commandContext, "author"), serverPlayer, 0);
-                              SRENetworkMessageUtils.sendNewspaper(serverPlayer, message, Optional.of(title),
+                              SixtySecNetworkMessageUtils.sendNewspaper(serverPlayer, message, Optional.of(title),
                                   Optional.of(author));
                             }
                             return i;

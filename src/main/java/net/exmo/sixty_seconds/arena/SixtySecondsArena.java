@@ -298,7 +298,7 @@ public final class SixtySecondsArena {
         BlockPos anchor = config.shelterAnchorDoor == null ? null : config.shelterAnchorDoor.toBlockPos();
         if (wantAnchor && anchor == null) {
             SixtySeconds.LOGGER.warn("[60s] shelter_at_door 已开启但未登记避难所锚点门"
-                    + "（/sre:60s_area anchor <x y z>），本局避难所回退到网格克隆。");
+                    + "（/60s_area anchor <x y z>），本局避难所回退到网格克隆。");
         }
         List<BlockPos> offsets = new ArrayList<>();
         int anchored = 0;
@@ -660,7 +660,7 @@ public final class SixtySecondsArena {
                 index++;
                 done++;
             }
-            // 进度显示与其他模式（tmm:start 的 FullTrainResetTask/OnlySomeBlockResetTask）保持一致：
+            // 进度显示与其他模式（60s start 的 FullTrainResetTask/OnlySomeBlockResetTask）保持一致：
             // 走 actionbar（true）、黄色、每 10 tick(~0.5s) 刷新一次，而非聊天栏每秒刷屏。
             if (index < work.size() && (++tickCounter % 10) == 0) {
                 int percent = (int) (100.0 * index / Math.max(1, work.size()));

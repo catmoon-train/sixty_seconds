@@ -131,7 +131,7 @@ public final class SixtySecondsMinigameRotation {
         Component message = Component.translatable("message.sixty_seconds.sixty_seconds.minigame_refresh",
                 SUCCESS_WINDOW / 20).withStyle(ChatFormatting.AQUA);
         for (ServerPlayer player : level.players()) {
-            var comp = net.exmo.sixty_seconds.bridge.SREPlayerMinigameTaskComponent.KEY.get(player);
+            var comp = net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent.KEY.get(player);
             boolean changed = false;
             // 清掉被轮换镶板的复用冷却：新一轮 20s 任务应立即可玩，否则上轮玩过的镶板一直提示冷却中
             for (BlockPos pos : rotated) {
@@ -161,7 +161,7 @@ public final class SixtySecondsMinigameRotation {
             if (!net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {
                 continue;
             }
-            var comp = net.exmo.sixty_seconds.bridge.SREPlayerMinigameTaskComponent.KEY.get(player);
+            var comp = net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent.KEY.get(player);
             boolean changed = false;
             if (comp.pendingMinigameTasks < 1) {
                 comp.pendingMinigameTasks = 1;

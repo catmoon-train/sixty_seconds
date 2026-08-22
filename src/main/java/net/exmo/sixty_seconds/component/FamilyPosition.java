@@ -1,7 +1,7 @@
 package net.exmo.sixty_seconds.component;
 
 /**
- * 家庭身份（轻量标签，不占用 SRERole 角色池）。
+ * 家庭身份（轻量标签，不占用 SixtySecRole 角色池）。
  * 括号内为准备阶段的携带上限：父亲 8，其余 2。
  */
 public enum FamilyPosition {

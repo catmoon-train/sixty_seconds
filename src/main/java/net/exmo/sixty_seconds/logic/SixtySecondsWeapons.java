@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.logic;
 
-import net.exmo.sixty_seconds.bridge.stubs.TMMItems;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecItems;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -103,10 +103,10 @@ public final class SixtySecondsWeapons {
     private static synchronized Map<Item, Integer> table() {
         if (gunTable == null) {
             Map<Item, Integer> map = new HashMap<>();
-            map.put(TMMItems.REVOLVER, 60);
-            map.put(TMMItems.STANDARD_REVOLVER, 60);
-            map.put(TMMItems.DERRINGER, 45);
-            map.put(TMMItems.SNIPER_RIFLE, 90);
+            map.put(SixtySecItems.REVOLVER, 60);
+            map.put(SixtySecItems.STANDARD_REVOLVER, 60);
+            map.put(SixtySecItems.DERRINGER, 45);
+            map.put(SixtySecItems.SNIPER_RIFLE, 90);
             map.put(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_PISTOL, 60);
             map.put(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_RPG, 100);
             map.put(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_SMG, 35);

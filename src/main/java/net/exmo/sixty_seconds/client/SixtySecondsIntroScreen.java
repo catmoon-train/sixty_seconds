@@ -36,7 +36,7 @@ import java.util.Map;
  *
  * <p><b>音效</b>：全部复用原版 {@link SoundEvents}，不新增 ogg 资源（遵循 CLAUDE.md）。
  *
- * <p>触发：客户端命令 {@code /sre:client screen intro_sixty_seconds}。ESC 或点击可跳过。
+ * <p>触发：客户端命令 {@code /60s_client screen intro_sixty_seconds}。ESC 或点击可跳过。
  */
 @OnlyIn(Dist.CLIENT)
 public class SixtySecondsIntroScreen extends Screen {
@@ -53,7 +53,7 @@ public class SixtySecondsIntroScreen extends Screen {
     private static final float LETTERBOX_TOP = 0.10f;
     private static final float LETTERBOX_BOTTOM = 0.24f; // 下方黑幕带（放字幕）
 
-    private static final String KEY = "cinematic.sre.sixty_seconds.";
+    private static final String KEY = "cinematic.60s.sixty_seconds.";
     private static final int TEXT_RGB = 0xF3ECDC;   // 暖白
     private static final int TITLE_RGB = 0xF7EAD2;
 

@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.bridge.minigame;
 
-import net.exmo.sixty_seconds.bridge.SREPlayerMinigameTaskComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent;
 import net.exmo.sixty_seconds.logic.SixtySecondsMinigameRotation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -20,7 +20,7 @@ public final class MinigameQuestServerNetwork {
             return;
         }
         if (SixtySecondsMinigameRotation.tryReward(level, pos, player)) {
-            SREPlayerMinigameTaskComponent.KEY.get(player).addTokens(1);
+            SixtySecPlayerMinigameTaskComponent.KEY.get(player).addTokens(1);
             player.displayClientMessage(
                     Component.translatable("message.sixty_seconds.sixty_seconds.minigame_complete"), true);
         }

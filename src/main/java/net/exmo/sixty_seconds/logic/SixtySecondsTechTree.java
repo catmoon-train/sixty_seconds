@@ -31,7 +31,7 @@ import java.util.UUID;
  * I 级 3 / II 级 6 / III 级 10 / IV 级 14 / V 级 18；工作环境与神秘技术单列）；
  * 跨分支门控（如需先解锁「更好的工作环境-N」）也用 parentId 表达——分支首节点的
  * parent 指向门控节点。两个特殊门控见 {@link #gateSatisfied}：综合补剂=医疗大类全解锁；
- * 神秘技术=全树 75%。入口：{@code /sre:60s tech} 打开科技树界面。
+ * 神秘技术=全树 75%。入口：{@code /60s tech} 打开科技树界面。
  */
 public final class SixtySecondsTechTree {
 

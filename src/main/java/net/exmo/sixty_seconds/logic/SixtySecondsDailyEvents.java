@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.logic;
 
-import net.exmo.sixty_seconds.bridge.SREPlayerMinigameTaskComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent;
 import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
@@ -53,7 +53,7 @@ import java.util.function.Predicate;
  *   <li><b>劫掠</b>：洗劫随机邻队家中容器，收益归己队、全队掉理智，受害队会收到通知。</li>
  * </ul>
  * 丢失物资 = 自动在家（住宅+避难所范围盒）里的所有容器中随机抽走；同队不会连续两天抽到同一事件。
- * 玩家点击选项走 {@code /sre:60s event <token> <option>}（见 SixtySecondsStartCommand）。
+ * 玩家点击选项走 {@code /60s event <token> <option>}（见 SixtySecondsStartCommand）。
  */
 public final class SixtySecondsDailyEvents {
     private static final String LANG = "message.sixty_seconds.sixty_seconds.devent.";
@@ -243,7 +243,7 @@ public final class SixtySecondsDailyEvents {
                 if (pending != null && def.choice != null) {
                     MutableComponent options = Component.empty();
                     for (int i = 1; i <= 2; i++) {
-                        String cmd = "/sre:60s event " + pending.token + " " + i;
+                        String cmd = "/60s event " + pending.token + " " + i;
                         options.append(Component.literal("【")
                                 .append(Component.translatable(LANG + def.id + ".opt" + i))
                                 .append(Component.literal("】"))
@@ -478,7 +478,7 @@ public final class SixtySecondsDailyEvents {
         st.pending.put(team.teamId, new Pending(token, def.id, Long.MAX_VALUE)); // 在睡觉前一直有效
         MutableComponent options = Component.empty();
         for (int i = 1; i <= 2; i++) {
-            String cmd = "/sre:60s event " + token + " " + i;
+            String cmd = "/60s event " + token + " " + i;
             options.append(Component.literal("【")
                     .append(Component.translatable(LANG + def.id + ".opt" + i))
                     .append(Component.literal("】"))
@@ -515,7 +515,7 @@ public final class SixtySecondsDailyEvents {
 
     // ══════════════════════════ 玩家点击选项 ══════════════════════════
 
-    /** 由 {@code /sre:60s event <token> <option>} 调用；校验队伍 / token / 状态后结算。 */
+    /** 由 {@code /60s event <token> <option>} 调用；校验队伍 / token / 状态后结算。 */
     public static void choose(ServerPlayer player, int token, int option) {
         ServerLevel level = player.serverLevel();
         LevelState st = STATE.get(level);
@@ -778,7 +778,7 @@ public final class SixtySecondsDailyEvents {
         });
         // 35. 救济金：每名在线成员 +5 代币
         instant("relief_fund", Type.FORTUNE, 8, (level, team) -> {
-            forEachMember(level, team, p -> SREPlayerMinigameTaskComponent.KEY.get(p).addTokens(5));
+            forEachMember(level, team, p -> SixtySecPlayerMinigameTaskComponent.KEY.get(p).addTokens(5));
             result(level, team, "relief_fund");
         });
 
@@ -822,7 +822,7 @@ public final class SixtySecondsDailyEvents {
         // 25. 电台竞猜：押 5 代币，50% 赢 15 / 50% 打水漂（san -3）；不参与无事
         choice("radio_gamble", Type.CHOICE, 8, (level, team, clicker, option) -> {
             if (option == 1) {
-                SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+                SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
                 if (tokens.getTokens() < 5) {
                     fail(clicker, "no_coins", 5);
                     return false;
@@ -882,7 +882,7 @@ public final class SixtySecondsDailyEvents {
         // 37. 神秘商人：花 7 代币买惊喜袋，60% 药+武器各 1 / 40% 一块破布（san -5）
         choice("mystery_bag", Type.CHOICE, 8, (level, team, clicker, option) -> {
             if (option == 1) {
-                SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+                SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
                 if (tokens.getTokens() < 7) {
                     fail(clicker, "no_coins", 7);
                     return false;
@@ -910,7 +910,7 @@ public final class SixtySecondsDailyEvents {
         // 19. 商队来访：10 代币 → 食物/水/药品各 1
         choice("trade_caravan", Type.TRADE, 10, (level, team, clicker, option) -> {
             if (option == 1) {
-                SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+                SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
                 if (tokens.getTokens() < 10) {
                     fail(clicker, "no_coins", 10);
                     return false;
@@ -945,7 +945,7 @@ public final class SixtySecondsDailyEvents {
         // 38. 军火贩子：8 代币 → 8 发子弹 + 1 件武器类物资
         choice("ammo_trader", Type.TRADE, 8, (level, team, clicker, option) -> {
             if (option == 1) {
-                SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+                SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
                 if (tokens.getTokens() < 8) {
                     fail(clicker, "no_coins", 8);
                     return false;
@@ -1119,7 +1119,7 @@ public final class SixtySecondsDailyEvents {
         // 53. 流浪医生：花 30 金币 → 治愈全队所有病人 + 每人回 20 健康
         choice("wandering_doctor", Type.CHOICE, 10, (level, team, clicker, option) -> {
             if (option == 1) {
-                SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+                SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
                 if (tokens.getTokens() < 5) {
                     fail(clicker, "no_coins", 5);
                     return false;
@@ -1155,7 +1155,7 @@ public final class SixtySecondsDailyEvents {
         // 54. 逃兵交易：花 5 代币 → 1 武器 + 4 子弹 + san -3（来路不明）
         choice("deserters_offer", Type.CHOICE, 8, (level, team, clicker, option) -> {
             if (option == 1) {
-                SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+                SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
                 if (tokens.getTokens() < 5) {
                     fail(clicker, "no_coins", 5);
                     return false;
@@ -1187,7 +1187,7 @@ public final class SixtySecondsDailyEvents {
                 result(level, team, "map_fragment.depart",
                         Component.literal(clicker.getGameProfile().getName()));
             } else {
-                SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+                SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
                 tokens.addTokens(3);
                 result(level, team, "map_fragment.r2",
                         Component.literal(clicker.getGameProfile().getName()));
@@ -1226,7 +1226,7 @@ public final class SixtySecondsDailyEvents {
         // 59. 水贩：4 代币 → 3 瓶水
         choice("water_peddler", Type.TRADE, 8, (level, team, clicker, option) -> {
             if (option == 1) {
-                SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+                SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
                 if (tokens.getTokens() < 4) {
                     fail(clicker, "no_coins", 4);
                     return false;
@@ -1536,7 +1536,7 @@ public final class SixtySecondsDailyEvents {
         // ── 交易：药贩子 ──────────────────────────────────────────────
         choice("medicine_dealer", Type.TRADE, 8, (level, team, clicker, option) -> {
             if (option == 1) {
-                SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+                SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
                 if (tokens.getTokens() < 8) {
                     fail(clicker, "no_coins", 8);
                     return false;
@@ -1629,7 +1629,7 @@ public final class SixtySecondsDailyEvents {
                 float roll = level.getRandom().nextFloat();
                 if (roll < 0.45F) {
                     // 赢：5 代币 + san+5，健康 -10
-                    SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+                    SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
                     tokens.addTokens(5);
                     addHealth(clicker, -10);
                     addSanity(clicker, 5);
@@ -1657,7 +1657,7 @@ public final class SixtySecondsDailyEvents {
         // ── 抉择：黑市情报 ────────────────────────────────────────────
         choice("blackmarket_info", Type.CHOICE, 8, (level, team, clicker, option) -> {
             if (option == 1) {
-                SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+                SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
                 if (tokens.getTokens() < 6) {
                     fail(clicker, "no_coins", 6);
                     return false;
@@ -1769,7 +1769,7 @@ public final class SixtySecondsDailyEvents {
         // ── 交易：种子商 ──────────────────────────────────────────────
         choice("seed_merchant", Type.TRADE, 8, (level, team, clicker, option) -> {
             if (option == 1) {
-                SREPlayerMinigameTaskComponent tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+                SixtySecPlayerMinigameTaskComponent tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
                 if (tokens.getTokens() < 5) {
                     fail(clicker, "no_coins", 5);
                     return false;
@@ -2270,7 +2270,7 @@ public final class SixtySecondsDailyEvents {
         // 161. 拾荒者竞赛：代币→50%双倍/50%丢
         choice("scavenger_bet", Type.CHOICE, 7, (level, team, clicker, option) -> {
             if (option != 1) { result(level, team, "scavenger_bet.r2"); return true; }
-            var tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+            var tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
             if (tokens.getTokens() < 3) { fail(clicker, "no_coins", 3); return false; }
             tokens.addTokens(-3);
             if (level.getRandom().nextFloat() < 0.5) {
@@ -2293,7 +2293,7 @@ public final class SixtySecondsDailyEvents {
         // 163. 地图碎片：花5代币→探索区标记60%成功
         choice("map_fragment", Type.CHOICE, 8, (level, team, clicker, option) -> {
             if (option != 1) { result(level, team, "map_fragment.r2"); return true; }
-            var tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+            var tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
             if (tokens.getTokens() < 5) { fail(clicker, "no_coins", 5); return false; }
             tokens.addTokens(-5);
             if (level.getRandom().nextFloat() < 0.6) {
@@ -2574,7 +2574,7 @@ public final class SixtySecondsDailyEvents {
         // 189. 神秘商人：5代币→随机1件武器（非枪械）
         choice("mystic_merchant", Type.TRADE, 6, (level, team, clicker, option) -> {
             if (option != 1) { result(level, team, "mystic_merchant.r2"); return true; }
-            var tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+            var tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
             if (tokens.getTokens() < 5) { fail(clicker, "no_coins", 5); return false; }
             tokens.addTokens(-5);
             Item[] wp = { ModItems.SIXTY_SECONDS_KNIFE, ModItems.SIXTY_SECONDS_PIPE, ModItems.SIXTY_SECONDS_CROWBAR,
@@ -2770,7 +2770,7 @@ public final class SixtySecondsDailyEvents {
         // 207. 交换情报：3代币→1工具
         choice("intel_buy", Type.TRADE, 8, (level, team, clicker, option) -> {
             if (option != 1) { result(level, team, "intel_buy.r2"); return true; }
-            var tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+            var tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
             if (tokens.getTokens() < 3) { fail(clicker, "no_coins", 3); return false; }
             tokens.addTokens(-3);
             List<ItemStack> g = rollLoot(level, 1, "tool");
@@ -2780,7 +2780,7 @@ public final class SixtySecondsDailyEvents {
         // 208. 玩具推销员：花3代币→随机娱乐物品
         choice("toy_salesman", Type.TRADE, 8, (level, team, clicker, option) -> {
             if (option != 1) { result(level, team, "toy_salesman.r2"); return true; }
-            var tokens = SREPlayerMinigameTaskComponent.KEY.get(clicker);
+            var tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(clicker);
             if (tokens.getTokens() < 3) { fail(clicker, "no_coins", 3); return false; }
             tokens.addTokens(-3);
             Item[] toys = { ModItems.SIXTY_SECONDS_POKER, ModItems.SIXTY_SECONDS_CHESS,

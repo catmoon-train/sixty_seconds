@@ -1,8 +1,8 @@
 package net.exmo.sixty_seconds;
 
 import net.exmo.sixty_seconds.bridge.NeoForgeEvents;
-import net.exmo.sixty_seconds.bridge.stubs.TMMItems;
-import net.exmo.sixty_seconds.bridge.stubs.TMMSounds;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecItems;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecSounds;
 import net.exmo.sixty_seconds.network.ModNetwork;
 import net.exmo.sixty_seconds.registry.ModBlocks;
 import net.exmo.sixty_seconds.registry.ModEffects;
@@ -33,8 +33,8 @@ public class Sixty_seconds {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            TMMItems.bind();
-            TMMSounds.bind();
+            SixtySecItems.bind();
+            SixtySecSounds.bind();
             net.exmo.sixty_seconds.init.ModOceanEntities.bind();
             SixtySecondsMod.init();
         });

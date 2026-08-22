@@ -23,7 +23,7 @@ import java.util.UUID;
  * <p>
  * 需要它的原因：{@code SixtySecondsStatsComponent} 是局内状态、刻意不落盘（重登即重置），
  * 掉线重连会丢失 队伍/身份/五值/倒地 等一切。备份表按局清空（{@code begin}/{@code stopGame}），
- * 不会把上一局的快照恢复到下一局。管理员也可用 {@code /sre:60s backup} 手动 保存/恢复/查看。
+ * 不会把上一局的快照恢复到下一局。管理员也可用 {@code /60s backup} 手动 保存/恢复/查看。
  */
 public final class SixtySecondsReconnect {
     private static final Map<UUID, Snapshot> BACKUPS = new HashMap<>();

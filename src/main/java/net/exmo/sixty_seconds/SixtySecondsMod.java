@@ -2,18 +2,18 @@ package net.exmo.sixty_seconds;
 
 import net.exmo.sixty_seconds.bridge.StarRailExpressID;
 import net.exmo.sixty_seconds.bridge.GameMode;
-import net.exmo.sixty_seconds.bridge.SREGameModes;
-import net.exmo.sixty_seconds.bridge.SREGameWorldComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecGameModes;
+import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
 /**
- * 末日60秒模式的引导装配：通过公开入口 {@link SREGameModes#registerGameMode} 注册模式，
+ * 末日60秒模式的引导装配：通过公开入口 {@link SixtySecGameModes#registerGameMode} 注册模式，
  * <b>不改动</b> {@code io.wifi} 内任何文件；仅需在 {@code Sixtyseconds.onInitialize} 里调用一次 {@link #init()}
  * （与 {@code GooseDuckMod.init()} 一致）。
  */
 public final class SixtySecondsMod {
-    /** 模式 ID：{@code sre:sixty_seconds}，可用 {@code /tmm:start sre:sixty_seconds} 启动。 */
+    /** 模式 ID：{@code sixty_seconds:sixty_seconds}，可用 {@code /60s start} 启动。 */
     public static final ResourceLocation MODE_ID = StarRailExpressID.shortId("sixty_seconds");
 
     /** 注册后的模式实例（init 后非空）。 */
@@ -28,7 +28,7 @@ public final class SixtySecondsMod {
     public static void init() {
         registerCommands();
         SixtySecondsCreativeTab.register(); // 统一创造标签页（须在物品入页前注册）
-        MODE = SREGameModes.registerGameMode(new SixtySecondsGameMode(MODE_ID));
+        MODE = SixtySecGameModes.registerGameMode(new SixtySecondsGameMode(MODE_ID));
         net.exmo.sixty_seconds.arena.SixtySecondsArena.registerEntityClearWindow(); // 开局清卸载区块里的残留尸体/掉落物
         net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem.register();
         net.exmo.sixty_seconds.logic.SixtySecondsMonsterSystem.registerEvents();
@@ -86,6 +86,6 @@ public final class SixtySecondsMod {
 
     /** 当前世界是否正在运行本模式。 */
     public static boolean isActive(Level level) {
-        return MODE != null && SREGameWorldComponent.KEY.get(level).getGameMode() == MODE;
+        return MODE != null && SixtySecGameWorldComponent.KEY.get(level).getGameMode() == MODE;
     }
 }

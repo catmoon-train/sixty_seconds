@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.content.item;
 
-import net.exmo.sixty_seconds.bridge.stubs.TMMBlocks;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecBlocks;
 import net.exmo.sixty_seconds.registry.ModEntities;
 import net.exmo.sixty_seconds.registry.ModItems;
 import net.minecraft.core.BlockPos;
@@ -100,7 +100,7 @@ public class WheelchairItem extends Item {
       if (player.isShiftKeyDown()) { // 不准你潜行用
          return InteractionResultHolder.pass(itemStack);
       }
-      if (player.getCooldowns().isOnCooldown(TMMBlocks.ACACIA_BRANCH.asItem())) {
+      if (player.getCooldowns().isOnCooldown(SixtySecBlocks.ACACIA_BRANCH.asItem())) {
          return InteractionResultHolder.pass(itemStack);
       }
       if (!canPlaceWheelchairAtPlayer(player)) {
@@ -127,7 +127,7 @@ public class WheelchairItem extends Item {
          level.gameEvent(player, GameEvent.ENTITY_PLACE, entity.position());
          player.stopRiding();
          player.startRiding(entity);
-         player.getCooldowns().addCooldown(TMMBlocks.ACACIA_BRANCH.asItem(), 10);
+         player.getCooldowns().addCooldown(SixtySecBlocks.ACACIA_BRANCH.asItem(), 10);
 
          return InteractionResultHolder.consume(itemStack);
       }

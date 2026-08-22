@@ -5,7 +5,7 @@ import de.maxhenkel.voicechat.api.VoicechatPlugin;
 import de.maxhenkel.voicechat.api.events.EventRegistration;
 import de.maxhenkel.voicechat.api.events.MicrophonePacketEvent;
 import net.exmo.sixty_seconds.SixtySeconds;
-import net.exmo.sixty_seconds.bridge.SREGameWorldComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
 import net.exmo.sixty_seconds.content.item.RadioItem;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -35,7 +35,7 @@ public class SixtySecondsVoiceChatPlugin implements VoicechatPlugin {
         if (vcplayer == null || !(vcplayer.getPlayer() instanceof ServerPlayer player)) {
             return;
         }
-        SREGameWorldComponent gameWorldComponent = SREGameWorldComponent.KEY.get(player.level());
+        SixtySecGameWorldComponent gameWorldComponent = SixtySecGameWorldComponent.KEY.get(player.level());
         if (gameWorldComponent == null) {
             return;
         }

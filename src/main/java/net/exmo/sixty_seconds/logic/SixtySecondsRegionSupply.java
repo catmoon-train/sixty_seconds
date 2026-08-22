@@ -11,7 +11,7 @@ import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.registry.ModBlocks;
 
 /**
- * 区域自动撒物资箱：管理员用 {@code /sre:60s_area region add/here} 登记星级区域时，若
+ * 区域自动撒物资箱：管理员用 {@code /60s_area region add/here} 登记星级区域时，若
  * {@code regionAutoSupplyEnabled} 开着，就在区域盒内地表随机撒三种随机箱——
  * <b>低级随机箱 / 上锁高级箱 / 高级随机箱</b>，数量按区域等级缩放（基准数量可配，见
  * {@link net.exmo.sixty_seconds.config.SixtySecondsConfig#regionSupplyBoxBaseCount}）。

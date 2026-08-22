@@ -5,14 +5,14 @@ import net.exmo.sixty_seconds.bridge.cca.ComponentKey;
 import net.exmo.sixty_seconds.bridge.cca.ComponentRegistry;
 import net.minecraft.world.level.Level;
 
-public class SREGameTimeComponent {
-    public static final ComponentKey<SREGameTimeComponent> KEY = ComponentRegistry.getOrCreate(
-            SixtySeconds.id("game_time"), SREGameTimeComponent.class);
+public class SixtySecGameTimeComponent {
+    public static final ComponentKey<SixtySecGameTimeComponent> KEY = ComponentRegistry.getOrCreate(
+            SixtySeconds.id("game_time"), SixtySecGameTimeComponent.class);
 
     private final Level world;
     private int resetTime;
 
-    public SREGameTimeComponent(Level world) {
+    public SixtySecGameTimeComponent(Level world) {
         this.world = world;
     }
 

@@ -1,7 +1,7 @@
 package net.exmo.sixty_seconds.content.entity;
 
-import net.exmo.sixty_seconds.bridge.SREGameWorldComponent;
-import net.exmo.sixty_seconds.bridge.stubs.TMMBlocks;
+import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecBlocks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -50,7 +50,7 @@ public class WheelchairEntity extends Mob {
 
     // ===== 其他字段 =====
     private ItemStack item = ItemStack.EMPTY;
-    private SREGameWorldComponent gameWorldComponent;
+    private SixtySecGameWorldComponent gameWorldComponent;
     private Vec3 lastPos = null;
 
     // ===== 减速与红石冷却 =====
@@ -192,7 +192,7 @@ public class WheelchairEntity extends Mob {
 
         // --- 耐久逻辑（完全保留原逻辑）---
         if (this.level().getGameTime() % 20 == 0) {
-            var gameC = SREGameWorldComponent.KEY.get(player.level());
+            var gameC = SixtySecGameWorldComponent.KEY.get(player.level());
             if (gameC.isRunning()) {
                 this.durability--;
             }
@@ -347,7 +347,7 @@ public class WheelchairEntity extends Mob {
     public float maxUpStep() {
         float f = 0.6F;
         if (gameWorldComponent == null) {
-            var gameComp = SREGameWorldComponent.KEY.maybeGet(this.level()).orElse(null);
+            var gameComp = SixtySecGameWorldComponent.KEY.maybeGet(this.level()).orElse(null);
             if (gameComp != null) {
                 this.gameWorldComponent = gameComp;
             } else {
@@ -411,10 +411,10 @@ public class WheelchairEntity extends Mob {
             return InteractionResult.SUCCESS;
         }
         if (this.getPassengers().isEmpty() && !player.isShiftKeyDown()
-                && !player.getCooldowns().isOnCooldown(TMMBlocks.ACACIA_BRANCH.asItem())) {
+                && !player.getCooldowns().isOnCooldown(SixtySecBlocks.ACACIA_BRANCH.asItem())) {
             if (!this.level().isClientSide) {
                 player.startRiding(this, true);
-                player.getCooldowns().addCooldown(TMMBlocks.ACACIA_BRANCH.asItem(), 10);
+                player.getCooldowns().addCooldown(SixtySecBlocks.ACACIA_BRANCH.asItem(), 10);
                 if (this.getControllingPassenger() == null)
                     this.addPassenger(player);
             }

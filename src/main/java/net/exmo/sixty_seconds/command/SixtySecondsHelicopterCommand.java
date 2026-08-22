@@ -11,9 +11,9 @@ import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
 
 /**
- * 直升机撤离指令（独立于 {@code /sre:60s} 命令树），统一管理 开关/状态/手动触发/设置降落点。
+ * 直升机撤离指令（独立于 {@code /60s} 命令树），统一管理 开关/状态/手动触发/设置降落点。
  * <p>
- * 注册为 {@code /sre:60s_helicopter}，所有子命令均需 OP 2 级权限。
+ * 注册为 {@code /60s_helicopter}，所有子命令均需 OP 2 级权限。
  * </p>
  */
 public final class SixtySecondsHelicopterCommand {
@@ -22,19 +22,19 @@ public final class SixtySecondsHelicopterCommand {
 
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
-                literal("sre:60s_helicopter")
+                literal("60s_helicopter")
                         .requires(source -> source.hasPermission(2))
-                        // /sre:60s_helicopter on  — 开启直升机
+                        // /60s_helicopter on  — 开启直升机
                         .then(literal("on").executes(c -> setHelicopter(c.getSource(), true)))
-                        // /sre:60s_helicopter off — 关闭直升机
+                        // /60s_helicopter off — 关闭直升机
                         .then(literal("off").executes(c -> setHelicopter(c.getSource(), false)))
-                        // /sre:60s_helicopter arrive — 手动触发直升机抵达
+                        // /60s_helicopter arrive — 手动触发直升机抵达
                         .then(literal("arrive").executes(c -> helicopterArrive(c.getSource())))
-                        // /sre:60s_helicopter        — 查看状态
+                        // /60s_helicopter        — 查看状态
                         .executes(c -> showHelicopter(c.getSource()))));
-        // /sre:60s_helicopter_set <x> <y> <z> — 设置降落点
+        // /60s_helicopter_set <x> <y> <z> — 设置降落点
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
-                literal("sre:60s_helicopter_set")
+                literal("60s_helicopter_set")
                         .requires(source -> source.hasPermission(2))
                         .then(argument("x", IntegerArgumentType.integer())
                                 .then(argument("y", IntegerArgumentType.integer())
@@ -72,7 +72,7 @@ public final class SixtySecondsHelicopterCommand {
             posStr = " §7(" + config.helicopterLandingPos.x + ", " + config.helicopterLandingPos.y + ", "
                     + config.helicopterLandingPos.z + ")";
         } else {
-            posStr = " §7(未设置 - 使用 /sre:60s_helicopter_set <x> <y> <z>)";
+            posStr = " §7(未设置 - 使用 /60s_helicopter_set <x> <y> <z>)";
         }
         source.sendSuccess(() -> Component.translatable(enabled
                         ? "message.sixty_seconds.sixty_seconds.helicopter_enabled"

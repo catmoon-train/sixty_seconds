@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.logic;
 
-import net.exmo.sixty_seconds.bridge.SRENetworkMessageUtils;
+import net.exmo.sixty_seconds.bridge.SixtySecNetworkMessageUtils;
 import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
@@ -598,7 +598,7 @@ public final class SixtySecondsNewspaper {
     public static void openMock(ServerPlayer player) {
         ServerLevel level = player.serverLevel();
         List<Component> sections = buildMockSections(level);
-        SRENetworkMessageUtils.sendNewspaper(player, sections,
+        SixtySecNetworkMessageUtils.sendNewspaper(player, sections,
                 java.util.Optional.of(Component.translatable(LANG + "title", 7)),
                 java.util.Optional.of(Component.translatable(LANG + "author")));
     }
@@ -649,7 +649,7 @@ public final class SixtySecondsNewspaper {
             }
             sections.add(Component.literal(history.toString()).withStyle(ChatFormatting.DARK_GRAY));
         }
-        SRENetworkMessageUtils.sendNewspaper(player, sections,
+        SixtySecNetworkMessageUtils.sendNewspaper(player, sections,
                 java.util.Optional.of(Component.translatable(LANG + "title", today.day)),
                 java.util.Optional.of(Component.translatable(LANG + "author")));
     }

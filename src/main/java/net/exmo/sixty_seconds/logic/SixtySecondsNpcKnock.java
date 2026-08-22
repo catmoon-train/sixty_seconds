@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.logic;
 
-import net.exmo.sixty_seconds.bridge.SRENetworkMessageUtils;
+import net.exmo.sixty_seconds.bridge.SixtySecNetworkMessageUtils;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.ChatFormatting;
@@ -20,8 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 玩家 NPC 敲门喊话：<b>创造模式的非参与玩家</b>（扮演 NPC 的演员）右键任意避难所门 =
- * 敲门——门内家庭听到敲门声与提示；随后 NPC 用 {@code /sre:60s ask <文字>} 向门内喊话，
- * 门内成员在聊天栏收到「门外的声音」，并经 {@link SRENetworkMessageUtils#sendBroadcast} 弹广播。
+ * 敲门——门内家庭听到敲门声与提示；随后 NPC 用 {@code /60s ask <文字>} 向门内喊话，
+ * 门内成员在聊天栏收到「门外的声音」，并经 {@link SixtySecNetworkMessageUtils#sendBroadcast} 弹广播。
  * 敲门记录（NPC → 目标队）保留到下次敲门/游戏重置，期间可连续喊话。
  */
 public final class SixtySecondsNpcKnock {
@@ -62,20 +62,20 @@ public final class SixtySecondsNpcKnock {
         for (ServerPlayer member : members(level, team)) {
             member.displayClientMessage(heard, false);
         }
-        // 提示 NPC：点击补全 /sre:60s ask 输入喊话内容
+        // 提示 NPC：点击补全 /60s ask 输入喊话内容
         player.displayClientMessage(Component.translatable(LANG + "knocked", team.teamId + 1)
                 .withStyle(ChatFormatting.GRAY), false);
         player.displayClientMessage(Component.literal("【")
                 .append(Component.translatable(LANG + "prompt"))
                 .append(Component.literal("】"))
                 .withStyle(style -> style.withColor(ChatFormatting.YELLOW)
-                        .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/sre:60s ask "))
+                        .withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/60s ask "))
                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                                 Component.translatable(LANG + "prompt_hint")))), false);
         return true;
     }
 
-    /** {@code /sre:60s ask <text>}：向最近敲过的队喊话；未敲过门或队伍已不存在时提示。 */
+    /** {@code /60s ask <text>}：向最近敲过的队喊话；未敲过门或队伍已不存在时提示。 */
     public static void ask(ServerPlayer npc, String text) {
         if (!npc.isCreative()) {
             npc.displayClientMessage(Component.translatable(LANG + "creative_only")
@@ -96,7 +96,7 @@ public final class SixtySecondsNpcKnock {
         List<ServerPlayer> members = members(level, team);
         for (ServerPlayer member : members) {
             member.displayClientMessage(line, false);
-            SRENetworkMessageUtils.sendBroadcast(member, Component.translatable(LANG + "voice", text));
+            SixtySecNetworkMessageUtils.sendBroadcast(member, Component.translatable(LANG + "voice", text));
             member.playNotifySound(SoundEvents.ZOMBIE_ATTACK_WOODEN_DOOR, SoundSource.AMBIENT, 0.4F, 1.5F);
         }
         npc.displayClientMessage(Component.translatable(LANG + "delivered", members.size())

@@ -2,9 +2,9 @@ package net.exmo.sixty_seconds.network;
 
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking;
-import net.exmo.sixty_seconds.content.item.component.SREWritableBookContent;
-import net.exmo.sixty_seconds.content.item.component.SREWrittenBookContent;
-import net.exmo.sixty_seconds.index.SREDataComponentTypes;
+import net.exmo.sixty_seconds.content.item.component.SixtySecWritableBookContent;
+import net.exmo.sixty_seconds.content.item.component.SixtySecWrittenBookContent;
+import net.exmo.sixty_seconds.index.SixtySecDataComponentTypes;
 import net.exmo.sixty_seconds.registry.ModItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
@@ -52,22 +52,22 @@ public record EditNewspaperPacket(List<String> pages, Optional<String> title) im
                 list.add(Filterable.passThrough(Component.literal(p)));
             }
             String title = titOpt.get();
-            if (title.length() >= SREWrittenBookContent.TITLE_MAX_LENGTH) {
-                title = title.substring(0, SREWrittenBookContent.TITLE_MAX_LENGTH);
+            if (title.length() >= SixtySecWrittenBookContent.TITLE_MAX_LENGTH) {
+                title = title.substring(0, SixtySecWrittenBookContent.TITLE_MAX_LENGTH);
             }
             String shortTitle = title;
             if (shortTitle.length() >= 10) {
                 shortTitle = shortTitle.substring(0, 8) + "...";
             }
-            mainHandItem.set(SREDataComponentTypes.WRITTEN_BOOK_CONTENT,
-                    new SREWrittenBookContent(Filterable.passThrough(title), player.getScoreboardName(), list, true));
+            mainHandItem.set(SixtySecDataComponentTypes.WRITTEN_BOOK_CONTENT,
+                    new SixtySecWrittenBookContent(Filterable.passThrough(title), player.getScoreboardName(), list, true));
             mainHandItem.set(DataComponents.ITEM_NAME,
                     Component.translatable("item.sixty_seconds.newspaper.name",
                             Component.translatable("item.sixty_seconds.newspaper.title.warp", shortTitle)
                                     .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)));
 
-            if (mainHandItem.has(SREDataComponentTypes.WRITABLE_BOOK_CONTENT)) {
-                mainHandItem.remove(SREDataComponentTypes.WRITABLE_BOOK_CONTENT);
+            if (mainHandItem.has(SixtySecDataComponentTypes.WRITABLE_BOOK_CONTENT)) {
+                mainHandItem.remove(SixtySecDataComponentTypes.WRITABLE_BOOK_CONTENT);
             }
         } else {
             var list = new ArrayList<Filterable<String>>();
@@ -78,7 +78,7 @@ public record EditNewspaperPacket(List<String> pages, Optional<String> title) im
                     Component.translatable("item.sixty_seconds.newspaper.draft",
                             Component.translatable("item.sixty_seconds.newspaper.draft.warp", player.getName())
                                     .withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY)));
-            mainHandItem.set(SREDataComponentTypes.WRITABLE_BOOK_CONTENT, new SREWritableBookContent(list));
+            mainHandItem.set(SixtySecDataComponentTypes.WRITABLE_BOOK_CONTENT, new SixtySecWritableBookContent(list));
         }
     }
 }

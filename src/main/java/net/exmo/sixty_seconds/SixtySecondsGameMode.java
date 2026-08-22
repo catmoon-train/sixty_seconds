@@ -1,7 +1,7 @@
 package net.exmo.sixty_seconds;
 
 import net.exmo.sixty_seconds.bridge.GameMode;
-import net.exmo.sixty_seconds.bridge.SREGameWorldComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
 import net.exmo.sixty_seconds.arena.SixtySecondsArena;
 import net.exmo.sixty_seconds.arena.SixtySecondsSearchZones;
 import net.exmo.sixty_seconds.logic.SixtySecondsManager;
@@ -31,7 +31,7 @@ public class SixtySecondsGameMode extends GameMode {
      * 传送统一放在异步建图完成回调（{@code SixtySecondsManager.onBuildComplete}）。
      */
     @Override
-    public void beforeInitializeGame(ServerLevel serverWorld, SREGameWorldComponent gameWorldComponent,
+    public void beforeInitializeGame(ServerLevel serverWorld, SixtySecGameWorldComponent gameWorldComponent,
             List<ServerPlayer> players) {
         net.exmo.sixty_seconds.logic.SixtySecondsGameSetup.prepareWorld(serverWorld, gameWorldComponent, players);
     }
@@ -46,7 +46,7 @@ public class SixtySecondsGameMode extends GameMode {
         return false;
     }
 
-    /** 家庭身份不是 SRERole：允许没有职业的存活生还者（否则会被强制变旁观）。 */
+    /** 家庭身份不是 SixtySecRole：允许没有职业的存活生还者（否则会被强制变旁观）。 */
     @Override
     public boolean requiresAssignedRole() {
         return false;
@@ -59,7 +59,7 @@ public class SixtySecondsGameMode extends GameMode {
     }
 
     /**
-     * 尸体可拿取：60s 玩家无 SRERole（{@link #requiresAssignedRole()} 返 false），若不覆写此项，
+     * 尸体可拿取：60s 玩家无 SixtySecRole（{@link #requiresAssignedRole()} 返 false），若不覆写此项，
      * {@code PlayerBodyEntityContainer} 的取物门控全部回退到 role==null → false，导致「能开尸体箱却拿不出东西」。
      * 与 {@code canSeeBodyContent} 成对开启（对照 RepairEscapeGameMode）。
      */
@@ -80,13 +80,13 @@ public class SixtySecondsGameMode extends GameMode {
 
     /** 旁观者同理不限制在 playArea 内——否则观战者飞到各队避难所/探索区就被拉回列车。 */
     @Override
-    public void limitSpectatorPlayer(ServerPlayer player, SREGameWorldComponent gameWorldComponent,
+    public void limitSpectatorPlayer(ServerPlayer player, SixtySecGameWorldComponent gameWorldComponent,
             net.exmo.sixty_seconds.bridge.AreasWorldComponent areas) {
         // 60s 不做旁观限制（游戏区域分散在 playArea 之外的克隆网格里）
     }
 
     @Override
-    public void initializeGame(ServerLevel serverWorld, SREGameWorldComponent gameWorldComponent,
+    public void initializeGame(ServerLevel serverWorld, SixtySecGameWorldComponent gameWorldComponent,
             List<ServerPlayer> players) {
         SixtySecondsSearchZones.reset(serverWorld);
         SixtySecondsArena.restoreAll(serverWorld);
@@ -95,7 +95,7 @@ public class SixtySecondsGameMode extends GameMode {
     }
 
     @Override
-    public void tickServerGameLoop(ServerLevel serverWorld, SREGameWorldComponent gameWorldComponent) {
+    public void tickServerGameLoop(ServerLevel serverWorld, SixtySecGameWorldComponent gameWorldComponent) {
         super.tickServerGameLoop(serverWorld, gameWorldComponent);
         SixtySecondsManager.tick(serverWorld, gameWorldComponent);
     }

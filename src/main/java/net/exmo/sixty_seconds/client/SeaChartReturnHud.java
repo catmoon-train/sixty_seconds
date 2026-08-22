@@ -261,6 +261,6 @@ public final class SeaChartReturnHud {
             return;
         }
         // 请求服务端下发海图数据并打开
-        minecraft.player.connection.sendCommand("sre:60s island map");
+        minecraft.player.connection.sendCommand("60s island map");
     }
 }

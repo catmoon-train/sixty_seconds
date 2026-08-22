@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.content.item;
 
-import net.exmo.sixty_seconds.bridge.stubs.SREItemProperties;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecItemProperties;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
@@ -23,7 +23,7 @@ import java.util.List;
  * <p>面板"攻击伤害"显示值 ≈ {@link #healthDamage} / {@link SixtySecondsBalance#HEALTH_PER_VANILLA_HP}，
  * 让玩家直观看出"扣多少健康"（150 健康 ≈ 50 原版HP，3:1 深度绑定）；tooltip 另显示真实健康伤害值。
  */
-public class SixtySecondsMeleeWeaponItem extends Item implements SREItemProperties.LeftClickHurtable {
+public class SixtySecondsMeleeWeaponItem extends Item implements SixtySecItemProperties.LeftClickHurtable {
     private final int healthDamage;
     /** 命中附加缓慢 IV 的时长（tick，0=无；电击棍用）。 */
     private final int stunTicks;

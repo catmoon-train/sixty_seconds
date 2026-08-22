@@ -134,9 +134,9 @@ public final class SixtySecondsHotlineSystem {
     public static void handleExpressGreeting(ServerPlayer player) {
         player.displayClientMessage(tl("hotline.express.greeting").withStyle(ChatFormatting.GOLD), false);
         player.displayClientMessage(
-            btn("hotline.express.send", "/sre:60s hotline express send", ChatFormatting.GREEN), false);
+            btn("hotline.express.send", "/60s hotline express send", ChatFormatting.GREEN), false);
         player.displayClientMessage(
-            btn("hotline.express.cancel", "/sre:60s hotline express cancel", ChatFormatting.GRAY), false);
+            btn("hotline.express.cancel", "/60s hotline express cancel", ChatFormatting.GRAY), false);
     }
 
     public static void handleExpressCancel(ServerPlayer player) {
@@ -162,7 +162,7 @@ public final class SixtySecondsHotlineSystem {
                     .setStyle(Style.EMPTY
                         .withColor(ChatFormatting.AQUA)
                         .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
-                            "/sre:60s hotline express team " + tid))
+                            "/60s hotline express team " + tid))
                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                             Component.translatable("message.sixty_seconds.hotline.express.team_hover", tid)))));
             }
@@ -205,13 +205,13 @@ public final class SixtySecondsHotlineSystem {
                 .append(Component.translatable("message.sixty_seconds.hotline.shop.buy")
                     .setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN)
                         .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
-                            "/sre:60s hotline shop buy " + i))
+                            "/60s hotline shop buy " + i))
                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                             Component.translatable("message.sixty_seconds.hotline.shop.buy_hover")))));
             player.displayClientMessage(line, false);
         }
         player.displayClientMessage(
-            btn("hotline.shop.cancel", "/sre:60s hotline shop cancel", ChatFormatting.GRAY), false);
+            btn("hotline.shop.cancel", "/60s hotline shop cancel", ChatFormatting.GRAY), false);
     }
 
     public static void handleShopBuy(ServerPlayer player, int index) {
@@ -248,9 +248,9 @@ public final class SixtySecondsHotlineSystem {
         if (isTimeout(player)) { timeout(player); return; }
         player.displayClientMessage(tl("hotline.rescue.greeting").withStyle(ChatFormatting.GOLD), false);
         player.displayClientMessage(
-            btn("hotline.rescue.request", "/sre:60s hotline rescue request", ChatFormatting.GREEN), false);
+            btn("hotline.rescue.request", "/60s hotline rescue request", ChatFormatting.GREEN), false);
         player.displayClientMessage(
-            btn("hotline.rescue.cancel", "/sre:60s hotline rescue cancel", ChatFormatting.GRAY), false);
+            btn("hotline.rescue.cancel", "/60s hotline rescue cancel", ChatFormatting.GRAY), false);
     }
 
     public static void handleRescueCancel(ServerPlayer player) {
@@ -421,9 +421,9 @@ public final class SixtySecondsHotlineSystem {
         if (isTimeout(player)) { timeout(player); return; }
         player.displayClientMessage(tl("hotline.hire.greeting").withStyle(ChatFormatting.GOLD), false);
         player.displayClientMessage(
-                btn("hotline.hire.confirm", "/sre:60s hotline hire confirm", ChatFormatting.GREEN), false);
+                btn("hotline.hire.confirm", "/60s hotline hire confirm", ChatFormatting.GREEN), false);
         player.displayClientMessage(
-                btn("hotline.hire.cancel", "/sre:60s hotline hire cancel", ChatFormatting.GRAY), false);
+                btn("hotline.hire.cancel", "/60s hotline hire cancel", ChatFormatting.GRAY), false);
     }
 
     public static void handleHireConfirm(ServerPlayer player) {
@@ -475,9 +475,9 @@ public final class SixtySecondsHotlineSystem {
         if (isTimeout(player)) { timeout(player); return; }
         player.displayClientMessage(tl("hotline.black_market.greeting").withStyle(ChatFormatting.GOLD), false);
         player.displayClientMessage(
-                btn("hotline.black_market.buy", "/sre:60s hotline black_market buy", ChatFormatting.GREEN), false);
+                btn("hotline.black_market.buy", "/60s hotline black_market buy", ChatFormatting.GREEN), false);
         player.displayClientMessage(
-                btn("hotline.black_market.cancel", "/sre:60s hotline black_market cancel", ChatFormatting.GRAY), false);
+                btn("hotline.black_market.cancel", "/60s hotline black_market cancel", ChatFormatting.GRAY), false);
     }
 
     public static void handleBlackMarketBuy(ServerPlayer player) {
@@ -529,9 +529,9 @@ public final class SixtySecondsHotlineSystem {
         if (isTimeout(player)) { timeout(player); return; }
         player.displayClientMessage(tl("hotline.recycle.greeting").withStyle(ChatFormatting.GOLD), false);
         player.displayClientMessage(
-                btn("hotline.recycle.confirm", "/sre:60s hotline recycle confirm", ChatFormatting.GREEN), false);
+                btn("hotline.recycle.confirm", "/60s hotline recycle confirm", ChatFormatting.GREEN), false);
         player.displayClientMessage(
-                btn("hotline.recycle.cancel", "/sre:60s hotline recycle cancel", ChatFormatting.GRAY), false);
+                btn("hotline.recycle.cancel", "/60s hotline recycle cancel", ChatFormatting.GRAY), false);
     }
 
     public static void handleRecycleConfirm(ServerPlayer player) {

@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
  * 例如 7 天局：d1=0.043, d2=0.086, d3=0.129, d4=0.171, d5=0.714, d6=0.857, d7=1.0
  *
  * <h3>利维坦不自然刷新</h3>
- * 只能通过 {@code /sre:ocean spawn monster leviathan} 指令召唤。
+ * 只能通过 {@code /60s_ocean spawn monster leviathan} 指令召唤。
  *
  * <h3>海怪出场特效</h3>
  * <ul>

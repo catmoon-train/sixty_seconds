@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
 /**
- * 赛前组队大厅（{@code /sre:60s team} 打开）：卡片式列出全部预组队伍，可创建/加入/离开。
+ * 赛前组队大厅（{@code /60s team} 打开）：卡片式列出全部预组队伍，可创建/加入/离开。
  * 卡片区可滚轮滚动（scissor 裁剪 + 金色滚动条）。风格遵循 {@code docs/ui_style.md}。
  * 服务端有变动时推送新快照原地刷新（保持滚动位置）。
  */

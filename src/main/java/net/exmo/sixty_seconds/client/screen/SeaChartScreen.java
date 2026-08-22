@@ -81,7 +81,7 @@ public class SeaChartScreen extends Screen {
             addRenderableWidget(Button.builder(Component.translatable(LANG + "chart_home"), button -> {
                 Minecraft minecraft = Minecraft.getInstance();
                 if (minecraft.player != null) {
-                    minecraft.player.connection.sendCommand("sre:60s island home");
+                    minecraft.player.connection.sendCommand("60s island home");
                 }
                 onClose();
             }).bounds(mapX, mapY + mapH + 6, 96, 20).build());
@@ -242,7 +242,7 @@ public class SeaChartScreen extends Screen {
             Minecraft minecraft = Minecraft.getInstance();
             if (entry != null && minecraft.player != null) {
                 if (entry.unlocked()) {
-                    minecraft.player.connection.sendCommand("sre:60s island sail " + entry.id());
+                    minecraft.player.connection.sendCommand("60s island sail " + entry.id());
                     onClose();
                 } else {
                     minecraft.player.displayClientMessage(Component.translatable(LANG + "chart_locked_hint")

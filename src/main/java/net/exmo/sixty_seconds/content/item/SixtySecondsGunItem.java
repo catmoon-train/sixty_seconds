@@ -1,9 +1,9 @@
 package net.exmo.sixty_seconds.content.item;
 
-import net.exmo.sixty_seconds.bridge.stubs.SREItemProperties;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecItemProperties;
 import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.registry.ModSounds;
-import net.exmo.sixty_seconds.bridge.stubs.TMMSounds;
+import net.exmo.sixty_seconds.bridge.stubs.SixtySecSounds;
 import net.exmo.sixty_seconds.bridge.stubs.PacketTracker;
 import net.exmo.sixty_seconds.bridge.stubs.ShootMuzzleS2CPayload;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
@@ -49,7 +49,7 @@ import java.util.List;
  * 每把枪有独立<b>攻击冷却</b>；枪声<b>降噪</b>（音量 {@link SixtySecondsBalance#GUN_SOUND_VOLUME}）。
  * 客户端只做准星射线 + 表现，命中结算全在服务端 {@link #handleShoot}（server-authoritative）。
  */
-public class SixtySecondsGunItem extends Item implements SREItemProperties.HeldLikeRevolver {
+public class SixtySecondsGunItem extends Item implements SixtySecItemProperties.HeldLikeRevolver {
     /** 全部已注册的枪械（构造时自动登记），用于「开一枪→所有枪共享冷却」。 */
     private static final java.util.List<SixtySecondsGunItem> ALL_GUNS = new java.util.ArrayList<>();
 
@@ -184,7 +184,7 @@ public class SixtySecondsGunItem extends Item implements SREItemProperties.HeldL
         // 弹药：非创造须有对应弹药，否则空枪「咔哒」并提示
         if (!player.isCreative() && !consumeAmmo(player, gun.ammoItem(), gun.ammoPerShot)) {
             level.playSound(null, player.getX(), player.getEyeY(), player.getZ(),
-                    TMMSounds.ITEM_REVOLVER_CLICK, SoundSource.PLAYERS, 0.6F, 1.3F);
+                    SixtySecSounds.ITEM_REVOLVER_CLICK, SoundSource.PLAYERS, 0.6F, 1.3F);
             player.displayClientMessage(
                     Component.translatable("message.sixty_seconds.sixty_seconds.gun_no_ammo"), true);
             return;
@@ -205,7 +205,7 @@ public class SixtySecondsGunItem extends Item implements SREItemProperties.HeldL
 
         // 降噪枪声（原枪声 5f 过响，这里低音量 + 略高音高的「噗」）
         level.playSound(null, player.getX(), player.getEyeY(), player.getZ(),
-                TMMSounds.ITEM_REVOLVER_SHOOT, SoundSource.PLAYERS, SixtySecondsBalance.GUN_SOUND_VOLUME,
+                SixtySecSounds.ITEM_REVOLVER_SHOOT, SoundSource.PLAYERS, SixtySecondsBalance.GUN_SOUND_VOLUME,
                 1.4F + player.getRandom().nextFloat() * 0.1F - 0.05F);
 
         // 弹道轨迹 + 枪口闪光

@@ -101,10 +101,10 @@ public final class TeamPingClientHandler {
     /** 60s 模式进行中 + 非旁观 + 已编队。 */
     private static boolean canPing(Minecraft client) {
         if (client.player == null || client.level == null || client.player.isSpectator()) return false;
-        if (net.exmo.sixty_seconds.bridge.client.SREClient.gameComponent == null
-                || !net.exmo.sixty_seconds.bridge.client.SREClient.gameComponent.isRunning()
+        if (net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient.gameComponent == null
+                || !net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient.gameComponent.isRunning()
                 || SixtySecondsMod.MODE == null
-                || net.exmo.sixty_seconds.bridge.client.SREClient.gameComponent.getGameMode() != SixtySecondsMod.MODE)
+                || net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient.gameComponent.getGameMode() != SixtySecondsMod.MODE)
             return false;
         return true;
     }

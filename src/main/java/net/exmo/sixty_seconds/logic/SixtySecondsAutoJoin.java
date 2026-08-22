@@ -44,7 +44,7 @@ import java.util.UUID;
  * 这些玩家即便退服再进也<b>不会</b>再次中途加入（防死亡/淘汰后重进刷新身份）。按局清空。
  *
  * <p>与 {@link SixtySecondsReconnect} 分工：有备份的掉线重连玩家由 Reconnect 复原原队伍，本类只接管全新玩家。
- * 开关 {@code autoJoinEnabled}（默认开，{@code /sre:60s autojoin on|off}）。
+ * 开关 {@code autoJoinEnabled}（默认开，{@code /60s autojoin on|off}）。
  */
 public final class SixtySecondsAutoJoin {
 

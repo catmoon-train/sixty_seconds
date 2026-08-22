@@ -5,11 +5,11 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SREGameModes {
+public final class SixtySecGameModes {
     public static final List<GameMode> MODES = new ArrayList<>();
     public static GameMode MURDER;
 
-    private SREGameModes() {
+    private SixtySecGameModes() {
     }
 
     public static GameMode registerGameMode(GameMode mode) {

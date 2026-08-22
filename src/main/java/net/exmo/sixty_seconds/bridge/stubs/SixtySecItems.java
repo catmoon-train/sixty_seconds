@@ -4,8 +4,8 @@ import net.exmo.sixty_seconds.registry.ModItems;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
-public final class TMMItems {
-    private TMMItems() {}
+public final class SixtySecItems {
+    private SixtySecItems() {}
     public static Item REVOLVER = Items.AIR;
     public static Item STANDARD_REVOLVER = Items.AIR;
     public static Item DERRINGER = Items.AIR;

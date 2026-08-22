@@ -5,9 +5,9 @@ import net.exmo.sixty_seconds.bridge.cca.ComponentKey;
 import net.exmo.sixty_seconds.bridge.cca.ComponentRegistry;
 import net.minecraft.world.entity.player.Player;
 
-public class SREPlayerMinigameTaskComponent implements RoleComponent {
-    public static final ComponentKey<SREPlayerMinigameTaskComponent> KEY = ComponentRegistry.getOrCreate(
-            SixtySeconds.id("minigame_task"), SREPlayerMinigameTaskComponent.class);
+public class SixtySecPlayerMinigameTaskComponent implements RoleComponent {
+    public static final ComponentKey<SixtySecPlayerMinigameTaskComponent> KEY = ComponentRegistry.getOrCreate(
+            SixtySeconds.id("minigame_task"), SixtySecPlayerMinigameTaskComponent.class);
 
     private final Player player;
     public int tokens = 0;
@@ -15,7 +15,7 @@ public class SREPlayerMinigameTaskComponent implements RoleComponent {
     public String targetMinigameId;
     public final java.util.HashMap<Long, Long> blockCooldownUntil = new java.util.HashMap<>();
 
-    public SREPlayerMinigameTaskComponent(Player player) {
+    public SixtySecPlayerMinigameTaskComponent(Player player) {
         this.player = player;
     }
 

@@ -20,21 +20,21 @@ import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
 
 /**
- * {@code /sre:60s_area ...} 登记末日60秒模式的地图配置（模板区域 / 出生点 / 队伍网格），落盘到
+ * {@code /60s_area ...} 登记末日60秒模式的地图配置（模板区域 / 出生点 / 队伍网格），落盘到
  * 世界存档目录 {@code sixty_seconds_config.json}。每次 set 后自动保存。
  * <p>
  * 用法：
  * <ul>
- *   <li>{@code /sre:60s_area template <residential|shelter> <x1> <y1> <z1> <x2> <y2> <z2>}（两个对角的绝对坐标，顺序随意）</li>
- *   <li>{@code /sre:60s_area spawn <residential|shelter> <x> <y> <z>}（模板内绝对坐标）</li>
- *   <li>{@code /sre:60s_area grid <baseX> <baseY> <baseZ> <spacing>}</li>
- *   <li>{@code /sre:60s_area anchor <x> <y> <z>} / {@code anchor clear}（避难所锚点门，模板内绝对坐标；
- *       配合 {@code /sre:60s shelter_at_door on} 把避难所克隆到各队探索区出口门上）</li>
- *   <li>{@code /sre:60s_area clearbindings [auto]}（清门绑定/锚点：无参全清，auto=只清海岛自动生成的）</li>
- *   <li>{@code /sre:60s_area region add <x1 y1 z1> <x2 y2 z2> <level> [name]} / {@code region here <radius> <level> [name]}
+ *   <li>{@code /60s_area template <residential|shelter> <x1> <y1> <z1> <x2> <y2> <z2>}（两个对角的绝对坐标，顺序随意）</li>
+ *   <li>{@code /60s_area spawn <residential|shelter> <x> <y> <z>}（模板内绝对坐标）</li>
+ *   <li>{@code /60s_area grid <baseX> <baseY> <baseZ> <spacing>}</li>
+ *   <li>{@code /60s_area anchor <x> <y> <z>} / {@code anchor clear}（避难所锚点门，模板内绝对坐标；
+ *       配合 {@code /60s shelter_at_door on} 把避难所克隆到各队探索区出口门上）</li>
+ *   <li>{@code /60s_area clearbindings [auto]}（清门绑定/锚点：无参全清，auto=只清海岛自动生成的）</li>
+ *   <li>{@code /60s_area region add <x1 y1 z1> <x2 y2 z2> <level> [name]} / {@code region here <radius> <level> [name]}
  *       / {@code region list|remove <index>|clear|at}（星级区域覆盖：任意盒设危险等级，优先级高于岛屿；
  *       登记时自动撒物资箱）；{@code region autosupply on|off|count <n>}（自动撒箱开关/基准数量）</li>
- *   <li>{@code /sre:60s_area show}</li>
+ *   <li>{@code /60s_area show}</li>
  * </ul>
  */
 public final class SixtySecondsAreaCommand {
@@ -66,7 +66,7 @@ public final class SixtySecondsAreaCommand {
 
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
-                literal("sre:60s_area")
+                literal("60s_area")
                         .requires(source -> source.hasPermission(2))
                         .then(literal("template")
                                 .then(argument("kind", StringArgumentType.word())
@@ -452,7 +452,7 @@ public final class SixtySecondsAreaCommand {
                 IntegerArgumentType.getInteger(ctx, "y"), IntegerArgumentType.getInteger(ctx, "z"));
         if (cfg.shelterTemplate == null) {
             ctx.getSource().sendFailure(Component.literal(
-                    "[60s] set the shelter template first: /sre:60s_area template shelter <x1 y1 z1> <x2 y2 z2>")
+                    "[60s] set the shelter template first: /60s_area template shelter <x1 y1 z1> <x2 y2 z2>")
                     .withStyle(ChatFormatting.RED));
             return 0;
         }
@@ -477,7 +477,7 @@ public final class SixtySecondsAreaCommand {
         ctx.getSource().sendSuccess(() -> Component.literal("[60s] shelter anchor door = ("
                 + vec.x + "," + vec.y + "," + vec.z + "); shelter_at_door "
                 + (cfg.shelterAtSearchDoorEnabled ? "is ON — shelters will clone onto each team's exit door"
-                        : "is OFF — enable with /sre:60s shelter_at_door on"))
+                        : "is OFF — enable with /60s shelter_at_door on"))
                 .withStyle(ChatFormatting.GREEN), true);
         return 1;
     }

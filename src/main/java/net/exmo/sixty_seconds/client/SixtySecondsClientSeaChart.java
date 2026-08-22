@@ -10,7 +10,7 @@ import net.minecraft.network.chat.Component;
 /**
  * 客户端海图数据持有器：缓存服务端最近一次下发的 {@link SixtySecondsSeaChartS2CPacket}，
  * 供 {@code SeaChartScreen} 渲染；{@code openScreen} 包直接弹出海图。
- * 打开入口：聊天栏点击（/sre:60s island map）或客户端命令 /sre:client screen sea_chart。
+ * 打开入口：聊天栏点击（/60s island map）或客户端命令 /60s_client screen sea_chart。
  */
 public final class SixtySecondsClientSeaChart {
 

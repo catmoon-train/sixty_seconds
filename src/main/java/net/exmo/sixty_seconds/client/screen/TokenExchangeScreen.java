@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.client.screen;
 
-import net.exmo.sixty_seconds.bridge.SREPlayerMinigameTaskComponent;
+import net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent;
 import net.exmo.sixty_seconds.network.TokenExchangeC2SPacket;
 import net.exmo.sixty_seconds.bridge.fabric.ClientPlayNetworking;
 import net.minecraft.ChatFormatting;
@@ -15,7 +15,7 @@ import org.lwjgl.glfw.GLFW;
  * 兑换实体游戏币（余额 → 实体币，1 枚 = 1 币）：输入数量或「全部」，
  * 经 {@code TokenExchangeC2SPacket} 由服务端校验扣余额并发放 {@code sixty_seconds_coin}。
  * 由 E 背包（{@code SixtySecondsEquipSlotMixin} 注入的「兑换实体币」按钮）打开；
- * 余额直接读本人 CCA 组件（{@link SREPlayerMinigameTaskComponent}，服务端自动同步）。
+ * 余额直接读本人 CCA 组件（{@link SixtySecPlayerMinigameTaskComponent}，服务端自动同步）。
  * 面板配色遵循 docs/ui_style.md。
  */
 public class TokenExchangeScreen extends Screen {
@@ -38,7 +38,7 @@ public class TokenExchangeScreen extends Screen {
 
     private int balance() {
         return this.minecraft != null && this.minecraft.player != null
-                ? SREPlayerMinigameTaskComponent.KEY.get(this.minecraft.player).getTokens() : 0;
+                ? SixtySecPlayerMinigameTaskComponent.KEY.get(this.minecraft.player).getTokens() : 0;
     }
 
     @Override

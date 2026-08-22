@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level;
  *       {@link SixtySecondsConfig#rvSpawnPoints}（立刻落盘）。</li>
  *   <li><b>潜行右键</b>：清空所有房车刷新点（回退到「住宅旁自动找点」）。</li>
  * </ul>
- * 也可用 {@code /sre:60s_area rv} 系列指令查看/删除/开关。
+ * 也可用 {@code /60s_area rv} 系列指令查看/删除/开关。
  */
 public class SixtySecondsRvSpawnToolItem extends Item {
 
