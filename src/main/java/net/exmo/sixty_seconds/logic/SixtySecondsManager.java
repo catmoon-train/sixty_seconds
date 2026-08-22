@@ -256,8 +256,8 @@ public final class SixtySecondsManager {
                     break;
                 }
                 SixtySecondsDoorHighlight.tick(level);
-                // 准备阶段循环播放警报音效（每 2 秒一次）
-                if (level.getGameTime() % 40 == 0) {
+                // 准备阶段循环播放警报音效（broken_alarm.ogg 时长约 2.72 秒，每 55 tick=2.75 秒触发一次实现无缝循环）
+                if (level.getGameTime() % 55 == 0) {
                     for (net.minecraft.server.level.ServerPlayer p : level.players()) {
                         level.playSound(null, p.getX(), p.getY(), p.getZ(),
                                 net.exmo.sixty_seconds.registry.ModSounds.BROKEN_ALARM, net.minecraft.sounds.SoundSource.MASTER, 0.8F, 1.0F);
