@@ -1,4 +1,4 @@
-package org.agmas.sixty_seconds.content.entity;
+package net.exmo.sixty_seconds.content.entity;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec3;

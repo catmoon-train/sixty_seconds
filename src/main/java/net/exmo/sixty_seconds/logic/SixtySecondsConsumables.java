@@ -22,7 +22,7 @@ import net.exmo.sixty_seconds.bridge.stubs.ChefWaterItem;
  *   <li><b>水</b>（{@link SixtySecondsWaterItem} 小/中/高三级）→ 恢复口渴值 {@code thirstRestore}。</li>
  *   <li><b>饮品</b>（{@link CocktailItem} 及其子类）→ 恢复 15 口渴值。</li>
  * </ul>
- * 由 {@code org.agmas.sixty_seconds.mixin.SixtySecondsConsumeMixin}（{@code Item.finishUsingItem} HEAD）驱动，
+ * 由 {@code net.exmo.sixty_seconds.mixin.SixtySecondsConsumeMixin}（{@code Item.finishUsingItem} HEAD）驱动，
  * 参照 {@code MapStatusBarRuntime.onFinishUsingItem}。
  */
 public final class SixtySecondsConsumables {

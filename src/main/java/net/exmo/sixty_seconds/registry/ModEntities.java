@@ -9,7 +9,7 @@ import net.exmo.sixty_seconds.content.entity.SixtySecondsSeaVehicleEntity;
 import net.exmo.sixty_seconds.content.entity.SixtySecondsVehicleEntity;
 import net.exmo.sixty_seconds.content.entity.WheelchairEntity;
 import net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity;
-import org.agmas.sixty_seconds.content.entity.WheelchairFieldItemEntity;
+import net.exmo.sixty_seconds.content.entity.WheelchairFieldItemEntity;
 import net.exmo.sixty_seconds.entity.OceanSharkEntity;
 import net.exmo.sixty_seconds.entity.SixtySecondsAcidSpitEntity;
 import net.exmo.sixty_seconds.entity.SixtySecondsArrowEntity;

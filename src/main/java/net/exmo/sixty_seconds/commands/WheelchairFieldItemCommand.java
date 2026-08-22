@@ -1,4 +1,4 @@
-package org.agmas.sixty_seconds.commands;
+package net.exmo.sixty_seconds.commands;
 
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -11,7 +11,7 @@ import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
-import org.agmas.sixty_seconds.content.entity.WheelchairFieldItemEntity;
+import net.exmo.sixty_seconds.content.entity.WheelchairFieldItemEntity;
 
 public class WheelchairFieldItemCommand {
 

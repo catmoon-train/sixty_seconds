@@ -14,7 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
-import net.exmo.sixty_seconds.client.NoellesrolesClient;
+import net.exmo.sixty_seconds.client.SixtySecClient;
 import net.exmo.sixty_seconds.bridge.client.TaskBlockOverlayRenderer;
 import net.exmo.sixty_seconds.client.map.AreaMapManager;
 import net.exmo.sixty_seconds.client.map.AreaMapPointCategory;
@@ -197,7 +197,7 @@ public class AreaMapScreen extends Screen {
                             mouseX, mouseY);
                 }
             }
-            for (Map.Entry<BlockPos, Integer> entry : NoellesrolesClient.taskBlocks.entrySet()) {
+            for (Map.Entry<BlockPos, Integer> entry : SixtySecClient.taskBlocks.entrySet()) {
                 AreaMapPointCategory cat = AreaMapPointCategory.byTypeId(entry.getValue());
                 if (cat == null || !AreaMapManager.visibleCategories.contains(cat)) continue;
                 if (drawPoint(g, ccx, ccy, entry.getKey(), cat.color, lift, mouseX, mouseY)) {

@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 商人购买界面（客户端）：行式货架——物品图标 + 名称 + 单价 + 剩余库存，点击购买。
  * 服务端每次成交后重推 {@link OpenNpcShopS2CPacket}，本屏经
- * {@code NoellesrolesClient} 的接收器整屏替换刷新（S2C 开屏 → C2S 动作 → 改状态 → 重推 S2C）。
+ * {@code SixtySecClient} 的接收器整屏替换刷新（S2C 开屏 → C2S 动作 → 改状态 → 重推 S2C）。
  * 潜行点击 = 一次买 8 个。风格遵循 {@code docs/ui_style.md}。
  */
 public class NpcShopScreen extends Screen {

@@ -1,4 +1,4 @@
-package org.agmas.sixty_seconds.content.item;
+package net.exmo.sixty_seconds.content.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

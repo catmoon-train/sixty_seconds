@@ -10,7 +10,7 @@ import java.util.Map;
  * 区域地图上可显示/筛选的任务点分类。
  *
  * <p>类型 ID 与 {@code MapScanner.scanAllTaskBlocks} 写入
- * {@code NoellesrolesClient.taskBlocks} 的方块类型 ID 一致
+ * {@code SixtySecClient.taskBlocks} 的方块类型 ID 一致
  * （颜色对齐 {@code TwoDimensionalTaskArrowRenderer.typeColor}）。
  * DOOR 无类型 ID，数据来自 {@code TaskBlockOverlayRenderer.RoomDoorPositions}。
  */

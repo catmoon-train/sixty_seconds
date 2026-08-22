@@ -1,4 +1,4 @@
-package org.agmas.sixty_seconds.content.entity;
+package net.exmo.sixty_seconds.content.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

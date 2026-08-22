@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.exmo.sixty_seconds.client.NoellesrolesClient;
+import net.exmo.sixty_seconds.client.SixtySecClient;
 import net.exmo.sixty_seconds.bridge.client.TaskBlockOverlayRenderer;
 import net.exmo.sixty_seconds.bridge.client.CommonHudRenderCallback;
 import net.exmo.sixty_seconds.client.screen.AreaMapScreen;
@@ -85,7 +85,7 @@ public final class AreaMapHud {
             if (spawn != null) {
                 drawPoint(g, x, y, pcx, pcz, halfCells, pxPerCell, spawn, 0xFFD4AF37);
             }
-            for (Map.Entry<BlockPos, Integer> entry : NoellesrolesClient.taskBlocks.entrySet()) {
+            for (Map.Entry<BlockPos, Integer> entry : SixtySecClient.taskBlocks.entrySet()) {
                 AreaMapPointCategory cat = AreaMapPointCategory.byTypeId(entry.getValue());
                 if (cat == null || !AreaMapManager.visibleCategories.contains(cat)) continue;
                 drawPoint(g, x, y, pcx, pcz, halfCells, pxPerCell, entry.getKey(), cat.color);

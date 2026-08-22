@@ -27,7 +27,7 @@ public class SixtySecondsSmokeGrenadeItem extends SixtySecondsGrenadeItem {
                 SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.PLAYERS, 1.5F, 0.5F);
 
         // 创建持久烟雾区域（服务端施加失明 + 客户端渲染粒子）
-        org.agmas.sixty_seconds.content.entity.ServerSmokeAreaManager.createSmokeArea(
+        net.exmo.sixty_seconds.content.entity.ServerSmokeAreaManager.createSmokeArea(
                 serverLevel, impact, SMOKE_RADIUS, SMOKE_DURATION_TICKS);
 
         // 初始粒子爆发（与 noelles SmokeGrenadeEntity 完全一致）

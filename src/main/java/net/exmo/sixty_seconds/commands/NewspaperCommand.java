@@ -1,4 +1,4 @@
-package org.agmas.sixty_seconds.commands;
+package net.exmo.sixty_seconds.commands;
 
 import net.exmo.sixty_seconds.bridge.SRENetworkMessageUtils;
 import net.exmo.sixty_seconds.bridge.fabric.CommandRegistrationCallback;

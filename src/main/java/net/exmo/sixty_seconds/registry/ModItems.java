@@ -1986,12 +1986,12 @@ public final class ModItems {
 
     public static Item NEWSPAPER;
     public static final DeferredItem<Item> HOLD_NEWSPAPER = ITEMS.register("newspaper", () -> {
-        NEWSPAPER = new org.agmas.sixty_seconds.content.item.NewspaperItem(new Item.Properties().stacksTo(8));
+        NEWSPAPER = new net.exmo.sixty_seconds.content.item.NewspaperItem(new Item.Properties().stacksTo(8));
         return NEWSPAPER;
     });
     public static Item WHEELCHAIR;
     public static final DeferredItem<Item> HOLD_WHEELCHAIR = ITEMS.register("wheelchair", () -> {
-        WHEELCHAIR = new org.agmas.sixty_seconds.content.item.WheelchairItem();
+        WHEELCHAIR = new net.exmo.sixty_seconds.content.item.WheelchairItem();
         return WHEELCHAIR;
     });
     public static Item RADIO;

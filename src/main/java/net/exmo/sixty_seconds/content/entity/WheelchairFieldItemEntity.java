@@ -1,4 +1,4 @@
-package org.agmas.sixty_seconds.content.entity;
+package net.exmo.sixty_seconds.content.entity;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;

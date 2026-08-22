@@ -1,4 +1,4 @@
-package org.agmas.sixty_seconds.content.item;
+package net.exmo.sixty_seconds.content.item;
 
 import net.exmo.sixty_seconds.bridge.stubs.TMMBlocks;
 import net.exmo.sixty_seconds.registry.ModEntities;

@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 
 /**
  * 末日60秒模式的引导装配：通过公开入口 {@link SREGameModes#registerGameMode} 注册模式，
- * <b>不改动</b> {@code io.wifi} 内任何文件；仅需在 {@code Noellesroles.onInitialize} 里调用一次 {@link #init()}
+ * <b>不改动</b> {@code io.wifi} 内任何文件；仅需在 {@code Sixtyseconds.onInitialize} 里调用一次 {@link #init()}
  * （与 {@code GooseDuckMod.init()} 一致）。
  */
 public final class SixtySecondsMod {

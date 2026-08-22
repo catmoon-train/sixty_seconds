@@ -23,7 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.exmo.sixty_seconds.registry.ModItems;
-import org.agmas.sixty_seconds.utils.WheelchairEffectBlockHandler;
+import net.exmo.sixty_seconds.utils.WheelchairEffectBlockHandler;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -217,7 +217,7 @@ public final class SeaChartReturnHud {
         graphics.fill(bladeX, py + 12, bladeX + 4, py + 18, 0xFF8B6914);
     }
 
-    // ── 网络包接收（由 NoellesrolesClient 调用） ──────────────────────────
+    // ── 网络包接收（由 SixtySecClient 调用） ──────────────────────────
 
     public static void onReturnStart(SixtySecondsSeaChartReturnStartS2CPacket packet) {
         start(packet.durationTicks(), Leg.RETURN, null);

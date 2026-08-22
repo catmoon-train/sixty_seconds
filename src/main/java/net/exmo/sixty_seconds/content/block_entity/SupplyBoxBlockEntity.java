@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 物资箱方块实体：按自身 {@link #category} 从共享 loot 表加权抽取，每日刷新（惰性：交互时按当前游戏日刷新）、
  * <b>每日全局一次</b>——任何玩家领取后当天全员不可再搜。物资在领取时即时掷骰（而非刷新时缓存一份），
- * 避免多人拿到同一份预掷结果。参照 {@code org.agmas.sixty_seconds.content.block_entity.SupplyCrateBlockEntity}。
+ * 避免多人拿到同一份预掷结果。参照 {@code net.exmo.sixty_seconds.content.block_entity.SupplyCrateBlockEntity}。
  */
 public class SupplyBoxBlockEntity extends BlockEntity {
     public String category = "tool";
