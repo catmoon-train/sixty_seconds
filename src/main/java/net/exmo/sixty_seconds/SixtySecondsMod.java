@@ -48,6 +48,8 @@ public final class SixtySecondsMod {
         net.exmo.sixty_seconds.logic.SixtySecondsMystic.register(); // 神秘技术：复活图腾右键尸体
         net.exmo.sixty_seconds.island.SixtySecondsIslands.register(); // 海岛远征：收音机侦听岛屿情报
         net.exmo.sixty_seconds.logic.SixtySecondsNpcSystem.register(); // NPC 死亡掉落（随身物资+废料）
+        net.exmo.sixty_seconds.content.item.SixtySecondsRadioHandler.register(); // 对讲机频道：掉线/旁观/弃机自动退出
+        registerVoiceChatPlugin(); // 对讲机语音组（Simple Voice Chat 已安装时生效）
         registerDropRule(); // 本模式放行丢弃物品（全局默认禁丢，见 KeyBindingMixin/DropRules）
         registerChatHudRule(); // 本模式放行聊天栏渲染（存活玩家默认被 ChatHudMixin 隐藏）
     }
@@ -63,11 +65,25 @@ public final class SixtySecondsMod {
     private static void registerDropRule() {
     }
 
+    /** 注册对讲机语音组插件。未安装 Simple Voice Chat 时静默跳过。 */
+    private static void registerVoiceChatPlugin() {
+        try {
+            de.maxhenkel.voicechat.api.VoicechatApi api = de.maxhenkel.voicechat.api.VoicechatService.api();
+            if (api != null) {
+                api.registerPlugin(new net.exmo.sixty_seconds.voice.SixtySecondsVoiceChatPlugin());
+            }
+        } catch (Throwable ignored) {
+            // Simple Voice Chat 未安装/不可用：对讲机仅保留频道界面，无语音转发。
+        }
+    }
+
     private static void registerCommands() {
         net.exmo.sixty_seconds.command.SixtySecondsStartCommand.register();
         net.exmo.sixty_seconds.command.SixtySecondsAreaCommand.register();
         net.exmo.sixty_seconds.command.SixtySecondsHelicopterCommand.register();
         net.exmo.sixty_seconds.command.OceanCreatureCommand.register();
+        org.agmas.noellesroles.commands.NewspaperCommand.register();
+        org.agmas.noellesroles.commands.WheelchairFieldItemCommand.register();
     }
 
     /** 当前世界是否正在运行本模式。 */

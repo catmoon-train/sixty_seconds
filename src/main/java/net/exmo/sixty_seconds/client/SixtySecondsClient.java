@@ -28,6 +28,8 @@ import net.exmo.sixty_seconds.client.render.SixtySecondsRvRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsSeaVehicleRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsTurretRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsVehicleRenderer;
+import net.exmo.sixty_seconds.client.gui.screen.NewspaperScreen;
+import net.exmo.sixty_seconds.client.gui.screen.RadioChannelScreen;
 import net.exmo.sixty_seconds.client.screen.AirdropLootEditScreen;
 import net.exmo.sixty_seconds.client.screen.BreakInSelectScreen;
 import net.exmo.sixty_seconds.client.screen.DismantleScreen;
@@ -62,6 +64,7 @@ import net.exmo.sixty_seconds.network.OpenNpcDialogueS2CPacket;
 import net.exmo.sixty_seconds.network.OpenNpcShopEditS2CPacket;
 import net.exmo.sixty_seconds.network.OpenNpcShopS2CPacket;
 import net.exmo.sixty_seconds.network.OpenPowerPanelS2CPacket;
+import net.exmo.sixty_seconds.network.OpenRadioChannelS2CPacket;
 import net.exmo.sixty_seconds.network.OpenRandomSupplyBoxConfigS2CPacket;
 import net.exmo.sixty_seconds.network.OpenRvConsoleS2CPacket;
 import net.exmo.sixty_seconds.network.OpenShelterDoorS2CPacket;
@@ -76,6 +79,7 @@ import net.exmo.sixty_seconds.network.OpenVisitChatS2CPacket;
 import net.exmo.sixty_seconds.network.OpenVisitPromptS2CPacket;
 import net.exmo.sixty_seconds.network.OpenVisitRequestS2CPacket;
 import net.exmo.sixty_seconds.network.PlayerHealthS2CPacket;
+import net.exmo.sixty_seconds.network.ShowCustomNewspaperPacket;
 import net.exmo.sixty_seconds.network.SleepBlackoutS2CPacket;
 import net.exmo.sixty_seconds.network.SixtySecondsCorpseMarkS2CPacket;
 import net.exmo.sixty_seconds.network.SixtySecondsIntroPayload;
@@ -103,8 +107,13 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import org.agmas.noellesroles.content.entity.WheelchairEntityModel;
+import org.agmas.noellesroles.content.entity.WheelchairEntityRenderer;
+import org.agmas.noellesroles.content.entity.WheelchairFieldItemRenderer;
+import org.agmas.noellesroles.content.item.NewspaperItem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -130,6 +139,14 @@ public final class SixtySecondsClient {
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             registerPayloadReceivers();
+            NewspaperItem.runner = (stack, hand) -> {
+                Minecraft minecraft = Minecraft.getInstance();
+                if (!hand.equals(InteractionHand.MAIN_HAND)) {
+                    return false;
+                }
+                minecraft.setScreen(new NewspaperScreen(stack, hand));
+                return true;
+            };
             SixtySecondsHud.register();
             SixtySecondsCombatHud.register();
             SixtySecondsSearchHud.register();
@@ -148,6 +165,12 @@ public final class SixtySecondsClient {
             AreaMapManager.register();
             AreaMapHud.register();
             ClientPlayNetworking.registerGlobalReceiver(VehicleCameraS2CPacket.ID, new VehicleCameraS2CPacket.ClientReceiver());
+            ClientPlayNetworking.registerGlobalReceiver(OpenRadioChannelS2CPacket.ID, (payload, context) ->
+                    context.client().execute(() -> context.client().setScreen(new RadioChannelScreen(payload.currentChannel()))));
+            ClientPlayNetworking.registerGlobalReceiver(ShowCustomNewspaperPacket.ID, (payload, context) ->
+                    context.client().execute(() -> context.client().setScreen(new NewspaperScreen(payload.pages(),
+                            payload.title().orElse(Component.literal("")),
+                            payload.author().orElse(Component.literal(""))))));
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onClientTick);
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onLogout);
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onWorldRender);
@@ -183,8 +206,14 @@ public final class SixtySecondsClient {
         event.registerEntityRenderer(ModEntities.OCEAN_SHARK, OceanSharkRenderer::new);
         event.registerEntityRenderer(ModEntities.OCEAN_SEA_MONSTER, OceanSeaMonsterRenderer::new);
         event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_GRENADE, ThrownItemRenderer::new);
-        event.registerEntityRenderer(ModEntities.WHEELCHAIR, SixtySecondsClient::wheelchairRenderer);
+        event.registerEntityRenderer(ModEntities.WHEELCHAIR, WheelchairEntityRenderer::new);
+        event.registerEntityRenderer(ModEntities.WHEELCHAIR_FIELD_ITEM, WheelchairFieldItemRenderer::new);
         event.registerEntityRenderer(ModEntities.PLAYER_BODY, SixtySecondsClient::bodyRenderer);
+    }
+
+    @SubscribeEvent
+    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(WheelchairEntityModel.LAYER_LOCATION, WheelchairEntityModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -247,16 +276,6 @@ public final class SixtySecondsClient {
         for (ItemTooltipCallback callback : ItemTooltipCallback.EVENT.invokers()) {
             callback.getTooltip(stack, event.getContext(), event.getFlags(), lines);
         }
-    }
-
-    private static HumanoidMobRenderer<WheelchairEntity, HumanoidModel<WheelchairEntity>> wheelchairRenderer(
-            EntityRendererProvider.Context ctx) {
-        return new HumanoidMobRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(ModelLayers.PLAYER)), 0.5F) {
-            @Override
-            public ResourceLocation getTextureLocation(WheelchairEntity entity) {
-                return DefaultPlayerSkin.getDefaultTexture();
-            }
-        };
     }
 
     private static HumanoidMobRenderer<PlayerBodyEntity, HumanoidModel<PlayerBodyEntity>> bodyRenderer(

@@ -10,6 +10,13 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
 }
 
 base {
@@ -110,6 +117,9 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
+    // 对讲机语音组：仅编译期需要 Simple Voice Chat API（运行时装对应版本 SVC 即可）
+    compileOnly "maven.modrinth:simple-voice-chat:neoforge-1.21.1-2.6.6"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

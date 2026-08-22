@@ -9,6 +9,7 @@ import net.exmo.sixty_seconds.content.entity.SixtySecondsSeaVehicleEntity;
 import net.exmo.sixty_seconds.content.entity.SixtySecondsVehicleEntity;
 import net.exmo.sixty_seconds.content.entity.WheelchairEntity;
 import net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity;
+import org.agmas.noellesroles.content.entity.WheelchairFieldItemEntity;
 import net.exmo.sixty_seconds.entity.OceanSharkEntity;
 import net.exmo.sixty_seconds.entity.SixtySecondsAcidSpitEntity;
 import net.exmo.sixty_seconds.entity.SixtySecondsArrowEntity;
@@ -42,6 +43,15 @@ public final class ModEntities {
                 WHEELCHAIR = EntityType.Builder.of(WheelchairEntity::new, MobCategory.MISC)
                         .sized(0.8f, 1.6f).clientTrackingRange(8).build("wheelchair");
                 return WHEELCHAIR;
+            });
+
+    public static EntityType<WheelchairFieldItemEntity> WHEELCHAIR_FIELD_ITEM;
+    public static final DeferredHolder<EntityType<?>, EntityType<WheelchairFieldItemEntity>> HOLD_WHEELCHAIR_FIELD_ITEM =
+            ENTITY_TYPES.register("wheelchair_field_item", () -> {
+                WHEELCHAIR_FIELD_ITEM = EntityType.Builder
+                        .<WheelchairFieldItemEntity>of((type, world) -> new WheelchairFieldItemEntity(type, world), MobCategory.MISC)
+                        .sized(0.5f, 0.5f).clientTrackingRange(10).build("wheelchair_field_item");
+                return WHEELCHAIR_FIELD_ITEM;
             });
 
     public static EntityType<SixtySecondsVehicleEntity> SIXTY_SECONDS_MOTORCYCLE;

@@ -31,6 +31,7 @@ public final class ModNetwork {
         registrar.playToClient(ComponentSyncS2CPacket.ID, adapt(ComponentSyncS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(CreateClientMarkingAreaPacket.ID, adapt(CreateClientMarkingAreaPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToServer(DismantleC2SPacket.ID, adapt(DismantleC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
+        registrar.playToServer(EditNewspaperPacket.ID, adapt(EditNewspaperPacket.STREAM_CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToClient(GunTracerS2CPacket.ID, adapt(GunTracerS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToServer(LootTableSaveC2SPacket.ID, adapt(LootTableSaveC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(MapTeleportC2SPacket.ID, adapt(MapTeleportC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
@@ -45,6 +46,7 @@ public final class ModNetwork {
         registrar.playToClient(OpenNpcShopEditS2CPacket.ID, adapt(OpenNpcShopEditS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(OpenNpcShopS2CPacket.ID, adapt(OpenNpcShopS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(OpenPowerPanelS2CPacket.ID, adapt(OpenPowerPanelS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
+        registrar.playToClient(OpenRadioChannelS2CPacket.ID, adapt(OpenRadioChannelS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(OpenRandomSupplyBoxConfigS2CPacket.ID, adapt(OpenRandomSupplyBoxConfigS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(OpenRvConsoleS2CPacket.ID, adapt(OpenRvConsoleS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(OpenShelterDoorS2CPacket.ID, adapt(OpenShelterDoorS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
@@ -60,6 +62,7 @@ public final class ModNetwork {
         registrar.playToClient(OpenVisitRequestS2CPacket.ID, adapt(OpenVisitRequestS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToServer(PhoneDialC2SPacket.TYPE, adapt(PhoneDialC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToClient(PlayerHealthS2CPacket.ID, adapt(PlayerHealthS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
+        registrar.playToServer(RadioChannelC2SPacket.ID, adapt(RadioChannelC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(RandomSupplyBoxConfigSaveC2SPacket.ID, adapt(RandomSupplyBoxConfigSaveC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(RvConsoleActionC2SPacket.ID, adapt(RvConsoleActionC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(ShelterDoorActionC2SPacket.ID, adapt(ShelterDoorActionC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
@@ -80,6 +83,7 @@ public final class ModNetwork {
         registrar.playToServer(SixtySecondsStarMapRequestC2SPacket.ID, adapt(SixtySecondsStarMapRequestC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToClient(SixtySecondsStarMapS2CPacket.ID, adapt(SixtySecondsStarMapS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(SixtySecondsStationStockS2CPacket.ID, adapt(SixtySecondsStationStockS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
+        registrar.playToClient(ShowCustomNewspaperPacket.ID, adapt(ShowCustomNewspaperPacket.STREAM_CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(SleepBlackoutS2CPacket.ID, adapt(SleepBlackoutS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToServer(StationCraftC2SPacket.ID, adapt(StationCraftC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToClient(SupplySearchS2CPacket.ID, adapt(SupplySearchS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
@@ -112,12 +116,14 @@ public final class ModNetwork {
             }
             if (payload instanceof BreakInExecuteC2SPacket p) { BreakInExecuteC2SPacket.handle(p, fabric); return; }
             if (payload instanceof DismantleC2SPacket p) { DismantleC2SPacket.handle(p, fabric); return; }
+            if (payload instanceof EditNewspaperPacket p) { EditNewspaperPacket.handle(p, fabric); return; }
             if (payload instanceof LootTableSaveC2SPacket p) { LootTableSaveC2SPacket.handle(p, fabric); return; }
             if (payload instanceof MapTeleportC2SPacket p) { MapTeleportC2SPacket.handle(p, fabric); return; }
             if (payload instanceof NpcDialogueActionC2SPacket p) { NpcDialogueActionC2SPacket.handle(p, fabric); return; }
             if (payload instanceof NpcShopBuyC2SPacket p) { NpcShopBuyC2SPacket.handle(p, fabric); return; }
             if (payload instanceof NpcShopSaveC2SPacket p) { NpcShopSaveC2SPacket.handle(p, fabric); return; }
             if (payload instanceof PhoneDialC2SPacket p) { PhoneDialC2SPacket.handle(p, fabric); return; }
+            if (payload instanceof RadioChannelC2SPacket p) { RadioChannelC2SPacket.handle(p, fabric); return; }
             if (payload instanceof RandomSupplyBoxConfigSaveC2SPacket p) { RandomSupplyBoxConfigSaveC2SPacket.handle(p, fabric); return; }
             if (payload instanceof RvConsoleActionC2SPacket p) { RvConsoleActionC2SPacket.handle(p, fabric); return; }
             if (payload instanceof ShelterDoorActionC2SPacket p) { ShelterDoorActionC2SPacket.handle(p, fabric); return; }

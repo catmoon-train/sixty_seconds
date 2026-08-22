@@ -168,6 +168,7 @@ public final class SixtySecondsManager {
         SixtySecondsDefenseSystem.discardTaggedMobs(level);
         teleportTeams(level, data, true);
         SixtySecondsRvSystem.onGameStart(level, data); // 房车：按队生成常驻房车（rvEnabled 时）
+        net.exmo.sixty_seconds.content.item.RadioItem.clear(); // 对讲机：新开局清空上一局频道成员
         // 海岛模式：清跨局解锁态，为每队默认解锁 1 级港湾岛，并把海图发给全员
         net.exmo.sixty_seconds.island.SixtySecondsIslands.onGameStart(level);
         net.exmo.sixty_seconds.island.SixtySecondsIslands.syncChartAll(level);

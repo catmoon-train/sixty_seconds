@@ -1986,12 +1986,12 @@ public final class ModItems {
 
     public static Item NEWSPAPER;
     public static final DeferredItem<Item> HOLD_NEWSPAPER = ITEMS.register("newspaper", () -> {
-        NEWSPAPER = new Item(new Item.Properties().stacksTo(1));
+        NEWSPAPER = new org.agmas.noellesroles.content.item.NewspaperItem(new Item.Properties().stacksTo(8));
         return NEWSPAPER;
     });
     public static Item WHEELCHAIR;
     public static final DeferredItem<Item> HOLD_WHEELCHAIR = ITEMS.register("wheelchair", () -> {
-        WHEELCHAIR = new Item(new Item.Properties().stacksTo(1));
+        WHEELCHAIR = new org.agmas.noellesroles.content.item.WheelchairItem();
         return WHEELCHAIR;
     });
     public static Item RADIO;
@@ -2003,6 +2003,7 @@ public final class ModItems {
     private ModItems() {}
 
     public static void register(IEventBus bus) {
+        net.exmo.sixty_seconds.index.SREDataComponentTypes.register(); // 报纸数据组件（须在 registry 冻结前）
         ITEMS.register(bus);
     }
 }
