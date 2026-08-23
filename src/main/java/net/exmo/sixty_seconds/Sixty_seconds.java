@@ -29,6 +29,7 @@ public class Sixty_seconds {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(ModNetwork::register);
         NeoForge.EVENT_BUS.register(NeoForgeEvents.class);
+        net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesAccess.init(); // 通过 IMC 获取 LostCities API（建筑星级映射）
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

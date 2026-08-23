@@ -26,8 +26,9 @@ import java.util.WeakHashMap;
  *       按等级压平权重差）且掷出件数越多；</li>
  *   <li>等级越高，周围刷出的怪更多更强（{@code SixtySecondsPveSystem}）。</li>
  * </ul>
- * 等级按<b>坐标反查</b>（门绑定危险区盒都是世界绝对坐标）：先匹配星级区域覆盖，再匹配岛屿单元格，再匹配门绑定危险区
- * （{@code DoorBinding.level}，0=继承全局），都不在则取全局基线（{@code searchZoneLevel}）。
+ * 等级按<b>坐标反查</b>（门绑定危险区盒都是世界绝对坐标）：先匹配星级区域覆盖，再匹配岛屿单元格，再匹配 LostCities
+ * 建筑星级（{@link net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesStarMap}，建筑创建后自动划级），
+ * 再匹配门绑定危险区（{@code DoorBinding.level}，0=继承全局），都不在则取全局基线（{@code searchZoneLevel}）。
  * 配置命令：{@code /60s_area level <1..5>}（全局）、{@code /60s_area level <1..5> <x y z>}（该点所在绑定区）；
  * 安全区只能通过 {@code /60s_area region add ... 0} 或星级区域魔杖设 0 级实现（全局/门绑定不支持 0）。
  */
@@ -40,8 +41,9 @@ public final class SixtySecondsAreaLevels {
     /**
      * 反查坐标的危险等级。优先级（从高到低）：
      * <ol>
-     *   <li><b>星级区域覆盖</b>（{@code areaLevelOverrides}，管理员魔改用，可盖住岛屿）——重叠取靠后一条；<b>可为 0=安全区</b>；</li>
+     *   <li><b>星级区域覆盖</b>（{@code areaLevelOverrides}，管理员魔改用，可盖住岛屿/建筑）——重叠取靠后一条；<b>可为 0=安全区</b>；</li>
      *   <li>岛屿单元格等级；</li>
+     *   <li><b>LostCities 建筑星级</b>（建筑创建后自动映射，无需手动登记）；</li>
      *   <li>门绑定危险区（{@code searchDoorBindings} 的 box + level）；</li>
      *   <li>全局基线 {@code searchZoneLevel}。</li>
      * </ol>
@@ -62,6 +64,12 @@ public final class SixtySecondsAreaLevels {
         int islandLevel = net.exmo.sixty_seconds.island.SixtySecondsIslands.levelAt(level, pos);
         if (islandLevel > 0) {
             return clamp(islandLevel);
+        }
+        // 3) LostCities 建筑星级：该坐标位于 LostCities 已知建筑内时按其建筑种类自动映射星级。
+        //    创建世界后建筑自动被划分到星级，无需手动登记；非建筑（街道/部件/非城市维度）返回 0 落到后续逻辑。
+        int lostCityStar = net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesStarMap.starAt(level, pos);
+        if (lostCityStar > 0) {
+            return clamp(lostCityStar);
         }
         if (config == null) {
             return 1;
