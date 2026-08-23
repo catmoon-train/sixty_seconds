@@ -135,7 +135,14 @@ public final class SixtySecondsLostCitiesStarMap {
         if (buildingName == null) {
             return NO_STAR;
         }
-        String name = buildingName.toLowerCase(Locale.ROOT);
+        // 防御：调用方可能误传入带命名空间的全名（如 lostcities:building1），统一取路径部分，
+        // 否则下面的 startsWith(...) 全部失败，都会落入 UNGRADED 导致不生成箱子。
+        String name = buildingName;
+        int sep = name.indexOf(':');
+        if (sep >= 0) {
+            name = name.substring(sep + 1);
+        }
+        name = name.toLowerCase(Locale.ROOT);
         // 通用建筑 building1~8 → 3 星
         if (name.startsWith("building")) {
             return 3;

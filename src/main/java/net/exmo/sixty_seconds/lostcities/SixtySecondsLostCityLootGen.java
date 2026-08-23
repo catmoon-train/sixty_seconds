@@ -71,8 +71,12 @@ public final class SixtySecondsLostCityLootGen {
         }
         WorldGenLevel world = event.getWorld();
         ChunkPos cp = new ChunkPos(event.getChunkX(), event.getChunkZ());
+        // 注意：starForBuildingName() 的契约是“不含命名空间的建筑路径名”（如 building1），
+        // 因此这里必须取 ResourceLocation 的 getPath()，而不是 getId().toString()（那会是 lostcities:building1）。
+        // 之前传入带命名空间的全名，导致 starForBuildingName 里所有 startsWith(...) 判断都失败，
+        // 全部落入 UNGRADED(-1) -> star<=0 -> PostGen 直接 return，所以一个箱子都没生成。
         META.computeIfAbsent(world, k -> new HashMap<>())
-                .put(cp, new BuildingMeta(c.buildingType.getId().toString(), c.cityLevel));
+                .put(cp, new BuildingMeta(c.buildingType.getId().getPath(), c.cityLevel));
     }
 
     @SubscribeEvent
