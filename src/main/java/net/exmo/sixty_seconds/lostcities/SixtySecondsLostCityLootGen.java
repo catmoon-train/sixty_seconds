@@ -2,6 +2,7 @@ package net.exmo.sixty_seconds.lostcities;
 
 import mcjty.lostcities.api.LostCityEvent;
 import mcjty.lostcities.setup.Registration;
+import net.exmo.sixty_seconds.SixtySeconds;
 import mcjty.lostcities.worldgen.LostCityTerrainFeature;
 import mcjty.lostcities.varia.ChunkCoord;
 import mcjty.lostcities.worldgen.IDimensionInfo;
@@ -83,6 +84,9 @@ public final class SixtySecondsLostCityLootGen {
         String name = id.getPath();
         // 星级 ≤ 0（无星级 / 撤离点 UNGRADED / 安全区 SAFE_STAR）不生成物资箱
         int star = SixtySecondsLostCitiesStarMap.starForBuildingName(name);
+        // 诊断：确认每个建筑 chunk 是否进入撒箱逻辑、星级是否正确
+        SixtySeconds.LOGGER.debug("[60s] LostCityLootGen chunk({},{}) building={} star={} floors={} cellars={}",
+                chunkX, chunkZ, name, star, info.getNumFloors(), info.cellars);
         if (star <= 0) {
             return;
         }
@@ -116,6 +120,8 @@ public final class SixtySecondsLostCityLootGen {
             }
         }
         if (candidates.isEmpty()) {
+            SixtySeconds.LOGGER.debug("[60s] LostCityLootGen chunk({},{}) building={} 无合法落箱点",
+                    chunkX, chunkZ, name);
             return;
         }
 
@@ -123,6 +129,8 @@ public final class SixtySecondsLostCityLootGen {
         Collections.shuffle(candidates, new Random(rng.nextLong()));
 
         int count = Math.min(star, MAX_BOXES);
+        SixtySeconds.LOGGER.debug("[60s] LostCityLootGen chunk({},{}) building={} 候选点={} 计划撒箱={}",
+                chunkX, chunkZ, name, candidates.size(), count);
         List<BlockPos> placed = new ArrayList<>();
         for (BlockPos pos : candidates) {
             if (placed.size() >= count) {
@@ -183,7 +191,12 @@ public final class SixtySecondsLostCityLootGen {
         return primer.getBlockState(pos.above()).isAir();
     }
 
-    /** 放置格水平四向至少 2 侧为空气：避免物资箱卡在墙体/窗台角落。 */
+    /**
+     * 放置格水平四向至少 1 侧为空气即可。
+     * 原要求 >= 2 侧会把 LostCities 标准建筑内部大量小房间/走廊/贴墙的合法地板全排除
+     * （这些结构通常只有 1~2 侧空气），导致建筑里候选点骤降甚至为 0 —— 即“建筑内不生成物资箱”。
+     * 防悬空交给 placeBox 的二次校验（脚下必须实心）兜底。
+     */
     private static boolean hasOpenSides(ChunkAccess primer, BlockPos pos) {
         int open = 0;
         for (Direction d : Direction.Plane.HORIZONTAL) {
@@ -191,7 +204,7 @@ public final class SixtySecondsLostCityLootGen {
                 open++;
             }
         }
-        return open >= 2;
+        return open >= 1;
     }
 
     /** 与已放置点水平距离过近（< 4 格）则返回 true。 */
