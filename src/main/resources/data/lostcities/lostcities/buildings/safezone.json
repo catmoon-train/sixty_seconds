@@ -3,6 +3,7 @@
   "rubble": "}",
   "minfloors": 1,
   "maxfloors": 1,
+  "maxcellars": 0,
   "overrideFloors": true,
   "parts": [
     {
