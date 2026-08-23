@@ -607,6 +607,8 @@
   "message.sixty_seconds.sixty_seconds.autojoin_no_room": "§cEvery team is already full at four—you stay a spectator",
   "message.sixty_seconds.sixty_seconds.days_set": "§aTotal days set to %s (survive the final day to win; the Apex boss always arrives on the last day)",
   "message.sixty_seconds.sixty_seconds.days_show": "Current total days: %s",
+  "commands.60s.start_days": "§a%s started — game will run for %s days (survive the final day to win)",
+  "commands.60s.start_endless": "§a%s started — endless mode (days do not end the game)",
   "item.sixty_seconds.sixty_seconds_assault_spawner_weak": "Night Raider Whistle (Weak)",
   "item.sixty_seconds.sixty_seconds_assault_spawner_medium": "Night Raider Whistle (Medium)",
   "item.sixty_seconds.sixty_seconds_assault_spawner_strong": "Night Raider Whistle (Strong)",

@@ -373,7 +373,8 @@ public final class SixtySecondsPveSystem {
                 SixtySecondsBalance.BOSS_MAX_LEVEL);
         // 最后一天（含之后）的 Boss 升级为「终焉之王」终极形态——随可配置总日数浮动，
         // 总日数被调短/调长时终极 Boss 始终压在最终日，不会永不出现或提前出现。
-        boolean apex = data.dayNumber >= SixtySecondsManager.totalDays(level);
+        boolean apex = !SixtySecondsManager.isEndless(level)
+                && data.dayNumber >= SixtySecondsManager.totalDays(level);
         spawnBoss(level, spot, bossLevel, apex);
         LAST_BOSS_DAY.put(level, data.dayNumber);
     }

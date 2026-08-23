@@ -5,7 +5,6 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import net.exmo.sixty_seconds.bridge.SixtySecConfig;
 import net.exmo.sixty_seconds.bridge.ParticipationComponent;
 import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
-import net.exmo.sixty_seconds.bridge.GameConstants;
 import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.bridge.fabric.CommandRegistrationCallback;
@@ -33,16 +32,21 @@ public final class SixtySecondsStartCommand {
                 literal("60s")
                         .then(literal("start")
                                 .requires(source -> source.hasPermission(SixtySecConfig.instance().startGameRequiredPermission))
-                                // 60s start force_all_players [minutes] — 强制所有参与中的玩家加入，无视位置
-                                .then(literal("force_all_players")
-                                        .then(argument("minutes", IntegerArgumentType.integer(1))
+                                // 60s start [days] force_all_players — 强制所有参与中的玩家加入，无视位置
+                                // days：游戏启用的天数，默认 7；-1 表示无尽模式（天数不决定结束）
+                                .then(argument("days", IntegerArgumentType.integer(-1))
+                                        .then(literal("force_all_players")
                                                 .executes(context -> start(context.getSource(),
-                                                        IntegerArgumentType.getInteger(context, "minutes"), true)))
-                                        .executes(context -> start(context.getSource(), -1, true)))
-                                // 60s start [minutes] — 常规启动，仅准备区域内的玩家加入
-                                .then(argument("minutes", IntegerArgumentType.integer(1))
+                                                        IntegerArgumentType.getInteger(context, "days"), true)))
                                         .executes(context -> start(context.getSource(),
-                                                IntegerArgumentType.getInteger(context, "minutes"), false)))
+                                                IntegerArgumentType.getInteger(context, "days"), false)))
+                                // 60s start force_all_players — 不带 days 的强制启动（默认 7 天）
+                                .then(literal("force_all_players")
+                                        .executes(context -> start(context.getSource(), -1, true)))
+                                // 60s start [days] — 常规启动，仅准备区域内的玩家加入
+                                .then(argument("days", IntegerArgumentType.integer(-1))
+                                        .executes(context -> start(context.getSource(),
+                                                IntegerArgumentType.getInteger(context, "days"), false)))
                                 .executes(context -> start(context.getSource(), -1, false)))
                         // 赛前组队大厅（对所有玩家开放；游戏进行中不可用）
                         .then(literal("team").executes(context -> openTeamLobby(context.getSource())))
@@ -139,10 +143,10 @@ public final class SixtySecondsStartCommand {
                                 .then(literal("on").executes(c -> setPve(c.getSource(), true)))
                                 .then(literal("off").executes(c -> setPve(c.getSource(), false)))
                                 .executes(c -> showPve(c.getSource())))
-                        // 管理员：本局总游戏日数（默认 7，按图持久化）；不带参数=查看当前值
+                        // 管理员：本局总游戏日数（默认 7，按图持久化）；-1 表示无尽；不带参数=查看当前值
                         .then(literal("days")
                                 .requires(source -> source.hasPermission(2))
-                                .then(argument("count", IntegerArgumentType.integer(1,
+                                .then(argument("count", IntegerArgumentType.integer(-1,
                                         net.exmo.sixty_seconds.logic.SixtySecondsManager.MAX_TOTAL_DAYS))
                                         .executes(c -> setTotalDays(c.getSource(),
                                                 IntegerArgumentType.getInteger(c, "count"))))
@@ -670,7 +674,7 @@ public final class SixtySecondsStartCommand {
         return net.exmo.sixty_seconds.logic.SixtySecondsMonsterSystem.sacrifice(player) ? 1 : 0;
     }
 
-    private static int start(CommandSourceStack source, int minutes, boolean forceAll) {
+    private static int start(CommandSourceStack source, int days, boolean forceAll) {
         if (SixtySecondsMod.MODE == null) {
             source.sendFailure(Component.literal("60s mode not initialized"));
             return 0;
@@ -680,11 +684,21 @@ public final class SixtySecondsStartCommand {
             return 0;
         }
 
+        // days：-1 表示无尽模式，否则为游戏启用的天数（默认 7）
+        int resolvedDays = days >= 0 ? days : SixtySecondsMod.MODE.defaultStartTime;
+        // 把天数写入本局配置（按图持久化），供 SixtySecondsManager.totalDays 读取；
+        // 60秒 游戏结束由天数（SixtySecondsManager.tick）控制，不再使用分钟倒计时
+        var level = source.getLevel();
+        var config = net.exmo.sixty_seconds.config.SixtySecondsConfigStore.current(level)
+                .orElseGet(net.exmo.sixty_seconds.config.SixtySecondsConfig::new);
+        config.totalDays = resolvedDays;
+        net.exmo.sixty_seconds.config.SixtySecondsConfigStore.save(level, config);
+
         // force_all_players: 将所有参与中的玩家（未 opt-out）强制纳入就绪列表，
         // 使其无论身处何地都能加入游戏
         if (forceAll) {
-            ParticipationComponent participation = ParticipationComponent.KEY.get(source.getLevel());
-            List<ServerPlayer> allPlayers = source.getLevel().getServer().getPlayerList().getPlayers();
+            ParticipationComponent participation = ParticipationComponent.KEY.get(level);
+            List<ServerPlayer> allPlayers = level.getServer().getPlayerList().getPlayers();
             List<UUID> forcedReady = allPlayers.stream()
                     .filter(participation::isParticipating)
                     .map(ServerPlayer::getUUID)
@@ -692,10 +706,15 @@ public final class SixtySecondsStartCommand {
             GameUtils.setForcedReadyPlayers(forcedReady);
         }
 
-        int resolved = minutes >= 0 ? minutes : SixtySecondsMod.MODE.defaultStartTime;
-        GameUtils.startGame(source.getLevel(), SixtySecondsMod.MODE, GameConstants.getInTicks(resolved, 0));
-        source.sendSuccess(() -> Component.translatable("commands.60s.start",
-                SixtySecondsMod.MODE.toString(), resolved).withStyle(ChatFormatting.GREEN), true);
+        // 分钟倒计时为框架兼容占位（60秒 结束由天数决定），实际不控制游戏结束
+        GameUtils.startGame(level, SixtySecondsMod.MODE, 0);
+        if (resolvedDays < 0) {
+            source.sendSuccess(() -> Component.translatable("commands.60s.start_endless",
+                    SixtySecondsMod.MODE.toString()).withStyle(ChatFormatting.GREEN), true);
+        } else {
+            source.sendSuccess(() -> Component.translatable("commands.60s.start_days",
+                    SixtySecondsMod.MODE.toString(), resolvedDays).withStyle(ChatFormatting.GREEN), true);
+        }
         return 1;
     }
 

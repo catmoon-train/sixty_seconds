@@ -66,14 +66,23 @@ public final class SixtySecondsManager {
 
     /**
      * 本局总游戏日数（按图配置 {@code totalDays}，缺省 {@value #DEFAULT_TOTAL_DAYS}，
-     * clamp 到 1..{@value #MAX_TOTAL_DAYS}）。撑过第 totalDays 天即幸存者胜。
+     * 上限 {@value #MAX_TOTAL_DAYS}）。撑过第 totalDays 天即幸存者胜。
+     * 特殊值 {@code -1} 表示<b>无尽模式</b>：游戏不会因天数结束，天数无限增长。
      * <p>客户端 HUD 不读本方法（拿不到服务端配置），改用<b>按玩家同步</b>的
      * {@code SixtySecondsStatsComponent.totalDays}（见 {@link #syncDayNumber}）。
      */
     public static int totalDays(ServerLevel level) {
         int configured = SixtySecondsConfigStore.current(level)
                 .map(config -> config.totalDays).orElse(DEFAULT_TOTAL_DAYS);
-        return Math.max(1, Math.min(MAX_TOTAL_DAYS, configured));
+        if (configured < 0) {
+            return -1; // 无尽模式
+        }
+        return Math.min(MAX_TOTAL_DAYS, configured);
+    }
+
+    /** 是否为无尽模式（天数不决定结束）。 */
+    public static boolean isEndless(ServerLevel level) {
+        return totalDays(level) < 0;
     }
 
     /** 开局：先分队槽位 → 异步建图（聊天栏广播进度）→ 建完分配家庭身份 → 传住宅 → 进 PREPARATION。 */
@@ -303,7 +312,8 @@ public final class SixtySecondsManager {
                 SixtySecondsWinConditions.tick(level, data); // 无存活幸存者→提前结束
                 // 若已被 WinConditions 提前结束(相位变 FINISHED)则跳过换日/结算
                 if (data.phase == SixtySecondsPhase.DAY && level.getGameTime() >= data.phaseEndTick) {
-                    if (data.dayNumber >= totalDays(level)) {
+                    // 无尽模式（-1）永不因天数结束；否则撑过第 totalDays 天即幸存者胜
+                    if (!isEndless(level) && data.dayNumber >= totalDays(level)) {
                         finish(level, data);
                     } else {
                         startDay(level, data, data.dayNumber + 1);

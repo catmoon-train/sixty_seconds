@@ -547,6 +547,8 @@
   "message.sixty_seconds.sixty_seconds.autojoin_no_room": "§c所有隊伍都已滿四人，你將繼續觀戰",
   "message.sixty_seconds.sixty_seconds.days_set": "§a本局總遊戲日數已設為 %s 天（撐過最後一天即倖存者勝利；終極 Boss 固定在最後一天降臨）",
   "message.sixty_seconds.sixty_seconds.days_show": "目前總遊戲日數：%s 天",
+  "commands.60s.start_days": "§a%s 已開始 — 遊戲將持續 %s 天（撐過最後一天即倖存者勝利）",
+  "commands.60s.start_endless": "§a%s 已開始 — 無盡模式（天數不會結束遊戲）",
   "item.sixty_seconds.sixty_seconds_assault_spawner_weak": "夜襲者召喚哨（弱）",
   "item.sixty_seconds.sixty_seconds_assault_spawner_medium": "夜襲者召喚哨（中等）",
   "item.sixty_seconds.sixty_seconds_assault_spawner_strong": "夜襲者召喚哨（強）",

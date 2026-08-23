@@ -195,7 +195,9 @@ public class SixtySecondsConfig {
     /**
      * 本局总游戏日数（默认 {@value net.exmo.sixty_seconds.logic.SixtySecondsManager#DEFAULT_TOTAL_DAYS}）：
      * 撑过最后一天即幸存者胜利。终极 Boss「终焉之王」固定在<b>最后一天</b>降临（随本值浮动）。
-     * {@code /60s days <1..30>} 设置（按图持久化）。见 {@code SixtySecondsManager.totalDays}。
+     * 特殊值 {@code -1} 表示<b>无尽模式</b>：天数不决定游戏结束，天数无限增长。
+     * {@code /60s days <-1..30>} 或开局 {@code /60s start <days>} 设置（按图持久化）。
+     * 见 {@code SixtySecondsManager.totalDays}。
      */
     @SerializedName("totalDays")
     public int totalDays = 7;
