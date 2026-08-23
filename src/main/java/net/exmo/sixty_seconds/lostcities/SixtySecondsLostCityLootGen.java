@@ -3,6 +3,7 @@ package net.exmo.sixty_seconds.lostcities;
 import mcjty.lostcities.api.LostChunkCharacteristics;
 import mcjty.lostcities.api.LostCityEvent;
 import mcjty.lostcities.setup.Registration;
+import mcjty.lostcities.worldgen.LostCityTerrainFeature;
 import mcjty.lostcities.varia.ChunkCoord;
 import mcjty.lostcities.worldgen.IDimensionInfo;
 import mcjty.lostcities.worldgen.lost.BuildingInfo;
@@ -52,7 +53,7 @@ public final class SixtySecondsLostCityLootGen {
     private static final int MIN_SPACING_SQ = 4 * 4;
 
     /** 每个 chunk 最多撒的箱子数（随星级线性增长，这里给出上限保护）。 */
-    private static final int MAX_BOXES = 20;
+    private static final int MAX_BOXES = 8;
 
     /** CharacteristicsEvent -> PostGenCityChunkEvent 之间按世界缓存建筑信息（弱引用 key 防止内存泄漏）。 */
     private static final WeakHashMap<WorldGenLevel, Map<ChunkPos, BuildingMeta>> META = new WeakHashMap<>();
@@ -113,8 +114,12 @@ public final class SixtySecondsLostCityLootGen {
             return;
         }
         BuildingInfo info = BuildingInfo.getBuildingInfo(new ChunkCoord(dimInfo.getType(), chunkX, chunkZ), dimInfo);
+        // 必须用 LostCities 真实的 FLOORHEIGHT（6），之前误写成 8 会导致多层建筑楼层错位，
+        // 越往上层 isFloor 匹配率越低，最终高层整层扫不到合法落箱点。
+        int floorHeight = LostCityTerrainFeature.FLOORHEIGHT;
         int groundY = info.getCityGroundLevel();
-        int topY = groundY + Math.max(1, info.getNumFloors()) * 8; // FLOORHEIGHT 默认 8
+        int bottomY = groundY - Math.max(0, info.cellars) * floorHeight; // 含地下室底
+        int topY = groundY + Math.max(1, info.getNumFloors()) * floorHeight;
 
         // 收集本 chunk 内所有合法地板候选点（贴地、非贴墙、不悬空/不天花板）
         List<BlockPos> candidates = new ArrayList<>();
@@ -122,7 +127,7 @@ public final class SixtySecondsLostCityLootGen {
             for (int lz = 0; lz < 16; lz++) {
                 int x = baseX + lx;
                 int z = baseZ + lz;
-                for (int y = groundY - 1; y <= topY; y++) {
+                for (int y = bottomY - 1; y <= topY; y++) {
                     BlockPos pos = new BlockPos(x, y, z);
                     if (isFloor(primer, pos) && hasOpenSides(primer, pos)) {
                         candidates.add(pos);
@@ -137,7 +142,7 @@ public final class SixtySecondsLostCityLootGen {
         // 用 worldgen 随机源打乱候选顺序，保证分布随机且确定性可复现
         Collections.shuffle(candidates, new Random(rng.nextLong()));
 
-        int count = Math.min(star * 2 + 1, MAX_BOXES);
+        int count = Math.min(star, MAX_BOXES);
         List<BlockPos> placed = new ArrayList<>();
         for (BlockPos pos : candidates) {
             if (placed.size() >= count) {
