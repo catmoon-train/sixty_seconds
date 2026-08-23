@@ -9,6 +9,9 @@ import net.exmo.sixty_seconds.SixtySeconds;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -53,9 +56,26 @@ public final class SixtySecondsLootStore {
                 SixtySeconds.LOGGER.warn("[60s] 读取 {} 失败：{}", FILE_NAME, e.toString());
             }
         }
-        SixtySecondsLootTable table = SixtySecondsLootTable.defaultTable();
+        SixtySecondsLootTable table = loadBuiltinDefault();
         writeFile(level, table);
         return table;
+    }
+
+    /** 从模组内置资源读取出厂默认 loot 表；资源缺失时回退到代码默认表。 */
+    private static SixtySecondsLootTable loadBuiltinDefault() {
+        try (InputStream in = SixtySecondsLootTable.class.getResourceAsStream("/sixty_seconds_loot.json")) {
+            if (in != null) {
+                try (Reader reader = new InputStreamReader(in, StandardCharsets.UTF_8)) {
+                    SixtySecondsLootTable table = GSON.fromJson(reader, SixtySecondsLootTable.class);
+                    if (table != null && table.categories != null) {
+                        return table;
+                    }
+                }
+            }
+        } catch (IOException | RuntimeException e) {
+            SixtySeconds.LOGGER.warn("[60s] 读取内置默认 loot 表失败：{}", e.toString());
+        }
+        return SixtySecondsLootTable.defaultTable();
     }
 
     private static void writeFile(ServerLevel level, SixtySecondsLootTable table) {

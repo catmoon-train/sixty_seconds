@@ -1,0 +1,2797 @@
+{
+  "categories": {
+    "food": [
+      {
+        "itemId": "minecraft:bread",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "minecraft:cooked_beef",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "minecraft:apple",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_canned_food",
+        "count": 1,
+        "weight": 2.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_biscuit",
+        "count": 2,
+        "weight": 2.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_jerky",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_instant_noodles",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chocolate_bar",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_energy_bar",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_dried_fruit",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_trail_mix",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_fresh_vegetables",
+        "count": 1,
+        "weight": 1.2
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_canned_soup",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_mre",
+        "count": 1,
+        "weight": 0.8
+      },
+      {
+        "itemId": "minecraft:wheat_seeds",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:brown_mushroom",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "minecraft:red_mushroom",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_seeds_pack",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:kelp",
+        "count": 3,
+        "weight": 8.0
+      },
+      {
+        "itemId": "minecraft:beef",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:porkchop",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:mutton",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:chicken",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:rabbit",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:cod",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:salmon",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:tropical_fish",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:pufferfish",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:rotten_flesh",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "minecraft:spider_eye",
+        "count": 1,
+        "weight": 10.0
+      },
+      {
+        "itemId": "minecraft:potato",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:carrot",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:sweet_berries",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:beetroot",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:glow_berries",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "minecraft:charcoal",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 1,
+        "weight": 15.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 2,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_rag",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "minecraft:spider_eye",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:bone",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:sugar",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:rotten_flesh",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "minecraft:iron_ingot",
+        "count": 2,
+        "weight": 4.0
+      },
+      {
+        "itemId": "minecraft:iron_ingot",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "minecraft:nether_wart",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "minecraft:oak_sapling",
+        "count": 1,
+        "weight": 8.0
+      }
+    ],
+    "water": [
+      {
+        "itemId": "minecraft:potion",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "minecraft:glass_bottle",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_juice",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_coffee",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_sports_drink",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_water_pack",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_purified_water",
+        "count": 1,
+        "weight": 1.2
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_thermos",
+        "count": 1,
+        "weight": 0.8
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_dirty_water",
+        "count": 1,
+        "weight": 16.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_dirty_water",
+        "count": 2,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_dirty_water",
+        "count": 2,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_water_small",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_water_small",
+        "count": 2,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_water_small",
+        "count": 3,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_water_medium",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_water_medium",
+        "count": 2,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_charcoal_filter",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:oak_planks",
+        "count": 2,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_plastic",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:iron_ingot",
+        "count": 2,
+        "weight": 4.0
+      },
+      {
+        "itemId": "minecraft:iron_ingot",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 2,
+        "weight": 8.0
+      },
+      {
+        "itemId": "minecraft:feather",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_precious_parts",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "minecraft:nether_wart",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "minecraft:oak_sapling",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_medicinal_fern",
+        "count": 1,
+        "weight": 2.0
+      }
+    ],
+    "medicine": [
+      {
+        "itemId": "minecraft:honey_bottle",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_painkillers",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_antibiotics",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_sedative",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_vitamin",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_purification_tablet",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_charcoal_pill",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_detox_tea",
+        "count": 1,
+        "weight": 1.2
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_medkit",
+        "count": 1,
+        "weight": 0.6
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_herbal_tea",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_blood_bag",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_anti_pollution_serum",
+        "count": 1,
+        "weight": 0.8
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_adrenaline",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_band_aid",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_splint",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_simple_bandage",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_medicine",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_alcohol",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_bandage",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_sanity_pill",
+        "count": 1,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_sanity_med",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_simple_bandage",
+        "count": 3,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_simple_bandage",
+        "count": 2,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_splint",
+        "count": 2,
+        "weight": 8.0
+      },
+      {
+        "itemId": "minecraft:charcoal",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:oak_planks",
+        "count": 3,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_rag",
+        "count": 1,
+        "weight": 16.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_rag",
+        "count": 2,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_rag",
+        "count": 3,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 2,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_plastic",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 1,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 2,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:bone",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "minecraft:disc_fragment_5",
+        "count": 2,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:leather",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:iron_ingot",
+        "count": 2,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:feather",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_precious_parts",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "minecraft:nether_wart",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_medicinal_fern",
+        "count": 1,
+        "weight": 2.0
+      }
+    ],
+    "tool": [
+      {
+        "itemId": "sixty_seconds:sixty_seconds_torch",
+        "count": 2,
+        "weight": 3.0
+      },
+      {
+        "itemId": "minecraft:iron_ingot",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wrench",
+        "count": 1,
+        "weight": 0.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_toolbox",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_compass",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_repair_kit",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_grappling_hook",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_claw_hook",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_blueprint",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_turret",
+        "count": 1,
+        "weight": 0.25
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_workbench",
+        "count": 1,
+        "weight": 0.4
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_stove",
+        "count": 1,
+        "weight": 0.3
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_purifier",
+        "count": 1,
+        "weight": 0.3
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_poker",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chess",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_harmonica",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_guitar",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_teddy_bear",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_planter",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_adv_workbench",
+        "count": 1,
+        "weight": 0.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_flashlight",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wrench",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_rope",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_radio",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_alarm",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_lure",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_toolbox",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_blueprint",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_nutrient_fertilizer",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_fertilizer",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_draft_paper",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_charcoal_filter",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_phone",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_battery",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_detach_wrench",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_box_pry",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_pliers",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_battery_large",
+        "count": 1,
+        "weight": 0.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_diesel_can",
+        "count": 1,
+        "weight": 0.1
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_coin",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 2,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_plastic",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_backpack_medium",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_backpack_small",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:bone",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:leather",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:leather",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "minecraft:disc_fragment_5",
+        "count": 2,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:feather",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_precious_parts",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "minecraft:nether_wart",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "minecraft:oak_sapling",
+        "count": 1,
+        "weight": 8.0
+      }
+    ],
+    "material": [
+      {
+        "itemId": "minecraft:iron_ingot",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_alcohol",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_battery",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_plastic",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_steel_ingot",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_nails",
+        "count": 3,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_fertilizer",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_charcoal_filter",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "minecraft:charcoal",
+        "count": 2,
+        "weight": 1.5
+      },
+      {
+        "itemId": "minecraft:potato",
+        "count": 2,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 4,
+        "weight": 16.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 3,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 2,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_rag",
+        "count": 3,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_rag",
+        "count": 2,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_rag",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 4,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 3,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 2,
+        "weight": 9.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_plastic",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_plastic",
+        "count": 2,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_plastic",
+        "count": 3,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_plastic",
+        "count": 4,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 2,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 3,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 4,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 2,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 3,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 4,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 2,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 2,
+        "weight": 9.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 3,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 4,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_brewing_parts",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_precious_parts",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_precious_parts",
+        "count": 2,
+        "weight": 1.0
+      },
+      {
+        "itemId": "minecraft:disc_fragment_5",
+        "count": 1,
+        "weight": 16.0
+      },
+      {
+        "itemId": "minecraft:disc_fragment_5",
+        "count": 2,
+        "weight": 10.0
+      },
+      {
+        "itemId": "minecraft:oak_planks",
+        "count": 4,
+        "weight": 8.0
+      },
+      {
+        "itemId": "minecraft:oak_planks",
+        "count": 3,
+        "weight": 9.0
+      },
+      {
+        "itemId": "minecraft:oak_planks",
+        "count": 2,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_nails",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_nails",
+        "count": 2,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_duct_tape",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 1,
+        "weight": 9.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 2,
+        "weight": 4.0
+      },
+      {
+        "itemId": "minecraft:charcoal",
+        "count": 2,
+        "weight": 10.0
+      },
+      {
+        "itemId": "minecraft:iron_ingot",
+        "count": 2,
+        "weight": 9.0
+      },
+      {
+        "itemId": "minecraft:leather",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "minecraft:paper",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 2,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:stick",
+        "count": 4,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:bone_meal",
+        "count": 1,
+        "weight": 6.0
+      }
+    ],
+    "weapon": [
+      {
+        "itemId": "sixty_seconds:sixty_seconds_hatchet",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_crude_bow",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_hunting_bow",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_hand_crossbow",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_crude_arrow",
+        "count": 6,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_iron_arrow",
+        "count": 4,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_cleaver",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_incendiary_grenade",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_frag_grenade",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_marking_grenade",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_smoke_grenade",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_knife",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_fire_axe",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_sledgehammer",
+        "count": 1,
+        "weight": 0.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_stun_baton",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_pipe_bomb",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_flashbang",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_riot_shield",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_hazmat_suit",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gas_mask",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_night_goggles",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_coin",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:leather_helmet",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:leather_chestplate",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:leather_leggings",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:leather_boots",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_helmet",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_chestplate",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_leggings",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_boots",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 4,
+        "weight": 9.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 3,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 1,
+        "weight": 16.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 2,
+        "weight": 14.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 3,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 2,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 1,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:leather",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 2,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "minecraft:feather",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_precious_parts",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "minecraft:nether_wart",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "minecraft:oak_sapling",
+        "count": 1,
+        "weight": 6.0
+      }
+    ],
+    "airdrop": [
+      {
+        "itemId": "sixty_seconds:sixty_seconds_frag_grenade",
+        "count": 2,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_steel_ingot",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 2,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 2,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_charcoal_filter",
+        "count": 2,
+        "weight": 1.2
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_canned_soup",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_mre",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_purified_water",
+        "count": 2,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_bandage",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_medicine",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_anti_pollution_serum",
+        "count": 1,
+        "weight": 0.8
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_fertilizer",
+        "count": 2,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 6,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 5,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 4,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_rag",
+        "count": 4,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 3,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 3,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 4,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 4,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 4,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 3,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_plastic",
+        "count": 4,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 5,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 3,
+        "weight": 8.0
+      },
+      {
+        "itemId": "minecraft:leather",
+        "count": 2,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:disc_fragment_5",
+        "count": 4,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:feather",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_precious_parts",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "minecraft:nether_wart",
+        "count": 1,
+        "weight": 3.0
+      }
+    ],
+    "advanced_food": [
+      {
+        "itemId": "sixty_seconds:sixty_seconds_mre",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_stew",
+        "count": 1,
+        "weight": 0.2
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_canned_soup",
+        "count": 1,
+        "weight": 2.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_canned_food",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_jerky",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_biscuit",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_sushi",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_rice_soup",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_fresh_vegetables",
+        "count": 2,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_thermos",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_instant_noodles",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_seeds_pack",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wild_rice_seeds",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 2,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 3,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:charcoal",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:disc_fragment_5",
+        "count": 2,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 2,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:leather",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "minecraft:nether_wart",
+        "count": 1,
+        "weight": 2.0
+      }
+    ],
+    "advanced_material": [
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 3,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_steel_ingot",
+        "count": 1,
+        "weight": 2.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 3,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_plastic",
+        "count": 3,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 2,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_plate",
+        "count": 2,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_fertilizer",
+        "count": 2,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_battery",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_battery_large",
+        "count": 1,
+        "weight": 0.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_fuel_can",
+        "count": 1,
+        "weight": 0.6
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 2,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_rag",
+        "count": 2,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 2,
+        "weight": 8.0
+      },
+      {
+        "itemId": "minecraft:oak_planks",
+        "count": 4,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:charcoal",
+        "count": 2,
+        "weight": 9.0
+      },
+      {
+        "itemId": "minecraft:oak_planks",
+        "count": 3,
+        "weight": 9.0
+      },
+      {
+        "itemId": "minecraft:charcoal",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:cocoa_beans",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:charcoal",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 2,
+        "weight": 12.0
+      },
+      {
+        "itemId": "minecraft:leather",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_precious_parts",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 3,
+        "weight": 8.0
+      },
+      {
+        "itemId": "minecraft:nether_wart",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 4,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:oak_sapling",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_medicinal_fern",
+        "count": 1,
+        "weight": 2.0
+      }
+    ],
+    "advanced_medicine": [
+      {
+        "itemId": "sixty_seconds:sixty_seconds_medkit",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_antibiotics",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_painkillers",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_sedative",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_purification_tablet",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_anti_pollution_serum",
+        "count": 1,
+        "weight": 1.2
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_adrenaline",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_blood_bag",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_omni_tonic",
+        "count": 1,
+        "weight": 0.2
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_medical_box",
+        "count": 1,
+        "weight": 0.1
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_sanity_med",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "minecraft:leather",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_alcohol",
+        "count": 2,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_medicine",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_cloth_roll",
+        "count": 3,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_band_aid",
+        "count": 3,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_mental_fortifier",
+        "count": 1,
+        "weight": 0.1
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wild_tea_seed",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_bandage",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_simple_bandage",
+        "count": 2,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_coffee",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_sanity_pill",
+        "count": 2,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_splint",
+        "count": 3,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 2,
+        "weight": 10.0
+      },
+      {
+        "itemId": "minecraft:charcoal",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 2,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:disc_fragment_5",
+        "count": 2,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 2,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_hemp_seeds",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wild_rice_seeds",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_medicinal_fern",
+        "count": 1,
+        "weight": 4.0
+      }
+    ],
+    "advanced_tool": [
+      {
+        "itemId": "sixty_seconds:sixty_seconds_toolbox",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_blueprint",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_repair_kit",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_grappling_hook",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chainsaw",
+        "count": 1,
+        "weight": 0.6
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_stun_baton",
+        "count": 1,
+        "weight": 0.6
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_radio",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_compass",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_solar_panel",
+        "count": 1,
+        "weight": 0.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gas_mask",
+        "count": 1,
+        "weight": 0.6
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_hazmat_suit",
+        "count": 1,
+        "weight": 0.4
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_night_goggles",
+        "count": 1,
+        "weight": 0.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_flashbang",
+        "count": 1,
+        "weight": 0.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_molotov",
+        "count": 1,
+        "weight": 0.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_planter",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_advanced_planter",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gardener_planter",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_mushroom_box",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 2,
+        "weight": 10.0
+      },
+      {
+        "itemId": "minecraft:bone",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:charcoal",
+        "count": 1,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 2,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:disc_fragment_5",
+        "count": 2,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:disc_fragment_5",
+        "count": 2,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 2,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:leather",
+        "count": 1,
+        "weight": 6.0
+      }
+    ],
+    "advanced_weapon": [
+      {
+        "itemId": "sixty_seconds:sixty_seconds_frag_grenade",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_incendiary_grenade",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_hunting_bow",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_iron_arrow",
+        "count": 6,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_heavy_crossbow",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_compound_bow",
+        "count": 1,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_recurve_bow",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_fire_arrow",
+        "count": 4,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_poison_arrow",
+        "count": 4,
+        "weight": 4.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_explosive_arrow",
+        "count": 2,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_steel_arrow",
+        "count": 4,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_smoke_grenade",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_marking_grenade",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_pipe_bomb",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_flashbang",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 2,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 2,
+        "weight": 10.0
+      },
+      {
+        "itemId": "minecraft:bone",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "minecraft:charcoal",
+        "count": 1,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 1,
+        "weight": 12.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:disc_fragment_5",
+        "count": 2,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 2,
+        "weight": 6.0
+      },
+      {
+        "itemId": "minecraft:leather",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_precious_parts",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_hemp_seeds",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_alloy_arrow",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_flare_gun",
+        "count": 1,
+        "weight": 0.6
+      }
+    ],
+    "advanced_rare": [
+      {
+        "itemId": "sixty_seconds:sixty_seconds_omni_tonic",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_blueprint",
+        "count": 2,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_battery_large",
+        "count": 2,
+        "weight": 2.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_diesel_can",
+        "count": 1,
+        "weight": 1.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_alloy_plate",
+        "count": 1,
+        "weight": 0.2
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_steel_ingot",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_plate",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_incendiary_grenade",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_smoke_grenade",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_nails",
+        "count": 3,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 3,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_advanced_planter",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_planter",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gardener_planter",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_mushroom_box",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_lathe",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_armor_forge",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_smoke_grenade",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_flashbang",
+        "count": 2,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 2,
+        "weight": 5.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 1,
+        "weight": 8.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 2,
+        "weight": 10.0
+      },
+      {
+        "itemId": "minecraft:bone",
+        "count": 1,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_chemicals",
+        "count": 1,
+        "weight": 10.0
+      },
+      {
+        "itemId": "minecraft:charcoal",
+        "count": 1,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 1,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:disc_fragment_5",
+        "count": 2,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 2,
+        "weight": 4.0
+      },
+      {
+        "itemId": "minecraft:leather",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_precious_parts",
+        "count": 1,
+        "weight": 1.0
+      },
+      {
+        "itemId": "minecraft:feather",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_hemp_seeds",
+        "count": 1,
+        "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_flare_gun",
+        "count": 1,
+        "weight": 0.5
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wild_rice_seeds",
+        "count": 1,
+        "weight": 5.0
+      }
+    ],
+    "field": [
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap_metal",
+        "count": 2,
+        "weight": 4.0
+      },
+      {
+        "itemId": "minecraft:disc_fragment_5",
+        "count": 1,
+        "weight": 2.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 2,
+        "weight": 20.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 1,
+        "weight": 22.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_scrap",
+        "count": 3,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_plastic",
+        "count": 1,
+        "weight": 15.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_wire",
+        "count": 1,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_plastic",
+        "count": 2,
+        "weight": 10.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_electronics",
+        "count": 1,
+        "weight": 7.0
+      },
+      {
+        "itemId": "minecraft:bone_meal",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gear",
+        "count": 1,
+        "weight": 6.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_glass_shard",
+        "count": 1,
+        "weight": 5.0
+      },
+      {
+        "itemId": "minecraft:disc_fragment_5",
+        "count": 2,
+        "weight": 7.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_gunpowder_pack",
+        "count": 1,
+        "weight": 2.0
+      }
+    ]
+  }
+}
