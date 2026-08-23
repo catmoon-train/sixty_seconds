@@ -2,9 +2,14 @@ package net.exmo.sixty_seconds.lostcities;
 
 import mcjty.lostcities.api.LostChunkCharacteristics;
 import mcjty.lostcities.api.LostCityEvent;
+import mcjty.lostcities.setup.Registration;
+import mcjty.lostcities.varia.ChunkCoord;
+import mcjty.lostcities.worldgen.IDimensionInfo;
+import mcjty.lostcities.worldgen.lost.BuildingInfo;
 import net.exmo.sixty_seconds.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
@@ -82,7 +87,9 @@ public final class SixtySecondsLostCityLootGen {
     @SubscribeEvent
     private static void onPostGen(LostCityEvent.PostGenCityChunkEvent event) {
         WorldGenLevel world = event.getWorld();
-        ChunkPos cp = new ChunkPos(event.getChunkX(), event.getChunkZ());
+        int chunkX = event.getChunkX();
+        int chunkZ = event.getChunkZ();
+        ChunkPos cp = new ChunkPos(chunkX, chunkZ);
         Map<ChunkPos, BuildingMeta> map = META.get(world);
         BuildingMeta meta = map == null ? null : map.remove(cp);
         if (meta == null) {
@@ -96,10 +103,18 @@ public final class SixtySecondsLostCityLootGen {
 
         ChunkAccess primer = event.getChunkAccess();
         RandomSource rng = world.getRandom();
-        int baseX = event.getChunkX() << 4;
-        int baseZ = event.getChunkZ() << 4;
-        int floorStart = Math.max(world.getMinBuildHeight() + 1, meta.cityLevel * 6 - 4);
-        int top = world.getMaxBuildHeight() - 1;
+        int baseX = chunkX << 4;
+        int baseZ = chunkZ << 4;
+
+        // 楼层实际世界 Y 由 LostCities 的 BuildingInfo 给出（已含 cityLevel*FLOORHEIGHT），
+        // 不要再自己用 cityLevel*6 近似，否则要么扫不到建筑、要么把箱子撒到建筑外地表。
+        IDimensionInfo dimInfo = Registration.LOSTCITY_FEATURE.get().getDimensionInfo(world);
+        if (dimInfo == null) {
+            return;
+        }
+        BuildingInfo info = BuildingInfo.getBuildingInfo(new ChunkCoord(dimInfo.getType(), chunkX, chunkZ), dimInfo);
+        int groundY = info.getCityGroundLevel();
+        int topY = groundY + Math.max(1, info.getNumFloors()) * 8; // FLOORHEIGHT 默认 8
 
         // 收集本 chunk 内所有合法地板候选点（贴地、非贴墙、不悬空/不天花板）
         List<BlockPos> candidates = new ArrayList<>();
@@ -107,7 +122,7 @@ public final class SixtySecondsLostCityLootGen {
             for (int lz = 0; lz < 16; lz++) {
                 int x = baseX + lx;
                 int z = baseZ + lz;
-                for (int y = floorStart; y <= top; y++) {
+                for (int y = groundY - 1; y <= topY; y++) {
                     BlockPos pos = new BlockPos(x, y, z);
                     if (isFloor(primer, pos) && hasOpenSides(primer, pos)) {
                         candidates.add(pos);
@@ -131,31 +146,40 @@ public final class SixtySecondsLostCityLootGen {
             if (tooClose(placed, pos)) {
                 continue;
             }
-            placeInPrimer(primer, pos, star, rng);
+            // 关键：不能现在直接写 primer —— PostGenCityChunkEvent 之后 LostCities 还会跑
+            // generateRuins / generateRubble / generateStuff 等阶段，会把箱子位置覆盖成
+            // stone/dirt/air/water，导致最终方块实体与方块不匹配而刷 WARN，且箱子消失。
+            // 改走 LostCities 的延迟 todo（ChunkFixer 阶段、真实 chunk 已成型时执行），
+            // 与 LostCities 自己的 loot/spawner 做法一致：先 setBlock 再 setBlockEntityNbt。
+            boolean advanced = rng.nextFloat() < (0.1f + 0.12f * star);
+            boolean locked = rng.nextFloat() < LOCK_RATIO;
+            String category = CATEGORIES[rng.nextInt(CATEGORIES.length)];
+            info.addPostTodo(pos, () -> placeBox(info, pos, advanced, locked, category));
             placed.add(pos);
         }
     }
 
-    /** primer 上放置一个物资箱方块，并写入其方块实体 NBT（category / 上锁状态）。 */
-    private static void placeInPrimer(ChunkAccess primer, BlockPos pos, int star, RandomSource rng) {
-        float advancedProb = 0.1f + 0.12f * star; // 星级越高高级箱占比越大
-        boolean advanced = rng.nextFloat() < advancedProb;
-        boolean locked = rng.nextFloat() < LOCK_RATIO; // 约 70% 上锁
+    /**
+     * 在 ChunkFixer 阶段（真实 chunk 已成型、所有地形生成完成）放置物资箱。
+     * 必须先 setBlock 再 setBlockEntityNbt，保证方块与方块实体状态一致，避免 "does not allow it" 的 WARN。
+     */
+    private static void placeBox(BuildingInfo info, BlockPos pos, boolean advanced, boolean locked, String category) {
+        WorldGenLevel inWorld = info.provider.getWorld();
         Block block = advanced
                 ? (locked ? ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED_LOCKED : ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED)
                 : (locked ? ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_LOCKED : ModBlocks.SIXTY_SECONDS_SUPPLY_BOX);
-        primer.setBlockState(pos, block.defaultBlockState(), false);
-
+        // 先放方块，再挂方块实体（状态匹配）
+        inWorld.setBlock(pos, block.defaultBlockState(), Block.UPDATE_ALL);
         CompoundTag tag = new CompoundTag();
-        tag.putString("id", "sixty_seconds:sixty_seconds_supply_box");
+        tag.putString("id", BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ENTITY).toString());
         tag.putInt("x", pos.getX());
         tag.putInt("y", pos.getY());
         tag.putInt("z", pos.getZ());
-        tag.putString("Category", CATEGORIES[rng.nextInt(CATEGORIES.length)]);
+        tag.putString("Category", category);
         tag.putInt("BonusRolls", 1);
         tag.putBoolean("OneShot", false);
         tag.putBoolean("Unlocked", !locked); // 上锁箱保持上锁，未锁箱显式开放
-        primer.setBlockEntityNbt(tag);
+        inWorld.getChunk(pos).setBlockEntityNbt(tag);
     }
 
     /** primer 中该格是否为合法落箱点：当前空气、脚下实心、头顶空气（贴地面，不悬空/不天花板）。 */
