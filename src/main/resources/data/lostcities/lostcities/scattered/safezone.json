@@ -1,0 +1,6 @@
+{
+  "buildings": [ "safezone" ],
+  "terrainheight": "highest",
+  "terrainfix": "none",
+  "heightoffset": 0
+}
