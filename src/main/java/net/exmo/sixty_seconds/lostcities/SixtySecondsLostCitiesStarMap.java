@@ -9,6 +9,8 @@ import net.minecraft.server.level.ServerLevel;
 
 import javax.annotation.Nullable;
 import java.util.Locale;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * LostCities 建筑 → 60 秒「区域星级」自动映射。
@@ -46,6 +48,14 @@ public final class SixtySecondsLostCitiesStarMap {
     /** 多区块建筑统一 5 星。 */
     private static final int MULTI_BUILDING_STAR = 5;
 
+    /**
+     * {@code ILostCityInformation} 按维度缓存：它在单个 {@code ServerLevel} 生命周期内是稳定的，
+     * 而 {@code levelAt}/{@code isSafeZone} 是高频运行时查询（PvP 每次攻击、每次刷怪、每次领箱都走一遍），
+     * 避免每次都经 {@code api().getLostInfo(level)} + try/catch 重新取。
+     * 用 WeakHashMap 以免阻止世界对象被 GC（维度卸载后自动清理）。
+     */
+    private static final Map<ServerLevel, ILostCityInformation> INFO_CACHE = new WeakHashMap<>();
+
     private SixtySecondsLostCitiesStarMap() {
     }
 
@@ -60,7 +70,7 @@ public final class SixtySecondsLostCitiesStarMap {
      * @return 1..5 的星级，或 {@link #NO_STAR}
      */
     public static int starAt(ServerLevel level, BlockPos pos) {
-        ILostCityInformation info = lostCitiesInfo(level);
+        ILostCityInformation info = cachedLostCitiesInfo(level);
         if (info == null) {
             return NO_STAR;
         }
@@ -132,18 +142,33 @@ public final class SixtySecondsLostCitiesStarMap {
         return NO_STAR;
     }
 
-    /** 获取指定维度的 LostCities 城市信息；该维度不支持城市或 LostCities 未接入时返回 null。 */
+    /** 获取指定维度的 LostCities 城市信息（带按维度缓存）；该维度不支持城市或 LostCities 未接入时返回 null。 */
     @Nullable
-    private static ILostCityInformation lostCitiesInfo(ServerLevel level) {
+    private static ILostCityInformation cachedLostCitiesInfo(ServerLevel level) {
+        // 缓存已命中：直接返回，避免每次查询都走 api()/getLostInfo() + try/catch。
+        ILostCityInformation cached = INFO_CACHE.get(level);
+        if (cached != null) {
+            return cached;
+        }
+        // 缓存未命中：仅在首次查询该维度（或上次降级为 null）时解析一次。
+        return resolveAndCache(level);
+    }
+
+    @Nullable
+    private static ILostCityInformation resolveAndCache(ServerLevel level) {
+        ILostCityInformation info = null;
         try {
             ILostCities lostCities = SixtySecondsLostCitiesAccess.api();
-            if (lostCities == null) {
-                return null;
+            if (lostCities != null) {
+                info = lostCities.getLostInfo(level);
             }
-            return lostCities.getLostInfo(level);
         } catch (Throwable ignored) {
             // LostCities 不可用（未安装/类路径缺失）：静默降级为无建筑星级。
-            return null;
+            info = null;
         }
+        // 即使解析为 null 也写入缓存，避免对同一维度反复重试（维度不支持城市/LostCities 未接入时），
+        // 维度卸载后 WeakHashMap 自动清理，不会泄漏。
+        INFO_CACHE.put(level, info);
+        return info;
     }
 }

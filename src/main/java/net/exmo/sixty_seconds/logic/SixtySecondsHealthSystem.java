@@ -289,9 +289,8 @@ public final class SixtySecondsHealthSystem {
         }
         // 安全区（0 级星级区域）：任一方身处安全区 → 完全禁 PvP（攻击不了别人、也不会被攻击）。
         // 怪化玩家在安全区同样被禁——安全区是绝对和平区，不因变怪而破例。
-        if (net.exmo.sixty_seconds.logic.SixtySecondsAreaLevels.isSafeZone(level, attacker.blockPosition())
-                || (victim != null
-                        && net.exmo.sixty_seconds.logic.SixtySecondsAreaLevels.isSafeZone(level, victim.blockPosition()))) {
+        // 合并一次安全区判定（isSafeZone 内部走 levelAt → starAt，属高频路径，避免重复查询）。
+        if (eitherInSafeZone(level, attacker, victim)) {
             return true;
         }
         if (SixtySecondsStatsComponent.KEY.get(attacker).monster) {
@@ -327,6 +326,19 @@ public final class SixtySecondsHealthSystem {
         // 旧逻辑 attackerTeam<0||victimTeam<0||attackerTeam!=victimTeam 恰好反了：把跨队禁掉、把无队伍禁掉，
         // 导致「打不了别队的人」「重连后打不了人」「无队伍旁观打不了人」。
         return attackerTeam >= 0 && attackerTeam == victimTeam;
+    }
+
+    /**
+     * 攻击方或受害方任一身处安全区（危险等级 0）即返回 true。安全区是绝对和平区，
+     * 攻击方与受害方只需其一在安全区就禁 PvP。合并为单次判定，避免对两名玩家各查一次
+     * {@code isSafeZone}（其内部走 {@code levelAt} → {@code starAt}，属 PvP 伤害热路径）。
+     */
+    private static boolean eitherInSafeZone(ServerLevel level, ServerPlayer attacker, @Nullable ServerPlayer victim) {
+        if (net.exmo.sixty_seconds.logic.SixtySecondsAreaLevels.isSafeZone(level, attacker.blockPosition())) {
+            return true;
+        }
+        return victim != null
+                && net.exmo.sixty_seconds.logic.SixtySecondsAreaLevels.isSafeZone(level, victim.blockPosition());
     }
 
     /** 玩家是否身处「非本队」的避难所盒内（= 破门闯入了别人家）。 */
@@ -365,9 +377,7 @@ public final class SixtySecondsHealthSystem {
      * 安全区原因优先于时段原因（安全区是绝对和平区，无论何时都禁 PvP）。
      */
     private static String pvpBlockedReason(ServerLevel level, ServerPlayer attacker, ServerPlayer victim) {
-        if (net.exmo.sixty_seconds.logic.SixtySecondsAreaLevels.isSafeZone(level, attacker.blockPosition())
-                || (victim != null
-                        && net.exmo.sixty_seconds.logic.SixtySecondsAreaLevels.isSafeZone(level, victim.blockPosition()))) {
+        if (eitherInSafeZone(level, attacker, victim)) {
             return "safe_zone";
         }
         SixtySecondsState.Data data = SixtySecondsState.get(level);
