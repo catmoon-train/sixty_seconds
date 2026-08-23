@@ -3202,6 +3202,8 @@
   "message.sixty_seconds.sixty_seconds.helicopter_final": "🚁 直升机已起飞！%1$s 名幸存者成功撤离！",
   "message.sixty_seconds.sixty_seconds.helicopter_no_evac": "🚁 直升机已起飞……但撤离点内没有幸存者。",
   "message.sixty_seconds.sixty_seconds.helicopter_enabled": "§a直升机撤离已开启——最后一天直升机将在指定降落点抵达。",
+  "message.sixty_seconds.sixty_seconds.evac_point_enter": "🚁 你已进入撤离点（建筑内），直升机抵达时在此即可撤离。",
+  "message.sixty_seconds.sixty_seconds.evac_point_leave": "🚁 你已离开撤离点。",
   "message.sixty_seconds.sixty_seconds.helicopter_disabled": "§c直升机撤离已关闭——最后一天不会刷直升机。",
   "message.sixty_seconds.sixty_seconds.helicopter_set": "直升机降落点已设置为 (%1$s, %2$s, %3$s)。",
   "hud.sixty_seconds.sixty_seconds.helicopter_title": "救援直升机已抵达",

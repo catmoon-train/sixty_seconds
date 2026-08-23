@@ -35,6 +35,8 @@ import java.util.WeakHashMap;
  *           {@code shopping(_open)} 购物中心/露天市场 → 4 星；</li>
  *       <li>{@code town00/01/10/11} 城镇建筑 → 3 星。</li>
  *       <li>{@code safezone} 60秒模组自带安全区建筑（由 {@code export_building} 导出注册）→ <b>0 级（安全区）</b>。</li>
+ *       <li>{@code evacuationpoint} 60秒模组自带撤离点建筑（由 {@code export_building} 导出注册）→ <b>不具有星级</b>
+ *           （返回 {@link #UNGRADED}），其所在位置被直升机撤离系统识别为撤离点（见 {@link #isEvacuationPoint}）。</li>
  *     </ul></li>
  *   <li><b>建筑部件</b> {@code parts/}（street/rails/bridge 等 207 个零件）不划分星级——它们不是独立建筑，
  *       仅作为建筑/街道的组装件，由所属建筑或街道决定。</li>
@@ -74,6 +76,13 @@ public final class SixtySecondsLostCitiesStarMap {
      * 导出的结构注册而来，固定为安全区（{@link #SAFE_STAR}），不计入未知建筑的无级别处理。
      */
     private static final Set<String> SAFE_BUILDINGS = Set.of("safezone");
+
+    /**
+     * 60秒模组自带的撤离点建筑集合（建筑文件名，不含命名空间）。这些建筑由 {@code export_building}
+     * 导出的结构注册而来，作为直升机撤离点候选区域：<b>不具有星级</b>（返回 {@link #UNGRADED}），并在直升机
+     * 撤离判定时被识别为撤离区（见 {@link #isEvacuationPoint}）。
+     */
+    private static final Set<String> EVAC_BUILDINGS = Set.of("evacuationpoint");
 
     /**
      * {@code ILostCityInformation} 按维度缓存：它在单个 {@code ServerLevel} 生命周期内是稳定的，
@@ -171,9 +180,34 @@ public final class SixtySecondsLostCitiesStarMap {
         if (SAFE_BUILDINGS.contains(name)) {
             return SAFE_STAR;
         }
+        // 60秒模组自带的撤离点建筑（由 export_building 导出的结构注册而来）：不具有星级（UNGRADED），
+        // 但其所在位置被直升机撤离系统识别为撤离区（见 isEvacuationPoint）。
+        if (EVAC_BUILDINGS.contains(name)) {
+            return UNGRADED;
+        }
         // 未知建筑名：该坐标确实位于某 LostCities 建筑内，但本表未登记其危险度。
         // 返回 UNGRADED（而非 NO_STAR/星级），让上层把它当作真正「无级别」的地方处理。
         return UNGRADED;
+    }
+
+    /**
+     * 判断给定坐标是否位于 60秒模组自带的撤离点建筑（{@code EVAC_BUILDINGS}）内。
+     * 用于直升机撤离系统把该建筑所在位置当作撤离点区域。
+     *
+     * @param level 服务端世界
+     * @param pos   世界绝对坐标
+     * @return 位于撤离点建筑内返回 true（LostCities 未接入时恒为 false）
+     */
+    public static boolean isEvacuationPoint(ServerLevel level, BlockPos pos) {
+        ILostCityInformation info = cachedLostCitiesInfo(level);
+        if (info == null) {
+            return false;
+        }
+        ILostChunkInfo chunk = info.getChunkInfo(pos.getX() >> 4, pos.getZ() >> 4);
+        if (chunk == null || !chunk.isCity() || chunk.getBuildingId() == null) {
+            return false;
+        }
+        return EVAC_BUILDINGS.contains(chunk.getBuildingId().getPath().toLowerCase(Locale.ROOT));
     }
 
     /** 获取指定维度的 LostCities 城市信息（带按维度缓存）；该维度不支持城市或 LostCities 未接入时返回 null。 */

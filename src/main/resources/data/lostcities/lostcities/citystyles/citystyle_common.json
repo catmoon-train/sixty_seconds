@@ -71,6 +71,10 @@
       {
         "factor": 0.08,
         "value": "safezone"
+      },
+      {
+        "factor": 0.03,
+        "value": "evacuationpoint"
       }
     ],
     "multibuildings": [

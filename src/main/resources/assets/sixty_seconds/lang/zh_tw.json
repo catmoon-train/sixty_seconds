@@ -2220,6 +2220,8 @@
   "message.sixty_seconds.sixty_seconds.helicopter_evac_you": "🎉 你已成功撤離！直升機帶你離開了這片末日廢土。",
   "message.sixty_seconds.sixty_seconds.helicopter_full": "🚁 直升機已滿載！8 名倖存者已撤離。祝留下的人好運……",
   "message.sixty_seconds.sixty_seconds.helicopter_enabled": "§a直升機撤離已開啟——最後一天直升機將在指定降落點抵達。",
+  "message.sixty_seconds.sixty_seconds.evac_point_enter": "🚁 你已進入撤離點（建築內），直升機抵達時在此即可撤離。",
+  "message.sixty_seconds.sixty_seconds.evac_point_leave": "🚁 你已離開撤離點。",
   "message.sixty_seconds.sixty_seconds.helicopter_disabled": "§c直升機撤離已關閉——最後一天不會刷直升機。",
   "message.sixty_seconds.sixty_seconds.helicopter_set": "直升機降落點已設定為 (%1$s, %2$s, %3$s)。",
   "hud.sixty_seconds.sixty_seconds.helicopter_title": "救援直升機已抵達",

@@ -160,5 +160,7 @@ public final class SixtySecondsState {
         public boolean helicopterArrived = false;
         /** 直升机撤离已撤离的玩家 UUID（有序，先到先得）。 */
         public final Set<UUID> helicopterEvacuated = new LinkedHashSet<>();
+        /** 当前处于撤离点建筑（evacuationpoint）内的玩家 UUID（运行时态，用于进入/离开提示，不持久化）。 */
+        public final Set<UUID> evacBuildingZone = new java.util.HashSet<>();
     }
 }

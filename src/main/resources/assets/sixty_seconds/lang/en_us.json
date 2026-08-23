@@ -2301,6 +2301,8 @@
   "message.sixty_seconds.sixty_seconds.helicopter_final": "🚁 The helicopter has taken off! %1$s survivors evacuated!",
   "message.sixty_seconds.sixty_seconds.helicopter_no_evac": "🚁 The helicopter has left... but no survivors were at the evac point.",
   "message.sixty_seconds.sixty_seconds.helicopter_enabled": "§aHelicopter evacuation enabled — helicopter will arrive at the set landing point on the final day.",
+  "message.sixty_seconds.sixty_seconds.evac_point_enter": "🚁 You entered an evacuation point (inside the building); stay here when the helicopter arrives to evacuate.",
+  "message.sixty_seconds.sixty_seconds.evac_point_leave": "🚁 You left the evacuation point.",
   "message.sixty_seconds.sixty_seconds.helicopter_disabled": "§cHelicopter evacuation disabled — no helicopter on the final day.",
   "message.sixty_seconds.sixty_seconds.helicopter_set": "Helicopter landing point set to (%1$s, %2$s, %3$s).",
   "hud.sixty_seconds.sixty_seconds.helicopter_title": "Rescue Helicopter Arrived",

@@ -69,6 +69,28 @@ public final class SixtySecondsHelicopterEvac {
             SixtySecondsHelicopterS2CPacket.broadcastArrive(
                     level.players(), pos, EVAC_RADIUS, totalSec, remainingSec);
         }
+
+        // 撤离点建筑（evacuationpoint）进入/离开提示：逐玩家判定，避免全局画圆。
+        for (ServerPlayer player : level.players()) {
+            if (player.isSpectator() || player.isCreative()) {
+                data.evacBuildingZone.remove(player.getUUID());
+                continue;
+            }
+            boolean inside = net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesStarMap
+                    .isEvacuationPoint(level, player.blockPosition());
+            boolean was = data.evacBuildingZone.contains(player.getUUID());
+            if (inside && !was) {
+                data.evacBuildingZone.add(player.getUUID());
+                player.displayClientMessage(
+                        Component.translatable("message.sixty_seconds.sixty_seconds.evac_point_enter")
+                                .withStyle(ChatFormatting.AQUA), true);
+            } else if (!inside && was) {
+                data.evacBuildingZone.remove(player.getUUID());
+                player.displayClientMessage(
+                        Component.translatable("message.sixty_seconds.sixty_seconds.evac_point_leave")
+                                .withStyle(ChatFormatting.GRAY), true);
+            }
+        }
     }
 
     /**
@@ -79,21 +101,22 @@ public final class SixtySecondsHelicopterEvac {
         if (!data.helicopterArrived) return 0;
 
         var pos = landingPos(level);
-        if (pos.equals(BlockPos.ZERO)) {
-            level.getServer().getPlayerList().broadcastSystemMessage(
-                    Component.translatable("message.sixty_seconds.sixty_seconds.helicopter_no_evac")
-                            .withStyle(ChatFormatting.RED), false);
-            return 0;
-        }
+        // 既有直升机降落点则正常撤离；无降落点但世界里有撤离点建筑（evacuationpoint）时，
+        // 仍以该建筑内部作为撤离区，仅不渲染圆形 HUD。
+        boolean useLandingZone = !pos.equals(BlockPos.ZERO);
 
-        AABB zone = new AABB(pos).inflate(EVAC_RADIUS);
+        AABB zone = useLandingZone ? new AABB(pos).inflate(EVAC_RADIUS) : null;
         int evacuated = 0;
 
         for (ServerPlayer player : level.players()) {
             if (player.isSpectator() || player.isCreative()) continue;
             var stats = SixtySecondsStatsComponent.KEY.get(player);
             if (stats.downed || stats.monster) continue;
-            if (!zone.contains(player.getX(), player.getY(), player.getZ())) continue;
+            // 撤离区 = 直升机降落点半径范围 或 60秒模组自带的撤离点建筑（evacuationpoint）内部
+            boolean inZone = (zone != null && zone.contains(player.getX(), player.getY(), player.getZ()))
+                    || net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesStarMap
+                            .isEvacuationPoint(level, player.blockPosition());
+            if (!inZone) continue;
 
             data.helicopterEvacuated.add(player.getUUID());
             player.setGameMode(net.minecraft.world.level.GameType.SPECTATOR);
@@ -113,9 +136,11 @@ public final class SixtySecondsHelicopterEvac {
                             .withStyle(ChatFormatting.RED), false);
         }
 
-        // 清空客户端渲染
-        SixtySecondsHelicopterS2CPacket.broadcastArrive(
-                level.players(), pos, EVAC_RADIUS, 0, 0);
+        // 清空客户端渲染（有降落点时渲染过圆形 HUD，无降落点时无圆心可清，跳过）
+        if (useLandingZone) {
+            SixtySecondsHelicopterS2CPacket.broadcastArrive(
+                    level.players(), pos, EVAC_RADIUS, 0, 0);
+        }
 
         return evacuated;
     }
