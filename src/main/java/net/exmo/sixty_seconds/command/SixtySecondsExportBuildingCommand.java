@@ -115,16 +115,21 @@ public final class SixtySecondsExportBuildingCommand {
         int minZ = Math.min(z1, z2), maxZ = Math.max(z1, z2);
         int sizeX = maxX - minX + 1, sizeY = maxY - minY + 1, sizeZ = maxZ - minZ + 1;
 
-        // 方块种类 → 递增数字索引（无上限）。空气固定为 -1。
-        Map<ResourceLocation, Integer> palette = new LinkedHashMap<>();
-        int[] counter = {0};
+        // 方块种类 → 单字符编码（无实际上限）。前 62 种用 0-9A-Za-z，
+        // 超出后用 Unicode 私有区(U+E000 起，6400+ 字符)继续分配，每格仍只占 1 字符。
+        // 这样 slices 直接是 LostCities 的字符画格式，无需后续数字→字符转换。
+        Map<ResourceLocation, String> palette = new LinkedHashMap<>();
+        final String base62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        int baseIdx = 0;
+        int privIdx = 0; // 私有区偏移，从 0xE000 起
 
         // 结果结构。
         JsonObject root = new JsonObject();
         root.addProperty("note",
-                "LostCities 建筑草稿（无方块种类上限）。slices[y][z][x] 为数字索引(-1=空气)，"
-                        + "对照 blockPalette 还原方块。prettySlices[y][z] 为空格分隔的数字预览("
-                        + ".=空气)便于肉眼查看。索引需替换为所用 citystyle 的 palette 字母后才能作为正式 part。");
+                "LostCities 建筑导出（已转换为标准 part 字符画格式，无方块种类上限）。"
+                        + "slices[y][z] 为第 y 层(从下往上)第 z 行(x 方向)的字符画，每格 1 字符，空格=空气。"
+                        + "超出 62 种方块的编码使用 Unicode 私有区字符(U+E000 起)，需在所用 citystyle 的 palette 中"
+                        + "登记为对应方块后才能作为正式 part 加载，详见 blockPalette。");
         root.addProperty("name", name);
         root.addProperty("chunk", CHUNK);
         root.addProperty("sourceBox", minX + "," + minY + "," + minZ + " -> " + maxX + "," + maxY + "," + maxZ);
@@ -143,54 +148,45 @@ public final class SixtySecondsExportBuildingCommand {
                 part.addProperty("xsize", lx);
                 part.addProperty("zsize", lz);
 
-                // 数字索引 slices（无上限）：slices[y] = [z行数字数组...]。
+                // 标准 part 字符画：slices[y] = [z行字符串...]，每格 1 字符。
                 JsonArray slices = new JsonArray();
-                // 空格分隔的预览字符串 prettySlices：pretty[y] = [z行字符串...]。
-                JsonArray pretty = new JsonArray();
                 for (int y = minY; y <= maxY; y++) {
-                    JsonArray slicesRow = new JsonArray();   // 本层 y 的数字行集合
-                    JsonArray prettyRow = new JsonArray();   // 本层 y 的预览行集合
+                    JsonArray row = new JsonArray();
                     for (int z = bz; z < bz + lz; z++) {
-                        JsonArray cellNums = new JsonArray(); // 本 z 行的数字（x 方向）
-                        StringBuilder prettyCell = new StringBuilder();
+                        StringBuilder line = new StringBuilder();
                         for (int x = bx; x < bx + lx; x++) {
                             BlockState st = level.getBlockState(new BlockPos(x, y, z));
-                            int idx;
                             if (st.isAir() || st.getBlock() == Blocks.AIR) {
-                                idx = -1;
-                            } else {
-                                ResourceLocation id = BuiltInRegistries.BLOCK.getKey(st.getBlock());
-                                Integer known = palette.get(id);
-                                if (known == null) {
-                                    known = counter[0]++;
-                                    palette.put(id, known);
+                                line.append(' ');
+                                continue;
+                            }
+                            ResourceLocation id = BuiltInRegistries.BLOCK.getKey(st.getBlock());
+                            String ch = palette.get(id);
+                            if (ch == null) {
+                                if (baseIdx < base62.length()) {
+                                    ch = String.valueOf(base62.charAt(baseIdx++));
+                                } else {
+                                    ch = new String(new int[]{0xE000 + privIdx++}, 0, 1);
                                 }
-                                idx = known;
+                                palette.put(id, ch);
                             }
-                            cellNums.add(idx);
-                            if (prettyCell.length() > 0) {
-                                prettyCell.append(' ');
-                            }
-                            prettyCell.append(idx);
+                            line.append(ch);
                         }
-                        slicesRow.add(cellNums);
-                        prettyRow.add(prettyCell.toString());
+                        row.add(line.toString());
                     }
-                    slices.add(slicesRow);
-                    pretty.add(prettyRow);
+                    slices.add(row);
                 }
                 part.add("slices", slices);
-                part.add("prettySlices", pretty);
                 parts.add(part);
             }
         }
 
         root.add("parts", parts);
 
-        // blockPalette 对照表（索引 → 方块 ID）。
+        // blockPalette 对照表（字符 → 方块 ID）。
         JsonObject blockPalette = new JsonObject();
-        for (Map.Entry<ResourceLocation, Integer> e : palette.entrySet()) {
-            blockPalette.addProperty(String.valueOf(e.getValue()), e.getKey().toString());
+        for (Map.Entry<ResourceLocation, String> e : palette.entrySet()) {
+            blockPalette.addProperty(e.getValue(), e.getKey().toString());
         }
         root.add("blockPalette", blockPalette);
 
