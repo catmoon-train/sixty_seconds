@@ -66,8 +66,14 @@ public final class SixtySecondsAreaLevels {
             return clamp(islandLevel);
         }
         // 3) LostCities 建筑星级：该坐标位于 LostCities 已知建筑内时按其建筑种类自动映射星级。
-        //    创建世界后建筑自动被划分到星级，无需手动登记；非建筑（街道/部件/非城市维度）返回 0 落到后续逻辑。
+        //    - SAFE_STAR（-2，60秒模组安全区建筑）→ 直接返回 0 级（安全区）；
+        //    - 正星级（1..5）→ 返回对应危险等级；
+        //    - UNGRADED（-1，城市建筑内但名未登记）与 NO_STAR（0，非建筑）不进入此分支，
+        //      继续走门绑定/全局基线——即「无级别/无建筑」不会变成安全区，也不计危险度。
         int lostCityStar = net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesStarMap.starAt(level, pos);
+        if (lostCityStar == net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesStarMap.SAFE_STAR) {
+            return 0;
+        }
         if (lostCityStar > 0) {
             return clamp(lostCityStar);
         }

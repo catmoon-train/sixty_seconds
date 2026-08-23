@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.WeakHashMap;
 
 /**
@@ -33,9 +34,12 @@ import java.util.WeakHashMap;
  *       <li>{@code library} 图书馆、{@code oilrig} 油井、{@code radiotower} 无线电塔、
  *           {@code shopping(_open)} 购物中心/露天市场 → 4 星；</li>
  *       <li>{@code town00/01/10/11} 城镇建筑 → 3 星。</li>
+ *       <li>{@code safezone} 60秒模组自带安全区建筑（由 {@code export_building} 导出注册）→ <b>0 级（安全区）</b>。</li>
  *     </ul></li>
  *   <li><b>建筑部件</b> {@code parts/}（street/rails/bridge 等 207 个零件）不划分星级——它们不是独立建筑，
  *       仅作为建筑/街道的组装件，由所属建筑或街道决定。</li>
+ *   <li><b>未登记建筑名</b>（位于某 LostCities 建筑内但本表未列出）→ 返回 {@link #UNGRADED}（-1），即真正「无级别」：
+ *       既不计入危险星级（>0），也不当作安全区（0），在等级系统中跳过建筑星级分支、落到门绑定/全局基线。</li>
  * </ul>
  *
  * <p>本类只读取 LostCities 提供的 API（{@code mcjty.lostcities.api.*}），不修改 LostCities 任何逻辑。</p>
@@ -55,8 +59,21 @@ public final class SixtySecondsLostCitiesStarMap {
      */
     public static final int UNGRADED = -1;
 
+    /**
+     * 安全区建筑：坐标位于 60秒模组自带的 safezone 等安全区建筑内。注意它使用专属负值而非 0，
+     * 以区别于 {@link #NO_STAR}（非建筑也应落入后续逻辑）——{@code SixtySecondsAreaLevels} 见到此标记
+     * 会直接返回 0 级（安全区）。
+     */
+    public static final int SAFE_STAR = -2;
+
     /** 多区块建筑统一 5 星。 */
     private static final int MULTI_BUILDING_STAR = 5;
+
+    /**
+     * 60秒模组自带的安全区建筑集合（建筑文件名，不含命名空间）。这些建筑由 {@code export_building}
+     * 导出的结构注册而来，固定为安全区（{@link #SAFE_STAR}），不计入未知建筑的无级别处理。
+     */
+    private static final Set<String> SAFE_BUILDINGS = Set.of("safezone");
 
     /**
      * {@code ILostCityInformation} 按维度缓存：它在单个 {@code ServerLevel} 生命周期内是稳定的，
@@ -149,6 +166,10 @@ public final class SixtySecondsLostCitiesStarMap {
         // 小屋 cabin → 1 星
         if ("cabin".equals(name)) {
             return 1;
+        }
+        // 60秒模组自带的安全区建筑（由 export_building 导出的结构注册而来）：固定为安全区（SAFE_STAR）。
+        if (SAFE_BUILDINGS.contains(name)) {
+            return SAFE_STAR;
         }
         // 未知建筑名：该坐标确实位于某 LostCities 建筑内，但本表未登记其危险度。
         // 返回 UNGRADED（而非 NO_STAR/星级），让上层把它当作真正「无级别」的地方处理。
