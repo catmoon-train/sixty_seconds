@@ -71,6 +71,7 @@ public final class SixtySecondsMod {
         net.exmo.sixty_seconds.command.SixtySecondsAutoCommand.register();
         net.exmo.sixty_seconds.command.SixtySecondsAreaCommand.register();
         net.exmo.sixty_seconds.command.SixtySecondsExportBuildingCommand.register();
+        net.exmo.sixty_seconds.command.SixtySecondsExportTemplateCommand.register();
         net.exmo.sixty_seconds.command.SixtySecondsHelicopterCommand.register();
         net.exmo.sixty_seconds.command.OceanCreatureCommand.register();
     }

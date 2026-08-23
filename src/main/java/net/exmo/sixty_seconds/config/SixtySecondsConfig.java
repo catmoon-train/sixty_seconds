@@ -41,6 +41,21 @@ public class SixtySecondsConfig {
     public Region shelterTemplate;
 
     /**
+     * 住宅模板的 .nbt 文件名（不含扩展名，位于世界存档 {@code sixty_seconds_templates/} 下）。
+     * 由 {@code /60s export_template residential <name>} 导出并回写；开局建图时若存在则优先按此文件生成
+     * （保留箱子内容物等方块实体数据），否则回退从世界里的模板区克隆。为空表示不使用导出文件。
+     */
+    @SerializedName("residentialTemplateFile")
+    public String residentialTemplateFile;
+
+    /**
+     * 庇护所模板的 .nbt 文件名（不含扩展名）。含义同 {@link #residentialTemplateFile}，对应
+     * {@code /60s export_template shelter <name>}。为空表示不使用导出文件。
+     */
+    @SerializedName("shelterTemplateFile")
+    public String shelterTemplateFile;
+
+    /**
      * 以下出生点写<b>模板内的绝对坐标</b>——建图时自动换算成相对模板 min 的偏移量套到每队克隆区
      * （见 {@code SixtySecondsArena.spawnFor}）；不在模板盒内的值按“相对模板 min 的偏移”兼容（旧写法）。
      */

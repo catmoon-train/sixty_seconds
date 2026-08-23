@@ -7,7 +7,14 @@ import net.exmo.sixty_seconds.bridge.ServerTaskInfoClasses.ServerTaskInfo;
 import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.IntArrayTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtAccounter;
+import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -15,13 +22,18 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.phys.AABB;
 import net.exmo.sixty_seconds.SixtySeconds;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +108,7 @@ public final class SixtySecondsArena {
             Runnable onComplete) {
         restoreAll(level);
         if (config == null || !config.isComplete()) {
-            clearArenaEntities(level, config, List.of());
+            clearArenaEntities(level, config, List.of(), List.of(), data);
             SixtySeconds.LOGGER.warn("[60s] 未配置完整的区域模板（sixty_seconds_config.json），跳过按队克隆建图。");
             onComplete.run();
             return;
@@ -123,14 +135,20 @@ public final class SixtySecondsArena {
         // 每队的避难所偏移：门锚定模式下 = 出口门 - 锚点门（避难所平移到探索区那扇门上），否则 = 队伍网格偏移。
         // 先整表算出来——clearArenaEntities 要按<b>实际</b>落位清残留实体，网格坐标在锚定模式下根本不是避难所所在地。
         List<BlockPos> shelterOffsets = shelterOffsets(config, data, exitDoorBindings);
+        // 住宅落位：始终贴网格，并把 Y 压到让模板最低层落在 y≈0（房子/庇护所全部生成到 y 轴 0 格附近）。
+        List<BlockPos> residentialOffsets = new ArrayList<>();
+        for (int i = 0; i < data.teams.size(); i++) {
+            BlockPos grid = config.teamOffset(i);
+            residentialOffsets.add(new BlockPos(grid.getX(), -config.residentialTemplate.min.y, grid.getZ()));
+        }
         // 模板含活板门 → 按地表智能下沉埋地（把每队避难所偏移的 Y 压到让活板门齐地表）。
         boolean buried = applyShelterBurial(level, config, shelterOffsets);
-        if (!heightsFit(level, config, data, shelterOffsets)) {
-            clearArenaEntities(level, config, List.of());
+        if (!heightsFit(level, config, data, residentialOffsets, shelterOffsets)) {
+            clearArenaEntities(level, config, List.of(), List.of(), data);
             onComplete.run();
             return;
         }
-        clearArenaEntities(level, config, shelterOffsets);
+        clearArenaEntities(level, config, shelterOffsets, residentialOffsets, data);
 
         LinkedHashMap<BlockPos, Snapshot> snapshots = new LinkedHashMap<>();
         ARENAS.put(level, snapshots);
@@ -142,8 +160,11 @@ public final class SixtySecondsArena {
         List<WorkItem> clones = new ArrayList<>();
         int index = 0;
         for (SixtySecondsState.TeamData team : data.teams.values()) {
-            BlockPos offset = config.teamOffset(index);
+            BlockPos offset = residentialOffsets.get(index);
             BlockPos shelterOffset = shelterOffsets.get(index);
+            // 尝试按导出的 .nbt 模板生成（保留箱子内容物等方块实体），无文件则回退从世界克隆
+            CompoundTag resTpl = loadTemplate(level, config.residentialTemplateFile);
+            CompoundTag shelTpl = loadTemplate(level, config.shelterTemplateFile);
             // 先净空（挖开克隆区四周/上方的自然地形），再克隆——队数无上限后克隆区会排进山里；
             // 锚定模式下避难所落在探索区门口，净空同样负责挖开门口的原生地形/建筑
             addClearance(level, clearance, config.residentialTemplate.toBox(), offset);
@@ -152,8 +173,8 @@ public final class SixtySecondsArena {
             if (!buried) {
                 addClearance(level, clearance, config.shelterTemplate.toBox(), shelterOffset);
             }
-            addChunks(clones, config.residentialTemplate.toBox(), offset);
-            addChunks(clones, config.shelterTemplate.toBox(), shelterOffset);
+            addChunks(clones, config.residentialTemplate.toBox(), offset, resTpl);
+            addChunks(clones, config.shelterTemplate.toBox(), shelterOffset, shelTpl);
             // 搜索区不克隆：所有队共用原模板区域（各队玩家会在同一片野外相遇——搜打撤对抗即来源于此）
 
             team.residentialSpawn = spawnFor(config.residentialSpawn, residentialBox, offset);
@@ -217,14 +238,14 @@ public final class SixtySecondsArena {
      * 不是住宅要落到的绝对坐标——把绝对坐标填进去正是越界的常见来源。
      */
     private static boolean heightsFit(ServerLevel level, SixtySecondsConfig config,
-            SixtySecondsState.Data data, List<BlockPos> shelterOffsets) {
+            SixtySecondsState.Data data, List<BlockPos> residentialOffsets, List<BlockPos> shelterOffsets) {
         int minY = level.getMinBuildHeight();
         int maxY = level.getMaxBuildHeight() - 1;
         boolean ok = true;
         int index = 0;
         for (SixtySecondsState.TeamData ignored : data.teams.values()) {
-            ok &= fits(level, "住宅", config.residentialTemplate.toBox(), config.teamOffset(index),
-                    index, minY, maxY, "teamBase.y");
+            ok &= fits(level, "住宅", config.residentialTemplate.toBox(), residentialOffsets.get(index),
+                    index, minY, maxY, "住宅贴地偏移");
             ok &= fits(level, "避难所", config.shelterTemplate.toBox(), shelterOffsets.get(index),
                     index, minY, maxY, "shelterAnchorDoor / teamBase.y");
             index++;
@@ -290,7 +311,9 @@ public final class SixtySecondsArena {
         if (config.rvEnabled) {
             List<BlockPos> offsets = new ArrayList<>();
             for (int index = 0; index < data.teams.size(); index++) {
-                offsets.add(config.teamOffset(index));
+                // 庇护所贴地：模板最低层落在 y≈0（房子与庇护所全部生成到 y 轴 0 格附近）
+                BlockPos g = config.teamOffset(index);
+                offsets.add(new BlockPos(g.getX(), -config.shelterTemplate.min.y, g.getZ()));
             }
             return offsets;
         }
@@ -310,7 +333,9 @@ public final class SixtySecondsArena {
                 offsets.add(exitDoor.door.toBlockPos().subtract(anchor));
                 anchored++;
             } else {
-                offsets.add(config.teamOffset(index));
+                // 庇护所贴地：模板最低层落在 y≈0（门锚定模式才走上面分支贴出口门）
+                BlockPos g = config.teamOffset(index);
+                offsets.add(new BlockPos(g.getX(), -config.shelterTemplate.min.y, g.getZ()));
             }
         }
         if (wantAnchor && anchor != null && anchored < data.teams.size()) {
@@ -373,6 +398,28 @@ public final class SixtySecondsArena {
         return null;
     }
 
+    /**
+     * 从世界存档 {@code sixty_seconds_templates/<name>.nbt} 加载导出的结构模板 NBT（保留方块实体/箱子内容物）。
+     * 文件名为空或不存在时返回 null，此时调用方应回退到从世界克隆。
+     */
+    private static CompoundTag loadTemplate(ServerLevel level, String name) {
+        if (name == null || name.isBlank()) {
+            return null;
+        }
+        Path dir = level.getServer().getWorldPath(LevelResource.ROOT).resolve("sixty_seconds_templates");
+        Path nbtPath = dir.resolve(name + ".nbt");
+        if (!Files.exists(nbtPath)) {
+            SixtySeconds.LOGGER.warn("[60s] 未找到导出的模板文件：{}（将回退从世界克隆）", nbtPath);
+            return null;
+        }
+        try (java.io.InputStream in = Files.newInputStream(nbtPath)) {
+            return NbtIo.readCompressed(in, new NbtAccounter(Long.MAX_VALUE, Integer.MAX_VALUE));
+        } catch (Exception e) {
+            SixtySeconds.LOGGER.warn("[60s] 加载模板 {} 失败：{}", name, e.getMessage());
+            return null;
+        }
+    }
+
     /** 结束/重开时把所有克隆写入的方块按快照还原。 */
     public static void restoreAll(ServerLevel level) {
         LinkedHashMap<BlockPos, Snapshot> snapshots = ARENAS.remove(level);
@@ -415,7 +462,7 @@ public final class SixtySecondsArena {
      * </ol>
      */
     private static void clearArenaEntities(ServerLevel level, SixtySecondsConfig config,
-            List<BlockPos> shelterOffsets) {
+            List<BlockPos> shelterOffsets, List<BlockPos> residentialOffsets, SixtySecondsState.Data data) {
         if (config == null || !config.isComplete()) {
             return;
         }
@@ -423,11 +470,10 @@ public final class SixtySecondsArena {
         // 模板源区域（玩家可能在这里死亡并留下尸体）
         zones.add(boxOf(config.residentialTemplate.toBox(), BlockPos.ZERO));
         zones.add(boxOf(config.shelterTemplate.toBox(), BlockPos.ZERO));
-        // 各队克隆区（队数无上限，沿 X 网格延伸）
-        for (int i = 0; i < 15; i++) {
-            BlockPos offset = config.teamOffset(i);
-            zones.add(boxOf(config.residentialTemplate.toBox(), offset));
-            zones.add(boxOf(config.shelterTemplate.toBox(), offset));
+        // 各队克隆区（队数无上限，沿 X 网格延伸；住宅用实际贴地落位）
+        for (int i = 0; i < data.teams.size() && i < residentialOffsets.size(); i++) {
+            zones.add(boxOf(config.residentialTemplate.toBox(), residentialOffsets.get(i)));
+            zones.add(boxOf(config.shelterTemplate.toBox(), shelterOffsets.get(i)));
         }
         // 本局避难所的<b>实际</b>落位：门锚定模式下不在网格上，上面那圈网格盒扫不到它——
         // 不补这一段，长在探索区门口的避难所里会留着上一局的尸体/掉落物
@@ -482,10 +528,11 @@ public final class SixtySecondsArena {
         return pos.offset(offset);
     }
 
-    /** 把模板盒切成 ≈{@link #CHUNK_TARGET} 方块的子盒，每个配上该队偏移，作为一个放置工作项。 */
-    private static void addChunks(List<WorkItem> work, BoundingBox templateBox, BlockPos offset) {
+    /** 把模板盒切成 ≈{@link #CHUNK_TARGET} 方块的子盒，每个配上该队偏移，作为一个放置工作项。
+     *  {@code template} 非空时该工作项按导出结构模板 NBT 放置（保留箱子内容物），否则从世界克隆。 */
+    private static void addChunks(List<WorkItem> work, BoundingBox templateBox, BlockPos offset, CompoundTag template) {
         for (BoundingBox chunk : buildChunks(templateBox, CHUNK_TARGET)) {
-            work.add(new WorkItem(chunk, offset));
+            work.add(new WorkItem(chunk, offset, template));
         }
     }
 
@@ -590,7 +637,81 @@ public final class SixtySecondsArena {
                 }
             }
         }
-        BlockCopyUtils.copyLayer(level, src, offset);
+        if (item.template() != null) {
+            copyFromTemplate(level, src, offset, item.template());
+        } else {
+            BlockCopyUtils.copyLayer(level, src, offset);
+        }
+    }
+
+    /**
+     * 按导出的结构模板 NBT（保留方块实体/箱子内容物）把子盒克隆到目标偏移。
+     * 与 {@link BlockCopyUtils#copyLayer} 行为一致：src 为模板在世界中的绝对源盒（子盒），
+     * 模板坐标为相对其 min 的 0-based 偏移——用 {@code src.min} 作为 templateMin 把相对坐标映射回世界源坐标，
+     * 从而复用同一套源子盒与偏移语义。未列出的方块（空气）按空气放置。
+     */
+    private static void copyFromTemplate(ServerLevel level, BoundingBox src, BlockPos offset, CompoundTag template) {
+        BlockPos templateMin = new BlockPos(src.minX(), src.minY(), src.minZ());
+        ListTag blocks = template.getList("blocks", Tag.TAG_COMPOUND);
+        ListTag palette = template.getList("palette", Tag.TAG_COMPOUND);
+        // 相对坐标 → (方块状态, 方块实体 NBT)
+        Map<BlockPos, TemplateBlock> lookup = new HashMap<>();
+        for (int i = 0; i < blocks.size(); i++) {
+            CompoundTag e = blocks.getCompound(i);
+            int[] pos = e.getIntArray("pos");
+            BlockPos rel = new BlockPos(pos[0], pos[1], pos[2]);
+            BlockState state = NbtUtils.readBlockState(level.holderLookup(net.minecraft.core.registries.Registries.BLOCK),
+                    palette.getCompound(e.getInt("state")));
+            CompoundTag nbt = e.contains("nbt") ? e.getCompound("nbt") : null;
+            lookup.put(rel, new TemplateBlock(state, nbt));
+        }
+        // 先放方块（air 为未列出项默认）
+        for (int y = src.minY(); y <= src.maxY(); y++) {
+            for (int x = src.minX(); x <= src.maxX(); x++) {
+                for (int z = src.minZ(); z <= src.maxZ(); z++) {
+                    BlockPos srcPos = new BlockPos(x, y, z);
+                    BlockPos rel = srcPos.subtract(templateMin);
+                    TemplateBlock tb = lookup.get(rel);
+                    BlockState state = tb != null ? tb.state : Blocks.AIR.defaultBlockState();
+                    BlockPos dst = srcPos.offset(offset);
+                    level.setBlock(dst, state, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
+                    level.getLightEngine().checkBlock(dst);
+                }
+            }
+        }
+        // 再放方块实体（箱子内容物等）
+        for (int y = src.minY(); y <= src.maxY(); y++) {
+            for (int x = src.minX(); x <= src.maxX(); x++) {
+                for (int z = src.minZ(); z <= src.maxZ(); z++) {
+                    BlockPos srcPos = new BlockPos(x, y, z);
+                    BlockPos rel = srcPos.subtract(templateMin);
+                    TemplateBlock tb = lookup.get(rel);
+                    if (tb == null || tb.nbt == null) {
+                        continue;
+                    }
+                    BlockPos dst = srcPos.offset(offset);
+                    BlockEntity dstBE = level.getBlockEntity(dst);
+                    if (dstBE != null) {
+                        CompoundTag tag = tb.nbt.copy();
+                        tag.putInt("x", dst.getX());
+                        tag.putInt("y", dst.getY());
+                        tag.putInt("z", dst.getZ());
+                        dstBE.loadWithComponents(tag, level.registryAccess());
+                        dstBE.setChanged();
+                    }
+                }
+            }
+        }
+    }
+
+    /** 模板里单格：方块状态 + 可选的方块实体 NBT（箱子内容物等）。 */
+    private static final class TemplateBlock {
+        final BlockState state;
+        final CompoundTag nbt;
+        TemplateBlock(BlockState state, CompoundTag nbt) {
+            this.state = state;
+            this.nbt = nbt;
+        }
     }
 
     private static void snapshot(ServerLevel level, LinkedHashMap<BlockPos, Snapshot> snapshots, BlockPos pos) {
@@ -621,10 +742,17 @@ public final class SixtySecondsArena {
     private record Snapshot(BlockState state, CompoundTag blockEntityTag) {
     }
 
-    /** 一个放置工作项：源模板子盒 + 该队网格偏移；{@code clearOnly}=净空项（目标区挖成空气，不克隆）。 */
-    private record WorkItem(BoundingBox src, BlockPos offset, boolean clearOnly) {
+    /** 一个放置工作项：源模板子盒 + 该队网格偏移；{@code clearOnly}=净空项（目标区挖成空气，不克隆）。
+     *  {@code template} 非空时按导出的结构模板 NBT（保留方块实体/箱子内容物）放置，否则从世界克隆。 */
+    private record WorkItem(BoundingBox src, BlockPos offset, boolean clearOnly, CompoundTag template) {
         WorkItem(BoundingBox src, BlockPos offset) {
-            this(src, offset, false);
+            this(src, offset, false, null);
+        }
+        WorkItem(BoundingBox src, BlockPos offset, boolean clearOnly) {
+            this(src, offset, clearOnly, null);
+        }
+        WorkItem(BoundingBox src, BlockPos offset, CompoundTag template) {
+            this(src, offset, false, template);
         }
     }
 
