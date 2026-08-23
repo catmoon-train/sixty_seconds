@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.BulkSectionAccess;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.exmo.sixty_seconds.SixtySeconds;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -249,16 +250,48 @@ public final class SixtySecondsIslandGenerator {
     record Snapshot(BlockState state, CompoundTag blockEntityTag) {
     }
 
-    /** 记录快照的放置器：所有生成写入都必须经它。 */
-    public static final class Placer {
-        final ServerLevel level;
+    /**
+     * 所有生成写入都必须经它。抽象基类：路径 A（异步建造）用 {@link LevelPlacer}，
+     * 路径 B（海洋世界）用 {@link PrimerPlacer} 在 worldgen 阶段把方块写进 chunk primer，
+     * 与 LostCities 一致地随 chunk 加载逐块出现。
+     */
+    public abstract static class Placer {
+        /** 还原快照；PrimerPlacer 为空实现（primer 阶段不记录，地形无需还原）。 */
         final LinkedHashMap<BlockPos, Snapshot> snapshots;
 
-        Placer(ServerLevel level, LinkedHashMap<BlockPos, Snapshot> snapshots) {
-            this.level = level;
+        Placer(LinkedHashMap<BlockPos, Snapshot> snapshots) {
             this.snapshots = snapshots;
         }
 
+        public abstract void set(BlockPos pos, BlockState state);
+
+        public void air(BlockPos pos) {
+            set(pos, Blocks.AIR.defaultBlockState());
+        }
+
+        /** 读取方块状态：LevelPlacer 查世界，PrimerPlacer 查 BulkSectionAccess（越界返回空气）。 */
+        public abstract BlockState getBlockState(BlockPos pos);
+
+        /** 读取方块实体：LevelPlacer 查世界，PrimerPlacer 返回 null（primer 阶段无 BE）。 */
+        public abstract @Nullable BlockEntity getBlockEntity(BlockPos pos);
+
+        /** 关联的 ServerLevel；PrimerPlacer 返回 null（不依赖运行时世界状态）。 */
+        public abstract @Nullable ServerLevel level();
+
+        /** 该水平坐标是否落在当前写入范围内；PrimerPlacer 用于快速跳过越界列（性能关键）。 */
+        public abstract boolean contains(int x, int z);
+    }
+
+    /** 路径 A（/60s island start 玩法）：写 ServerLevel 并录制还原快照。 */
+    public static final class LevelPlacer extends Placer {
+        final ServerLevel level;
+
+        LevelPlacer(ServerLevel level, LinkedHashMap<BlockPos, Snapshot> snapshots) {
+            super(snapshots);
+            this.level = level;
+        }
+
+        @Override
         public void set(BlockPos pos, BlockState state) {
             BlockState old = level.getBlockState(pos);
             if (old == state) {
@@ -276,12 +309,76 @@ public final class SixtySecondsIslandGenerator {
             level.setBlock(pos, state, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
         }
 
-        public void air(BlockPos pos) {
-            set(pos, Blocks.AIR.defaultBlockState());
+        @Override
+        public BlockState getBlockState(BlockPos pos) {
+            return level.getBlockState(pos);
         }
 
+        @Override
+        public @Nullable BlockEntity getBlockEntity(BlockPos pos) {
+            return level.getBlockEntity(pos);
+        }
+
+        @Override
         public ServerLevel level() {
             return level;
+        }
+
+        @Override
+        public boolean contains(int x, int z) {
+            return true; // 异步建造无范围限制
+        }
+    }
+
+    /**
+     * 路径 B（海洋世界）：在 worldgen 阶段把方块写进 chunk primer（BulkSectionAccess），
+     * 不触发方块/灯光更新，随 chunk 加载逐块出现。越出本 chunk 范围的写入会被静默跳过，
+     * 因此「整岛装饰」只需对本 chunk 调用一次，自然只落成本 chunk 内的那一块。
+     */
+    public static final class PrimerPlacer extends Placer {
+        final BulkSectionAccess bsa;
+        final int minX, minZ, maxX, maxZ; // 本 chunk 世界坐标范围（含）
+
+        PrimerPlacer(BulkSectionAccess bsa, int minX, int minZ) {
+            super(new LinkedHashMap<>());
+            this.bsa = bsa;
+            this.minX = minX;
+            this.minZ = minZ;
+            this.maxX = minX + 15;
+            this.maxZ = minZ + 15;
+        }
+
+        private boolean inChunk(BlockPos pos) {
+            return pos.getX() >= minX && pos.getX() <= maxX
+                    && pos.getZ() >= minZ && pos.getZ() <= maxZ;
+        }
+
+        @Override
+        public void set(BlockPos pos, BlockState state) {
+            if (!inChunk(pos)) return; // 越界跳过：只写本 chunk 那一块
+            setPrimer(bsa, pos.getX(), pos.getY(), pos.getZ(), state);
+        }
+
+        @Override
+        public BlockState getBlockState(BlockPos pos) {
+            if (!inChunk(pos)) return Blocks.AIR.defaultBlockState(); // 越界视为空气，避免 NPE 且让垫层/木桩逻辑正确跳过
+            LevelChunkSection sec = bsa.getSection(pos);
+            return sec == null ? Blocks.AIR.defaultBlockState() : sec.getBlockState(pos.getX() & 15, pos.getY(), pos.getZ() & 15);
+        }
+
+        @Override
+        public @Nullable BlockEntity getBlockEntity(BlockPos pos) {
+            return null; // primer 阶段无方块实体
+        }
+
+        @Override
+        public @Nullable ServerLevel level() {
+            return null;
+        }
+
+        @Override
+        public boolean contains(int x, int z) {
+            return inChunk(new BlockPos(x, 0, z));
         }
     }
 
@@ -291,7 +388,7 @@ public final class SixtySecondsIslandGenerator {
      */
     public static void queueBuild(ServerLevel level, List<SixtySecondsIsland> islands,
             LinkedHashMap<BlockPos, Snapshot> snapshots, boolean placeShelterDoors, Runnable onComplete) {
-        Placer placer = new Placer(level, snapshots);
+        Placer placer = new LevelPlacer(level, snapshots);
         List<Runnable> work = new ArrayList<>();
         for (SixtySecondsIsland island : islands) {
             int r = island.radius + WATER_SKIRT;
@@ -325,10 +422,10 @@ public final class SixtySecondsIslandGenerator {
         RandomSource rng = RandomSource.create(island.seed ^ 0x5D00_0DL);
         BlockPos ground = null;
         for (int attempt = 0; attempt < 24 && ground == null; attempt++) {
-            ground = randomGround(p.level, island, rng, 0.0, 0.45); // 靠岛心一带
+            ground = randomGround(p,island, rng, 0.0, 0.45); // 靠岛心一带
         }
         if (ground == null) {
-            ground = scanGround(p.level, island, island.centerX, island.centerZ);
+            ground = scanGround(p,island, island.centerX, island.centerZ);
         }
         if (ground == null) {
             return;
@@ -542,7 +639,7 @@ public final class SixtySecondsIslandGenerator {
                 // 净空：地表以上的原有方块全部清掉（含海面以上）
                 for (int y = Math.max(surface + 1, yMin); y <= yMax; y++) {
                     pos.set(x, y, z);
-                    if (!p.level.getBlockState(pos).isAir()) {
+                    if (!p.getBlockState(pos).isAir()) {
                         p.air(pos);
                     }
                 }
@@ -639,7 +736,7 @@ public final class SixtySecondsIslandGenerator {
         int trees = Math.max(type == SixtySecondsIsland.Type.CORAL || type == SixtySecondsIsland.Type.BARREN ? 0 : 1,
                 (int) (dm * treeMult));
         for (int i = 0; i < trees + rng.nextInt(Math.max(1, (int) (dm * 4))); i++) {
-            BlockPos ground = randomGround(p.level, island, rng, 0.15, 0.85);
+            BlockPos ground = randomGround(p,island, rng, 0.15, 0.85);
             if (ground == null) continue;
             placeTree(p, island, ground, rng);
         }
@@ -648,7 +745,7 @@ public final class SixtySecondsIslandGenerator {
         int rocks = Math.max(1, (int) (dm * (4 + island.level)));
         BlockState rock = rockBlock(type);
         for (int i = 0; i < rocks; i++) {
-            BlockPos ground = randomGround(p.level, island, rng, 0.1, 0.9);
+            BlockPos ground = randomGround(p,island, rng, 0.1, 0.9);
             if (ground == null) continue;
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dz = -1; dz <= 1; dz++) {
@@ -666,9 +763,9 @@ public final class SixtySecondsIslandGenerator {
         int flora = Math.max(type == SixtySecondsIsland.Type.BARREN ? 5 : 1,
                 (int) (dm * floraCount(type, island.level)));
         for (int i = 0; i < flora; i++) {
-            BlockPos ground = randomGround(p.level, island, rng, 0.1, 0.95);
+            BlockPos ground = randomGround(p,island, rng, 0.1, 0.95);
             if (ground == null) continue;
-            BlockState below = p.level.getBlockState(ground.below());
+            BlockState below = p.getBlockState(ground.below());
             BlockState plant = plantBlock(type, island.level, below, rng);
             if (plant != null) p.set(ground, plant);
         }
@@ -769,7 +866,7 @@ public final class SixtySecondsIslandGenerator {
                 float dm = island.size.decoMult;
                 int lava = Math.max(1, (int) (dm * 8));
                 for (int i = 0; i < lava; i++) {
-                    BlockPos ground = randomGround(p.level, island, rng, 0.0, 0.4);
+                    BlockPos ground = randomGround(p,island, rng, 0.0, 0.4);
                     if (ground != null) p.set(ground.below(), Blocks.MAGMA_BLOCK.defaultBlockState());
                 }
             }
@@ -781,7 +878,7 @@ public final class SixtySecondsIslandGenerator {
                 // 山顶岩浆块 + 随机火焰
                 int lava = Math.max(1, (int) (dm * 10));
                 for (int i = 0; i < lava; i++) {
-                    BlockPos ground = randomGround(p.level, island, rng, 0.0, 0.35);
+                    BlockPos ground = randomGround(p,island, rng, 0.0, 0.35);
                     if (ground != null) {
                         p.set(ground.below(), Blocks.MAGMA_BLOCK.defaultBlockState());
                         if (rng.nextFloat() < 0.15F) p.set(ground.above(), Blocks.FIRE.defaultBlockState());
@@ -792,7 +889,7 @@ public final class SixtySecondsIslandGenerator {
                 // 沼泽水面随机莲叶
                 int pads = Math.max(1, (int) (dm * 6));
                 for (int i = 0; i < pads; i++) {
-                    BlockPos ground = randomGround(p.level, island, rng, 0.3, 0.9);
+                    BlockPos ground = randomGround(p,island, rng, 0.3, 0.9);
                     if (ground != null && ground.getY() <= island.seaY) {
                         p.set(ground, Blocks.LILY_PAD.defaultBlockState());
                     }
@@ -802,7 +899,7 @@ public final class SixtySecondsIslandGenerator {
                 // 环礁潟湖/礁盘上散布珊瑚
                 int coral = Math.max(1, (int) (dm * 12));
                 for (int i = 0; i < coral; i++) {
-                    BlockPos ground = randomGround(p.level, island, rng, 0.1, 1.0);
+                    BlockPos ground = randomGround(p,island, rng, 0.1, 1.0);
                     if (ground != null && ground.getY() <= island.seaY + 2) {
                         BlockState c = rng.nextFloat() < 0.5F
                                 ? Blocks.BRAIN_CORAL_BLOCK.defaultBlockState()
@@ -815,7 +912,7 @@ public final class SixtySecondsIslandGenerator {
                 // 海泡菜
                 int pickles = Math.max(1, (int) (dm * 8));
                 for (int i = 0; i < pickles; i++) {
-                    BlockPos ground = randomGround(p.level, island, rng, 0.5, 1.0);
+                    BlockPos ground = randomGround(p,island, rng, 0.5, 1.0);
                     if (ground != null && ground.getY() <= island.seaY) {
                         p.set(ground, Blocks.SEA_PICKLE.defaultBlockState());
                     }
@@ -825,9 +922,9 @@ public final class SixtySecondsIslandGenerator {
                 // 冰霜岛：额外积雪层
                 int snow = Math.max(1, (int) (dm * 20));
                 for (int i = 0; i < snow; i++) {
-                    BlockPos ground = randomGround(p.level, island, rng, 0.0, 0.8);
-                    if (ground != null && p.level.getBlockState(ground).isAir()
-                            && p.level.getBlockState(ground.below()).isSolidRender(p.level, ground.below())) {
+                    BlockPos ground = randomGround(p,island, rng, 0.0, 0.8);
+                    if (ground != null && p.getBlockState(ground).isAir()
+                            && p.getBlockState(ground.below()).isSolidRender(null, ground.below())) {
                         p.set(ground, Blocks.SNOW.defaultBlockState());
                     }
                 }
@@ -836,11 +933,11 @@ public final class SixtySecondsIslandGenerator {
                 // 密林岛：藤蔓挂满树干/悬崖
                 int vines = Math.max(1, (int) (dm * 20));
                 for (int i = 0; i < vines; i++) {
-                    BlockPos ground = randomGround(p.level, island, rng, 0.0, 0.8);
+                    BlockPos ground = randomGround(p,island, rng, 0.0, 0.8);
                     if (ground != null) {
                         for (int dy = 1; dy <= 3; dy++) {
                             BlockPos vp = ground.above(dy);
-                            if (p.level.getBlockState(vp).isAir() && rng.nextFloat() < 0.4F) {
+                            if (p.getBlockState(vp).isAir() && rng.nextFloat() < 0.4F) {
                                 p.set(vp, Blocks.VINE.defaultBlockState());
                             }
                         }
@@ -849,8 +946,8 @@ public final class SixtySecondsIslandGenerator {
                 // 随机可可豆
                 int cocoa = Math.max(1, (int) (dm * 4));
                 for (int i = 0; i < cocoa; i++) {
-                    BlockPos ground = randomGround(p.level, island, rng, 0.1, 0.7);
-                    if (ground != null && p.level.getBlockState(ground).isAir()) {
+                    BlockPos ground = randomGround(p,island, rng, 0.1, 0.7);
+                    if (ground != null && p.getBlockState(ground).isAir()) {
                         p.set(ground, Blocks.COCOA.defaultBlockState());
                     }
                 }
@@ -859,7 +956,7 @@ public final class SixtySecondsIslandGenerator {
                 // 高原岛：山顶/崖边额外岩石堆
                 int extraRocks = Math.max(1, (int) (dm * 5));
                 for (int i = 0; i < extraRocks; i++) {
-                    BlockPos ground = randomGround(p.level, island, rng, 0.0, 0.3);
+                    BlockPos ground = randomGround(p,island, rng, 0.0, 0.3);
                     if (ground != null) {
                         p.set(ground.below(), Blocks.COBBLESTONE.defaultBlockState());
                         if (rng.nextBoolean()) p.set(ground, Blocks.COBBLESTONE.defaultBlockState());
@@ -950,7 +1047,7 @@ public final class SixtySecondsIslandGenerator {
                     int man = Math.abs(dx) + Math.abs(dz) + dy;
                     if (man == 0 || man > 3 || rng.nextFloat() < 0.15F) continue;
                     BlockPos leafPos = top.offset(dx, dy, dz);
-                    if (p.level.getBlockState(leafPos).isAir()) {
+                    if (p.getBlockState(leafPos).isAir()) {
                         p.set(leafPos, leaves);
                     }
                 }
@@ -972,7 +1069,7 @@ public final class SixtySecondsIslandGenerator {
         RandomSource rng = RandomSource.create(island.seed ^ 0xB0B0L);
         float sm = island.size.supplyMult;
         // 登岛点：向群岛原点一侧的滩头（找不到就用岛心地表）
-        BlockPos dock = findDock(level, island);
+        BlockPos dock = findDock(p, island);
         island.dockX = dock.getX();
         island.dockY = dock.getY();
         island.dockZ = dock.getZ();
@@ -982,7 +1079,7 @@ public final class SixtySecondsIslandGenerator {
         int normal = Math.max(2, (int) (sm * (10 + island.level * 3) * 1.5)
                 + rng.nextInt(Math.max(1, (int) (sm * 14 * 1.5))));
         for (int i = 0; i < normal; i++) {
-            BlockPos spot = randomGround(level, island, rng, 0.05, 0.9);
+            BlockPos spot = randomGround(p, island, rng, 0.05, 0.9);
             if (spot == null) {
                 continue;
             }
@@ -999,7 +1096,7 @@ public final class SixtySecondsIslandGenerator {
         // 高级物资箱：等级-1 个（按大小缩放，+30%）；4 级起带高级锁（需钳子）；一半刷成随机
         int advanced = Math.max(0, (int) (sm * (island.level - 1) * 1.5));
         for (int i = 0; i < advanced; i++) {
-            BlockPos spot = randomGround(level, island, rng, 0.0, 0.6);
+            BlockPos spot = randomGround(p, island, rng, 0.0, 0.6);
             if (spot == null) {
                 continue;
             }
@@ -1016,7 +1113,7 @@ public final class SixtySecondsIslandGenerator {
         // 初始驻岛怪：数量/强度随等级+大小（后续增援由 PveSystem 游荡怪按 levelAt 自动缩放）
         int monsters = Math.max(1, (int) (sm * island.level * 2));
         for (int i = 0; i < monsters; i++) {
-            BlockPos spot = randomGround(level, island, rng, 0.1, 0.8);
+            BlockPos spot = randomGround(p, island, rng, 0.1, 0.8);
             if (spot == null) {
                 continue;
             }
@@ -1042,7 +1139,7 @@ public final class SixtySecondsIslandGenerator {
     /** 放一个物资箱并设类别。 */
     static void placeSupplyBox(Placer p, BlockPos pos, Block block, String category) {
         p.set(pos, block.defaultBlockState());
-        if (p.level.getBlockEntity(pos)
+        if (p.getBlockEntity(pos)
                 instanceof net.exmo.sixty_seconds.content.block_entity.SupplyBoxBlockEntity box) {
             box.category = category;
             box.setChanged();
@@ -1050,19 +1147,22 @@ public final class SixtySecondsIslandGenerator {
     }
 
     /** 找登岛滩头：从岛心向群岛外围方向走到岸线附近的可站立点。 */
-    private static BlockPos findDock(ServerLevel level, SixtySecondsIsland island) {
+    private static BlockPos findDock(Placer p, SixtySecondsIsland island) {
         RandomSource rng = RandomSource.create(island.seed ^ 0xD0C4L);
         for (int attempt = 0; attempt < 40; attempt++) {
             double angle = rng.nextDouble() * Math.PI * 2;
             double dist = island.radius * (0.55 + rng.nextDouble() * 0.35);
             int x = island.centerX + (int) Math.round(Math.cos(angle) * dist);
             int z = island.centerZ + (int) Math.round(Math.sin(angle) * dist);
-            BlockPos ground = scanGround(level, island, x, z);
+            if (!p.contains(x, z)) {
+                continue; // 越界列直接跳过：primer 路径下避免整岛扫描，性能关键
+            }
+            BlockPos ground = scanGround(p, island, x, z);
             if (ground != null && ground.getY() <= island.seaY + 4) {
                 return ground;
             }
         }
-        BlockPos center = scanGround(level, island, island.centerX, island.centerZ);
+        BlockPos center = scanGround(p, island, island.centerX, island.centerZ);
         return center != null ? center : new BlockPos(island.centerX, island.seaY, island.centerZ);
     }
 
@@ -1070,14 +1170,17 @@ public final class SixtySecondsIslandGenerator {
      * 岛上随机找一个可放置的地表空气格（其下为实心陆地、非水）；distMin/Max 为相对半径比例。
      * 供装饰/废墟/物资箱/怪物选点共用。
      */
-    public static BlockPos randomGround(ServerLevel level, SixtySecondsIsland island, RandomSource rng,
+    public static BlockPos randomGround(Placer p, SixtySecondsIsland island, RandomSource rng,
             double distMin, double distMax) {
         for (int attempt = 0; attempt < 24; attempt++) {
             double angle = rng.nextDouble() * Math.PI * 2;
             double dist = island.radius * (distMin + rng.nextDouble() * (distMax - distMin));
             int x = island.centerX + (int) Math.round(Math.cos(angle) * dist);
             int z = island.centerZ + (int) Math.round(Math.sin(angle) * dist);
-            BlockPos ground = scanGround(level, island, x, z);
+            if (!p.contains(x, z)) {
+                continue; // 越界列直接跳过：primer 路径下避免整岛扫描，性能关键
+            }
+            BlockPos ground = scanGround(p, island, x, z);
             if (ground != null) {
                 return ground;
             }
@@ -1086,18 +1189,18 @@ public final class SixtySecondsIslandGenerator {
     }
 
     /** 自上而下扫该列的地表：返回「地面上的第一格空气」；水面/无地面返回 null。 */
-    public static BlockPos scanGround(ServerLevel level, SixtySecondsIsland island, int x, int z) {
+    public static BlockPos scanGround(Placer p, SixtySecondsIsland island, int x, int z) {
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         for (int y = island.seaY + HEIGHT_ABOVE_SEA - 2; y > island.seaY - 2; y--) {
             pos.set(x, y, z);
-            BlockState state = level.getBlockState(pos);
+            BlockState state = p.getBlockState(pos);
             if (state.isAir()) {
                 continue;
             }
             if (!state.getFluidState().isEmpty()) {
                 return null; // 水面
             }
-            return state.isSolidRender(level, pos) && level.getBlockState(pos.above()).isAir()
+            return state.isSolidRender(null, pos) && p.getBlockState(pos.above()).isAir()
                     ? pos.above().immutable() : null;
         }
         return null;

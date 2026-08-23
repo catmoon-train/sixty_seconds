@@ -592,7 +592,9 @@ public final class SixtySecondsIslands {
             RandomSource rng = level.random;
             int pack = 1 + island.level + rng.nextInt(2);
             for (int i = 0; i < pack; i++) {
-                BlockPos spot = SixtySecondsIslandGenerator.randomGround(level, island, rng, 0.1, 0.7);
+                BlockPos spot = SixtySecondsIslandGenerator.randomGround(
+                        new SixtySecondsIslandGenerator.LevelPlacer(level, new java.util.LinkedHashMap<>()),
+                        island, rng, 0.1, 0.7);
                 if (spot != null) {
                     SixtySecondsPveSystem.createMonster(level, spot,
                             SixtySecondsIslandGenerator.rollVariant(rng, island.level),

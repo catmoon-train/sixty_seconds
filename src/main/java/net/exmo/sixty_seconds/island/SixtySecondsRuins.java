@@ -51,13 +51,13 @@ public final class SixtySecondsRuins {
             if (placed >= count) {
                 break;
             }
-            BlockPos origin = findSpot(p.level(), island, rng, SHORE[template]);
+            BlockPos origin = findSpot(p, island, rng, SHORE[template]);
             if (origin == null) {
                 continue;
             }
             build(p, template, origin, rng, island.level);
             // 保底物资箱：贴废墟放，等级高概率给高级箱
-            BlockPos boxSpot = nearbyAir(p.level(), origin, rng);
+            BlockPos boxSpot = nearbyAir(p, origin, rng);
             if (boxSpot != null) {
                 boolean advanced = rng.nextFloat() < 0.12F * island.level;
                 SixtySecondsIslandGenerator.placeSupplyBox(p, boxSpot, advanced
@@ -69,10 +69,10 @@ public final class SixtySecondsRuins {
         }
     }
 
-    private static BlockPos findSpot(ServerLevel level, SixtySecondsIsland island, RandomSource rng,
+    private static BlockPos findSpot(Placer p, SixtySecondsIsland island, RandomSource rng,
             boolean shore) {
         for (int attempt = 0; attempt < 20; attempt++) {
-            BlockPos ground = SixtySecondsIslandGenerator.randomGround(level, island, rng,
+            BlockPos ground = SixtySecondsIslandGenerator.randomGround(p, island, rng,
                     shore ? 0.55 : 0.1, shore ? 0.95 : 0.6);
             if (ground == null) {
                 continue;
@@ -85,13 +85,13 @@ public final class SixtySecondsRuins {
         return null;
     }
 
-    private static BlockPos nearbyAir(ServerLevel level, BlockPos origin, RandomSource rng) {
+    private static BlockPos nearbyAir(Placer p, BlockPos origin, RandomSource rng) {
         for (int attempt = 0; attempt < 12; attempt++) {
             BlockPos pos = origin.offset(rng.nextInt(9) - 4, 0, rng.nextInt(9) - 4);
             for (int dy = 2; dy >= -2; dy--) {
                 BlockPos candidate = pos.above(dy);
-                if (level.getBlockState(candidate).isAir()
-                        && level.getBlockState(candidate.below()).isSolidRender(level, candidate.below())) {
+                if (p.getBlockState(candidate).isAir()
+                        && p.getBlockState(candidate.below()).isSolidRender(null, candidate.below())) {
                     return candidate;
                 }
             }
@@ -155,7 +155,7 @@ public final class SixtySecondsRuins {
         for (int dx = -halfW; dx <= halfW; dx++) {
             for (int dz = -halfD; dz <= halfD; dz++) {
                 BlockPos below = origin.offset(dx, -1, dz);
-                if (!p.level().getBlockState(below).isSolidRender(p.level(), below)) {
+                if (!p.getBlockState(below).isSolidRender(null, below)) {
                     p.set(below, block);
                 }
             }
@@ -278,7 +278,7 @@ public final class SixtySecondsRuins {
             if (dx % 3 == 0) { // 木桩
                 for (int dy = -1; dy >= -4; dy--) {
                     BlockPos pile = origin.offset(dx, dy, -1);
-                    if (p.level().getBlockState(pile).isSolidRender(p.level(), pile)) {
+                    if (p.getBlockState(pile).isSolidRender(null, pile)) {
                         break;
                     }
                     p.set(pile, Blocks.OAK_FENCE.defaultBlockState());
@@ -596,7 +596,7 @@ public final class SixtySecondsRuins {
             for (Direction dir : Direction.Plane.HORIZONTAL) {
                 if (rng.nextFloat() < 0.3F + lvl * 0.08F) {
                     BlockPos vine = origin.relative(dir).above(y);
-                    if (p.level().getBlockState(vine).isAir())
+                    if (p.getBlockState(vine).isAir())
                         p.set(vine, Blocks.VINE.defaultBlockState());
                 }
             }
@@ -729,7 +729,7 @@ public final class SixtySecondsRuins {
             if (y % 2 == 1) {
                 Direction dir = randomHorizontal(rng);
                 BlockPos side = origin.relative(dir).above(y);
-                if (p.level().getBlockState(side).isAir())
+                if (p.getBlockState(side).isAir())
                     p.set(side, Blocks.OAK_FENCE.defaultBlockState());
             }
         }
@@ -749,7 +749,7 @@ public final class SixtySecondsRuins {
         for (int dx = -3; dx <= 3; dx++) {
             for (int dz = -3; dz <= 3; dz++) {
                 double dist = Math.sqrt(dx * dx + dz * dz);
-                if (dist <= 3.5 && p.level().getBlockState(origin.offset(dx, -1, dz)).is(Blocks.GRASS_BLOCK))
+                if (dist <= 3.5 && p.getBlockState(origin.offset(dx, -1, dz)).is(Blocks.GRASS_BLOCK))
                     p.set(origin.offset(dx, -1, dz), Blocks.COARSE_DIRT.defaultBlockState());
             }
         }

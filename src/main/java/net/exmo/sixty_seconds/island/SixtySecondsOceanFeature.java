@@ -90,7 +90,8 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
         try (BulkSectionAccess bsa = new BulkSectionAccess(level)) {
             // 1) 海床骨架：每列从 Y=0 到 seaY 重写（基岩/沙/空/水）
             writeSeafloor(bsa, x0, z0, x1, z1, seaY);
-            // 2) 岛屿骨架：本区块落入的岛屿 cell 覆盖陆地/岸边
+            // 2) 岛屿骨架 + 装饰 + 废墟 + 物资箱：全部随本区块逐块写入 primer，
+            //    与 LostCities 一致地「一块块」出现，进游戏后不再有大面积一次性建造。
             writeIslands(bsa, serverLevel, config, x0, z0, x1, z1, worldSeed);
         }
         return true;
@@ -122,7 +123,7 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
         }
     }
 
-    /** 写岛屿骨架 primer（不触发更新）。 */
+    /** 写岛屿骨架 + 装饰 + 废墟 + 物资箱 primer（不触发更新，逐块）。 */
     private void writeIslands(BulkSectionAccess bsa, ServerLevel level, SixtySecondsConfig config,
                               int x0, int z0, int x1, int z1, long worldSeed) {
         int regX0 = Math.floorDiv(x0 - NEIGHBOR_MARGIN, REGION);
@@ -140,8 +141,14 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
                     if (z1 < island.centerZ - cell || z0 > island.centerZ + cell) {
                         continue;
                     }
-                    // 仅覆盖本区块落入岛 cell 的列（岛屿骨架），装饰/物资箱由 ChunkEvent.Load 排程
+                    // 岛屿骨架（陆地/岸边）
                     SixtySecondsIslandGenerator.buildPatchPrimer(bsa, island, x0, z0, x1, z1);
+                    // 装饰（树/岩石/植被）与废墟/物资箱：经 PrimerPlacer 逐块写入，越界列自动跳过，
+                    // 因此每座岛只落成本区块内的那一块，随玩家探索逐 chunk 出现。
+                    SixtySecondsIslandGenerator.PrimerPlacer placer =
+                            new SixtySecondsIslandGenerator.PrimerPlacer(bsa, x0, z0);
+                    SixtySecondsIslandGenerator.decorate(placer, island);
+                    SixtySecondsRuins.placeAll(placer, island);
                 }
             }
         }

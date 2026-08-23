@@ -7,6 +7,7 @@ import net.exmo.sixty_seconds.loot.SixtySecondsLootTable;
 import net.exmo.sixty_seconds.network.OpenLootTableEditS2CPacket;
 import net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,6 +33,9 @@ import java.util.List;
  * <p>
  * 变体：{@code locked}（上锁——普通锁需<b>撬箱起子</b>、高级锁需<b>钳子</b>，每撬耗 1 耐久）、
  * {@code advanced}（高级——掷骰件数更多、稀有物更易出）。
+ * <p>
+ * 海洋世界在 worldgen primer 阶段写入箱子时因无法写入方块实体 NBT，默认采用 {@code tool} 分类；
+ * 玩家进入游戏后仍可在创造模式下潜行右键循环切换本箱类别。
  */
 public class SupplyBoxBlock extends BaseEntityBlock {
     private static final MapCodec<SupplyBoxBlock> CODEC = simpleCodec(SupplyBoxBlock::new);

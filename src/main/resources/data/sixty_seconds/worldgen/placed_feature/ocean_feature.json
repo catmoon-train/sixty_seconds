@@ -1,0 +1,9 @@
+{
+  "feature": "sixty_seconds:ocean_feature",
+  "placement": [
+    {
+      "count": 1,
+      "type": "minecraft:count"
+    }
+  ]
+}

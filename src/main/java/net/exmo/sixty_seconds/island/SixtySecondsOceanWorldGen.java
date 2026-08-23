@@ -50,8 +50,6 @@ public final class SixtySecondsOceanWorldGen {
     /** 岛屿 cell 额外的搜索半径（格），覆盖相邻区域可能伸过来的岛。 */
     static final int NEIGHBOR_MARGIN = 400;
 
-    /** 已排程建造的岛屿（防重复）：Level → 已排程的 island id 集合。 */
-    private static final Map<Level, Set<Long>> SCHEDULED = new WeakHashMap<>();
     /** 是否已注册事件（仅注册一次）。 */
     private static final AtomicBoolean REGISTERED = new AtomicBoolean(false);
 
@@ -113,46 +111,12 @@ public final class SixtySecondsOceanWorldGen {
         }
         // 重新落盘，确保 ocean 标记持久化（创建世界阶段可能只写了内存标记）
         SixtySecondsConfigStore.save(serverLevel, config);
-
-        // Ocean 地形（海床 + 岛屿骨架）已经在 worldgen 阶段的 SixtySecondsOceanFeature 里
-        // 写入 ChunkAccess primer（不触发任何更新），不会再在已加载区块上同步 setBlock，
-        // 因此不会卡主线程/卡死生成进度。这里只负责排程岛屿的装饰 + 物资箱建造。
-        LevelChunk chunk = (LevelChunk) event.getChunk();
-        int cx = chunk.getPos().getMinBlockX();
-        int cz = chunk.getPos().getMinBlockZ();
-        long worldSeed = serverLevel.getSeed();
-        applyChunkDecorations(serverLevel, config, cx, cz, worldSeed);
+        // 注意：海床 + 岛屿骨架 + 装饰 + 废墟 + 物资箱全部在 worldgen 阶段由 SixtySecondsOceanFeature
+        // 逐 chunk 写入 ChunkAccess primer（不触发任何更新），随玩家探索逐块出现，
+        // 因此进游戏后不再有「大面积一次性建造」，这里无需再做任何排程。
     }
 
-    /**
-     * 对已加载区块落入的岛屿排程装饰 + 物资箱建造（异步跨 tick，不阻塞生成）。
-     * 地形本身由 {@code SixtySecondsOceanFeature} 在 worldgen 阶段写好。
-     */
-    private static void applyChunkDecorations(ServerLevel serverLevel, SixtySecondsConfig config,
-                                               int cx, int cz, long worldSeed) {
-        int regX0 = Math.floorDiv(cx - NEIGHBOR_MARGIN, REGION);
-        int regX1 = Math.floorDiv(cx + 15 + NEIGHBOR_MARGIN, REGION);
-        int regZ0 = Math.floorDiv(cz - NEIGHBOR_MARGIN, REGION);
-        int regZ1 = Math.floorDiv(cz + 15 + NEIGHBOR_MARGIN, REGION);
-        for (int rx = regX0; rx <= regX1; rx++) {
-            for (int rz = regZ0; rz <= regZ1; rz++) {
-                List<SixtySecondsIsland> islands = planRegion(rx, rz, config, worldSeed);
-                for (SixtySecondsIsland island : islands) {
-                    int cell = island.radius + SixtySecondsIslandGenerator.WATER_SKIRT;
-                    if (cx + 15 < island.centerX - cell || cx > island.centerX + cell) {
-                        continue;
-                    }
-                    if (cz + 15 < island.centerZ - cell || cz > island.centerZ + cell) {
-                        continue;
-                    }
-                    // 排程整岛装饰 + 物资箱（仅一次）
-                    scheduleIsland(serverLevel, island);
-                }
-            }
-        }
-    }
-
-    /** 确定性规划某区域内生成的岛屿列表（供海洋地形 Feature 与装饰排程共用）。 */
+    /** 确定性规划某区域内生成的岛屿列表（供海洋地形 Feature 共用）。 */
     public static List<SixtySecondsIsland> planRegion(int rx, int rz, SixtySecondsConfig config, long worldSeed) {
         long seed = config.oceanSeed ^ (rx * 73856093L) ^ (rz * 19349663L) ^ (worldSeed * 83492791L);
         net.minecraft.util.RandomSource rng = net.minecraft.util.RandomSource.create(seed);
@@ -184,15 +148,5 @@ public final class SixtySecondsOceanWorldGen {
             result.add(island);
         }
         return result;
-    }
-
-    /** 排程整岛装饰 + 物资箱建造（仅一次）。 */
-    private static void scheduleIsland(ServerLevel level, SixtySecondsIsland island) {
-        Set<Long> set = SCHEDULED.computeIfAbsent(level, k -> java.util.concurrent.ConcurrentHashMap.newKeySet());
-        if (!set.add((long) island.id)) {
-            return;
-        }
-        SixtySecondsIslandGenerator.queueBuild(level, java.util.List.of(island),
-                new java.util.LinkedHashMap<>(), true, null);
     }
 }
