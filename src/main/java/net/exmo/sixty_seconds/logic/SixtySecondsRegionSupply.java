@@ -3,12 +3,16 @@ package net.exmo.sixty_seconds.logic;
 import net.exmo.sixty_seconds.content.block_entity.RandomSupplyBoxBlockEntity;
 import net.exmo.sixty_seconds.content.block_entity.SupplyBoxBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.registry.ModBlocks;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 区域自动撒物资箱：管理员用 {@code /60s_area region add/here} 登记星级区域时，若
@@ -20,8 +24,14 @@ import net.exmo.sixty_seconds.registry.ModBlocks;
  */
 public final class SixtySecondsRegionSupply {
 
-    /** 高级/上锁箱的抽类别池（普通/高级箱设 category 用；随机箱自带类别，不用它）。 */
-    private static final String[] LOCKED_CATEGORIES = {"food", "water", "medicine", "tool", "material", "weapon"};
+    /** 普通/高级物资箱的抽类别池（随机类别，与全局 loot 表的非空投 categories 对齐；airdrop 为空投专属，不在此处）。 */
+    private static final String[] CATEGORIES = {"food", "water", "medicine", "tool", "material", "weapon"};
+
+    /** 生成的物资箱中上锁（需撬锁）的比例。 */
+    private static final float LOCK_RATIO = 0.7f;
+
+    /** 任意两个物资箱之间的水平最小间距（格），避免扎堆过密。 */
+    private static final int MIN_SPACING = 4;
 
     private SixtySecondsRegionSupply() {
     }
@@ -45,6 +55,7 @@ public final class SixtySecondsRegionSupply {
         RandomSource rng = level.getRandom();
         int want = boxCountFor(areaLevel, baseCount);
         int placed = 0;
+        List<BlockPos> placedList = new ArrayList<>();
         // 尝试次数放宽到目标的 4 倍：地表点可能落在水/无地面处而跳过
         for (int attempt = 0; attempt < want * 4 && placed < want; attempt++) {
             int x = minX + rng.nextInt(maxX - minX + 1);
@@ -64,7 +75,8 @@ public final class SixtySecondsRegionSupply {
                 continue;
             }
             BlockPos pos = new BlockPos(x, y, z);
-            if (placeBox(level, pos, areaLevel, rng)) {
+            if (placeBox(level, pos, areaLevel, rng, placedList)) {
+                placedList.add(pos);
                 placed++;
             }
         }
@@ -72,23 +84,30 @@ public final class SixtySecondsRegionSupply {
         return placed;
     }
 
-    /** 在 pos 放一个箱子：按等级掷种类（低级随机 / 上锁高级 / 高级随机）。 */
-    private static boolean placeBox(ServerLevel level, BlockPos pos, int areaLevel, RandomSource rng) {
-        float r = rng.nextFloat();
+    /** 在 pos 放一个箱子：等级越高高级箱占比越大；约 70% 为上锁箱（需撬锁）。 */
+    private static boolean placeBox(ServerLevel level, BlockPos pos, int areaLevel, RandomSource rng, List<BlockPos> placed) {
+        // 最小间距：避免物资箱扎堆过密
+        for (BlockPos p : placed) {
+            int dx = p.getX() - pos.getX();
+            int dz = p.getZ() - pos.getZ();
+            if (dx * dx + dz * dz < MIN_SPACING * MIN_SPACING) {
+                return false;
+            }
+        }
+        // 高级箱比例随区域等级上升：1 星约 0.22，5 星约 0.7
+        float advancedProb = 0.1f + 0.12f * areaLevel;
+        boolean advanced = rng.nextFloat() < advancedProb;
+        boolean locked = rng.nextFloat() < LOCK_RATIO;
         Block block;
-        if (areaLevel >= 3 && r < 0.15f * areaLevel) {
-            block = ModBlocks.SIXTY_SECONDS_HIGH_TIER_RANDOM_SUPPLY_BOX;         // 高级随机箱（仅 3-5 星刷新）
-        } else if (areaLevel >= 3 && r < 0.15f * areaLevel + 0.15f) {
-            block = ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED_LOCKED;          // 上锁高级箱
+        if (advanced) {
+            block = locked ? ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED_LOCKED : ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED;
         } else {
-            block = ModBlocks.SIXTY_SECONDS_LOW_TIER_RANDOM_SUPPLY_BOX;          // 低级随机箱
+            block = locked ? ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_LOCKED : ModBlocks.SIXTY_SECONDS_SUPPLY_BOX;
         }
         level.setBlock(pos, block.defaultBlockState(), Block.UPDATE_ALL);
         BlockEntity be = level.getBlockEntity(pos);
-        // 随机箱类别配置由全局配置（SixtySecondsRandomBoxConfigStore）管理，无需 per-crate 初始化
-        if (be instanceof SupplyBoxBlockEntity sb
-                && !(be instanceof RandomSupplyBoxBlockEntity)) {
-            sb.category = LOCKED_CATEGORIES[rng.nextInt(LOCKED_CATEGORIES.length)];
+        if (be instanceof SupplyBoxBlockEntity sb) {
+            sb.category = CATEGORIES[rng.nextInt(CATEGORIES.length)];
             sb.setChanged();
         }
         return true;
@@ -101,11 +120,23 @@ public final class SixtySecondsRegionSupply {
             p.set(x, y, z);
             boolean solid = !level.getBlockState(p).isAir()
                     && level.getBlockState(p).getFluidState().isEmpty();
-            if (solid && level.getBlockState(p.set(x, y + 1, z)).isAir()) {
+            if (solid && level.getBlockState(p.set(x, y + 1, z)).isAir()
+                    && hasOpenSides(level, x, y + 1, z)) {
                 return y + 1;
             }
         }
         return null;
+    }
+
+    /** 放置格（x,y,z）水平四向中至少 2 侧为空气：避免物资箱卡在墙体/窗台角落。 */
+    private static boolean hasOpenSides(ServerLevel level, int x, int y, int z) {
+        int open = 0;
+        for (Direction d : Direction.Plane.HORIZONTAL) {
+            if (level.getBlockState(new BlockPos(x + d.getStepX(), y, z + d.getStepZ())).isAir()) {
+                open++;
+            }
+        }
+        return open >= 2;
     }
 
     /**
@@ -130,6 +161,9 @@ public final class SixtySecondsRegionSupply {
             // 站位：当前位置必须是空气（才能放箱子）
             p.set(x, y, z);
             if (!level.getBlockState(p).isAir()) continue;
+
+            // 不要只贴着墙体/窗台角落：放置格水平四向至少 2 侧为空气
+            if (!hasOpenSides(level, x, y, z)) continue;
 
             // 天花板：头顶 2~10 格内必须有实心块（覆盖低矮棚屋到高大厅堂）
             int ceilingMax = Math.min(y + 10, top);
