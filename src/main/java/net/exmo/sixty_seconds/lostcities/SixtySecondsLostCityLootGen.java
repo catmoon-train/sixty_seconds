@@ -1,6 +1,5 @@
 package net.exmo.sixty_seconds.lostcities;
 
-import mcjty.lostcities.api.LostChunkCharacteristics;
 import mcjty.lostcities.api.LostCityEvent;
 import mcjty.lostcities.setup.Registration;
 import mcjty.lostcities.worldgen.LostCityTerrainFeature;
@@ -10,24 +9,20 @@ import mcjty.lostcities.worldgen.lost.BuildingInfo;
 import net.exmo.sixty_seconds.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.WeakHashMap;
 
 /**
  * 让 LostCities 在生成建筑时按建筑星级自动撒 60秒 物资箱：
@@ -53,36 +48,16 @@ public final class SixtySecondsLostCityLootGen {
     private static final int MIN_SPACING_SQ = 4 * 4;
 
     /** 每个 chunk 最多撒的箱子数（随星级线性增长，这里给出上限保护）。 */
-    private static final int MAX_BOXES = 8;
-
-    /** CharacteristicsEvent -> PostGenCityChunkEvent 之间按世界缓存建筑信息（弱引用 key 防止内存泄漏）。 */
-    private static final WeakHashMap<WorldGenLevel, Map<ChunkPos, BuildingMeta>> META = new WeakHashMap<>();
-
-    private record BuildingMeta(String name, int cityLevel) {
-    }
+    private static final int MAX_BOXES = 15;
 
     private SixtySecondsLostCityLootGen() {
     }
 
     public static void register() {
-        NeoForge.EVENT_BUS.addListener(SixtySecondsLostCityLootGen::onCharacteristics);
+        // 不再依赖 CharacteristicsEvent：它的 buildingType 只在「建筑主 chunk」有值，
+        // 导致跨多 chunk 的多层建筑只有主 chunk 那一格能撒箱，其余楼层全无 —— 现象就是
+        // 「多层 buildings 反而没生成物资箱」。改用 PostGen 时直接反查 BuildingInfo。
         NeoForge.EVENT_BUS.addListener(SixtySecondsLostCityLootGen::onPostGen);
-    }
-
-    @SubscribeEvent
-    private static void onCharacteristics(LostCityEvent.CharacteristicsEvent event) {
-        LostChunkCharacteristics c = event.getCharacteristics();
-        if (c == null || c.buildingType == null || c.buildingType.getId() == null) {
-            return; // 街道/空地：无建筑，PostGen 时不撒箱
-        }
-        WorldGenLevel world = event.getWorld();
-        ChunkPos cp = new ChunkPos(event.getChunkX(), event.getChunkZ());
-        // 注意：starForBuildingName() 的契约是“不含命名空间的建筑路径名”（如 building1），
-        // 因此这里必须取 ResourceLocation 的 getPath()，而不是 getId().toString()（那会是 lostcities:building1）。
-        // 之前传入带命名空间的全名，导致 starForBuildingName 里所有 startsWith(...) 判断都失败，
-        // 全部落入 UNGRADED(-1) -> star<=0 -> PostGen 直接 return，所以一个箱子都没生成。
-        META.computeIfAbsent(world, k -> new HashMap<>())
-                .put(cp, new BuildingMeta(c.buildingType.getId().getPath(), c.cityLevel));
     }
 
     @SubscribeEvent
@@ -90,14 +65,24 @@ public final class SixtySecondsLostCityLootGen {
         WorldGenLevel world = event.getWorld();
         int chunkX = event.getChunkX();
         int chunkZ = event.getChunkZ();
-        ChunkPos cp = new ChunkPos(chunkX, chunkZ);
-        Map<ChunkPos, BuildingMeta> map = META.get(world);
-        BuildingMeta meta = map == null ? null : map.remove(cp);
-        if (meta == null) {
+
+        IDimensionInfo dimInfo = Registration.LOSTCITY_FEATURE.get().getDimensionInfo(world);
+        if (dimInfo == null) {
             return;
         }
+        ChunkCoord coord = new ChunkCoord(dimInfo.getType(), chunkX, chunkZ);
+        BuildingInfo info = BuildingInfo.getBuildingInfo(coord, dimInfo);
+
+        // 直接在 PostGen 阶段用 BuildingInfo 反查本 chunk 所属建筑名。
+        // BuildingInfo.buildingType 是从建筑主 chunk 继承下来的（多区块建筑所有 chunk 共享），
+        // 因此无论本 chunk 是不是「主 chunk」都能拿到正确的建筑名 —— 解决多层建筑漏箱问题。
+        ResourceLocation id = info.getBuildingId();
+        if (id == null) {
+            return; // 街道/空地：无建筑
+        }
+        String name = id.getPath();
         // 星级 ≤ 0（无星级 / 撤离点 UNGRADED / 安全区 SAFE_STAR）不生成物资箱
-        int star = SixtySecondsLostCitiesStarMap.starForBuildingName(meta.name);
+        int star = SixtySecondsLostCitiesStarMap.starForBuildingName(name);
         if (star <= 0) {
             return;
         }
@@ -109,11 +94,6 @@ public final class SixtySecondsLostCityLootGen {
 
         // 楼层实际世界 Y 由 LostCities 的 BuildingInfo 给出（已含 cityLevel*FLOORHEIGHT），
         // 不要再自己用 cityLevel*6 近似，否则要么扫不到建筑、要么把箱子撒到建筑外地表。
-        IDimensionInfo dimInfo = Registration.LOSTCITY_FEATURE.get().getDimensionInfo(world);
-        if (dimInfo == null) {
-            return;
-        }
-        BuildingInfo info = BuildingInfo.getBuildingInfo(new ChunkCoord(dimInfo.getType(), chunkX, chunkZ), dimInfo);
         // 必须用 LostCities 真实的 FLOORHEIGHT（6），之前误写成 8 会导致多层建筑楼层错位，
         // 越往上层 isFloor 匹配率越低，最终高层整层扫不到合法落箱点。
         int floorHeight = LostCityTerrainFeature.FLOORHEIGHT;
@@ -170,6 +150,11 @@ public final class SixtySecondsLostCityLootGen {
      */
     private static void placeBox(BuildingInfo info, BlockPos pos, boolean advanced, boolean locked, String category) {
         WorldGenLevel inWorld = info.provider.getWorld();
+        // 二次校验：延迟到 ChunkFixer 才执行，若此时脚下已不是实心（地形被后续阶段改动），
+        // 放下去会悬空，直接跳过该候选点。
+        if (!inWorld.getBlockState(pos).isAir() || inWorld.getBlockState(pos.below()).isAir()) {
+            return;
+        }
         Block block = advanced
                 ? (locked ? ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED_LOCKED : ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED)
                 : (locked ? ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_LOCKED : ModBlocks.SIXTY_SECONDS_SUPPLY_BOX);
