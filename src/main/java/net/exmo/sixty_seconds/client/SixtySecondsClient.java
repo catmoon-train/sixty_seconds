@@ -42,6 +42,7 @@ import net.exmo.sixty_seconds.client.screen.RandomSupplyBoxConfigScreen;
 import net.exmo.sixty_seconds.client.screen.ShelterDoorScreen;
 import net.exmo.sixty_seconds.client.screen.ShelterPanelScreen;
 import net.exmo.sixty_seconds.client.screen.SixtySecondsDoorScreen;
+import net.exmo.sixty_seconds.client.screen.StarMapScreen;
 import net.exmo.sixty_seconds.client.screen.SixtySecondsRvScreen;
 import net.exmo.sixty_seconds.client.screen.StationCraftScreen;
 import net.exmo.sixty_seconds.client.screen.TeamLobbyScreen;
@@ -90,6 +91,7 @@ import net.exmo.sixty_seconds.network.SixtySecondsSeaChartReturnCancelS2CPacket;
 import net.exmo.sixty_seconds.network.SixtySecondsSeaChartReturnStartS2CPacket;
 import net.exmo.sixty_seconds.network.SixtySecondsSeaChartS2CPacket;
 import net.exmo.sixty_seconds.network.SixtySecondsSeaChartSailStartS2CPacket;
+import net.exmo.sixty_seconds.network.SixtySecondsStarMapRequestC2SPacket;
 import net.exmo.sixty_seconds.network.SixtySecondsStarMapS2CPacket;
 import net.exmo.sixty_seconds.network.SixtySecondsStationStockS2CPacket;
 import net.exmo.sixty_seconds.network.SupplySearchS2CPacket;
@@ -114,6 +116,7 @@ import net.exmo.sixty_seconds.content.entity.WheelchairEntityModel;
 import net.exmo.sixty_seconds.content.entity.WheelchairEntityRenderer;
 import net.exmo.sixty_seconds.content.entity.WheelchairFieldItemRenderer;
 import net.exmo.sixty_seconds.content.item.NewspaperItem;
+import net.exmo.sixty_seconds.content.item.StarMapItem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -146,6 +149,16 @@ public final class SixtySecondsClient {
                 }
                 minecraft.setScreen(new NewspaperScreen(stack, hand));
                 return true;
+            };
+            // 星图物品右键打开全屏星图：加载本地已探索缓存 → 请求服务端刷新星级区域 → 打开界面。
+            StarMapItem.openScreenCallback = () -> {
+                Minecraft minecraft = Minecraft.getInstance();
+                if (minecraft.player == null) {
+                    return;
+                }
+                StarMapManager.loadExploredChunks();
+                ClientPlayNetworking.send(new SixtySecondsStarMapRequestC2SPacket());
+                minecraft.setScreen(new StarMapScreen());
             };
             SixtySecondsHud.register();
             SixtySecondsCombatHud.register();
