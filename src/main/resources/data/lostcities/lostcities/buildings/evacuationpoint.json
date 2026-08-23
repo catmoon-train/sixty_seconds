@@ -3,6 +3,7 @@
   "rubble": "}",
   "minfloors": 1,
   "maxfloors": 1,
+  "overrideFloors": true,
   "parts": [
     {
       "part": "evacuationpoint"
