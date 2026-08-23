@@ -55,8 +55,14 @@ import java.util.WeakHashMap;
  */
 public final class SixtySecondsPveSystem {
 
-    /** level → 当前 Boss UUID（同一时间最多一只）。 */
-    private static final Map<ServerLevel, UUID> ACTIVE_BOSS = new WeakHashMap<>();
+    /** level → 当前活跃夜晚 Boss 记录（UUID + 刷出游戏日）。同一时间最多一只；超 2 天自动消失。 */
+    private record ActiveBoss(UUID id, int spawnDay) {
+    }
+
+    private static final Map<ServerLevel, ActiveBoss> ACTIVE_BOSS = new WeakHashMap<>();
+
+    /** 夜晚 Boss 最大存活天数：超过后直接消失，允许新 Boss 刷新（防被卡住永久阻挡）。 */
+    private static final int BOSS_MAX_LIFETIME_DAYS = 2;
     /** level → (哨戒炮位置 → 状态)。 */
     private static final Map<ServerLevel, Map<BlockPos, Turret>> TURRETS = new WeakHashMap<>();
     /** level → 上次游荡怪刷新判定 tick。 */
@@ -328,23 +334,42 @@ public final class SixtySecondsPveSystem {
         if (LAST_BOSS_DAY.getOrDefault(level, 0) >= data.dayNumber) {
             return;
         }
-        UUID activeBoss = ACTIVE_BOSS.get(level);
-        if (activeBoss != null && level.getEntity(activeBoss) instanceof SixtySecondsBossEntity boss
-                && boss.isAlive()) {
-            return; // 上一只还活着
+        // 终焉之王（apex）：刷新不被任何情况阻挡，可与普通 Boss 共存——跳过活跃 Boss 锁与概率判定。
+        boolean apex = !SixtySecondsManager.isEndless(level)
+                && data.dayNumber >= SixtySecondsManager.totalDays(level);
+
+        if (!apex) {
+            // 普通 Boss：同一时间最多一只；若上一只还活着但已超 2 天存活上限，则强制消失并允许新 Boss。
+            ActiveBoss rec = ACTIVE_BOSS.get(level);
+            if (rec != null) {
+                SixtySecondsBossEntity boss = level.getEntity(rec.id()) instanceof SixtySecondsBossEntity b
+                        && b.isAlive() ? b : null;
+                if (boss != null) {
+                    if (data.dayNumber - rec.spawnDay() >= BOSS_MAX_LIFETIME_DAYS) {
+                        boss.discard();          // 超期：直接消失
+                        ACTIVE_BOSS.remove(level);
+                    } else {
+                        return;                  // 还在存活窗口内，本晚不再刷普通 Boss
+                    }
+                } else {
+                    ACTIVE_BOSS.remove(level);   // 上一只已死/不存在
+                }
+            }
+
+            boolean guaranteed = data.dayNumber == 3 || data.dayNumber == 5 || data.dayNumber == 7;
+            double chance = SixtySecondsBalance.BOSS_NIGHT_CHANCE
+                    + SixtySecondsBalance.BOSS_NIGHT_CHANCE_PER_DAY * data.dayNumber;
+            // 非保底日应用天数倍率（前两天 Boss 概率大幅降低）
+            if (!guaranteed) {
+                chance *= SixtySecondsBalance.bossSpawnDayMult(data.dayNumber);
+            }
+            // 怪物整体刷新频率 +30%（叠加在原有 +40% 之上）
+            chance *= SixtySecondsBalance.MONSTER_SPAWN_FREQ_MULT;
+            if (!guaranteed && level.random.nextDouble() >= chance) {
+                return;
+            }
         }
-        boolean guaranteed = data.dayNumber == 3 || data.dayNumber == 5 || data.dayNumber == 7;
-        double chance = SixtySecondsBalance.BOSS_NIGHT_CHANCE
-                + SixtySecondsBalance.BOSS_NIGHT_CHANCE_PER_DAY * data.dayNumber;
-        // 非保底日应用天数倍率（前两天 Boss 概率大幅降低）
-        if (!guaranteed) {
-            chance *= SixtySecondsBalance.bossSpawnDayMult(data.dayNumber);
-        }
-        // 怪物整体刷新频率 +30%（叠加在原有 +40% 之上）
-        chance *= SixtySecondsBalance.MONSTER_SPAWN_FREQ_MULT;
-        if (!guaranteed && level.random.nextDouble() >= chance) {
-            return;
-        }
+
         // 落点：随机一个有锚点的队伍的探索区门外远处（20~36 格）；找不到落点则放弃本晚
         List<SixtySecondsState.TeamData> candidates = new ArrayList<>();
         for (SixtySecondsState.TeamData team : data.teams.values()) {
@@ -371,11 +396,8 @@ public final class SixtySecondsPveSystem {
         }
         int bossLevel = Mth.clamp((data.dayNumber + 1) / 2 + (areaLevel - 1) / 2, 1,
                 SixtySecondsBalance.BOSS_MAX_LEVEL);
-        // 最后一天（含之后）的 Boss 升级为「终焉之王」终极形态——随可配置总日数浮动，
-        // 总日数被调短/调长时终极 Boss 始终压在最终日，不会永不出现或提前出现。
-        boolean apex = !SixtySecondsManager.isEndless(level)
-                && data.dayNumber >= SixtySecondsManager.totalDays(level);
-        spawnBoss(level, spot, bossLevel, apex);
+        // apex 不进 ACTIVE_BOSS 全局锁，可与其它 Boss 并存；普通 Boss 进入锁并受 2 天上限约束。
+        spawnBoss(level, spot, bossLevel, apex, pickBossVariantPublic(level.random, data.dayNumber), !apex);
         LAST_BOSS_DAY.put(level, data.dayNumber);
     }
 
@@ -437,7 +459,7 @@ public final class SixtySecondsPveSystem {
         boss.applyBossLevel(bossLevel, apex, variant);
         level.addFreshEntity(boss);
         if (trackActive) {
-            ACTIVE_BOSS.put(level, boss.getUUID());
+            ACTIVE_BOSS.put(level, new ActiveBoss(boss.getUUID(), SixtySecondsState.get(level).dayNumber));
         }
         Component message;
         if (variant == SixtySecondsBossEntity.BossVariant.RAVAGER) {
