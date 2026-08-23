@@ -1,12 +1,15 @@
 package net.exmo.sixty_seconds.loot;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -25,6 +28,17 @@ public class SixtySecondsLootTable {
         public String itemId = "minecraft:bread";
         public int count = 1;
         public float weight = 1.0F;
+        /**
+         * 可选 NBT（单层字符串键值），序列化时写入物品 {@code CUSTOM_DATA} 组件。
+         * 用于 TACZ 等需要型号标识的第三方物品，例如：
+         * <ul>
+         *   <li>枪：itemId="tacz:modern_kinetic_gun"，nbt={"GunId":"tacz:glock_17"}</li>
+         *   <li>弹：itemId="tacz:ammo"，nbt={"AmmoId":"tacz:9mm"}</li>
+         *   <li>配件：itemId="tacz:attachment"，nbt={"AttachmentId":"tacz:sight_sro_dot"}</li>
+         * </ul>
+         * null 时行为与原版完全一致（不写 NBT），向后兼容旧配置。
+         */
+        public Map<String, String> nbt = null;
 
         public Entry() {
         }
@@ -33,6 +47,13 @@ public class SixtySecondsLootTable {
             this.itemId = itemId;
             this.count = count;
             this.weight = weight;
+        }
+
+        public Entry(String itemId, int count, float weight, Map<String, String> nbt) {
+            this.itemId = itemId;
+            this.count = count;
+            this.weight = weight;
+            this.nbt = nbt;
         }
     }
 
@@ -107,7 +128,16 @@ public class SixtySecondsLootTable {
         if (item == Items.AIR && !entry.itemId.equals("minecraft:air")) {
             return ItemStack.EMPTY;
         }
-        return new ItemStack(item, Math.max(1, entry.count));
+        ItemStack stack = new ItemStack(item, Math.max(1, entry.count));
+        // 可选 NBT：写入 CUSTOM_DATA 组件（TACZ 枪/弹/配件靠此携带型号标识）
+        if (entry.nbt != null && !entry.nbt.isEmpty()) {
+            CompoundTag tag = new CompoundTag();
+            for (Map.Entry<String, String> kv : entry.nbt.entrySet()) {
+                tag.putString(kv.getKey(), kv.getValue());
+            }
+            stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+        }
+        return stack;
     }
 
     /** 内置默认表（首次运行时写盘）。 */
@@ -334,6 +364,13 @@ public class SixtySecondsLootTable {
                 buf.writeUtf(entry.itemId == null ? "" : entry.itemId);
                 buf.writeVarInt(entry.count);
                 buf.writeFloat(entry.weight);
+                // NBT：数量 + (key,value) 对
+                Map<String, String> nbt = entry.nbt == null ? Map.of() : entry.nbt;
+                buf.writeVarInt(nbt.size());
+                for (Map.Entry<String, String> kv : nbt.entrySet()) {
+                    buf.writeUtf(kv.getKey());
+                    buf.writeUtf(kv.getValue());
+                }
             }
         }
     }
@@ -346,7 +383,16 @@ public class SixtySecondsLootTable {
             int n = buf.readVarInt();
             List<Entry> list = new ArrayList<>();
             for (int j = 0; j < n; j++) {
-                list.add(new Entry(buf.readUtf(), buf.readVarInt(), buf.readFloat()));
+                Entry e = new Entry(buf.readUtf(), buf.readVarInt(), buf.readFloat());
+                int nbtSize = buf.readVarInt();
+                if (nbtSize > 0) {
+                    Map<String, String> nbt = new LinkedHashMap<>();
+                    for (int k = 0; k < nbtSize; k++) {
+                        nbt.put(buf.readUtf(), buf.readUtf());
+                    }
+                    e.nbt = nbt;
+                }
+                list.add(e);
             }
             table.categories.put(category, list);
         }
