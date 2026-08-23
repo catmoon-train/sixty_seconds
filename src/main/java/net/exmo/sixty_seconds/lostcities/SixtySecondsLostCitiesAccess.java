@@ -35,26 +35,17 @@ public final class SixtySecondsLostCitiesAccess {
      */
     public static void init() {
         try {
-            // LostCities 官方用法：
-            //   InterModComms.sendTo(ILostCities.LOSTCITIES, ILostCities.GET_LOST_CITIES, GetLostCities::new)
-            // 其中 GetLostCities 实现 Supplier<Function<ILostCities, Void>>。
+            // LostCities 在 processIMC 阶段期望 IMC 消息的 Supplier.get() 直接返回
+            // 一个 Function<ILostCities, Void>（见 LostCities.processIMC 对 messageSupplier.get() 的 cast）。
             net.neoforged.fml.InterModComms.sendTo(
                     ILostCities.LOSTCITIES,
                     ILostCities.GET_LOST_CITIES,
-                    GetLostCities::new);
+                    (Supplier<Function<ILostCities, Void>>) () -> api -> {
+                        SixtySecondsLostCitiesAccess.api = api;
+                        return null;
+                    });
         } catch (Throwable ignored) {
             // LostCities 不可用：不注册 IMC，后续全部静默降级为无建筑星级。
-        }
-    }
-
-    /** 实现 LostCities 要求的 {@code Supplier<Function<ILostCities, Void>>}，把实例写入静态缓存。 */
-    public static final class GetLostCities implements Supplier<Function<ILostCities, Void>> {
-        @Override
-        public Function<ILostCities, Void> get() {
-            return api -> {
-                SixtySecondsLostCitiesAccess.api = api;
-                return null;
-            };
         }
     }
 }

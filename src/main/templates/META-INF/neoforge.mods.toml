@@ -74,7 +74,7 @@ side = "BOTH"
 [[dependencies."${mod_id}"]]
 modId = "lostcities"
 type = "required"
-versionRange = "[8.4.1,)"
+versionRange = "[1.21-8.4.1,)"
 ordering = "AFTER"
 side = "BOTH"
 
