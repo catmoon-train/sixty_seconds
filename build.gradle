@@ -120,6 +120,9 @@ dependencies {
 
     // 对讲机语音组：仅编译期需要 Simple Voice Chat API（运行时装对应版本 SVC 即可）
     compileOnly "maven.modrinth:simple-voice-chat:neoforge-1.21.1-2.6.6"
+
+    // LostCities 前置（工作区本地构建版）：编译期引用 mcjty.lostcities.api.*；运行时由 run/mods 目录加载
+    compileOnly files("run/mods/lostcities-1.21-8.4.1.jar")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
