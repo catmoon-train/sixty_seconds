@@ -61,9 +61,17 @@ public final class SixtySecondsGameSetup {
             SixtySecPlayerShopComponent.KEY.get(player).init();
             net.exmo.sixty_seconds.bridge.stubs.DynamicShopComponent.KEY.get(player).init();
             net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent.KEY.get(player).init();
-            HashSet<Item> copy = new HashSet<>(player.getCooldowns().cooldowns.keySet());
-            for (Item item : copy) {
-                player.getCooldowns().removeCooldown(item);
+            try {
+                var cooldownsField = net.minecraft.world.item.ItemCooldowns.class.getDeclaredField("cooldowns");
+                cooldownsField.setAccessible(true);
+                @SuppressWarnings("unchecked")
+                java.util.Map<Item, ?> cooldownMap =
+                        (java.util.Map<Item, ?>) cooldownsField.get(player.getCooldowns());
+                for (Item item : new HashSet<>(cooldownMap.keySet())) {
+                    player.getCooldowns().removeCooldown(item);
+                }
+            } catch (ReflectiveOperationException ignored) {
+                // 冷却字段在运行时不可用则跳过
             }
         }
         gameWorldComponent.clearRoleMap(true);

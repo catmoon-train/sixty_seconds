@@ -26,6 +26,7 @@ public class Sixty_seconds {
         ModEffects.register(modEventBus);
         ModSounds.register(modEventBus);
         SixtySecondsCreativeTab.register(modEventBus);
+        net.exmo.sixty_seconds.island.SixtySecondsOceanFeature.register(modEventBus); // 海洋世界地形生成 Feature
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(ModNetwork::register);
         NeoForge.EVENT_BUS.register(NeoForgeEvents.class);

@@ -2344,5 +2344,14 @@
   "gui.sixty_seconds.radio.join": "Join",
   "gui.sixty_seconds.radio.leave": "Leave",
   "gui.sixty_seconds.radio.current": "Current channel: %s",
-  "gui.sixty_seconds.radio.offline": "Not connected"
+  "gui.sixty_seconds.radio.offline": "Not connected",
+  "gui.sixty_seconds.ocean_world.button.on": "60 Seconds · Ocean: ON",
+  "gui.sixty_seconds.ocean_world.button.off": "60 Seconds · Ocean",
+  "gui.sixty_seconds.ocean_world.title": "60 Seconds Ocean World",
+  "gui.sixty_seconds.ocean_world.enabled.yes": "Enabled: Yes",
+  "gui.sixty_seconds.ocean_world.enabled.no": "Enabled: No",
+  "gui.sixty_seconds.ocean_world.seed": "Terrain Seed",
+  "gui.sixty_seconds.ocean_world.islands": "Islands per region: %s",
+  "gui.sixty_seconds.ocean_world.sea_y": "Sea level Y: %s",
+  "gui.sixty_seconds.ocean_world.done": "Done"
 }

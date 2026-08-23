@@ -1,10 +1,6 @@
 {
-  "palette": {
-    "0": "minecraft:stone_brick_slab",
-    "1": "minecraft:yellow_concrete",
-    "2": "minecraft:light_gray_concrete",
-    "3": "minecraft:white_concrete"
-  },
+  "xsize": 16,
+  "zsize": 16,
   "slices": [
     [
       "   000000000    ",
@@ -78,5 +74,25 @@
       "                ",
       "                "
     ]
-  ]
+  ],
+  "palette": {
+    "palette": [
+      {
+        "char": "0",
+        "block": "minecraft:stone_brick_slab"
+      },
+      {
+        "char": "1",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "2",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:white_concrete"
+      }
+    ]
+  }
 }

@@ -3229,5 +3229,14 @@
   "screen.sixty_seconds.sixty_seconds.end_tag_monster": "[变怪]",
   "screen.sixty_seconds.sixty_seconds.end_tag_evacuated": "[已撤离]",
   "screen.sixty_seconds.sixty_seconds.end_tip": "按「继续」返回",
-  "screen.sixty_seconds.sixty_seconds.end_continue": "继续"
+  "screen.sixty_seconds.sixty_seconds.end_continue": "继续",
+  "gui.sixty_seconds.ocean_world.button.on": "60秒·海洋：开",
+  "gui.sixty_seconds.ocean_world.button.off": "60秒·海洋",
+  "gui.sixty_seconds.ocean_world.title": "60秒·海洋世界配置",
+  "gui.sixty_seconds.ocean_world.enabled.yes": "已启用：是",
+  "gui.sixty_seconds.ocean_world.enabled.no": "已启用：否",
+  "gui.sixty_seconds.ocean_world.seed": "地形种子",
+  "gui.sixty_seconds.ocean_world.islands": "每区域岛屿：%s",
+  "gui.sixty_seconds.ocean_world.sea_y": "海平面Y：%s",
+  "gui.sixty_seconds.ocean_world.done": "完成"
 }

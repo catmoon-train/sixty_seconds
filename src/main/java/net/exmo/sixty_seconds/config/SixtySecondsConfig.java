@@ -153,6 +153,31 @@ public class SixtySecondsConfig {
     public boolean oceanCreaturesEnabled = true;
 
     /**
+     * 海洋世界模式开关（默认<b>关</b>）：开启后，主世界在区块首次加载时被整体改写为
+     * 「全海洋 + 底层基岩(Y=10) + 沙(Y=11/12) + Y&lt;10 留空 + 海面散布岛屿（含物资箱）」地形。
+     * 区别于普通 60秒 模式：在本模式下，避难所/初始房子生成在 Y=-40 附近（由建图逻辑处理）。
+     * <p>
+     * 由「创建世界」界面选择或 {@code /60s ocean create} 命令置位（按图持久化）。
+     */
+    @SerializedName("oceanMode")
+    public boolean oceanMode = false;
+    /** 海洋世界地形种子（与地形生成强相关，建图/海图共用）。 */
+    @SerializedName("oceanSeed")
+    public long oceanSeed = 1337L;
+    /** 海洋世界海平面 Y（默认 80）。 */
+    @SerializedName("oceanSeaY")
+    public int oceanSeaY = 80;
+    /** 每 1024×1024 区域中生成的岛屿数量（0~3，确定性分布）。 */
+    @SerializedName("oceanIslandCount")
+    public int oceanIslandCount = 2;
+    /** 区域岛默认危险等级（决定色板/物资/怪物数量）。 */
+    @SerializedName("oceanIslandLevel")
+    public int oceanIslandLevel = 1;
+    /** 玩家出生点（海洋世界建在 0,seaY,0 附近；可配置）。 */
+    @SerializedName("oceanSpawnY")
+    public int oceanSpawnY = 80;
+
+    /**
      * 中途自动入队开关（默认<b>开</b>）：游戏进行中新加入服务器（且无重连备份）的玩家，
      * 自动补入一支<b>在线不满 {@link net.exmo.sixty_seconds.logic.SixtySecondsTeamAllocator#TEAM_SIZE 四人}</b>
      * 的队伍（选在线人数最少的未满队），传送到该队住宅并发身份。所有队伍都满则留观战。

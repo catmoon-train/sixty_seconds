@@ -18,6 +18,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.BulkSectionAccess;
+import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.exmo.sixty_seconds.SixtySeconds;
 
 import java.util.ArrayList;
@@ -520,7 +522,7 @@ public final class SixtySecondsIslandGenerator {
     }
 
     /** 建一个 16×16 列 patch：净空 → 海床/海水/滩涂/陆地按列成形。 */
-    private static void buildPatch(Placer p, SixtySecondsIsland island, int x0, int z0, int x1, int z1) {
+    static void buildPatch(Placer p, SixtySecondsIsland island, int x0, int z0, int x1, int z1) {
         int rOuter = island.radius + WATER_SKIRT;
         Palette pal = palette(island);
         BlockState water = Blocks.WATER.defaultBlockState();
@@ -573,7 +575,61 @@ public final class SixtySecondsIslandGenerator {
 
     // ── 装饰：树木 / 岩石 / 植被 ───────────────────────────────────────────
 
-    private static void decorate(Placer p, SixtySecondsIsland island) {
+    /**
+     * 与 {@link #buildPatch(Placer, SixtySecondsIsland, int, int, int, int)} 相同形状，
+     * 但直接写入 worldgen 阶段的 {@code ChunkAccess} primer（通过 {@link BulkSectionAccess}），
+     * 不触发任何方块更新/光照重算。用于海洋世界的地形生成 Feature，避免在主线程
+     * 对已加载区块同步 setBlock 导致的卡死（参照 LostCities 的 Feature.place 写法）。
+     */
+    static void buildPatchPrimer(BulkSectionAccess bsa, SixtySecondsIsland island, int x0, int z0, int x1, int z1) {
+        int rOuter = island.radius + WATER_SKIRT;
+        Palette pal = palette(island);
+        BlockState water = Blocks.WATER.defaultBlockState();
+        int yMin = island.seaY - DEPTH_BELOW_SEA;
+        int yMax = island.seaY + HEIGHT_ABOVE_SEA;
+        for (int x = x0; x <= x1; x++) {
+            for (int z = z0; z <= z1; z++) {
+                double distSqr = island.distSqr(x + 0.5, z + 0.5);
+                if (distSqr > (double) rOuter * rOuter) {
+                    continue;
+                }
+                float landVal = landValue(island, x, z);
+                boolean land = landVal > LAND_THRESHOLD;
+                int surface = land ? surfaceY(island, x, z, landVal) : island.seaY - 2
+                        - (int) (2 * fbm(island.seed ^ 77L, x * 0.08, z * 0.08, 2));
+                if (land) {
+                    boolean beach = surface <= island.seaY;
+                    float topNoise = fbm(island.seed ^ 31L, x * 0.11, z * 0.11, 2);
+                    for (int y = yMin; y <= surface; y++) {
+                        BlockState state;
+                        if (y == surface) {
+                            state = beach ? pal.beach() : (topNoise > 0.62F ? pal.topAlt() : pal.top());
+                        } else if (y >= surface - 2) {
+                            state = beach ? pal.beach() : pal.under();
+                        } else {
+                            state = pal.core();
+                        }
+                        setPrimer(bsa, x, y, z, state);
+                    }
+                } else {
+                    boolean rim = distSqr > (double) (rOuter - 2) * (rOuter - 2);
+                    for (int y = yMin; y <= island.seaY; y++) {
+                        setPrimer(bsa, x, y, z, y <= surface || rim ? pal.seabed() : water);
+                    }
+                }
+            }
+        }
+    }
+
+    /** 直接写 primer（不触发更新），参照 LostCities 的 SectionCache.setBlock 写法。 */
+    private static void setPrimer(BulkSectionAccess bsa, int x, int y, int z, BlockState state) {
+        LevelChunkSection section = bsa.getSection(new net.minecraft.core.BlockPos(x, y, z));
+        if (section != null) {
+            section.setBlockState(x & 15, y & 15, z & 15, state, false);
+        }
+    }
+
+    static void decorate(Placer p, SixtySecondsIsland island) {
         RandomSource rng = RandomSource.create(island.seed ^ 0xDEC0L);
         float dm = island.size.decoMult;
         SixtySecondsIsland.Type type = island.type;
@@ -911,7 +967,7 @@ public final class SixtySecondsIslandGenerator {
     /** 物资箱抽类别池。 */
     private static final String[] BOX_CATEGORIES = {"food", "water", "medicine", "tool", "material", "weapon"};
 
-    private static void populate(Placer p, SixtySecondsIsland island) {
+    static void populate(Placer p, SixtySecondsIsland island) {
         ServerLevel level = p.level();
         RandomSource rng = RandomSource.create(island.seed ^ 0xB0B0L);
         float sm = island.size.supplyMult;
@@ -931,7 +987,8 @@ public final class SixtySecondsIslandGenerator {
                 continue;
             }
             boolean asRandom = rng.nextFloat() < 0.5F;
-            boolean locked = !asRandom && island.level >= 3 && rng.nextFloat() < 0.3F;
+            // 普通物资箱：65% 落实为上锁的物资箱方块（仅非随机箱参与）
+            boolean locked = !asRandom && rng.nextFloat() < 0.65F;
             placeSupplyBox(p, spot, asRandom
                     ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_LOW_TIER_RANDOM_SUPPLY_BOX
                     : (locked
@@ -947,7 +1004,8 @@ public final class SixtySecondsIslandGenerator {
                 continue;
             }
             boolean asRandom = rng.nextFloat() < 0.5F;
-            boolean advancedLocked = !asRandom && island.level >= 4;
+            // 高级物资箱：65% 落实为上锁的高级物资箱方块（仅非随机箱参与）
+            boolean advancedLocked = !asRandom && rng.nextFloat() < 0.65F;
             placeSupplyBox(p, spot, asRandom
                     ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_HIGH_TIER_RANDOM_SUPPLY_BOX
                     : (advancedLocked
