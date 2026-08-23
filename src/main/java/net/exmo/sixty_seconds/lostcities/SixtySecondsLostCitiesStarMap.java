@@ -42,8 +42,18 @@ import java.util.WeakHashMap;
  */
 public final class SixtySecondsLostCitiesStarMap {
 
-    /** 无星级：该坐标不在已知建筑内（街道/部件/非城市），交由后续等级逻辑处理。 */
+    /**
+     * 无星级：该坐标不在任何 LostCities 建筑内（街道/部件/非城市维度），交由后续等级逻辑处理。
+     * 注意它只是「没有建筑星级」，仍会被 {@code SixtySecondsAreaLevels} 按岛屿/门绑定/全局基线判定，并非「安全区」。
+     */
     public static final int NO_STAR = 0;
+
+    /**
+     * 无级别：坐标位于某 LostCities 建筑内，但其建筑名未在本映射表中登记。
+     * 这是真正「不具有任何级别」的地方——既不是安全区（≠ 0），也没有危险星级（> 0），
+     * 在 {@code SixtySecondsAreaLevels} 中会跳过建筑星级分支、直接落到后续等级逻辑（门绑定/全局基线）。
+     */
+    public static final int UNGRADED = -1;
 
     /** 多区块建筑统一 5 星。 */
     private static final int MULTI_BUILDING_STAR = 5;
@@ -60,14 +70,15 @@ public final class SixtySecondsLostCitiesStarMap {
     }
 
     /**
-     * 反查某坐标是否位于 LostCities 已知建筑内，返回对应星级（1..5）；非建筑/非城市维度/无 LostCities 时返回 {@link #NO_STAR}。
+     * 反查某坐标是否位于 LostCities 已知建筑内，返回对应星级（1..5）；未知建筑名返回 {@link #UNGRADED}（真正无级别）；
+     * 非建筑/非城市维度/无 LostCities 时返回 {@link #NO_STAR}（仅表示「无建筑星级」，仍走后续等级逻辑）。
      *
      * <p>该方法为服务端调用（LostCities 的 {@code getChunkInfo} 是高效缓存查询，但禁止在世界生成期间调用——
      * 而 {@code levelAt} 都是游戏运行时查询，符合要求）。LostCities 未安装/未接入时静默返回 0。</p>
      *
      * @param level 服务端世界
      * @param pos   世界绝对坐标
-     * @return 1..5 的星级，或 {@link #NO_STAR}
+     * @return 1..5 的星级、{@link #UNGRADED}（-1，城市建筑内但名未登记）、或 {@link #NO_STAR}（0，非建筑）
      */
     public static int starAt(ServerLevel level, BlockPos pos) {
         ILostCityInformation info = cachedLostCitiesInfo(level);
@@ -92,7 +103,7 @@ public final class SixtySecondsLostCitiesStarMap {
 
     /**
      * 根据建筑名称（{@code data/lostcities/lostcities/buildings/} 下的 JSON 文件名，不含命名空间）
-     * 返回对应星级；未知名称返回 {@link #NO_STAR}。
+     * 返回对应星级（1..5）；未知名称返回 {@link #UNGRADED}（城市建筑内但未登记，真正无级别）。
      */
     public static int starForBuildingName(String buildingName) {
         if (buildingName == null) {
@@ -139,7 +150,9 @@ public final class SixtySecondsLostCitiesStarMap {
         if ("cabin".equals(name)) {
             return 1;
         }
-        return NO_STAR;
+        // 未知建筑名：该坐标确实位于某 LostCities 建筑内，但本表未登记其危险度。
+        // 返回 UNGRADED（而非 NO_STAR/星级），让上层把它当作真正「无级别」的地方处理。
+        return UNGRADED;
     }
 
     /** 获取指定维度的 LostCities 城市信息（带按维度缓存）；该维度不支持城市或 LostCities 未接入时返回 null。 */
