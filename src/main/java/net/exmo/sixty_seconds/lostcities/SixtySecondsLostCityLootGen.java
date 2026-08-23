@@ -8,7 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -51,7 +50,7 @@ public final class SixtySecondsLostCityLootGen {
     private static final int MAX_BOXES = 20;
 
     /** CharacteristicsEvent -> PostGenCityChunkEvent 之间按世界缓存建筑信息（弱引用 key 防止内存泄漏）。 */
-    private static final WeakHashMap<Level, Map<ChunkPos, BuildingMeta>> META = new WeakHashMap<>();
+    private static final WeakHashMap<WorldGenLevel, Map<ChunkPos, BuildingMeta>> META = new WeakHashMap<>();
 
     private record BuildingMeta(String name, int cityLevel) {
     }
@@ -70,7 +69,7 @@ public final class SixtySecondsLostCityLootGen {
         if (c == null || c.buildingType == null || c.buildingType.getId() == null) {
             return; // 街道/空地：无建筑，PostGen 时不撒箱
         }
-        Level world = event.getWorld();
+        WorldGenLevel world = event.getWorld();
         ChunkPos cp = new ChunkPos(event.getChunkX(), event.getChunkZ());
         META.computeIfAbsent(world, k -> new HashMap<>())
                 .put(cp, new BuildingMeta(c.buildingType.getId().toString(), c.cityLevel));
@@ -78,7 +77,7 @@ public final class SixtySecondsLostCityLootGen {
 
     @SubscribeEvent
     private static void onPostGen(LostCityEvent.PostGenCityChunkEvent event) {
-        Level world = event.getWorld();
+        WorldGenLevel world = event.getWorld();
         ChunkPos cp = new ChunkPos(event.getChunkX(), event.getChunkZ());
         Map<ChunkPos, BuildingMeta> map = META.get(world);
         BuildingMeta meta = map == null ? null : map.remove(cp);

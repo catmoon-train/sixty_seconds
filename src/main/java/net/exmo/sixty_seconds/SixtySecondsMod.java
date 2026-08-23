@@ -52,6 +52,7 @@ public final class SixtySecondsMod {
         registerDropRule(); // 本模式放行丢弃物品（全局默认禁丢，见 KeyBindingMixin/DropRules）
         registerChatHudRule(); // 本模式放行聊天栏渲染（存活玩家默认被 ChatHudMixin 隐藏）
         net.exmo.sixty_seconds.lostcities.SixtySecondsLostCityLootGen.register(); // LostCities 建筑按星级自动撒物资箱
+        net.exmo.sixty_seconds.lostcities.SixtySecondsLostCityNpcGen.register(); // LostCities 建筑固定刷 NPC（安全区/交易建筑，只刷一次）
     }
 
     /**

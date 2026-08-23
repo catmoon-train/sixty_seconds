@@ -211,6 +211,15 @@ public final class SixtySecondsLostCitiesStarMap {
     }
 
     /** 获取指定维度的 LostCities 城市信息（带按维度缓存）；该维度不支持城市或 LostCities 未接入时返回 null。 */
+    /**
+     * 公开访问器：返回该维度（服务端世界）的 LostCities 城市信息，未接入/不支持时返回 null。
+     * 供 NPC 生成器等在运行时按坐标反查建筑名使用（带按维度缓存）。
+     */
+    @Nullable
+    public static ILostCityInformation cityInfo(ServerLevel level) {
+        return cachedLostCitiesInfo(level);
+    }
+
     @Nullable
     private static ILostCityInformation cachedLostCitiesInfo(ServerLevel level) {
         // 缓存已命中：直接返回，避免每次查询都走 api()/getLostInfo() + try/catch。
