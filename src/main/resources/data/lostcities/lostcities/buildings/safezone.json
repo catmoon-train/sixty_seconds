@@ -6,7 +6,12 @@
   "overrideFloors": true,
   "parts": [
     {
-      "part": "safezone"
+      "part": "safezone",
+      "ground": true
+    },
+    {
+      "part": "safezone_air",
+      "top": true
     }
   ]
 }

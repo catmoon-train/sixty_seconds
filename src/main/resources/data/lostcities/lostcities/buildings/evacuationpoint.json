@@ -6,7 +6,12 @@
   "overrideFloors": true,
   "parts": [
     {
-      "part": "evacuationpoint"
+      "part": "evacuationpoint",
+      "ground": true
+    },
+    {
+      "part": "evacuationpoint_air",
+      "top": true
     }
   ]
 }
