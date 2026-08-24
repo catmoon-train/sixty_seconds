@@ -860,12 +860,15 @@ public final class SixtySecondsIslandGenerator {
     // ── 装饰：树木 / 岩石 / 植被 ───────────────────────────────────────────
 
     /**
-     * 与 {@link #buildPatch(Placer, SixtySecondsIsland, int, int, int, int)} 相同形状，
+     * 与 {@link #buildPatch(Placer, List, SixtySecondsIsland, int, int, int, int)} 相同形状，
      * 但直接写入 worldgen 阶段的 {@code ChunkAccess} primer（通过 {@link BulkSectionAccess}），
      * 不触发任何方块更新/光照重算。用于海洋世界的地形生成 Feature，避免在主线程
      * 对已加载区块同步 setBlock 导致的卡死（参照 LostCities 的 Feature.place 写法）。
+     * <p>重叠区域融合：每列取覆盖本列且 landValue 最大的岛为主导（并列时 id 小者优先），
+     * 仅主导岛负责该列成形，使相邻岛屿的陆地自然连成一片，而非被后建的岛切开。
      */
-    static void buildPatchPrimer(BulkSectionAccess bsa, SixtySecondsIsland island, int x0, int z0, int x1, int z1) {
+    static void buildPatchPrimer(BulkSectionAccess bsa, List<SixtySecondsIsland> all,
+            SixtySecondsIsland island, int x0, int z0, int x1, int z1) {
         int rOuter = island.radius + WATER_SKIRT;
         Palette pal = palette(island);
         BlockState water = Blocks.WATER.defaultBlockState();
@@ -877,7 +880,24 @@ public final class SixtySecondsIslandGenerator {
                 if (distSqr > (double) rOuter * rOuter) {
                     continue;
                 }
-                float landVal = landValue(island, x, z);
+                // 重叠融合：取覆盖本列且 landValue 最大的岛主导；本岛非主导则跳过，
+                // 交由其主导岛在自己的 patch 轮次成形，避免把邻居陆地误判成海而切开。
+                SixtySecondsIsland dom = island;
+                float best = landValue(island, x, z);
+                for (SixtySecondsIsland o : all) {
+                    if (o == island) {
+                        continue;
+                    }
+                    float lv = landValue(o, x, z);
+                    if (lv > best || (lv == best && o.id < island.id)) {
+                        best = lv;
+                        dom = o;
+                    }
+                }
+                if (dom != island) {
+                    continue;
+                }
+                float landVal = best;
                 boolean land = landVal > LAND_THRESHOLD;
                 int surface = land ? surfaceY(island, x, z, landVal) : island.seaY - 2
                         - (int) (2 * fbm(island.seed ^ 77L, x * 0.08, z * 0.08, 2));

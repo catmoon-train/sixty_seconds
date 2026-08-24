@@ -115,13 +115,15 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
                         continue;
                     }
                     // 岛屿骨架（陆地/岸边）
-                    SixtySecondsIslandGenerator.buildPatchPrimer(bsa, island, x0, z0, x1, z1);
+                    SixtySecondsIslandGenerator.buildPatchPrimer(bsa, islands, island, x0, z0, x1, z1);
                     // 装饰（树/岩石/植被）与废墟/物资箱：经 PrimerPlacer 逐块写入，越界列自动跳过，
                     // 因此每座岛只落成本区块内的那一块，随玩家探索逐 chunk 出现。
                     SixtySecondsIslandGenerator.PrimerPlacer placer =
                             new SixtySecondsIslandGenerator.PrimerPlacer(bsa, x0, z0);
                     SixtySecondsIslandGenerator.decorate(placer, island);
-                    SixtySecondsRuins.placeAll(placer, island);
+                    if (!island.isEvacuation) {
+                        SixtySecondsRuins.placeAll(placer, island);
+                    }
                 }
             }
         }
