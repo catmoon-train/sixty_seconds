@@ -268,41 +268,46 @@ public final class SixtySecondsIslandGenerator {
         if (firstIsland) return SixtySecondsIsland.Type.TROPICAL;
         float r = rng.nextFloat();
         return switch (level) {
-            case 1 -> r < 0.45F ? SixtySecondsIsland.Type.TROPICAL
-                    : r < 0.72F ? SixtySecondsIsland.Type.MARSH
-                            : r < 0.88F ? SixtySecondsIsland.Type.CORAL
-                                    : SixtySecondsIsland.Type.RUINS;
-            case 2 -> r < 0.16F ? SixtySecondsIsland.Type.FROST
-                    : r < 0.32F ? SixtySecondsIsland.Type.PLATEAU
-                            : r < 0.48F ? SixtySecondsIsland.Type.JUNGLE
-                                    : r < 0.62F ? SixtySecondsIsland.Type.TROPICAL
-                                            : r < 0.76F ? SixtySecondsIsland.Type.MARSH
-                                                    : r < 0.88F ? SixtySecondsIsland.Type.CORAL
-                                                            : SixtySecondsIsland.Type.RUINS;
-            case 3 -> r < 0.20F ? SixtySecondsIsland.Type.JUNGLE
-                    : r < 0.38F ? SixtySecondsIsland.Type.PLATEAU
-                            : r < 0.54F ? SixtySecondsIsland.Type.FROST
-                                    : r < 0.68F ? SixtySecondsIsland.Type.BARREN
-                                            : r < 0.80F ? SixtySecondsIsland.Type.TROPICAL
-                                                    : r < 0.90F ? SixtySecondsIsland.Type.RUINS
-                                                            : r < 0.96F ? SixtySecondsIsland.Type.QUARANTINE
-                                                                    : SixtySecondsIsland.Type.FORSAKEN;
-            case 4 -> r < 0.20F ? SixtySecondsIsland.Type.VOLCANIC
+            case 1 -> r < 0.42F ? SixtySecondsIsland.Type.TROPICAL
+                    : r < 0.68F ? SixtySecondsIsland.Type.MARSH
+                            : r < 0.84F ? SixtySecondsIsland.Type.CORAL
+                                    : r < 0.93F ? SixtySecondsIsland.Type.RUINS
+                                            : SixtySecondsIsland.Type.SWAMP;
+            case 2 -> r < 0.15F ? SixtySecondsIsland.Type.FROST
+                    : r < 0.30F ? SixtySecondsIsland.Type.PLATEAU
+                            : r < 0.45F ? SixtySecondsIsland.Type.JUNGLE
+                                    : r < 0.58F ? SixtySecondsIsland.Type.TROPICAL
+                                            : r < 0.71F ? SixtySecondsIsland.Type.MARSH
+                                                    : r < 0.82F ? SixtySecondsIsland.Type.CORAL
+                                                            : r < 0.91F ? SixtySecondsIsland.Type.RUINS
+                                                                    : SixtySecondsIsland.Type.SWAMP;
+            case 3 -> r < 0.18F ? SixtySecondsIsland.Type.JUNGLE
+                    : r < 0.34F ? SixtySecondsIsland.Type.PLATEAU
+                            : r < 0.48F ? SixtySecondsIsland.Type.FROST
+                                    : r < 0.60F ? SixtySecondsIsland.Type.BARREN
+                                            : r < 0.71F ? SixtySecondsIsland.Type.TROPICAL
+                                                    : r < 0.80F ? SixtySecondsIsland.Type.RUINS
+                                                            : r < 0.88F ? SixtySecondsIsland.Type.QUARANTINE
+                                                                    : r < 0.94F ? SixtySecondsIsland.Type.MESA
+                                                                            : SixtySecondsIsland.Type.FORSAKEN;
+            case 4 -> r < 0.18F ? SixtySecondsIsland.Type.VOLCANIC
+                    : r < 0.36F ? SixtySecondsIsland.Type.BARREN
+                            : r < 0.52F ? SixtySecondsIsland.Type.JUNGLE
+                                    : r < 0.65F ? SixtySecondsIsland.Type.RUINS
+                                            : r < 0.76F ? SixtySecondsIsland.Type.OIL
+                                                    : r < 0.85F ? SixtySecondsIsland.Type.MILITARY
+                                                            : r < 0.92F ? SixtySecondsIsland.Type.INFERNO
+                                                                    : r < 0.96F ? SixtySecondsIsland.Type.CRYSTAL
+                                                                            : SixtySecondsIsland.Type.FORSAKEN;
+            default -> r < 0.24F ? SixtySecondsIsland.Type.VOLCANIC // level 5
                     : r < 0.40F ? SixtySecondsIsland.Type.BARREN
-                            : r < 0.56F ? SixtySecondsIsland.Type.JUNGLE
-                                    : r < 0.70F ? SixtySecondsIsland.Type.RUINS
-                                            : r < 0.82F ? SixtySecondsIsland.Type.OIL
-                                                    : r < 0.90F ? SixtySecondsIsland.Type.MILITARY
-                                                            : r < 0.95F ? SixtySecondsIsland.Type.INFERNO
-                                                                    : SixtySecondsIsland.Type.FORSAKEN;
-            default -> r < 0.26F ? SixtySecondsIsland.Type.VOLCANIC // level 5
-                    : r < 0.44F ? SixtySecondsIsland.Type.BARREN
-                            : r < 0.60F ? SixtySecondsIsland.Type.RUINS
-                                    : r < 0.74F ? SixtySecondsIsland.Type.OIL
-                                            : r < 0.84F ? SixtySecondsIsland.Type.MILITARY
-                                                    : r < 0.91F ? SixtySecondsIsland.Type.INFERNO
-                                                            : r < 0.96F ? SixtySecondsIsland.Type.FORSAKEN
-                                                                    : SixtySecondsIsland.Type.ABYSS;
+                            : r < 0.54F ? SixtySecondsIsland.Type.RUINS
+                                    : r < 0.67F ? SixtySecondsIsland.Type.OIL
+                                            : r < 0.77F ? SixtySecondsIsland.Type.MILITARY
+                                                    : r < 0.85F ? SixtySecondsIsland.Type.INFERNO
+                                                            : r < 0.90F ? SixtySecondsIsland.Type.FORSAKEN
+                                                                    : r < 0.94F ? SixtySecondsIsland.Type.ASHEN
+                                                                            : SixtySecondsIsland.Type.ABYSS;
         };
     }
 
@@ -591,10 +596,6 @@ public final class SixtySecondsIslandGenerator {
             case TROPICAL -> new Palette(Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.GRASS_BLOCK.defaultBlockState(),
                     Blocks.DIRT.defaultBlockState(), Blocks.STONE.defaultBlockState(),
                     Blocks.SAND.defaultBlockState(), Blocks.SANDSTONE.defaultBlockState());
-            case EVACUATION, RUINS, QUARANTINE, OIL, MILITARY, ABYSS, INFERNO, FORSAKEN -> new Palette(
-                    Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.GRASS_BLOCK.defaultBlockState(),
-                    Blocks.DIRT.defaultBlockState(), Blocks.STONE.defaultBlockState(),
-                    Blocks.SAND.defaultBlockState(), Blocks.SANDSTONE.defaultBlockState());
             case MARSH -> new Palette(Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.PODZOL.defaultBlockState(),
                     Blocks.MUD.defaultBlockState(), Blocks.STONE.defaultBlockState(),
                     Blocks.MUD.defaultBlockState(), Blocks.MUD.defaultBlockState());
@@ -616,6 +617,48 @@ public final class SixtySecondsIslandGenerator {
             case BARREN -> new Palette(Blocks.COARSE_DIRT.defaultBlockState(), Blocks.GRAVEL.defaultBlockState(),
                     Blocks.COARSE_DIRT.defaultBlockState(), Blocks.STONE.defaultBlockState(),
                     Blocks.GRAVEL.defaultBlockState(), Blocks.TUFF.defaultBlockState());
+            // —— 以下为差异化末日主题地形 ——
+            case RUINS -> new Palette(Blocks.STONE_BRICKS.defaultBlockState(),
+                    Blocks.CRACKED_STONE_BRICKS.defaultBlockState(), Blocks.STONE.defaultBlockState(),
+                    Blocks.STONE.defaultBlockState(), Blocks.SAND.defaultBlockState(),
+                    Blocks.STONE.defaultBlockState());
+            case QUARANTINE -> new Palette(Blocks.ORANGE_TERRACOTTA.defaultBlockState(),
+                    Blocks.TERRACOTTA.defaultBlockState(), Blocks.GRAVEL.defaultBlockState(),
+                    Blocks.STONE.defaultBlockState(), Blocks.SAND.defaultBlockState(),
+                    Blocks.SANDSTONE.defaultBlockState());
+            case OIL -> new Palette(Blocks.BLACK_CONCRETE.defaultBlockState(), Blocks.OBSIDIAN.defaultBlockState(),
+                    Blocks.BLACKSTONE.defaultBlockState(), Blocks.BLACKSTONE.defaultBlockState(),
+                    Blocks.BLACKSTONE.defaultBlockState(), Blocks.BLACK_CONCRETE.defaultBlockState());
+            case MILITARY -> new Palette(Blocks.SANDSTONE.defaultBlockState(), Blocks.WHITE_CONCRETE.defaultBlockState(),
+                    Blocks.STONE.defaultBlockState(), Blocks.STONE.defaultBlockState(),
+                    Blocks.SAND.defaultBlockState(), Blocks.STONE.defaultBlockState());
+            case ABYSS -> new Palette(Blocks.DEEPSLATE.defaultBlockState(), Blocks.BLACKSTONE.defaultBlockState(),
+                    Blocks.DEEPSLATE.defaultBlockState(), Blocks.BLACKSTONE.defaultBlockState(),
+                    Blocks.BLACKSTONE.defaultBlockState(), Blocks.DEEPSLATE.defaultBlockState());
+            case INFERNO -> new Palette(Blocks.BASALT.defaultBlockState(), Blocks.BLACKSTONE.defaultBlockState(),
+                    Blocks.BLACKSTONE.defaultBlockState(), Blocks.BASALT.defaultBlockState(),
+                    Blocks.MAGMA_BLOCK.defaultBlockState(), Blocks.MAGMA_BLOCK.defaultBlockState());
+            case FORSAKEN -> new Palette(Blocks.CYAN_TERRACOTTA.defaultBlockState(),
+                    Blocks.CRACKED_STONE_BRICKS.defaultBlockState(), Blocks.GRAVEL.defaultBlockState(),
+                    Blocks.STONE.defaultBlockState(), Blocks.SAND.defaultBlockState(),
+                    Blocks.SANDSTONE.defaultBlockState());
+            case CRYSTAL -> new Palette(Blocks.QUARTZ_BLOCK.defaultBlockState(),
+                    Blocks.AMETHYST_BLOCK.defaultBlockState(), Blocks.BUDDING_AMETHYST.defaultBlockState(),
+                    Blocks.STONE.defaultBlockState(), Blocks.SAND.defaultBlockState(),
+                    Blocks.BUDDING_AMETHYST.defaultBlockState());
+            case SWAMP -> new Palette(Blocks.MYCELIUM.defaultBlockState(), Blocks.MUD.defaultBlockState(),
+                    Blocks.MYCELIUM.defaultBlockState(), Blocks.STONE.defaultBlockState(),
+                    Blocks.MUD.defaultBlockState(), Blocks.MUD.defaultBlockState());
+            case MESA -> new Palette(Blocks.RED_SANDSTONE.defaultBlockState(), Blocks.TERRACOTTA.defaultBlockState(),
+                    Blocks.RED_SANDSTONE.defaultBlockState(), Blocks.STONE.defaultBlockState(),
+                    Blocks.RED_SAND.defaultBlockState(), Blocks.RED_SANDSTONE.defaultBlockState());
+            case ASHEN -> new Palette(Blocks.GRAY_CONCRETE.defaultBlockState(), Blocks.COAL_BLOCK.defaultBlockState(),
+                    Blocks.GRAY_CONCRETE.defaultBlockState(), Blocks.STONE.defaultBlockState(),
+                    Blocks.SAND.defaultBlockState(), Blocks.STONE.defaultBlockState());
+            case EVACUATION -> new Palette(Blocks.GRASS_BLOCK.defaultBlockState(),
+                    Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.DIRT.defaultBlockState(),
+                    Blocks.STONE.defaultBlockState(), Blocks.SAND.defaultBlockState(),
+                    Blocks.SANDSTONE.defaultBlockState());
         };
     }
 
@@ -677,8 +720,32 @@ public final class SixtySecondsIslandGenerator {
                 // 荒芜：低矮丘陵
                 yield (float) (Math.pow(normLand, 1.0) * (5 + island.level * 3 + mountain * 8));
             }
+            case MESA -> {
+                // 红台地：平顶+陡崖（类似高原，略低）
+                double centerDist = Math.sqrt(island.distSqr(x + 0.5, z + 0.5)) / island.radius;
+                if (centerDist < 0.4) {
+                    yield (float) (8 + island.level * 3 + mountain * 3);
+                }
+                yield (float) (Math.pow(normLand, 0.7) * (5 + island.level * 2 + mountain * 7));
+            }
+            case SWAMP -> {
+                // 毒沼：极低平，类似沼泽
+                yield (float) (normLand * (3 + island.level * 2 + mountain * 4));
+            }
+            case CRYSTAL -> {
+                // 晶簇：尖峰耸立
+                yield (float) (Math.pow(normLand, 1.3) * (10 + island.level * 6 + mountain * (14 + island.level * 6)));
+            }
+            case ABYSS -> {
+                // 深渊：整体压低，凹陷感
+                yield (float) (Math.pow(normLand, 0.9) * (4 + island.level * 2 + mountain * 6));
+            }
+            case INFERNO -> {
+                // 炼狱：锥形山体（类似火山，略平缓）
+                yield (float) (Math.pow(normLand, 1.8) * (9 + island.level * 6 + mountain * 14));
+            }
             default -> {
-                // 热带/冰霜/密林：标准地形
+                // 热带/冰霜/密林/废墟/隔离/油井/军事/遗弃/灰烬/撤离点：标准地形
                 yield (float) (Math.pow(normLand, 1.15)
                         * (8 + island.level * 5 + mountain * (12 + island.level * 5)));
             }
@@ -851,11 +918,16 @@ public final class SixtySecondsIslandGenerator {
             case TROPICAL -> 8 + level;
             case MARSH -> 5;
             case VOLCANIC -> Math.max(1, 4 - level);
-            case CORAL, BARREN -> 0;
+            case CORAL, BARREN, OIL, ABYSS, INFERNO, CRYSTAL, ASHEN -> 0;
             case FROST -> 4 + level;
             case PLATEAU -> 3;
             case JUNGLE -> 12 + level * 2;
-            case RUINS, QUARANTINE, OIL, MILITARY, ABYSS, INFERNO, FORSAKEN -> 5;
+            case RUINS -> 4;
+            case QUARANTINE -> 2;
+            case MILITARY -> 2;
+            case FORSAKEN -> 3;
+            case SWAMP -> 6;
+            case MESA -> 1;
             case EVACUATION -> 3;
         };
     }
@@ -869,6 +941,17 @@ public final class SixtySecondsIslandGenerator {
             case FROST -> Blocks.PACKED_ICE.defaultBlockState();
             case PLATEAU -> Blocks.ANDESITE.defaultBlockState();
             case BARREN -> Blocks.COBBLESTONE.defaultBlockState();
+            case RUINS -> Blocks.STONE_BRICKS.defaultBlockState();
+            case OIL -> Blocks.BLACKSTONE.defaultBlockState();
+            case QUARANTINE -> Blocks.TERRACOTTA.defaultBlockState();
+            case MILITARY -> Blocks.ANDESITE.defaultBlockState();
+            case ABYSS -> Blocks.DEEPSLATE.defaultBlockState();
+            case INFERNO -> Blocks.BASALT.defaultBlockState();
+            case FORSAKEN -> Blocks.CYAN_TERRACOTTA.defaultBlockState();
+            case CRYSTAL -> Blocks.AMETHYST_BLOCK.defaultBlockState();
+            case SWAMP -> Blocks.MOSSY_COBBLESTONE.defaultBlockState();
+            case MESA -> Blocks.RED_SANDSTONE.defaultBlockState();
+            case ASHEN -> Blocks.COAL_BLOCK.defaultBlockState();
             default -> Blocks.MOSSY_COBBLESTONE.defaultBlockState();
         };
     }
@@ -885,7 +968,17 @@ public final class SixtySecondsIslandGenerator {
             case PLATEAU -> 20;
             case JUNGLE -> 55 + level * 8;
             case BARREN -> 5;
-            case RUINS, QUARANTINE, OIL, MILITARY, ABYSS, INFERNO, FORSAKEN -> 24;
+            case RUINS -> 18;
+            case QUARANTINE -> 12;
+            case OIL -> 2;
+            case MILITARY -> 14;
+            case ABYSS -> 4;
+            case INFERNO -> 6;
+            case FORSAKEN -> 16;
+            case CRYSTAL -> 8;
+            case SWAMP -> 38;
+            case MESA -> 10;
+            case ASHEN -> 4;
             case EVACUATION -> 12;
         };
     }
@@ -925,6 +1018,34 @@ public final class SixtySecondsIslandGenerator {
                     ? Blocks.FERN.defaultBlockState() : null;
             case BARREN -> below.is(Blocks.COARSE_DIRT) || below.is(Blocks.GRAVEL)
                     ? Blocks.DEAD_BUSH.defaultBlockState() : null;
+            case RUINS -> below.is(Blocks.STONE_BRICKS) || below.is(Blocks.CRACKED_STONE_BRICKS)
+                    || below.is(Blocks.SAND) ? Blocks.DEAD_BUSH.defaultBlockState() : null;
+            case QUARANTINE -> below.is(Blocks.ORANGE_TERRACOTTA) || below.is(Blocks.TERRACOTTA)
+                    || below.is(Blocks.SAND) ? (rng.nextFloat() < 0.5F ? Blocks.BROWN_MUSHROOM
+                            : Blocks.RED_MUSHROOM).defaultBlockState() : null;
+            case OIL -> below.is(Blocks.BLACK_CONCRETE) || below.is(Blocks.OBSIDIAN)
+                    || below.is(Blocks.BLACKSTONE) ? Blocks.DEAD_BUSH.defaultBlockState() : null;
+            case MILITARY -> below.is(Blocks.SANDSTONE) || below.is(Blocks.WHITE_CONCRETE)
+                    || below.is(Blocks.SAND) ? Blocks.DEAD_BUSH.defaultBlockState() : null;
+            case ABYSS -> below.is(Blocks.DEEPSLATE) || below.is(Blocks.BLACKSTONE)
+                    ? Blocks.DEAD_BUSH.defaultBlockState() : null;
+            case INFERNO -> below.is(Blocks.BASALT) || below.is(Blocks.BLACKSTONE)
+                    || below.is(Blocks.MAGMA_BLOCK) ? Blocks.DEAD_BUSH.defaultBlockState() : null;
+            case FORSAKEN -> below.is(Blocks.CYAN_TERRACOTTA) || below.is(Blocks.CRACKED_STONE_BRICKS)
+                    || below.is(Blocks.SAND) ? (rng.nextFloat() < 0.5F ? Blocks.BROWN_MUSHROOM
+                            : Blocks.RED_MUSHROOM).defaultBlockState() : null;
+            case CRYSTAL -> below.is(Blocks.QUARTZ_BLOCK) || below.is(Blocks.AMETHYST_BLOCK)
+                    ? Blocks.SHORT_GRASS.defaultBlockState() : null;
+            case SWAMP -> below.is(Blocks.MYCELIUM) || below.is(Blocks.MUD)
+                    ? (rng.nextFloat() < 0.5F ? Blocks.BROWN_MUSHROOM
+                            : Blocks.RED_MUSHROOM).defaultBlockState() : null;
+            case MESA -> below.is(Blocks.RED_SANDSTONE) || below.is(Blocks.TERRACOTTA)
+                    || below.is(Blocks.RED_SAND) ? Blocks.DEAD_BUSH.defaultBlockState() : null;
+            case ASHEN -> below.is(Blocks.GRAY_CONCRETE) || below.is(Blocks.COAL_BLOCK)
+                    || below.is(Blocks.SAND) ? Blocks.DEAD_BUSH.defaultBlockState() : null;
+            case EVACUATION -> (below.is(Blocks.GRASS_BLOCK) || below.is(Blocks.DIRT))
+                    ? (rng.nextFloat() < 0.6F ? Blocks.FERN.defaultBlockState()
+                            : Blocks.SHORT_GRASS.defaultBlockState()) : null;
             default -> null;
         };
     }
@@ -1033,6 +1154,111 @@ public final class SixtySecondsIslandGenerator {
                         p.set(ground.below(), Blocks.COBBLESTONE.defaultBlockState());
                         if (rng.nextBoolean()) p.set(ground, Blocks.COBBLESTONE.defaultBlockState());
                     }
+                }
+            }
+            case INFERNO -> {
+                // 炼狱岛：地表裂隙岩浆块 + 火焰
+                int lava = Math.max(1, (int) (dm * 10));
+                for (int i = 0; i < lava; i++) {
+                    BlockPos ground = randomGround(p, island, rng, 0.0, 0.4);
+                    if (ground != null) {
+                        p.set(ground.below(), Blocks.MAGMA_BLOCK.defaultBlockState());
+                        if (rng.nextFloat() < 0.2F) p.set(ground.above(), Blocks.FIRE.defaultBlockState());
+                    }
+                }
+            }
+            case ABYSS -> {
+                // 深渊岛：地表裂隙下界岩，阴森
+                int cracks = Math.max(1, (int) (dm * 8));
+                for (int i = 0; i < cracks; i++) {
+                    BlockPos ground = randomGround(p, island, rng, 0.0, 0.5);
+                    if (ground != null) p.set(ground.below(), Blocks.NETHERRACK.defaultBlockState());
+                }
+            }
+            case CRYSTAL -> {
+                // 晶簇岛：地表生长紫水晶簇
+                int buds = Math.max(1, (int) (dm * 14));
+                for (int i = 0; i < buds; i++) {
+                    BlockPos ground = randomGround(p, island, rng, 0.1, 0.9);
+                    if (ground != null && p.getBlockState(ground).isAir()) {
+                        BlockState bud = rng.nextFloat() < 0.5F
+                                ? Blocks.SMALL_AMETHYST_BUD.defaultBlockState()
+                                : Blocks.AMETHYST_CLUSTER.defaultBlockState();
+                        p.set(ground, bud);
+                    }
+                }
+            }
+            case SWAMP -> {
+                // 毒沼岛：地表散布巨型蘑菇
+                int mush = Math.max(1, (int) (dm * 6));
+                for (int i = 0; i < mush; i++) {
+                    BlockPos ground = randomGround(p, island, rng, 0.2, 0.9);
+                    if (ground != null && p.getBlockState(ground).isAir()) {
+                        p.set(ground, Blocks.MUSHROOM_STEM.defaultBlockState());
+                        p.set(ground.above(), (rng.nextBoolean()
+                                ? Blocks.RED_MUSHROOM_BLOCK : Blocks.BROWN_MUSHROOM_BLOCK).defaultBlockState());
+                    }
+                }
+            }
+            case MESA -> {
+                // 红台地岛：红砂岩柱
+                int pillars = Math.max(1, (int) (dm * 4));
+                for (int i = 0; i < pillars; i++) {
+                    BlockPos ground = randomGround(p, island, rng, 0.0, 0.4);
+                    if (ground != null) {
+                        int h = 2 + rng.nextInt(3);
+                        for (int dy = 0; dy < h; dy++) p.set(ground.above(dy), Blocks.RED_SANDSTONE.defaultBlockState());
+                    }
+                }
+            }
+            case ASHEN -> {
+                // 灰烬岛：地表木炭堆，死寂
+                int coal = Math.max(1, (int) (dm * 6));
+                for (int i = 0; i < coal; i++) {
+                    BlockPos ground = randomGround(p, island, rng, 0.0, 0.6);
+                    if (ground != null) p.set(ground, Blocks.COAL_BLOCK.defaultBlockState());
+                }
+            }
+            case RUINS -> {
+                // 废墟岛：散落石砖碎块
+                int bricks = Math.max(1, (int) (dm * 6));
+                for (int i = 0; i < bricks; i++) {
+                    BlockPos ground = randomGround(p, island, rng, 0.0, 0.7);
+                    if (ground != null) p.set(ground, Blocks.STONE_BRICKS.defaultBlockState());
+                }
+            }
+            case QUARANTINE -> {
+                // 隔离岛：锈红陶瓦堆
+                int tiles = Math.max(1, (int) (dm * 6));
+                for (int i = 0; i < tiles; i++) {
+                    BlockPos ground = randomGround(p, island, rng, 0.0, 0.7);
+                    if (ground != null) p.set(ground, Blocks.ORANGE_TERRACOTTA.defaultBlockState());
+                }
+            }
+            case OIL -> {
+                // 油井岛：地表黑色油渍斑块
+                int oil = Math.max(1, (int) (dm * 6));
+                for (int i = 0; i < oil; i++) {
+                    BlockPos ground = randomGround(p, island, rng, 0.0, 0.8);
+                    if (ground != null) p.set(ground, Blocks.BLACK_CONCRETE.defaultBlockState());
+                }
+            }
+            case MILITARY -> {
+                // 军事岛：铁栏杆残骸 + 砂岩堆
+                int bars = Math.max(1, (int) (dm * 5));
+                for (int i = 0; i < bars; i++) {
+                    BlockPos ground = randomGround(p, island, rng, 0.0, 0.7);
+                    if (ground != null && p.getBlockState(ground).isAir()) {
+                        p.set(ground, Blocks.IRON_BARS.defaultBlockState());
+                    }
+                }
+            }
+            case FORSAKEN -> {
+                // 遗弃岛：彩色陶瓦废墟
+                int tiles = Math.max(1, (int) (dm * 6));
+                for (int i = 0; i < tiles; i++) {
+                    BlockPos ground = randomGround(p, island, rng, 0.0, 0.7);
+                    if (ground != null) p.set(ground, Blocks.CYAN_TERRACOTTA.defaultBlockState());
                 }
             }
         }

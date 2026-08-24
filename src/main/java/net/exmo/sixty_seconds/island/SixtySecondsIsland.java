@@ -39,6 +39,10 @@ public class SixtySecondsIsland {
         ABYSS,      // 深渊：高危稀有岛，灰黑焦土+裂隙，Level5 极少出现，怪物成群
         INFERNO,    // 炼狱：高危稀有岛，熔岩裂隙+焦岩，Level4~5 低概率，极度危险
         FORSAKEN,   // 遗弃：中高危稀有岛，锈蚀废墟+毒雾，Level3~5 低概率
+        CRYSTAL,    // 晶簇：紫水晶母岩+石英尖峰，Level3~5 稀有，折射发光
+        SWAMP,      // 毒沼：菌丝地表+巨型蘑菇，Level2~4 低概率，毒雾弥漫
+        MESA,       // 红台地：红砂岩+陶瓦平顶，Level3~5 低概率，干旱荒红
+        ASHEN,      // 灰烬：灰混凝土+木炭枯骸，Level2~4 低概率，死寂灰白
         EVACUATION  // 撤离点：专门的撤离点岛屿，稀有、不刷新物资箱、海图特殊标记，最后一天登岛即撤离
     }
 
