@@ -113,6 +113,47 @@ public final class SixtySecondsOceanWorldGen {
             island.dockZ = island.centerZ;
             islands.add(island);
         }
+        // 稀有撤离点岛屿：每片群岛以低概率<b>额外生成</b>一座专门的撤离点岛（不改造现有岛）。
+        if (rng.nextFloat() < Math.max(0.0F, Math.min(1.0F, config.evacuationIslandChance))) {
+            SixtySecondsIsland evac = new SixtySecondsIsland();
+            evac.id = (regionX * 100000 + regionZ * 1000) + 90000 + islands.size();
+            evac.namePrefix = rng.nextInt(SixtySecondsIsland.NAME_PREFIX_COUNT);
+            evac.nameSuffix = rng.nextInt(SixtySecondsIsland.NAME_SUFFIX_COUNT);
+            evac.seed = rng.nextLong();
+            evac.seaY = seaY;
+            evac.level = 1;                                  // 撤离点岛为安全等级，便于登岛
+            evac.type = SixtySecondsIsland.Type.EVACUATION;  // 专门的撤离点岛屿类型
+            evac.isEvacuation = true;
+            SixtySecondsIsland.Size sz = evac.size;
+            evac.radius = (int) (base * sz.radiusMult) + sz.levelRadiusBonus + rng.nextInt(sz.radiusVariance + 1);
+            boolean placed = false;
+            for (int attempt = 0; attempt < 400; attempt++) {
+                int x = loX + rng.nextInt(hiX - loX + 1);
+                int z = loZ + rng.nextInt(hiZ - loZ + 1);
+                boolean ok = true;
+                for (SixtySecondsIsland other : islands) {
+                    double need = evac.radius + other.radius + SixtySecondsIslandGenerator.WATER_SKIRT * 2 + 16;
+                    if (other.distSqr(x, z) < need * need) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if (ok) {
+                    evac.centerX = x;
+                    evac.centerZ = z;
+                    placed = true;
+                    break;
+                }
+            }
+            if (!placed) {
+                evac.centerX = originX + REGION_BLOCKS / 2 + base;
+                evac.centerZ = originZ + REGION_BLOCKS / 2 + base;
+            }
+            evac.dockX = evac.centerX;
+            evac.dockY = seaY;
+            evac.dockZ = evac.centerZ;
+            islands.add(evac);
+        }
         REGIONS.put(key, islands);
         return islands;
     }

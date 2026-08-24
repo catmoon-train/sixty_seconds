@@ -31,7 +31,12 @@ public class SixtySecondsIsland {
         FROST,      // 冰霜：雪+冰+云杉，积雪覆盖
         PLATEAU,    // 高原：平顶+陡崖，陶瓦+石头
         JUNGLE,     // 密林：高密度丛林树+藤蔓+可可
-        BARREN      // 荒芜：砂土+砾石+枯灌木，极稀疏
+        BARREN,     // 荒芜：砂土+砾石+枯灌木，极稀疏
+        RUINS,      // 废墟：坍塌建筑残骸，混凝土碎块，荒草丛生
+        QUARANTINE, // 隔离：废弃检疫设施，锈蚀围栏，高危污染
+        OIL,        // 油井：废弃钻井平台残骸，黑色油渍，钢架
+        MILITARY,   // 军事：废弃前哨堡垒，掩体残壁，弹孔遍布
+        EVACUATION  // 撤离点：专门的撤离点岛屿，稀有、不刷新物资箱、海图特殊标记，最后一天登岛即撤离
     }
 
     /** 岛屿规模：小型/中型/大型，决定半径、装饰密度、物资数量。 */
@@ -70,6 +75,9 @@ public class SixtySecondsIsland {
     public int namePrefix;
     @SerializedName("nameSuffix")
     public int nameSuffix;
+    /** 是否为撤离点岛屿：稀有、不刷新物资箱、海图特殊标记、最后一天登岛即撤离。 */
+    @SerializedName("isEvacuation")
+    public boolean isEvacuation = false;
     /** 地形噪声种子（服务端生成与客户端海图共用）。 */
     @SerializedName("seed")
     public long seed;

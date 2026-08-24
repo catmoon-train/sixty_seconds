@@ -143,7 +143,7 @@ public final class SixtySecondsIslandGenerator {
      * 实际半径 = base×size.radiusMult + level×size.levelRadiusBonus + 随机(0..variance)。
      */
     public static List<SixtySecondsIsland> plan(RandomSource rng, int count, int centerX, int centerZ, int seaY,
-            int baseRadius) {
+            int baseRadius, float evacChance) {
         int base = baseRadius > 0 ? baseRadius : DEFAULT_BASE_RADIUS;
         List<Integer> prefixes = new ArrayList<>();
         for (int i = 0; i < SixtySecondsIsland.NAME_PREFIX_COUNT; i++) {
@@ -214,6 +214,48 @@ public final class SixtySecondsIslandGenerator {
             island.dockY = seaY;
             island.dockZ = island.centerZ;
         }
+        // 稀有撤离点岛屿：低概率在本片群岛中<b>额外生成</b>一座专门的撤离点岛（不改造现有岛）。
+        if (rng.nextFloat() < Math.max(0.0F, Math.min(1.0F, evacChance))) {
+            SixtySecondsIsland evac = new SixtySecondsIsland();
+            evac.id = islands.size() + 50000; // 避开常规岛 id（0~count-1 / 区域编码），避免与 visited 判定冲突
+            evac.size = SixtySecondsIsland.Size.MEDIUM;
+            evac.level = 1;
+            evac.type = SixtySecondsIsland.Type.EVACUATION;
+            evac.isEvacuation = true;
+            evac.namePrefix = prefixes.get(islands.size() % prefixes.size());
+            evac.nameSuffix = rng.nextInt(SixtySecondsIsland.NAME_SUFFIX_COUNT);
+            evac.seed = rng.nextLong();
+            evac.seaY = seaY;
+            SixtySecondsIsland.Size sz = evac.size;
+            evac.radius = (int) (base * sz.radiusMult) + sz.levelRadiusBonus + rng.nextInt(sz.radiusVariance + 1);
+            boolean placed = false;
+            for (int attempt = 0; attempt < 400; attempt++) {
+                int x = centerX + rng.nextInt(extent * 2 + 1) - extent;
+                int z = centerZ + rng.nextInt(extent * 2 + 1) - extent;
+                boolean ok = true;
+                for (SixtySecondsIsland other : islands) {
+                    double need = evac.radius + other.radius + WATER_SKIRT * 2 + 16;
+                    if (other.distSqr(x, z) < need * need) {
+                        ok = false;
+                        break;
+                    }
+                }
+                if (ok) {
+                    evac.centerX = x;
+                    evac.centerZ = z;
+                    placed = true;
+                    break;
+                }
+            }
+            if (!placed) {
+                evac.centerX = centerX + extent;
+                evac.centerZ = centerZ + extent;
+            }
+            evac.dockX = evac.centerX;
+            evac.dockY = seaY;
+            evac.dockZ = evac.centerZ;
+            islands.add(evac);
+        }
         return islands;
     }
 
@@ -225,25 +267,36 @@ public final class SixtySecondsIslandGenerator {
         if (firstIsland) return SixtySecondsIsland.Type.TROPICAL;
         float r = rng.nextFloat();
         return switch (level) {
-            case 1 -> r < 0.50F ? SixtySecondsIsland.Type.TROPICAL
-                    : r < 0.80F ? SixtySecondsIsland.Type.MARSH
-                            : SixtySecondsIsland.Type.CORAL;
-            case 2 -> r < 0.20F ? SixtySecondsIsland.Type.FROST
-                    : r < 0.40F ? SixtySecondsIsland.Type.PLATEAU
+            case 1 -> r < 0.45F ? SixtySecondsIsland.Type.TROPICAL
+                    : r < 0.72F ? SixtySecondsIsland.Type.MARSH
+                            : r < 0.88F ? SixtySecondsIsland.Type.CORAL
+                                    : SixtySecondsIsland.Type.RUINS;
+            case 2 -> r < 0.16F ? SixtySecondsIsland.Type.FROST
+                    : r < 0.32F ? SixtySecondsIsland.Type.PLATEAU
+                            : r < 0.48F ? SixtySecondsIsland.Type.JUNGLE
+                                    : r < 0.62F ? SixtySecondsIsland.Type.TROPICAL
+                                            : r < 0.76F ? SixtySecondsIsland.Type.MARSH
+                                                    : r < 0.88F ? SixtySecondsIsland.Type.CORAL
+                                                            : SixtySecondsIsland.Type.RUINS;
+            case 3 -> r < 0.20F ? SixtySecondsIsland.Type.JUNGLE
+                    : r < 0.38F ? SixtySecondsIsland.Type.PLATEAU
+                            : r < 0.54F ? SixtySecondsIsland.Type.FROST
+                                    : r < 0.68F ? SixtySecondsIsland.Type.BARREN
+                                            : r < 0.80F ? SixtySecondsIsland.Type.TROPICAL
+                                                    : r < 0.90F ? SixtySecondsIsland.Type.RUINS
+                                                            : SixtySecondsIsland.Type.QUARANTINE;
+            case 4 -> r < 0.22F ? SixtySecondsIsland.Type.VOLCANIC
+                    : r < 0.42F ? SixtySecondsIsland.Type.BARREN
                             : r < 0.60F ? SixtySecondsIsland.Type.JUNGLE
-                                    : r < 0.75F ? SixtySecondsIsland.Type.TROPICAL
-                                            : r < 0.90F ? SixtySecondsIsland.Type.MARSH
-                                                    : SixtySecondsIsland.Type.CORAL;
-            case 3 -> r < 0.25F ? SixtySecondsIsland.Type.JUNGLE
-                    : r < 0.50F ? SixtySecondsIsland.Type.PLATEAU
-                            : r < 0.70F ? SixtySecondsIsland.Type.FROST
-                                    : r < 0.85F ? SixtySecondsIsland.Type.BARREN
-                                            : SixtySecondsIsland.Type.TROPICAL;
-            case 4 -> r < 0.40F ? SixtySecondsIsland.Type.VOLCANIC
-                    : r < 0.80F ? SixtySecondsIsland.Type.BARREN
-                            : SixtySecondsIsland.Type.JUNGLE;
-            default -> r < 0.70F ? SixtySecondsIsland.Type.VOLCANIC // level 5
-                    : SixtySecondsIsland.Type.BARREN;
+                                    : r < 0.74F ? SixtySecondsIsland.Type.RUINS
+                                            : r < 0.88F ? SixtySecondsIsland.Type.OIL
+                                                    : SixtySecondsIsland.Type.MILITARY;
+            default -> r < 0.28F ? SixtySecondsIsland.Type.VOLCANIC // level 5
+                    : r < 0.48F ? SixtySecondsIsland.Type.BARREN
+                            : r < 0.64F ? SixtySecondsIsland.Type.RUINS
+                                    : r < 0.80F ? SixtySecondsIsland.Type.OIL
+                                            : r < 0.90F ? SixtySecondsIsland.Type.MILITARY
+                                                    : SixtySecondsIsland.Type.QUARANTINE;
         };
     }
 
@@ -532,6 +585,10 @@ public final class SixtySecondsIslandGenerator {
             case TROPICAL -> new Palette(Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.GRASS_BLOCK.defaultBlockState(),
                     Blocks.DIRT.defaultBlockState(), Blocks.STONE.defaultBlockState(),
                     Blocks.SAND.defaultBlockState(), Blocks.SANDSTONE.defaultBlockState());
+            case EVACUATION, RUINS, QUARANTINE, OIL, MILITARY -> new Palette(Blocks.GRASS_BLOCK.defaultBlockState(),
+                    Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.DIRT.defaultBlockState(),
+                    Blocks.STONE.defaultBlockState(), Blocks.SAND.defaultBlockState(),
+                    Blocks.SANDSTONE.defaultBlockState());
             case MARSH -> new Palette(Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.PODZOL.defaultBlockState(),
                     Blocks.MUD.defaultBlockState(), Blocks.STONE.defaultBlockState(),
                     Blocks.MUD.defaultBlockState(), Blocks.MUD.defaultBlockState());
@@ -792,6 +849,8 @@ public final class SixtySecondsIslandGenerator {
             case FROST -> 4 + level;
             case PLATEAU -> 3;
             case JUNGLE -> 12 + level * 2;
+            case RUINS, QUARANTINE, OIL, MILITARY -> 5;
+            case EVACUATION -> 3;
         };
     }
 
@@ -820,6 +879,8 @@ public final class SixtySecondsIslandGenerator {
             case PLATEAU -> 20;
             case JUNGLE -> 55 + level * 8;
             case BARREN -> 5;
+            case RUINS, QUARANTINE, OIL, MILITARY -> 24;
+            case EVACUATION -> 12;
         };
     }
 
@@ -1079,18 +1140,33 @@ public final class SixtySecondsIslandGenerator {
         island.dockY = dock.getY();
         island.dockZ = dock.getZ();
 
-        // 普通物资箱：数量随等级+大小；1 级小岛约 6~13 个，1 级大岛 13~26 个；3 级起部分上锁
-        // 总数在+30%基础上再+20%，即 1.3×1.2=1.56 → 取整用 1.5
-        int normal = Math.max(2, (int) (sm * (10 + island.level * 3) * 1.5)
-                + rng.nextInt(Math.max(1, (int) (sm * 14 * 1.5))));
+        // 撤离点岛屿：不刷新任何物资箱（玩家只需抵达并最后一天登岛即可撤离）
+        boolean isEvacuation = island.isEvacuation || island.type == SixtySecondsIsland.Type.EVACUATION;
+        if (isEvacuation) {
+            // 仅生成驻岛怪（少量），保持可登陆但无物资诱惑
+            int guards = Math.max(1, (int) (sm * 1.5));
+            for (int i = 0; i < guards; i++) {
+                BlockPos spot = randomGround(p, island, rng, 0.1, 0.8);
+                if (spot == null) {
+                    continue;
+                }
+                SixtySecondsPveSystem.createMonster(level, spot, rollVariant(rng, 2), 1.0, 1.0);
+            }
+            return;
+        }
+
+        // 普通物资箱：数量已下调（原 1.5 倍系数降为约 0.9 倍，分布更稀疏）；约 70% 上锁。
+        // 其中 15% 为随机箱（不上锁），其余 85% 中 82% 上锁 → 整体上锁率 ≈ 0.85×0.82 ≈ 70%。
+        int normal = Math.max(2, (int) (sm * (6 + island.level * 2) * 0.9)
+                + rng.nextInt(Math.max(1, (int) (sm * 5 * 0.9))));
         for (int i = 0; i < normal; i++) {
             BlockPos spot = randomGround(p, island, rng, 0.05, 0.9);
             if (spot == null) {
                 continue;
             }
-            boolean asRandom = rng.nextFloat() < 0.5F;
-            // 普通物资箱：65% 落实为上锁的物资箱方块（仅非随机箱参与）
-            boolean locked = !asRandom && rng.nextFloat() < 0.65F;
+            boolean asRandom = rng.nextFloat() < 0.15F;
+            // 普通物资箱：约 82% 落实为上锁的物资箱方块（仅非随机箱参与）
+            boolean locked = !asRandom && rng.nextFloat() < 0.82F;
             placeSupplyBox(p, spot, asRandom
                     ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_LOW_TIER_RANDOM_SUPPLY_BOX
                     : (locked
@@ -1098,16 +1174,16 @@ public final class SixtySecondsIslandGenerator {
                             : net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX),
                     BOX_CATEGORIES[rng.nextInt(BOX_CATEGORIES.length)]);
         }
-        // 高级物资箱：等级-1 个（按大小缩放，+30%）；4 级起带高级锁（需钳子）；一半刷成随机
-        int advanced = Math.max(0, (int) (sm * (island.level - 1) * 1.5));
+        // 高级物资箱：等级-1 个（按大小缩放，系数下调至 0.9）；约 70% 上锁；少量随机箱
+        int advanced = Math.max(0, (int) (sm * (island.level - 1) * 0.9));
         for (int i = 0; i < advanced; i++) {
             BlockPos spot = randomGround(p, island, rng, 0.0, 0.6);
             if (spot == null) {
                 continue;
             }
-            boolean asRandom = rng.nextFloat() < 0.5F;
-            // 高级物资箱：65% 落实为上锁的高级物资箱方块（仅非随机箱参与）
-            boolean advancedLocked = !asRandom && rng.nextFloat() < 0.65F;
+            boolean asRandom = rng.nextFloat() < 0.15F;
+            // 高级物资箱：约 82% 落实为上锁的高级物资箱方块（仅非随机箱参与）
+            boolean advancedLocked = !asRandom && rng.nextFloat() < 0.82F;
             placeSupplyBox(p, spot, asRandom
                     ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_HIGH_TIER_RANDOM_SUPPLY_BOX
                     : (advancedLocked

@@ -263,16 +263,17 @@ public final class SixtySecondsIslands {
         }
         data.building = true;
         RandomSource rng = RandomSource.create(level.random.nextLong());
+        net.exmo.sixty_seconds.config.SixtySecondsConfig cfg = net.exmo.sixty_seconds.config.SixtySecondsConfigStore
+                .current(level).orElseGet(net.exmo.sixty_seconds.config.SixtySecondsConfig::new);
         List<SixtySecondsIsland> islands = SixtySecondsIslandGenerator.plan(rng, count, centerX, centerZ, seaY,
-                baseRadius);
+                baseRadius, cfg.evacuationIslandChance);
         data.save.islands.clear();
         data.save.islands.addAll(islands);
         data.snapshots.clear();
         SixtySeconds.LOGGER.info("[60s] 开始生成海岛群：{} 座，中心 ({}, {})，海平面 y={}，基准半径 {}。",
                 islands.size(), centerX, centerZ, seaY,
                 baseRadius > 0 ? baseRadius : SixtySecondsIslandGenerator.DEFAULT_BASE_RADIUS);
-        boolean placeShelterDoors = net.exmo.sixty_seconds.config.SixtySecondsConfigStore.current(level)
-                .map(config -> config.islandShelterDoorEnabled).orElse(true);
+        boolean placeShelterDoors = cfg.islandShelterDoorEnabled;
         SixtySecondsIslandGenerator.queueBuild(level, islands, data.snapshots, placeShelterDoors, () -> {
             data.building = false;
             data.save.enabled = true;
@@ -582,6 +583,29 @@ public final class SixtySecondsIslands {
 
     /** 登岛：SubTitle 报幕 + 高危警报 + 全队解锁 + 首登刷守岛怪 + 区域地图切到本岛。 */
     private static void onLanded(ServerLevel level, Data data, ServerPlayer player, SixtySecondsIsland island) {
+        // 撤离点岛屿：不触发常规探岛流程（不刷守岛怪、不返航锁）；最后一天登岛即撤离
+        if (island.isEvacuation || island.type == SixtySecondsIsland.Type.EVACUATION) {
+            var state = SixtySecondsState.get(level);
+            var stats = SixtySecondsStatsComponent.KEY.get(player);
+            boolean lastDay = stats.totalDays > 0 && stats.dayNumber >= stats.totalDays;
+            SubtitleCommand.sendToPlayerTop(player,
+                    Component.literal(island.name().getString()).withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD),
+                    Component.translatable(LANG + (lastDay ? "evac_now" : "evac_wait"))
+                            .withStyle(ChatFormatting.YELLOW),
+                    90, false);
+            if (lastDay && !state.helicopterEvacuated.contains(player.getUUID())) {
+                state.helicopterEvacuated.add(player.getUUID());
+                player.setGameMode(net.minecraft.world.level.GameType.SPECTATOR);
+                player.displayClientMessage(
+                        Component.translatable(LANG + "evac_success").withStyle(ChatFormatting.GREEN), false);
+                level.getServer().getPlayerList().broadcastSystemMessage(
+                        Component.translatable(LANG + "evac_broadcast", player.getDisplayName())
+                                .withStyle(ChatFormatting.GOLD),
+                        false);
+            }
+            return;
+        }
+
         int lv = island.level;
         ChatFormatting nameColor = lv >= 4 ? ChatFormatting.RED : lv >= 3 ? ChatFormatting.GOLD
                 : ChatFormatting.AQUA;

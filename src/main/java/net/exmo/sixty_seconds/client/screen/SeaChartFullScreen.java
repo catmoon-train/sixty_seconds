@@ -37,6 +37,9 @@ public class SeaChartFullScreen extends Screen {
 
     /** 等级 1..5 的岛屿主色。 */
     private static final int[] LEVEL_COLORS = {0xFF59C24A, 0xFF3EC7A0, 0xFFE0C34A, 0xFFE07B39, 0xFFD94040};
+    /** 撤离点岛屿的特殊高亮色（金色发光，区别于普通等级色）。 */
+    private static final int COLOR_EVAC = 0xFFF2C14E;
+    private static final int COLOR_EVAC_BORDER = 0xFFFFE08A;
     private static final int COLOR_BEACH = 0xFFD8CC9A;
     private static final int COLOR_OCEAN = 0xFF0B2740;
     private static final int COLOR_OCEAN_DEEP = 0xFF081C30;
@@ -68,6 +71,9 @@ public class SeaChartFullScreen extends Screen {
     private double worldMinZ;
     private double worldMaxX;
     private double worldMaxZ;
+
+    /** 海图显示半径（以玩家为中心，超出则不显示岛屿）。 */
+    private int seaChartRadius = 1800;
 
     /** 拖拽状态 */
     private boolean dragging = false;
@@ -115,9 +121,16 @@ public class SeaChartFullScreen extends Screen {
         worldMaxX = worldMinX + spanX;
         worldMaxZ = worldMinZ + spanZ;
 
-        // 初始视图居中
-        viewCenterX = (worldMinX + worldMaxX) / 2.0;
-        viewCenterZ = (worldMinZ + worldMaxZ) / 2.0;
+        // 海图显示半径（以玩家为中心，超出则不再显示）
+        seaChartRadius = data.seaChartRadius();
+        if (seaChartRadius <= 0) {
+            seaChartRadius = 1800;
+        }
+
+        // 初始视图以玩家为中心（玩家不在时回退到群岛中心）
+        BlockPos pc = playerCenter();
+        viewCenterX = pc != null ? pc.getX() : (worldMinX + worldMaxX) / 2.0;
+        viewCenterZ = pc != null ? pc.getZ() : (worldMinZ + worldMaxZ) / 2.0;
         scale = Math.min((double) width / spanX, (double) height / spanZ);
 
         // 按钮
@@ -169,12 +182,27 @@ public class SeaChartFullScreen extends Screen {
         return (screenY - height / 2.0) / scale + viewCenterZ;
     }
 
+    /** 取玩家当前世界坐标（用于海图以玩家为中心）；玩家不存在时返回 null。 */
+    private static BlockPos playerCenter() {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player != null) {
+            return mc.player.blockPosition();
+        }
+        return null;
+    }
+
     // ── 渲染 ──────────────────────────────────────────────────────────
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         // 全屏深海背景
         renderOceanBackground(graphics);
+        // 海图以玩家为中心：每帧将视口中心对齐到玩家当前位置（拖拽/缩放时用户可临时偏移）
+        BlockPos pc = playerCenter();
+        if (pc != null) {
+            viewCenterX = pc.getX();
+            viewCenterZ = pc.getZ();
+        }
         // 岛屿
         hoveredIsland = -1;
         List<Runnable> labels = new ArrayList<>();
@@ -237,6 +265,14 @@ public class SeaChartFullScreen extends Screen {
         int cy = toScreenY(entry.centerZ());
         int screenR = Math.max(8, (int) (entry.radius() * scale));
 
+        // 以玩家为中心：超出显示半径的岛屿不绘制（撤离点岛同样受此约束）
+        double dxc = entry.centerX() - viewCenterX;
+        double dzc = entry.centerZ() - viewCenterZ;
+        double distCenter = Math.sqrt(dxc * dxc + dzc * dzc);
+        if (distCenter > seaChartRadius + entry.radius()) {
+            return;
+        }
+
         // 视锥剔除：岛完全在屏幕外就跳过，省掉整个 rasterize
         if (cx + screenR < -32 || cx - screenR > width + 32
                 || cy + screenR < -32 || cy - screenR > height + 32) {
@@ -277,12 +313,20 @@ public class SeaChartFullScreen extends Screen {
             }
         }
 
-        int color = LEVEL_COLORS[Mth.clamp(entry.level(), 1, 5) - 1];
-        String label = islandName(entry).getString() + " Lv." + entry.level()
+        int color = entry.evacuation() ? COLOR_EVAC
+                : LEVEL_COLORS[Mth.clamp(entry.level(), 1, 5) - 1];
+        String label = islandName(entry).getString() + (entry.evacuation()
+                ? " " + Component.translatable(LANG + "chart_evacuation").getString()
+                : " Lv." + entry.level())
                 + (entry.visited() ? " " + Component.translatable(LANG + "chart_visited").getString() : "");
         int labelR = Math.min(screenR, MAX_CIRCLE_RADIUS);
         labels.add(() -> {
             graphics.drawCenteredString(font, label, cx, cy + labelR + 3, color);
+            if (entry.evacuation()) {
+                // 撤离点岛额外画一圈金色光环，强调其特殊性
+                int ringR = Math.min(screenR, MAX_CIRCLE_RADIUS) + 6;
+                drawCircleBorder(graphics, cx, cy, ringR, COLOR_EVAC_BORDER);
+            }
             if (hoveredIsland == entry.id()) {
                 int hr = Math.min(screenR, MAX_CIRCLE_RADIUS);
                 graphics.fill(cx - hr - 3, cy - hr - 3, cx + hr + 3, cy - hr - 2, 0xFFFFFFFF);
@@ -313,7 +357,9 @@ public class SeaChartFullScreen extends Screen {
         int startY = Math.max(cy - screenR, -step);
         int endY = Math.min(cy + screenR, height + step);
 
-        int mainColor = fog ? COLOR_FOG : LEVEL_COLORS[Mth.clamp(entry.level(), 1, 5) - 1];
+        int mainColor = fog ? COLOR_FOG
+                : entry.evacuation() ? COLOR_EVAC
+                        : LEVEL_COLORS[Mth.clamp(entry.level(), 1, 5) - 1];
         int size = Math.max(1, step);
 
         for (int px = startX; px <= endX; px += step) {
