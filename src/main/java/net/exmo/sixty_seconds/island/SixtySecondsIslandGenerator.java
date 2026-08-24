@@ -43,6 +43,12 @@ public final class SixtySecondsIslandGenerator {
 
     /** 环岛水裙边宽度（陆地半径之外再铺这么宽的海面）。 */
     public static final int WATER_SKIRT = 18;
+    /**
+     * 岛屿间距倍数：岛心最小允许间距 = (r1+r2) × (1 + 此值) + 水裙边。
+     * 值越大岛屿越稀疏（海域越大）。原版（值=0）岛仅相切不重叠；
+     * 当前 3.0 表示岛间额外留出约 3×(r1+r2) 的海域，比原版稀疏数倍以上。
+     */
+    public static final float ISLAND_SPACING_MULT = 3.0F;
     /** 单元格纵向生成范围：海平面以下挖/铺的深度、以上净空+山体高度。 */
     public static final int DEPTH_BELOW_SEA = 8;
     public static final int HEIGHT_ABOVE_SEA = 72;
@@ -153,9 +159,9 @@ public final class SixtySecondsIslandGenerator {
         }
         Collections.shuffle(prefixes, new java.util.Random(rng.nextLong()));
         List<SixtySecondsIsland> islands = new ArrayList<>();
-        // 布局域以大岛基准半径为准
+        // 布局域以大岛基准半径为准；岛屿稀疏后需要更大的扩散域，否则拒绝采样会大量重试
         int effBase = (int) (base * SixtySecondsIsland.Size.LARGE.radiusMult);
-        int extent = (int) (2.2 * (effBase + WATER_SKIRT + 8) * Math.sqrt(count)) + 120;
+        int extent = (int) (2.2 * (1.0 + ISLAND_SPACING_MULT) * (effBase + WATER_SKIRT + 8) * Math.sqrt(count)) + 120;
         int patIdx = 0;
         for (int i = 0; i < count; i++) {
             SixtySecondsIsland island = new SixtySecondsIsland();
@@ -212,7 +218,8 @@ public final class SixtySecondsIslandGenerator {
                 int z = i == 0 ? centerZ : centerZ + rng.nextInt(extent * 2 + 1) - extent;
                 boolean ok = true;
                 for (SixtySecondsIsland other : islands) {
-                    double need = island.radius + other.radius + WATER_SKIRT * 2 + 16;
+                    double need = (island.radius + other.radius) * (1.0 + ISLAND_SPACING_MULT)
+                            + WATER_SKIRT * 2 + 16;
                     if (other.distSqr(x, z) < need * need) {
                         ok = false;
                         break;
@@ -254,7 +261,8 @@ public final class SixtySecondsIslandGenerator {
                 int z = centerZ + rng.nextInt(extent * 2 + 1) - extent;
                 boolean ok = true;
                 for (SixtySecondsIsland other : islands) {
-                    double need = evac.radius + other.radius + WATER_SKIRT * 2 + 16;
+                    double need = (evac.radius + other.radius) * (1.0 + ISLAND_SPACING_MULT)
+                            + WATER_SKIRT * 2 + 16;
                     if (other.distSqr(x, z) < need * need) {
                         ok = false;
                         break;
