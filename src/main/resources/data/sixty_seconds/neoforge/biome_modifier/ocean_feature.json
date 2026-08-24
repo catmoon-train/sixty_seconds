@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_features",
-  "biomes": "sixty_seconds:ocean",
+  "biomes": "#sixty_seconds:ocean",
   "features": "sixty_seconds:ocean_feature",
   "step": "raw_generation"
 }

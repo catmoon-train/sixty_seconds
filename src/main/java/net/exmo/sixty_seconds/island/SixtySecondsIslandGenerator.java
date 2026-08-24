@@ -128,7 +128,7 @@ public final class SixtySecondsIslandGenerator {
     // ── 群岛规划 ─────────────────────────────────────────────────────────
 
     /** 等级分布模式（首岛恒为 1 级港湾，其余按此循环；偏重低等级以配合小型/中型岛）。 */
-    private static final int[] LEVEL_PATTERN = {1, 2, 1, 2, 3, 1, 2, 3, 1, 2, 4, 1, 3, 5, 1, 2, 3, 4, 2};
+    static final int[] LEVEL_PATTERN = {1, 2, 1, 2, 3, 1, 2, 3, 1, 2, 4, 1, 3, 5, 1, 2, 3, 4, 2};
 
     /** 默认岛屿基准半径（{@code plan} 的 baseRadius 传 ≤0 时使用）。 */
     public static final int DEFAULT_BASE_RADIUS = 340;
@@ -220,7 +220,7 @@ public final class SixtySecondsIslandGenerator {
      * 按等级分配生态类型。首岛强制热带（新手友好）。
      * 等级越高越偏危险/荒凉类型。
      */
-    private static SixtySecondsIsland.Type assignType(RandomSource rng, int level, boolean firstIsland) {
+    static SixtySecondsIsland.Type assignType(RandomSource rng, int level, boolean firstIsland) {
         if (firstIsland) return SixtySecondsIsland.Type.TROPICAL;
         float r = rng.nextFloat();
         return switch (level) {

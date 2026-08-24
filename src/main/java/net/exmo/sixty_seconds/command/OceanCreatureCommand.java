@@ -10,6 +10,7 @@ import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
 import net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity;
 import net.exmo.sixty_seconds.entity.OceanSharkEntity;
 import net.exmo.sixty_seconds.island.SixtySecondsIsland;
+import net.exmo.sixty_seconds.island.SixtySecondsIslandGenerator;
 import net.exmo.sixty_seconds.island.SixtySecondsOceanWorldGen;
 import net.exmo.sixty_seconds.logic.OceanCreatureSpawner;
 import net.exmo.sixty_seconds.bridge.fabric.CommandRegistrationCallback;
@@ -215,7 +216,9 @@ public final class OceanCreatureCommand {
         List<SixtySecondsIsland> islands = SixtySecondsOceanWorldGen.planRegion(0, 0, config, ocean.getSeed());
         if (islands != null && !islands.isEmpty()) {
             SixtySecondsIsland island = islands.get(0);
-            return new BlockPos(island.centerX, island.seaY + 2, island.centerZ);
+            // 落在首岛外侧的水面（避免直接卡进岛心陆地），再游/航行上岛
+            int offX = island.centerX + island.radius + SixtySecondsIslandGenerator.WATER_SKIRT + 8;
+            return new BlockPos(offX, island.seaY + 2, island.centerZ);
         }
         BlockPos spawn = ocean.getSharedSpawnPos();
         return new BlockPos(spawn.getX(), config.oceanSeaY + 2, spawn.getZ());

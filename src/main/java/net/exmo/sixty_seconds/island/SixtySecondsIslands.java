@@ -166,8 +166,22 @@ public final class SixtySecondsIslands {
         if (data.building || data.save.enabled) {
             return;
         }
-        // count/centerX/centerZ/seaY/baseRadius 传 0，由 start 回退到海洋配置
-        start(level, 0, 0, 0, 0, 0);
+        // 海洋维度：岛屿地形由 SixtySecondsOceanFeature 在区块生成阶段按 planRegion 确定性写入，
+        // 这里只补齐玩法元数据（海图/登岛/返航）。扫描出生点周边若干区域一次性登记，
+        // 与地形共用同一套 planRegion（同 seed/同坐标），保证海图与实地完全一致。
+        net.exmo.sixty_seconds.config.SixtySecondsConfig config = net.exmo.sixty_seconds.config.SixtySecondsConfigStore
+                .current(level).orElseGet(net.exmo.sixty_seconds.config.SixtySecondsConfig::new);
+        List<SixtySecondsIsland> all = new ArrayList<>();
+        int scan = 3;
+        for (int rx = -scan; rx <= scan; rx++) {
+            for (int rz = -scan; rz <= scan; rz++) {
+                all.addAll(SixtySecondsOceanWorldGen.planRegion(rx, rz, config, level.getSeed()));
+            }
+        }
+        data.save.islands = all;
+        data.save.enabled = true;
+        save(level, data);
+        syncChartAll(level);
     }
 
     /** {@code /60s sea_teleport off} 时把在途的扬帆/返航一并作废，并重发海图刷新客户端按钮态。 */

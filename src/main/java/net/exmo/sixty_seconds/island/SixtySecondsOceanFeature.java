@@ -40,8 +40,8 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
     static final int BEDROCK_Y = 10;
     /** 沙子层 Y 范围（含）。 */
     static final int SAND_TOP = 12;
-    /** 区域网格边长（格），需与 SixtySecondsOceanWorldGen 保持一致。 */
-    static final int REGION = SixtySecondsOceanWorldGen.REGION;
+    /** 区域网格边长（方块），需与 SixtySecondsOceanWorldGen.REGION_BLOCKS 保持一致。 */
+    static final int REGION = SixtySecondsOceanWorldGen.REGION_BLOCKS;
     /** 岛屿 cell 额外的搜索半径（格）。 */
     static final int NEIGHBOR_MARGIN = SixtySecondsOceanWorldGen.NEIGHBOR_MARGIN;
 
