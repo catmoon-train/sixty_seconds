@@ -10,9 +10,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.SpawnResult;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -22,6 +26,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.exmo.sixty_seconds.SixtySeconds;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 海洋鲨鱼：不同体积的鲨鱼变体（礁鲨→中型鲨→大白鲨），带有冲撞、撕咬流血技能。
@@ -104,6 +109,28 @@ public class OceanSharkEntity extends OceanCreatureEntity {
 
     public Variant getVariant() {
         return Variant.byId(getVariantId());
+    }
+
+    /**
+     * 数据驱动（biome_modifier add_spawns）自然刷新时，按原刷怪概率随机选变体，保持稀有度一致。
+     * 海洋维度难度始终满强度（dayRatio=1），故直接用满强度概率：
+     * MEGALODON 4% / GREAT_WHITE 15% / HAMMERHEAD 19% / TIGER_SHARK 22% / REEF_SHARK 40%。
+     * 手动刷怪走 {@code MobSpawnType.COMMAND}，不进入此分支（避免覆盖已选定的变体）。
+     */
+    @Override
+    public SpawnResult finalizeSpawn(ServerLevel level, DifficultyInstance difficulty,
+            MobSpawnType spawnType, @Nullable SpawnGroupData spawnData) {
+        if (spawnType == MobSpawnType.NATURAL && getVariant() == Variant.REEF_SHARK) {
+            float r = level.getRandom().nextFloat();
+            Variant v;
+            if (r < 0.04F) v = Variant.MEGALODON;
+            else if (r < 0.19F) v = Variant.GREAT_WHITE;
+            else if (r < 0.38F) v = Variant.HAMMERHEAD;
+            else if (r < 0.60F) v = Variant.TIGER_SHARK;
+            else v = Variant.REEF_SHARK;
+            applyVariant(v);
+        }
+        return super.finalizeSpawn(level, difficulty, spawnType, spawnData);
     }
 
     public ResourceLocation textureLocation() {

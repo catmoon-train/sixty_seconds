@@ -4,11 +4,16 @@ import net.exmo.sixty_seconds.bridge.NeoForgeEvents;
 import net.exmo.sixty_seconds.bridge.stubs.SixtySecItems;
 import net.exmo.sixty_seconds.bridge.stubs.SixtySecSounds;
 import net.exmo.sixty_seconds.network.ModNetwork;
+import net.exmo.sixty_seconds.init.ModOceanEntities;
+import net.exmo.sixty_seconds.entity.OceanSharkEntity;
 import net.exmo.sixty_seconds.registry.ModBlocks;
 import net.exmo.sixty_seconds.registry.ModEffects;
 import net.exmo.sixty_seconds.registry.ModEntities;
 import net.exmo.sixty_seconds.registry.ModItems;
 import net.exmo.sixty_seconds.registry.ModSounds;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -39,6 +44,13 @@ public class Sixty_seconds {
             SixtySecSounds.bind();
             net.exmo.sixty_seconds.init.ModOceanEntities.bind();
             SixtySecondsMod.init();
+            // 海洋鲨鱼数据刷怪（biome_modifier add_spawns）必需的刷怪位置规则：
+            // 没有这一步，数据包里的 add_spawns 不会真正刷出实体。
+            SpawnPlacements.register(ModOceanEntities.OCEAN_SHARK.get(),
+                    SpawnPlacements.Type.IN_WATER,
+                    Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    (level, pos, state) -> level.getFluidState(pos).is(FluidTags.WATER)
+                            && level.getFluidState(pos.above()).is(FluidTags.WATER));
         });
     }
 }

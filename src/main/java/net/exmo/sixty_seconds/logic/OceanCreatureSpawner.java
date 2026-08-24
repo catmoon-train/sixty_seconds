@@ -22,15 +22,23 @@ import net.exmo.sixty_seconds.registry.ModEffects;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * 海洋生物自然刷新系统：海上（非岸边）对搜索区玩家定期判定，刷出鲨鱼和海怪。
+ * 海洋生物刷新系统。
+ *
+ * <h3>鲨鱼 / 海盗 NPC（数据驱动刷新）</h3>
+ * <p>{@code ocean_shark} 与海盗 NPC 已改为 NeoForge {@code biome_modifier} + {@code forge:add_spawns}
+ * 数据驱动自然刷新（见 {@code data/sixty_seconds/forge/biome_modifier/ocean_creatures.json}），
+ * 变体稀有度由实体 {@code finalizeSpawn} 内按原概率随机决定。本类不再手动刷鲨鱼。
+ *
+ * <h3>海怪 KRAKEN / SERPENT（手动刷，含出场特效）</h3>
+ * <p>保留手动刷怪以维持播报/浓雾/音效等出场特效。</p>
+ *
+ * <h3>利维坦 LEVIATHAN（定时刷）</h3>
+ * <p>游戏开始时（dayNumber 未记录过）刷第一只，之后每 {@link #LEVIATHAN_PERIOD_DAYS}（6）个由对局推进的游戏日刷一只，
+ * 与鲨鱼/海怪独立、不计入刷怪上限、可与其他 Boss 共存，优先刷在玩家附近海域。</p>
  *
  * <h3>难度按天数比例递增</h3>
  * <p>基础概率 × dayRatio = 当前概率。dayRatio = currentDay / totalDays。
  * 前四天有额外压降（dayRatio × 0.3），保证前几天几乎不刷强怪。
- * 例如 7 天局：d1=0.043, d2=0.086, d3=0.129, d4=0.171, d5=0.714, d6=0.857, d7=1.0
- *
- * <h3>利维坦不自然刷新</h3>
- * 只能通过 {@code /60s_ocean spawn monster leviathan} 指令召唤。
  *
  * <h3>海怪出场特效</h3>
  * <ul>
@@ -43,6 +51,9 @@ import org.jetbrains.annotations.Nullable;
 public final class OceanCreatureSpawner {
 
     public static final int CHECK_INTERVAL = 20 * 14;
+
+    /** 利维坦（LEVIATHAN）刷新周期：每 6 个由对局推进的游戏日（dayNumber）刷一只。 */
+    public static final int LEVIATHAN_PERIOD_DAYS = 6;
 
     private static final int MAX_NEARBY_SHARKS = 5;
     private static final int MAX_NEARBY_MONSTERS = 2;
@@ -74,11 +85,14 @@ public final class OceanCreatureSpawner {
 
         // 前四天额外压降 ×0.3（保证前几天几乎不刷强怪）
         double earlyDayMult = dayNumber <= 4 ? 0.3 : 1.0;
-        // 怪物刷新频率+40%：鲨鱼/海怪基础概率 ×1.4
-        double sharkBase = (night ? 0.28 : 0.105) * dayRatio * earlyDayMult;
+        // 海怪基础概率（鲨鱼已改数据驱动刷新，不在此手动刷）
         double monsterBase = (night ? 0.042 : 0.007) * dayRatio * earlyDayMult;
 
         RandomSource random = level.getRandom();
+
+        // 利维坦定时刷新（与鲨鱼/海怪独立，可共存）
+        tickLeviathan(level, dayNumber);
+
         for (ServerPlayer player : level.players()) {
             if (player.isSpectator() || player.isCreative()
                     || !net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {
@@ -91,19 +105,10 @@ public final class OceanCreatureSpawner {
                 continue;
             }
 
-            int nearbySharks = countNearby(level, player, OceanSharkEntity.class, NEARBY_RADIUS);
             int nearbyMonsters = countNearby(level, player, OceanSeaMonsterEntity.class, NEARBY_RADIUS);
 
-            // ── 鲨鱼刷新 ──────────────────────────────────────────
-            if (nearbySharks < MAX_NEARBY_SHARKS && random.nextDouble() < sharkBase) {
-                BlockPos spot = findWaterSpot(level, player.blockPosition(),
-                        SPAWN_MIN_DIST, SPAWN_MAX_DIST, random);
-                if (spot != null) {
-                    spawnShark(level, spot, random, dayRatio);
-                }
-            }
-
-            // ── 海怪刷新 ──────────────────────────────────────────
+            // ── 海怪刷新（KRAKEN / SERPENT，含出场特效）───────────────────
+            // 注：鲨鱼 ocean_shark 已通过 biome_modifier 数据驱动自然刷新，这里不再手动刷。
             if (nearbyMonsters < MAX_NEARBY_MONSTERS && random.nextDouble() < monsterBase) {
                 BlockPos spot = findWaterSpot(level, player.blockPosition(),
                         SPAWN_MIN_DIST + 8, SPAWN_MAX_DIST + 12, random);
@@ -115,6 +120,50 @@ public final class OceanCreatureSpawner {
                 }
             }
         }
+    }
+
+    /**
+     * 利维坦定时刷新：游戏开始时（dayNumber 未记录过）刷第一只，之后每跨过
+     * {@link #LEVIATHAN_PERIOD_DAYS}（6）个由对局推进的游戏日（dayNumber）刷一只。
+     * 与鲨鱼/海怪完全独立，不计入 {@code MAX_NEARBY_MONSTERS} 上限，可与其他 Boss 共存。
+     * 优先刷新在最近存活玩家的附近开阔海域。
+     *
+     * @param dayNumber 当前由对局推进的游戏天数（SixtySecondsState.Data.dayNumber）
+     */
+    private static void tickLeviathan(ServerLevel level, int dayNumber) {
+        SixtySecondsState.Data data = SixtySecondsState.get(level);
+        if (data == null) return;
+        boolean neverSpawned = data.leviathanLastSpawnDay == Integer.MIN_VALUE;
+        if (!neverSpawned && dayNumber - data.leviathanLastSpawnDay < LEVIATHAN_PERIOD_DAYS) {
+            return;
+        }
+        // 选最近存活玩家作为刷新锚点；无人则本轮跳过（等下次 tick）
+        ServerPlayer target = null;
+        double best = Double.MAX_VALUE;
+        for (ServerPlayer player : level.players()) {
+            if (player.isSpectator() || player.isCreative()
+                    || !net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {
+                continue;
+            }
+            double d = player.distanceToSqr(player);
+            if (d < best) {
+                best = d;
+                target = player;
+            }
+        }
+        if (target == null) return;
+        BlockPos spot = findWaterSpot(level, target.blockPosition(),
+                SPAWN_MIN_DIST, SPAWN_MAX_DIST, level.getRandom());
+        if (spot == null) return;
+        OceanSeaMonsterEntity monster = ModOceanEntities.OCEAN_SEA_MONSTER.create(level);
+        if (monster == null) return;
+        monster.moveTo(spot.getX() + 0.5, spot.getY(), spot.getZ() + 0.5,
+                level.getRandom().nextFloat() * 360.0F, 0.0F);
+        monster.applyVariant(OceanSeaMonsterEntity.Variant.LEVIATHAN);
+        monster.finalizeSpawn(level, level.getCurrentDifficultyAt(spot), MobSpawnType.COMMAND, null);
+        level.addFreshEntity(monster);
+        data.leviathanLastSpawnDay = dayNumber;
+        announceSeaMonster(level, monster, target);
     }
 
     // ══════════════════════════════════════════════════════════════
@@ -151,7 +200,7 @@ public final class OceanCreatureSpawner {
     }
 
     // ══════════════════════════════════════════════════════════════
-    //  海怪生成（利维坦不自然刷新）
+    //  海怪生成（KRAKEN / SERPENT；利维坦改由 tickLeviathan 定时刷）
     // ══════════════════════════════════════════════════════════════
 
     @Nullable

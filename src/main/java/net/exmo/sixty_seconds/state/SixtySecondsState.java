@@ -162,5 +162,12 @@ public final class SixtySecondsState {
         public final Set<UUID> helicopterEvacuated = new LinkedHashSet<>();
         /** 当前处于撤离点建筑（evacuationpoint）内的玩家 UUID（运行时态，用于进入/离开提示，不持久化）。 */
         public final Set<UUID> evacBuildingZone = new java.util.HashSet<>();
+        /**
+         * 利维坦（LEVIATHAN）上次自动刷新的游戏天数（由对局推进的 dayNumber，运行时态，不持久化）。
+         * {@code Integer.MIN_VALUE} = 本局尚未刷过 → 下次 tick 立即刷首只（游戏开始时）。
+         * 之后每跨过 {@code LEVIATHAN_PERIOD_DAYS}（6）个游戏日再刷一只。
+         * 注意：用 dayNumber 而非 gameTime，使刷新节奏跟随对局天数而非真实世界时间。
+         */
+        public int leviathanLastSpawnDay = Integer.MIN_VALUE;
     }
 }
