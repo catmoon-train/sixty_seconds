@@ -12,7 +12,6 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.BulkSectionAccess;
-import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -74,10 +73,10 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
                 .orElseGet(SixtySecondsConfig::new);
 
         BlockPos origin = ctx.origin();
-        // 用 chunk 真实原点（0/16 对齐），而非 placed_feature 随机落点，保证每区块精确覆盖自身 16×16
-        ChunkAccess chunk = level.getChunk(origin);
-        int cx = chunk.getPos().getMinBlockX();
-        int cz = chunk.getPos().getMinBlockZ();
+        // raw_generation step + placed_feature(count) 下 origin 落在 chunk 内随机位置，
+        // 需换算回 chunk 原点（0/16 对齐），保证每区块精确覆盖自身 16×16
+        int cx = Math.floorDiv(origin.getX(), 16) * 16;
+        int cz = Math.floorDiv(origin.getZ(), 16) * 16;
         int seaY = config.oceanSeaY;
         long worldSeed = serverLevel.getSeed();
 
