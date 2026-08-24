@@ -58,11 +58,15 @@ public final class NeoForgeEvents {
     public static void onLevelTick(LevelTickEvent.Post event) {
         if (event.getLevel() instanceof ServerLevel level) {
             SixtySecGameWorldComponent.KEY.get(level).serverTick();
-            // 海洋（海岛）维度：独立于主世界对局，自行驱动海洋生物刷新与海岛登岛检测
+            // 海洋（海岛）维度：独立于主世界对局，自行驱动海洋生物刷新、海盗 NPC 与海岛登岛检测
             if (level.dimension() == SixtySeconds.OCEAN_DIMENSION) {
                 net.exmo.sixty_seconds.island.SixtySecondsIslands.ensureOceanStarted(level);
                 net.exmo.sixty_seconds.logic.OceanCreatureSpawner.tick(level);
                 net.exmo.sixty_seconds.island.SixtySecondsIslands.tick(level);
+                // 海盗等海面 NPC：海洋维度内（不依赖搜索区/对局）按固定间隔刷新
+                net.exmo.sixty_seconds.state.SixtySecondsState.Data od =
+                        net.exmo.sixty_seconds.state.SixtySecondsState.get(level);
+                net.exmo.sixty_seconds.logic.SixtySecondsNpcSpawner.spawnPirates(level, od, level.isNight());
             }
             for (ServerTickEvents.EndWorldTick listener : ServerTickEvents.END_WORLD_TICK.invokers()) {
                 listener.onEndTick(level);

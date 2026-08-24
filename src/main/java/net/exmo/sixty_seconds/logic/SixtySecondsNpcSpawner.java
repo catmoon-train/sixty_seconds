@@ -1,5 +1,6 @@
 package net.exmo.sixty_seconds.logic;
 
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
@@ -415,7 +416,9 @@ public final class SixtySecondsNpcSpawner {
             }
             // 只找<b>出了门</b>的人：在家的玩家哪怕住在水边也不该被海盗堵门，那是夜袭的活。
             // 这条同时把「扬帆去海岛」的玩家收进来——出海本来就走的是探索区状态。
-            if (!net.exmo.sixty_seconds.arena.SixtySecondsSearchZones.isInSearchZone(player)) {
+            // 海洋维度内身处即视为在外海探索，无需搜索区状态也照常刷新海盗。
+            boolean ocean = level.dimension() == SixtySeconds.OCEAN_DIMENSION;
+            if (!net.exmo.sixty_seconds.arena.SixtySecondsSearchZones.isInSearchZone(player) && !ocean) {
                 continue;
             }
             if (random.nextDouble() >= chance) {
