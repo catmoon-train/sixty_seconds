@@ -315,9 +315,9 @@ public class SeaChartFullScreen extends Screen {
 
         int color = entry.evacuation() ? COLOR_EVAC
                 : LEVEL_COLORS[Mth.clamp(entry.level(), 1, 5) - 1];
-        String label = islandName(entry).getString() + (entry.evacuation()
-                ? " " + Component.translatable(LANG + "chart_evacuation").getString()
-                : " Lv." + entry.level())
+        // 撤离点岛使用专属独立岛名（如「归航岛」），不再追加「撤离点」文字后缀；以金色+光环标识特殊性
+        String label = islandName(entry).getString()
+                + (entry.evacuation() ? "" : " Lv." + entry.level())
                 + (entry.visited() ? " " + Component.translatable(LANG + "chart_visited").getString() : "");
         int labelR = Math.min(screenR, MAX_CIRCLE_RADIUS);
         labels.add(() -> {

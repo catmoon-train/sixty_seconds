@@ -117,6 +117,7 @@ public final class SixtySecondsOceanWorldGen {
         if (rng.nextFloat() < Math.max(0.0F, Math.min(1.0F, config.evacuationIslandChance))) {
             SixtySecondsIsland evac = new SixtySecondsIsland();
             evac.id = (regionX * 100000 + regionZ * 1000) + 90000 + islands.size();
+            evac.evacNameIndex = rng.nextInt(SixtySecondsIsland.EVAC_NAME_COUNT);
             evac.namePrefix = rng.nextInt(SixtySecondsIsland.NAME_PREFIX_COUNT);
             evac.nameSuffix = rng.nextInt(SixtySecondsIsland.NAME_SUFFIX_COUNT);
             evac.seed = rng.nextLong();

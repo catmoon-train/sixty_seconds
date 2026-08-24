@@ -85,8 +85,6 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
                 .orElseGet(SixtySecondsConfig::new);
         int seaY = config.oceanSeaY;
         long worldSeed = serverLevel.getSeed();
-        LOGGER.info("[60s][OceanFeature] generateChunk chunk=({},{}) seaY={} configSeed={}",
-                cx, cz, seaY, config.oceanSeed);
         try (BulkSectionAccess bsa = new BulkSectionAccess(level)) {
             int x0 = cx, z0 = cz, x1 = cx + 15, z1 = cz + 15;
             // 1) 海床骨架
@@ -105,8 +103,6 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
         int regX1 = Math.floorDiv(x1, REGION);
         int regZ0 = Math.floorDiv(z0, REGION);
         int regZ1 = Math.floorDiv(z1, REGION);
-        LOGGER.info("[60s][OceanFeature] writeIslands chunk=({},{}) regX=[{},{}] regZ=[{},{}]",
-                x0, z0, regX0, regX1, regZ0, regZ1);
         for (int rx = regX0; rx <= regX1; rx++) {
             for (int rz = regZ0; rz <= regZ1; rz++) {
                 List<SixtySecondsIsland> islands = SixtySecondsOceanWorldGen.planRegion(rx, rz, config, worldSeed);
@@ -118,8 +114,6 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
                     if (z1 < island.centerZ - cell || z0 > island.centerZ + cell) {
                         continue;
                     }
-                    LOGGER.info("[60s][OceanFeature] 命中岛屿 id={} 中心=({},{})({}) 半径={} 本chunk=({},{})",
-                            island.id, island.centerX, island.centerZ, island.type, island.radius, x0, z0);
                     // 岛屿骨架（陆地/岸边）
                     SixtySecondsIslandGenerator.buildPatchPrimer(bsa, island, x0, z0, x1, z1);
                     // 装饰（树/岩石/植被）与废墟/物资箱：经 PrimerPlacer 逐块写入，越界列自动跳过，

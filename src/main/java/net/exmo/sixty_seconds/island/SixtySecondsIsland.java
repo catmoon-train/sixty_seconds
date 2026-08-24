@@ -15,7 +15,7 @@ import net.minecraft.world.phys.AABB;
 public class SixtySecondsIsland {
     /** 语言键前缀；岛名 = name_prefix.N + name_suffix.M 两段翻译拼接。 */
     public static final String LANG = "message.sixty_seconds.sixty_seconds.island.";
-    public static final int NAME_PREFIX_COUNT = 16;
+    public static final int NAME_PREFIX_COUNT = 24;
     public static final int NAME_SUFFIX_COUNT = 4;
 
     /**
@@ -36,6 +36,9 @@ public class SixtySecondsIsland {
         QUARANTINE, // 隔离：废弃检疫设施，锈蚀围栏，高危污染
         OIL,        // 油井：废弃钻井平台残骸，黑色油渍，钢架
         MILITARY,   // 军事：废弃前哨堡垒，掩体残壁，弹孔遍布
+        ABYSS,      // 深渊：高危稀有岛，灰黑焦土+裂隙，Level5 极少出现，怪物成群
+        INFERNO,    // 炼狱：高危稀有岛，熔岩裂隙+焦岩，Level4~5 低概率，极度危险
+        FORSAKEN,   // 遗弃：中高危稀有岛，锈蚀废墟+毒雾，Level3~5 低概率
         EVACUATION  // 撤离点：专门的撤离点岛屿，稀有、不刷新物资箱、海图特殊标记，最后一天登岛即撤离
     }
 
@@ -78,6 +81,11 @@ public class SixtySecondsIsland {
     /** 是否为撤离点岛屿：稀有、不刷新物资箱、海图特殊标记、最后一天登岛即撤离。 */
     @SerializedName("isEvacuation")
     public boolean isEvacuation = false;
+    /** 撤离点岛屿的专属独立名称索引（独立于普通 name_prefix/name_suffix，避免「碎浪岛 撤离点」式命名）。 */
+    @SerializedName("evacNameIndex")
+    public int evacNameIndex = 0;
+    /** 撤离点专属名称池大小。 */
+    public static final int EVAC_NAME_COUNT = 6;
     /** 地形噪声种子（服务端生成与客户端海图共用）。 */
     @SerializedName("seed")
     public long seed;
@@ -121,6 +129,12 @@ public class SixtySecondsIsland {
 
     /** 岛名（两段翻译键拼接，客户端/服务端同构）。有类型时追加类型标签。 */
     public Component name() {
+        // 撤离点岛屿：使用专属独立名称池（如「归航岛」），不附加「撤离点」类型标签，
+        // 表现为一个独立的岛屿大类，而非「碎浪岛 撤离点」这种后缀式命名。
+        if (isEvacuation || type == Type.EVACUATION) {
+            return Component.translatable(LANG + "evac_name." + (evacNameIndex % EVAC_NAME_COUNT))
+                    .withStyle(net.minecraft.ChatFormatting.GOLD);
+        }
         Component base = Component.translatable(LANG + "name_prefix." + namePrefix)
                 .append(Component.translatable(LANG + "name_suffix." + nameSuffix));
         if (type != null) {

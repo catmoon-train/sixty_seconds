@@ -222,6 +222,7 @@ public final class SixtySecondsIslandGenerator {
             evac.level = 1;
             evac.type = SixtySecondsIsland.Type.EVACUATION;
             evac.isEvacuation = true;
+            evac.evacNameIndex = rng.nextInt(SixtySecondsIsland.EVAC_NAME_COUNT);
             evac.namePrefix = prefixes.get(islands.size() % prefixes.size());
             evac.nameSuffix = rng.nextInt(SixtySecondsIsland.NAME_SUFFIX_COUNT);
             evac.seed = rng.nextLong();
@@ -284,19 +285,24 @@ public final class SixtySecondsIslandGenerator {
                                     : r < 0.68F ? SixtySecondsIsland.Type.BARREN
                                             : r < 0.80F ? SixtySecondsIsland.Type.TROPICAL
                                                     : r < 0.90F ? SixtySecondsIsland.Type.RUINS
-                                                            : SixtySecondsIsland.Type.QUARANTINE;
-            case 4 -> r < 0.22F ? SixtySecondsIsland.Type.VOLCANIC
-                    : r < 0.42F ? SixtySecondsIsland.Type.BARREN
-                            : r < 0.60F ? SixtySecondsIsland.Type.JUNGLE
-                                    : r < 0.74F ? SixtySecondsIsland.Type.RUINS
-                                            : r < 0.88F ? SixtySecondsIsland.Type.OIL
-                                                    : SixtySecondsIsland.Type.MILITARY;
-            default -> r < 0.28F ? SixtySecondsIsland.Type.VOLCANIC // level 5
-                    : r < 0.48F ? SixtySecondsIsland.Type.BARREN
-                            : r < 0.64F ? SixtySecondsIsland.Type.RUINS
-                                    : r < 0.80F ? SixtySecondsIsland.Type.OIL
-                                            : r < 0.90F ? SixtySecondsIsland.Type.MILITARY
-                                                    : SixtySecondsIsland.Type.QUARANTINE;
+                                                            : r < 0.96F ? SixtySecondsIsland.Type.QUARANTINE
+                                                                    : SixtySecondsIsland.Type.FORSAKEN;
+            case 4 -> r < 0.20F ? SixtySecondsIsland.Type.VOLCANIC
+                    : r < 0.40F ? SixtySecondsIsland.Type.BARREN
+                            : r < 0.56F ? SixtySecondsIsland.Type.JUNGLE
+                                    : r < 0.70F ? SixtySecondsIsland.Type.RUINS
+                                            : r < 0.82F ? SixtySecondsIsland.Type.OIL
+                                                    : r < 0.90F ? SixtySecondsIsland.Type.MILITARY
+                                                            : r < 0.95F ? SixtySecondsIsland.Type.INFERNO
+                                                                    : SixtySecondsIsland.Type.FORSAKEN;
+            default -> r < 0.26F ? SixtySecondsIsland.Type.VOLCANIC // level 5
+                    : r < 0.44F ? SixtySecondsIsland.Type.BARREN
+                            : r < 0.60F ? SixtySecondsIsland.Type.RUINS
+                                    : r < 0.74F ? SixtySecondsIsland.Type.OIL
+                                            : r < 0.84F ? SixtySecondsIsland.Type.MILITARY
+                                                    : r < 0.91F ? SixtySecondsIsland.Type.INFERNO
+                                                            : r < 0.96F ? SixtySecondsIsland.Type.FORSAKEN
+                                                                    : SixtySecondsIsland.Type.ABYSS;
         };
     }
 
@@ -585,10 +591,10 @@ public final class SixtySecondsIslandGenerator {
             case TROPICAL -> new Palette(Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.GRASS_BLOCK.defaultBlockState(),
                     Blocks.DIRT.defaultBlockState(), Blocks.STONE.defaultBlockState(),
                     Blocks.SAND.defaultBlockState(), Blocks.SANDSTONE.defaultBlockState());
-            case EVACUATION, RUINS, QUARANTINE, OIL, MILITARY -> new Palette(Blocks.GRASS_BLOCK.defaultBlockState(),
-                    Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.DIRT.defaultBlockState(),
-                    Blocks.STONE.defaultBlockState(), Blocks.SAND.defaultBlockState(),
-                    Blocks.SANDSTONE.defaultBlockState());
+            case EVACUATION, RUINS, QUARANTINE, OIL, MILITARY, ABYSS, INFERNO, FORSAKEN -> new Palette(
+                    Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.GRASS_BLOCK.defaultBlockState(),
+                    Blocks.DIRT.defaultBlockState(), Blocks.STONE.defaultBlockState(),
+                    Blocks.SAND.defaultBlockState(), Blocks.SANDSTONE.defaultBlockState());
             case MARSH -> new Palette(Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.PODZOL.defaultBlockState(),
                     Blocks.MUD.defaultBlockState(), Blocks.STONE.defaultBlockState(),
                     Blocks.MUD.defaultBlockState(), Blocks.MUD.defaultBlockState());
@@ -849,7 +855,7 @@ public final class SixtySecondsIslandGenerator {
             case FROST -> 4 + level;
             case PLATEAU -> 3;
             case JUNGLE -> 12 + level * 2;
-            case RUINS, QUARANTINE, OIL, MILITARY -> 5;
+            case RUINS, QUARANTINE, OIL, MILITARY, ABYSS, INFERNO, FORSAKEN -> 5;
             case EVACUATION -> 3;
         };
     }
@@ -879,7 +885,7 @@ public final class SixtySecondsIslandGenerator {
             case PLATEAU -> 20;
             case JUNGLE -> 55 + level * 8;
             case BARREN -> 5;
-            case RUINS, QUARANTINE, OIL, MILITARY -> 24;
+            case RUINS, QUARANTINE, OIL, MILITARY, ABYSS, INFERNO, FORSAKEN -> 24;
             case EVACUATION -> 12;
         };
     }
@@ -1155,10 +1161,10 @@ public final class SixtySecondsIslandGenerator {
             return;
         }
 
-        // 普通物资箱：数量已下调（原 1.5 倍系数降为约 0.9 倍，分布更稀疏）；约 70% 上锁。
+        // 普通物资箱：数量在 0.9 倍基础上再降 50%（系数约 0.45，分布更稀疏）；约 70% 上锁。
         // 其中 15% 为随机箱（不上锁），其余 85% 中 82% 上锁 → 整体上锁率 ≈ 0.85×0.82 ≈ 70%。
-        int normal = Math.max(2, (int) (sm * (6 + island.level * 2) * 0.9)
-                + rng.nextInt(Math.max(1, (int) (sm * 5 * 0.9))));
+        int normal = Math.max(1, (int) (sm * (6 + island.level * 2) * 0.45)
+                + rng.nextInt(Math.max(1, (int) (sm * 5 * 0.45))));
         for (int i = 0; i < normal; i++) {
             BlockPos spot = randomGround(p, island, rng, 0.05, 0.9);
             if (spot == null) {
@@ -1174,8 +1180,8 @@ public final class SixtySecondsIslandGenerator {
                             : net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX),
                     BOX_CATEGORIES[rng.nextInt(BOX_CATEGORIES.length)]);
         }
-        // 高级物资箱：等级-1 个（按大小缩放，系数下调至 0.9）；约 70% 上锁；少量随机箱
-        int advanced = Math.max(0, (int) (sm * (island.level - 1) * 0.9));
+        // 高级物资箱：等级-1 个（按大小缩放，系数在 0.9 基础上再降 50% 至 0.45）；约 70% 上锁；少量随机箱
+        int advanced = Math.max(0, (int) (sm * (island.level - 1) * 0.45));
         for (int i = 0; i < advanced; i++) {
             BlockPos spot = randomGround(p, island, rng, 0.0, 0.6);
             if (spot == null) {

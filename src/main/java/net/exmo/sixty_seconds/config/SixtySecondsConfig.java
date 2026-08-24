@@ -182,7 +182,7 @@ public class SixtySecondsConfig {
      * 海图特殊标记，最后一天登岛即可撤离）。{@code /60s_ocean evac_chance <0~1>} 设置（按图持久化）。
      */
     @SerializedName("evacuationIslandChance")
-    public float evacuationIslandChance = 0.25F;
+    public float evacuationIslandChance = 0.05F;
     /** 区域岛默认危险等级（决定色板/物资/怪物数量）。 */
     @SerializedName("oceanIslandLevel")
     public int oceanIslandLevel = 1;
