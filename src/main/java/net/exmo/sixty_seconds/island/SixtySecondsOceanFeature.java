@@ -2,12 +2,12 @@ package net.exmo.sixty_seconds.island;
 
 import com.mojang.logging.LogUtils;
 import net.exmo.sixty_seconds.SixtySeconds;
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,8 +29,8 @@ import java.util.List;
  * 且每次写入都 <b>不触发任何方块更新</b>，因此不会在已加载区块上同步 setBlock，
  * 也不会让主线程在生成阶段被占满导致卡死）。
  *
- * <p>只有当前世界配置 {@link SixtySecondsConfig#oceanMode} 为真时才会写入地形，
- * 普通世界完全不受影响。
+ * <p>仅在 {@code sixty_seconds:ocean} 维度内触发（由数据包 dimension/ocean.json 加载），
+ * 与主世界互不干扰。
  */
 public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -66,15 +66,12 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
         if (level.isClientSide() || !(level instanceof ServerLevel serverLevel)) {
             return false;
         }
-        if (serverLevel.dimension() != Level.OVERWORLD) {
+        if (serverLevel.dimension() != SixtySeconds.OCEAN_DIMENSION) {
             return false;
         }
-        // 只有海洋世界才写地形（普通世界配置 oceanMode=false 时直接跳过）
+        // 海洋维度始终生成海岛地形（使用配置中的种子/海平面/岛屿数量，缺失时回退默认值）
         SixtySecondsConfig config = SixtySecondsConfigStore.current(serverLevel)
-                .orElse(null);
-        if (config == null || !config.oceanMode) {
-            return false;
-        }
+                .orElseGet(SixtySecondsConfig::new);
 
         BlockPos origin = ctx.origin();
         int cx = origin.getX();

@@ -153,12 +153,13 @@ public class SixtySecondsConfig {
     public boolean oceanCreaturesEnabled = true;
 
     /**
-     * 海洋世界模式开关（默认<b>关</b>）：开启后，主世界在区块首次加载时被整体改写为
-     * 「全海洋 + 底层基岩(Y=10) + 沙(Y=11/12) + Y&lt;10 留空 + 海面散布岛屿（含物资箱）」地形。
-     * 区别于普通 60秒 模式：在本模式下，避难所/初始房子生成在 Y=-40 附近（由建图逻辑处理）。
+     * 海洋（海岛）世界开关（默认<b>关</b>，现已废弃）。
      * <p>
-     * 由「创建世界」界面选择或 {@code /60s ocean create} 命令置位（按图持久化）。
+     * 旧实现：开启后主世界在区块首次加载时被整体改写为「全海洋 + 散布岛屿」地形（由「创建世界」界面预设置位）。
+     * 新实现：海洋世界已改为独立维度 {@code sixty_seconds:ocean}（见数据包 {@code data/sixty_seconds/dimension/ocean.json}），
+     * 由 {@code /60s_ocean tp} 传送进入，不再改写主世界，此字段保留仅为兼容旧存档 JSON。
      */
+    @Deprecated
     @SerializedName("oceanMode")
     public boolean oceanMode = false;
     /** 海洋世界地形种子（与地形生成强相关，建图/海图共用）。 */

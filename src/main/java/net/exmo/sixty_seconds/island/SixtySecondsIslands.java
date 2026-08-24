@@ -27,6 +27,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.phys.AABB;
 import net.exmo.sixty_seconds.SixtySeconds;
@@ -154,6 +155,19 @@ public final class SixtySecondsIslands {
         return net.exmo.sixty_seconds.config.SixtySecondsConfigStore.current(level)
                 .map(config -> config.seaChartTeleportEnabled)
                 .orElse(false);
+    }
+
+    /**
+     * 海洋（海岛）维度专用：维度首次 tick 时若群岛尚未生成，则按海洋配置异步生成。
+     * 使登岛检测、扬帆、返航等海岛远征玩法在该维度内开箱即用，与主世界对局互不干扰。
+     */
+    public static void ensureOceanStarted(ServerLevel level) {
+        Data data = get(level);
+        if (data.building || data.save.enabled) {
+            return;
+        }
+        // count/centerX/centerZ/seaY/baseRadius 传 0，由 start 回退到海洋配置
+        start(level, 0, 0, 0, 0, 0);
     }
 
     /** {@code /60s sea_teleport off} 时把在途的扬帆/返航一并作废，并重发海图刷新客户端按钮态。 */
@@ -587,7 +601,9 @@ public final class SixtySecondsIslands {
                     Component.translatable(LANG + "unlocked_by_visit", island.name(), island.level));
         }
         // 首登守岛怪：一小队，等级越高越强（每岛每局一次；后续增援靠 PVE 游荡怪）
-        if (SixtySecondsMod.isActive(level) && data.guardSpawned.add(island.id)
+        // 海洋维度没有对局进行中，但同样需要在首次登岛时刷守岛怪
+        if ((SixtySecondsMod.isActive(level) || level.dimension() == SixtySeconds.OCEAN_DIMENSION)
+                && data.guardSpawned.add(island.id)
                 && SixtySecondsPveSystem.pveEnabled(level)) {
             RandomSource rng = level.random;
             int pack = 1 + island.level + rng.nextInt(2);
@@ -673,7 +689,10 @@ public final class SixtySecondsIslands {
     /** 收音机侦听：海岛开启的对局中，每队每日一次机会，成功则解锁一座岛。 */
     private static void tryRadioIntel(ServerLevel level, ServerPlayer player) {
         Data data = STATES.get(level);
-        if (data == null || !data.save.enabled || !SixtySecondsMod.isActive(level)) {
+        boolean ocean = level.dimension() == SixtySeconds.OCEAN_DIMENSION;
+        // 海洋维度没有对局进行中，但收音机侦听仍可用（按天推进无效时视为第 1 天）
+        if (data == null || !data.save.enabled
+                || (!SixtySecondsMod.isActive(level) && !ocean)) {
             return;
         }
         int teamId = SixtySecondsStatsComponent.KEY.get(player).teamId;
@@ -682,7 +701,8 @@ public final class SixtySecondsIslands {
         }
         int day = SixtySecondsState.get(level).dayNumber;
         if (day <= 0) {
-            return;
+            // 海洋维度按天推进无效，使用第 1 天情报
+            day = 1;
         }
         Integer lastDay = data.radioIntelDay.get(teamId);
         if (lastDay != null && lastDay >= day) {
@@ -714,6 +734,7 @@ public final class SixtySecondsIslands {
     public static void sail(ServerPlayer player, int islandId) {
         ServerLevel level = player.serverLevel();
         Data data = get(level);
+        boolean ocean = level.dimension() == SixtySeconds.OCEAN_DIMENSION;
         if (!data.save.enabled || data.building) {
             player.displayClientMessage(Component.translatable(LANG + "sail_unavailable")
                     .withStyle(ChatFormatting.RED), true);
@@ -729,13 +750,15 @@ public final class SixtySecondsIslands {
             completeSail(player, new SailOrder(islandId, 0L, player.blockPosition().immutable()));
             return;
         }
-        // sea_teleport 关闭 = 只能自己开船去，海图不提供扬帆
-        if (!teleportAllowed(level)) {
+        // sea_teleport 关闭 = 只能自己开船去，海图不提供扬帆；海洋维度内扬帆始终可用
+        if (!teleportAllowed(level) && !ocean) {
             player.displayClientMessage(Component.translatable(LANG + "sail_teleport_disabled")
                     .withStyle(ChatFormatting.RED), true);
             return;
         }
-        if (!SixtySecondsMod.isActive(level) || !SixtySecondsSearchZones.isInSearchZone(player)) {
+        // 主世界要求「对局进行中且在搜索区」；海洋维度内身处即视为在外海探索
+        if ((!SixtySecondsMod.isActive(level) && !ocean)
+                || (!SixtySecondsSearchZones.isInSearchZone(player) && !ocean)) {
             player.displayClientMessage(Component.translatable(LANG + "sail_not_in_zone")
                     .withStyle(ChatFormatting.RED), true);
             return;
@@ -746,7 +769,8 @@ public final class SixtySecondsIslands {
         }
         int teamId = stats.teamId;
         Set<Integer> unlocked = data.teamUnlocked.get(teamId);
-        if (teamId < 0 || unlocked == null || !unlocked.contains(island.id)) {
+        // 海洋维度内所有岛默认可达（无需先为某队解锁）；主世界仍需本队已解锁
+        if (!ocean && (teamId < 0 || unlocked == null || !unlocked.contains(island.id))) {
             player.displayClientMessage(Component.translatable(LANG + "sail_locked")
                     .withStyle(ChatFormatting.RED), true);
             return;
@@ -959,9 +983,22 @@ public final class SixtySecondsIslands {
     public static void requestReturn(ServerPlayer player) {
         ServerLevel level = player.serverLevel();
         Data data = get(level);
+        boolean ocean = level.dimension() == SixtySeconds.OCEAN_DIMENSION;
         if (!data.save.enabled || data.building) {
             player.displayClientMessage(Component.translatable(LANG + "return_unavailable")
                     .withStyle(ChatFormatting.RED), true);
+            return;
+        }
+
+        // 海洋维度返航 = 回主世界出生点，无需搜索区/登岛点等限制
+        if (ocean) {
+            long now = level.getGameTime();
+            data.playerReturningUntil.put(player.getUUID(), now + RETURN_DURATION_TICKS);
+            SixtySecondsSeaChartReturnStartS2CPacket.send(player, RETURN_DURATION_TICKS);
+            level.playSound(null, player.blockPosition(), SoundEvents.BOAT_PADDLE_WATER,
+                    SoundSource.PLAYERS, 0.8F, 1.0F);
+            player.displayClientMessage(Component.translatable(LANG + "return_started")
+                    .withStyle(ChatFormatting.AQUA), true);
             return;
         }
 
@@ -1058,6 +1095,26 @@ public final class SixtySecondsIslands {
         SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
         stats.exploreCooldownEndTick = 0;
         stats.sync();
+
+        // 海洋维度返航 = 回到主世界出生点
+        if (level.dimension() == SixtySeconds.OCEAN_DIMENSION) {
+            ServerLevel overworld = level.getServer().getLevel(Level.OVERWORLD);
+            BlockPos home = overworld != null ? overworld.getSharedSpawnPos() : player.blockPosition();
+            if (origin == null) {
+                origin = player.blockPosition();
+            }
+            if (overworld != null) {
+                BlockPos safe = SixtySecondsSearchZones.findSafeSpot(overworld, home);
+                player.teleportTo(overworld, safe.getX() + 0.5, safe.getY(), safe.getZ() + 0.5,
+                        player.getYRot(), player.getXRot());
+            }
+            if (!player.isCreative()) {
+                applyTripCost(player, origin, home);
+            }
+            player.displayClientMessage(Component.translatable(LANG + "return_complete")
+                    .withStyle(ChatFormatting.GREEN), true);
+            return;
+        }
 
         // 回程航距按「登岛点 → 本队庇护所」算（returnPlayer 的落点就是庇护所出生点）；
         // 拿不到队伍信息时退回玩家当前位置，至少不会算成 0 距离白嫖一趟

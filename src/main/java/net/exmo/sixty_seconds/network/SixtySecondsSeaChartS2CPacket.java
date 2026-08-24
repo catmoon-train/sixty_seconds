@@ -90,19 +90,21 @@ public record SixtySecondsSeaChartS2CPacket(boolean enabled, boolean openScreen,
         Set<Integer> unlocked = data.teamUnlocked.get(teamId);
         Set<Integer> visited = data.teamVisited.get(teamId);
         boolean seeAll = player.isCreative() || player.isSpectator();
+        // 海洋（海岛）维度内所有岛默认可达、扬帆/返航始终可用
+        boolean ocean = level.dimension() == SixtySeconds.OCEAN_DIMENSION;
         List<Entry> entries = new ArrayList<>();
         int seaY = 0;
         for (SixtySecondsIsland island : data.save.islands) {
             seaY = island.seaY;
-            boolean isUnlocked = seeAll || island.level <= 1
+            boolean isUnlocked = seeAll || ocean || island.level <= 1
                     || (unlocked != null && unlocked.contains(island.id));
             entries.add(new Entry(island.id, island.level, island.namePrefix, island.nameSuffix,
                     island.centerX, island.centerZ, island.radius, island.seed, isUnlocked,
                     visited != null && visited.contains(island.id),
                     island.type == null ? -1 : island.type.ordinal()));
         }
-        // 创造/旁观不受 sea_teleport 开关限制（管理员巡查/观战要能随时跳岛）
-        boolean teleportAllowed = seeAll || SixtySecondsIslands.teleportAllowed(level);
+        // 创造/旁观不受 sea_teleport 开关限制；海洋维度内扬帆/返航总是可用
+        boolean teleportAllowed = seeAll || ocean || SixtySecondsIslands.teleportAllowed(level);
         ServerPlayNetworking.send(player, new SixtySecondsSeaChartS2CPacket(data.save.enabled, openScreen,
                 teleportAllowed, seaY, entries));
     }

@@ -47,7 +47,6 @@ public final class SixtySecondsMod {
         net.exmo.sixty_seconds.content.block.SixtySecondsBaseUtilityBlock.register(); // 基地报警器/玩偶/次声波音响
         net.exmo.sixty_seconds.logic.SixtySecondsMystic.register(); // 神秘技术：复活图腾右键尸体
         net.exmo.sixty_seconds.island.SixtySecondsIslands.register(); // 海岛远征：收音机侦听岛屿情报
-        net.exmo.sixty_seconds.island.SixtySecondsOceanWorldGen.register(); // 海洋世界：创建世界即整体改写为海洋地图
         net.exmo.sixty_seconds.logic.SixtySecondsNpcSystem.register(); // NPC 死亡掉落（随身物资+废料）
         net.exmo.sixty_seconds.content.item.SixtySecondsRadioHandler.register(); // 对讲机频道：掉线/旁观/弃机自动退出
         registerDropRule(); // 本模式放行丢弃物品（全局默认禁丢，见 KeyBindingMixin/DropRules）

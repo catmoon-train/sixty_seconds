@@ -4,18 +4,26 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import net.exmo.sixty_seconds.SixtySeconds;
+import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
 import net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity;
 import net.exmo.sixty_seconds.entity.OceanSharkEntity;
+import net.exmo.sixty_seconds.island.SixtySecondsIsland;
+import net.exmo.sixty_seconds.island.SixtySecondsOceanWorldGen;
 import net.exmo.sixty_seconds.logic.OceanCreatureSpawner;
 import net.exmo.sixty_seconds.bridge.fabric.CommandRegistrationCallback;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.ChatFormatting;
+
+import java.util.List;
 
 /**
  * 海洋生物管理命令：生成/开关海洋生物（鲨鱼/海怪）。
@@ -75,6 +83,12 @@ public final class OceanCreatureCommand {
         // /60s_ocean status
         root.then(Commands.literal("status")
                 .executes(OceanCreatureCommand::showStatus));
+
+        // /60s_ocean tp [player]  — 传送到海洋（海岛）维度
+        root.then(Commands.literal("tp")
+                .executes(ctx -> teleportToOcean(ctx.getSource(), null))
+                .then(Commands.argument("target", EntityArgument.player())
+                        .executes(ctx -> teleportToOcean(ctx.getSource(), EntityArgument.getPlayer(ctx, "target")))));
 
         dispatcher.register(root);
         });
@@ -172,5 +186,38 @@ public final class OceanCreatureCommand {
                         .withStyle(ChatFormatting.RED))
                 .withStyle(ChatFormatting.YELLOW), false);
         return 1;
+    }
+
+    /** 将玩家传送到海洋（海岛）维度 {@code sixty_seconds:ocean}。 */
+    private static int teleportToOcean(CommandSourceStack source, ServerPlayer target) {
+        MinecraftServer server = source.getServer();
+        ServerLevel ocean = server.getLevel(SixtySeconds.OCEAN_DIMENSION);
+        if (ocean == null) {
+            source.sendFailure(Component.literal("海洋维度未加载，请确认 sixty_seconds 数据包已启用"));
+            return 0;
+        }
+        ServerPlayer player = target != null ? target : source.getPlayer();
+        if (player == null) {
+            source.sendFailure(Component.literal("无法获取目标玩家"));
+            return 0;
+        }
+        BlockPos dest = computeOceanSpawn(ocean, player);
+        player.teleportTo(ocean, dest.getX() + 0.5, dest.getY(), dest.getZ() + 0.5,
+                player.getYRot(), player.getXRot());
+        source.sendSuccess(() -> Component.literal("已将 " + player.getName().getString() + " 传送到海洋维度")
+                .withStyle(ChatFormatting.AQUA), true);
+        return 1;
+    }
+
+    /** 计算海洋维度的安全落点：优先落在 region(0,0) 的第一座岛屿中心，否则落在维度出生点上方。 */
+    private static BlockPos computeOceanSpawn(ServerLevel ocean, ServerPlayer player) {
+        SixtySecondsConfig config = SixtySecondsConfigStore.current(ocean).orElseGet(SixtySecondsConfig::new);
+        List<SixtySecondsIsland> islands = SixtySecondsOceanWorldGen.planRegion(0, 0, config, ocean.getSeed());
+        if (islands != null && !islands.isEmpty()) {
+            SixtySecondsIsland island = islands.get(0);
+            return new BlockPos(island.centerX, island.seaY + 2, island.centerZ);
+        }
+        BlockPos spawn = ocean.getSharedSpawnPos();
+        return new BlockPos(spawn.getX(), config.oceanSeaY + 2, spawn.getZ());
     }
 }

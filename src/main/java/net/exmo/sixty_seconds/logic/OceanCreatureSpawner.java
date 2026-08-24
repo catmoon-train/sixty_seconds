@@ -1,5 +1,6 @@
 package net.exmo.sixty_seconds.logic;
 
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
 import net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity;
@@ -62,14 +63,17 @@ public final class OceanCreatureSpawner {
         if (config == null || !config.oceanCreaturesEnabled) return;
 
         SixtySecondsState.Data data = SixtySecondsState.get(level);
-        if (data == null || data.dayNumber <= 0) return;
+        if (data == null) return;
+        // 海洋（海岛）维度没有对局推进的游戏日：用 totalDays 作为等效难度（始终满强度）
+        boolean inOcean = level.dimension() == SixtySeconds.OCEAN_DIMENSION;
+        int dayNumber = data.dayNumber > 0 ? data.dayNumber : Math.max(1, config.totalDays);
 
         // ── 天数比例：dayRatio = currentDay / totalDays ─────────────
-        double dayRatio = (double) data.dayNumber / Math.max(1, config.totalDays);
+        double dayRatio = (double) dayNumber / Math.max(1, config.totalDays);
         boolean night = level.isNight();
 
         // 前四天额外压降 ×0.3（保证前几天几乎不刷强怪）
-        double earlyDayMult = data.dayNumber <= 4 ? 0.3 : 1.0;
+        double earlyDayMult = dayNumber <= 4 ? 0.3 : 1.0;
         // 怪物刷新频率+40%：鲨鱼/海怪基础概率 ×1.4
         double sharkBase = (night ? 0.28 : 0.105) * dayRatio * earlyDayMult;
         double monsterBase = (night ? 0.042 : 0.007) * dayRatio * earlyDayMult;
@@ -80,7 +84,7 @@ public final class OceanCreatureSpawner {
                     || !net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {
                 continue;
             }
-            if (!net.exmo.sixty_seconds.arena.SixtySecondsSearchZones.isInSearchZone(player)) {
+            if (!net.exmo.sixty_seconds.arena.SixtySecondsSearchZones.isInSearchZone(player) && !inOcean) {
                 continue;
             }
             if (!isNearOpenWater(level, player.blockPosition())) {

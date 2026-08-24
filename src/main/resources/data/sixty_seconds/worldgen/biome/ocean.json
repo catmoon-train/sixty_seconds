@@ -1,0 +1,25 @@
+{
+  "has_precipitation": false,
+  "temperature": 0.8,
+  "temperature_modifier": "none",
+  "downfall": 0.0,
+  "effects": {
+    "sky_color": 7907327,
+    "fog_color": 12638463,
+    "fluid_fog_color": 7960953,
+    "water_color": 4159204,
+    "water_fog_color": 329011,
+    "grass_color": 7979896,
+    "foliage_color": 7979896,
+    "sky_type": 0,
+    "cloud_color": 16777215,
+    "has_ground": true
+  },
+  "spawners": {},
+  "spawn_costs": {},
+  "carvers": {
+    "air": [],
+    "liquid": []
+  },
+  "features": []
+}
