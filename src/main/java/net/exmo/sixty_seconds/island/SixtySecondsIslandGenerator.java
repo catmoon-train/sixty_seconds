@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.BulkSectionAccess;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.exmo.sixty_seconds.SixtySeconds;
 import org.jetbrains.annotations.Nullable;
@@ -363,7 +364,11 @@ public final class SixtySecondsIslandGenerator {
         public BlockState getBlockState(BlockPos pos) {
             if (!inChunk(pos)) return Blocks.AIR.defaultBlockState(); // 越界视为空气，避免 NPE 且让垫层/木桩逻辑正确跳过
             LevelChunkSection sec = bsa.getSection(pos);
-            return sec == null ? Blocks.AIR.defaultBlockState() : sec.getBlockState(pos.getX() & 15, pos.getY(), pos.getZ() & 15);
+            if (sec == null) return Blocks.AIR.defaultBlockState();
+            int lx = pos.getX() & 15;
+            int ly = pos.getY() & 15; // section 内局部 Y，必须用世界 Y 取模 16
+            int lz = pos.getZ() & 15;
+            return sec.getBlockState(lx, ly, lz);
         }
 
         @Override
@@ -720,7 +725,7 @@ public final class SixtySecondsIslandGenerator {
 
     /** 直接写 primer（不触发更新），参照 LostCities 的 SectionCache.setBlock 写法。 */
     private static void setPrimer(BulkSectionAccess bsa, int x, int y, int z, BlockState state) {
-        LevelChunkSection section = bsa.getSection(new net.minecraft.core.BlockPos(x, y, z));
+        LevelChunkSection section = bsa.getSection(new BlockPos(x, y, z));
         if (section != null) {
             section.setBlockState(x & 15, y & 15, z & 15, state, false);
         }

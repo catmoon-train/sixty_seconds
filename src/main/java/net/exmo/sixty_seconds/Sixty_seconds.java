@@ -34,6 +34,7 @@ public class Sixty_seconds {
         ModSounds.register(modEventBus);
         SixtySecondsCreativeTab.register(modEventBus);
         net.exmo.sixty_seconds.island.SixtySecondsOceanFeature.register(modEventBus); // 海洋世界地形生成 Feature
+        net.exmo.sixty_seconds.world.OceanChunkGenerator.CHUNK_GENERATORS.register(modEventBus); // 海洋维度生成器
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerSpawnPlacements);
         modEventBus.addListener(ModNetwork::register);
