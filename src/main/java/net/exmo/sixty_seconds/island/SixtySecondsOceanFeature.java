@@ -74,8 +74,10 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
                 .orElseGet(SixtySecondsConfig::new);
 
         BlockPos origin = ctx.origin();
-        int cx = origin.getX();
-        int cz = origin.getZ();
+        // 用 chunk 真实原点（0/16 对齐），而非 placed_feature 随机落点，保证每区块精确覆盖自身 16×16
+        ChunkAccess chunk = level.getChunk(origin);
+        int cx = chunk.getPos().getMinBlockX();
+        int cz = chunk.getPos().getMinBlockZ();
         int seaY = config.oceanSeaY;
         long worldSeed = serverLevel.getSeed();
 
