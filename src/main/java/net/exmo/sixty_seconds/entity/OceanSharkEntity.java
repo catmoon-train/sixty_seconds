@@ -9,6 +9,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
@@ -16,7 +17,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
-import net.minecraft.world.entity.SpawnResult;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -118,10 +118,10 @@ public class OceanSharkEntity extends OceanCreatureEntity {
      * 手动刷怪走 {@code MobSpawnType.COMMAND}，不进入此分支（避免覆盖已选定的变体）。
      */
     @Override
-    public SpawnResult finalizeSpawn(ServerLevel level, DifficultyInstance difficulty,
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
             MobSpawnType spawnType, @Nullable SpawnGroupData spawnData) {
         if (spawnType == MobSpawnType.NATURAL && getVariant() == Variant.REEF_SHARK) {
-            float r = level.getRandom().nextFloat();
+            float r = ((ServerLevel) level).getRandom().nextFloat();
             Variant v;
             if (r < 0.04F) v = Variant.MEGALODON;
             else if (r < 0.19F) v = Variant.GREAT_WHITE;

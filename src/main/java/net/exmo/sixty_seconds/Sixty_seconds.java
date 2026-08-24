@@ -13,6 +13,8 @@ import net.exmo.sixty_seconds.registry.ModItems;
 import net.exmo.sixty_seconds.registry.ModSounds;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -33,6 +35,7 @@ public class Sixty_seconds {
         SixtySecondsCreativeTab.register(modEventBus);
         net.exmo.sixty_seconds.island.SixtySecondsOceanFeature.register(modEventBus); // 海洋世界地形生成 Feature
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::registerSpawnPlacements);
         modEventBus.addListener(ModNetwork::register);
         NeoForge.EVENT_BUS.register(NeoForgeEvents.class);
         net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesAccess.init(); // 通过 IMC 获取 LostCities API（建筑星级映射）
@@ -44,13 +47,21 @@ public class Sixty_seconds {
             SixtySecSounds.bind();
             net.exmo.sixty_seconds.init.ModOceanEntities.bind();
             SixtySecondsMod.init();
-            // 海洋鲨鱼数据刷怪（biome_modifier add_spawns）必需的刷怪位置规则：
-            // 没有这一步，数据包里的 add_spawns 不会真正刷出实体。
-            SpawnPlacements.register(ModOceanEntities.OCEAN_SHARK.get(),
-                    SpawnPlacements.Type.IN_WATER,
-                    Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                    (level, pos, state) -> level.getFluidState(pos).is(FluidTags.WATER)
-                            && level.getFluidState(pos.above()).is(FluidTags.WATER));
         });
+    }
+
+    /**
+     * 海洋鲨鱼数据刷怪（biome_modifier add_spawns）必需的刷怪位置规则登记。
+     * NeoForge 1.21.1 通过 {@link RegisterSpawnPlacementsEvent}（mod 总线）注册，
+     * 没有这一步，数据包里的 add_spawns 不会真正刷出实体。
+     */
+    private void registerSpawnPlacements(final RegisterSpawnPlacementsEvent event) {
+        event.register(ModOceanEntities.OCEAN_SHARK,
+                SpawnPlacementTypes.IN_WATER,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                (type, level, spawnType, pos, random) ->
+                        level.getFluidState(pos).is(FluidTags.WATER)
+                                && level.getFluidState(pos.above()).is(FluidTags.WATER),
+                RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 }
