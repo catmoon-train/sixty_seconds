@@ -40,6 +40,8 @@ public class SeaChartFullScreen extends Screen {
     /** 撤离点岛屿的特殊高亮色（金色发光，区别于普通等级色）。 */
     private static final int COLOR_EVAC = 0xFFF2C14E;
     private static final int COLOR_EVAC_BORDER = 0xFFFFE08A;
+    private static final int COLOR_HARDCORE = 0xFFB71C1C;
+    private static final int COLOR_HARDCORE_BORDER = 0xFF000000;
     private static final int COLOR_BEACH = 0xFFD8CC9A;
     private static final int COLOR_OCEAN = 0xFF0B2740;
     private static final int COLOR_OCEAN_DEEP = 0xFF081C30;
@@ -313,16 +315,21 @@ public class SeaChartFullScreen extends Screen {
             }
         }
 
-        int color = entry.evacuation() ? COLOR_EVAC
+        int color = entry.hardcore() ? COLOR_HARDCORE
+                : entry.evacuation() ? COLOR_EVAC
                 : LEVEL_COLORS[Mth.clamp(entry.level(), 1, 5) - 1];
         // 撤离点岛使用专属独立岛名（如「归航岛」），不再追加「撤离点」文字后缀；以金色+光环标识特殊性
-        String label = islandName(entry).getString()
+        String label = (entry.hardcore() ? "☠ " : "") + islandName(entry).getString()
                 + (entry.evacuation() ? "" : " Lv." + entry.level())
                 + (entry.visited() ? " " + Component.translatable(LANG + "chart_visited").getString() : "");
         int labelR = Math.min(screenR, MAX_CIRCLE_RADIUS);
         labels.add(() -> {
             graphics.drawCenteredString(font, label, cx, cy + labelR + 3, color);
-            if (entry.evacuation()) {
+            if (entry.hardcore()) {
+                // 炼狱岛：深红本体 + 黑色描边，强调高危强化据点
+                int ringR = Math.min(screenR, MAX_CIRCLE_RADIUS) + 4;
+                drawCircleBorder(graphics, cx, cy, ringR, COLOR_HARDCORE_BORDER);
+            } else if (entry.evacuation()) {
                 // 撤离点岛额外画一圈金色光环，强调其特殊性
                 int ringR = Math.min(screenR, MAX_CIRCLE_RADIUS) + 6;
                 drawCircleBorder(graphics, cx, cy, ringR, COLOR_EVAC_BORDER);
@@ -358,8 +365,9 @@ public class SeaChartFullScreen extends Screen {
         int endY = Math.min(cy + screenR, height + step);
 
         int mainColor = fog ? COLOR_FOG
-                : entry.evacuation() ? COLOR_EVAC
-                        : LEVEL_COLORS[Mth.clamp(entry.level(), 1, 5) - 1];
+                : entry.hardcore() ? COLOR_HARDCORE
+                        : entry.evacuation() ? COLOR_EVAC
+                                : LEVEL_COLORS[Mth.clamp(entry.level(), 1, 5) - 1];
         int size = Math.max(1, step);
 
         for (int px = startX; px <= endX; px += step) {

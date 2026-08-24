@@ -3,7 +3,9 @@ package net.exmo.sixty_seconds.island;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
+import net.exmo.sixty_seconds.entity.SixtySecondsBossEntity;
 import net.exmo.sixty_seconds.SixtySecondsMod;
+import net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity;
 import net.exmo.sixty_seconds.arena.SixtySecondsSearchZones;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.logic.SixtySecondsPveSystem;
@@ -24,6 +26,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.item.ItemStack;
@@ -551,6 +554,81 @@ public final class SixtySecondsIslands {
             data.lastIsland.put(player.getUUID(), current.id);
             onLanded(level, data, player, current);
         }
+
+        tickHardcoreGarrison(level, data);
+    }
+
+    /**
+     * 炼狱岛驻守 Boss 的「远离消失 / 靠近去重重生」管理（每 10 tick 一次）。
+     * <p>去重依据：维度内按 {@link SixtySecondsBossEntity#getHomeIslandId()} 索引存活驻守 Boss。
+     * 玩家全部远离岛心 {@code >HARDCORE_BOSS_DESPAWN_DIST} 时让驻守 Boss 消失；
+     * 玩家靠近 {@code <HARDCORE_BOSS_SPAWN_DIST} 且岛上无存活驻守 Boss 时重建一只。</p>
+     */
+    private static void tickHardcoreGarrison(ServerLevel level, Data data) {
+        // 无炼狱岛时直接短路，避免无谓的实体扫描
+        boolean anyHardcore = false;
+        for (SixtySecondsIsland isl : data.save.islands) {
+            if (isl.hardcore && isl.bossVariant != null) {
+                anyHardcore = true;
+                break;
+            }
+        }
+        if (!anyHardcore) {
+            return;
+        }
+        // 1) 收集维度内所有存活的驻守 Boss（按岛 id 索引，天然去重）
+        //    按 Boss 类索引查询（Level.getEntities 内部按实体类存储，比遍历全维度所有实体高效）
+        Map<Integer, SixtySecondsBossEntity> garrison = new java.util.HashMap<>();
+        net.minecraft.world.level.entity.EntityTypeTest<net.minecraft.world.entity.Entity, SixtySecondsBossEntity> test =
+                net.minecraft.world.level.entity.EntityTypeTest.forClass(SixtySecondsBossEntity.class);
+        net.minecraft.world.phys.AABB big = net.minecraft.world.phys.AABB.ofSize(
+                net.minecraft.world.phys.Vec3.ZERO, 3.0E7, 3.0E7, 3.0E7);
+        java.util.List<SixtySecondsBossEntity> bossList = new java.util.ArrayList<>();
+        level.getEntities(test, big, boss -> true, bossList);
+        for (SixtySecondsBossEntity boss : bossList) {
+            if (!boss.isRemoved() && boss.isGarrisonBoss()) {
+                garrison.putIfAbsent(boss.getHomeIslandId(), boss);
+            }
+        }
+        double despawnSqr = SixtySecondsBalance.HARDCORE_BOSS_DESPAWN_DIST
+                * SixtySecondsBalance.HARDCORE_BOSS_DESPAWN_DIST;
+        double spawnSqr = SixtySecondsBalance.HARDCORE_BOSS_SPAWN_DIST
+                * SixtySecondsBalance.HARDCORE_BOSS_SPAWN_DIST;
+        for (SixtySecondsIsland island : data.save.islands) {
+            if (!island.hardcore || island.bossVariant == null) {
+                continue;
+            }
+            // 2) 该岛最近玩家与岛心的水平距离平方
+            double nearestSqr = Double.MAX_VALUE;
+            for (ServerPlayer player : level.players()) {
+                if (player.isSpectator()) {
+                    continue;
+                }
+                double dx = player.getX() - island.centerX;
+                double dz = player.getZ() - island.centerZ;
+                double d = dx * dx + dz * dz;
+                if (d < nearestSqr) {
+                    nearestSqr = d;
+                }
+            }
+            SixtySecondsBossEntity existing = garrison.get(island.id);
+            if (existing != null && !existing.isRemoved()) {
+                // 有驻守 Boss：全部玩家远离则消失
+                if (nearestSqr > despawnSqr) {
+                    existing.discard();
+                }
+            } else if (nearestSqr <= spawnSqr) {
+                // 无存活驻守 Boss 且玩家靠近：去重后重建一只
+                int bossLevel = Mth.clamp(island.level - 1 + SixtySecondsBalance.HARDCORE_BOSS_LEVEL_BONUS,
+                        1, SixtySecondsBalance.AREA_BOSS_MAX_LEVEL);
+                BlockPos bossSpot = new BlockPos(island.centerX, island.seaY + 1, island.centerZ);
+                SixtySecondsBossEntity boss = SixtySecondsPveSystem.spawnBoss(
+                        level, bossSpot, bossLevel, false, island.bossVariant, false);
+                if (boss != null) {
+                    boss.setHomeIslandId(island.id);
+                }
+            }
+        }
     }
 
     // ── 海图点位订阅（庇护所 + 队友；只在有人开着海图时推）──────────────────────
@@ -644,16 +722,49 @@ public final class SixtySecondsIslands {
                 && data.guardSpawned.add(island.id)
                 && SixtySecondsPveSystem.pveEnabled(level)) {
             RandomSource rng = level.random;
+            // 炼狱岛：守岛怪更多、用更强 variant、血量额外加成；并固定驻守一只 Boss
             int pack = 1 + island.level + rng.nextInt(2);
+            double hpMult = 1.0 + 0.15 * (island.level - 1);
+            if (island.hardcore) {
+                pack += SixtySecondsBalance.HARDCORE_GUARD_EXTRA;
+                hpMult *= SixtySecondsBalance.HARDCORE_GUARD_HEALTH_MULT;
+            }
+            SixtySecondsIslandGenerator.LevelPlacer placer =
+                    new SixtySecondsIslandGenerator.LevelPlacer(level, new java.util.LinkedHashMap<>());
             for (int i = 0; i < pack; i++) {
-                BlockPos spot = SixtySecondsIslandGenerator.randomGround(
-                        new SixtySecondsIslandGenerator.LevelPlacer(level, new java.util.LinkedHashMap<>()),
-                        island, rng, 0.1, 0.7);
+                BlockPos spot = SixtySecondsIslandGenerator.randomGround(placer, island, rng, 0.1, 0.7);
                 if (spot != null) {
-                    SixtySecondsPveSystem.createMonster(level, spot,
-                            SixtySecondsIslandGenerator.rollVariant(rng, island.level),
-                            1.0 + 0.15 * (island.level - 1), 1.0);
+                    SixtySecondsMonsterEntity.Variant v;
+                    if (island.hardcore) {
+                        v = SixtySecondsBalance.HARDCORE_GUARD_VARIANTS[
+                                rng.nextInt(SixtySecondsBalance.HARDCORE_GUARD_VARIANTS.length)];
+                    } else {
+                        v = SixtySecondsIslandGenerator.rollVariant(rng, island.level);
+                    }
+                    SixtySecondsPveSystem.createMonster(level, spot, v, hpMult, 1.0);
                 }
+            }
+            // 炼狱岛固定驻守一只 Boss（规划阶段决定的变体；首登一次性）
+            if (island.hardcore && island.bossVariant != null) {
+                int bossLevel = Mth.clamp(island.level - 1 + SixtySecondsBalance.HARDCORE_BOSS_LEVEL_BONUS,
+                        1, SixtySecondsBalance.AREA_BOSS_MAX_LEVEL);
+                BlockPos bossSpot = SixtySecondsIslandGenerator.randomGround(
+                        placer, island, rng, 0.1, 0.6);
+                if (bossSpot == null) {
+                    bossSpot = new BlockPos(island.centerX, island.seaY + 1, island.centerZ);
+                }
+                SixtySecondsBossEntity boss = SixtySecondsPveSystem.spawnBoss(
+                        level, bossSpot, bossLevel, false, island.bossVariant, false);
+                if (boss != null) {
+                    boss.setHomeIslandId(island.id);
+                }
+                // 炼狱岛登场额外红色警报，强调驻守 Boss
+                SubtitleCommand.sendToPlayerTop(player,
+                        Component.translatable(LANG + "enter_hardcore").withStyle(ChatFormatting.DARK_RED,
+                                ChatFormatting.BOLD),
+                        Component.translatable(LANG + "enter_hardcore_sub").withStyle(ChatFormatting.RED),
+                        80, false);
+                player.playNotifySound(SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 1.0F, 0.9F);
             }
         }
     }

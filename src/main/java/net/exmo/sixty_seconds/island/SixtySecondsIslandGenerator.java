@@ -1,7 +1,9 @@
 package net.exmo.sixty_seconds.island;
 
+import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.bridge.ServerTaskInfoClasses;
+import net.exmo.sixty_seconds.entity.SixtySecondsBossEntity;
 import net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity;
 import net.exmo.sixty_seconds.logic.SixtySecondsPveSystem;
 import net.minecraft.ChatFormatting;
@@ -182,6 +184,14 @@ public final class SixtySecondsIslandGenerator {
             island.seaY = seaY;
             // ── 生态类型：按等级分布，首岛恒为热带（友好新手岛）──
             island.type = assignType(rng, island.level, i == 0);
+            // ── 炼狱岛：仅「部分」五星岛按概率强化（更高难怪物 + 固定驻守 Boss）──
+            if (island.level >= 5 && !island.isEvacuation
+                    && rng.nextFloat() < SixtySecondsBalance.HARDCORE_FIVE_STAR_CHANCE) {
+                island.hardcore = true;
+                // 从强力 Boss 池里随机挑一只固定驻守
+                SixtySecondsBossEntity.BossVariant[] pool = SixtySecondsBalance.HARDCORE_BOSS_POOL;
+                island.bossVariant = pool[rng.nextInt(pool.length)];
+            }
             // ── 半径：base×size乘数 + level加成 + 随机 ──
             SixtySecondsIsland.Size sz = island.size;
             island.radius = (int) (base * sz.radiusMult)
@@ -471,7 +481,11 @@ public final class SixtySecondsIslandGenerator {
                 }
             }
             work.add(() -> decorate(placer, island));
-            work.add(() -> SixtySecondsRuins.placeAll(placer, island));
+            // 撤离点岛：跳过「专有建筑 / 地形模板」(Ruins)，避免生成废墟建筑，
+            // 同时也就不会生成 Ruins 自带的保底物资箱（撤离点岛本就不该有物资箱）。
+            if (!island.isEvacuation) {
+                work.add(() -> SixtySecondsRuins.placeAll(placer, island));
+            }
             work.add(() -> populate(placer, island));
             // 一级岛：地形建好后放一扇避难所门（走 Placer 记快照，还原时随地形自动清除）。
             if (placeShelterDoors && island.level == 1) {
@@ -1387,18 +1401,18 @@ public final class SixtySecondsIslandGenerator {
             return;
         }
 
-        // 普通物资箱：数量在 0.9 倍基础上再降 50%（系数约 0.45，分布更稀疏）；约 70% 上锁。
+        // 普通物资箱：数量遵循 SUPPLY_BOX_DENSITY 系数（在原始 0.9 基础上再降 50%，分布更稀疏）；约 70% 上锁。
         // 其中 15% 为随机箱（不上锁），其余 85% 中 82% 上锁 → 整体上锁率 ≈ 0.85×0.82 ≈ 70%。
-        int normal = Math.max(1, (int) (sm * (6 + island.level * 2) * 0.45)
-                + rng.nextInt(Math.max(1, (int) (sm * 5 * 0.45))));
+        int normal = Math.max(1, (int) (sm * (6 + island.level * 2) * SUPPLY_BOX_DENSITY)
+                + rng.nextInt(Math.max(1, (int) (sm * 5 * SUPPLY_BOX_DENSITY))));
         for (int i = 0; i < normal; i++) {
             BlockPos spot = randomGround(p, island, rng, 0.05, 0.9);
             if (spot == null) {
                 continue;
             }
-            boolean asRandom = rng.nextFloat() < 0.15F;
+            boolean asRandom = rng.nextFloat() < SUPPLY_BOX_RANDOM_RATE;
             // 普通物资箱：约 82% 落实为上锁的物资箱方块（仅非随机箱参与）
-            boolean locked = !asRandom && rng.nextFloat() < 0.82F;
+            boolean locked = !asRandom && rng.nextFloat() < SUPPLY_BOX_LOCK_RATE;
             placeSupplyBox(p, spot, asRandom
                     ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_LOW_TIER_RANDOM_SUPPLY_BOX
                     : (locked
@@ -1407,15 +1421,15 @@ public final class SixtySecondsIslandGenerator {
                     BOX_CATEGORIES[rng.nextInt(BOX_CATEGORIES.length)]);
         }
         // 高级物资箱：等级-1 个（按大小缩放，系数在 0.9 基础上再降 50% 至 0.45）；约 70% 上锁；少量随机箱
-        int advanced = Math.max(0, (int) (sm * (island.level - 1) * 0.45));
+        int advanced = Math.max(0, (int) (sm * (island.level - 1) * SUPPLY_BOX_DENSITY));
         for (int i = 0; i < advanced; i++) {
             BlockPos spot = randomGround(p, island, rng, 0.0, 0.6);
             if (spot == null) {
                 continue;
             }
-            boolean asRandom = rng.nextFloat() < 0.15F;
+            boolean asRandom = rng.nextFloat() < SUPPLY_BOX_RANDOM_RATE;
             // 高级物资箱：约 82% 落实为上锁的高级物资箱方块（仅非随机箱参与）
-            boolean advancedLocked = !asRandom && rng.nextFloat() < 0.82F;
+            boolean advancedLocked = !asRandom && rng.nextFloat() < SUPPLY_BOX_LOCK_RATE;
             placeSupplyBox(p, spot, asRandom
                     ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_HIGH_TIER_RANDOM_SUPPLY_BOX
                     : (advancedLocked

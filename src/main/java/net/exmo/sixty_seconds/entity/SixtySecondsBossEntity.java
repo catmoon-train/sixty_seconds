@@ -87,6 +87,12 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
             SynchedEntityData.defineId(SixtySecondsBossEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> BOSS_VARIANT =
             SynchedEntityData.defineId(SixtySecondsBossEntity.class, EntityDataSerializers.INT);
+    /**
+     * 驻守岛 id：炼狱岛固定驻守 Boss 写入所属岛屿 id（≥0）；
+     * 普通/夜晚 Boss 为 -1。用于「玩家远离则消失、靠近则去重重生」逻辑。
+     */
+    private static final EntityDataAccessor<Integer> HOME_ISLAND_ID =
+            SynchedEntityData.defineId(SixtySecondsBossEntity.class, EntityDataSerializers.INT);
 
     private final ServerBossEvent bossEvent = new ServerBossEvent(
             Component.translatable("entity.sixty_seconds.sixty_seconds_boss"),
@@ -122,6 +128,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         builder.define(BOSS_LEVEL, 1);
         builder.define(APEX, false);
         builder.define(BOSS_VARIANT, BossVariant.RAVAGER.id);
+        builder.define(HOME_ISLAND_ID, -1);
     }
 
     /** 按 Boss 等级装配（普通尸潮领主）。 */
@@ -180,6 +187,20 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
 
     public BossVariant getBossVariant() {
         return BossVariant.byId(this.entityData.get(BOSS_VARIANT));
+    }
+
+    /** 设置/读取驻守岛 id（炼狱岛固定 Boss 用；-1 表示非驻守 Boss）。 */
+    public void setHomeIslandId(int id) {
+        this.entityData.set(HOME_ISLAND_ID, id);
+    }
+
+    public int getHomeIslandId() {
+        return this.entityData.get(HOME_ISLAND_ID);
+    }
+
+    /** 是否为某炼狱岛的驻守 Boss。 */
+    public boolean isGarrisonBoss() {
+        return this.entityData.get(HOME_ISLAND_ID) >= 0;
     }
 
     private void setAttr(net.minecraft.core.Holder<net.minecraft.world.entity.ai.attributes.Attribute> attr,
@@ -764,6 +785,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         tag.putInt("SreBossLevel", bossLevel());
         tag.putBoolean("SreBossApex", isApex());
         tag.putInt("SreBossVariant", getBossVariant().id);
+        tag.putInt("SreBossHome", getHomeIslandId());
     }
 
     @Override
@@ -773,6 +795,9 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
             BossVariant variant = tag.contains("SreBossVariant")
                     ? BossVariant.byId(tag.getInt("SreBossVariant")) : BossVariant.RAVAGER;
             applyBossLevel(tag.getInt("SreBossLevel"), tag.getBoolean("SreBossApex"), variant);
+        }
+        if (tag.contains("SreBossHome")) {
+            setHomeIslandId(tag.getInt("SreBossHome"));
         }
     }
 }

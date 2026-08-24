@@ -1,5 +1,8 @@
 package net.exmo.sixty_seconds;
 
+import net.exmo.sixty_seconds.entity.SixtySecondsBossEntity;
+import net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity;
+
 /**
  * 末日60秒模式的数值平衡集中表——所有可调数值放这里，便于统一调参。
  */
@@ -224,6 +227,43 @@ public final class SixtySecondsBalance {
     public static final int DAMAGE_BOSS_MELEE_INJURY = 60;
     /** 「伤害 Boss」降临的游戏日（≥本值那晚首 tick 触发，每局仅一次）。 */
     public static final int DAMAGE_BOSS_SPAWN_DAY = 3;
+
+    // ── 炼狱岛（部分五星岛强化；SixtySecondsIslandGenerator + onLanded）──────
+    /** 五星岛中被选为「炼狱岛」（更高难怪物 + 固定驻守 Boss）的概率。其余五星岛保持原难度。 */
+    public static final double HARDCORE_FIVE_STAR_CHANCE = 0.25;
+    /** 炼狱岛守岛怪额外数量（在普通守岛怪基础上 + 本值）。 */
+    public static final int HARDCORE_GUARD_EXTRA = 2;
+    /** 炼狱岛守岛怪血量倍率（在原有 (1+星级增益) 基础上再 × 本值）。 */
+    public static final double HARDCORE_GUARD_HEALTH_MULT = 1.7;
+    /** 炼狱岛固定驻守 Boss 的等级额外加成（在正常 clamp(areaLevel-1,1,4) 基础上 + 本值）。 */
+    public static final int HARDCORE_BOSS_LEVEL_BONUS = 1;
+    /** 炼狱岛固定驻守 Boss 的可选变体池（仅取攻击性强的几种）。 */
+    public static final SixtySecondsBossEntity.BossVariant[] HARDCORE_BOSS_POOL = {
+            SixtySecondsBossEntity.BossVariant.RAVAGER,
+            SixtySecondsBossEntity.BossVariant.COLOSSUS,
+            SixtySecondsBossEntity.BossVariant.NECROMANCER,
+            SixtySecondsBossEntity.BossVariant.PLAGUEBEARER
+    };
+    /** 炼狱岛守岛怪优先使用的强 variant 池（普通岛用 SHAMBLER/RUNNER，炼狱岛混入这些）。 */
+    public static final SixtySecondsMonsterEntity.Variant[] HARDCORE_GUARD_VARIANTS = {
+            SixtySecondsMonsterEntity.Variant.BRUTE,
+            SixtySecondsMonsterEntity.Variant.HOWLER,
+            SixtySecondsMonsterEntity.Variant.SPITTER
+    };
+    /** 玩家距炼狱岛中心超过此格数（水平方向）时，空闲驻守 Boss 消失（避免常驻耗性能/堆积）。 */
+    public static final double HARDCORE_BOSS_DESPAWN_DIST = 90;
+    /** 玩家距炼狱岛中心小于此格数（水平方向）且岛上无存活驻守 Boss 时，重新刷一只（去重后再刷）。 */
+    public static final double HARDCORE_BOSS_SPAWN_DIST = 70;
+
+    // ── 物资箱密度系数（SixtySecondsIslandGenerator.populate 与 SixtySecondsRuins 共用）──
+    /** 普通/废墟物资箱的密度系数（在原始 0.9 基础上再降约 50%，使分布更稀疏）。 */
+    public static final double SUPPLY_BOX_DENSITY = 0.45;
+    /** 物资箱落实为上锁方块的占比（仅非随机箱参与，约 82% → 整体约 70% 上锁）。 */
+    public static final double SUPPLY_BOX_LOCK_RATE = 0.82;
+    /** 物资箱为「随机箱」（不上锁、掉落更随机）的占比。 */
+    public static final double SUPPLY_BOX_RANDOM_RATE = 0.15;
+    /** 每星级的「升级为高级物资箱」概率（普通箱按 0.12×level、废墟箱同理）。 */
+    public static final double SUPPLY_BOX_ADVANCED_PER_LEVEL = 0.12;
 
     /**
      * 游荡怪刷新概率的天数倍率（前期压低、逐步爬升；怪物刷新频率+40% 后各档 ×1.4）：

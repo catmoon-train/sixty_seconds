@@ -1,5 +1,6 @@
 package net.exmo.sixty_seconds.island;
 
+import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.island.SixtySecondsIslandGenerator.Placer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -56,13 +57,23 @@ public final class SixtySecondsRuins {
                 continue;
             }
             build(p, template, origin, rng, island.level);
-            // 保底物资箱：贴废墟放，等级高概率给高级箱
+            // 废墟物资箱：密度遵循 populate 的 SUPPLY_BOX_DENSITY 系数（不再保底），
+            // 类型/上锁/随机规则与 populate 完全一致（高级升级按等级、82% 上锁、15% 随机）。
             BlockPos boxSpot = nearbyAir(p, origin, rng);
-            if (boxSpot != null) {
-                boolean advanced = rng.nextFloat() < 0.12F * island.level;
+            if (boxSpot != null && rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_DENSITY) {
+                boolean advanced = rng.nextFloat()
+                        < SixtySecondsBalance.SUPPLY_BOX_ADVANCED_PER_LEVEL * island.level;
+                boolean asRandom = rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_RANDOM_RATE;
+                boolean locked = !asRandom && rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_LOCK_RATE;
                 SixtySecondsIslandGenerator.placeSupplyBox(p, boxSpot, advanced
-                        ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED
-                        : net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX,
+                        ? (locked
+                            ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED_LOCKED
+                            : net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED)
+                        : (asRandom
+                            ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_LOW_TIER_RANDOM_SUPPLY_BOX
+                            : (locked
+                                ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_LOCKED
+                                : net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX)),
                         rng.nextBoolean() ? "material" : "tool");
             }
             placed++;

@@ -33,7 +33,8 @@ public record SixtySecondsSeaChartS2CPacket(boolean enabled, boolean openScreen,
 
     /** 单岛条目：locked（未解锁）条目在客户端画成迷雾「未知海域」。typeOrd -1=旧存档无类型。 */
     public record Entry(int id, int level, int namePrefix, int nameSuffix, int centerX, int centerZ,
-            int radius, long seed, boolean unlocked, boolean visited, int typeOrd, boolean evacuation) {
+            int radius, long seed, boolean unlocked, boolean visited, int typeOrd, boolean evacuation,
+            boolean hardcore) {
         public SixtySecondsIsland.Type type() {
             SixtySecondsIsland.Type[] values = SixtySecondsIsland.Type.values();
             return typeOrd >= 0 && typeOrd < values.length ? values[typeOrd] : null;
@@ -64,6 +65,7 @@ public record SixtySecondsSeaChartS2CPacket(boolean enabled, boolean openScreen,
                     buf.writeBoolean(entry.visited());
                     buf.writeVarInt(entry.typeOrd());
                     buf.writeBoolean(entry.evacuation());
+                    buf.writeBoolean(entry.hardcore());
                 }
             }, buf -> {
                 boolean enabled = buf.readBoolean();
@@ -76,8 +78,8 @@ public record SixtySecondsSeaChartS2CPacket(boolean enabled, boolean openScreen,
                 for (int i = 0; i < count; i++) {
                     islands.add(new Entry(buf.readVarInt(), buf.readVarInt(), buf.readVarInt(),
                             buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(),
-                            buf.readLong(), buf.readBoolean(), buf.readBoolean(), buf.readVarInt(),
-                            buf.readBoolean()));
+                            buf.readLong(), buf.readBoolean(),                             buf.readBoolean(), buf.readVarInt(),
+                            buf.readBoolean(), buf.readBoolean()));
                 }
                 return new SixtySecondsSeaChartS2CPacket(enabled, openScreen, teleportAllowed, seaY,
                         seaChartRadius, islands);
@@ -108,7 +110,8 @@ public record SixtySecondsSeaChartS2CPacket(boolean enabled, boolean openScreen,
                     island.centerX, island.centerZ, island.radius, island.seed, isUnlocked,
                     visited != null && visited.contains(island.id),
                     island.type == null ? -1 : island.type.ordinal(),
-                    island.isEvacuation || island.type == SixtySecondsIsland.Type.EVACUATION));
+                    island.isEvacuation || island.type == SixtySecondsIsland.Type.EVACUATION,
+                    island.hardcore));
         }
         // 创造/旁观不受 sea_teleport 开关限制；海洋维度内扬帆/返航总是可用
         boolean teleportAllowed = seeAll || ocean || SixtySecondsIslands.teleportAllowed(level);

@@ -1,6 +1,7 @@
 package net.exmo.sixty_seconds.island;
 
 import com.google.gson.annotations.SerializedName;
+import net.exmo.sixty_seconds.entity.SixtySecondsBossEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.AABB;
@@ -90,6 +91,19 @@ public class SixtySecondsIsland {
     public int evacNameIndex = 0;
     /** 撤离点专属名称池大小。 */
     public static final int EVAC_NAME_COUNT = 6;
+    /**
+     * 是否为「炼狱岛」（高难强化岛）：仅<b>部分</b>五星岛按概率获得。
+     * 强化了首登守岛怪（更强变体 + 更高血量 + 更多数量）并额外固定驻守一只 Boss。
+     * 与 {@link #isEvacuation} 互斥（撤离点岛恒为 false）。
+     */
+    @SerializedName("hardcore")
+    public boolean hardcore = false;
+    /**
+     * 炼狱岛固定驻守的 Boss 变体（{@link #hardcore} 为真时有效；null 表示不刷 Boss，仅强化守岛怪）。
+     * 在 Generator 规划阶段一次性随机决定，落盘后稳定。
+     */
+    @SerializedName("bossVariant")
+    public SixtySecondsBossEntity.BossVariant bossVariant = null;
     /** 地形噪声种子（服务端生成与客户端海图共用）。 */
     @SerializedName("seed")
     public long seed;
