@@ -33,12 +33,18 @@ import java.util.List;
  */
 public final class SixtySecondsRuins {
 
-    public static final int TEMPLATE_COUNT = 39;
+    public static final int TEMPLATE_COUNT = 40;
     /** 滩涂系模板（选点贴近岸线、要求低海拔）。 */
     private static final boolean[] SHORE = new boolean[TEMPLATE_COUNT];
 
     /** 每种生态类型偏好抽取的模板（联动分布）。空数组=无偏好（纯随机）。 */
     private static final java.util.Map<SixtySecondsIsland.Type, int[]> PREFERRED = new java.util.EnumMap<>(SixtySecondsIsland.Type.class);
+
+    /**
+     * 专属模板：仅在该生态类型岛上生成、且保证至少出现一次（绕过随机抽取）。
+     * 这些模板对其它类型不可见，不会混入普通抽取池。
+     */
+    private static final java.util.Map<SixtySecondsIsland.Type, int[]> EXCLUSIVE = new java.util.EnumMap<>(SixtySecondsIsland.Type.class);
 
     static {
         SHORE[3] = SHORE[4] = SHORE[5] = true;   // 沉船、废弃码头、灯塔残基
@@ -83,34 +89,68 @@ public final class SixtySecondsRuins {
                 new int[]{25, 2, 7, 0, 36, 13});
         PREFERRED.put(SixtySecondsIsland.Type.ASHEN,
                 new int[]{26, 30, 2, 25, 27, 35});
+        PREFERRED.put(SixtySecondsIsland.Type.SCULK,
+                new int[]{39});
+        // 幽匿神殿：仅 SCULK 岛生成、且必出现一次
+        EXCLUSIVE.put(SixtySecondsIsland.Type.SCULK, new int[]{39});
         // EVACUATION 不在 PREFERRED 中（撤离岛本就不调 placeAll）
     }
 
     private SixtySecondsRuins() {
     }
 
-    /** 每岛放置废墟：数量随等级（2..4 处），模板不重复抽取，滩涂系模板落在岸边。 */
+    /**
+     * 每岛放置废墟：数量随等级（2..4 处），模板不重复抽取，滩涂系模板落在岸边。
+     * <p>生态联动：70% 概率从本岛 {@link SixtySecondsIsland.Type} 偏好池抽取（见 {@link #PREFERRED}），
+     * 30% 概率从全池抽取以保证多样性；偏好池用尽后自动回退到全池。
+     * <p>专属模板（见 {@link #EXCLUSIVE}）仅在该生态类型的岛上生成，且保证至少出现一次，
+     * 不会混入其它类型的抽取池。
+     */
     public static void placeAll(Placer p, SixtySecondsIsland island) {
         RandomSource rng = RandomSource.create(island.seed ^ 0x521A5L);
         int count = Math.min(TEMPLATE_COUNT, 2 + island.level / 2 + rng.nextInt(2));
+
+        // 本岛可抽取的模板：全模板去掉「非本类型的专属模板」（专属模板仅对归属类型可见）。
+        java.util.List<Integer> allowed = new ArrayList<>();
+        java.util.Set<Integer> exclusiveOthers = new java.util.HashSet<>();
+        for (var e : EXCLUSIVE.entrySet()) {
+            if (e.getKey() != island.type) {
+                for (int t : e.getValue()) exclusiveOthers.add(t);
+            }
+        }
+        for (int i = 0; i < TEMPLATE_COUNT; i++) {
+            if (!exclusiveOthers.contains(i)) allowed.add(i);
+        }
 
         int[] preferred = PREFERRED.getOrDefault(island.type, new int[0]);
         boolean hasPref = preferred.length > 0;
 
         java.util.Set<Integer> used = new java.util.HashSet<>();
         int placed = 0, guard = 0;
+
+        // 先强制放置本类型专属模板（保证至少出现一次）
+        for (int t : EXCLUSIVE.getOrDefault(island.type, new int[0])) {
+            if (used.contains(t)) continue;
+            BlockPos origin = findSpot(p, island, rng, SHORE[t]);
+            if (origin != null) {
+                placeOne(p, island, rng, t, origin);
+                used.add(t);
+                placed++;
+            }
+        }
+
         while (placed < count && guard++ < 400) {
             int template;
             if (hasPref && rng.nextFloat() < 0.7F) {
                 java.util.List<Integer> pool = new ArrayList<>();
-                for (int t : preferred) if (!used.contains(t)) pool.add(t);
+                for (int t : preferred) if (!used.contains(t) && allowed.contains(t)) pool.add(t);
                 if (pool.isEmpty()) {
-                    template = pickUnused(rng, used);
+                    template = pickUnused(rng, used, allowed);
                 } else {
                     template = pool.get(rng.nextInt(pool.size()));
                 }
             } else {
-                template = pickUnused(rng, used);
+                template = pickUnused(rng, used, allowed);
             }
             if (template < 0) break;
             used.add(template);
@@ -119,35 +159,41 @@ public final class SixtySecondsRuins {
             if (origin == null) {
                 continue;
             }
-            build(p, template, origin, rng, island.level);
-            // 废墟物资箱：密度遵循 populate 的 SUPPLY_BOX_DENSITY 系数（不再保底），
-            // 类型/上锁/随机规则与 populate 完全一致（高级升级按等级、82% 上锁、15% 随机）。
-            BlockPos boxSpot = nearbyAir(p, origin, rng);
-            if (boxSpot != null && rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_DENSITY) {
-                boolean advanced = rng.nextFloat()
-                        < SixtySecondsBalance.SUPPLY_BOX_ADVANCED_PER_LEVEL * island.level;
-                boolean asRandom = rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_RANDOM_RATE;
-                boolean locked = !asRandom && rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_LOCK_RATE;
-                SixtySecondsIslandGenerator.placeSupplyBox(p, boxSpot, advanced
-                        ? (locked
-                            ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED_LOCKED
-                            : net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED)
-                        : (asRandom
-                            ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_LOW_TIER_RANDOM_SUPPLY_BOX
-                            : (locked
-                                ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_LOCKED
-                                : net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX)),
-                        rng.nextBoolean() ? "material" : "tool");
-            }
+            placeOne(p, island, rng, template, origin);
             placed++;
         }
     }
 
-    /** 从全模板池随机取一个尚未使用的模板；用尽返回 -1。 */
-    private static int pickUnused(RandomSource rng, java.util.Set<Integer> used) {
-        if (used.size() >= TEMPLATE_COUNT) return -1;
+    /** 在 origin 处建一处废墟模板，并按密度规则附带一个物资箱。 */
+    private static void placeOne(Placer p, SixtySecondsIsland island, RandomSource rng,
+            int template, BlockPos origin) {
+        build(p, template, origin, rng, island.level);
+        // 废墟物资箱：密度遵循 populate 的 SUPPLY_BOX_DENSITY 系数（不再保底），
+        // 类型/上锁/随机规则与 populate 完全一致（高级升级按等级、82% 上锁、15% 随机）。
+        BlockPos boxSpot = nearbyAir(p, origin, rng);
+        if (boxSpot != null && rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_DENSITY) {
+            boolean advanced = rng.nextFloat()
+                    < SixtySecondsBalance.SUPPLY_BOX_ADVANCED_PER_LEVEL * island.level;
+            boolean asRandom = rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_RANDOM_RATE;
+            boolean locked = !asRandom && rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_LOCK_RATE;
+            SixtySecondsIslandGenerator.placeSupplyBox(p, boxSpot, advanced
+                    ? (locked
+                        ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED_LOCKED
+                        : net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED)
+                    : (asRandom
+                        ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_LOW_TIER_RANDOM_SUPPLY_BOX
+                        : (locked
+                            ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_LOCKED
+                            : net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX)),
+                    rng.nextBoolean() ? "material" : "tool");
+        }
+    }
+
+    /** 从 allowed 模板池随机取一个尚未使用的模板；用尽返回 -1。 */
+    private static int pickUnused(RandomSource rng, java.util.Set<Integer> used, java.util.List<Integer> allowed) {
+        if (used.size() >= allowed.size()) return -1;
         int t;
-        do { t = rng.nextInt(TEMPLATE_COUNT); } while (used.contains(t));
+        do { t = allowed.get(rng.nextInt(allowed.size())); } while (used.contains(t));
         return t;
     }
 
@@ -222,6 +268,7 @@ public final class SixtySecondsRuins {
             case 36 -> brokenCatapult(p, origin, rng);
             case 37 -> sailMaker(p, origin, rng);
             case 38 -> fungusGrove(p, origin, rng, islandLevel);
+            case 39 -> sculkShrine(p, origin, rng);
             default -> campfireCircle(p, origin, rng);
         }
     }
@@ -1198,6 +1245,53 @@ public final class SixtySecondsRuins {
             p.set(stem.offset(0, h, 0), cap);
         }
         p.set(origin.above(1), Blocks.SHROOMLIGHT.defaultBlockState());
+    }
+
+    /**
+     * 39 幽匿神殿：仅 SCULK 岛生成的专属模板。
+     * 由幽匿块基座 + 幽匿脉络铺地 + 幽匿感测体/催发体环绕 + 中央幽匿尖啸体构成，
+     * 四角立柱点缀幽匿脉络，氛围死寂回响。
+     */
+    private static void sculkShrine(Placer p, BlockPos origin, RandomSource rng) {
+        BlockState sculk = Blocks.SCULK.defaultBlockState();
+        BlockState vein = Blocks.SCULK_VEIN.defaultBlockState();
+        BlockState sensor = Blocks.SCULK_SENSOR.defaultBlockState();
+        BlockState catalyst = Blocks.SCULK_CATALYST.defaultBlockState();
+        BlockState shrieker = Blocks.SCULK_SHRIEKER.defaultBlockState();
+
+        // 基座：3×3 幽匿块，表面覆一层幽匿脉络
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                p.set(origin.offset(dx, 0, dz), sculk);
+                p.set(origin.offset(dx, 1, dz), vein);
+            }
+        }
+        // 四角催发体
+        int[] c = {-1, 1};
+        for (int dx : c) {
+            for (int dz : c) {
+                p.set(origin.offset(dx, 1, dz), catalyst);
+            }
+        }
+        // 四边中点感测体
+        p.set(origin.offset(-1, 1, 0), sensor);
+        p.set(origin.offset(1, 1, 0), sensor);
+        p.set(origin.offset(0, 1, -1), sensor);
+        p.set(origin.offset(0, 1, 1), sensor);
+        // 中央尖啸体（核心），上方悬一段幽匿脉络
+        p.set(origin, sculk);
+        p.set(origin.above(1), shrieker);
+        p.set(origin.above(2), vein);
+        // 立柱：四角向上延伸幽匿块，顶端点脉络
+        for (int dx : c) {
+            for (int dz : c) {
+                int h = 2 + rng.nextInt(2);
+                for (int y = 2; y <= h; y++) {
+                    p.set(origin.offset(dx, y, dz), sculk);
+                }
+                p.set(origin.offset(dx, h + 1, dz), vein);
+            }
+        }
     }
 
     /** 供枯树断枝用的水平随机方向（避免引 Direction 泛滥）。 */

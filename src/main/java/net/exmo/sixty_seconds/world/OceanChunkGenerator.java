@@ -155,8 +155,6 @@ public final class OceanChunkGenerator extends ChunkGenerator {
     @Override
     public CompletableFuture<ChunkAccess> fillFromNoise(Blender p_223210_, RandomState p_223211_,
                                                         StructureManager p_223212_, ChunkAccess chunk) {
-        LOGGER.info("[60s][OceanGen] fillFromNoise chunk=({},{})",
-                chunk.getPos().getMinBlockX(), chunk.getPos().getMinBlockZ());
         ChunkPos pos = chunk.getPos();
         int x0 = pos.getMinBlockX();
         int z0 = pos.getMinBlockZ();

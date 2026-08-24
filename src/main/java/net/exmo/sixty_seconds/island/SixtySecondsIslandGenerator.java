@@ -191,8 +191,17 @@ public final class SixtySecondsIslandGenerator {
             island.seaY = seaY;
             // ── 生态类型：按等级分布，首岛恒为热带（友好新手岛）──
             island.type = assignType(rng, island.level, i == 0);
+            // 幽匿岛固定为 5 星（最高难），并取大岛规模以匹配其压迫感
+            if (island.type == SixtySecondsIsland.Type.SCULK) {
+                island.level = 5;
+                island.size = SixtySecondsIsland.Size.LARGE;
+                // 幽匿岛必定是炼狱岛：更强守岛怪 + 固定驻守 Boss
+                island.hardcore = true;
+                SixtySecondsBossEntity.BossVariant[] pool = SixtySecondsBalance.HARDCORE_BOSS_POOL;
+                island.bossVariant = pool[rng.nextInt(pool.length)];
+            }
             // ── 炼狱岛：仅「部分」五星岛按概率强化（更高难怪物 + 固定驻守 Boss）──
-            if (island.level >= 5 && !island.isEvacuation
+            if (!island.hardcore && island.level >= 5 && !island.isEvacuation
                     && rng.nextFloat() < SixtySecondsBalance.HARDCORE_FIVE_STAR_CHANCE) {
                 island.hardcore = true;
                 // 从强力 Boss 池里随机挑一只固定驻守
@@ -310,27 +319,30 @@ public final class SixtySecondsIslandGenerator {
                                     : r < 0.60F ? SixtySecondsIsland.Type.BARREN
                                             : r < 0.71F ? SixtySecondsIsland.Type.TROPICAL
                                                     : r < 0.80F ? SixtySecondsIsland.Type.RUINS
-                                                            : r < 0.88F ? SixtySecondsIsland.Type.QUARANTINE
-                                                                    : r < 0.94F ? SixtySecondsIsland.Type.MESA
-                                                                            : SixtySecondsIsland.Type.FORSAKEN;
+                                                            : r < 0.86F ? SixtySecondsIsland.Type.QUARANTINE
+                                                                    : r < 0.93F ? SixtySecondsIsland.Type.MESA
+                                                                            : r < 0.94F ? SixtySecondsIsland.Type.SCULK
+                                                                                    : SixtySecondsIsland.Type.FORSAKEN;
             case 4 -> r < 0.18F ? SixtySecondsIsland.Type.VOLCANIC
                     : r < 0.36F ? SixtySecondsIsland.Type.BARREN
                             : r < 0.52F ? SixtySecondsIsland.Type.JUNGLE
                                     : r < 0.65F ? SixtySecondsIsland.Type.RUINS
-                                            : r < 0.76F ? SixtySecondsIsland.Type.OIL
-                                                    : r < 0.85F ? SixtySecondsIsland.Type.MILITARY
-                                                            : r < 0.92F ? SixtySecondsIsland.Type.INFERNO
-                                                                    : r < 0.96F ? SixtySecondsIsland.Type.CRYSTAL
-                                                                            : SixtySecondsIsland.Type.FORSAKEN;
+                                            : r < 0.75F ? SixtySecondsIsland.Type.OIL
+                                                    : r < 0.84F ? SixtySecondsIsland.Type.MILITARY
+                                                            : r < 0.90F ? SixtySecondsIsland.Type.INFERNO
+                                                                    : r < 0.95F ? SixtySecondsIsland.Type.CRYSTAL
+                                                                            : r < 0.96F ? SixtySecondsIsland.Type.SCULK
+                                                                                    : SixtySecondsIsland.Type.FORSAKEN;
             default -> r < 0.24F ? SixtySecondsIsland.Type.VOLCANIC // level 5
                     : r < 0.40F ? SixtySecondsIsland.Type.BARREN
                             : r < 0.54F ? SixtySecondsIsland.Type.RUINS
-                                    : r < 0.67F ? SixtySecondsIsland.Type.OIL
-                                            : r < 0.77F ? SixtySecondsIsland.Type.MILITARY
-                                                    : r < 0.85F ? SixtySecondsIsland.Type.INFERNO
-                                                            : r < 0.90F ? SixtySecondsIsland.Type.FORSAKEN
+                                    : r < 0.66F ? SixtySecondsIsland.Type.OIL
+                                            : r < 0.76F ? SixtySecondsIsland.Type.MILITARY
+                                                    : r < 0.84F ? SixtySecondsIsland.Type.INFERNO
+                                                            : r < 0.89F ? SixtySecondsIsland.Type.FORSAKEN
                                                                     : r < 0.94F ? SixtySecondsIsland.Type.ASHEN
-                                                                            : SixtySecondsIsland.Type.ABYSS;
+                                                                            : r < 0.95F ? SixtySecondsIsland.Type.SCULK
+                                                                                    : SixtySecondsIsland.Type.ABYSS;
         };
     }
 
@@ -682,6 +694,10 @@ public final class SixtySecondsIslandGenerator {
             case ASHEN -> new Palette(Blocks.GRAY_CONCRETE.defaultBlockState(), Blocks.COAL_BLOCK.defaultBlockState(),
                     Blocks.GRAY_CONCRETE.defaultBlockState(), Blocks.STONE.defaultBlockState(),
                     Blocks.SAND.defaultBlockState(), Blocks.STONE.defaultBlockState());
+            case SCULK -> new Palette(Blocks.SCULK.defaultBlockState(),
+                    Blocks.SCULK_VEIN.defaultBlockState(), Blocks.DEEPSLATE.defaultBlockState(),
+                    Blocks.DEEPSLATE.defaultBlockState(), Blocks.SCULK.defaultBlockState(),
+                    Blocks.SCULK.defaultBlockState());
             case EVACUATION -> new Palette(Blocks.GRASS_BLOCK.defaultBlockState(),
                     Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.DIRT.defaultBlockState(),
                     Blocks.STONE.defaultBlockState(), Blocks.SAND.defaultBlockState(),
@@ -977,6 +993,7 @@ public final class SixtySecondsIslandGenerator {
             case FORSAKEN -> 3;
             case SWAMP -> 6;
             case MESA -> 1;
+            case SCULK -> 0;
             case EVACUATION -> 3;
         };
     }
@@ -1001,6 +1018,7 @@ public final class SixtySecondsIslandGenerator {
             case SWAMP -> Blocks.MOSSY_COBBLESTONE.defaultBlockState();
             case MESA -> Blocks.RED_SANDSTONE.defaultBlockState();
             case ASHEN -> Blocks.COAL_BLOCK.defaultBlockState();
+            case SCULK -> Blocks.DEEPSLATE.defaultBlockState();
             default -> Blocks.MOSSY_COBBLESTONE.defaultBlockState();
         };
     }
@@ -1028,6 +1046,7 @@ public final class SixtySecondsIslandGenerator {
             case SWAMP -> 38;
             case MESA -> 10;
             case ASHEN -> 4;
+            case SCULK -> 0;
             case EVACUATION -> 12;
         };
     }

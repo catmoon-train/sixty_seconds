@@ -44,6 +44,7 @@ public class SixtySecondsIsland {
         SWAMP,      // 毒沼：菌丝地表+巨型蘑菇，Level2~4 低概率，毒雾弥漫
         MESA,       // 红台地：红砂岩+陶瓦平顶，Level3~5 低概率，干旱荒红
         ASHEN,      // 灰烬：灰混凝土+木炭枯骸，Level2~4 低概率，死寂灰白
+        SCULK,      // 幽匿：地表与浅层由幽匿块构成，Level3~5 稀有，死寂回响，仅生成幽匿神殿
         EVACUATION  // 撤离点：专门的撤离点岛屿，稀有、不刷新物资箱、海图特殊标记，最后一天登岛即撤离
     }
 
