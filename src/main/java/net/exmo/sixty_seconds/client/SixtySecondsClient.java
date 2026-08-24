@@ -18,6 +18,7 @@ import net.exmo.sixty_seconds.client.map.AreaMapHud;
 import net.exmo.sixty_seconds.client.map.AreaMapManager;
 import net.exmo.sixty_seconds.client.map.StarMapHud;
 import net.exmo.sixty_seconds.client.map.StarMapManager;
+import net.exmo.sixty_seconds.client.SeaChartReturnHud;
 import net.exmo.sixty_seconds.client.render.OceanSeaMonsterRenderer;
 import net.exmo.sixty_seconds.client.render.OceanSharkRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsArrowRenderer;
@@ -117,6 +118,7 @@ import net.exmo.sixty_seconds.content.entity.WheelchairEntityRenderer;
 import net.exmo.sixty_seconds.content.entity.WheelchairFieldItemRenderer;
 import net.exmo.sixty_seconds.content.item.NewspaperItem;
 import net.exmo.sixty_seconds.content.item.SixtySecondsNoteItem;
+import net.exmo.sixty_seconds.content.item.SeaChartItem;
 import net.exmo.sixty_seconds.content.item.StarMapItem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -172,6 +174,15 @@ public final class SixtySecondsClient {
                 StarMapManager.loadExploredChunks();
                 ClientPlayNetworking.send(new SixtySecondsStarMapRequestC2SPacket());
                 minecraft.setScreen(new StarMapScreen());
+            };
+            // 海图物品右键打开全屏海图：请求服务端下发海图数据并打开界面（与 StarMapItem 同模式，
+            // 对齐移植版 StarRailExpress 的 SeaChartItem.openScreenCallback 写法）。
+            SeaChartItem.openScreenCallback = () -> {
+                Minecraft minecraft = Minecraft.getInstance();
+                if (minecraft.player == null) {
+                    return;
+                }
+                SeaChartReturnHud.openFullScreenChart();
             };
             SixtySecondsHud.register();
             SixtySecondsCombatHud.register();
