@@ -43,6 +43,13 @@ public final class SixtySecondsIslandGenerator {
 
     /** 环岛水裙边宽度（陆地半径之外再铺这么宽的海面）。 */
     public static final int WATER_SKIRT = 18;
+    /**
+     * 岛屿间距系数：岛心最小允许间距 = (r1+r2) × 此值。
+     * &lt;1 表示允许两座岛的地盘交叠（连片群岛，地形自然融合）；
+     * =1 仅相切；&gt;1 在相切之外再保留水裙边间隔。默认值允许交叠约 45%。
+     * 设为 1.0 以上即可恢复「绝不重叠、永远被水道隔开」的旧行为。
+     */
+    public static final float ISLAND_OVERLAP_FACTOR = 0.55F;
     /** 单元格纵向生成范围：海平面以下挖/铺的深度、以上净空+山体高度。 */
     public static final int DEPTH_BELOW_SEA = 8;
     public static final int HEIGHT_ABOVE_SEA = 72;
@@ -203,7 +210,10 @@ public final class SixtySecondsIslandGenerator {
                 int z = i == 0 ? centerZ : centerZ + rng.nextInt(extent * 2 + 1) - extent;
                 boolean ok = true;
                 for (SixtySecondsIsland other : islands) {
-                    double need = island.radius + other.radius + WATER_SKIRT * 2 + 16;
+                    double need = (island.radius + other.radius) * ISLAND_OVERLAP_FACTOR;
+                    if (ISLAND_OVERLAP_FACTOR >= 1.0F) {
+                        need += WATER_SKIRT * 2 + 16; // 不重叠模式下额外保留水裙边间隔
+                    }
                     if (other.distSqr(x, z) < need * need) {
                         ok = false;
                         break;
@@ -245,7 +255,10 @@ public final class SixtySecondsIslandGenerator {
                 int z = centerZ + rng.nextInt(extent * 2 + 1) - extent;
                 boolean ok = true;
                 for (SixtySecondsIsland other : islands) {
-                    double need = evac.radius + other.radius + WATER_SKIRT * 2 + 16;
+                    double need = (evac.radius + other.radius) * ISLAND_OVERLAP_FACTOR;
+                    if (ISLAND_OVERLAP_FACTOR >= 1.0F) {
+                        need += WATER_SKIRT * 2 + 16;
+                    }
                     if (other.distSqr(x, z) < need * need) {
                         ok = false;
                         break;
@@ -475,7 +488,7 @@ public final class SixtySecondsIslandGenerator {
                 for (int pz = island.centerZ - r; pz <= island.centerZ + r; pz += PATCH) {
                     int x0 = px;
                     int z0 = pz;
-                    work.add(() -> buildPatch(placer, island, x0, z0,
+                    work.add(() -> buildPatch(placer, islands, island, x0, z0,
                             Math.min(x0 + PATCH - 1, island.centerX + r),
                             Math.min(z0 + PATCH - 1, island.centerZ + r)));
                 }
@@ -767,8 +780,13 @@ public final class SixtySecondsIslandGenerator {
         return island.seaY + (int) h;
     }
 
-    /** 建一个 16×16 列 patch：净空 → 海床/海水/滩涂/陆地按列成形。 */
-    static void buildPatch(Placer p, SixtySecondsIsland island, int x0, int z0, int x1, int z1) {
+    /**
+     * 建一个 16×16 列 patch：净空 → 海床/海水/滩涂/陆地按列成形。
+     * {@code all} 为整批岛屿，用于重叠融合：每列取 landValue 最大的岛为主导，
+     * 仅主导岛负责该列成形，避免后建的岛把前岛陆地误判成海而「切开」。
+     */
+    static void buildPatch(Placer p, List<SixtySecondsIsland> all, SixtySecondsIsland island,
+            int x0, int z0, int x1, int z1) {
         int rOuter = island.radius + WATER_SKIRT;
         Palette pal = palette(island);
         BlockState water = Blocks.WATER.defaultBlockState();
@@ -781,7 +799,24 @@ public final class SixtySecondsIslandGenerator {
                 if (distSqr > (double) rOuter * rOuter) {
                     continue;
                 }
-                float landVal = landValue(island, x, z);
+                // 重叠融合：取覆盖本列且 landValue 最大的岛主导；并列时 id 小者优先。
+                // 本岛非主导则跳过，交由其主导岛在自己的 patch 轮次成形。
+                SixtySecondsIsland dom = island;
+                float best = landValue(island, x, z);
+                for (SixtySecondsIsland o : all) {
+                    if (o == island) {
+                        continue;
+                    }
+                    float lv = landValue(o, x, z);
+                    if (lv > best || (lv == best && o.id < island.id)) {
+                        best = lv;
+                        dom = o;
+                    }
+                }
+                if (dom != island) {
+                    continue;
+                }
+                float landVal = best;
                 boolean land = landVal > LAND_THRESHOLD;
                 int surface = land ? surfaceY(island, x, z, landVal) : island.seaY - 2
                         - (int) (2 * fbm(island.seed ^ 77L, x * 0.08, z * 0.08, 2));
@@ -1403,16 +1438,16 @@ public final class SixtySecondsIslandGenerator {
 
         // 普通物资箱：数量遵循 SUPPLY_BOX_DENSITY 系数（在原始 0.9 基础上再降 50%，分布更稀疏）；约 70% 上锁。
         // 其中 15% 为随机箱（不上锁），其余 85% 中 82% 上锁 → 整体上锁率 ≈ 0.85×0.82 ≈ 70%。
-        int normal = Math.max(1, (int) (sm * (6 + island.level * 2) * SUPPLY_BOX_DENSITY)
-                + rng.nextInt(Math.max(1, (int) (sm * 5 * SUPPLY_BOX_DENSITY))));
+        int normal = Math.max(1, (int) (sm * (6 + island.level * 2) * SixtySecondsBalance.SUPPLY_BOX_DENSITY)
+                + rng.nextInt(Math.max(1, (int) (sm * 5 * SixtySecondsBalance.SUPPLY_BOX_DENSITY))));
         for (int i = 0; i < normal; i++) {
             BlockPos spot = randomGround(p, island, rng, 0.05, 0.9);
             if (spot == null) {
                 continue;
             }
-            boolean asRandom = rng.nextFloat() < SUPPLY_BOX_RANDOM_RATE;
+            boolean asRandom = rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_RANDOM_RATE;
             // 普通物资箱：约 82% 落实为上锁的物资箱方块（仅非随机箱参与）
-            boolean locked = !asRandom && rng.nextFloat() < SUPPLY_BOX_LOCK_RATE;
+            boolean locked = !asRandom && rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_LOCK_RATE;
             placeSupplyBox(p, spot, asRandom
                     ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_LOW_TIER_RANDOM_SUPPLY_BOX
                     : (locked
@@ -1421,15 +1456,15 @@ public final class SixtySecondsIslandGenerator {
                     BOX_CATEGORIES[rng.nextInt(BOX_CATEGORIES.length)]);
         }
         // 高级物资箱：等级-1 个（按大小缩放，系数在 0.9 基础上再降 50% 至 0.45）；约 70% 上锁；少量随机箱
-        int advanced = Math.max(0, (int) (sm * (island.level - 1) * SUPPLY_BOX_DENSITY));
+        int advanced = Math.max(0, (int) (sm * (island.level - 1) * SixtySecondsBalance.SUPPLY_BOX_DENSITY));
         for (int i = 0; i < advanced; i++) {
             BlockPos spot = randomGround(p, island, rng, 0.0, 0.6);
             if (spot == null) {
                 continue;
             }
-            boolean asRandom = rng.nextFloat() < SUPPLY_BOX_RANDOM_RATE;
+            boolean asRandom = rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_RANDOM_RATE;
             // 高级物资箱：约 82% 落实为上锁的高级物资箱方块（仅非随机箱参与）
-            boolean advancedLocked = !asRandom && rng.nextFloat() < SUPPLY_BOX_LOCK_RATE;
+            boolean advancedLocked = !asRandom && rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_LOCK_RATE;
             placeSupplyBox(p, spot, asRandom
                     ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_HIGH_TIER_RANDOM_SUPPLY_BOX
                     : (advancedLocked

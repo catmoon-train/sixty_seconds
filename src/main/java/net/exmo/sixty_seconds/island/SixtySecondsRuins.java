@@ -14,25 +14,76 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 海岛废墟建筑：24 个程序化模板（编号 0..23），每岛按等级抽若干个散布在地表，
+ * 海岛废墟建筑：39 个程序化模板（编号 0..38），每岛按等级抽若干个散布在地表，
  * 全部经 {@link Placer} 写入（自动快照，随海岛还原一起回滚）。
  * 每处废墟旁保底一个物资箱（高等级岛概率升级为高级箱）。
+ * <p>
+ * <b>生态联动分布</b>：抽取不再均匀随机——每种岛屿 {@link SixtySecondsIsland.Type} 拥有
+ * 一组偏好模板（见 {@link #PREFERRED}），每次放置以 70% 概率从该生态偏好池抽取、30% 概率
+ * 从全池抽取，保证风格统一又不失多样性；模板在同岛内不重复。
  * <ul>
  *   <li>0 坍塌石屋 · 1 瞭望塔 · 2 石环祭坛 · 3 沉船残骸(滩) · 4 废弃码头(滩) · 5 灯塔残基(滩)</li>
  *   <li>6 半埋神殿 · 7 破败仓库 · 8 水井营地 · 9 荒废墓地 · 10 前哨围墙 · 11 教堂残骸</li>
  *   <li>12 渔夫小屋(滩) · 13 烽火台 · 14 矿洞入口 · 15 救生艇(滩) · 16 晾晒架营地 · 17 藤蔓雕像</li>
  *   <li>18 倒塌桥梁(滩) · 19 风暴避难所 · 20 废弃温室 · 21 海盗藏宝 · 22 图腾柱 · 23 篝火圈</li>
+ *   <li>24 残破风车 · 25 石拱门 · 26 兽骨堆 · 27 陷坑陷阱 · 28 沉没钟楼 · 29 海上钻井残骸(滩)</li>
+ *   <li>30 绞刑架 · 31 冰晶祭坛 · 32 黑曜石熔炉 · 33 珊瑚拱(滩)</li>
+ *   <li>34 晶簇尖峰 · 35 献祭祭坛 · 36 破损投石机 · 37 帆匠棚(滩) · 38 菌林</li>
  * </ul>
  */
 public final class SixtySecondsRuins {
 
-    public static final int TEMPLATE_COUNT = 24;
+    public static final int TEMPLATE_COUNT = 39;
     /** 滩涂系模板（选点贴近岸线、要求低海拔）。 */
     private static final boolean[] SHORE = new boolean[TEMPLATE_COUNT];
+
+    /** 每种生态类型偏好抽取的模板（联动分布）。空数组=无偏好（纯随机）。 */
+    private static final java.util.Map<SixtySecondsIsland.Type, int[]> PREFERRED = new java.util.EnumMap<>(SixtySecondsIsland.Type.class);
 
     static {
         SHORE[3] = SHORE[4] = SHORE[5] = true;   // 沉船、废弃码头、灯塔残基
         SHORE[12] = SHORE[15] = SHORE[18] = true; // 渔夫小屋、救生艇、断桥
+        SHORE[29] = SHORE[33] = SHORE[37] = true; // 海上钻井残骸、珊瑚拱、帆匠棚
+
+        PREFERRED.put(SixtySecondsIsland.Type.TROPICAL,
+                new int[]{20, 16, 12, 3, 17, 22, 0, 7});
+        PREFERRED.put(SixtySecondsIsland.Type.MARSH,
+                new int[]{9, 8, 17, 16, 26, 7});
+        PREFERRED.put(SixtySecondsIsland.Type.VOLCANIC,
+                new int[]{32, 26, 27, 30, 19, 21, 2});
+        PREFERRED.put(SixtySecondsIsland.Type.CORAL,
+                new int[]{33, 12, 3, 4, 15, 5, 37});
+        PREFERRED.put(SixtySecondsIsland.Type.FROST,
+                new int[]{31, 1, 13, 2, 8, 25, 28});
+        PREFERRED.put(SixtySecondsIsland.Type.PLATEAU,
+                new int[]{25, 2, 1, 10, 11, 36});
+        PREFERRED.put(SixtySecondsIsland.Type.JUNGLE,
+                new int[]{17, 20, 22, 16, 14});
+        PREFERRED.put(SixtySecondsIsland.Type.BARREN,
+                new int[]{26, 27, 30, 2, 25, 35});
+        PREFERRED.put(SixtySecondsIsland.Type.RUINS,
+                new int[]{0, 7, 11, 6, 10, 28, 13});
+        PREFERRED.put(SixtySecondsIsland.Type.QUARANTINE,
+                new int[]{19, 30, 26, 21, 29, 32});
+        PREFERRED.put(SixtySecondsIsland.Type.OIL,
+                new int[]{29, 19, 21, 30, 26, 32});
+        PREFERRED.put(SixtySecondsIsland.Type.MILITARY,
+                new int[]{10, 19, 27, 1, 30, 36});
+        PREFERRED.put(SixtySecondsIsland.Type.ABYSS,
+                new int[]{27, 30, 26, 32, 21, 35});
+        PREFERRED.put(SixtySecondsIsland.Type.INFERNO,
+                new int[]{32, 27, 30, 26, 19, 35});
+        PREFERRED.put(SixtySecondsIsland.Type.FORSAKEN,
+                new int[]{30, 26, 21, 19, 29, 35});
+        PREFERRED.put(SixtySecondsIsland.Type.CRYSTAL,
+                new int[]{34, 2, 13, 25, 17, 31});
+        PREFERRED.put(SixtySecondsIsland.Type.SWAMP,
+                new int[]{9, 17, 16, 26, 38, 8});
+        PREFERRED.put(SixtySecondsIsland.Type.MESA,
+                new int[]{25, 2, 7, 0, 36, 13});
+        PREFERRED.put(SixtySecondsIsland.Type.ASHEN,
+                new int[]{26, 30, 2, 25, 27, 35});
+        // EVACUATION 不在 PREFERRED 中（撤离岛本就不调 placeAll）
     }
 
     private SixtySecondsRuins() {
@@ -42,16 +93,28 @@ public final class SixtySecondsRuins {
     public static void placeAll(Placer p, SixtySecondsIsland island) {
         RandomSource rng = RandomSource.create(island.seed ^ 0x521A5L);
         int count = Math.min(TEMPLATE_COUNT, 2 + island.level / 2 + rng.nextInt(2));
-        List<Integer> deck = new ArrayList<>();
-        for (int i = 0; i < TEMPLATE_COUNT; i++) {
-            deck.add(i);
-        }
-        Collections.shuffle(deck, new java.util.Random(rng.nextLong()));
-        int placed = 0;
-        for (int template : deck) {
-            if (placed >= count) {
-                break;
+
+        int[] preferred = PREFERRED.getOrDefault(island.type, new int[0]);
+        boolean hasPref = preferred.length > 0;
+
+        java.util.Set<Integer> used = new java.util.HashSet<>();
+        int placed = 0, guard = 0;
+        while (placed < count && guard++ < 400) {
+            int template;
+            if (hasPref && rng.nextFloat() < 0.7F) {
+                java.util.List<Integer> pool = new ArrayList<>();
+                for (int t : preferred) if (!used.contains(t)) pool.add(t);
+                if (pool.isEmpty()) {
+                    template = pickUnused(rng, used);
+                } else {
+                    template = pool.get(rng.nextInt(pool.size()));
+                }
+            } else {
+                template = pickUnused(rng, used);
             }
+            if (template < 0) break;
+            used.add(template);
+
             BlockPos origin = findSpot(p, island, rng, SHORE[template]);
             if (origin == null) {
                 continue;
@@ -78,6 +141,14 @@ public final class SixtySecondsRuins {
             }
             placed++;
         }
+    }
+
+    /** 从全模板池随机取一个尚未使用的模板；用尽返回 -1。 */
+    private static int pickUnused(RandomSource rng, java.util.Set<Integer> used) {
+        if (used.size() >= TEMPLATE_COUNT) return -1;
+        int t;
+        do { t = rng.nextInt(TEMPLATE_COUNT); } while (used.contains(t));
+        return t;
     }
 
     private static BlockPos findSpot(Placer p, SixtySecondsIsland island, RandomSource rng,
@@ -136,6 +207,21 @@ public final class SixtySecondsRuins {
             case 20 -> greenhouse(p, origin, rng);
             case 21 -> pirateCache(p, origin, rng);
             case 22 -> totemPole(p, origin, rng, islandLevel);
+            case 24 -> windmill(p, origin, rng, islandLevel);
+            case 25 -> stoneArch(p, origin, rng, islandLevel);
+            case 26 -> bonePile(p, origin, rng);
+            case 27 -> pitTrap(p, origin, rng, islandLevel);
+            case 28 -> sunkenBell(p, origin, rng, islandLevel);
+            case 29 -> oilRig(p, origin, rng, islandLevel);
+            case 30 -> gallows(p, origin, rng);
+            case 31 -> iceAltar(p, origin, rng, islandLevel);
+            case 32 -> obsidianForge(p, origin, rng, islandLevel);
+            case 33 -> coralArch(p, origin, rng);
+            case 34 -> crystalSpires(p, origin, rng);
+            case 35 -> sacrificialAltar(p, origin, rng);
+            case 36 -> brokenCatapult(p, origin, rng);
+            case 37 -> sailMaker(p, origin, rng);
+            case 38 -> fungusGrove(p, origin, rng, islandLevel);
             default -> campfireCircle(p, origin, rng);
         }
     }
@@ -778,6 +864,340 @@ public final class SixtySecondsRuins {
         // 柴火堆
         p.set(origin.offset(2, 0, 0), Blocks.OAK_LOG.defaultBlockState());
         p.set(origin.offset(-2, 0, 1), Blocks.OAK_LOG.defaultBlockState());
+    }
+
+    // ── 新增模板 24..33（跨风格补充）──────────────────────────────────────
+
+    /** 24 残破风车：石砖塔身 6~9 高，顶部断叶片（旋转木架残破）。 */
+    private static void windmill(Placer p, BlockPos origin, RandomSource rng, int lvl) {
+        pad(p, origin, 2, 2, Blocks.COBBLESTONE.defaultBlockState());
+        int height = 6 + rng.nextInt(4);
+        for (int y = 0; y < height; y++) {
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    boolean edge = Math.abs(dx) == 1 || Math.abs(dz) == 1;
+                    if (!edge) {
+                        continue;
+                    }
+                    if (y == 0 && dz == 1 && dx == 0) {
+                        continue; // 门
+                    }
+                    if (y >= height - 2 && rng.nextFloat() < 0.4F) {
+                        continue; // 顶部风化缺口
+                    }
+                    p.set(origin.offset(dx, y, dz), brick(rng, lvl));
+                }
+            }
+        }
+        // 顶部断叶片：仅保留 1~2 片
+        int blades = 1 + rng.nextInt(2);
+        for (int i = 0; i < blades; i++) {
+            double angle = Math.PI * 2 * i / 4 + rng.nextDouble();
+            int len = 3 + rng.nextInt(2);
+            for (int s = 1; s <= len; s++) {
+                int bx = (int) Math.round(Math.cos(angle) * s);
+                int bz = (int) Math.round(Math.sin(angle) * s);
+                p.set(origin.offset(bx, height, bz), Blocks.OAK_FENCE.defaultBlockState());
+            }
+        }
+        p.set(origin.above(height), Blocks.SPRUCE_PLANKS.defaultBlockState());
+    }
+
+    /** 25 石拱门：装饰性地标，横跨小径的残破拱（两侧柱 + 顶石）。 */
+    private static void stoneArch(Placer p, BlockPos origin, RandomSource rng, int lvl) {
+        pad(p, origin, 3, 1, Blocks.STONE_BRICKS.defaultBlockState());
+        int h = 4 + rng.nextInt(2);
+        for (int y = 0; y < h; y++) {
+            if (rng.nextFloat() >= 0.35F) {
+                p.set(origin.offset(-3, y, 0), brick(rng, lvl));
+            }
+            if (rng.nextFloat() >= 0.35F) {
+                p.set(origin.offset(3, y, 0), brick(rng, lvl));
+            }
+        }
+        // 拱顶石（残缺）
+        for (int dx = -2; dx <= 2; dx++) {
+            if (rng.nextFloat() < 0.5F) {
+                p.set(origin.offset(dx, h, 0), brick(rng, lvl));
+            }
+        }
+        p.set(origin.offset(0, h + 1, 0), Blocks.CHISELED_STONE_BRICKS.defaultBlockState());
+    }
+
+    /** 26 兽骨堆：诡异场景，散落骨头/骨块 + 中央巨大颅骨。 */
+    private static void bonePile(Placer p, BlockPos origin, RandomSource rng) {
+        pad(p, origin, 2, 2, Blocks.COARSE_DIRT.defaultBlockState());
+        for (int i = 0; i < 6; i++) {
+            BlockPos b = origin.offset(rng.nextInt(5) - 2, 0, rng.nextInt(5) - 2);
+            p.set(b, rng.nextBoolean() ? Blocks.BONE_BLOCK.defaultBlockState()
+                    : Blocks.COBBLESTONE.defaultBlockState());
+        }
+        // 中央颅骨
+        p.set(origin, Blocks.SKELETON_SKULL.defaultBlockState());
+        p.set(origin.above(), Blocks.BONE_BLOCK.defaultBlockState());
+        if (rng.nextBoolean()) {
+            p.set(origin.offset(0, 1, 1), Blocks.SKELETON_SKULL.defaultBlockState());
+        }
+    }
+
+    /** 27 陷坑陷阱：危险地形，地表挖出尖刺坑（木刺+深坑），警示作用。 */
+    private static void pitTrap(Placer p, BlockPos origin, RandomSource rng, int lvl) {
+        // 挖坑（3×3，深 3）
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                for (int dy = 0; dy >= -3; dy--) {
+                    p.set(origin.offset(dx, dy, dz), Blocks.AIR.defaultBlockState());
+                }
+                // 坑底木刺
+                p.set(origin.offset(dx, -3, dz), Blocks.OAK_FENCE.defaultBlockState());
+            }
+        }
+        // 坑沿残木围栏（破损）
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                boolean edge = Math.abs(dx) == 1 || Math.abs(dz) == 1;
+                if (edge && rng.nextFloat() < 0.5F) {
+                    p.set(origin.offset(dx, 0, dz), Blocks.OAK_FENCE.defaultBlockState());
+                }
+            }
+        }
+        if (rng.nextBoolean()) {
+            p.set(origin.above(), Blocks.TRIPWIRE.defaultBlockState());
+        }
+    }
+
+    /** 28 沉没钟楼：半陷地下的石砖钟楼，顶部悬一口钟（已静默）。 */
+    private static void sunkenBell(Placer p, BlockPos origin, RandomSource rng, int lvl) {
+        BlockPos base = origin.below(2); // 半埋
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dz = -2; dz <= 2; dz++) {
+                boolean edge = Math.abs(dx) == 2 || Math.abs(dz) == 2;
+                if (!edge) {
+                    continue;
+                }
+                for (int y = 0; y <= 5; y++) {
+                    if (rng.nextFloat() < 0.2F) {
+                        continue;
+                    }
+                    p.set(base.offset(dx, y, dz), brick(rng, lvl));
+                }
+            }
+        }
+        // 悬钟（石砖梁 + 钟）
+        p.set(base.offset(0, 5, 0), Blocks.OAK_LOG.defaultBlockState());
+        p.set(base.offset(0, 6, 0), Blocks.BELL.defaultBlockState());
+    }
+
+    /** 29 海上钻井残骸(滩)：锈蚀铁架平台，向海面伸出，残破管线和油桶。 */
+    private static void oilRig(Placer p, BlockPos origin, RandomSource rng, int lvl) {
+        pad(p, origin, 2, 2, Blocks.IRON_BLOCK.defaultBlockState());
+        int h = 4 + rng.nextInt(3);
+        for (int y = 0; y < h; y++) {
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    boolean edge = Math.abs(dx) == 1 || Math.abs(dz) == 1;
+                    if (!edge) {
+                        continue;
+                    }
+                    if (y == 0 && dz == 0 && dx == 0) {
+                        continue;
+                    }
+                    if (rng.nextFloat() < 0.3F) {
+                        continue; // 锈蚀缺口
+                    }
+                    p.set(origin.offset(dx, y, dz), Blocks.IRON_BARS.defaultBlockState());
+                }
+            }
+        }
+        // 伸出海面的栈桥
+        for (int dx = 2; dx <= 7; dx++) {
+            if (rng.nextFloat() < 0.25F) {
+                continue;
+            }
+            p.set(origin.offset(dx, 0, 0), Blocks.IRON_BLOCK.defaultBlockState());
+        }
+        p.set(origin.offset(1, h, 0), Blocks.LANTERN.defaultBlockState());
+        p.set(origin.offset(-1, 0, -1), Blocks.BARREL.defaultBlockState());
+    }
+
+    /** 30 绞刑架：两根立柱 + 横梁 + 垂下锁链，诡异地标。 */
+    private static void gallows(Placer p, BlockPos origin, RandomSource rng) {
+        pad(p, origin, 2, 1, Blocks.OAK_PLANKS.defaultBlockState());
+        for (int y = 0; y < 5; y++) {
+            p.set(origin.offset(-1, y, 0), Blocks.OAK_LOG.defaultBlockState());
+            p.set(origin.offset(1, y, 0), Blocks.OAK_LOG.defaultBlockState());
+        }
+        p.set(origin.offset(-1, 4, 0), Blocks.OAK_LOG.defaultBlockState());
+        p.set(origin.offset(0, 4, 0), Blocks.OAK_LOG.defaultBlockState());
+        p.set(origin.offset(1, 4, 0), Blocks.OAK_LOG.defaultBlockState());
+        // 垂下锁链/绳
+        for (int y = 3; y >= 1; y--) {
+            if (rng.nextFloat() < 0.4F) {
+                continue;
+            }
+            p.set(origin.offset(0, y, 0), Blocks.CHAIN.defaultBlockState());
+        }
+        if (rng.nextBoolean()) {
+            p.set(origin.offset(0, 0, 1), Blocks.SKELETON_SKULL.defaultBlockState());
+        }
+    }
+
+    /** 31 冰晶祭坛：FROST 风，凿制石英+冰构成的小祭坛，中央浮冰核心。 */
+    private static void iceAltar(Placer p, BlockPos origin, RandomSource rng, int lvl) {
+        pad(p, origin, 2, 2, Blocks.PACKED_ICE.defaultBlockState());
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                boolean edge = Math.abs(dx) == 1 || Math.abs(dz) == 1;
+                BlockState m = edge ? Blocks.QUARTZ_BLOCK.defaultBlockState()
+                        : Blocks.ICE.defaultBlockState();
+                p.set(origin.offset(dx, 0, dz), m);
+                if (edge && rng.nextFloat() < 0.5F) {
+                    p.set(origin.offset(dx, 1, dz), Blocks.QUARTZ_PILLAR.defaultBlockState());
+                }
+            }
+        }
+        p.set(origin, Blocks.BLUE_ICE.defaultBlockState());
+        p.set(origin.above(), Blocks.SEA_LANTERN.defaultBlockState());
+    }
+
+    /** 32 黑曜石熔炉：VOLCANIC 风，黑曜石炉体 + 熔岩核心 + 裂纹发光。 */
+    private static void obsidianForge(Placer p, BlockPos origin, RandomSource rng, int lvl) {
+        pad(p, origin, 2, 2, Blocks.OBSIDIAN.defaultBlockState());
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                boolean edge = Math.abs(dx) == 1 || Math.abs(dz) == 1;
+                if (edge) {
+                    p.set(origin.offset(dx, 0, dz), Blocks.OBSIDIAN.defaultBlockState());
+                    if (rng.nextFloat() < 0.6F) {
+                        p.set(origin.offset(dx, 1, dz), Blocks.OBSIDIAN.defaultBlockState());
+                    }
+                }
+            }
+        }
+        // 熔岩核心
+        p.set(origin, Blocks.LAVA.defaultBlockState());
+        p.set(origin.above(), Blocks.GLOWSTONE.defaultBlockState());
+        // 裂纹余烬
+        for (int i = 0; i < 3; i++) {
+            BlockPos e = origin.offset(rng.nextInt(3) - 1, 0, rng.nextInt(3) - 1);
+            if (p.getBlockState(e).isAir()) {
+                p.set(e, Blocks.MAGMA_BLOCK.defaultBlockState());
+            }
+        }
+    }
+
+    /** 33 珊瑚拱(滩)：CORAL 风，彩色珊瑚构成的低拱，点缀海扇与海晶。 */
+    private static void coralArch(Placer p, BlockPos origin, RandomSource rng) {
+        BlockState[] corals = {
+                Blocks.RED_CONCRETE.defaultBlockState(),
+                Blocks.BLUE_CONCRETE.defaultBlockState(),
+                Blocks.PINK_CONCRETE.defaultBlockState(),
+                Blocks.YELLOW_CONCRETE.defaultBlockState()
+        };
+        pad(p, origin, 2, 1, corals[rng.nextInt(corals.length)]);
+        int h = 3 + rng.nextInt(2);
+        for (int y = 0; y < h; y++) {
+            BlockState c = corals[rng.nextInt(corals.length)];
+            if (rng.nextFloat() >= 0.3F) {
+                p.set(origin.offset(-2, y, 0), c);
+            }
+            if (rng.nextFloat() >= 0.3F) {
+                p.set(origin.offset(2, y, 0), c);
+            }
+        }
+        for (int dx = -1; dx <= 1; dx++) {
+            if (rng.nextFloat() < 0.5F) {
+                p.set(origin.offset(dx, h, 0), corals[rng.nextInt(corals.length)]);
+            }
+        }
+        p.set(origin.offset(0, h + 1, 0), Blocks.SEA_LANTERN.defaultBlockState());
+    }
+
+    /** 34 晶簇尖峰：CRYSTAL 风，紫水晶母岩基座 + 数根石英/紫晶尖峰，顶部发光芽。 */
+    private static void crystalSpires(Placer p, BlockPos origin, RandomSource rng) {
+        pad(p, origin, 2, 2, Blocks.AMETHYST_BLOCK.defaultBlockState());
+        int[] xs = {-1, 0, 1, -1, 1};
+        int[] zs = {-1, 0, 1, 1, -1};
+        for (int i = 0; i < 5; i++) {
+            int h = 2 + rng.nextInt(4);
+            BlockPos base = origin.offset(xs[i], 0, zs[i]);
+            for (int y = 0; y < h; y++) {
+                p.set(base.offset(0, y, 0), rng.nextFloat() < 0.5F
+                        ? Blocks.QUARTZ_PILLAR.defaultBlockState()
+                        : Blocks.AMETHYST_BLOCK.defaultBlockState());
+            }
+            p.set(base.offset(0, h, 0), rng.nextFloat() < 0.5F
+                    ? Blocks.AMETHYST_CLUSTER.defaultBlockState()
+                    : Blocks.SMALL_AMETHYST_BUD.defaultBlockState());
+        }
+    }
+
+    /** 35 献祭祭坛：诡异通用风，黑石台座 + 红石沟槽 + 四角骨火盆。 */
+    private static void sacrificialAltar(Placer p, BlockPos origin, RandomSource rng) {
+        pad(p, origin, 2, 2, Blocks.POLISHED_BLACKSTONE.defaultBlockState());
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                boolean edge = Math.abs(dx) == 1 || Math.abs(dz) == 1;
+                BlockState m = edge ? Blocks.POLISHED_BLACKSTONE.defaultBlockState()
+                        : Blocks.REDSTONE_BLOCK.defaultBlockState();
+                p.set(origin.offset(dx, 0, dz), m);
+            }
+        }
+        p.set(origin, Blocks.CRYING_OBSIDIAN.defaultBlockState());
+        p.set(origin.above(), Blocks.SOUL_LANTERN.defaultBlockState());
+        for (int i = 0; i < 4; i++) {
+            int dx = (i & 1) == 0 ? -1 : 1;
+            int dz = (i & 2) == 0 ? -1 : 1;
+            p.set(origin.offset(dx, 1, dz), Blocks.BONE_BLOCK.defaultBlockState());
+        }
+    }
+
+    /** 36 破损投石机：PLATEAU/MILITARY 风，木架 + 石配重 + 抛臂，半塌。 */
+    private static void brokenCatapult(Placer p, BlockPos origin, RandomSource rng) {
+        pad(p, origin, 2, 1, Blocks.SPRUCE_PLANKS.defaultBlockState());
+        p.set(origin.offset(-1, 1, 0), Blocks.SPRUCE_LOG.defaultBlockState());
+        p.set(origin.offset(1, 1, 0), Blocks.SPRUCE_LOG.defaultBlockState());
+        p.set(origin.offset(0, 3, 0), Blocks.SPRUCE_LOG.defaultBlockState()); // 抛臂支点
+        p.set(origin.offset(0, 3, 1), Blocks.SPRUCE_FENCE.defaultBlockState());
+        p.set(origin.offset(0, 4, -1), Blocks.STONE.defaultBlockState()); // 配重
+        if (rng.nextFloat() < 0.5F) {
+            p.set(origin.offset(2, 0, 0), Blocks.COBBLESTONE.defaultBlockState()); // 散落弹石
+        }
+    }
+
+    /** 37 帆匠棚(滩)：CORAL/海风，晾网木架 + 工作台 + 桶，低矮贴近岸线。 */
+    private static void sailMaker(Placer p, BlockPos origin, RandomSource rng) {
+        pad(p, origin, 2, 1, Blocks.OAK_PLANKS.defaultBlockState());
+        for (int z = -1; z <= 1; z++) {
+            p.set(origin.offset(-1, 1, z), Blocks.OAK_FENCE.defaultBlockState());
+            p.set(origin.offset(1, 1, z), Blocks.OAK_FENCE.defaultBlockState());
+        }
+        p.set(origin.offset(-1, 2, 0), Blocks.OAK_FENCE.defaultBlockState());
+        p.set(origin.offset(1, 2, 0), Blocks.OAK_FENCE.defaultBlockState());
+        p.set(origin, Blocks.CRAFTING_TABLE.defaultBlockState());
+        p.set(origin.offset(1, 0, 1), Blocks.BARREL.defaultBlockState());
+        if (rng.nextBoolean()) {
+            p.set(origin.offset(0, 1, 1), Blocks.LANTERN.defaultBlockState());
+        }
+    }
+
+    /** 38 菌林：SWAMP/JUNGLE 风，菌丝地表 + 巨型蘑菇丛 + 孢子光。 */
+    private static void fungusGrove(Placer p, BlockPos origin, RandomSource rng, int lvl) {
+        pad(p, origin, 2, 2, Blocks.MYCELIUM.defaultBlockState());
+        for (int i = 0; i < 3 + rng.nextInt(2); i++) {
+            int dx = rng.nextInt(3) - 1;
+            int dz = rng.nextInt(3) - 1;
+            int h = 3 + rng.nextInt(3);
+            BlockPos stem = origin.offset(dx, 0, dz);
+            for (int y = 0; y < h; y++) {
+                p.set(stem.offset(0, y, 0), Blocks.MUSHROOM_STEM.defaultBlockState());
+            }
+            BlockState cap = rng.nextBoolean()
+                    ? Blocks.RED_MUSHROOM_BLOCK.defaultBlockState()
+                    : Blocks.BROWN_MUSHROOM_BLOCK.defaultBlockState();
+            p.set(stem.offset(0, h, 0), cap);
+        }
+        p.set(origin.above(1), Blocks.SHROOMLIGHT.defaultBlockState());
     }
 
     /** 供枯树断枝用的水平随机方向（避免引 Direction 泛滥）。 */
