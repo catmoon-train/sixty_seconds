@@ -62,6 +62,7 @@ public class NewspaperScreen extends Screen {
 
     // ---------- 核心数据 ----------
     private final boolean editable;
+    private boolean canSign = true;
     private final List<String> stringPages;
     private final List<Component> componentPages;
     private String title = "";
@@ -106,10 +107,15 @@ public class NewspaperScreen extends Screen {
     // ==================== 构造函数 ====================
 
     public NewspaperScreen(ItemStack book, InteractionHand hand) {
+        this(book, hand, true);
+    }
+
+    public NewspaperScreen(ItemStack book, InteractionHand hand, boolean canSign) {
         super(GameNarrator.NO_TITLE);
         this.player = Minecraft.getInstance().player;
         this.book = book;
         this.hand = hand;
+        this.canSign = canSign;
         this.titleEdit = new TextFieldHelper(
                 () -> this.title,
                 s -> this.title = s,
@@ -353,30 +359,36 @@ public class NewspaperScreen extends Screen {
                                 onClose();
                             })
                             .bounds(startX + actionBtnWidth + spacing, bottomY, actionBtnWidth, 20).build());
-            this.signButton = this.addRenderableWidget(
-                    Button.builder(Component.translatable("book.signButton"),
-                            b -> {
-                                isSigning = true;
-                                updateButtonVisibility();
-                            })
-                            .bounds(startX, bottomY, actionBtnWidth, 20).build());
-            this.finalizeButton = this.addRenderableWidget(
-                    Button.builder(Component.translatable("book.finalizeButton"),
-                            b -> {
-                                if (isSigning) {
-                                    saveChanges(true);
-                                    onClose();
-                                }
-                            })
-                            .bounds(startX, bottomY, actionBtnWidth, 20).build());
-            this.cancelButton = this.addRenderableWidget(
-                    Button.builder(CommonComponents.GUI_CANCEL,
-                            b -> {
-                                isSigning = false;
-                                updateButtonVisibility();
-                                clearDisplayCache();
-                            })
-                            .bounds(startX + actionBtnWidth + spacing, bottomY, actionBtnWidth, 20).build());
+            if (canSign) {
+                this.signButton = this.addRenderableWidget(
+                        Button.builder(Component.translatable("book.signButton"),
+                                b -> {
+                                    isSigning = true;
+                                    updateButtonVisibility();
+                                })
+                                .bounds(startX, bottomY, actionBtnWidth, 20).build());
+                this.finalizeButton = this.addRenderableWidget(
+                        Button.builder(Component.translatable("book.finalizeButton"),
+                                b -> {
+                                    if (isSigning) {
+                                        saveChanges(true);
+                                        onClose();
+                                    }
+                                })
+                                .bounds(startX, bottomY, actionBtnWidth, 20).build());
+                this.cancelButton = this.addRenderableWidget(
+                        Button.builder(CommonComponents.GUI_CANCEL,
+                                b -> {
+                                    isSigning = false;
+                                    updateButtonVisibility();
+                                    clearDisplayCache();
+                                })
+                                .bounds(startX + actionBtnWidth + spacing, bottomY, actionBtnWidth, 20).build());
+            } else {
+                this.signButton = null;
+                this.finalizeButton = null;
+                this.cancelButton = null;
+            }
         } else {
             this.doneButton = this.addRenderableWidget(
                     Button.builder(CommonComponents.GUI_OK,
@@ -404,10 +416,14 @@ public class NewspaperScreen extends Screen {
         }
 
         doneButton.visible = !isSigning;
-        signButton.visible = !isSigning;
-        cancelButton.visible = isSigning;
-        finalizeButton.visible = isSigning;
-        finalizeButton.active = !StringUtil.isBlank(title);
+        if (signButton != null)
+            signButton.visible = !isSigning;
+        if (cancelButton != null)
+            cancelButton.visible = isSigning;
+        if (finalizeButton != null) {
+            finalizeButton.visible = isSigning;
+            finalizeButton.active = !StringUtil.isBlank(title);
+        }
     }
 
     // ==================== 翻页 ====================

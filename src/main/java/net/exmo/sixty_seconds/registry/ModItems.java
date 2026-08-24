@@ -1355,7 +1355,7 @@ public final class ModItems {
 
     public static Item SIXTY_SECONDS_NOTE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_NOTE = ITEMS.register("sixty_seconds_note", () -> {
-        SIXTY_SECONDS_NOTE = new Item(new Item.Properties().stacksTo(16));
+        SIXTY_SECONDS_NOTE = new net.exmo.sixty_seconds.content.item.SixtySecondsNoteItem(new Item.Properties().stacksTo(16));
         return SIXTY_SECONDS_NOTE;
     });
 

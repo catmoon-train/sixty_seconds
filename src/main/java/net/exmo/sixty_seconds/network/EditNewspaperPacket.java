@@ -42,9 +42,10 @@ public record EditNewspaperPacket(List<String> pages, Optional<String> title) im
     public static void handle(EditNewspaperPacket payload, ServerPlayNetworking.Context context) {
         var player = context.player();
         var mainHandItem = player.getMainHandItem();
-        if (!mainHandItem.is(ModItems.NEWSPAPER)) {
+        if (!mainHandItem.is(ModItems.NEWSPAPER) && !mainHandItem.is(ModItems.SIXTY_SECONDS_NOTE)) {
             return;
         }
+        boolean isNote = mainHandItem.is(ModItems.SIXTY_SECONDS_NOTE);
         var titOpt = payload.title();
         if (titOpt.isPresent()) {
             var list = new ArrayList<Filterable<Component>>();
@@ -74,10 +75,12 @@ public record EditNewspaperPacket(List<String> pages, Optional<String> title) im
             for (var p : payload.pages()) {
                 list.add(Filterable.passThrough(p));
             }
-            mainHandItem.set(DataComponents.ITEM_NAME,
-                    Component.translatable("item.sixty_seconds.newspaper.draft",
-                            Component.translatable("item.sixty_seconds.newspaper.draft.warp", player.getName())
-                                    .withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY)));
+            if (!isNote) {
+                mainHandItem.set(DataComponents.ITEM_NAME,
+                        Component.translatable("item.sixty_seconds.newspaper.draft",
+                                Component.translatable("item.sixty_seconds.newspaper.draft.warp", player.getName())
+                                        .withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY)));
+            }
             mainHandItem.set(SixtySecDataComponentTypes.WRITABLE_BOOK_CONTENT, new SixtySecWritableBookContent(list));
         }
     }

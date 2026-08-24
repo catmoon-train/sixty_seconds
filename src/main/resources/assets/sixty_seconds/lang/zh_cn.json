@@ -1047,6 +1047,7 @@
   "item.sixty_seconds.sixty_seconds_tobacco_seeds": "烟草种子",
   "item.sixty_seconds.sixty_seconds_nutrient_fertilizer": "营养肥",
   "item.sixty_seconds.sixty_seconds_note": "便签",
+  "item.sixty_seconds.sixty_seconds_note.written": "已书写（%s 字）",
   "item.sixty_seconds.sixty_seconds_big_note": "巨大便签",
   "item.sixty_seconds.sixty_seconds_magnet": "磁铁",
   "item.sixty_seconds.sixty_seconds_box_pry": "撬箱起子",

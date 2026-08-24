@@ -116,6 +116,7 @@ import net.exmo.sixty_seconds.content.entity.WheelchairEntityModel;
 import net.exmo.sixty_seconds.content.entity.WheelchairEntityRenderer;
 import net.exmo.sixty_seconds.content.entity.WheelchairFieldItemRenderer;
 import net.exmo.sixty_seconds.content.item.NewspaperItem;
+import net.exmo.sixty_seconds.content.item.SixtySecondsNoteItem;
 import net.exmo.sixty_seconds.content.item.StarMapItem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -149,6 +150,18 @@ public final class SixtySecondsClient {
                 }
                 minecraft.setScreen(new NewspaperScreen(stack, hand));
                 return true;
+            };
+            // 便签：右键打开纸张书写页（可打字并保存，不署名）。
+            SixtySecondsNoteItem.runner = (stack, hand) -> {
+                Minecraft minecraft = Minecraft.getInstance();
+                if (!hand.equals(InteractionHand.MAIN_HAND)) {
+                    return false;
+                }
+                if (minecraft.screen == null) {
+                    minecraft.setScreen(new NewspaperScreen(stack, hand, false));
+                    return true;
+                }
+                return false;
             };
             // 星图物品右键打开全屏星图：加载本地已探索缓存 → 请求服务端刷新星级区域 → 打开界面。
             StarMapItem.openScreenCallback = () -> {
