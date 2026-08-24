@@ -49,6 +49,11 @@ public final class SixtySecondsIslandGenerator {
      * 当前 3.0 表示岛间额外留出约 3×(r1+r2) 的海域，比原版稀疏数倍以上。
      */
     public static final float ISLAND_SPACING_MULT = 3.0F;
+    /**
+     * 岛屿间最小边缘间隔（格）：无论岛屿大小，两岛陆地边缘之间至少保留这么宽的海域。
+     * 与 {@link #ISLAND_SPACING_MULT} 取较大值，保证「至少相隔 500 格」。
+     */
+    public static final int ISLAND_MIN_GAP = 500;
     /** 单元格纵向生成范围：海平面以下挖/铺的深度、以上净空+山体高度。 */
     public static final int DEPTH_BELOW_SEA = 8;
     public static final int HEIGHT_ABOVE_SEA = 72;
@@ -161,7 +166,9 @@ public final class SixtySecondsIslandGenerator {
         List<SixtySecondsIsland> islands = new ArrayList<>();
         // 布局域以大岛基准半径为准；岛屿稀疏后需要更大的扩散域，否则拒绝采样会大量重试
         int effBase = (int) (base * SixtySecondsIsland.Size.LARGE.radiusMult);
-        int extent = (int) (2.2 * (1.0 + ISLAND_SPACING_MULT) * (effBase + WATER_SKIRT + 8) * Math.sqrt(count)) + 120;
+        // 布局域以半径与最小间隔为准，并放大以容纳更稀疏的群岛（避免拒绝采样大量重试）
+        int extent = (int) ((2.2 * (1.0 + ISLAND_SPACING_MULT) * (effBase + WATER_SKIRT + 8)
+                + ISLAND_MIN_GAP * 2) * Math.sqrt(count)) + 120;
         int patIdx = 0;
         for (int i = 0; i < count; i++) {
             SixtySecondsIsland island = new SixtySecondsIsland();
@@ -218,8 +225,9 @@ public final class SixtySecondsIslandGenerator {
                 int z = i == 0 ? centerZ : centerZ + rng.nextInt(extent * 2 + 1) - extent;
                 boolean ok = true;
                 for (SixtySecondsIsland other : islands) {
-                    double need = (island.radius + other.radius) * (1.0 + ISLAND_SPACING_MULT)
-                            + WATER_SKIRT * 2 + 16;
+                    // 边缘间隔 = max(倍数稀疏, 最小间隔200) ，再叠加水裙边
+                    double extra = Math.max((island.radius + other.radius) * ISLAND_SPACING_MULT, ISLAND_MIN_GAP);
+                    double need = island.radius + other.radius + WATER_SKIRT * 2 + 16 + extra;
                     if (other.distSqr(x, z) < need * need) {
                         ok = false;
                         break;
@@ -261,8 +269,8 @@ public final class SixtySecondsIslandGenerator {
                 int z = centerZ + rng.nextInt(extent * 2 + 1) - extent;
                 boolean ok = true;
                 for (SixtySecondsIsland other : islands) {
-                    double need = (evac.radius + other.radius) * (1.0 + ISLAND_SPACING_MULT)
-                            + WATER_SKIRT * 2 + 16;
+                    double extra = Math.max((evac.radius + other.radius) * ISLAND_SPACING_MULT, ISLAND_MIN_GAP);
+                    double need = evac.radius + other.radius + WATER_SKIRT * 2 + 16 + extra;
                     if (other.distSqr(x, z) < need * need) {
                         ok = false;
                         break;
