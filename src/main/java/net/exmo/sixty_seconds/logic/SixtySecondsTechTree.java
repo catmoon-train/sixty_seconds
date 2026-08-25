@@ -138,6 +138,7 @@ public final class SixtySecondsTechTree {
         chain(list, "military", "work_env_3", "armor_1", "armor_2", "armor_3", "armor_4");
         chain(list, "military", "work_env_3", "func_armor_1", "func_armor_2");
         chain(list, "military", "work_env_3", "melee_1", "melee_2", "melee_3");
+        chain(list, "military", "melee_2", "mace_1", "mace_2", "mace_3");
         chain(list, "military", "work_env_3", "throwables_1", "throwables_2", "throwables_3");
         // ── 枪械线（TACZ 枪/弹/配件，全部在军械台且需通电）────────────────
         // 多前置节点的第二个前置写在 EXTRA_REQUIREMENTS，parentId 只表达主干链。

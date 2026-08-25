@@ -1047,6 +1047,16 @@ public final class SixtySecondsRecipes {
                 List.of(in(steel, 1), in(iron, 5), in(oak, 3)), ModItems.SIXTY_SECONDS_SLEDGEHAMMER, 1);
         add(list, "steel_spear", Station.WEAPON_FORGE, "melee_2", true,
                 List.of(in(steel, 2), in(Items.STICK, 2)), ModItems.SIXTY_SECONDS_STEEL_SPEAR, 1);
+        // ── 重锤（武器锻造台，通电）────────────────────────────────────
+        add(list, "iron_mace", Station.WEAPON_FORGE, "mace_1", true,
+                List.of(in(iron, 16), in(Items.STICK, 4), in(hemp, 6), in(plastic, 6)), ModItems.SIXTY_SECONDS_IRON_MACE, 1);
+        add(list, "steel_mace", Station.WEAPON_FORGE, "mace_2", true,
+                List.of(in(steel, 16), in(Items.STICK, 4), in(hemp, 6), in(plastic, 6)), ModItems.SIXTY_SECONDS_STEEL_MACE, 1);
+        add(list, "alloy_mace", Station.WEAPON_FORGE, "mace_3", true,
+                List.of(in(alloy, 16), in(Items.STICK, 4), in(hemp, 6), in(plastic, 6)), ModItems.SIXTY_SECONDS_ALLOY_MACE, 1);
+        // 重锤-III 解锁后可在武器锻造台通电制作原版风弹
+        add(list, "wind_charge", Station.WEAPON_FORGE, "mace_3", true,
+                List.of(in(plastic, 4), in(ModItems.SIXTY_SECONDS_CHEMICALS, 2)), Items.WIND_CHARGE, 1);
         add(list, "hatchet", Station.WEAPON_FORGE, "melee_2", true,
                 List.of(in(iron, 8), in(Items.STICK, 4)), ModItems.SIXTY_SECONDS_HATCHET, 1);
         add(list, "chainsaw", Station.WEAPON_FORGE, "melee_3", true,
