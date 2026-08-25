@@ -1027,7 +1027,7 @@ public final class SixtySecondsRecipes {
         add(list, "ballistic_vest", Station.ARMOR_FORGE, "func_armor_2", true,
                 List.of(in(steel, 3), in(plastic, 3), in(clothRoll, 3)), ModItems.SIXTY_SECONDS_BALLISTIC_VEST, 1);
         add(list, "horse_armor_relic", Station.ARMOR_FORGE, "func_armor_2", true,
-                List.of(in(steel, 2), in(plastic, 3)), Items.IRON_HORSE_ARMOR, 1);
+                List.of(in(steel, 2), in(plastic, 3)), ModItems.PREDECESSOR_HORSE_ARMOR, 1);
         add(list, "riot_shield", Station.ARMOR_FORGE, "func_armor_2", true,
                 List.of(in(iron, 8), in(oak, 3)), ModItems.SIXTY_SECONDS_RIOT_SHIELD, 1);
         // ── 冷兵器（武器锻造台）────────────────────────────────────────
@@ -1284,13 +1284,13 @@ public final class SixtySecondsRecipes {
         // ── 马匹（车床）───────────────────────────────────────────────
         add(list, "horseshoe_rainbow", Station.LATHE, "horse_1", true,
                 List.of(in(iron, 20), in(Items.LEATHER, 4), in(plastic, 6), in(scrap, 8), in(chem, 1)),
-                net.minecraft.world.item.Items.IRON_HORSE_ARMOR, 1);
+                ModItems.HORSESHOE_RAINBOW, 1);
         add(list, "horseshoe_canyuesa", Station.LATHE, "horse_1", true,
                 List.of(in(iron, 20), in(Items.LEATHER, 4), in(plastic, 6), in(scrap, 8), in(gear, 1)),
-                net.minecraft.world.item.Items.GOLDEN_HORSE_ARMOR, 1);
+                ModItems.HORSESHOE_CANYUESA, 1);
         add(list, "horseshoe_superpig", Station.LATHE, "horse_2", true,
                 List.of(in(steel, 10), in(Items.LEATHER, 6), in(scrap, 12), in(plastic, 8), in(hemp, 6)),
-                net.minecraft.world.item.Items.DIAMOND_HORSE_ARMOR, 1);
+                ModItems.HORSESHOE_SUPERPIG, 1);
         // ── 载具（车床）───────────────────────────────────────────────
         add(list, "wheelchair", Station.LATHE, "vehicle_1", true,
                 List.of(in(steel, 6), in(gear, 5), in(elec, 5), in(wire, 3), in(hemp, 5), in(plastic, 5)),

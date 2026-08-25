@@ -3,6 +3,10 @@ package net.exmo.sixty_seconds.registry;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.content.item.SeaChartItem;
 import net.exmo.sixty_seconds.content.item.StarMapItem;
+import net.exmo.sixty_seconds.content.item.CanyuesaHorseshoeItem;
+import net.exmo.sixty_seconds.content.item.PredecessorHorseArmorItem;
+import net.exmo.sixty_seconds.content.item.RainbowHorseshoeItem;
+import net.exmo.sixty_seconds.content.item.SuperPigHorseshoeItem;
 import net.exmo.sixty_seconds.content.entity.SixtySecondsRvPart;
 import net.exmo.sixty_seconds.content.item.SixtySecondsRvPartItem;
 import net.minecraft.world.entity.EntityType;
@@ -1967,6 +1971,31 @@ public final class ModItems {
         SIXTY_SECONDS_HORSE = new net.exmo.sixty_seconds.content.item.TrapCageAnimalItem(EntityType.HORSE,
                     new Item.Properties().stacksTo(8));
         return SIXTY_SECONDS_HORSE;
+    });
+
+    // ── 马蹄铁 / 前人留下的马铠 ──
+    public static Item HORSESHOE_SUPERPIG;
+    public static final DeferredItem<Item> HOLD_HORSESHOE_SUPERPIG = ITEMS.register("horseshoe_superpig", () -> {
+        HORSESHOE_SUPERPIG = new SuperPigHorseshoeItem(new Item.Properties().stacksTo(1));
+        return HORSESHOE_SUPERPIG;
+    });
+
+    public static Item HORSESHOE_RAINBOW;
+    public static final DeferredItem<Item> HOLD_HORSESHOE_RAINBOW = ITEMS.register("horseshoe_rainbow", () -> {
+        HORSESHOE_RAINBOW = new RainbowHorseshoeItem(new Item.Properties().stacksTo(1));
+        return HORSESHOE_RAINBOW;
+    });
+
+    public static Item HORSESHOE_CANYUESA;
+    public static final DeferredItem<Item> HOLD_HORSESHOE_CANYUESA = ITEMS.register("horseshoe_canyuesa", () -> {
+        HORSESHOE_CANYUESA = new CanyuesaHorseshoeItem(new Item.Properties().stacksTo(1));
+        return HORSESHOE_CANYUESA;
+    });
+
+    public static PredecessorHorseArmorItem PREDECESSOR_HORSE_ARMOR;
+    public static final DeferredItem<PredecessorHorseArmorItem> HOLD_PREDECESSOR_HORSE_ARMOR = ITEMS.register("predecessor_horse_armor", () -> {
+        PREDECESSOR_HORSE_ARMOR = new PredecessorHorseArmorItem(new Item.Properties());
+        return PREDECESSOR_HORSE_ARMOR;
     });
 
     public static Item SIXTY_SECONDS_DONKEY;

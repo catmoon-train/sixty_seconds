@@ -19,8 +19,11 @@ import net.exmo.sixty_seconds.client.map.AreaMapManager;
 import net.exmo.sixty_seconds.client.map.StarMapHud;
 import net.exmo.sixty_seconds.client.map.StarMapManager;
 import net.exmo.sixty_seconds.client.SeaChartReturnHud;
+import net.exmo.sixty_seconds.client.render.CanyuesaHorseRenderer;
 import net.exmo.sixty_seconds.client.render.OceanSeaMonsterRenderer;
 import net.exmo.sixty_seconds.client.render.OceanSharkRenderer;
+import net.exmo.sixty_seconds.client.render.RainbowHorseRenderer;
+import net.exmo.sixty_seconds.client.render.SuperPigHorseRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsArrowRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsFlyingVehicleRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsMonsterRenderer;
@@ -175,8 +178,7 @@ public final class SixtySecondsClient {
                 ClientPlayNetworking.send(new SixtySecondsStarMapRequestC2SPacket());
                 minecraft.setScreen(new StarMapScreen());
             };
-            // 海图物品右键打开全屏海图：请求服务端下发海图数据并打开界面（与 StarMapItem 同模式，
-            // 对齐移植版 StarRailExpress 的 SeaChartItem.openScreenCallback 写法）。
+            // 海图物品右键打开全屏海图：请求服务端下发海图数据并打开界面（与 StarMapItem 同模式）。
             SeaChartItem.openScreenCallback = () -> {
                 Minecraft minecraft = Minecraft.getInstance();
                 if (minecraft.player == null) {
@@ -242,6 +244,9 @@ public final class SixtySecondsClient {
         event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_NPC, SixtySecondsNpcRenderer::new);
         event.registerEntityRenderer(ModEntities.OCEAN_SHARK, OceanSharkRenderer::new);
         event.registerEntityRenderer(ModEntities.OCEAN_SEA_MONSTER, OceanSeaMonsterRenderer::new);
+        event.registerEntityRenderer(ModEntities.SUPER_PIG_HORSE, SuperPigHorseRenderer::new);
+        event.registerEntityRenderer(ModEntities.RAINBOW_HORSE, RainbowHorseRenderer::new);
+        event.registerEntityRenderer(ModEntities.CANYUESA_HORSE, CanyuesaHorseRenderer::new);
         event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_GRENADE, ThrownItemRenderer::new);
         event.registerEntityRenderer(ModEntities.WHEELCHAIR, WheelchairEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.WHEELCHAIR_FIELD_ITEM, WheelchairFieldItemRenderer::new);

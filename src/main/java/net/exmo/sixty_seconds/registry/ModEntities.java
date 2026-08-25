@@ -11,6 +11,9 @@ import net.exmo.sixty_seconds.content.entity.WheelchairEntity;
 import net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity;
 import net.exmo.sixty_seconds.content.entity.WheelchairFieldItemEntity;
 import net.exmo.sixty_seconds.entity.OceanSharkEntity;
+import net.exmo.sixty_seconds.entity.SuperPigHorseEntity;
+import net.exmo.sixty_seconds.entity.RainbowHorseEntity;
+import net.exmo.sixty_seconds.entity.CanyuesaHorseEntity;
 import net.exmo.sixty_seconds.entity.SixtySecondsAcidSpitEntity;
 import net.exmo.sixty_seconds.entity.SixtySecondsArrowEntity;
 import net.exmo.sixty_seconds.entity.SixtySecondsBossEntity;
@@ -179,6 +182,29 @@ public final class ModEntities {
                 return OCEAN_SEA_MONSTER;
             });
 
+    // ── 三种临时坐骑马 ──
+    public static EntityType<SuperPigHorseEntity> SUPER_PIG_HORSE;
+    public static final DeferredHolder<EntityType<?>, EntityType<SuperPigHorseEntity>> HOLD_SUPER_PIG_HORSE =
+            ENTITY_TYPES.register("super_pig_horse", () -> {
+                SUPER_PIG_HORSE = EntityType.Builder.of(SuperPigHorseEntity::new, MobCategory.CREATURE)
+                        .sized(1.4f, 1.6f).clientTrackingRange(10).build("super_pig_horse");
+                return SUPER_PIG_HORSE;
+            });
+    public static EntityType<RainbowHorseEntity> RAINBOW_HORSE;
+    public static final DeferredHolder<EntityType<?>, EntityType<RainbowHorseEntity>> HOLD_RAINBOW_HORSE =
+            ENTITY_TYPES.register("rainbow_horse", () -> {
+                RAINBOW_HORSE = EntityType.Builder.of(RainbowHorseEntity::new, MobCategory.CREATURE)
+                        .sized(1.4f, 1.6f).clientTrackingRange(10).build("rainbow_horse");
+                return RAINBOW_HORSE;
+            });
+    public static EntityType<CanyuesaHorseEntity> CANYUESA_HORSE;
+    public static final DeferredHolder<EntityType<?>, EntityType<CanyuesaHorseEntity>> HOLD_CANYUESA_HORSE =
+            ENTITY_TYPES.register("canyuesa_horse", () -> {
+                CANYUESA_HORSE = EntityType.Builder.of(CanyuesaHorseEntity::new, MobCategory.CREATURE)
+                        .sized(1.4f, 1.6f).clientTrackingRange(10).build("canyuesa_horse");
+                return CANYUESA_HORSE;
+            });
+
     private static EntityType<SixtySecondsSeaVehicleEntity> sea(SixtySecondsSeaVehicleEntity.Kind kind,
             float w, float h, String name) {
         return EntityType.Builder.<SixtySecondsSeaVehicleEntity>of(
@@ -218,6 +244,9 @@ public final class ModEntities {
                 .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE, 8.0)
                 .add(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE, 32.0)
                 .build());
+        event.put(SUPER_PIG_HORSE, SuperPigHorseEntity.createAttributes().build());
+        event.put(RAINBOW_HORSE, RainbowHorseEntity.createAttributes().build());
+        event.put(CANYUESA_HORSE, CanyuesaHorseEntity.createAttributes().build());
         event.put(OCEAN_SEA_MONSTER, OceanSeaMonsterEntity.createMobAttributes()
                 .add(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH, 600.0)
                 .add(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, 0.16)
