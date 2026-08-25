@@ -11,8 +11,6 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
 
 import java.util.Arrays;
@@ -89,12 +87,7 @@ public final class SixtySecondsWeatherCommand {
             level.setWeatherParameters(0, 0, false, false);
         }
         WeatherSync.force(level, type);
-
-        // 到点自动清除粒子标记
-        MinecraftServer server = level.getServer();
-        if (server != null) {
-            server.tell(new TickTask(server.getTickCount() + duration, () -> WeatherSync.clear(level)));
-        }
+        WeatherSync.scheduleClear(level, duration);
 
         ctx.getSource().sendSuccess(
                 () -> Component.literal("已开启天气预览: " + type.name() + " （" + minutes + " 分钟）"), true);

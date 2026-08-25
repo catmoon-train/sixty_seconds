@@ -108,6 +108,7 @@ import net.exmo.sixty_seconds.registry.ModParticles;
 import net.exmo.sixty_seconds.client.weather.WeatherParticle;
 import net.exmo.sixty_seconds.client.weather.WeatherParticleSpawner;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -135,6 +136,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -213,18 +215,25 @@ public final class SixtySecondsClient {
                     context.client().execute(() -> context.client().setScreen(new NewspaperScreen(payload.pages(),
                             payload.title().orElse(Component.literal("")),
                             payload.author().orElse(Component.literal(""))))));
-            // 先注册天气粒子生成器监听，确保即使下方粒子提供器注册异常也不影响生成器 tick
+            // 天气粒子生成器监听（即使下方粒子提供器注册异常也不影响生成器 tick）
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onClientTick);
-            try {
-                Minecraft.getInstance().particleEngine.register(ModParticles.WEATHER_STREAK, new WeatherParticle.Provider(ResourceLocation.parse("particle/rain")));
-                Minecraft.getInstance().particleEngine.register(ModParticles.WEATHER_DUST, new WeatherParticle.Provider(ResourceLocation.parse("particle/smoke")));
-            } catch (Exception e) {
-                org.slf4j.LoggerFactory.getLogger(SixtySecondsClient.class).error("[60s-weather] 天气粒子提供器注册失败", e);
-            }
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onLogout);
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onWorldRender);
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onTooltip);
         });
+    }
+
+    /**
+     * 用 registerSpriteSet 注册天气粒子提供器：引擎会在粒子图集加载完成后，
+     * 把对应 particles.json 中声明的 SpriteSet（rain/smoke）传入 Provider，
+     * 从而避免手动 getTextureAtlas(...).apply(...) 在图集未就绪时抛 NPE。
+     */
+    @SubscribeEvent
+    public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(ModParticles.WEATHER_STREAK,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_DUST,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
     }
 
     @SubscribeEvent
@@ -301,6 +310,8 @@ public final class SixtySecondsClient {
 
     private static void onLogout(ClientPlayerNetworkEvent.LoggingOut event) {
         Minecraft client = Minecraft.getInstance();
+        // 离开世界/切换存档时清空天气预览，避免旧世界状态带入新世界
+        net.exmo.sixty_seconds.weather.ClientWeatherState.reset();
         for (ClientPlayConnectionEvents.Disconnect listener : ClientPlayConnectionEvents.DISCONNECT.invokers()) {
             listener.onPlayDisconnect(client.getConnection(), client);
         }

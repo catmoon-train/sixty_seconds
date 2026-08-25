@@ -3,30 +3,28 @@ package net.exmo.sixty_seconds.client.weather;
 import net.exmo.sixty_seconds.registry.ModParticles;
 import net.exmo.sixty_seconds.weather.ClientWeatherState;
 import net.exmo.sixty_seconds.weather.WeatherVisualConfig;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * 通用天气粒子：渲染为受光照/透明度的广告牌贴图，颜色/大小/速度由当前激活天气主题决定。
  * 由 spawner 根据主题选择 {@code weather_streak}(竖直条) 或 {@code weather_dust}(柔团) 两种类型。
+ * 贴图由引擎从对应 particles.json 构建的 SpriteSet 提供（图集就绪后传入），避免手动查图集导致的 NPE。
  */
 public class WeatherParticle extends TextureSheetParticle {
     private final float baseAlpha;
 
     protected WeatherParticle(ClientLevel level, double x, double y, double z,
-                              double vx, double vy, double vz, TextureAtlasSprite sprite) {
+                              double vx, double vy, double vz, SpriteSet sprites) {
         super(level, x, y, z);
-        this.setSprite(sprite);
+        this.setSprite(sprites.get(level.random));
 
         WeatherTheme theme = WeatherThemes.get(ClientWeatherState.getEventType());
         if (theme == null) {
@@ -76,20 +74,16 @@ public class WeatherParticle extends TextureSheetParticle {
     }
 
     public static class Provider implements ParticleProvider<SimpleParticleType> {
-        private final ResourceLocation spriteLoc;
-        private TextureAtlasSprite sprite;
+        private final SpriteSet spriteSet;
 
-        public Provider(ResourceLocation spriteLoc) {
-            this.spriteLoc = spriteLoc;
+        public Provider(SpriteSet spriteSet) {
+            this.spriteSet = spriteSet;
         }
 
         @Override
         public Particle createParticle(@NotNull SimpleParticleType type, @NotNull ClientLevel level,
                                        double x, double y, double z, double xs, double ys, double zs) {
-            if (sprite == null) {
-                sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_PARTICLES).apply(spriteLoc);
-            }
-            return new WeatherParticle(level, x, y, z, xs, ys, zs, sprite);
+            return new WeatherParticle(level, x, y, z, xs, ys, zs, spriteSet);
         }
     }
 }

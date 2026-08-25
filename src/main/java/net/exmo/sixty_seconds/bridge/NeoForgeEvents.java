@@ -49,6 +49,7 @@ public final class NeoForgeEvents {
     @SubscribeEvent
     public static void onServerTickPost(ServerTickEvent.Post event) {
         GameUtils.tickTaskQueue(event.getServer());
+        net.exmo.sixty_seconds.weather.WeatherSync.serverTick(event.getServer());
         for (ServerTickEvents.EndServerTick listener : ServerTickEvents.END_SERVER_TICK.invokers()) {
             listener.onEndTick(event.getServer());
         }

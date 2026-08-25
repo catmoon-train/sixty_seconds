@@ -221,7 +221,7 @@ public final class SixtySecondsEventSystem {
             case AIRDROP -> airdrop(level); // 瞬发，不进 ACTIVE
         }
         if (type != EventType.AIRDROP) {
-            net.exmo.sixty_seconds.weather.WeatherSync.send(level, type);
+            net.exmo.sixty_seconds.weather.WeatherSync.send(level, type, false);
         }
     }
 
@@ -403,10 +403,8 @@ public final class SixtySecondsEventSystem {
     }
 
     private static void endEvent(ServerLevel level, Active active) {
-        // 指令强制天气预览优先：若当前有 /60s weather 预览生效，自然事件结束时不清除它
-        if (!net.exmo.sixty_seconds.weather.WeatherSync.isForced(level)) {
-            net.exmo.sixty_seconds.weather.WeatherSync.send(level, null);
-        }
+        // 自然事件结束只清事件槽（forced=false），绝不影响指令预览槽
+        net.exmo.sixty_seconds.weather.WeatherSync.send(level, null, false);
         switch (active.type) {
             case POLLUTION_RAIN -> {
                 level.setWeatherParameters(0, 0, false, false);
