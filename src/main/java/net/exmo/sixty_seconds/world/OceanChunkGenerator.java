@@ -4,8 +4,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.island.SixtySecondsOceanFeature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -66,8 +64,6 @@ public final class OceanChunkGenerator extends ChunkGenerator {
 
     public static final net.neoforged.neoforge.registries.DeferredHolder<MapCodec<? extends ChunkGenerator>, MapCodec<OceanChunkGenerator>>
             HOLDER = CHUNK_GENERATORS.register("ocean", () -> CODEC);
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(OceanChunkGenerator.class);
 
     private final int seaLevel;
     private final int minY;
@@ -146,7 +142,6 @@ public final class OceanChunkGenerator extends ChunkGenerator {
         ChunkPos cpos = chunk.getPos();
         int cx = cpos.getMinBlockX();
         int cz = cpos.getMinBlockZ();
-        LOGGER.info("[60s][OceanGen] applyBiomeDecoration chunk=({},{})", cx, cz);
         // 直接手动触发海洋岛屿 feature，确保岛屿在海洋维度一定生成（不依赖 biome_modifier 注入链）。
         SixtySecondsOceanFeature.generateChunk(level, cx, cz);
         super.applyBiomeDecoration(level, chunk, structureManager);
