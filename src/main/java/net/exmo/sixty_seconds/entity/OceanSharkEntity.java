@@ -24,8 +24,11 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.exmo.sixty_seconds.SixtySeconds;
+import net.exmo.sixty_seconds.Sixty_seconds;
+import net.exmo.sixty_seconds.state.SixtySecondsState;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -121,15 +124,49 @@ public class OceanSharkEntity extends OceanCreatureEntity {
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
             MobSpawnType spawnType, @Nullable SpawnGroupData spawnData) {
-        if (spawnType == MobSpawnType.NATURAL && getVariant() == Variant.REEF_SHARK) {
-            float r = ((ServerLevel) level).getRandom().nextFloat();
-            Variant v;
-            if (r < 0.04F) v = Variant.MEGALODON;
-            else if (r < 0.19F) v = Variant.GREAT_WHITE;
-            else if (r < 0.38F) v = Variant.HAMMERHEAD;
-            else if (r < 0.60F) v = Variant.TIGER_SHARK;
-            else v = Variant.REEF_SHARK;
-            applyVariant(v);
+        if (spawnType == MobSpawnType.NATURAL) {
+            // 刷新间隔 / 总数上限 / 局部密度上限：每个自然刷新必然经过这里，
+            // 比 SpawnPlacement 判定可靠（且不受维度 ResourceKey 实例引用比较问题影响，
+            // 详见 Sixty_seconds.registerSpawnPlacements 的注释）。超限则直接丢弃，不放进世界。
+            if (level instanceof ServerLevel sl) {
+                SixtySecondsState.Data data = SixtySecondsState.get(sl);
+                long now = sl.getGameTime();
+
+                // 1) 刷新速度：两次成功刷新之间至少间隔 SHARK_SPAWN_INTERVAL_TICKS（首只不限）
+                if (data.lastSharkSpawnTick != Long.MIN_VALUE
+                        && now - data.lastSharkSpawnTick < Sixty_seconds.SHARK_SPAWN_INTERVAL_TICKS) {
+                    this.discard();
+                    return spawnData;
+                }
+                // 2) 全局数量上限（覆盖整个维度）
+                AABB whole = new AABB(-30_000_000, sl.getMinBuildHeight(), -30_000_000,
+                        30_000_000, sl.getMaxBuildHeight(), 30_000_000);
+                if (sl.getEntitiesOfClass(OceanSharkEntity.class, whole).size() >= Sixty_seconds.SHARK_GLOBAL_CAP) {
+                    this.discard();
+                    return spawnData;
+                }
+                // 3) 局部密度上限（候选点附近已有太多则不放，避免扎堆）
+                int near = sl.getEntitiesOfClass(OceanSharkEntity.class,
+                        new AABB(this.blockPosition()).inflate(Sixty_seconds.SHARK_AREA_RADIUS)).size();
+                if (near >= Sixty_seconds.SHARK_AREA_CAP) {
+                    this.discard();
+                    return spawnData;
+                }
+                // 通过：记录时间戳，保证“一次只放一条”的平滑节奏
+                data.lastSharkSpawnTick = now;
+            }
+
+            // 变体稀有度（仅默认礁鲨时按满强度概率随机选变体）
+            if (getVariant() == Variant.REEF_SHARK) {
+                float r = ((ServerLevel) level).getRandom().nextFloat();
+                Variant v;
+                if (r < 0.04F) v = Variant.MEGALODON;
+                else if (r < 0.19F) v = Variant.GREAT_WHITE;
+                else if (r < 0.38F) v = Variant.HAMMERHEAD;
+                else if (r < 0.60F) v = Variant.TIGER_SHARK;
+                else v = Variant.REEF_SHARK;
+                applyVariant(v);
+            }
         }
         return super.finalizeSpawn(level, difficulty, spawnType, spawnData);
     }
