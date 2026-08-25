@@ -197,9 +197,10 @@ public final class SixtySecondsIslandGenerator {
                                             : r < 0.50F ? SixtySecondsIsland.Type.MILITARY
                                                     : r < 0.60F ? SixtySecondsIsland.Type.INFERNO
                                                     : r < 0.70F ? SixtySecondsIsland.Type.FORSAKEN
-                                                    : r < 0.80F ? SixtySecondsIsland.Type.ASHEN
-                                                    : r < 0.90F ? SixtySecondsIsland.Type.SCULK
-                                                    : SixtySecondsIsland.Type.ABYSS;
+                                                    : r < 0.79F ? SixtySecondsIsland.Type.ASHEN
+                                                    : r < 0.89F ? SixtySecondsIsland.Type.SCULK
+                                                    : r < 0.99F ? SixtySecondsIsland.Type.ABYSS
+                                                    : SixtySecondsIsland.Type.DIAMOND;
         };
     }
 
@@ -437,6 +438,10 @@ public final class SixtySecondsIslandGenerator {
                     Blocks.GRASS_BLOCK.defaultBlockState(), Blocks.DIRT.defaultBlockState(),
                     Blocks.STONE.defaultBlockState(), Blocks.SAND.defaultBlockState(),
                     Blocks.SANDSTONE.defaultBlockState());
+            case DIAMOND -> new Palette(Blocks.DIAMOND_BLOCK.defaultBlockState(),
+                    Blocks.DIAMOND_BLOCK.defaultBlockState(), Blocks.DIAMOND_BLOCK.defaultBlockState(),
+                    Blocks.DIAMOND_BLOCK.defaultBlockState(), Blocks.DIAMOND_BLOCK.defaultBlockState(),
+                    Blocks.DIAMOND_BLOCK.defaultBlockState());
         };
     }
 
@@ -677,6 +682,7 @@ public final class SixtySecondsIslandGenerator {
             case SWAMP -> 6;
             case MESA -> 1;
             case SCULK -> 0;
+            case DIAMOND -> 0;
             case EVACUATION -> 3;
         };
     }
@@ -702,6 +708,7 @@ public final class SixtySecondsIslandGenerator {
             case MESA -> Blocks.RED_SANDSTONE.defaultBlockState();
             case ASHEN -> Blocks.COAL_BLOCK.defaultBlockState();
             case SCULK -> Blocks.DEEPSLATE.defaultBlockState();
+            case DIAMOND -> Blocks.DIAMOND_BLOCK.defaultBlockState();
             default -> Blocks.MOSSY_COBBLESTONE.defaultBlockState();
         };
     }
@@ -730,6 +737,7 @@ public final class SixtySecondsIslandGenerator {
             case MESA -> 10;
             case ASHEN -> 4;
             case SCULK -> 0;
+            case DIAMOND -> 0;
             case EVACUATION -> 12;
         };
     }
@@ -1011,6 +1019,9 @@ public final class SixtySecondsIslandGenerator {
                     BlockPos ground = randomGround(p, island, rng, 0.0, 0.7);
                     if (ground != null) p.set(ground, Blocks.CYAN_TERRACOTTA.defaultBlockState());
                 }
+            }
+            case DIAMOND -> {
+                // 钻石岛：无特殊装饰，保持纯钻石块
             }
         }
     }
