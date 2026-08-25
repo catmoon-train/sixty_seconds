@@ -105,7 +105,7 @@ public class SixtySecondsConfig {
     public boolean seaChartTeleportEnabled = false;
     /**
      * 海图显示半径（方块）：以玩家为中心，超出该距离的岛屿在海图上不再显示（默认 1800）。
-     * 可在 {@code sixty_seconds_config.json} 调整；{@code /60s_ocean} 不在本参数范围时仍用此值。
+     * 可在 {@code sixty_seconds_config.json} 调整；{@code /60s ocean} 不在本参数范围时仍用此值。
      */
     @SerializedName("seaChartRadius")
     public int seaChartRadius = 1800;
@@ -153,7 +153,7 @@ public class SixtySecondsConfig {
     /**
      * 海洋生物自然刷新开关（默认<b>开</b>）：鲨鱼/海怪在海上自然刷新。
      * 与 PVE 开关 {@link #pveEnabled} 相互独立。
-     * {@code /60s_ocean toggle on|off} 切换（按图持久化）。
+     * {@code /60s ocean toggle on|off} 切换（按图持久化）。
      */
     @SerializedName("oceanCreaturesEnabled")
     public boolean oceanCreaturesEnabled = true;
@@ -163,7 +163,7 @@ public class SixtySecondsConfig {
      * <p>
      * 旧实现：开启后主世界在区块首次加载时被整体改写为「全海洋 + 散布岛屿」地形（由「创建世界」界面预设置位）。
      * 新实现：海洋世界已改为独立维度 {@code sixty_seconds:ocean}（见数据包 {@code data/sixty_seconds/dimension/ocean.json}），
-     * 由 {@code /60s_ocean tp} 传送进入，不再改写主世界，此字段保留仅为兼容旧存档 JSON。
+     * 由 {@code /60s ocean tp} 传送进入，不再改写主世界，此字段保留仅为兼容旧存档 JSON。
      */
     @Deprecated
     @SerializedName("oceanMode")
@@ -179,7 +179,7 @@ public class SixtySecondsConfig {
     public int oceanIslandCount = 2;
     /**
      * 撤离点岛屿出现概率（默认 0.25）：每片群岛以该概率<b>至多</b>生成一座撤离点岛（稀有、不刷新物资箱、
-     * 海图特殊标记，最后一天登岛即可撤离）。{@code /60s_ocean evac_chance <0~1>} 设置（按图持久化）。
+     * 海图特殊标记，最后一天登岛即可撤离）。{@code /60s ocean evac_chance <0~1>} 设置（按图持久化）。
      */
     @SerializedName("evacuationIslandChance")
     public float evacuationIslandChance = 0.05F;

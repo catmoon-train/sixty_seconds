@@ -27,9 +27,9 @@ import java.util.List;
  * 生物生成（鲨鱼/海怪/海洋 Boss）已统一到 /60s spawn（见 SixtySecondsStartCommand）。
  *
  * <pre>{@code
- * /60s_ocean toggle on|off                 — 开关海洋生物自然刷新（默认开）
- * /60s_ocean status                        — 查看当前开关状态
- * /60s_ocean tp [player]                   — 传送到海洋（海岛）维度
+ * /60s ocean toggle on|off                 — 开关海洋生物自然刷新（默认开）
+ * /60s ocean status                        — 查看当前开关状态
+ * /60s ocean tp [player]                   — 传送到海洋（海岛）维度
  * }</pre>
  */
 public final class OceanCreatureCommand {
