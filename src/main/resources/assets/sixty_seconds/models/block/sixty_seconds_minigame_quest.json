@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "sixty_seconds:item/sixty_seconds_minigame_quest"
+  }
+}

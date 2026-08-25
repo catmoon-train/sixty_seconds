@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "facing=east,waterlogged=false": {
+      "model": "sixty_seconds:block/sixty_seconds_minigame_quest_panel",
+      "y": 90
+    },
+    "facing=north,waterlogged=false": {
+      "model": "sixty_seconds:block/sixty_seconds_minigame_quest_panel"
+    },
+    "facing=south,waterlogged=false": {
+      "model": "sixty_seconds:block/sixty_seconds_minigame_quest_panel",
+      "y": 180
+    },
+    "facing=west,waterlogged=false": {
+      "model": "sixty_seconds:block/sixty_seconds_minigame_quest_panel",
+      "y": 270
+    },
+    "facing=down,waterlogged=false": {
+      "model": "sixty_seconds:block/sixty_seconds_minigame_quest_panel",
+      "x": 90
+    },
+    "facing=up,waterlogged=false": {
+      "model": "sixty_seconds:block/sixty_seconds_minigame_quest_panel",
+      "x": 270
+    },
+    "facing=east,waterlogged=true": {
+      "model": "sixty_seconds:block/sixty_seconds_minigame_quest_panel",
+      "y": 90
+    },
+    "facing=north,waterlogged=true": {
+      "model": "sixty_seconds:block/sixty_seconds_minigame_quest_panel"
+    },
+    "facing=south,waterlogged=true": {
+      "model": "sixty_seconds:block/sixty_seconds_minigame_quest_panel",
+      "y": 180
+    },
+    "facing=west,waterlogged=true": {
+      "model": "sixty_seconds:block/sixty_seconds_minigame_quest_panel",
+      "y": 270
+    },
+    "facing=down,waterlogged=true": {
+      "model": "sixty_seconds:block/sixty_seconds_minigame_quest_panel",
+      "x": 90
+    },
+    "facing=up,waterlogged=true": {
+      "model": "sixty_seconds:block/sixty_seconds_minigame_quest_panel",
+      "x": 270
+    }
+  }
+}

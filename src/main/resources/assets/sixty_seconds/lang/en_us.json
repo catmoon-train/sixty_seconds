@@ -77,6 +77,8 @@
   "message.sixty_seconds.sixty_seconds.backup_none": "No backup available for that player",
   "message.sixty_seconds.sixty_seconds.backup_no_team": "That player is not in a team — nothing to back up",
   "message.sixty_seconds.sixty_seconds.backup_count": "%1$s disconnect backup(s) currently held",
+  "block.sixty_seconds.sixty_seconds_minigame_quest": "Minigame Quest Block",
+  "block.sixty_seconds.sixty_seconds_minigame_quest_panel": "Minigame Quest Panel",
   "block.sixty_seconds.sixty_seconds_shelter_panel": "Shelter Control Panel",
   "tooltip.sixty_seconds.sixty_seconds_shelter_panel": "Shelter control panel: right-click for the team dashboard — door HP, power, tech, and member status.",
   "gui.sixty_seconds.sixty_seconds.power_title": "Power System",
