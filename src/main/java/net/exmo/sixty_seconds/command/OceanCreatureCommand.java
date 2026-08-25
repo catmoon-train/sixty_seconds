@@ -2,17 +2,13 @@ package net.exmo.sixty_seconds.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
-import net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity;
-import net.exmo.sixty_seconds.entity.OceanSharkEntity;
 import net.exmo.sixty_seconds.island.SixtySecondsIsland;
 import net.exmo.sixty_seconds.island.SixtySecondsIslandGenerator;
 import net.exmo.sixty_seconds.island.SixtySecondsOceanWorldGen;
-import net.exmo.sixty_seconds.logic.OceanCreatureSpawner;
 import net.exmo.sixty_seconds.bridge.fabric.CommandRegistrationCallback;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -27,136 +23,41 @@ import net.minecraft.ChatFormatting;
 import java.util.List;
 
 /**
- * 海洋生物管理命令：生成/开关海洋生物（鲨鱼/海怪）。
+ * 海洋维度管理命令：开关/状态/传送。
+ * 生物生成（鲨鱼/海怪/海洋 Boss）已统一到 /60s spawn（见 SixtySecondsStartCommand）。
  *
  * <pre>{@code
- * /60s_ocean spawn shark <type>            — 在自己位置生成指定鲨鱼
- * /60s_ocean spawn monster <type>          — 生成指定海怪
  * /60s_ocean toggle on|off                 — 开关海洋生物自然刷新（默认开）
  * /60s_ocean status                        — 查看当前开关状态
+ * /60s_ocean tp [player]                   — 传送到海洋（海岛）维度
  * }</pre>
  */
 public final class OceanCreatureCommand {
-
-    private static final String[] SHARK_TYPES = {
-            "reef_shark", "tiger_shark", "hammerhead", "great_white", "megalodon"
-    };
-    private static final String[] MONSTER_TYPES = {
-            "kraken", "serpent", "leviathan"
-    };
 
     private OceanCreatureCommand() {}
 
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            var root = Commands.literal("60s_ocean")
-                .requires(src -> src.hasPermission(2));
+            var root = Commands.literal("60s");
 
-        // /60s_ocean spawn shark <type>
-        root.then(Commands.literal("spawn")
-                .then(Commands.literal("shark")
-                        .then(Commands.argument("type", StringArgumentType.word())
-                                .suggests((ctx, builder) -> {
-                                    for (String t : SHARK_TYPES) {
-                                        builder.suggest(t);
-                                    }
-                                    return builder.buildFuture();
-                                })
-                                .executes(ctx -> spawnShark(ctx, ctx.getSource()))
-                        ))
-                .then(Commands.literal("monster")
-                        .then(Commands.argument("type", StringArgumentType.word())
-                                .suggests((ctx, builder) -> {
-                                    for (String t : MONSTER_TYPES) {
-                                        builder.suggest(t);
-                                    }
-                                    return builder.buildFuture();
-                                })
-                                .executes(ctx -> spawnMonster(ctx, ctx.getSource()))
-                        ))
-        );
-
-        // /60s_ocean toggle on|off
-        root.then(Commands.literal("toggle")
-                .then(Commands.argument("enabled", BoolArgumentType.bool())
-                        .executes(OceanCreatureCommand::toggleOceanCreatures)));
-
-        // /60s_ocean status
-        root.then(Commands.literal("status")
-                .executes(OceanCreatureCommand::showStatus));
-
-        // /60s_ocean tp [player]  — 传送到海洋（海岛）维度
-        root.then(Commands.literal("tp")
-                .executes(ctx -> teleportToOcean(ctx.getSource(), null))
-                .then(Commands.argument("target", EntityArgument.player())
-                        .executes(ctx -> teleportToOcean(ctx.getSource(), EntityArgument.getPlayer(ctx, "target")))));
+            // 生物生成已统一到 /60s spawn（见 SixtySecondsStartCommand），此处仅保留开关/状态/传送。
+            root.then(Commands.literal("ocean")
+                .requires(src -> src.hasPermission(2))
+                // /60s ocean toggle on|off
+                .then(Commands.literal("toggle")
+                        .then(Commands.argument("enabled", BoolArgumentType.bool())
+                                .executes(OceanCreatureCommand::toggleOceanCreatures)))
+                // /60s ocean status
+                .then(Commands.literal("status")
+                        .executes(OceanCreatureCommand::showStatus))
+                // /60s ocean tp [player]  — 传送到海洋（海岛）维度
+                .then(Commands.literal("tp")
+                        .executes(ctx -> teleportToOcean(ctx.getSource(), null))
+                        .then(Commands.argument("target", EntityArgument.player())
+                                .executes(ctx -> teleportToOcean(ctx.getSource(), EntityArgument.getPlayer(ctx, "target"))))));
 
         dispatcher.register(root);
         });
-    }
-
-    private static int spawnShark(CommandContext<CommandSourceStack> ctx, CommandSourceStack src) {
-        String type = StringArgumentType.getString(ctx, "type");
-        ServerLevel level = src.getLevel();
-        BlockPos pos = src.getEntity() instanceof ServerPlayer player
-                ? player.blockPosition() : BlockPos.containing(src.getPosition());
-
-        OceanSharkEntity.Variant variant = switch (type.toLowerCase()) {
-            case "reef_shark", "reef" -> OceanSharkEntity.Variant.REEF_SHARK;
-            case "tiger_shark", "tiger" -> OceanSharkEntity.Variant.TIGER_SHARK;
-            case "hammerhead", "hammer" -> OceanSharkEntity.Variant.HAMMERHEAD;
-            case "great_white", "greatwhite", "white" -> OceanSharkEntity.Variant.GREAT_WHITE;
-            case "megalodon", "mega" -> OceanSharkEntity.Variant.MEGALODON;
-            default -> {
-                src.sendFailure(Component.literal("未知鲨鱼类型: " + type
-                        + "，可用: reef_shark, tiger_shark, hammerhead, great_white, megalodon"));
-                yield null;
-            }
-        };
-        if (variant == null) return 0;
-
-        OceanSharkEntity shark = OceanCreatureSpawner.spawnShark(level, pos,
-                level.getRandom(), 1.0);
-        if (shark != null) {
-            shark.applyVariant(variant);
-            src.sendSuccess(() -> Component.translatable("command.sixty_seconds.ocean.shark_spawned",
-                            Component.translatable(variant.nameKey()))
-                    .withStyle(ChatFormatting.AQUA), true);
-            return 1;
-        }
-        src.sendFailure(Component.literal("生成失败：无法创建鲨鱼实体"));
-        return 0;
-    }
-
-    private static int spawnMonster(CommandContext<CommandSourceStack> ctx, CommandSourceStack src) {
-        String type = StringArgumentType.getString(ctx, "type");
-        ServerLevel level = src.getLevel();
-        BlockPos pos = src.getEntity() instanceof ServerPlayer player
-                ? player.blockPosition() : BlockPos.containing(src.getPosition());
-
-        OceanSeaMonsterEntity.Variant variant = switch (type.toLowerCase()) {
-            case "kraken" -> OceanSeaMonsterEntity.Variant.KRAKEN;
-            case "serpent" -> OceanSeaMonsterEntity.Variant.SERPENT;
-            case "leviathan" -> OceanSeaMonsterEntity.Variant.LEVIATHAN;
-            default -> {
-                src.sendFailure(Component.literal("未知海怪类型: " + type
-                        + "，可用: kraken, serpent, leviathan"));
-                yield null;
-            }
-        };
-        if (variant == null) return 0;
-
-        OceanSeaMonsterEntity monster = OceanCreatureSpawner.spawnSeaMonster(level, pos,
-                level.getRandom(), 1.0);
-        if (monster != null) {
-            monster.applyVariant(variant);
-            src.sendSuccess(() -> Component.translatable("command.sixty_seconds.ocean.monster_spawned",
-                            Component.translatable(variant.nameKey()))
-                    .withStyle(ChatFormatting.DARK_PURPLE), true);
-            return 1;
-        }
-        src.sendFailure(Component.literal("生成失败：无法创建海怪实体"));
-        return 0;
     }
 
     private static int toggleOceanCreatures(CommandContext<CommandSourceStack> ctx) {

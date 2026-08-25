@@ -251,26 +251,29 @@ public final class SixtySecondsStartCommand {
                                         .then(argument("id", IntegerArgumentType.integer(0))
                                                 .executes(c -> islandSail(c.getSource(),
                                                         IntegerArgumentType.getInteger(c, "id"))))))
-                        // 管理员：立即在准星/自身位置刷一只 Boss（缺省等级=1，可选变体）
-                        .then(literal("boss")
+                        // 管理员：统一生成 60 秒生物 —— /60s spawn <boss|monster|shark> ...
+                        .then(literal("spawn")
                                 .requires(source -> source.hasPermission(2))
-                                .then(argument("level", IntegerArgumentType.integer(1,
-                                        net.exmo.sixty_seconds.SixtySecondsBalance.BOSS_MAX_LEVEL))
-                                        .then(argument("variant", StringArgumentType.word())
-                                                .suggests((ctx, builder) -> {
-                                                    for (var v : net.exmo.sixty_seconds.entity.SixtySecondsBossEntity.BossVariant.values()) {
-                                                        builder.suggest(v.name().toLowerCase());
-                                                    }
-                                                    return builder.buildFuture();
-                                                })
+                                // 陆地 Boss：/60s spawn boss [等级] [变体]
+                                .then(literal("boss")
+                                        .then(argument("level", IntegerArgumentType.integer(1,
+                                                net.exmo.sixty_seconds.SixtySecondsBalance.BOSS_MAX_LEVEL))
+                                                .then(argument("variant", StringArgumentType.word())
+                                                        .suggests((ctx, builder) -> {
+                                                            for (var v : net.exmo.sixty_seconds.entity.SixtySecondsBossEntity.BossVariant.values()) {
+                                                                builder.suggest(v.name().toLowerCase());
+                                                            }
+                                                            return builder.buildFuture();
+                                                        })
+                                                        .executes(c -> spawnBoss(c.getSource(),
+                                                                IntegerArgumentType.getInteger(c, "level"),
+                                                                StringArgumentType.getString(c, "variant"))))
                                                 .executes(c -> spawnBoss(c.getSource(),
-                                                        IntegerArgumentType.getInteger(c, "level"),
-                                                        StringArgumentType.getString(c, "variant"))))
-                                        .executes(c -> spawnBoss(c.getSource(),
-                                                IntegerArgumentType.getInteger(c, "level"))))
-                                // 海洋 Boss：leviathan=海洋终极 Boss（定时刷的那种）；kraken/serpent=普通海怪。
+                                                        IntegerArgumentType.getInteger(c, "level"))))
+                                        .executes(c -> spawnBoss(c.getSource(), 1)))
+                                // 海洋 Boss / 海怪：/60s spawn monster <kraken|serpent|leviathan>
                                 // 不要求 60s 模式运行，可在海洋（海岛）维度使用。
-                                .then(literal("ocean")
+                                .then(literal("monster")
                                         .then(argument("type", StringArgumentType.word())
                                                 .suggests((ctx, builder) -> {
                                                     for (String t : new String[]{"kraken", "serpent", "leviathan"}) {
@@ -278,9 +281,20 @@ public final class SixtySecondsStartCommand {
                                                     }
                                                     return builder.buildFuture();
                                                 })
-                                                .executes(c -> spawnOceanBoss(c.getSource(),
+                                                .executes(c -> spawnOceanMonster(c.getSource(),
                                                         StringArgumentType.getString(c, "type")))))
-                                .executes(c -> spawnBoss(c.getSource(), 1)))
+                                // 鲨鱼：/60s spawn shark <reef_shark|tiger_shark|hammerhead|great_white|megalodon>
+                                .then(literal("shark")
+                                        .then(argument("type", StringArgumentType.word())
+                                                .suggests((ctx, builder) -> {
+                                                    for (String t : new String[]{"reef_shark", "tiger_shark",
+                                                            "hammerhead", "great_white", "megalodon"}) {
+                                                        builder.suggest(t);
+                                                    }
+                                                    return builder.buildFuture();
+                                                })
+                                                .executes(c -> spawnSharkCommand(c.getSource(),
+                                                        StringArgumentType.getString(c, "type"))))))
                         // 管理员：Boss 刷新点绑定（与 Boss 魔杖物品等效；落盘 sixty_seconds_config.json）
                         .then(literal("boss_spawn")
                                 .requires(source -> source.hasPermission(2))
@@ -1224,11 +1238,11 @@ public final class SixtySecondsStartCommand {
     }
 
     /**
-     * 管理员：在自身/指令位置刷海洋 Boss。
+     * 管理员：在自身/指令位置刷海洋 Boss / 海怪。
      * leviathan=海洋终极 Boss（定时刷的那种）；kraken/serpent=普通海怪。
-     * 不要求 60s 模式运行——可在海洋（海岛）维度使用；落点取执行者脚下，优先水面。
+     * 不要求 60s 模式运行——可在海洋（海岛）维度使用；落点取执行者脚下。
      */
-    private static int spawnOceanBoss(CommandSourceStack source, String type) {
+    private static int spawnOceanMonster(CommandSourceStack source, String type) {
         net.minecraft.server.level.ServerLevel level = source.getLevel();
         net.minecraft.core.BlockPos pos = source.getEntity() instanceof ServerPlayer player
                 ? player.blockPosition() : net.minecraft.core.BlockPos.containing(source.getPosition());
@@ -1253,6 +1267,38 @@ public final class SixtySecondsStartCommand {
         source.sendSuccess(() -> Component.translatable("command.sixty_seconds.ocean.monster_spawned",
                 Component.translatable(variant.nameKey())).withStyle(ChatFormatting.DARK_PURPLE), true);
         return 1;
+    }
+
+    /**
+     * 管理员：在自身/指令位置刷鲨鱼。落点取执行者脚下，优先水面。
+     */
+    private static int spawnSharkCommand(CommandSourceStack source, String type) {
+        net.minecraft.server.level.ServerLevel level = source.getLevel();
+        net.minecraft.core.BlockPos pos = source.getEntity() instanceof ServerPlayer player
+                ? player.blockPosition() : net.minecraft.core.BlockPos.containing(source.getPosition());
+        net.exmo.sixty_seconds.entity.OceanSharkEntity.Variant variant = switch (type.toLowerCase()) {
+            case "reef_shark", "reef" -> net.exmo.sixty_seconds.entity.OceanSharkEntity.Variant.REEF_SHARK;
+            case "tiger_shark", "tiger" -> net.exmo.sixty_seconds.entity.OceanSharkEntity.Variant.TIGER_SHARK;
+            case "hammerhead", "hammer" -> net.exmo.sixty_seconds.entity.OceanSharkEntity.Variant.HAMMERHEAD;
+            case "great_white", "greatwhite", "white" -> net.exmo.sixty_seconds.entity.OceanSharkEntity.Variant.GREAT_WHITE;
+            case "megalodon", "mega" -> net.exmo.sixty_seconds.entity.OceanSharkEntity.Variant.MEGALODON;
+            default -> {
+                source.sendFailure(Component.literal("未知鲨鱼类型: " + type
+                        + "，可用: reef_shark, tiger_shark, hammerhead, great_white, megalodon"));
+                yield null;
+            }
+        };
+        if (variant == null) return 0;
+        net.exmo.sixty_seconds.entity.OceanSharkEntity shark =
+                net.exmo.sixty_seconds.logic.OceanCreatureSpawner.spawnShark(level, pos, level.getRandom(), 1.0);
+        if (shark != null) {
+            shark.applyVariant(variant);
+            source.sendSuccess(() -> Component.translatable("command.sixty_seconds.ocean.shark_spawned",
+                    Component.translatable(variant.nameKey())).withStyle(ChatFormatting.AQUA), true);
+            return 1;
+        }
+        source.sendFailure(Component.literal("生成失败：无法创建鲨鱼实体"));
+        return 0;
     }
 
     // ── Boss 刷新点绑定（boss_spawn add/remove/list/clear）──────────────
