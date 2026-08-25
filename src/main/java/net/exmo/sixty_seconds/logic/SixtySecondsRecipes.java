@@ -501,8 +501,6 @@ public final class SixtySecondsRecipes {
         add(list, "grappling_hook", Station.WORKBENCH, "tools_3", true,
                 List.of(in(Items.STICK, 2), in(iron, 1), in(hemp, 2)),
                 ModItems.SIXTY_SECONDS_GRAPPLING_HOOK, 1);
-        add(list, "big_note", Station.WORKBENCH, "tools_3", true,
-                List.of(in(Items.PAPER, 8)), ModItems.SIXTY_SECONDS_BIG_NOTE, 1);
         add(list, "pliers", Station.WORKBENCH, "tools_3", true,
                 List.of(in(Items.STICK, 2), in(steel, 2), in(hemp, 1)), ModItems.SIXTY_SECONDS_PLIERS, 1);
         add(list, "claw_hook", Station.WORKBENCH, "tools_3", true,
@@ -510,6 +508,10 @@ public final class SixtySecondsRecipes {
         // 稿纸：Paper*5 + 木炭*1，需通电
         add(list, "draft_paper", Station.WORKBENCH, "tools_3", true,
                 List.of(in(Items.PAPER, 5), in(Items.CHARCOAL, 1)), ModItems.SIXTY_SECONDS_DRAFT_PAPER, 1);
+        // 撤离点指南针：钢锭*6 + 电线*4 + 电池*2，需通电
+        add(list, "evac_compass", Station.WORKBENCH, "tools_3", true,
+                List.of(in(steel, 6), in(ModItems.SIXTY_SECONDS_WIRE, 4), in(ModItems.SIXTY_SECONDS_BATTERY, 2)),
+                ModItems.EVAC_COMPASS, 1);
 
         // ── 背包（裁缝台）─────────────────────────────────────────────
         add(list, "backpack_small", Station.TAILOR, "backpack_1", false,

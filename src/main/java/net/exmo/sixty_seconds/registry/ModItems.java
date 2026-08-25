@@ -43,6 +43,12 @@ public final class ModItems {
         return STAR_MAP;
     });
 
+    public static Item EVAC_COMPASS;
+    public static final DeferredItem<Item> HOLD_EVAC_COMPASS = ITEMS.register("sixty_seconds_evac_compass", () -> {
+        EVAC_COMPASS = new net.exmo.sixty_seconds.item.EvacCompassItem(new Item.Properties().stacksTo(1));
+        return EVAC_COMPASS;
+    });
+
     public static Item SIXTY_SECONDS_WATER_SMALL;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_WATER_SMALL = ITEMS.register("sixty_seconds_water_small", () -> {
         SIXTY_SECONDS_WATER_SMALL = new net.exmo.sixty_seconds.content.item.SixtySecondsWaterItem(

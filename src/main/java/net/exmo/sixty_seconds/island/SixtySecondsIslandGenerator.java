@@ -197,10 +197,10 @@ public final class SixtySecondsIslandGenerator {
                                     : r < 0.66F ? SixtySecondsIsland.Type.OIL
                                             : r < 0.76F ? SixtySecondsIsland.Type.MILITARY
                                                     : r < 0.84F ? SixtySecondsIsland.Type.INFERNO
-                                                            : r < 0.89F ? SixtySecondsIsland.Type.FORSAKEN
-                                                                    : r < 0.94F ? SixtySecondsIsland.Type.ASHEN
-                                                                            : r < 0.95F ? SixtySecondsIsland.Type.SCULK
-                                                                                    : SixtySecondsIsland.Type.ABYSS;
+                                                    : r < 0.89F ? SixtySecondsIsland.Type.FORSAKEN
+                                                    : r < 0.90F ? SixtySecondsIsland.Type.ASHEN
+                                                    : r < 0.98F ? SixtySecondsIsland.Type.SCULK
+                                                    : SixtySecondsIsland.Type.ABYSS;
         };
     }
 

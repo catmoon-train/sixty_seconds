@@ -69,6 +69,8 @@ public class SeaChartFullScreen extends Screen {
     private double scale;
     private double viewCenterX;
     private double viewCenterZ;
+    /** 是否将视口中心锁定到玩家；左键拖动/R键会将其关闭，P键会重新开启 */
+    private boolean followingPlayer = true;
     private double worldMinX;
     private double worldMinZ;
     private double worldMaxX;
@@ -200,10 +202,12 @@ public class SeaChartFullScreen extends Screen {
         // 全屏深海背景
         renderOceanBackground(graphics);
         // 海图以玩家为中心：每帧将视口中心对齐到玩家当前位置（拖拽/缩放时用户可临时偏移）
-        BlockPos pc = playerCenter();
-        if (pc != null) {
-            viewCenterX = pc.getX();
-            viewCenterZ = pc.getZ();
+        if (followingPlayer) {
+            BlockPos pc = playerCenter();
+            if (pc != null) {
+                viewCenterX = pc.getX();
+                viewCenterZ = pc.getZ();
+            }
         }
         // 岛屿
         hoveredIsland = -1;
@@ -675,6 +679,7 @@ public class SeaChartFullScreen extends Screen {
         if (button == 0) {
             // 开始拖拽
             dragging = true;
+            followingPlayer = false; // 手动平移后停止跟随玩家，使拖动生效
             dragMouseX = (int) mouseX;
             dragMouseY = (int) mouseY;
             dragStartX = viewCenterX;
@@ -707,7 +712,7 @@ public class SeaChartFullScreen extends Screen {
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
         double oldScale = scale;
         double zoomFactor = 1.0 + scrollY * 0.15;
-        scale = Mth.clamp(scale * zoomFactor, 0.1, 8.0);
+        scale = Mth.clamp(scale * zoomFactor, 0.05, 32.0);
 
         // 以鼠标位置为中心缩放
         if (scale != oldScale) {
@@ -725,8 +730,9 @@ public class SeaChartFullScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        // R 键：重置视图（居中）
+        // R 键：重置视图（居中到海域，停止跟随玩家）
         if (keyCode == 82) { // R key
+            followingPlayer = false;
             viewCenterX = (worldMinX + worldMaxX) / 2.0;
             viewCenterZ = (worldMinZ + worldMaxZ) / 2.0;
             double spanX = worldMaxX - worldMinX;
@@ -734,9 +740,10 @@ public class SeaChartFullScreen extends Screen {
             scale = Math.min((double) width / spanX, (double) height / spanZ);
             return true;
         }
-        // P 键：回到玩家位置
+        // P 键：回到玩家位置（重新开始跟随玩家）
         if (keyCode == 80) { // P key
             Minecraft minecraft = Minecraft.getInstance();
+            followingPlayer = true;
             if (minecraft.player != null) {
                 viewCenterX = minecraft.player.getX();
                 viewCenterZ = minecraft.player.getZ();

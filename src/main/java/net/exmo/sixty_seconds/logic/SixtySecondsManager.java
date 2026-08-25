@@ -450,8 +450,8 @@ public final class SixtySecondsManager {
      */
     private static void giveStartupMaps(ServerLevel level, SixtySecondsState.Data data) {
         boolean ocean = net.exmo.sixty_seconds.SixtySeconds.isOcean(level);
-        Item mapItem = ocean ? ModItems.SEA_CHART.get() : ModItems.STAR_MAP.get();
-        for (ServerPlayer p : data.players) {
+        Item mapItem = ocean ? ModItems.SEA_CHART : ModItems.STAR_MAP;
+        for (ServerPlayer p : level.players()) {
             if (p == null) {
                 continue;
             }
