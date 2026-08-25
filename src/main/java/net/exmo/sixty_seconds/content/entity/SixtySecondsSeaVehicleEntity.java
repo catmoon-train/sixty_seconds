@@ -173,10 +173,9 @@ public class SixtySecondsSeaVehicleEntity extends Boat {
     public void tick() {
         super.tick();
         // 汽艇/渔船 bbox 很高，原版 Boat.floatBoat 初始瞬移会把它压到水下判为 UNDER_WATER 沉底
-        // （getWaterLevelAbove 只扫船顶一层，船顶高出水面就找不到水）。木筏 bbox 矮不受影响。
-        if (kind != Kind.RAFT) {
-            applySurfaceFloat();
-        }
+        // （getWaterLevelAbove 只扫船顶一层，船顶高出水面就找不到水）。木筏虽不受此影响，
+        // 但也统一做水面抬升修正，保证整体浮在水面之上不沉。
+        applySurfaceFloat();
         if (this.level().isClientSide) {
             return;
         }
@@ -233,7 +232,8 @@ public class SixtySecondsSeaVehicleEntity extends Boat {
         }
         float surfaceLine = topWaterY + level.getFluidState(new BlockPos(cx, topWaterY, cz))
                 .getHeight(level, new BlockPos(cx, topWaterY, cz));
-        double targetY = surfaceLine - 0.15;
+        // 木筏整体要求浮在水面之上（船底抬高 0.35 格）；汽艇/渔船底部压线即可
+        double targetY = surfaceLine + (kind == Kind.RAFT ? 0.35 : -0.15);
         double curY = getY();
         Vec3 v = getDeltaMovement();
         if (curY < targetY - 0.1) {

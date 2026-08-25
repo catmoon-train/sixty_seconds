@@ -86,7 +86,10 @@ public class SixtySecondsSeaVehicleItem extends Item {
         if (boat == null) {
             return InteractionResultHolder.fail(stack);
         }
-        boat.setPos(hit.getLocation().x, hit.getLocation().y, hit.getLocation().z);
+        // 木筏整体浮在水面之上：放置时底部略高于水面（与 tick 内的浮力修正目标一致），
+        // 汽艇/渔船底缘压水线即可
+        float placeOffset = boat.kind() == SixtySecondsSeaVehicleEntity.Kind.RAFT ? 0.35F : 0.0F;
+        boat.setPos(hit.getLocation().x, hit.getLocation().y + placeOffset, hit.getLocation().z);
         boat.setYRot(player.getYRot());
         // 渔船碰撞盒很大（9.6×4.0），极易和岸边/玩家碰撞导致放不下去，跳过 noCollision 检查
         if (boat.kind() != SixtySecondsSeaVehicleEntity.Kind.FISHING_BOAT
