@@ -1,8 +1,6 @@
 package net.exmo.sixty_seconds.weather;
 
 import net.exmo.sixty_seconds.logic.SixtySecondsEventSystem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 客户端持有「当前激活的主题化天气」类型，由 {@link net.exmo.sixty_seconds.network.WeatherS2CPacket}
@@ -11,7 +9,6 @@ import org.slf4j.LoggerFactory;
  * 位于公共包，不引用任何客户端类，故服务端亦可安全加载。
  */
 public final class ClientWeatherState {
-    private static final Logger LOG = LoggerFactory.getLogger(ClientWeatherState.class);
     private static volatile int previewWeatherId = -1;
     private static volatile int eventWeatherId = -1;
 
@@ -20,15 +17,11 @@ public final class ClientWeatherState {
 
     /** 指令预览槽（-1 表示无）。 */
     public static void setPreview(int weatherId) {
-        LOG.info("[60s-weather] setPreview({}) previewWeatherId 旧={} 新={}",
-                weatherId, previewWeatherId, weatherId);
         previewWeatherId = weatherId;
     }
 
     /** 自然事件槽（-1 表示无）。 */
     public static void setEvent(int weatherId) {
-        LOG.info("[60s-weather] setEvent({}) eventWeatherId 旧={} 新={}",
-                weatherId, eventWeatherId, weatherId);
         eventWeatherId = weatherId;
     }
 

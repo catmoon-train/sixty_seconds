@@ -6,8 +6,6 @@ import net.exmo.sixty_seconds.network.WeatherS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +20,6 @@ import java.util.Map;
  * 由 {@link #serverTick} 每服务端 tick 检查。
  */
 public final class WeatherSync {
-    private static final Logger LOG = LoggerFactory.getLogger(WeatherSync.class);
     private record Forced(SixtySecondsEventSystem.EventType type) {
     }
 
@@ -36,7 +33,6 @@ public final class WeatherSync {
     /** 向维度内所有玩家广播天气类型（null 表示清除对应槽位）。forced=true 为指令预览，false 为自然事件。 */
     public static void send(ServerLevel level, SixtySecondsEventSystem.EventType type, boolean forced) {
         byte id = type == null ? (byte) -1 : (byte) type.ordinal();
-        LOG.info("[60s-weather] 服务端广播 weatherId={} forced={} 玩家数={}", id, forced, level.players().size());
         WeatherS2CPacket packet = new WeatherS2CPacket(id, forced);
         for (ServerPlayer player : level.players()) {
             ServerPlayNetworking.send(player, packet);
@@ -45,7 +41,6 @@ public final class WeatherSync {
 
     /** 指令强制开启（预览，优先级最高）。会取消任何待执行的到期清除。 */
     public static void force(ServerLevel level, SixtySecondsEventSystem.EventType type) {
-        LOG.info("[60s-weather] force 指令预览 type={}", type);
         FORCED.put(level, new Forced(type));
         CLEAR_AT.remove(level);
         send(level, type, true);
@@ -59,7 +54,6 @@ public final class WeatherSync {
         }
         long at = server.getTickCount() + Math.max(1, ticks);
         CLEAR_AT.put(level, at);
-        LOG.info("[60s-weather] 已安排预览清除，约 {} tick 后 (当前={}, 到期={})", ticks, server.getTickCount(), at);
     }
 
     /** 结束指令预览：清除预览槽，客户端回退到自然事件（若有）。 */
@@ -78,7 +72,6 @@ public final class WeatherSync {
         for (ServerLevel level : server.getAllLevels()) {
             Long at = CLEAR_AT.get(level);
             if (at != null && now >= at) {
-                LOG.info("[60s-weather] 预览到期，自动清除 level={}", level.dimension().location());
                 clear(level);
             }
         }
