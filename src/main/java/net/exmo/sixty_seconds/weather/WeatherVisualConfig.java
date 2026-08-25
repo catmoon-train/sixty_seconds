@@ -17,6 +17,8 @@ public final class WeatherVisualConfig {
     public static final ModConfigSpec.DoubleValue DENSITY_MULTIPLIER;
     public static final ModConfigSpec.DoubleValue SIZE_MULTIPLIER;
     public static final ModConfigSpec.IntValue MAX_PER_TICK;
+    public static final ModConfigSpec.BooleanValue SKY_TINT_ENABLED;
+    public static final ModConfigSpec.DoubleValue SKY_TINT_STRENGTH;
 
     static {
         ENABLED = BUILDER.comment("启用天气粒子覆盖（封掉原版雨雪渲染并替换为主题化粒子）")
@@ -27,6 +29,10 @@ public final class WeatherVisualConfig {
                 .defineInRange("sizeMultiplier", 1.0, 0.3, 3.0);
         MAX_PER_TICK = BUILDER.comment("单 tick 单玩家最大粒子数（性能保护上限）")
                 .defineInRange("maxParticlesPerTick", 24, 4, 80);
+        SKY_TINT_ENABLED = BUILDER.comment("天气激活时给天空染色（跟随主题色）")
+                .define("skyTintEnabled", true);
+        SKY_TINT_STRENGTH = BUILDER.comment("天空染色强度倍率（0=无，1=完全覆盖主题色）")
+                .defineInRange("skyTintStrength", 0.8, 0.0, 1.0);
         SPEC = BUILDER.build();
     }
 }

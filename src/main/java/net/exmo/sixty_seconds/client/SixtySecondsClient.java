@@ -142,6 +142,22 @@ import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import net.exmo.sixty_seconds.client.weather.WeatherTheme;
+import net.exmo.sixty_seconds.client.weather.WeatherThemes;
+import net.exmo.sixty_seconds.weather.ClientWeatherState;
+import net.exmo.sixty_seconds.weather.WeatherVisualConfig;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
+
 import java.util.List;
 
 @EventBusSubscriber(modid = SixtySeconds.MOD_ID, value = Dist.CLIENT)
@@ -318,6 +334,10 @@ public final class SixtySecondsClient {
     }
 
     private static void onWorldRender(RenderLevelStageEvent event) {
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_SKY) {
+            renderSkyTint(event);
+            return;
+        }
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) {
             return;
         }
@@ -332,6 +352,74 @@ public final class SixtySecondsClient {
         for (WorldRenderEvents.AfterTranslucent listener : WorldRenderEvents.AFTER_TRANSLUCENT.invokers()) {
             listener.afterTranslucent(context);
         }
+    }
+
+    /** 天气激活时天空染色的淡入淡出系数 (0..1)。 */
+    private static float skyTintFade = 0f;
+    private static WeatherTheme lastSkyTheme = null;
+
+    /**
+     * 在天空阶段之后绘制一个全屏半透明色块为天空染色。地形在天空之后渲染且写入深度，
+     * 会自然盖在染色之上，因此染色只出现在天空区域（地平线以上）。
+     * 颜色取自当前天气主题色，强度由配置 skyTintStrength 与主题 skyA 共同决定，并带淡入淡出。
+     */
+    private static void renderSkyTint(RenderLevelStageEvent event) {
+        if (!WeatherVisualConfig.SKY_TINT_ENABLED.get()) {
+            return;
+        }
+        WeatherTheme theme = ClientWeatherState.isActive()
+                ? WeatherThemes.get(ClientWeatherState.getEventType()) : null;
+        if (theme != null) {
+            lastSkyTheme = theme;
+        }
+        float target = theme != null ? 1f : 0f;
+        skyTintFade += (target - skyTintFade) * 0.06f; // 每帧缓动
+        if (skyTintFade < 0.01f || lastSkyTheme == null) {
+            return;
+        }
+        float strength = (float) WeatherVisualConfig.SKY_TINT_STRENGTH.get().doubleValue();
+        float a = strength * lastSkyTheme.skyA * skyTintFade;
+        if (a <= 0.001f) {
+            return;
+        }
+
+        PoseStack pose = event.getPoseStack();
+        pose.pushPose();
+        // 沿用当前透视投影与相机变换：沿相机视线方向(-Z)平移一段距离后，画一个足够大的面片覆盖整个视野。
+        // 天空阶段地形尚未绘制，关闭深度测试后该面片只染到天空区域，地形随后会盖在上面。
+        // 沿用当前透视投影与相机变换：沿相机视线方向(-Z)平移一段距离后，画一个足够大的面片覆盖整个视野。
+        // 天空阶段地形尚未绘制，关闭深度测试后该面片只染到天空区域，地形随后会盖在上面。
+        float fovDeg = (float) Minecraft.getInstance().options.fov().get().intValue();
+        float fov = (float) Math.toRadians(fovDeg);
+        Window window = Minecraft.getInstance().getWindow();
+        float aspect = window.getWidth() / (float) Math.max(1, window.getHeight());
+        float distance = 100f;
+        float margin = 1.5f; // 安全余量，覆盖动态 FOV / 超宽屏
+        float h = margin * (float) (distance * Math.tan(fov / 2.0));
+        float w = h * aspect;
+        pose.translate(0f, 0f, -distance);
+
+        RenderSystem.depthMask(false);
+        RenderSystem.disableDepthTest();
+        RenderSystem.disableCull();
+        RenderSystem.enableBlend();
+        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
+                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
+                GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        BufferBuilder buf = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+        buf.addVertex(pose.last().pose(), -w, -h, 0f).setColor(lastSkyTheme.skyR, lastSkyTheme.skyG, lastSkyTheme.skyB, a);
+        buf.addVertex(pose.last().pose(), -w,  h, 0f).setColor(lastSkyTheme.skyR, lastSkyTheme.skyG, lastSkyTheme.skyB, a);
+        buf.addVertex(pose.last().pose(),  w,  h, 0f).setColor(lastSkyTheme.skyR, lastSkyTheme.skyG, lastSkyTheme.skyB, a);
+        buf.addVertex(pose.last().pose(),  w, -h, 0f).setColor(lastSkyTheme.skyR, lastSkyTheme.skyG, lastSkyTheme.skyB, a);
+        BufferUploader.drawWithShader(buf.build());
+
+        RenderSystem.enableDepthTest();
+        RenderSystem.depthMask(true);
+        RenderSystem.enableCull();
+        RenderSystem.disableBlend();
+        pose.popPose();
     }
 
     private static void onTooltip(ItemTooltipEvent event) {

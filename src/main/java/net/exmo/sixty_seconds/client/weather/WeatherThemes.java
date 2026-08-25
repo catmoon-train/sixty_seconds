@@ -10,7 +10,8 @@ import static net.exmo.sixty_seconds.logic.SixtySecondsEventSystem.EventType.*;
 /** 为模组内每一种天气定义一套粒子表现。数值集中在下方静态块，便于调参/调密度大小。 */
 public final class WeatherThemes {
     public static final WeatherTheme FALLBACK =
-            new WeatherTheme(0.8f, 0.8f, 0.85f, 0.3f, 0.7f, 0.05f, false, 6, 0f, -0.1f, 0f, 0.1f, 40, 70);
+            new WeatherTheme(0.8f, 0.8f, 0.85f, 0.3f, 0.7f, 0.05f, false, 6, 0f, -0.1f, 0f, 0.1f, 40, 70,
+                    0.8f, 0.8f, 0.85f, 0.35f);
 
     private static final Map<SixtySecondsEventSystem.EventType, WeatherTheme> TABLE =
             new EnumMap<>(SixtySecondsEventSystem.EventType.class);
@@ -36,7 +37,7 @@ public final class WeatherThemes {
 
     private static void put(SixtySecondsEventSystem.EventType t, float r, float g, float b, float a, float sz,
                             float gr, boolean s, int d, float vx, float vy, float vz, float j, int lm, int lM) {
-        TABLE.put(t, new WeatherTheme(r, g, b, a, sz, gr, s, d, vx, vy, vz, j, lm, lM));
+        TABLE.put(t, new WeatherTheme(r, g, b, a, sz, gr, s, d, vx, vy, vz, j, lm, lM, r, g, b, 0.4f));
     }
 
     public static WeatherTheme get(SixtySecondsEventSystem.EventType t) {
