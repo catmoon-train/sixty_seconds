@@ -1,0 +1,12 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#sixty_seconds:ocean",
+  "spawners": [
+    {
+      "type": "sixty_seconds:ocean_shark",
+      "weight": 100,
+      "minCount": 1,
+      "maxCount": 4
+    }
+  ]
+}
