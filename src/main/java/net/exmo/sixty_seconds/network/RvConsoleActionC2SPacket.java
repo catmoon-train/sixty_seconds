@@ -49,7 +49,12 @@ public record RvConsoleActionC2SPacket(int entityId, int action, int partOrdinal
     public static void handle(RvConsoleActionC2SPacket payload, ServerPlayNetworking.Context context) {
         ServerPlayer player = context.player();
         Entity entity = player.serverLevel().getEntity(payload.entityId());
-        if (!(entity instanceof SixtySecondsRvEntity rv) || !rv.canUse(player)) {
+        if (!(entity instanceof SixtySecondsRvEntity rv)) {
+            return;
+        }
+        // 游戏未启动时房车尚未归属队伍（teamId = -1），canUse 会拒绝所有控制台操作，
+        // 因此未启动（INACTIVE）相位放行，允许提前安装改装板/加油等准备。
+        if (!canUseNow(rv, player)) {
             return;
         }
         switch (payload.action()) {
@@ -72,6 +77,16 @@ public record RvConsoleActionC2SPacket(int entityId, int action, int partOrdinal
             default -> {
             }
         }
+    }
+
+    /** 游戏未启动（INACTIVE）时放行控制台操作；游戏中按原 canUse（队伍校验）。 */
+    private static boolean canUseNow(SixtySecondsRvEntity rv, ServerPlayer player) {
+        net.exmo.sixty_seconds.state.SixtySecondsState.Data data =
+                net.exmo.sixty_seconds.state.SixtySecondsState.get(player.serverLevel());
+        if (data.phase == net.exmo.sixty_seconds.SixtySecondsPhase.INACTIVE) {
+            return true;
+        }
+        return rv.canUse(player);
     }
 
     /** 选座上车：seatIndex 0..3（0/1=前座，2/3=车顶座）。 */

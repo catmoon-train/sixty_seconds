@@ -841,13 +841,20 @@ public class SixtySecondsRvEntity extends SixtySecondsVehicleEntity {
             return InteractionResult.SUCCESS;
         }
         ItemStack held = player.getItemInHand(hand);
-        // 游戏未开始（INACTIVE）：右键直接上车；手持改装板直接打开改装界面（不再弹门菜单/显示无可用操作）
+        // 游戏未开始（INACTIVE）：右键直接上车；手持改装板直接打开改装界面；手持油罐可直接加油（不再弹门菜单/显示无可用操作）
         if (net.exmo.sixty_seconds.state.SixtySecondsState.get(serverPlayer.serverLevel()).phase
                 == net.exmo.sixty_seconds.SixtySecondsPhase.INACTIVE) {
             if (held.getItem() instanceof net.exmo.sixty_seconds.content.item.SixtySecondsRvPartItem) {
                 net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking.send(serverPlayer,
                         new net.exmo.sixty_seconds.network.OpenRvConsoleS2CPacket(this.getId()));
                 return InteractionResult.SUCCESS;
+            }
+            // 燃油罐 / 柴油罐均可加油（柴油罐量更多）
+            if (held.is(ModItems.SIXTY_SECONDS_DIESEL_CAN)
+                    || held.is(ModItems.SIXTY_SECONDS_FUEL_CAN)) {
+                int amount = held.is(ModItems.SIXTY_SECONDS_DIESEL_CAN)
+                        ? FUEL_PER_CAN_TICKS : FUEL_PER_CAN_TICKS / 2;
+                return addFuel(serverPlayer, held, amount);
             }
             if (!this.isDisabled() && player.startRiding(this, true)) {
                 net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking.send(serverPlayer,
@@ -872,9 +879,12 @@ public class SixtySecondsRvEntity extends SixtySecondsVehicleEntity {
             if (held.is(ItemTags.PLANKS) || held.is(Items.IRON_INGOT)) {
                 return tryRepairWithMaterials(serverPlayer);
             }
-            // 手持柴油罐：沿用基类加油（修理工具不再修复 RV，改为木板+铁锭）
-            if (held.is(ModItems.SIXTY_SECONDS_DIESEL_CAN)) {
-                return super.mobInteract(player, hand);
+            // 手持柴油罐 / 燃油罐：加油（柴油罐为主燃料 +3 分钟，燃油罐应急 +1.5 分钟）
+            if (held.is(ModItems.SIXTY_SECONDS_DIESEL_CAN)
+                    || held.is(ModItems.SIXTY_SECONDS_FUEL_CAN)) {
+                int amount = held.is(ModItems.SIXTY_SECONDS_DIESEL_CAN)
+                        ? FUEL_PER_CAN_TICKS : FUEL_PER_CAN_TICKS / 2;
+                return addFuel(serverPlayer, held, amount);
             }
             // 手持木板/铁锭/修理包：加固家门（与庇护所门一致）
             if (net.exmo.sixty_seconds.state.SixtySecondsState.get(level).phase
@@ -892,6 +902,19 @@ public class SixtySecondsRvEntity extends SixtySecondsVehicleEntity {
         }
         // 统一门菜单
         net.exmo.sixty_seconds.logic.SixtySecondsDoorMenu.openForRv(serverPlayer, this);
+        return InteractionResult.SUCCESS;
+    }
+
+    /** 加油：消耗 1 个油罐，增加指定 tick 燃料。 */
+    private InteractionResult addFuel(ServerPlayer player, ItemStack held, int ticks) {
+        if (!player.isCreative()) {
+            held.shrink(1);
+        }
+        setFuelTicks(fuelTicks() + ticks);
+        this.level().playSound(null, getX(), getY(), getZ(),
+                SoundEvents.BREWING_STAND_BREW, SoundSource.NEUTRAL, 0.8F, 0.7F);
+        player.displayClientMessage(Component.translatable(
+                "message.sixty_seconds.sixty_seconds.vehicle_fueled", fuelTicks() / 20), true);
         return InteractionResult.SUCCESS;
     }
 
