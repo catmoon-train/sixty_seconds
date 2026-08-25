@@ -373,6 +373,12 @@ public final class SixtySecondsManager {
         boolean firstDay = day == 1;
         data.phase = SixtySecondsPhase.DAY;
         data.dayNumber = day;
+        // 同步海洋（海岛）维度的游戏天数：主对局在主世界推进，海洋维度自身不推进天数，
+        // 这里把当前日数写入海洋维度状态，使其刷怪强度等随主对局天数正常变化（不受维度影响）。
+        ServerLevel ocean = level.getServer().getLevel(net.exmo.sixty_seconds.SixtySeconds.OCEAN_DIMENSION);
+        if (ocean != null && ocean != level) {
+            net.exmo.sixty_seconds.state.SixtySecondsState.get(ocean).dayNumber = day;
+        }
         data.phaseEndTick = level.getGameTime() + DAY_TICKS;
         data.lastDayStage = 0; // 新的一天从清晨开始（清晨由 day_start 播报，不重复提示）
         clearTimeWarnings(level); // 新的一天重置预警去重

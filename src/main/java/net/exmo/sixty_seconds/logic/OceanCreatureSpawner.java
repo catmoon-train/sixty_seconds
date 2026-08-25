@@ -12,6 +12,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -76,11 +77,10 @@ public final class OceanCreatureSpawner {
         SixtySecondsConfig config = SixtySecondsConfigStore.current(level).orElse(null);
         if (config == null || !config.oceanCreaturesEnabled) return;
 
-        SixtySecondsState.Data data = SixtySecondsState.get(level);
-        if (data == null) return;
-        // 海洋（海岛）维度没有对局推进的游戏日：用 totalDays 作为等效难度（始终满强度）
+        // 游戏天数以主对局（主世界）为准：海洋维度自身不推进天数，故取主世界的日数，
+        // 使海洋模式刷怪强度随主对局天数正常变化，不受所在维度影响。
         boolean inOcean = level.dimension() == SixtySeconds.OCEAN_DIMENSION;
-        int dayNumber = data.dayNumber > 0 ? data.dayNumber : Math.max(1, config.totalDays);
+        int dayNumber = resolveGameDay(level, config);
 
         // ── 天数比例：dayRatio = currentDay / totalDays ─────────────
         double dayRatio = (double) dayNumber / Math.max(1, config.totalDays);
@@ -140,6 +140,27 @@ public final class OceanCreatureSpawner {
                 }
             }
         }
+    }
+
+    /**
+     * 解析当前应使用的“游戏天数”：
+     * 海洋模式启动时，海洋维度即是对局主维度（所有玩家都在海洋维度，与主世界无关，
+     * 天数在海洋维度自身推进），故优先取“当前维度”的日数；
+     * 普通模式对局在主世界、玩家赴海洋远征时，再回退取主世界日数。
+     * 两者均无有效日数时回退 totalDays。
+     */
+    private static int resolveGameDay(ServerLevel level, @Nullable SixtySecondsConfig config) {
+        int totalDays = config != null ? config.totalDays : 7;
+        // 1) 优先当前维度（海洋模式：海洋即主维度，自身推进天数）
+        int here = SixtySecondsState.get(level).dayNumber;
+        if (here > 0) return here;
+        // 2) 回退主世界（普通模式：对局在主世界，海洋维度只是远征附加维度）
+        ServerLevel overworld = level.getServer().getLevel(Level.OVERWORLD);
+        if (overworld != null) {
+            int d = SixtySecondsState.get(overworld).dayNumber;
+            if (d > 0) return d;
+        }
+        return Math.max(1, totalDays);
     }
 
     /**
