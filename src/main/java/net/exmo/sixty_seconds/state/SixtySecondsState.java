@@ -172,11 +172,5 @@ public final class SixtySecondsState {
          * 注意：用 dayNumber 而非 gameTime，使刷新节奏跟随对局天数而非真实世界时间。
          */
         public int leviathanLastSpawnDay = Integer.MIN_VALUE;
-        /**
-         * 海洋鲨鱼上次「成功数据驱动刷新」的游戏时刻（{@code level.getGameTime()}）。
-         * {@code Long.MIN_VALUE} = 从未刷新过。与 {@code Sixty_seconds.SHARK_SPAWN_INTERVAL_TICKS}
-         * 配合限制刷新速度（在刷怪位置判定里读取）。
-         */
-        public long lastSharkSpawnTick = Long.MIN_VALUE;
     }
 }

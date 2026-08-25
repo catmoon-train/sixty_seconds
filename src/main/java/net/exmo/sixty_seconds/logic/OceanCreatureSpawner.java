@@ -28,11 +28,12 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 海洋生物刷新系统。
  *
- * <h3>鲨鱼（数据驱动自然刷新，上限/节奏在 SpawnPlacement 判定中把关）</h3>
- * <p>{@code ocean_shark} 走 NeoForge {@code biome_modifier} + {@code neoforge:add_spawns}
- * 数据驱动自然刷新（权重/是否刷由数据包决定）；数量上限与刷新速度由
- * {@code Sixty_seconds.registerSpawnPlacements} 的刷怪位置判定统一把关，避免“一进海域就刷一大堆、数量无上限”。
- * 变体稀有度由实体 {@code finalizeSpawn} 内按原概率随机决定。本类不再手动刷鲨鱼。
+ * <h3>鲨鱼（受控刷新，上限/节奏在本类内把关）</h3>
+ * <p>{@code ocean_shark} 不再走 biome_modifier 的 add_spawns（自定义海洋生成器在
+ * CHUNK_GENERATION 阶段会把鲨鱼刷在虚空 Y 并瞬间死亡）；改由本类在海洋维度
+ * {@code tick} 内以受控概率刷新，数量上限与局部密度上限读取
+ * {@code Sixty_seconds.SHARK_GLOBAL_CAP} / {@code SHARK_AREA_CAP} / {@code SHARK_AREA_RADIUS}，
+ * 避免“一进海域就刷一大堆、数量无上限”。变体稀有度由实体 {@code finalizeSpawn} 内按天数随机决定。
  *
  * <h3>海怪 KRAKEN / SERPENT（手动刷，含出场特效）</h3>
  * <p>保留手动刷怪以维持播报/浓雾/音效等出场特效。</p>
@@ -236,7 +237,7 @@ public final class OceanCreatureSpawner {
             variant = OceanSharkEntity.Variant.REEF_SHARK;
         }
         shark.applyVariant(variant);
-        // 手动/指令来源用 COMMAND：绕过 registerSpawnPlacements 的数量上限，保证指令必定生效
+        // 手动/指令来源用 COMMAND：直接完成 finalizeSpawn，保证指令必定生效
         shark.finalizeSpawn(level, level.getCurrentDifficultyAt(waterPos),
                 MobSpawnType.COMMAND, null);
         level.addFreshEntity(shark);
