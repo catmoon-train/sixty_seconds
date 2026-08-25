@@ -605,7 +605,7 @@ public class SixtySecondsRvEntity extends SixtySecondsVehicleEntity {
     @Override
     public void tick() {
         super.tick();
-        // 航海改装板：装上后房车可在水面漂浮行驶
+        // 航海改装：装上后房车可在水面漂浮行驶
         if (hasPart(SixtySecondsRvPart.MARINE_MOD)) {
             applyMarineFloat();
         }
@@ -634,7 +634,7 @@ public class SixtySecondsRvEntity extends SixtySecondsVehicleEntity {
     }
 
     /**
-     * 航海改装板：让房车在水面漂浮行驶。每 tick 检测车体所在水柱的顶面（连续水块最上一格之上的空气），
+     * 航海改装：让房车在水面漂浮行驶。每 tick 检测车体所在水柱的顶面（连续水块最上一格之上的空气），
      * 若房车被淹没（低于水面）则拉回到水面并清零下沉速度；若已在水面附近则抑制继续下沉，
      * 从而表现为「浮在水面上并被驱动行驶」。不在水中时直接返回，保持原地面物理。
      */
