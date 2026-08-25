@@ -158,48 +158,47 @@ public final class SixtySecondsIslandGenerator {
         if (firstIsland) return SixtySecondsIsland.Type.TROPICAL;
         float r = rng.nextFloat();
         return switch (level) {
-            case 1 -> r < 0.42F ? SixtySecondsIsland.Type.TROPICAL
-                    : r < 0.68F ? SixtySecondsIsland.Type.MARSH
-                            : r < 0.84F ? SixtySecondsIsland.Type.CORAL
-                                    : r < 0.93F ? SixtySecondsIsland.Type.RUINS
+            // 每级内各类型均匀分布；SCULK(幽匿岛)仅存在于 5 级
+            case 1 -> r < 0.20F ? SixtySecondsIsland.Type.TROPICAL
+                    : r < 0.40F ? SixtySecondsIsland.Type.MARSH
+                            : r < 0.60F ? SixtySecondsIsland.Type.CORAL
+                                    : r < 0.80F ? SixtySecondsIsland.Type.RUINS
                                             : SixtySecondsIsland.Type.SWAMP;
-            case 2 -> r < 0.15F ? SixtySecondsIsland.Type.FROST
-                    : r < 0.30F ? SixtySecondsIsland.Type.PLATEAU
-                            : r < 0.45F ? SixtySecondsIsland.Type.JUNGLE
-                                    : r < 0.58F ? SixtySecondsIsland.Type.TROPICAL
-                                            : r < 0.71F ? SixtySecondsIsland.Type.MARSH
-                                                    : r < 0.82F ? SixtySecondsIsland.Type.CORAL
-                                                            : r < 0.91F ? SixtySecondsIsland.Type.RUINS
+            case 2 -> r < 0.125F ? SixtySecondsIsland.Type.FROST
+                    : r < 0.25F ? SixtySecondsIsland.Type.PLATEAU
+                            : r < 0.375F ? SixtySecondsIsland.Type.JUNGLE
+                                    : r < 0.50F ? SixtySecondsIsland.Type.TROPICAL
+                                            : r < 0.625F ? SixtySecondsIsland.Type.MARSH
+                                                    : r < 0.75F ? SixtySecondsIsland.Type.CORAL
+                                                            : r < 0.875F ? SixtySecondsIsland.Type.RUINS
                                                                     : SixtySecondsIsland.Type.SWAMP;
-            case 3 -> r < 0.18F ? SixtySecondsIsland.Type.JUNGLE
-                    : r < 0.34F ? SixtySecondsIsland.Type.PLATEAU
-                            : r < 0.48F ? SixtySecondsIsland.Type.FROST
-                                    : r < 0.60F ? SixtySecondsIsland.Type.BARREN
-                                            : r < 0.71F ? SixtySecondsIsland.Type.TROPICAL
-                                                    : r < 0.80F ? SixtySecondsIsland.Type.RUINS
-                                                            : r < 0.86F ? SixtySecondsIsland.Type.QUARANTINE
-                                                                    : r < 0.93F ? SixtySecondsIsland.Type.MESA
-                                                                            : r < 0.94F ? SixtySecondsIsland.Type.SCULK
-                                                                                    : SixtySecondsIsland.Type.FORSAKEN;
-            case 4 -> r < 0.18F ? SixtySecondsIsland.Type.VOLCANIC
-                    : r < 0.36F ? SixtySecondsIsland.Type.BARREN
-                            : r < 0.52F ? SixtySecondsIsland.Type.JUNGLE
-                                    : r < 0.65F ? SixtySecondsIsland.Type.RUINS
-                                            : r < 0.75F ? SixtySecondsIsland.Type.OIL
-                                                    : r < 0.84F ? SixtySecondsIsland.Type.MILITARY
-                                                            : r < 0.90F ? SixtySecondsIsland.Type.INFERNO
-                                                                    : r < 0.95F ? SixtySecondsIsland.Type.CRYSTAL
-                                                                            : r < 0.96F ? SixtySecondsIsland.Type.SCULK
-                                                                                    : SixtySecondsIsland.Type.FORSAKEN;
-            default -> r < 0.24F ? SixtySecondsIsland.Type.VOLCANIC // level 5
-                    : r < 0.40F ? SixtySecondsIsland.Type.BARREN
-                            : r < 0.54F ? SixtySecondsIsland.Type.RUINS
-                                    : r < 0.66F ? SixtySecondsIsland.Type.OIL
-                                            : r < 0.76F ? SixtySecondsIsland.Type.MILITARY
-                                                    : r < 0.84F ? SixtySecondsIsland.Type.INFERNO
-                                                    : r < 0.89F ? SixtySecondsIsland.Type.FORSAKEN
-                                                    : r < 0.90F ? SixtySecondsIsland.Type.ASHEN
-                                                    : r < 0.98F ? SixtySecondsIsland.Type.SCULK
+            case 3 -> r < 0.111F ? SixtySecondsIsland.Type.JUNGLE
+                    : r < 0.222F ? SixtySecondsIsland.Type.PLATEAU
+                            : r < 0.333F ? SixtySecondsIsland.Type.FROST
+                                    : r < 0.444F ? SixtySecondsIsland.Type.BARREN
+                                            : r < 0.556F ? SixtySecondsIsland.Type.TROPICAL
+                                                    : r < 0.667F ? SixtySecondsIsland.Type.RUINS
+                                                            : r < 0.778F ? SixtySecondsIsland.Type.QUARANTINE
+                                                                    : r < 0.889F ? SixtySecondsIsland.Type.MESA
+                                                                            : SixtySecondsIsland.Type.FORSAKEN;
+            case 4 -> r < 0.111F ? SixtySecondsIsland.Type.VOLCANIC
+                    : r < 0.222F ? SixtySecondsIsland.Type.BARREN
+                            : r < 0.333F ? SixtySecondsIsland.Type.JUNGLE
+                                    : r < 0.444F ? SixtySecondsIsland.Type.RUINS
+                                            : r < 0.556F ? SixtySecondsIsland.Type.OIL
+                                                    : r < 0.667F ? SixtySecondsIsland.Type.MILITARY
+                                                            : r < 0.778F ? SixtySecondsIsland.Type.INFERNO
+                                                                    : r < 0.889F ? SixtySecondsIsland.Type.CRYSTAL
+                                                                            : SixtySecondsIsland.Type.FORSAKEN;
+            default -> r < 0.10F ? SixtySecondsIsland.Type.VOLCANIC // level 5
+                    : r < 0.20F ? SixtySecondsIsland.Type.BARREN
+                            : r < 0.30F ? SixtySecondsIsland.Type.RUINS
+                                    : r < 0.40F ? SixtySecondsIsland.Type.OIL
+                                            : r < 0.50F ? SixtySecondsIsland.Type.MILITARY
+                                                    : r < 0.60F ? SixtySecondsIsland.Type.INFERNO
+                                                    : r < 0.70F ? SixtySecondsIsland.Type.FORSAKEN
+                                                    : r < 0.80F ? SixtySecondsIsland.Type.ASHEN
+                                                    : r < 0.90F ? SixtySecondsIsland.Type.SCULK
                                                     : SixtySecondsIsland.Type.ABYSS;
         };
     }
