@@ -139,6 +139,11 @@ public final class SixtySecondsEventSystem {
         }
     }
 
+    /** 是否为下雨型自然事件（触发世界下雨）。与 startEvent 中 setWeatherParameters(..., true, ...) 保持一致。 */
+    public static boolean isRainEventType(EventType type) {
+        return type == EventType.POLLUTION_RAIN || type == EventType.HAIL;
+    }
+
     private static void startEvent(ServerLevel level, EventType type, long now) {
         switch (type) {
             case POLLUTION_RAIN -> {
@@ -214,6 +219,9 @@ public final class SixtySecondsEventSystem {
                         .withStyle(ChatFormatting.GRAY));
             }
             case AIRDROP -> airdrop(level); // 瞬发，不进 ACTIVE
+        }
+        if (type != EventType.AIRDROP) {
+            net.exmo.sixty_seconds.weather.WeatherSync.send(level, type);
         }
     }
 
@@ -395,6 +403,7 @@ public final class SixtySecondsEventSystem {
     }
 
     private static void endEvent(ServerLevel level, Active active) {
+        net.exmo.sixty_seconds.weather.WeatherSync.send(level, null);
         switch (active.type) {
             case POLLUTION_RAIN -> {
                 level.setWeatherParameters(0, 0, false, false);

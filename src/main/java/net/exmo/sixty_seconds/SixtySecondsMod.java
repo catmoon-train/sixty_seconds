@@ -27,6 +27,7 @@ public final class SixtySecondsMod {
 
     public static void init() {
         registerCommands();
+        net.exmo.sixty_seconds.command.SixtySecondsWeatherCommand.register();
         SixtySecondsCreativeTab.register(); // 统一创造标签页（须在物品入页前注册）
         MODE = SixtySecGameModes.registerGameMode(new SixtySecondsGameMode(MODE_ID));
         net.exmo.sixty_seconds.arena.SixtySecondsArena.registerEntityClearWindow(); // 开局清卸载区块里的残留尸体/掉落物

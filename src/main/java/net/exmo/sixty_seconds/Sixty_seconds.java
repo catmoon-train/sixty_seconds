@@ -22,6 +22,9 @@ import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.config.ModConfig;
+import net.exmo.sixty_seconds.registry.ModParticles;
+import net.exmo.sixty_seconds.weather.WeatherVisualConfig;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -52,6 +55,8 @@ public class Sixty_seconds {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerSpawnPlacements);
         modEventBus.addListener(ModNetwork::register);
+        ModParticles.register(modEventBus);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, WeatherVisualConfig.SPEC);
         NeoForge.EVENT_BUS.register(NeoForgeEvents.class);
         net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesAccess.init(); // 通过 IMC 获取 LostCities API（建筑星级映射）
     }

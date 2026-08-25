@@ -15,6 +15,7 @@ import net.exmo.sixty_seconds.bridge.stubs.AdvancedCameraPayload;
 import net.exmo.sixty_seconds.bridge.stubs.AnnounceWelcomePayload;
 import net.exmo.sixty_seconds.bridge.stubs.ShootMuzzleS2CPayload;
 import net.exmo.sixty_seconds.bridge.stubs.TriggerScreenEdgeEffectPayload;
+import net.exmo.sixty_seconds.network.WeatherS2CPacket;
 
 public final class ModNetwork {
     private ModNetwork() {}
@@ -103,6 +104,7 @@ public final class ModNetwork {
         registrar.playToClient(AnnounceWelcomePayload.TYPE, adapt(AnnounceWelcomePayload.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(ShootMuzzleS2CPayload.TYPE, adapt(ShootMuzzleS2CPayload.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(TriggerScreenEdgeEffectPayload.TYPE, adapt(TriggerScreenEdgeEffectPayload.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
+        registrar.playToClient(WeatherS2CPacket.TYPE, adapt(WeatherS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
     }
 
     private static void handleC2S(CustomPacketPayload payload, IPayloadContext ctx) {
@@ -148,6 +150,10 @@ public final class ModNetwork {
         ctx.enqueueWork(() -> {
             if (payload instanceof ComponentSyncS2CPacket sync) {
                 ComponentSyncS2CPacket.handleClient(sync);
+                return;
+            }
+            if (payload instanceof WeatherS2CPacket weather) {
+                WeatherS2CPacket.handleClient(weather);
                 return;
             }
             ClientPlayNetworking.dispatch(payload);

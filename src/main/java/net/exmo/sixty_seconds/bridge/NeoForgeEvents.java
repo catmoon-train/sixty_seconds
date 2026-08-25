@@ -189,6 +189,7 @@ public final class NeoForgeEvents {
             }
             // 重载世界后，首位玩家加入时自动恢复上一局存档
             net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.onPlayerJoin(player);
+            net.exmo.sixty_seconds.weather.WeatherSync.resend(player);
         }
     }
 

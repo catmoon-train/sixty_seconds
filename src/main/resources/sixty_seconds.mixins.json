@@ -15,6 +15,7 @@
     "SixtySecondsHealMixin"
   ],
   "client": [
+    "WeatherRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

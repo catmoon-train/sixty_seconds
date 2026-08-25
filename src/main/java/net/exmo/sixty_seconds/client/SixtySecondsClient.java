@@ -104,6 +104,9 @@ import net.exmo.sixty_seconds.network.VehicleCameraS2CPacket;
 import net.exmo.sixty_seconds.network.VisitChatMessageS2CPacket;
 import net.exmo.sixty_seconds.registry.ModBlocks;
 import net.exmo.sixty_seconds.registry.ModEntities;
+import net.exmo.sixty_seconds.registry.ModParticles;
+import net.exmo.sixty_seconds.client.weather.WeatherParticle;
+import net.exmo.sixty_seconds.client.weather.WeatherParticleSpawner;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -210,6 +213,8 @@ public final class SixtySecondsClient {
                     context.client().execute(() -> context.client().setScreen(new NewspaperScreen(payload.pages(),
                             payload.title().orElse(Component.literal("")),
                             payload.author().orElse(Component.literal(""))))));
+            Minecraft.getInstance().particleEngine.register(ModParticles.WEATHER_STREAK, new WeatherParticle.Provider(ResourceLocation.parse("particle/rain")));
+            Minecraft.getInstance().particleEngine.register(ModParticles.WEATHER_DUST, new WeatherParticle.Provider(ResourceLocation.parse("particle/smoke")));
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onClientTick);
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onLogout);
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onWorldRender);
@@ -283,6 +288,7 @@ public final class SixtySecondsClient {
         if (client.level != null) {
             SixtySecGameWorldComponent.KEY.get(client.level).clientTick();
         }
+        WeatherParticleSpawner.tick(client);
         for (ClientTickEvents.EndTick listener : ClientTickEvents.END_CLIENT_TICK.invokers()) {
             listener.onEndTick(client);
         }
