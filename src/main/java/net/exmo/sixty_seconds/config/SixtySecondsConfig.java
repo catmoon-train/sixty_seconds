@@ -104,11 +104,12 @@ public class SixtySecondsConfig {
     @SerializedName("seaChartTeleportEnabled")
     public boolean seaChartTeleportEnabled = false;
     /**
-     * 海图显示半径（方块）：以玩家为中心，超出该距离的岛屿在海图上不再显示（默认 1800）。
+     * 海图显示半径（方块）：以玩家为中心，超出该距离的岛屿在海图上不再显示（默认 3600）。
+     * 即海图「可看到的区域」大小——调大可显示更远的岛屿、扩大海域视野。
      * 可在 {@code sixty_seconds_config.json} 调整；{@code /60s ocean} 不在本参数范围时仍用此值。
      */
     @SerializedName("seaChartRadius")
-    public int seaChartRadius = 1800;
+    public int seaChartRadius = 3600;
 
     /**
      * 生成海岛时是否在<b>一级岛</b>上自动放置一扇避难所门并登记为门绑定/锚点（默认<b>开</b>）：
@@ -174,9 +175,6 @@ public class SixtySecondsConfig {
     /** 海洋世界海平面 Y（默认 80）。 */
     @SerializedName("oceanSeaY")
     public int oceanSeaY = 80;
-    /** 每 1024×1024 区域中生成的岛屿数量（0~3，确定性分布）。 */
-    @SerializedName("oceanIslandCount")
-    public int oceanIslandCount = 2;
     /**
      * 撤离点岛屿出现概率（默认 0.25）：每片群岛以该概率<b>至多</b>生成一座撤离点岛（稀有、不刷新物资箱、
      * 海图特殊标记，最后一天登岛即可撤离）。{@code /60s ocean evac_chance <0~1>} 设置（按图持久化）。

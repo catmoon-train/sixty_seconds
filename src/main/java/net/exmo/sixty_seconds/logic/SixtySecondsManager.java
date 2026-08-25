@@ -31,6 +31,8 @@ import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.registry.ModEffects;
+import net.exmo.sixty_seconds.registry.ModItems;
+import net.minecraft.world.item.Item;
 
 import java.util.HashSet;
 import java.util.List;

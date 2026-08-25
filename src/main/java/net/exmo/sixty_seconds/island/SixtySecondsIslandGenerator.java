@@ -46,15 +46,15 @@ public final class SixtySecondsIslandGenerator {
     /**
      * 岛屿间距倍数：与 {@link #ISLAND_MIN_GAP} 取较大值作为「额外海域」。
      * 岛心最小允许间距 = (r1+r2) + 水裙边×2 + 16 + max((r1+r2)×此值, ISLAND_MIN_GAP)。
-     * 0.5 表示在「半径之和的一半」与「500 格下限」之间取大，确保任意两岛边缘至少相隔约 500 格，
+     * 0.25 表示在「半径之和的四分之一」与「250 格下限」之间取大，确保任意两岛边缘至少相隔约 250 格，
      * 既不会像原版(值=0)那样仅相切，也不会因倍数过大而单区域放不下、被迫回退堆叠。
      */
-    public static final float ISLAND_SPACING_MULT = 0.5F;
+    public static final float ISLAND_SPACING_MULT = 0.25F;
     /**
      * 岛屿间最小边缘间隔（格）：无论岛屿大小，两岛陆地边缘之间至少保留这么宽的海域。
-     * 与 {@link #ISLAND_SPACING_MULT} 取较大值，保证「至少相隔 500 格」。
+     * 与 {@link #ISLAND_SPACING_MULT} 取较大值，保证「至少相隔 250 格」。
      */
-    public static final int ISLAND_MIN_GAP = 500;
+    public static final int ISLAND_MIN_GAP = 250;
     /** 单元格纵向生成范围：海平面以下挖/铺的深度、以上净空+山体高度。 */
     public static final int DEPTH_BELOW_SEA = 8;
     public static final int HEIGHT_ABOVE_SEA = 72;

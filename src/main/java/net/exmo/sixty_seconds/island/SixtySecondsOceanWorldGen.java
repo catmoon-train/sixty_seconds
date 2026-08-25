@@ -22,8 +22,8 @@ public final class SixtySecondsOceanWorldGen {
 
     /** 单区域边长（区块数，旧常量，保留以备兼容）。 */
     public static final int REGION = 32;
-    /** 海洋维度单区域边长（方块数）：每 4096×4096 方块区域按 {@code oceanIslandCount} 生成岛屿。
-     *  放大区域以容纳大岛 + 至少 500 格间隔（避免单区域放不下而回退堆叠 / 跨区截断）。 */
+    /** 海洋维度单区域边长（方块数）：每 4096×4096 方块区域确定性地生成 6~10 座岛屿（按区域随机、不等数量）。
+     *  放大区域以容纳这些岛屿 + 至少 250 格间隔（避免单区域放不下而回退堆叠 / 跨区截断）。 */
     public static final int REGION_BLOCKS = 4096;
     /** 区域邻接外扩方块数（岛屿半径可能跨区，生成时向四周多算一圈）。 */
     public static final int NEIGHBOR_MARGIN = 512;
@@ -39,7 +39,8 @@ public final class SixtySecondsOceanWorldGen {
         }
         long hash = hashRegion(regionX, regionZ, worldSeed);
         WorldgenRandom rng = new WorldgenRandom(new XoroshiroRandomSource(hash));
-        int count = Math.max(1, config.oceanIslandCount);
+        // 每个区域确定性地生成 6~10 座岛屿不等；具体间距由下方拒绝采样保证至少达到最低间隔标准。
+        int count = 6 + rng.nextInt(5);
         int seaY = config.oceanSeaY > 0 ? config.oceanSeaY : 80;
         int base = SixtySecondsIslandGenerator.DEFAULT_BASE_RADIUS;
         int originX = regionX * REGION_BLOCKS;

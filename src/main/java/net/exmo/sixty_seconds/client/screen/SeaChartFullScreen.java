@@ -75,7 +75,7 @@ public class SeaChartFullScreen extends Screen {
     private double worldMaxZ;
 
     /** 海图显示半径（以玩家为中心，超出则不显示岛屿）。 */
-    private int seaChartRadius = 1800;
+    private int seaChartRadius = 3600;
 
     /** 拖拽状态 */
     private boolean dragging = false;
@@ -126,7 +126,7 @@ public class SeaChartFullScreen extends Screen {
         // 海图显示半径（以玩家为中心，超出则不再显示）
         seaChartRadius = data.seaChartRadius();
         if (seaChartRadius <= 0) {
-            seaChartRadius = 1800;
+            seaChartRadius = 3600;
         }
 
         // 初始视图以玩家为中心（玩家不在时回退到群岛中心）

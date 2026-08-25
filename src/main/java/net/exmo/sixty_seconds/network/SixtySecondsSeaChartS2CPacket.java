@@ -116,7 +116,7 @@ public record SixtySecondsSeaChartS2CPacket(boolean enabled, boolean openScreen,
         // 创造/旁观不受 sea_teleport 开关限制；海洋维度内扬帆/返航总是可用
         boolean teleportAllowed = seeAll || ocean || SixtySecondsIslands.teleportAllowed(level);
         int seaChartRadius = SixtySecondsConfigStore.current(level)
-                .map(c -> c.seaChartRadius).orElse(1800);
+                .map(c -> c.seaChartRadius).orElse(3600);
         ServerPlayNetworking.send(player, new SixtySecondsSeaChartS2CPacket(data.save.enabled, openScreen,
                 teleportAllowed, seaY, seaChartRadius, entries));
     }
