@@ -206,4 +206,14 @@ public class OceanSharkEntity extends OceanCreatureEntity {
             }
         }
     }
+
+    /** 击杀鲨鱼固定掉落 2 个生鲨鱼肉排。 */
+    @Override
+    public void die(net.minecraft.world.damagesource.DamageSource cause) {
+        super.die(cause);
+        if (level() instanceof ServerLevel sl) {
+            spawnAtLocation(new net.minecraft.world.item.ItemStack(
+                    net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_RAW_SHARK_STEAK, 2));
+        }
+    }
 }

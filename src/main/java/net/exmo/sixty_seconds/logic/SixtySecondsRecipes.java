@@ -608,6 +608,8 @@ public final class SixtySecondsRecipes {
         cook(list, "cook_rabbit", Items.RABBIT, Items.COOKED_RABBIT);
         cook(list, "cook_cod", Items.COD, Items.COOKED_COD);
         cook(list, "cook_salmon", Items.SALMON, Items.COOKED_SALMON);
+        cook(list, "cook_shark_steak", ModItems.SIXTY_SECONDS_RAW_SHARK_STEAK, ModItems.SIXTY_SECONDS_COOKED_SHARK_STEAK);
+        cook(list, "cook_tentacle_meat", ModItems.SIXTY_SECONDS_RAW_TENTACLE_MEAT, ModItems.SIXTY_SECONDS_COOKED_TENTACLE_MEAT);
         add(list, "dried_fruit", Station.STOVE, "cooking_1", false,
                 List.of(any("fruit", 2, fruits())), ModItems.SIXTY_SECONDS_DRIED_FRUIT, 3);
         add(list, "bread", Station.STOVE, "cooking_1", false,

@@ -716,6 +716,35 @@ public final class ModItems {
         return SIXTY_SECONDS_SEEDS_PACK;
     });
 
+    // ── 海洋食材：生/熟鲨鱼肉排、生/熟触手肉 ─────────────────────────
+    public static Item SIXTY_SECONDS_RAW_SHARK_STEAK;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_RAW_SHARK_STEAK = ITEMS.register("sixty_seconds_raw_shark_steak", () -> {
+        SIXTY_SECONDS_RAW_SHARK_STEAK = new Item(new Item.Properties().stacksTo(16).food(
+                new net.minecraft.world.food.FoodProperties.Builder().nutrition(3).saturationModifier(0.3F).build()));
+        return SIXTY_SECONDS_RAW_SHARK_STEAK;
+    });
+
+    public static Item SIXTY_SECONDS_COOKED_SHARK_STEAK;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_COOKED_SHARK_STEAK = ITEMS.register("sixty_seconds_cooked_shark_steak", () -> {
+        SIXTY_SECONDS_COOKED_SHARK_STEAK = new Item(new Item.Properties().stacksTo(16).food(
+                new net.minecraft.world.food.FoodProperties.Builder().nutrition(10).saturationModifier(0.8F).build()));
+        return SIXTY_SECONDS_COOKED_SHARK_STEAK;
+    });
+
+    public static Item SIXTY_SECONDS_RAW_TENTACLE_MEAT;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_RAW_TENTACLE_MEAT = ITEMS.register("sixty_seconds_raw_tentacle_meat", () -> {
+        SIXTY_SECONDS_RAW_TENTACLE_MEAT = new Item(new Item.Properties().stacksTo(16).food(
+                new net.minecraft.world.food.FoodProperties.Builder().nutrition(3).saturationModifier(0.3F).build()));
+        return SIXTY_SECONDS_RAW_TENTACLE_MEAT;
+    });
+
+    public static Item SIXTY_SECONDS_COOKED_TENTACLE_MEAT;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_COOKED_TENTACLE_MEAT = ITEMS.register("sixty_seconds_cooked_tentacle_meat", () -> {
+        SIXTY_SECONDS_COOKED_TENTACLE_MEAT = new Item(new Item.Properties().stacksTo(16).food(
+                new net.minecraft.world.food.FoodProperties.Builder().nutrition(12).saturationModifier(0.9F).build()));
+        return SIXTY_SECONDS_COOKED_TENTACLE_MEAT;
+    });
+
     public static Item SIXTY_SECONDS_WATER_PACK;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_WATER_PACK = ITEMS.register("sixty_seconds_water_pack", () -> {
         SIXTY_SECONDS_WATER_PACK = new net.exmo.sixty_seconds.content.item.SixtySecondsWaterItem(

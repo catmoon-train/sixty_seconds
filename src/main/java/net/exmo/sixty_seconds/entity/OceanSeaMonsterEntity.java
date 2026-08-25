@@ -766,6 +766,9 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
                         1 + sl.random.nextInt(3)));
             }
         }
+        // 生触手肉：击杀海洋 Boss 固定掉落 4 个
+        spawnAtLocation(new net.minecraft.world.item.ItemStack(
+                net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_RAW_TENTACLE_MEAT, 4));
     }
 
     @Override
