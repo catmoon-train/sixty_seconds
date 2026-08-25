@@ -13,9 +13,9 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 /**
  * 60s 重锤，继承原版 MaceItem。
- * 基础伤害/攻速设为原版重锤数值（5.0 / -3.4），不分级；
- * 可分级的维度：耐久（getMaxDamage）、猛击落距加伤、击退、盾牌击落概率。
- * 钢制参数与原版一致，铁制更低、合金更高。
+ * 三档（铁/钢/合金）均分级：基础伤害、攻速、耐久随档位提升
+ * （铁质偏低、钢质等同原版重锤 5.0/-3.4、合金更高更快）；
+ * 此外猛击落距加伤、击退、盾牌击落概率也随档位提升。
  */
 public class SixtySecondsMaceItem extends MaceItem {
     private final int maxDamage;

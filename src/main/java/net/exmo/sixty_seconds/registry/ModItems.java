@@ -1215,14 +1215,15 @@ public final class ModItems {
         return SIXTY_SECONDS_STEEL_SPEAR;
     });
 
-    /** 重锤共用属性：原版重锤基础伤害 5.0 / 攻速 -3.4，并按档位设置可损耗耐久。 */
-    private static Item.Properties maceProperties(int maxDamage) {
+    /** 重锤属性：按档位设置基础伤害 / 攻速 / 耐久。铁质偏低、钢质等同原版重锤、合金更高更快，
+     *  与物品描述一致；此外「重砸额外伤害/击退/破盾概率」也随档位提升。 */
+    private static Item.Properties maceProperties(int maxDamage, float attackDamage, double attackSpeed) {
         ItemAttributeModifiers attributes = ItemAttributeModifiers.builder()
                 .add(Attributes.ATTACK_DAMAGE,
-                        new AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, 5.0, AttributeModifier.Operation.ADD_VALUE),
+                        new AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, attackDamage, AttributeModifier.Operation.ADD_VALUE),
                         EquipmentSlotGroup.MAINHAND)
                 .add(Attributes.ATTACK_SPEED,
-                        new AttributeModifier(Item.BASE_ATTACK_SPEED_ID, -3.4, AttributeModifier.Operation.ADD_VALUE),
+                        new AttributeModifier(Item.BASE_ATTACK_SPEED_ID, attackSpeed, AttributeModifier.Operation.ADD_VALUE),
                         EquipmentSlotGroup.MAINHAND)
                 .build();
         return new Item.Properties().stacksTo(1).durability(maxDamage).attributes(attributes);
@@ -1231,21 +1232,21 @@ public final class ModItems {
     public static Item SIXTY_SECONDS_IRON_MACE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_IRON_MACE = ITEMS.register("iron_mace", () -> {
         SIXTY_SECONDS_IRON_MACE = new net.exmo.sixty_seconds.content.item.SixtySecondsMaceItem(
-                50, 0.6F, 0.6F, 0.15F, maceProperties(50));
+                50, 0.6F, 0.6F, 0.15F, maceProperties(50, 4.0F, -3.6D));
         return SIXTY_SECONDS_IRON_MACE;
     });
 
     public static Item SIXTY_SECONDS_STEEL_MACE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_STEEL_MACE = ITEMS.register("steel_mace", () -> {
         SIXTY_SECONDS_STEEL_MACE = new net.exmo.sixty_seconds.content.item.SixtySecondsMaceItem(
-                150, 1.0F, 1.0F, 0.3F, maceProperties(150));
+                150, 1.0F, 1.0F, 0.3F, maceProperties(150, 5.0F, -3.4D));
         return SIXTY_SECONDS_STEEL_MACE;
     });
 
     public static Item SIXTY_SECONDS_ALLOY_MACE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_ALLOY_MACE = ITEMS.register("alloy_mace", () -> {
         SIXTY_SECONDS_ALLOY_MACE = new net.exmo.sixty_seconds.content.item.SixtySecondsMaceItem(
-                400, 1.5F, 1.5F, 0.5F, maceProperties(400));
+                400, 1.5F, 1.5F, 0.5F, maceProperties(400, 6.5F, -3.2D));
         return SIXTY_SECONDS_ALLOY_MACE;
     });
 

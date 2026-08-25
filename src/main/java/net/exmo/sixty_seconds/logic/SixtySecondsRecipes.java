@@ -1405,6 +1405,9 @@ public final class SixtySecondsRecipes {
         add(list, "rv_tool_bench", Station.LATHE, "rv_upgrade_2", true,
                 List.of(in(steel, 4), in(oak, 6), in(scrap, 6)),
                 rvp.get(SixtySecondsRvPart.TOOL_BENCH), 1);
+        add(list, "rv_marine_mod", Station.LATHE, "rv_upgrade_2", true,
+                List.of(in(steel, 6), in(plastic, 4), in(copper, 4), in(gear, 3)),
+                rvp.get(SixtySecondsRvPart.MARINE_MOD), 1);
         // ▸ 房车装修-III (rv_upgrade_3)
         add(list, "rv_economy_carburetor", Station.LATHE, "rv_upgrade_3", true,
                 List.of(in(alloy, 2), in(precious, 1), in(chem, 3)),

@@ -23,7 +23,8 @@ public enum SixtySecondsRvPart {
     LONG_RANGE_RADIO,
     NAVIGATION_ARRAY,
     SCOUTING_RADAR,
-    EXTRA_SEATS;
+    EXTRA_SEATS,
+    MARINE_MOD;
 
     public String id() {
         return name().toLowerCase(Locale.ROOT);

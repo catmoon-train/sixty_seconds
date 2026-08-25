@@ -28,6 +28,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
 import net.exmo.sixty_seconds.registry.ModItems;
 
 import java.util.EnumSet;
@@ -603,6 +605,10 @@ public class SixtySecondsRvEntity extends SixtySecondsVehicleEntity {
     @Override
     public void tick() {
         super.tick();
+        // 航海改装板：装上后房车可在水面漂浮行驶
+        if (hasPart(SixtySecondsRvPart.MARINE_MOD)) {
+            applyMarineFloat();
+        }
         // 客户端：累加车轮旋转 + 破坏状态冒烟
         if (this.level().isClientSide) {
             wheelRotation += throttle() * 0.6F;
@@ -624,6 +630,47 @@ public class SixtySecondsRvEntity extends SixtySecondsVehicleEntity {
         }
         if (this.level().getGameTime() % 20 == 0) {
             applyPassiveParts();
+        }
+    }
+
+    /**
+     * 航海改装板：让房车在水面漂浮行驶。每 tick 检测车体所在水柱的顶面（连续水块最上一格之上的空气），
+     * 若房车被淹没（低于水面）则拉回到水面并清零下沉速度；若已在水面附近则抑制继续下沉，
+     * 从而表现为「浮在水面上并被驱动行驶」。不在水中时直接返回，保持原地面物理。
+     */
+    private void applyMarineFloat() {
+        Level level = this.level();
+        BlockPos center = this.blockPosition();
+        int cx = center.getX();
+        int cz = center.getZ();
+        int baseY = center.getY();
+        int surfaceY = -1;
+        int minY = level.getMinBuildHeight();
+        int maxY = level.getMaxBuildHeight();
+        for (int dy = -3; dy <= 16; dy++) {
+            int y = baseY + dy;
+            if (y < minY || y >= maxY) {
+                continue;
+            }
+            BlockPos bp = new BlockPos(cx, y, cz);
+            if (level.getFluidState(bp).is(FluidTags.WATER)
+                    && !level.getFluidState(bp.above()).is(FluidTags.WATER)) {
+                surfaceY = y + 1;
+                break;
+            }
+        }
+        if (surfaceY < 0) {
+            return; // 不在水中，正常地面物理
+        }
+        double curY = getY();
+        Vec3 v = getDeltaMovement();
+        if (curY < surfaceY - 0.1) {
+            // 被淹没：拉回水面并清零下沉速度
+            this.setPos(getX(), surfaceY, getZ());
+            this.setDeltaMovement(v.x, 0.0, v.z);
+        } else if (curY < surfaceY + 0.8 && v.y < 0.0) {
+            // 已在水面附近：抑制继续下沉，保持漂浮
+            this.setDeltaMovement(v.x, 0.0, v.z);
         }
     }
 
