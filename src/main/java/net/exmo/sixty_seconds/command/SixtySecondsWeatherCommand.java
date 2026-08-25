@@ -52,7 +52,7 @@ public final class SixtySecondsWeatherCommand {
         String names = Arrays.stream(SixtySecondsEventSystem.EventType.values())
                 .map(Enum::name)
                 .collect(Collectors.joining(", "));
-        ctx.getSource().sendSuccess(() -> Component.literal("可用天气: " + names), false);
+        ctx.getSource().sendSuccess(() -> Component.translatable("command.sixty_seconds.weather.list", names), false);
         return 1;
     }
 
@@ -60,7 +60,7 @@ public final class SixtySecondsWeatherCommand {
         ServerLevel level = ctx.getSource().getLevel();
         level.setWeatherParameters(6000, 0, false, false);
         WeatherSync.clear(level);
-        ctx.getSource().sendSuccess(() -> Component.literal("已清除天气预览"), true);
+        ctx.getSource().sendSuccess(() -> Component.translatable("command.sixty_seconds.weather.cleared"), true);
         return 1;
     }
 
@@ -68,11 +68,11 @@ public final class SixtySecondsWeatherCommand {
         String name = StringArgumentType.getString(ctx, "weather");
         SixtySecondsEventSystem.EventType type = resolve(name);
         if (type == null) {
-            ctx.getSource().sendFailure(Component.literal("未知天气: " + name + "（用 /60s weather list 查看）"));
+            ctx.getSource().sendFailure(Component.translatable("command.sixty_seconds.weather.unknown", name));
             return 0;
         }
         if (type == SixtySecondsEventSystem.EventType.AIRDROP) {
-            ctx.getSource().sendFailure(Component.literal("空投不支持粒子天气预览"));
+            ctx.getSource().sendFailure(Component.translatable("command.sixty_seconds.weather.no_airdrop"));
             return 0;
         }
 
@@ -90,7 +90,7 @@ public final class SixtySecondsWeatherCommand {
         WeatherSync.scheduleClear(level, duration);
 
         ctx.getSource().sendSuccess(
-                () -> Component.literal("已开启天气预览: " + type.name() + " （" + minutes + " 分钟）"), true);
+                () -> Component.translatable("command.sixty_seconds.weather.preview_on", type.name(), minutes), true);
         return 1;
     }
 

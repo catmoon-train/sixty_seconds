@@ -205,18 +205,19 @@ public final class SixtySecondsExportBuildingCommand {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             Files.writeString(out, gson.toJson(root), StandardCharsets.UTF_8);
 
-            source.sendSuccess(() -> Component.literal(
-                    "[export_building] 已导出 " + parts.size() + " 个 part 草稿（区域 "
-                            + sizeX + "×" + sizeY + "×" + sizeZ + "，方块种类 " + palette.size() + "）")
+            source.sendSuccess(() -> Component.translatable("commands.60s.export_building.done",
+                    parts.size(), sizeX, sizeY, sizeZ, palette.size())
                     .withStyle(ChatFormatting.GREEN), false);
-            source.sendSuccess(() -> Component.literal("文件： " + out).withStyle(ChatFormatting.GRAY), false);
-            source.sendSuccess(() -> Component.literal("划 0 级安全区命令（复制执行）：").withStyle(ChatFormatting.YELLOW), false);
+            source.sendSuccess(() -> Component.translatable("commands.60s.export_building.file", out)
+                    .withStyle(ChatFormatting.GRAY), false);
+            source.sendSuccess(() -> Component.translatable("commands.60s.export_building.safe_cmd")
+                    .withStyle(ChatFormatting.YELLOW), false);
             source.sendSuccess(() -> Component.literal(regionCmd).withStyle(ChatFormatting.AQUA), false);
             SixtySeconds.LOGGER.info("[60s] export_building '{}' -> {} (parts={}, blocks={})",
                     name, out, parts.size(), palette.size());
             return 1;
         } catch (Exception e) {
-            source.sendFailure(Component.literal("[export_building] 写文件失败： " + e.getMessage())
+            source.sendFailure(Component.translatable("commands.60s.export_building.fail", e.getMessage())
                     .withStyle(ChatFormatting.RED));
             SixtySeconds.LOGGER.warn("[60s] export_building 写文件失败", e);
             return 0;

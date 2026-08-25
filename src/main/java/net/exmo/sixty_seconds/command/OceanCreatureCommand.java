@@ -65,7 +65,7 @@ public final class OceanCreatureCommand {
         ServerLevel level = ctx.getSource().getLevel();
         var configOpt = SixtySecondsConfigStore.current(level);
         if (configOpt.isEmpty()) {
-            ctx.getSource().sendFailure(Component.literal("当前地图无 60s 配置"));
+            ctx.getSource().sendFailure(Component.translatable("command.sixty_seconds.ocean.no_config"));
             return 0;
         }
         configOpt.get().oceanCreaturesEnabled = enabled;
@@ -95,19 +95,19 @@ public final class OceanCreatureCommand {
         MinecraftServer server = source.getServer();
         ServerLevel ocean = server.getLevel(SixtySeconds.OCEAN_DIMENSION);
         if (ocean == null) {
-            source.sendFailure(Component.literal("海洋维度未加载，请确认 sixty_seconds 数据包已启用"));
+            source.sendFailure(Component.translatable("command.sixty_seconds.ocean.dim_not_loaded"));
             return 0;
         }
         ServerPlayer player = target != null ? target : source.getPlayer();
         if (player == null) {
-            source.sendFailure(Component.literal("无法获取目标玩家"));
+            source.sendFailure(Component.translatable("command.sixty_seconds.ocean.no_player"));
             return 0;
         }
         BlockPos dest = computeOceanSpawn(ocean, player);
         player.teleportTo(ocean, dest.getX() + 0.5, dest.getY(), dest.getZ() + 0.5,
                 player.getYRot(), player.getXRot());
-        source.sendSuccess(() -> Component.literal("已将 " + player.getName().getString() + " 传送到海洋维度")
-                .withStyle(ChatFormatting.AQUA), true);
+        source.sendSuccess(() -> Component.translatable("command.sixty_seconds.ocean.teleported",
+                        player.getName()).withStyle(ChatFormatting.AQUA), true);
         return 1;
     }
 

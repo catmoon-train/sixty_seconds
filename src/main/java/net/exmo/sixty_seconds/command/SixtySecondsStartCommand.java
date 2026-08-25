@@ -730,7 +730,7 @@ public final class SixtySecondsStartCommand {
             // 海岛模式：整局 60 秒运行于海洋维度。
             // 住宅与庇护所（竞技场）直接生成在海洋维度内（Y=-40 地板），房车落在岛屿陆地返回本维度庇护所。
             if (ocean == null) {
-                source.sendFailure(Component.literal("海洋（海岛）维度未加载，无法以海岛模式开局"));
+                source.sendFailure(Component.translatable("commands.60s.start_ocean_dim_missing"));
                 return 0;
             }
             SixtySecondsIslands.ensureOceanStarted(ocean);
@@ -742,7 +742,7 @@ public final class SixtySecondsStartCommand {
                 source.sendSuccess(() -> Component.translatable("commands.60s.start_days",
                         SixtySecondsMod.MODE.toString(), resolvedDays).withStyle(ChatFormatting.GREEN), true);
             }
-            source.sendSuccess(() -> Component.literal("海岛模式已启用")
+            source.sendSuccess(() -> Component.translatable("commands.60s.start_ocean_enabled")
                     .withStyle(ChatFormatting.AQUA), true);
             return 1;
         }
@@ -1241,8 +1241,7 @@ public final class SixtySecondsStartCommand {
             try {
                 variant = net.exmo.sixty_seconds.entity.SixtySecondsBossEntity.BossVariant.valueOf(variantName.toUpperCase());
             } catch (IllegalArgumentException e) {
-                source.sendFailure(Component.literal("未知 Boss 变体: " + variantName
-                        + "。可用: ravager, colossus, necromancer, plaguebearer, specter"));
+                source.sendFailure(Component.translatable("commands.60s.boss_unknown_variant", variantName));
                 return 0;
             }
         }
@@ -1266,8 +1265,7 @@ public final class SixtySecondsStartCommand {
             case "serpent" -> net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity.Variant.SERPENT;
             case "leviathan" -> net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity.Variant.LEVIATHAN;
             default -> {
-                source.sendFailure(Component.literal("未知海洋 Boss 类型: " + type
-                        + "，可用: kraken, serpent, leviathan"));
+                source.sendFailure(Component.translatable("commands.60s.ocean_boss_unknown_type", type));
                 yield null;
             }
         };
@@ -1275,7 +1273,7 @@ public final class SixtySecondsStartCommand {
         net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity monster =
                 net.exmo.sixty_seconds.logic.OceanCreatureSpawner.spawnSeaMonster(level, pos, level.getRandom(), 1.0);
         if (monster == null) {
-            source.sendFailure(Component.literal("生成失败：无法创建海洋 Boss 实体"));
+            source.sendFailure(Component.translatable("commands.60s.ocean_boss_spawn_failed"));
             return 0;
         }
         monster.applyVariant(variant);
@@ -1298,8 +1296,7 @@ public final class SixtySecondsStartCommand {
             case "great_white", "greatwhite", "white" -> net.exmo.sixty_seconds.entity.OceanSharkEntity.Variant.GREAT_WHITE;
             case "megalodon", "mega" -> net.exmo.sixty_seconds.entity.OceanSharkEntity.Variant.MEGALODON;
             default -> {
-                source.sendFailure(Component.literal("未知鲨鱼类型: " + type
-                        + "，可用: reef_shark, tiger_shark, hammerhead, great_white, megalodon"));
+                source.sendFailure(Component.translatable("commands.60s.shark_unknown_type", type));
                 yield null;
             }
         };
@@ -1312,7 +1309,7 @@ public final class SixtySecondsStartCommand {
                     Component.translatable(variant.nameKey())).withStyle(ChatFormatting.AQUA), true);
             return 1;
         }
-        source.sendFailure(Component.literal("生成失败：无法创建鲨鱼实体"));
+        source.sendFailure(Component.translatable("commands.60s.shark_spawn_failed"));
         return 0;
     }
 
@@ -1326,16 +1323,16 @@ public final class SixtySecondsStartCommand {
         }
         for (var v : config.bossSpawnPoints) {
             if (v != null && v.x == pos.getX() && v.y == pos.getY() && v.z == pos.getZ()) {
-                source.sendFailure(Component.literal("该位置已登记 Boss 刷新点"));
+                source.sendFailure(Component.translatable("commands.60s.boss_spawn_already"));
                 return 0;
             }
         }
         config.bossSpawnPoints.add(new net.exmo.sixty_seconds.config.SixtySecondsConfig.Vec(
                 pos.getX(), pos.getY(), pos.getZ()));
         net.exmo.sixty_seconds.config.SixtySecondsConfigStore.save(level, config);
-        source.sendSuccess(() -> Component.literal(
-                "已登记 Boss 刷新点 (" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ()
-                        + ")，当前共 " + config.bossSpawnPoints.size() + " 个").withStyle(ChatFormatting.AQUA), false);
+        source.sendSuccess(() -> Component.translatable("commands.60s.boss_spawn_added",
+                pos.getX(), pos.getY(), pos.getZ(), config.bossSpawnPoints.size())
+                .withStyle(ChatFormatting.AQUA), false);
         return 1;
     }
 
@@ -1343,14 +1340,13 @@ public final class SixtySecondsStartCommand {
         var level = source.getLevel();
         var config = net.exmo.sixty_seconds.config.SixtySecondsConfigStore.current(level).orElse(null);
         if (config == null || config.bossSpawnPoints == null || index >= config.bossSpawnPoints.size()) {
-            source.sendFailure(Component.literal("索引越界"));
+            source.sendFailure(Component.translatable("commands.60s.boss_spawn_index_oob"));
             return 0;
         }
         var removed = config.bossSpawnPoints.remove(index);
         net.exmo.sixty_seconds.config.SixtySecondsConfigStore.save(level, config);
-        source.sendSuccess(() -> Component.literal(
-                "已移除 Boss 刷新点 #" + index + " (" + removed.x + ", " + removed.y + ", " + removed.z + ")")
-                .withStyle(ChatFormatting.GREEN), false);
+        source.sendSuccess(() -> Component.translatable("commands.60s.boss_spawn_removed",
+                index, removed.x, removed.y, removed.z).withStyle(ChatFormatting.GREEN), false);
         return 1;
     }
 
@@ -1358,11 +1354,12 @@ public final class SixtySecondsStartCommand {
         var level = source.getLevel();
         var config = net.exmo.sixty_seconds.config.SixtySecondsConfigStore.current(level).orElse(null);
         if (config == null || config.bossSpawnPoints == null || config.bossSpawnPoints.isEmpty()) {
-            source.sendSuccess(() -> Component.literal("暂无 Boss 刷新点").withStyle(ChatFormatting.YELLOW), false);
+            source.sendSuccess(() -> Component.translatable("commands.60s.boss_spawn_none")
+                    .withStyle(ChatFormatting.YELLOW), false);
             return 0;
         }
-        source.sendSuccess(() -> Component.literal("Boss 刷新点列表（共 " + config.bossSpawnPoints.size() + " 个）：")
-                .withStyle(ChatFormatting.AQUA), false);
+        source.sendSuccess(() -> Component.translatable("commands.60s.boss_spawn_list",
+                config.bossSpawnPoints.size()).withStyle(ChatFormatting.AQUA), false);
         for (int i = 0; i < config.bossSpawnPoints.size(); i++) {
             var v = config.bossSpawnPoints.get(i);
             final int idx = i;
@@ -1380,7 +1377,7 @@ public final class SixtySecondsStartCommand {
         config.bossSpawnPoints = new java.util.ArrayList<>();
         net.exmo.sixty_seconds.config.SixtySecondsConfigStore.save(level, config);
         final int count = n;
-        source.sendSuccess(() -> Component.literal("已清空 " + count + " 个 Boss 刷新点")
+        source.sendSuccess(() -> Component.translatable("commands.60s.boss_spawn_cleared", count)
                 .withStyle(ChatFormatting.GREEN), false);
         return 1;
     }

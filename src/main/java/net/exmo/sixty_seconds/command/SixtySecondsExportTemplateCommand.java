@@ -64,21 +64,20 @@ public final class SixtySecondsExportTemplateCommand {
         String name = StringArgumentType.getString(ctx, "name");
 
         if (!kind.equals("residential") && !kind.equals("shelter")) {
-            src.sendFailure(Component.literal("§c类型必须是 residential（房子/住宅）或 shelter（庇护所）"));
+            src.sendFailure(Component.translatable("commands.60s.export_template.bad_kind"));
             return 0;
         }
 
         var configOpt = SixtySecondsConfigStore.load(level);
         if (configOpt.isEmpty()) {
-            src.sendFailure(Component.literal("§c未找到 60秒 配置，请先开一局或重载配置"));
+            src.sendFailure(Component.translatable("commands.60s.export_template.no_config"));
             return 0;
         }
         SixtySecondsConfig config = configOpt.get();
 
         var region = kind.equals("residential") ? config.residentialTemplate : config.shelterTemplate;
         if (region == null) {
-            src.sendFailure(Component.literal("§c尚未登记 " + kind + " 模板：请先用 /60s_area template "
-                    + kind + " <x1> <y1> <z1> <x2> <y2> <z2> 框选手搭的模板"));
+            src.sendFailure(Component.translatable("commands.60s.export_template.not_registered", kind));
             return 0;
         }
 
@@ -129,7 +128,7 @@ public final class SixtySecondsExportTemplateCommand {
         try {
             Files.createDirectories(dir);
         } catch (java.io.IOException e) {
-            src.sendFailure(Component.literal("§c无法创建目录： " + e.getMessage()));
+            src.sendFailure(Component.translatable("commands.60s.export_template.mkdir_fail", e.getMessage()));
             return 0;
         }
 
@@ -137,7 +136,7 @@ public final class SixtySecondsExportTemplateCommand {
         try {
             NbtIo.writeCompressed(root, nbtPath);
         } catch (java.io.IOException e) {
-            src.sendFailure(Component.literal("§c保存模板失败： " + e.getMessage()));
+            src.sendFailure(Component.translatable("commands.60s.export_template.save_fail", e.getMessage()));
             return 0;
         }
 
@@ -148,9 +147,8 @@ public final class SixtySecondsExportTemplateCommand {
         }
         SixtySecondsConfigStore.save(level, config);
 
-        src.sendSuccess(() -> Component.literal("§a已导出 " + kind + " 模板「" + name + "」到 "
-                + dir.getFileName() + "/" + name + ".nbt（" + sizeX + "×" + sizeY + "×" + sizeZ
-                + "，已保留箱子内容物等方块实体）。开局将按此文件生成。"), false);
+        src.sendSuccess(() -> Component.translatable("commands.60s.export_template.done",
+                kind, name, dir.getFileName() + "/" + name + ".nbt", sizeX, sizeY, sizeZ), false);
         return 1;
     }
 }

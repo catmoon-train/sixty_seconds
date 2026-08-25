@@ -98,7 +98,7 @@ public class SimpleQuestMinigameScreen extends Screen {
     private static final int INTRO_TICKS = 7;
 
     // 原版材质 ResourceLocation
-    private static final ResourceLocation BG_TEXTURE = ResourceLocation.fromNamespaceAndPath("starrailexpress", "textures/gui/background.png");
+    private static final ResourceLocation BG_TEXTURE = ResourceLocation.fromNamespaceAndPath("sixty_seconds", "textures/gui/background.png");
 
     // 原版物品栈缓存
     private static final ItemStack SPONGE = new ItemStack(Items.SPONGE);
@@ -897,8 +897,8 @@ public class SimpleQuestMinigameScreen extends Screen {
             case GAME_2048 -> render2048(g, left, top);
             case CATCH_EGGS -> renderCatchEggs(g, left, top);
             case COLOR_SORT -> renderColorSort(g, left, top);
-            case GUESS_NUMBER -> { g.drawCenteredString(font,Component.literal(guessLow+" - "+guessHigh),width/2,top+50,WHITE); g.drawCenteredString(font,tr("guess_number.hint"),width/2,top+75,MUTED); int ix=left+120; MinigameUI.roundRect(g,ix,top+95,ix+190,top+120,4,0xFF334455); g.drawString(font,guessInput,ix+6,top+101,WHITE); int bx=left+(PANEL_W-60)/2; MinigameUI.roundRect(g,bx,top+125,bx+60,top+148,4,GREEN); g.drawCenteredString(font,Component.literal("确定"),bx+30,top+129,0xFF101010); g.drawCenteredString(font,tr("guess_number.count",guessCount),width/2,top+155,MUTED); }
-            case REACTION_TEST -> { int col=reactState==0?MUTED:reactState==1?YELLOW:reactFailed?RED:GREEN; String txt=reactState==0?"等待触发...":reactState==1?"现在点击!":reactFailed?"失败! "+reactElapsed+"ms":reactElapsed+"ms"; g.drawCenteredString(font,Component.literal(txt),width/2,top+100,col); if(reactState==1){int bx=width/2-40,by=top+120;MinigameUI.roundRect(g,bx,by,bx+80,by+30,6,GREEN);g.drawCenteredString(font,Component.literal("点我!"),width/2,by+8,0xFF101010);} g.drawCenteredString(font,tr("common.hits",reactSuccess,3),width/2,top+6,WHITE); }
+            case GUESS_NUMBER -> { g.drawCenteredString(font,Component.literal(guessLow+" - "+guessHigh),width/2,top+50,WHITE); g.drawCenteredString(font,tr("guess_number.hint"),width/2,top+75,MUTED); int ix=left+120; MinigameUI.roundRect(g,ix,top+95,ix+190,top+120,4,0xFF334455); g.drawString(font,guessInput,ix+6,top+101,WHITE); int bx=left+(PANEL_W-60)/2; MinigameUI.roundRect(g,bx,top+125,bx+60,top+148,4,GREEN); g.drawCenteredString(font,tr("common.confirm"),bx+30,top+129,0xFF101010); g.drawCenteredString(font,tr("guess_number.count",guessCount),width/2,top+155,MUTED); }
+            case REACTION_TEST -> { int col=reactState==0?MUTED:reactState==1?YELLOW:reactFailed?RED:GREEN; net.minecraft.network.chat.Component txt=reactState==0?tr("reaction_test.waiting"):reactState==1?tr("reaction_test.click_now"):reactFailed?Component.translatable("minigame.starrailexpress.reaction_test.failed",reactElapsed):Component.literal(reactElapsed+"ms"); g.drawCenteredString(font,txt,width/2,top+100,col); if(reactState==1){int bx=width/2-40,by=top+120;MinigameUI.roundRect(g,bx,by,bx+80,by+30,6,GREEN);g.drawCenteredString(font,tr("reaction_test.click_me"),width/2,by+8,0xFF101010);} g.drawCenteredString(font,tr("common.hits",reactSuccess,3),width/2,top+6,WHITE); }
             case LINK_MATCH -> renderLinkMatch(g, left, top);
             case TETRIS -> renderTetris(g, left, top);
             case MEMORY_MATCH -> renderMemMatch(g, left, top);
@@ -2753,7 +2753,7 @@ public class SimpleQuestMinigameScreen extends Screen {
             int col=simonClicked[i]?GREEN:(flash?cols[i]:0xFF334455);
             MinigameUI.roundRect(g,x,cy,x+55,cy+55,6,col);}
         g.drawCenteredString(font,tr("common.hits",simonPlayerIdx,5),width/2,top+8,WHITE);
-        if(simonFlash>=0)g.drawCenteredString(font,Component.literal("记住顺序..."),width/2,top+130,MUTED);
+        if(simonFlash>=0)g.drawCenteredString(font,tr("simon_says.remember"),width/2,top+130,MUTED);
     }
     private void clickSimon(int i){
         if(simonFlash>=0||simonPlayerIdx>=5)return;
@@ -3085,7 +3085,7 @@ public class SimpleQuestMinigameScreen extends Screen {
         for(int i=5;i<10;i++)if(scaleSlots[i]>=0){int si=scaleSlots[i],ix=px+55+(i-5)*10; g.renderItem(new ItemStack(scaleItemTex[si]),ix,py+82);}
         // 底部可拖拽物品
         for(int i=0;i<5;i++){int ix=left+40+i*80; g.renderItem(new ItemStack(scaleItemTex[i]),ix,top+PANEL_H-40); g.drawString(font,String.valueOf(scaleItems[i]),ix+20,top+PANEL_H-24,WHITE);}
-        g.drawCenteredString(font,Component.literal("左:"+scaleLeftWt+"  右:"+scaleRightWt),width/2,top+HEADER_H+5,WHITE);
+        g.drawCenteredString(font,tr("balance_scale.pan",scaleLeftWt,scaleRightWt),width/2,top+HEADER_H+5,WHITE);
         if(scaleLeftWt>0&&scaleLeftWt==scaleRightWt)complete();
         // 渲染拖拽中的物品
         if(scaleDragItem>=0)g.renderItem(new ItemStack(scaleItemTex[scaleDragItem]),(int)lastMouseX-8,(int)lastMouseY-8);
@@ -3161,7 +3161,12 @@ public class SimpleQuestMinigameScreen extends Screen {
     private void renderKlotski(GuiGraphics g,int left,int top){
         int cs=42,gap=2,ox=left+(PANEL_W-4*cs-3*gap)/2,oy=top+30;
         int[]cols={0,0xFFDD6644,0xFF44AACC,0xFF44CC66,0xFFCC66AA,0xFFDDAA44,0xFF8866CC,0xFFDD8888,0xFF88DD88,0xFF8888DD,0xFFDDAACC};
-        String[]names={"","曹操","张飞","赵云","马超","黄忠","关羽","卒","卒","卒","卒"};
+        net.minecraft.network.chat.Component[]names={
+                Component.literal(""),
+                tr("klotski.caocao"),tr("klotski.zhangfei"),tr("klotski.zhaoyun"),
+                tr("klotski.machao"),tr("klotski.huangzhong"),tr("klotski.guanyu"),
+                tr("klotski.soldier"),tr("klotski.soldier"),tr("klotski.soldier"),tr("klotski.soldier")
+        };
         // 选中块整体高亮
         if(klotskiSelR>=0){
             int[]sz=klotskiBlockSize(klotskiSelR,klotskiSelC);
@@ -3172,7 +3177,7 @@ public class SimpleQuestMinigameScreen extends Screen {
             int x=ox+c*(cs+gap),y=oy+r*(cs+gap);int id=klotskiGrid[r][c];
             MinigameUI.roundRect(g,x,y,x+cs,y+cs,4,id>0?cols[id]:0xFF222233);
             if(id>0&&(r==0||klotskiGrid[r-1][c]!=id)&&(c==0||klotskiGrid[r][c-1]!=id))
-                g.drawCenteredString(font,Component.literal(names[id]),x+cs/2,y+cs/2-5,WHITE);
+                g.drawCenteredString(font,names[id],x+cs/2,y+cs/2-5,WHITE);
         }
         // 出口标记(底部中间)
         int ex=ox+1*(cs+gap)+cs/2,ey=oy+5*(cs+gap);

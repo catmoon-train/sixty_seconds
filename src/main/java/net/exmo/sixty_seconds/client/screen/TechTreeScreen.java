@@ -652,9 +652,9 @@ public class TechTreeScreen extends Screen {
                 .append(Component.literal("  |  "))
                 .append(Component.literal("zoom: " + (int) (zoom * 100) + "%").withStyle(ChatFormatting.GRAY))
                 .append(Component.literal("  |  "))
-                .append(Component.literal(readonly
-                        ? "只读预览（禁止解锁）"
-                        : "拖拽移动 | 滚轮缩放 | R重置").withStyle(ChatFormatting.DARK_GRAY));
+                .append(Component.translatable(readonly
+                        ? "screen.sixty_seconds.tech_tree.readonly_hint"
+                        : "screen.sixty_seconds.tech_tree.nav_hint").withStyle(ChatFormatting.DARK_GRAY));
         g.drawCenteredString(this.font, info, this.width / 2, this.height - 20, TEXT);
     }
 

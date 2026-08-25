@@ -869,31 +869,31 @@ public final class SixtySecondsManager {
     }
 
     /** 把 tick 数转成人话（大致时间描述）。 */
-    private static String humanTimeDesc(long ticks) {
+    private static Component humanTimeDesc(long ticks) {
         long seconds = ticks / 20;
         if (seconds >= 120) {
             long minutes = seconds / 60;
-            return minutes + "分钟";
+            return Component.translatable("message.sixty_seconds.sixty_seconds.time_desc.minutes", minutes);
         }
         if (seconds >= 90) {
-            return "1分半";
+            return Component.translatable("message.sixty_seconds.sixty_seconds.time_desc.minute_half");
         }
         if (seconds >= 70) {
-            return "1分钟多一点";
+            return Component.translatable("message.sixty_seconds.sixty_seconds.time_desc.minute_over");
         }
         if (seconds >= 50) {
-            return "1分钟";
+            return Component.translatable("message.sixty_seconds.sixty_seconds.time_desc.minute");
         }
         if (seconds >= 35) {
-            return "半分钟多一点";
+            return Component.translatable("message.sixty_seconds.sixty_seconds.time_desc.half_minute_over");
         }
         if (seconds >= 25) {
-            return "半分钟";
+            return Component.translatable("message.sixty_seconds.sixty_seconds.time_desc.half_minute");
         }
         if (seconds >= 15) {
-            return "十几秒";
+            return Component.translatable("message.sixty_seconds.sixty_seconds.time_desc.ten_seconds");
         }
-        return seconds + "秒";
+        return Component.translatable("message.sixty_seconds.sixty_seconds.time_desc.seconds", seconds);
     }
 
     /** 换日时清空预警去重，各阈值新的一天可重新播报。 */

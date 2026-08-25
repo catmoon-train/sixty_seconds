@@ -209,7 +209,9 @@ public final class SixtySecondsHud {
         drawHealthBar(graphics, client, hx, hy, healthBarW, stats.health, stats.healthMax, 0xFFE64848);
         graphics.drawString(client.font, healthText, healthValX, hy, COL_VALUE);
         if (shift) {
-            graphics.drawString(client.font, "健康", healthValX, hy - VALUE_H - 1, COL_TITLE);
+            graphics.drawString(client.font,
+                    Component.translatable("hud.sixty_seconds.sixty_seconds.health"),
+                    healthValX, hy - VALUE_H - 1, COL_TITLE);
         }
 
         // ── 其他状态条：右中下角竖排（背景面板 + 背板色条 + 文字左/数值右）──
@@ -223,11 +225,16 @@ public final class SixtySecondsHud {
                 Math.max(stats.sanityMax, SixtySecondsStatsComponent.MAX), stats.pollutionMax};
         int[] statColors = {0xFFE0A030, 0xFF37A7E6, 0xFFB06AE6, 0xFF74B04A};
         boolean[] highIsBad = {false, false, false, true};
-        String[] statNames = {"饥饿", "口渴", "理智", "污染"};
+        net.minecraft.network.chat.Component[] statNames = {
+                Component.translatable("hud.sixty_seconds.sixty_seconds.hunger"),
+                Component.translatable("hud.sixty_seconds.sixty_seconds.thirst"),
+                Component.translatable("hud.sixty_seconds.sixty_seconds.sanity"),
+                Component.translatable("hud.sixty_seconds.sixty_seconds.pollution")
+        };
 
         // 计算最大文字宽
         int nameMaxW = 0, valMaxW = 0;
-        for (String n : statNames) nameMaxW = Math.max(nameMaxW, client.font.width(n));
+        for (net.minecraft.network.chat.Component n : statNames) nameMaxW = Math.max(nameMaxW, client.font.width(n));
         for (int v : statValues) valMaxW = Math.max(valMaxW, client.font.width(String.valueOf(v)));
 
         int rowContentW = nameMaxW + 4 + statBarW + 4 + valMaxW;

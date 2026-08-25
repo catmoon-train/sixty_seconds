@@ -118,10 +118,16 @@ public class SixtySecondsRvScreen extends Screen {
         y += 24;
 
         // 座位选择（2 前 + 2 顶）：点击上车到指定座位
-        g.drawString(this.font, Component.literal("座位 / Seats").withStyle(ChatFormatting.BOLD), x, y, GOLD);
+        g.drawString(this.font, Component.translatable("screen.sixty_seconds.rv.seats").withStyle(ChatFormatting.BOLD),
+                x, y, GOLD);
         y += 12;
         int seatW = (barW - 12) / 4;
-        String[] seatNames = {"前左", "前右", "顶左", "顶右"};
+        net.minecraft.network.chat.Component[] seatNames = {
+                Component.translatable("screen.sixty_seconds.rv.seat.front_left"),
+                Component.translatable("screen.sixty_seconds.rv.seat.front_right"),
+                Component.translatable("screen.sixty_seconds.rv.seat.top_left"),
+                Component.translatable("screen.sixty_seconds.rv.seat.top_right")
+        };
         for (int i = 0; i < SixtySecondsRvEntity.RV_SEAT_COUNT; i++) {
             int sx = x + i * (seatW + 4);
             int occupantId = rv.seatOccupant(i);
@@ -131,9 +137,11 @@ public class SixtySecondsRvScreen extends Screen {
             int col = isMe ? GOLD : (occupied ? MUTED : GREEN);
             g.fill(sx, y, sx + seatW, y + 14, TRACK);
             g.renderOutline(sx, y, seatW, 14, col);
-            String label = seatNames[i] + (isMe ? "(你)" : (occupied ? " 占" : " 空"));
-            String trimmed = this.font.plainSubstrByWidth(label, seatW - 4);
-            g.drawCenteredString(this.font, trimmed, sx + seatW / 2, y + 3, col);
+            net.minecraft.network.chat.Component label = seatNames[i].copy()
+                    .append(isMe ? Component.translatable("screen.sixty_seconds.rv.seat.you")
+                            : occupied ? Component.translatable("screen.sixty_seconds.rv.seat.occupied")
+                                    : Component.translatable("screen.sixty_seconds.rv.seat.empty"));
+            g.drawCenteredString(this.font, label, sx + seatW / 2, y + 3, col);
             seatRows.add(new SeatRow(sx, y, sx + seatW, y + 14, i));
         }
         y += 22;
@@ -142,10 +150,10 @@ public class SixtySecondsRvScreen extends Screen {
         int leftX = x;
         int rightX = x + colW + 6;
         // 左列：已装配（点击卸下）
-        g.drawString(this.font, Component.literal("已装配 / Installed").withStyle(ChatFormatting.BOLD),
+        g.drawString(this.font, Component.translatable("screen.sixty_seconds.rv.installed").withStyle(ChatFormatting.BOLD),
                 leftX, y, GOLD);
         // 右列：可安装（背包中的配件，点击安装）
-        g.drawString(this.font, Component.literal("可安装 / Available").withStyle(ChatFormatting.BOLD),
+        g.drawString(this.font, Component.translatable("screen.sixty_seconds.rv.available").withStyle(ChatFormatting.BOLD),
                 rightX, y, GOLD);
         int rowY = y + 14;
 

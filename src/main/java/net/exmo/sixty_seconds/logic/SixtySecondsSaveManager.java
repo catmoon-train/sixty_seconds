@@ -9,6 +9,7 @@ import net.exmo.sixty_seconds.bridge.SixtySecRole;
 import net.exmo.sixty_seconds.bridge.stubs.SixtySecRoles;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -196,7 +197,8 @@ public final class SixtySecondsSaveManager {
 
             SixtySecondsManager.syncDayNumber(level, freshData, freshData.dayNumber);
             SixtySecondsManager.broadcast(level,
-                    Component.literal("§a已恢复上一局游戏进度（第 " + freshData.dayNumber + " 天 / " + freshData.phase + "）"));
+                    Component.translatable("message.sixty_seconds.sixty_seconds.restored_progress",
+                            freshData.dayNumber, freshData.phase).withStyle(ChatFormatting.GREEN));
             System.out.println("[SixtySecondsSaveManager] 已恢复上一局进度：第 " + freshData.dayNumber + " 天 / " + freshData.phase);
             // 立即把恢复后的进度落盘，避免 5 分钟内再次退出时进度回退
             writeSnapshot(level, snap);

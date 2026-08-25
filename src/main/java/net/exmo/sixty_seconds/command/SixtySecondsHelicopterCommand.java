@@ -72,7 +72,8 @@ public final class SixtySecondsHelicopterCommand {
             posStr = " §7(" + config.helicopterLandingPos.x + ", " + config.helicopterLandingPos.y + ", "
                     + config.helicopterLandingPos.z + ")";
         } else {
-            posStr = " §7(未设置 - 使用 /60s_helicopter_set <x> <y> <z>)";
+            posStr = " §7(" + net.minecraft.network.chat.Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.helicopter_not_set").getString() + ")";
         }
         source.sendSuccess(() -> Component.translatable(enabled
                         ? "message.sixty_seconds.sixty_seconds.helicopter_enabled"

@@ -52,7 +52,8 @@ public class WheelchairFieldItemCommand {
         entity.setPickedUp(true);
         entity.setItem(effectType.getDisplayItem());
         world.addFreshEntity(entity);
-        context.getSource().sendSuccess(() -> Component.literal("成功在 " + pos.toShortString() + " 生成道具: " + effectType.name()), true);
+        context.getSource().sendSuccess(() -> Component.translatable(
+                "commands.60s.wheelchair_item_spawned", pos.toShortString(), effectType.name()), true);
         return 1;
     }
 }

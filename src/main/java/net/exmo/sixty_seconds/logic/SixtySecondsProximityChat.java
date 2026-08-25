@@ -34,7 +34,7 @@ public final class SixtySecondsProximityChat {
             // 管理员（OP，权限≥2）发言：不受旁观频道 / 邻近距离限制，红色广播给<b>所有人</b>，醒目——
             // 用于全场喊话/裁决。必须先于下面的旁观分支判断（管理员常在旁观/创造态观战）。
             if (sender.hasPermissions(2)) {
-                Component adminLine = Component.literal("[管理员] ")
+                Component adminLine = Component.translatable("chat.prefix.admin")
                         .append(Component.translatable("chat.type.text", sender.getDisplayName(),
                                 Component.literal(rawText)))
                         .withStyle(ChatFormatting.RED);
@@ -46,7 +46,7 @@ public final class SixtySecondsProximityChat {
             // 旁观/创造（阵亡者、未参与旁观，非管理员）发言只在旁观频道流通：正常存活玩家看不到，
             // 避免旁观者向场内通气/剧透；旁观者之间可正常交流。
             if (GameUtils.isPlayerSpectatingOrCreative(sender)) {
-                Component specLine = Component.literal("[旁观] ").withStyle(ChatFormatting.GRAY)
+                Component specLine = Component.translatable("chat.prefix.spec").withStyle(ChatFormatting.GRAY)
                         .append(Component.translatable("chat.type.text", sender.getDisplayName(),
                                 Component.literal(rawText)));
                 for (ServerPlayer receiver : level.players()) {
