@@ -3,11 +3,10 @@
   "biomes": "#sixty_seconds:ocean",
   "spawners": [
     {
-      "type": "minecraft:water_creature",
+      "type": "sixty_seconds:ocean_shark",
       "weight": 100,
       "minCount": 1,
-      "maxCount": 1,
-      "entity": "sixty_seconds:ocean_shark"
+      "maxCount": 1
     }
   ]
 }
