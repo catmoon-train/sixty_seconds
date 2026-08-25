@@ -292,7 +292,8 @@ public final class SixtySecondsRecipes {
 
     private static List<Item> rawMeat() {
         return List.of(Items.BEEF, Items.PORKCHOP, Items.MUTTON, Items.CHICKEN, Items.RABBIT,
-                Items.COD, Items.SALMON);
+                Items.COD, Items.SALMON, ModItems.SIXTY_SECONDS_RAW_SHARK_STEAK,
+                ModItems.SIXTY_SECONDS_RAW_TENTACLE_MEAT);
     }
 
     private static List<Item> fish() {
@@ -588,16 +589,14 @@ public final class SixtySecondsRecipes {
         // ── 烟草 ─────────────────────────────────────────────────────
         add(list, "tobacco_seeds", Station.WORKBENCH, "tobacco", false,
                 List.of(in(ModItems.SIXTY_SECONDS_TOBACCO, 1)), ModItems.SIXTY_SECONDS_TOBACCO_SEEDS, 1);
-        Item cigarette = external("watheextraitems:cigarette");
-        if (cigarette != null) {
-            add(list, "cigarette", Station.WORKBENCH, "tobacco", false,
-                    List.of(in(ModItems.SIXTY_SECONDS_TOBACCO, 1), in(Items.PAPER, 1)), cigarette, 1);
-        }
-        Item cigar = external("watheextraitems:cigar");
-        if (cigar != null) {
-            add(list, "cigar", Station.WORKBENCH, "tobacco", false,
-                    List.of(in(ModItems.SIXTY_SECONDS_TOBACCO, 1), in(chem, 1), in(oak, 1)), cigar, 1);
-        }
+        // 香烟：烟草 + 纸
+        add(list, "cigarette", Station.WORKBENCH, "tobacco", false,
+                List.of(in(ModItems.SIXTY_SECONDS_TOBACCO, 1), in(Items.PAPER, 1)),
+                ModItems.SIXTY_SECONDS_CIGARETTE, 1);
+        // 雪茄：烟草 + 化学制剂 + 橡木（更精致，恢复更多）
+        add(list, "cigar", Station.WORKBENCH, "tobacco", false,
+                List.of(in(ModItems.SIXTY_SECONDS_TOBACCO, 1), in(chem, 1), in(oak, 1)),
+                ModItems.SIXTY_SECONDS_CIGAR, 1);
 
         // ══ 炊事（厨房灶台）═══════════════════════════════════════════
         // ── 烹饪-I：生食→熟食（全部通电）+ 果干/面包/糖 ─────────────────────
@@ -1181,9 +1180,6 @@ public final class SixtySecondsRecipes {
                 List.of(in(gunpowder, 3), in(scrap, 8)), ModItems.SIXTY_SECONDS_PIPE_BOMB, 1);
         add(list, "flashbang", Station.ARSENAL, "throwables_1", true,
                 List.of(in(gunpowder, 2), in(chem, 2), in(scrap, 5)), ModItems.SIXTY_SECONDS_FLASHBANG, 1);
-        add(list, "decoy_flare", Station.ARSENAL, "throwables_1", true,
-                List.of(in(gunpowder, 1), in(ModItems.SIXTY_SECONDS_SCRAP_METAL, 4)),
-                ModItems.SIXTY_SECONDS_DECOY_FLARE, 1);
         add(list, "incendiary_grenade", Station.ARSENAL, "throwables_2", true,
                 List.of(in(alcohol, 2), in(ModItems.SIXTY_SECONDS_FUEL_CAN, 2), in(gunpowder, 2)),
                 ModItems.SIXTY_SECONDS_INCENDIARY_GRENADE, 1);
@@ -1193,8 +1189,9 @@ public final class SixtySecondsRecipes {
                 List.of(in(steel, 2), in(wire, 2), in(scrap, 10)), ModItems.SIXTY_SECONDS_SMOKE_GRENADE, 1);
         add(list, "sixty_marking", Station.ARSENAL, "throwables_3", true,
                 List.of(in(steel, 1), in(hemp, 2), in(copper, 3)), ModItems.SIXTY_SECONDS_MARKING_GRENADE, 1);
-        add(list, "sixty_flare", Station.ARSENAL, "throwables_1", false,
-                List.of(in(Items.PAPER, 1), in(Items.CHARCOAL, 1), in(copper, 1)), ModItems.SIXTY_SECONDS_DECOY_FLARE, 1);
+        add(list, "sixty_flare", Station.ARSENAL, "throwables_1", true,
+                List.of(in(Items.PAPER, 2), in(Items.CHARCOAL, 2), in(chem, 2), any("raw_meat", 1, rawMeat())),
+                ModItems.SIXTY_SECONDS_DECOY_FLARE, 1);
         // ── 弓 / 弩（武器锻造台）──────────────────────────────────────
         add(list, "crude_bow", Station.WEAPON_FORGE, "archery_1", false,
                 List.of(in(Items.STICK, 3), in(Items.STRING, 3)), ModItems.SIXTY_SECONDS_CRUDE_BOW, 1);

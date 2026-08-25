@@ -1280,9 +1280,9 @@ public final class SixtySecondsDailyEvents {
             if (option == 1) {
                 // 给香烟
                 ItemStack cig = takeFromInventory(clicker,
-                        stack -> itemId(stack).equals("watheextraitems:cigarette"));
+                        stack -> stack.is(ModItems.SIXTY_SECONDS_CIGARETTE));
                 if (cig == null) {
-                    fail(clicker, "no_item", Component.translatable("item.watheextraitems.cigarette"));
+                    fail(clicker, "no_item", Component.translatable("item.sixty_seconds.sixty_seconds_cigarette"));
                     return false;
                 }
                 List<ItemStack> gained = rollLoot(level, 1, "food");
@@ -1294,9 +1294,9 @@ public final class SixtySecondsDailyEvents {
             } else if (option == 2) {
                 // 给雪茄
                 ItemStack cig = takeFromInventory(clicker,
-                        stack -> itemId(stack).equals("watheextraitems:cigar"));
+                        stack -> stack.is(ModItems.SIXTY_SECONDS_CIGAR));
                 if (cig == null) {
-                    fail(clicker, "no_item", Component.translatable("item.watheextraitems.cigar"));
+                    fail(clicker, "no_item", Component.translatable("item.sixty_seconds.sixty_seconds_cigar"));
                     return false;
                 }
                 List<ItemStack> gained = new ArrayList<>();

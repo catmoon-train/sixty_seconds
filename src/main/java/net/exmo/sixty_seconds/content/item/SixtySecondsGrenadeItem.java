@@ -91,7 +91,11 @@ public class SixtySecondsGrenadeItem extends Item {
                 // 诱饵弹（零伤）：不伤怪，改为清仇恨并把范围内怪物吸引到爆点
                 if (mobDamage <= 0 && !fire && !blind) {
                     mob.setTarget(null);
-                    mob.getNavigation().moveTo(impact.x, impact.y, impact.z, 1.25);
+                    mob.setLastHurtByMob(null);
+                    // 5 秒吸引标记：爆点坐标 + 到期时间（怪物 tick 据此持续导航并抑制回锁）
+                    mob.getPersistentData().putIntArray("sixty_seconds_decoy_target", new int[]{
+                            (int) Math.floor(impact.x), (int) Math.floor(impact.y), (int) Math.floor(impact.z),
+                            (int) (serverLevel.getGameTime() + 5 * 20)});
                     continue;
                 }
                 mob.hurt(thrower != null ? serverLevel.damageSources().playerAttack(thrower)
@@ -127,11 +131,16 @@ public class SixtySecondsGrenadeItem extends Item {
             net.exmo.sixty_seconds.content.entity.ServerFireAreaManager.createFireArea(
                     serverLevel, impact, radius, fireDuration, true);
         }
-        serverLevel.sendParticles(fire ? ParticleTypes.FLAME : blind ? ParticleTypes.FLASH
-                : ParticleTypes.EXPLOSION, impact.x, impact.y + 0.5, impact.z,
-                fire ? 40 : 8, radius / 2, 0.5, radius / 2, 0.02);
+        boolean isDecoy = mobDamage <= 0 && !fire && !blind;
+        serverLevel.sendParticles(isDecoy ? ParticleTypes.CAMPFIRE_COSY_SMOKE
+                : fire ? ParticleTypes.FLAME : blind ? ParticleTypes.FLASH
+                        : ParticleTypes.EXPLOSION, impact.x, impact.y + 0.5, impact.z,
+                isDecoy ? 20 : fire ? 40 : 8, radius / 2, 0.5, radius / 2, 0.02);
+        // 诱饵弹：播放原版烟花爆炸声（吸引/迷惑，声音宏亮）
         serverLevel.playSound(null, impact.x, impact.y, impact.z,
-                blind ? SoundEvents.FIREWORK_ROCKET_BLAST : SoundEvents.GENERIC_EXPLODE.value(),
-                SoundSource.PLAYERS, 1.2F, blind ? 1.4F : 0.9F);
+                isDecoy ? SoundEvents.FIREWORK_ROCKET_BLAST
+                        : blind ? SoundEvents.FIREWORK_ROCKET_BLAST : SoundEvents.GENERIC_EXPLODE.value(),
+                SoundSource.PLAYERS, isDecoy ? 1.5F : blind ? 1.4F : 0.9F,
+                isDecoy ? 0.9F : blind ? 1.4F : 0.9F);
     }
 }

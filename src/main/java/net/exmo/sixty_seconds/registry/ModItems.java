@@ -1411,6 +1411,20 @@ public final class ModItems {
         return SIXTY_SECONDS_TOBACCO;
     });
 
+    public static Item SIXTY_SECONDS_CIGARETTE;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_CIGARETTE = ITEMS.register("sixty_seconds_cigarette", () -> {
+        SIXTY_SECONDS_CIGARETTE = new net.exmo.sixty_seconds.content.item.SixtySecondsCigaretteItem(
+                new Item.Properties().stacksTo(1).durability(3), 10, 12);
+        return SIXTY_SECONDS_CIGARETTE;
+    });
+
+    public static Item SIXTY_SECONDS_CIGAR;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_CIGAR = ITEMS.register("sixty_seconds_cigar", () -> {
+        SIXTY_SECONDS_CIGAR = new net.exmo.sixty_seconds.content.item.SixtySecondsCigaretteItem(
+                new Item.Properties().stacksTo(1).durability(5), 5, 18);
+        return SIXTY_SECONDS_CIGAR;
+    });
+
     public static Item SIXTY_SECONDS_TOBACCO_SEEDS;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_TOBACCO_SEEDS = ITEMS.register("sixty_seconds_tobacco_seeds", () -> {
         SIXTY_SECONDS_TOBACCO_SEEDS = new Item(new Item.Properties().stacksTo(16));
@@ -1750,8 +1764,8 @@ public final class ModItems {
 
     public static Item SIXTY_SECONDS_DECOY_FLARE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_DECOY_FLARE = ITEMS.register("sixty_seconds_decoy_flare", () -> {
-        SIXTY_SECONDS_DECOY_FLARE = new net.exmo.sixty_seconds.content.item.SixtySecondsGrenadeItem(
-                    new Item.Properties().stacksTo(4), 8.0D, 0.0F, 20, false, false);
+        SIXTY_SECONDS_DECOY_FLARE = new net.exmo.sixty_seconds.content.item.SixtySecondsDecoyGrenadeItem(
+                    new Item.Properties().stacksTo(4));
         return SIXTY_SECONDS_DECOY_FLARE;
     });
 

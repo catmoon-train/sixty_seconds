@@ -246,6 +246,19 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
             discard();
             return;
         }
+        // 诱饵弹吸引：标记未到期时持续导航到爆点并抑制重新锁定玩家
+        if (getPersistentData().contains("sixty_seconds_decoy_target")) {
+            int[] t = getPersistentData().getIntArray("sixty_seconds_decoy_target");
+            if (serverLevel.getGameTime() <= t[3]) {
+                setTarget(null);
+                setLastHurtByMob(null);
+                if (getNavigation() != null && getNavigation().isDone()) {
+                    getNavigation().moveTo(t[0] + 0.5, t[1], t[2] + 0.5, 1.25);
+                }
+            } else {
+                getPersistentData().remove("sixty_seconds_decoy_target");
+            }
+        }
         // 目标有效性：倒地者（怪打不动）/变怪玩家/创造/旁观 不作为追击目标
         if (getTarget() instanceof ServerPlayer targetPlayer && !isValidPrey(targetPlayer)) {
             setTarget(null);

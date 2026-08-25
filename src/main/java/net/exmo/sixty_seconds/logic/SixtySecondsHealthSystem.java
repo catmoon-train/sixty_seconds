@@ -474,10 +474,12 @@ public final class SixtySecondsHealthSystem {
             }
             return;
         }
+        // 手持原版不死图腾时优先触发（救活回 TOTEM_HEALTH 血）；无图腾再走倒地/死亡
+        if (SixtySecondsMystic.tryUndyingTotem(victim, stats)) {
+            return;
+        }
         if (stats.downedCountToday >= 1) {
-            if (!SixtySecondsMystic.tryUndyingTotem(victim, stats)) {
-                die(victim, attacker);
-            }
+            die(victim, attacker);
             return;
         }
         setDowned(victim, stats);
