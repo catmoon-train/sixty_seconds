@@ -1,5 +1,6 @@
 package net.exmo.sixty_seconds.logic;
 
+import net.exmo.sixty_seconds.Sixty_seconds;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
@@ -17,8 +18,10 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.exmo.sixty_seconds.registry.ModEffects;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -93,6 +96,9 @@ public final class OceanCreatureSpawner {
         // 利维坦定时刷新（与鲨鱼/海怪独立，可共存）
         tickLeviathan(level, dayNumber);
 
+        // 世界范围内鲨鱼总数（受 SHARK_GLOBAL_CAP 约束），本 tick 内复用
+        int globalSharks = countAll(level, OceanSharkEntity.class);
+
         for (ServerPlayer player : level.players()) {
             if (player.isSpectator() || player.isCreative()
                     || !net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {
@@ -116,6 +122,21 @@ public final class OceanCreatureSpawner {
                     if (monster != null) {
                         announceSeaMonster(level, monster, player);
                     }
+                }
+            }
+
+            // ── 鲨鱼刷新 ───────────────────────────────────────────────
+            // 不再依赖 biome_modifier 的 add_spawns：自定义海洋生成器在 CHUNK_GENERATION
+            // 阶段会把鲨鱼刷在虚空 Y 并瞬间“掉出世界”死亡，且每区块都刷 → 洪流。
+            // 改为这里可控刷新：Y 由 findWaterSpot 保证落在真实水面，受总数/局部/天数约束。
+            int areaSharks = countNearby(level, player, OceanSharkEntity.class, Sixty_seconds.SHARK_AREA_RADIUS);
+            if (globalSharks < Sixty_seconds.SHARK_GLOBAL_CAP
+                    && areaSharks < Sixty_seconds.SHARK_AREA_CAP
+                    && random.nextDouble() < 0.35 * dayRatio * earlyDayMult) {
+                BlockPos spot = findWaterSpot(level, player.blockPosition(),
+                        SPAWN_MIN_DIST, SPAWN_MAX_DIST, random);
+                if (spot != null) {
+                    spawnShark(level, spot, random, dayRatio);
                 }
             }
         }
@@ -173,7 +194,9 @@ public final class OceanCreatureSpawner {
     public static OceanSharkEntity spawnShark(ServerLevel level, BlockPos waterPos,
             RandomSource random, double dayRatio) {
         OceanSharkEntity shark = ModOceanEntities.OCEAN_SHARK.create(level);
-        if (shark == null) return null;
+        if (shark == null) {
+            return null;
+        }
         shark.moveTo(waterPos.getX() + 0.5, waterPos.getY(), waterPos.getZ() + 0.5,
                 random.nextFloat() * 360.0F, 0.0F);
 
@@ -192,8 +215,9 @@ public final class OceanCreatureSpawner {
             variant = OceanSharkEntity.Variant.REEF_SHARK;
         }
         shark.applyVariant(variant);
+        // 手动/指令来源用 COMMAND：绕过 registerSpawnPlacements 的数量上限，保证指令必定生效
         shark.finalizeSpawn(level, level.getCurrentDifficultyAt(waterPos),
-                MobSpawnType.NATURAL, null);
+                MobSpawnType.COMMAND, null);
         level.addFreshEntity(shark);
         return shark;
     }
@@ -338,5 +362,12 @@ public final class OceanCreatureSpawner {
             count++;
         }
         return count;
+    }
+
+    /** 世界范围内统计某类实体总数（用于全局数量上限判断）。 */
+    private static <T extends Entity> int countAll(ServerLevel level, Class<T> clazz) {
+        AABB whole = new AABB(-30_000_000, level.getMinBuildHeight(), -30_000_000,
+                30_000_000, level.getMaxBuildHeight(), 30_000_000);
+        return level.getEntitiesOfClass(clazz, whole).size();
     }
 }

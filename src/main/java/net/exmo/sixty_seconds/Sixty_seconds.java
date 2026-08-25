@@ -82,37 +82,48 @@ public class Sixty_seconds {
                 SpawnPlacementTypes.IN_WATER,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 (type, level, spawnType, pos, random) -> {
+                    // 只在海洋维度、且为服务端才合法
+                    if (!(level instanceof ServerLevel sl)) {
+                        return false;
+                    }
+                    if (!sl.dimension().equals(SixtySeconds.OCEAN_DIMENSION)) {
+                        return false;
+                    }
                     // 必须是水下才合法
                     if (!level.getFluidState(pos).is(FluidTags.WATER)
                             || !level.getFluidState(pos.above()).is(FluidTags.WATER)) {
                         return false;
                     }
-                    // 仅拦截数据驱动的自然刷新；指令/其它方式放行（不受上限限流）
-                    if (spawnType != MobSpawnType.NATURAL) return true;
-                    if (!(level instanceof ServerLevel sl)) return true;
-                    if (!sl.dimension().equals(SixtySeconds.OCEAN_DIMENSION)) return true; // 只在海洋维度限流
+                    // 指令/召唤等明确手动来源（COMMAND）直接放行，数量由调用方控制
+                    if (spawnType == MobSpawnType.COMMAND) {
+                        return true;
+                    }
 
                     SixtySecondsState.Data data = SixtySecondsState.get(sl);
-                    long now = sl.getGameTime();
 
-                    // 1) 刷新速度：两次成功刷新之间至少间隔 SHARK_SPAWN_INTERVAL_TICKS（首只不限）
-                    if (data.lastSharkSpawnTick != Long.MIN_VALUE
-                            && now - data.lastSharkSpawnTick < SHARK_SPAWN_INTERVAL_TICKS) {
-                        return false;
-                    }
-                    // 2) 全局数量上限（覆盖整个海洋维度）
+                    // 1) 全局数量上限（覆盖整个海洋维度）——对自然刷新与区块生成都生效
                     AABB whole = new AABB(-30_000_000, level.getMinBuildHeight(), -30_000_000,
                             30_000_000, level.getMaxBuildHeight(), 30_000_000);
-                    if (sl.getEntitiesOfClass(OceanSharkEntity.class, whole).size() >= SHARK_GLOBAL_CAP) {
+                    int globalCount = sl.getEntitiesOfClass(OceanSharkEntity.class, whole).size();
+                    if (globalCount >= SHARK_GLOBAL_CAP) {
                         return false;
                     }
-                    // 3) 局部密度上限（候选点附近已有太多则不放，避免扎堆）
+                    // 2) 局部密度上限（候选点附近已有太多则不放，避免扎堆）
                     int near = sl.getEntitiesOfClass(OceanSharkEntity.class,
                             new AABB(pos).inflate(SHARK_AREA_RADIUS)).size();
-                    if (near >= SHARK_AREA_CAP) return false;
+                    if (near >= SHARK_AREA_CAP) {
+                        return false;
+                    }
 
-                    // 通过：记录时间戳，保证“一次只放一条”的平滑节奏
-                    data.lastSharkSpawnTick = now;
+                    // 3) 周期性自然刷新限速（区块生成只受上面数量上限约束，可形成有界初始种群）
+                    if (spawnType == MobSpawnType.NATURAL) {
+                        long now = sl.getGameTime();
+                        if (data.lastSharkSpawnTick != Long.MIN_VALUE
+                                && now - data.lastSharkSpawnTick < SHARK_SPAWN_INTERVAL_TICKS) {
+                            return false;
+                        }
+                        data.lastSharkSpawnTick = now;
+                    }
                     return true;
                 },
                 RegisterSpawnPlacementsEvent.Operation.REPLACE);
