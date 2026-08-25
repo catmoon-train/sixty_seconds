@@ -69,17 +69,47 @@ public class Sixty_seconds {
      * 海洋鲨鱼数据刷怪（biome_modifier add_spawns）必需的刷怪位置规则登记。
      * NeoForge 1.21.1 通过 {@link RegisterSpawnPlacementsEvent}（mod 总线）注册，
      * 没有这一步，数据包里的 add_spawns 不会真正刷出实体。
-     * <p>这里只负责「能否在水里生成」的放置校验；
-     * 数量上限 / 刷新节奏改由 {@code OceanSharkEntity.finalizeSpawn} 强制——
-     * 因为 finalizeSpawn 对每一次自然刷新必然执行，且不受「维度 ResourceKey 实例引用比较」问题影响。
+     * <p>这里同时把关「是否在水里」与「刷新间隔 / 总数上限 / 局部密度上限」：
+     * 判定返回 false 时自然刷怪器会干净地跳过该候选点（不会真的创建实体），
      */
     private void registerSpawnPlacements(final RegisterSpawnPlacementsEvent event) {
         event.register(ModOceanEntities.OCEAN_SHARK,
                 SpawnPlacementTypes.IN_WATER,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                (type, level, spawnType, pos, random) ->
-                        level.getFluidState(pos).is(FluidTags.WATER)
-                                && level.getFluidState(pos.above()).is(FluidTags.WATER),
+                (type, level, spawnType, pos, random) -> {
+                    // 必须是水下才合法
+                    if (!level.getFluidState(pos).is(FluidTags.WATER)
+                            || !level.getFluidState(pos.above()).is(FluidTags.WATER)) {
+                        return false;
+                    }
+                    // 仅拦截数据驱动的自然刷新；指令/其它方式放行（不受上限限流）
+                    if (spawnType != MobSpawnType.NATURAL) return true;
+                    if (!(level instanceof ServerLevel sl)) return true;
+                    if (!sl.dimension().equals(SixtySeconds.OCEAN_DIMENSION)) return true; // 只在海洋维度限流
+
+                    SixtySecondsState.Data data = SixtySecondsState.get(sl);
+                    long now = sl.getGameTime();
+
+                    // 1) 刷新速度：两次成功刷新之间至少间隔 SHARK_SPAWN_INTERVAL_TICKS（首只不限）
+                    if (data.lastSharkSpawnTick != Long.MIN_VALUE
+                            && now - data.lastSharkSpawnTick < SHARK_SPAWN_INTERVAL_TICKS) {
+                        return false;
+                    }
+                    // 2) 全局数量上限（覆盖整个海洋维度）
+                    AABB whole = new AABB(-30_000_000, level.getMinBuildHeight(), -30_000_000,
+                            30_000_000, level.getMaxBuildHeight(), 30_000_000);
+                    if (sl.getEntitiesOfClass(OceanSharkEntity.class, whole).size() >= SHARK_GLOBAL_CAP) {
+                        return false;
+                    }
+                    // 3) 局部密度上限（候选点附近已有太多则不放，避免扎堆）
+                    int near = sl.getEntitiesOfClass(OceanSharkEntity.class,
+                            new AABB(pos).inflate(SHARK_AREA_RADIUS)).size();
+                    if (near >= SHARK_AREA_CAP) return false;
+
+                    // 通过：记录时间戳，保证“一次只放一条”的平滑节奏
+                    data.lastSharkSpawnTick = now;
+                    return true;
+                },
                 RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 }
