@@ -1,5 +1,6 @@
 package net.exmo.sixty_seconds.content.item;
 
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
@@ -48,7 +49,9 @@ public class SixtySecondsMaceItem extends MaceItem {
             target.hurt(attacker.damageSources().mobAttack(attacker), attacker.fallDistance * smashDamageScale);
             // 击退，沿用原版公式并乘档位倍率
             float f = attacker.fallDistance > 5.0F ? 1.0F : 0.5F;
-            target.knockback((double) (0.6F * (float) fall * f * knockbackScale), attacker);
+            target.knockback((double) (0.6F * (float) fall * f * knockbackScale),
+                    (double) Mth.sin(attacker.getYRot() * (float) (Math.PI / 180.0)),
+                    (double) (-Mth.cos(attacker.getYRot() * (float) (Math.PI / 180.0))));
         }
         // 手动损耗耐久（不调 super.hurtEnemy，避免原版 smash 二次加伤）
         stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
