@@ -6,7 +6,9 @@ import net.exmo.sixty_seconds.bridge.SixtySecConfig;
 import net.exmo.sixty_seconds.bridge.ParticipationComponent;
 import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
 import net.exmo.sixty_seconds.bridge.GameUtils;
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.SixtySecondsMod;
+import net.exmo.sixty_seconds.island.SixtySecondsIslands;
 import net.exmo.sixty_seconds.bridge.fabric.CommandRegistrationCallback;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
@@ -22,7 +24,7 @@ import java.util.UUID;
 import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
 
-/** {@code /60s start [minutes]} 启动末日60秒模式（也可 {@code /60s start}）。同时包含 sick/cure 调试指令。 */
+/** {@code /60s start [normal|ocean] [days]} 启动末日60秒模式（也可 {@code /60s start}）。normal=仅主世界玩法；ocean=额外启用海岛远征。同时包含 sick/cure 调试指令。 */
 public final class SixtySecondsStartCommand {
     private SixtySecondsStartCommand() {
     }
@@ -32,22 +34,40 @@ public final class SixtySecondsStartCommand {
                 literal("60s")
                         .then(literal("start")
                                 .requires(source -> source.hasPermission(SixtySecConfig.instance().startGameRequiredPermission))
-                                // 60s start [days] force_all_players — 强制所有参与中的玩家加入，无视位置
-                                // days：游戏启用的天数，默认 7；-1 表示无尽模式（天数不决定结束）
-                                .then(argument("days", IntegerArgumentType.integer(-1))
+                                // 60s start [模式] [days] [force_all_players]
+                                //   模式 normal|ocean 可省略（默认 normal）
+                                //   normal：仅主世界末日玩法（住宅/庇护所/搜索区由竞技场生成）
+                                //   ocean ：在 normal 基础上额外启用海岛远征——海洋维度群岛（含各岛庇护所自动门
+                                //           绑定与地形/装饰生成）在此显式就绪；生成全部落在岛屿陆地，不会落在大海
+                                .then(argument("mode", StringArgumentType.word())
+                                        .suggests((context, builder) -> {
+                                            builder.suggest("normal");
+                                            builder.suggest("ocean");
+                                            return builder.buildFuture();
+                                        })
+                                        .then(argument("days", IntegerArgumentType.integer(-1))
+                                                .then(literal("force_all_players")
+                                                        .executes(context -> start(context.getSource(),
+                                                                parseMode(StringArgumentType.getString(context, "mode")),
+                                                                IntegerArgumentType.getInteger(context, "days"), true)))
+                                                .executes(context -> start(context.getSource(),
+                                                        parseMode(StringArgumentType.getString(context, "mode")),
+                                                        IntegerArgumentType.getInteger(context, "days"), false)))
                                         .then(literal("force_all_players")
                                                 .executes(context -> start(context.getSource(),
-                                                        IntegerArgumentType.getInteger(context, "days"), true)))
+                                                        parseMode(StringArgumentType.getString(context, "mode")), -1, true)))
                                         .executes(context -> start(context.getSource(),
-                                                IntegerArgumentType.getInteger(context, "days"), false)))
-                                // 60s start force_all_players — 不带 days 的强制启动（默认 7 天）
-                                .then(literal("force_all_players")
-                                        .executes(context -> start(context.getSource(), -1, true)))
-                                // 60s start [days] — 常规启动，仅准备区域内的玩家加入
+                                                parseMode(StringArgumentType.getString(context, "mode")), -1, false)))
+                                // 60s start [days] [force_all_players] —— 省略模式，默认 normal（向后兼容旧用法）
                                 .then(argument("days", IntegerArgumentType.integer(-1))
-                                        .executes(context -> start(context.getSource(),
+                                        .then(literal("force_all_players")
+                                                .executes(context -> start(context.getSource(), StartMode.NORMAL,
+                                                        IntegerArgumentType.getInteger(context, "days"), true)))
+                                        .executes(context -> start(context.getSource(), StartMode.NORMAL,
                                                 IntegerArgumentType.getInteger(context, "days"), false)))
-                                .executes(context -> start(context.getSource(), -1, false)))
+                                .then(literal("force_all_players")
+                                        .executes(context -> start(context.getSource(), StartMode.NORMAL, -1, true)))
+                                .executes(context -> start(context.getSource(), StartMode.NORMAL, -1, false)))
                         // 赛前组队大厅（对所有玩家开放；游戏进行中不可用）
                         .then(literal("team").executes(context -> openTeamLobby(context.getSource())))
                         // 科技树（对所有玩家开放；仅本模式进行中可用）
@@ -655,31 +675,50 @@ public final class SixtySecondsStartCommand {
         return net.exmo.sixty_seconds.logic.SixtySecondsMonsterSystem.sacrifice(player) ? 1 : 0;
     }
 
-    private static int start(CommandSourceStack source, int days, boolean forceAll) {
+    /** 对局模式：{@code NORMAL} 仅主世界末日玩法；{@code OCEAN} 额外启用海岛远征（海洋维度群岛）。 */
+    private enum StartMode {
+        NORMAL, OCEAN
+    }
+
+    /** 将命令中的模式词解析为 {@link StartMode}；未知值回退 normal 并提示。 */
+    private static StartMode parseMode(String raw) {
+        if ("ocean".equalsIgnoreCase(raw)) {
+            return StartMode.OCEAN;
+        }
+        if (raw != null && !"normal".equalsIgnoreCase(raw)) {
+            // 容错：非 normal/ocean 视为拼写错误，回退 normal
+        }
+        return StartMode.NORMAL;
+    }
+
+    private static int start(CommandSourceStack source, StartMode mode, int days, boolean forceAll) {
         if (SixtySecondsMod.MODE == null) {
             source.sendFailure(Component.literal("60s mode not initialized"));
             return 0;
         }
-        if (SixtySecGameWorldComponent.KEY.get(source.getLevel()).isRunning()) {
+        var mainLevel = source.getLevel();
+        ServerLevel ocean = mainLevel.getServer().getLevel(SixtySeconds.OCEAN_DIMENSION);
+        // 游戏可能运行在主世界或海洋维度，二者任一在跑都视为进行中
+        boolean running = SixtySecGameWorldComponent.KEY.get(mainLevel).isRunning()
+                || (ocean != null && SixtySecGameWorldComponent.KEY.get(ocean).isRunning());
+        if (running) {
             source.sendFailure(Component.translatable("game.start_error.game_running"));
             return 0;
         }
 
         // days：-1 表示无尽模式，否则为游戏启用的天数（默认 7）
         int resolvedDays = days >= 0 ? days : SixtySecondsMod.MODE.defaultStartTime;
-        // 把天数写入本局配置（按图持久化），供 SixtySecondsManager.totalDays 读取；
-        // 60秒 游戏结束由天数（SixtySecondsManager.tick）控制，不再使用分钟倒计时
-        var level = source.getLevel();
-        var config = net.exmo.sixty_seconds.config.SixtySecondsConfigStore.current(level)
+        // 配置按地图名共享（主世界与海洋维度同名地图读同一文件），天数写入当前世界即可
+        var config = net.exmo.sixty_seconds.config.SixtySecondsConfigStore.current(mainLevel)
                 .orElseGet(net.exmo.sixty_seconds.config.SixtySecondsConfig::new);
         config.totalDays = resolvedDays;
-        net.exmo.sixty_seconds.config.SixtySecondsConfigStore.save(level, config);
+        net.exmo.sixty_seconds.config.SixtySecondsConfigStore.save(mainLevel, config);
 
         // force_all_players: 将所有参与中的玩家（未 opt-out）强制纳入就绪列表，
         // 使其无论身处何地都能加入游戏
         if (forceAll) {
-            ParticipationComponent participation = ParticipationComponent.KEY.get(level);
-            List<ServerPlayer> allPlayers = level.getServer().getPlayerList().getPlayers();
+            ParticipationComponent participation = ParticipationComponent.KEY.get(mainLevel);
+            List<ServerPlayer> allPlayers = mainLevel.getServer().getPlayerList().getPlayers();
             List<UUID> forcedReady = allPlayers.stream()
                     .filter(participation::isParticipating)
                     .map(ServerPlayer::getUUID)
@@ -687,8 +726,29 @@ public final class SixtySecondsStartCommand {
             GameUtils.setForcedReadyPlayers(forcedReady);
         }
 
-        // 分钟倒计时为框架兼容占位（60秒 结束由天数决定），实际不控制游戏结束
-        GameUtils.startGame(level, SixtySecondsMod.MODE, 0);
+        if (mode == StartMode.OCEAN) {
+            // 海岛模式：整局 60 秒运行于海洋维度。
+            // 住宅与庇护所（竞技场）直接生成在海洋维度内（Y=-40 地板），房车落在岛屿陆地返回本维度庇护所。
+            if (ocean == null) {
+                source.sendFailure(Component.literal("海洋（海岛）维度未加载，无法以海岛模式开局"));
+                return 0;
+            }
+            SixtySecondsIslands.ensureOceanStarted(ocean);
+            GameUtils.startGame(ocean, SixtySecondsMod.MODE, 0);
+            if (resolvedDays < 0) {
+                source.sendSuccess(() -> Component.translatable("commands.60s.start_endless",
+                        SixtySecondsMod.MODE.toString()).withStyle(ChatFormatting.GREEN), true);
+            } else {
+                source.sendSuccess(() -> Component.translatable("commands.60s.start_days",
+                        SixtySecondsMod.MODE.toString(), resolvedDays).withStyle(ChatFormatting.GREEN), true);
+            }
+            source.sendSuccess(() -> Component.literal("海岛模式已启用")
+                    .withStyle(ChatFormatting.AQUA), true);
+            return 1;
+        }
+
+        // 常规：主世界开局（分钟倒计时为框架兼容占位，实际由天数决定结束）
+        GameUtils.startGame(mainLevel, SixtySecondsMod.MODE, 0);
         if (resolvedDays < 0) {
             source.sendSuccess(() -> Component.translatable("commands.60s.start_endless",
                     SixtySecondsMod.MODE.toString()).withStyle(ChatFormatting.GREEN), true);

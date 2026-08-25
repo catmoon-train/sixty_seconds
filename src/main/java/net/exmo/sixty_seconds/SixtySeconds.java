@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import org.slf4j.Logger;
 
@@ -15,6 +16,11 @@ public final class SixtySeconds {
     /** 海洋（海岛）维度：{@code sixty_seconds:ocean}。通过数据包 {@code data/sixty_seconds/dimension/ocean.json} 注册。 */
     public static final ResourceKey<Level> OCEAN_DIMENSION =
             ResourceKey.create(Registries.DIMENSION, id("ocean"));
+
+    /** 判断给定维度是否为海洋（海岛）维度。 */
+    public static boolean isOcean(ServerLevel level) {
+        return OCEAN_DIMENSION.equals(level.dimension());
+    }
 
     private SixtySeconds() {
     }

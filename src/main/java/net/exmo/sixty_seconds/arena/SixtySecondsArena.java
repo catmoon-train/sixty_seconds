@@ -134,15 +134,19 @@ public final class SixtySecondsArena {
 
         // 每队的避难所偏移：门锚定模式下 = 出口门 - 锚点门（避难所平移到探索区那扇门上），否则 = 队伍网格偏移。
         // 先整表算出来——clearArenaEntities 要按<b>实际</b>落位清残留实体，网格坐标在锚定模式下根本不是避难所所在地。
-        List<BlockPos> shelterOffsets = shelterOffsets(config, data, exitDoorBindings);
-        // 住宅落位：始终贴网格，并把 Y 压到让模板最低层落在 y≈0（房子/庇护所全部生成到 y 轴 0 格附近）。
+        boolean ocean = SixtySeconds.isOcean(level);
+        List<BlockPos> shelterOffsets = shelterOffsets(config, data, exitDoorBindings, ocean);
+        // 住宅落位：始终贴网格。ocean 模式把整座建筑压到 y≈-39，地板贴在 Y=-40（海洋维度 min_y=-64，可达）；
+        // 普通模式最低层落在 y≈0。
+        int residentialBaseY = ocean ? (-39 - config.residentialTemplate.min.y) : (-config.residentialTemplate.min.y);
         List<BlockPos> residentialOffsets = new ArrayList<>();
         for (int i = 0; i < data.teams.size(); i++) {
             BlockPos grid = config.teamOffset(i);
-            residentialOffsets.add(new BlockPos(grid.getX(), -config.residentialTemplate.min.y, grid.getZ()));
+            residentialOffsets.add(new BlockPos(grid.getX(), residentialBaseY, grid.getZ()));
         }
         // 模板含活板门 → 按地表智能下沉埋地（把每队避难所偏移的 Y 压到让活板门齐地表）。
-        boolean buried = applyShelterBurial(level, config, shelterOffsets);
+        // ocean 模式不埋地：埋地会按地表（海洋维度海床 ~Y72）对齐活板门，与 -40 地板相悖。
+        boolean buried = ocean ? false : applyShelterBurial(level, config, shelterOffsets);
         if (!heightsFit(level, config, data, residentialOffsets, shelterOffsets)) {
             clearArenaEntities(level, config, List.of(), List.of(), data);
             onComplete.run();
@@ -159,9 +163,19 @@ public final class SixtySecondsArena {
         List<WorkItem> clearance = new ArrayList<>();
         List<WorkItem> clones = new ArrayList<>();
         int index = 0;
+        int arenaMinX = Integer.MAX_VALUE, arenaMaxX = Integer.MIN_VALUE;
+        int arenaMinZ = Integer.MAX_VALUE, arenaMaxZ = Integer.MIN_VALUE;
         for (SixtySecondsState.TeamData team : data.teams.values()) {
             BlockPos offset = residentialOffsets.get(index);
             BlockPos shelterOffset = shelterOffsets.get(index);
+            arenaMinX = Math.min(arenaMinX, residentialBox.minX() + offset.getX());
+            arenaMaxX = Math.max(arenaMaxX, residentialBox.maxX() + offset.getX());
+            arenaMinZ = Math.min(arenaMinZ, residentialBox.minZ() + offset.getZ());
+            arenaMaxZ = Math.max(arenaMaxZ, residentialBox.maxZ() + offset.getZ());
+            arenaMinX = Math.min(arenaMinX, shelterBox.minX() + shelterOffset.getX());
+            arenaMaxX = Math.max(arenaMaxX, shelterBox.maxX() + shelterOffset.getX());
+            arenaMinZ = Math.min(arenaMinZ, shelterBox.minZ() + shelterOffset.getZ());
+            arenaMaxZ = Math.max(arenaMaxZ, shelterBox.maxZ() + shelterOffset.getZ());
             // 尝试按导出的 .nbt 模板生成（保留箱子内容物等方块实体），无文件则回退从世界克隆
             CompoundTag resTpl = loadTemplate(level, config.residentialTemplateFile);
             CompoundTag shelTpl = loadTemplate(level, config.shelterTemplateFile);
@@ -223,6 +237,15 @@ public final class SixtySecondsArena {
         List<WorkItem> work = new ArrayList<>(clearance.size() + clones.size());
         work.addAll(clearance);
         work.addAll(clones);
+        // ocean 模式：在 Y=-40 铺一层地板，托住所有建筑（建筑最低层在 -39）。放在净空/克隆之后，
+        // 避免被净空（会下挖到 -41）把地板挖掉；地板自身走快照，局末照常还原。
+        if (ocean && arenaMinX <= arenaMaxX) {
+            int margin = 3;
+            BoundingBox floorBox = BoundingBox.fromCorners(
+                    new BlockPos(arenaMinX - margin, -40, arenaMinZ - margin),
+                    new BlockPos(arenaMaxX + margin, -40, arenaMaxZ + margin));
+            work.add(new WorkItem(floorBox, BlockPos.ZERO, FLOOR_STATE));
+        }
         GameUtils.serverTaskQueue.add(new BuildTask(level, snapshots, work, onComplete, teams));
         SixtySeconds.LOGGER.info("[60s] 开始异步建图：{} 支队伍，{} 个子盒分批放置。", teams, work.size());
     }
@@ -307,7 +330,16 @@ public final class SixtySecondsArena {
      * 注意锚定模式下<b>不</b>叠加网格偏移：出口门本身已是各队互不相同的世界坐标，再加网格会把避难所甩出探索区。
      */
     private static List<BlockPos> shelterOffsets(SixtySecondsConfig config, SixtySecondsState.Data data,
-            List<SixtySecondsConfig.DoorBinding> exitDoorBindings) {
+            List<SixtySecondsConfig.DoorBinding> exitDoorBindings, boolean ocean) {
+        // ocean 模式：始终走网格，并把整座避难所压到 y≈-39（地板贴 Y=-40）；不锚定出口门、不埋地
+        if (ocean) {
+            List<BlockPos> offsets = new ArrayList<>();
+            for (int index = 0; index < data.teams.size(); index++) {
+                BlockPos g = config.teamOffset(index);
+                offsets.add(new BlockPos(g.getX(), -39 - config.shelterTemplate.min.y, g.getZ()));
+            }
+            return offsets;
+        }
         if (config.rvEnabled) {
             List<BlockPos> offsets = new ArrayList<>();
             for (int index = 0; index < data.teams.size(); index++) {
@@ -539,6 +571,8 @@ public final class SixtySecondsArena {
     /** 克隆区净空的水平外扩（格）与上方净空高度（格）。 */
     private static final int CLEAR_MARGIN = 2;
     private static final int CLEAR_HEADROOM = 12;
+    /** ocean 模式竞技场地板方块（Y=-40 一层，托住所有建筑）。 */
+    private static final BlockState FLOOR_STATE = Blocks.STONE.defaultBlockState();
 
     /**
      * 净空工作项：把克隆目标区<b>四周 {@link #CLEAR_MARGIN} 格环带 + 上方 {@link #CLEAR_HEADROOM} 格</b>
@@ -601,8 +635,26 @@ public final class SixtySecondsArena {
         return chunks;
     }
 
-    /** 放置一个工作项：先快照目标区（copyLayer 会覆写），再克隆；净空项 = 快照后挖成空气。 */
+    /** 放置一个工作项：先快照目标区（copyLayer 会覆写），再克隆；净空项 = 快照后挖成空气；地板项 = 铺方块。 */
     private static void placeWorkItem(ServerLevel level, LinkedHashMap<BlockPos, Snapshot> snapshots, WorkItem item) {
+        if (item.isFloor()) {
+            BlockState fs = item.floor();
+            for (int y = item.src.minY(); y <= item.src.maxY(); y++) {
+                for (int x = item.src.minX(); x <= item.src.maxX(); x++) {
+                    for (int z = item.src.minZ(); z <= item.src.maxZ(); z++) {
+                        BlockPos dst = new BlockPos(x + item.offset.getX(), y + item.offset.getY(), z + item.offset.getZ());
+                        if (level.getBlockState(dst).isAir()) {
+                            continue;
+                        }
+                        snapshot(level, snapshots, dst);
+                        net.minecraft.world.Clearable.tryClear(level.getBlockEntity(dst));
+                        level.setBlock(dst, fs, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
+                        level.getLightEngine().checkBlock(dst);
+                    }
+                }
+            }
+            return;
+        }
         BoundingBox src = item.src;
         BlockPos offset = item.offset;
         if (item.clearOnly()) {
@@ -743,16 +795,23 @@ public final class SixtySecondsArena {
     }
 
     /** 一个放置工作项：源模板子盒 + 该队网格偏移；{@code clearOnly}=净空项（目标区挖成空气，不克隆）。
-     *  {@code template} 非空时按导出的结构模板 NBT（保留方块实体/箱子内容物）放置，否则从世界克隆。 */
-    private record WorkItem(BoundingBox src, BlockPos offset, boolean clearOnly, CompoundTag template) {
+     *  {@code template} 非空时按导出的结构模板 NBT（保留方块实体/箱子内容物）放置，否则从世界克隆。
+     *  {@code floor} 非空时为本项铺设地板（ocean 模式 Y=-40 一层）。三者互斥。 */
+    private record WorkItem(BoundingBox src, BlockPos offset, boolean clearOnly, CompoundTag template, BlockState floor) {
         WorkItem(BoundingBox src, BlockPos offset) {
-            this(src, offset, false, null);
+            this(src, offset, false, null, null);
         }
         WorkItem(BoundingBox src, BlockPos offset, boolean clearOnly) {
-            this(src, offset, clearOnly, null);
+            this(src, offset, clearOnly, null, null);
         }
         WorkItem(BoundingBox src, BlockPos offset, CompoundTag template) {
-            this(src, offset, false, template);
+            this(src, offset, false, template, null);
+        }
+        WorkItem(BoundingBox src, BlockPos offset, BlockState floor) {
+            this(src, offset, false, null, floor);
+        }
+        boolean isFloor() {
+            return floor != null;
         }
     }
 

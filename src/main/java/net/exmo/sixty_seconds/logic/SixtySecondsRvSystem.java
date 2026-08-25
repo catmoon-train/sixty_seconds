@@ -10,8 +10,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.util.RandomSource;
 import net.exmo.sixty_seconds.SixtySeconds;
+import net.exmo.sixty_seconds.island.SixtySecondsIsland;
+import net.exmo.sixty_seconds.island.SixtySecondsIslands;
+import net.exmo.sixty_seconds.island.SixtySecondsIslandGenerator;
 import net.exmo.sixty_seconds.registry.ModEntities;
 
 import java.util.ArrayList;
@@ -52,8 +57,26 @@ public final class SixtySecondsRvSystem {
     /** 建图完成、玩家已传送进家后调用：清掉上一局残留房车，再按队生成本局房车。 */
     public static void onGameStart(ServerLevel level, SixtySecondsState.Data data) {
         SixtySecondsConfig config = SixtySecondsConfigStore.current(level).orElse(null);
-        if (config == null || !config.rvEnabled) {
+        boolean ocean = SixtySeconds.isOcean(level);
+        // ocean 模式：房车落在各队 1 级港湾岛陆地（避水），回同维度庇护所，不受 rvEnabled 限制
+        if (!ocean && (config == null || !config.rvEnabled)) {
             return;
+        }
+        // ocean 模式：先为各队计算 1 级港湾岛上的陆地落点（自动搜索、避水），不再依赖手动 rvSpawnPoints
+        if (ocean) {
+            SixtySecondsIslands.Data islandData = SixtySecondsIslands.get(level);
+            List<SixtySecondsIsland> lvl1 = islandData.save.islands.stream()
+                    .filter(i -> i.level == 1).collect(java.util.stream.Collectors.toList());
+            List<SixtySecondsState.TeamData> teams = new ArrayList<>(data.teams.values());
+            RandomSource rng = level.getRandom();
+            for (int i = 0; i < teams.size(); i++) {
+                SixtySecondsState.TeamData team = teams.get(i);
+                if (team.shelterSpawn == null) continue;
+                SixtySecondsIsland island = lvl1.isEmpty() ? null : lvl1.get(i % lvl1.size());
+                if (island == null) continue;
+                BlockPos spot = findIslandRvSpot(level, island, rng);
+                if (spot != null) data.oceanRvSpots.put(team.teamId, spot);
+            }
         }
         ORPHAN_SWEPT.remove(level);
         discardAllRvs(level);
@@ -63,7 +86,7 @@ public final class SixtySecondsRvSystem {
             team.rvForcedChunkX = Integer.MIN_VALUE;
             team.rvForcedChunkZ = Integer.MIN_VALUE;
             team.rvLastSafePos = null;
-            spawnRv(level, config, team, index);
+            spawnRv(level, config, data, team, index);
             index++;
         }
         SixtySeconds.LOGGER.info("[60s] 房车模式：为 {} 支队伍生成常驻房车。", data.teams.size());
@@ -110,7 +133,7 @@ public final class SixtySecondsRvSystem {
             }
             SixtySecondsRvEntity rv = resolveRv(level, team);
             if (rv == null && team.rvRespawnCooldown <= 0) {
-                rv = spawnRv(level, config, team, index);
+                rv = spawnRv(level, config, data, team, index);
                 // 生成成功→重置冷却；失败→冷却 5 秒防无限重试
                 team.rvRespawnCooldown = (rv != null) ? 0 : 100;
             }
@@ -186,8 +209,8 @@ public final class SixtySecondsRvSystem {
     /** 按刷新点生成一辆房车并登记；刷新点解析失败返回 null。
      *  先生成实体前强制加载目标区块，防止实体被挂在未加载区块上导致立即移除。 */
     private static SixtySecondsRvEntity spawnRv(ServerLevel level, SixtySecondsConfig config,
-            SixtySecondsState.TeamData team, int index) {
-        BlockPos spawn = resolveSpawn(level, config, team, index);
+            SixtySecondsState.Data data, SixtySecondsState.TeamData team, int index) {
+        BlockPos spawn = resolveSpawn(level, config, data, team, index);
         if (spawn == null) {
             return null;
         }
@@ -220,9 +243,18 @@ public final class SixtySecondsRvSystem {
         team.rvForcedChunkZ = cur.z;
     }
 
-    /** 刷新点：配置的 {@code rvSpawnPoints[index]} 优先，否则住宅出生点旁的安全落点。 */
+    /** 刷新点：ocean 模式用各队岛屿陆地落点；否则配置的 {@code rvSpawnPoints[index]} 优先，再回退住宅出生点旁。 */
     private static BlockPos resolveSpawn(ServerLevel level, SixtySecondsConfig config,
-            SixtySecondsState.TeamData team, int index) {
+            SixtySecondsState.Data data, SixtySecondsState.TeamData team, int index) {
+        // ocean 模式优先用各队在岛屿陆地上的自动落点（已在 onGameStart 预计算，避水）
+        if (SixtySeconds.isOcean(level) && data.oceanRvSpots.containsKey(team.teamId)) {
+            BlockPos spot = data.oceanRvSpots.get(team.teamId);
+            BlockPos safe = SixtySecondsSearchZones.findSafeSpot(level, spot);
+            return safe != null ? safe : spot;
+        }
+        if (config == null) {
+            return null;
+        }
         if (config.rvSpawnPoints != null && index < config.rvSpawnPoints.size()
                 && config.rvSpawnPoints.get(index) != null) {
             BlockPos configured = config.rvSpawnPoints.get(index).toBlockPos();
@@ -233,6 +265,47 @@ public final class SixtySecondsRvSystem {
             return SixtySecondsSearchZones.findSafeSpot(level, team.residentialSpawn.offset(3, 0, 3));
         }
         return null;
+    }
+
+    /** ocean 模式：在岛屿陆地（避水）上找一个双格净空、脚下有支撑的房车落点。 */
+    private static BlockPos findIslandRvSpot(ServerLevel level, SixtySecondsIsland island, RandomSource rng) {
+        for (int a = 0; a < 64; a++) {
+            double ang = rng.nextDouble() * Math.PI * 2.0;
+            double rad = Math.sqrt(rng.nextDouble()) * (island.radius * 0.9);
+            int x = island.centerX + (int) Math.round(Math.cos(ang) * rad);
+            int z = island.centerZ + (int) Math.round(Math.sin(ang) * rad);
+            if (island.distSqr(x, z) > (double) island.radius * island.radius) {
+                continue;
+            }
+            int y = findSurfaceY(level, x, z,
+                    island.seaY + SixtySecondsIslandGenerator.HEIGHT_ABOVE_SEA - 2,
+                    island.seaY - SixtySecondsIslandGenerator.DEPTH_BELOW_SEA);
+            if (y < 0) {
+                continue;
+            }
+            BlockPos feet = new BlockPos(x, y, z);
+            if (!level.getFluidState(feet).isEmpty() || !level.getFluidState(feet.above()).isEmpty()) {
+                continue;
+            }
+            if (!level.getBlockState(feet).isAir() || !level.getBlockState(feet.above()).isAir()) {
+                continue;
+            }
+            return feet;
+        }
+        return null;
+    }
+
+    /** 在 [bottomY, topY] 区间内自顶向下扫描，返回首个「非空气、非流体、有碰撞」方块之上的 Y（脚部站立位）。 */
+    private static int findSurfaceY(ServerLevel level, int x, int z, int topY, int bottomY) {
+        BlockPos.MutableBlockPos p = new BlockPos.MutableBlockPos();
+        for (int y = topY; y >= bottomY; y--) {
+            p.set(x, y, z);
+            BlockState s = level.getBlockState(p);
+            if (!s.isAir() && s.getFluidState().isEmpty() && !s.getCollisionShape(level, p).isEmpty()) {
+                return y + 1;
+            }
+        }
+        return -1;
     }
 
     // ─────────────────────────────────────────────────────────────────
