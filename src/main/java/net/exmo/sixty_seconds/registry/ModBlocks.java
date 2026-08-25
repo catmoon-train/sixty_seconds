@@ -609,6 +609,18 @@ public final class ModBlocks {
             });
 
 
+    // 小游戏任务点镶板（透明贴面、可贴墙）
+    public static Block SIXTY_SECONDS_MINIGAME_QUEST_PANEL;
+    public static final DeferredBlock<Block> HOLD_SIXTY_SECONDS_MINIGAME_QUEST_PANEL = BLOCKS.register(
+            "sixty_seconds_minigame_quest_panel", () -> {
+                SIXTY_SECONDS_MINIGAME_QUEST_PANEL = new net.exmo.sixty_seconds.bridge.minigame.MinigameQuestPanelBlock(
+                        BlockBehaviour.Properties.of().strength(2.5F).noOcclusion());
+                return SIXTY_SECONDS_MINIGAME_QUEST_PANEL;
+            });
+    public static final DeferredItem<Item> ITEM_SIXTY_SECONDS_MINIGAME_QUEST_PANEL = ITEMS.register(
+            "sixty_seconds_minigame_quest_panel",
+            () -> new BlockItem(HOLD_SIXTY_SECONDS_MINIGAME_QUEST_PANEL.get(), new Item.Properties()));
+
     public static Block SIXTY_SECONDS_MINIGAME_QUEST;
     public static final DeferredBlock<Block> HOLD_SIXTY_SECONDS_MINIGAME_QUEST = BLOCKS.register("sixty_seconds_minigame_quest", () -> {
         SIXTY_SECONDS_MINIGAME_QUEST = new net.exmo.sixty_seconds.bridge.minigame.MinigameQuestBlock(
@@ -622,7 +634,7 @@ public final class ModBlocks {
             BLOCK_ENTITIES.register("sixty_seconds_minigame_quest", () -> {
                 SIXTY_SECONDS_MINIGAME_QUEST_ENTITY = BlockEntityType.Builder.of(
                         net.exmo.sixty_seconds.bridge.minigame.MinigameQuestBlockEntity::new,
-                        SIXTY_SECONDS_MINIGAME_QUEST).build(null);
+                        SIXTY_SECONDS_MINIGAME_QUEST, SIXTY_SECONDS_MINIGAME_QUEST_PANEL).build(null);
                 return SIXTY_SECONDS_MINIGAME_QUEST_ENTITY;
             });
 

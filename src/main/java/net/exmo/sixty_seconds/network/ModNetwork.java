@@ -2,6 +2,7 @@ package net.exmo.sixty_seconds.network;
 
 import net.exmo.sixty_seconds.bridge.fabric.ClientPlayNetworking;
 import net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking;
+import net.exmo.sixty_seconds.bridge.minigame.MinigameQuestServerNetwork;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -36,9 +37,13 @@ public final class ModNetwork {
         registrar.playToClient(GunTracerS2CPacket.ID, adapt(GunTracerS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToServer(LootTableSaveC2SPacket.ID, adapt(LootTableSaveC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(MapTeleportC2SPacket.ID, adapt(MapTeleportC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
+        registrar.playToServer(MinigameQuestPayload.SaveConfig.ID, adapt(MinigameQuestPayload.SaveConfig.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
+        registrar.playToServer(MinigameQuestPayload.CompleteGame.ID, adapt(MinigameQuestPayload.CompleteGame.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(NpcDialogueActionC2SPacket.ID, adapt(NpcDialogueActionC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(NpcShopBuyC2SPacket.ID, adapt(NpcShopBuyC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(NpcShopSaveC2SPacket.ID, adapt(NpcShopSaveC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
+        registrar.playToClient(MinigameQuestPayload.OpenConfig.ID, adapt(MinigameQuestPayload.OpenConfig.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
+        registrar.playToClient(MinigameQuestPayload.OpenGame.ID, adapt(MinigameQuestPayload.OpenGame.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(OpenAirdropEditS2CPacket.ID, adapt(OpenAirdropEditS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(OpenBreakInSelectS2CPacket.ID, adapt(OpenBreakInSelectS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(OpenDismantleS2CPacket.ID, adapt(OpenDismantleS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
@@ -121,6 +126,8 @@ public final class ModNetwork {
             if (payload instanceof EditNewspaperPacket p) { EditNewspaperPacket.handle(p, fabric); return; }
             if (payload instanceof LootTableSaveC2SPacket p) { LootTableSaveC2SPacket.handle(p, fabric); return; }
             if (payload instanceof MapTeleportC2SPacket p) { MapTeleportC2SPacket.handle(p, fabric); return; }
+            if (payload instanceof MinigameQuestPayload.SaveConfig p) { MinigameQuestServerNetwork.handle(p, fabric); return; }
+            if (payload instanceof MinigameQuestPayload.CompleteGame p) { MinigameQuestServerNetwork.handle(p, fabric); return; }
             if (payload instanceof NpcDialogueActionC2SPacket p) { NpcDialogueActionC2SPacket.handle(p, fabric); return; }
             if (payload instanceof NpcShopBuyC2SPacket p) { NpcShopBuyC2SPacket.handle(p, fabric); return; }
             if (payload instanceof NpcShopSaveC2SPacket p) { NpcShopSaveC2SPacket.handle(p, fabric); return; }

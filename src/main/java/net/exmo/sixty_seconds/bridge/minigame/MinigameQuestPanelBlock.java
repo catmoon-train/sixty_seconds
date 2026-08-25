@@ -114,7 +114,7 @@ public class MinigameQuestPanelBlock extends BaseEntityBlock
                     }
                     String sabotageMinigameId = questBe.getMinigameId();
                     if (sabotageMinigameId != null && !sabotageMinigameId.isEmpty()) {
-                        MinigameQuestServerNetwork.complete(sp, pos);
+                        MinigameQuestServerNetwork.sendOpenGame(sp, pos, sabotageMinigameId);
                     }
                     return InteractionResult.SUCCESS;
                 }
@@ -147,7 +147,7 @@ public class MinigameQuestPanelBlock extends BaseEntityBlock
                         }
                         mgComp.startBlockCooldown(pos);
                     }
-                    MinigameQuestServerNetwork.complete(sp, pos);
+                    MinigameQuestServerNetwork.sendOpenGame(sp, pos, minigameId);
                 }
             }
         }

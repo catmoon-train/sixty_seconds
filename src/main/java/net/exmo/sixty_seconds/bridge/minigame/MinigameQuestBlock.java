@@ -113,7 +113,7 @@ public class MinigameQuestBlock extends BaseEntityBlock
                     }
                     String sabotageMinigameId = questBe.getMinigameId();
                     if (sabotageMinigameId != null && !sabotageMinigameId.isEmpty()) {
-                        MinigameQuestServerNetwork.complete(sp, pos);
+                        MinigameQuestServerNetwork.sendOpenGame(sp, pos, sabotageMinigameId);
                     }
                     return InteractionResult.SUCCESS;
                 }
@@ -159,7 +159,7 @@ public class MinigameQuestBlock extends BaseEntityBlock
                         // 使用任务点即进入复用冷却（透视也随之隐藏）
                         mgComp.startBlockCooldown(pos);
                     }
-                    MinigameQuestServerNetwork.complete(sp, pos);
+                    MinigameQuestServerNetwork.sendOpenGame(sp, pos, minigameId);
                 }
             }
         }

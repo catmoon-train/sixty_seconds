@@ -231,6 +231,28 @@ public final class SixtySecondsClient {
                     context.client().execute(() -> context.client().setScreen(new NewspaperScreen(payload.pages(),
                             payload.title().orElse(Component.literal("")),
                             payload.author().orElse(Component.literal(""))))));
+            // 小游戏镶板：创造模式打开配置界面；冒险模式打开小游戏界面
+            ClientPlayNetworking.registerGlobalReceiver(net.exmo.sixty_seconds.network.MinigameQuestPayload.OpenConfig.ID,
+                    (payload, context) -> context.client().execute(() -> context.client().setScreen(
+                            new net.exmo.sixty_seconds.client.screen.minigame.MinigameQuestConfigScreen(
+                                    payload.pos(),
+                                    payload.data().getString("MinigameId"),
+                                    payload.data().getInt("MarkerColor"),
+                                    payload.data().getBoolean("IsTaskMarker"),
+                                    payload.data().getBoolean("IsSabotageTrigger"),
+                                    payload.data().getInt("SabotageDuration"),
+                                    payload.data().getInt("SabotageCooldown")))));
+            ClientPlayNetworking.registerGlobalReceiver(net.exmo.sixty_seconds.network.MinigameQuestPayload.OpenGame.ID,
+                    (payload, context) -> context.client().execute(() -> {
+                        Runnable onSuccess = () -> net.exmo.sixty_seconds.bridge.fabric.ClientPlayNetworking.send(
+                                new net.exmo.sixty_seconds.network.MinigameQuestPayload.CompleteGame(payload.pos()));
+                        net.minecraft.client.gui.screens.Screen screen =
+                                net.exmo.sixty_seconds.client.screen.minigame.MinigameScreenFactory.create(
+                                        payload.minigameId(), payload.pos(), onSuccess);
+                        if (screen != null) {
+                            context.client().setScreen(screen);
+                        }
+                    }));
             // 天气粒子生成器监听（即使下方粒子提供器注册异常也不影响生成器 tick）
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onClientTick);
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onLogout);
