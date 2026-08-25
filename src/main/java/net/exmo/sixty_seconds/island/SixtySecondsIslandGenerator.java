@@ -44,11 +44,12 @@ public final class SixtySecondsIslandGenerator {
     /** 环岛水裙边宽度（陆地半径之外再铺这么宽的海面）。 */
     public static final int WATER_SKIRT = 18;
     /**
-     * 岛屿间距倍数：岛心最小允许间距 = (r1+r2) × (1 + 此值) + 水裙边。
-     * 值越大岛屿越稀疏（海域越大）。原版（值=0）岛仅相切不重叠；
-     * 当前 3.0 表示岛间额外留出约 3×(r1+r2) 的海域，比原版稀疏数倍以上。
+     * 岛屿间距倍数：与 {@link #ISLAND_MIN_GAP} 取较大值作为「额外海域」。
+     * 岛心最小允许间距 = (r1+r2) + 水裙边×2 + 16 + max((r1+r2)×此值, ISLAND_MIN_GAP)。
+     * 0.5 表示在「半径之和的一半」与「500 格下限」之间取大，确保任意两岛边缘至少相隔约 500 格，
+     * 既不会像原版(值=0)那样仅相切，也不会因倍数过大而单区域放不下、被迫回退堆叠。
      */
-    public static final float ISLAND_SPACING_MULT = 3.0F;
+    public static final float ISLAND_SPACING_MULT = 0.5F;
     /**
      * 岛屿间最小边缘间隔（格）：无论岛屿大小，两岛陆地边缘之间至少保留这么宽的海域。
      * 与 {@link #ISLAND_SPACING_MULT} 取较大值，保证「至少相隔 500 格」。

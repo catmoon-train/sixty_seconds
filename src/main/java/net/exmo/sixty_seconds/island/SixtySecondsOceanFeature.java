@@ -60,7 +60,7 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
         if (level.isClientSide() || !(level instanceof ServerLevel serverLevel)) {
             return false;
         }
-        if (serverLevel.dimension() != SixtySeconds.OCEAN_DIMENSION) {
+        if (!serverLevel.dimension().equals(SixtySeconds.OCEAN_DIMENSION)) {
             return false;
         }
         BlockPos origin = ctx.origin();
@@ -78,7 +78,7 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
      */
     public static void generateChunk(WorldGenLevel level, int cx, int cz) {
         ServerLevel serverLevel = level.getLevel();
-        if (serverLevel.dimension() != SixtySeconds.OCEAN_DIMENSION) {
+        if (!serverLevel.dimension().equals(SixtySeconds.OCEAN_DIMENSION)) {
             return;
         }
         SixtySecondsConfig config = SixtySecondsConfigStore.current(serverLevel)
@@ -103,8 +103,9 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
         int regX1 = Math.floorDiv(x1, REGION);
         int regZ0 = Math.floorDiv(z0, REGION);
         int regZ1 = Math.floorDiv(z1, REGION);
-        for (int rx = regX0; rx <= regX1; rx++) {
-            for (int rz = regZ0; rz <= regZ1; rz++) {
+        // 额外纳入相邻区域：岛屿单元格可能跨入本 chunk，保证边界处的岛不被截断
+        for (int rx = regX0 - 1; rx <= regX1 + 1; rx++) {
+            for (int rz = regZ0 - 1; rz <= regZ1 + 1; rz++) {
                 List<SixtySecondsIsland> islands = SixtySecondsOceanWorldGen.planRegion(rx, rz, config, worldSeed);
                 for (SixtySecondsIsland island : islands) {
                     int cell = island.radius + SixtySecondsIslandGenerator.WATER_SKIRT;
