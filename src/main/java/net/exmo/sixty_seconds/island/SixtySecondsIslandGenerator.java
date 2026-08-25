@@ -148,153 +148,7 @@ public final class SixtySecondsIslandGenerator {
     /** 默认岛屿基准半径（{@code plan} 的 baseRadius 传 ≤0 时使用）。 */
     public static final int DEFAULT_BASE_RADIUS = 340;
 
-    /**
-     * 规划一批海岛：等级分布、大小分类、名字（前缀不重复）、噪声种子、互不重叠的位置。
-     * 首岛恒为 1 级中型港湾（海图默认解锁）。
-     * 大小分布 ~45% 小型 / ~35% 中型 / ~20% 大型；
-     * 小型岛等级偏低（1-2）、大型岛偏高（2-5）、中型按模式循环。
-     * {@code baseRadius} 为可编辑的基准半径（≤0 用默认 {@link #DEFAULT_BASE_RADIUS}）；
-     * 实际半径 = base×size.radiusMult + level×size.levelRadiusBonus + 随机(0..variance)。
-     */
-    public static List<SixtySecondsIsland> plan(RandomSource rng, int count, int centerX, int centerZ, int seaY,
-            int baseRadius, float evacChance) {
-        int base = baseRadius > 0 ? baseRadius : DEFAULT_BASE_RADIUS;
-        List<Integer> prefixes = new ArrayList<>();
-        for (int i = 0; i < SixtySecondsIsland.NAME_PREFIX_COUNT; i++) {
-            prefixes.add(i);
-        }
-        Collections.shuffle(prefixes, new java.util.Random(rng.nextLong()));
-        List<SixtySecondsIsland> islands = new ArrayList<>();
-        // 布局域以大岛基准半径为准；岛屿稀疏后需要更大的扩散域，否则拒绝采样会大量重试
-        int effBase = (int) (base * SixtySecondsIsland.Size.LARGE.radiusMult);
-        // 布局域以半径与最小间隔为准，并放大以容纳更稀疏的群岛（避免拒绝采样大量重试）
-        int extent = (int) ((2.2 * (1.0 + ISLAND_SPACING_MULT) * (effBase + WATER_SKIRT + 8)
-                + ISLAND_MIN_GAP * 2) * Math.sqrt(count)) + 120;
-        int patIdx = 0;
-        for (int i = 0; i < count; i++) {
-            SixtySecondsIsland island = new SixtySecondsIsland();
-            island.id = i;
-            // ── 大小分类 ──
-            if (i == 0) {
-                island.size = SixtySecondsIsland.Size.MEDIUM;
-                island.level = 1;
-            } else {
-                float r = rng.nextFloat();
-                if (r < 0.45F) {
-                    island.size = SixtySecondsIsland.Size.SMALL;
-                    island.level = 1 + rng.nextInt(2); // 1~2
-                } else if (r < 0.80F) {
-                    island.size = SixtySecondsIsland.Size.MEDIUM;
-                    island.level = LEVEL_PATTERN[patIdx % LEVEL_PATTERN.length];
-                    patIdx++;
-                } else {
-                    island.size = SixtySecondsIsland.Size.LARGE;
-                    island.level = 2 + rng.nextInt(4); // 2~5
-                }
-            }
-            island.namePrefix = prefixes.get(i % prefixes.size());
-            island.nameSuffix = rng.nextInt(SixtySecondsIsland.NAME_SUFFIX_COUNT);
-            island.seed = rng.nextLong();
-            island.seaY = seaY;
-            // ── 生态类型：按等级分布，首岛恒为热带（友好新手岛）──
-            island.type = assignType(rng, island.level, i == 0);
-            // 幽匿岛固定为 5 星（最高难），并取大岛规模以匹配其压迫感
-            if (island.type == SixtySecondsIsland.Type.SCULK) {
-                island.level = 5;
-                island.size = SixtySecondsIsland.Size.LARGE;
-                // 幽匿岛必定是炼狱岛：更强守岛怪 + 固定驻守 Boss
-                island.hardcore = true;
-                SixtySecondsBossEntity.BossVariant[] pool = SixtySecondsBalance.HARDCORE_BOSS_POOL;
-                island.bossVariant = pool[rng.nextInt(pool.length)];
-            }
-            // ── 炼狱岛：仅「部分」五星岛按概率强化（更高难怪物 + 固定驻守 Boss）──
-            if (!island.hardcore && island.level >= 5 && !island.isEvacuation
-                    && rng.nextFloat() < SixtySecondsBalance.HARDCORE_FIVE_STAR_CHANCE) {
-                island.hardcore = true;
-                // 从强力 Boss 池里随机挑一只固定驻守
-                SixtySecondsBossEntity.BossVariant[] pool = SixtySecondsBalance.HARDCORE_BOSS_POOL;
-                island.bossVariant = pool[rng.nextInt(pool.length)];
-            }
-            // ── 半径：base×size乘数 + level加成 + 随机 ──
-            SixtySecondsIsland.Size sz = island.size;
-            island.radius = (int) (base * sz.radiusMult)
-                    + island.level * sz.levelRadiusBonus
-                    + rng.nextInt(sz.radiusVariance + 1);
-            // 位置：矩形域内拒绝采样，保证与已放置的岛间距足够（水裙边不相互吞并）
-            for (int attempt = 0; attempt < 400; attempt++) {
-                int x = i == 0 ? centerX : centerX + rng.nextInt(extent * 2 + 1) - extent;
-                int z = i == 0 ? centerZ : centerZ + rng.nextInt(extent * 2 + 1) - extent;
-                boolean ok = true;
-                for (SixtySecondsIsland other : islands) {
-                    // 边缘间隔 = max(倍数稀疏, 最小间隔200) ，再叠加水裙边
-                    double extra = Math.max((island.radius + other.radius) * ISLAND_SPACING_MULT, ISLAND_MIN_GAP);
-                    double need = island.radius + other.radius + WATER_SKIRT * 2 + 16 + extra;
-                    if (other.distSqr(x, z) < need * need) {
-                        ok = false;
-                        break;
-                    }
-                }
-                if (ok) {
-                    island.centerX = x;
-                    island.centerZ = z;
-                    islands.add(island);
-                    break;
-                }
-                if (attempt == 399) {
-                    extent += 80; // 放不下就扩域重试本岛
-                    i--;
-                }
-            }
-            island.dockX = island.centerX;
-            island.dockY = seaY;
-            island.dockZ = island.centerZ;
-        }
-        // 稀有撤离点岛屿：低概率在本片群岛中<b>额外生成</b>一座专门的撤离点岛（不改造现有岛）。
-        if (rng.nextFloat() < Math.max(0.0F, Math.min(1.0F, evacChance))) {
-            SixtySecondsIsland evac = new SixtySecondsIsland();
-            evac.id = islands.size() + 50000; // 避开常规岛 id（0~count-1 / 区域编码），避免与 visited 判定冲突
-            evac.size = SixtySecondsIsland.Size.MEDIUM;
-            evac.level = 1;
-            evac.type = SixtySecondsIsland.Type.EVACUATION;
-            evac.isEvacuation = true;
-            evac.evacNameIndex = rng.nextInt(SixtySecondsIsland.EVAC_NAME_COUNT);
-            evac.namePrefix = prefixes.get(islands.size() % prefixes.size());
-            evac.nameSuffix = rng.nextInt(SixtySecondsIsland.NAME_SUFFIX_COUNT);
-            evac.seed = rng.nextLong();
-            evac.seaY = seaY;
-            SixtySecondsIsland.Size sz = evac.size;
-            evac.radius = (int) (base * sz.radiusMult) + sz.levelRadiusBonus + rng.nextInt(sz.radiusVariance + 1);
-            boolean placed = false;
-            for (int attempt = 0; attempt < 400; attempt++) {
-                int x = centerX + rng.nextInt(extent * 2 + 1) - extent;
-                int z = centerZ + rng.nextInt(extent * 2 + 1) - extent;
-                boolean ok = true;
-                for (SixtySecondsIsland other : islands) {
-                    double extra = Math.max((evac.radius + other.radius) * ISLAND_SPACING_MULT, ISLAND_MIN_GAP);
-                    double need = evac.radius + other.radius + WATER_SKIRT * 2 + 16 + extra;
-                    if (other.distSqr(x, z) < need * need) {
-                        ok = false;
-                        break;
-                    }
-                }
-                if (ok) {
-                    evac.centerX = x;
-                    evac.centerZ = z;
-                    placed = true;
-                    break;
-                }
-            }
-            if (!placed) {
-                evac.centerX = centerX + extent;
-                evac.centerZ = centerZ + extent;
-            }
-            evac.dockX = evac.centerX;
-            evac.dockY = seaY;
-            evac.dockZ = evac.centerZ;
-            islands.add(evac);
-        }
-        return islands;
-    }
+
 
     /**
      * 按等级分配生态类型。首岛强制热带（新手友好）。
@@ -490,139 +344,17 @@ public final class SixtySecondsIslandGenerator {
         }
     }
 
-    /**
-     * 把整个群岛的建造排入 {@code GameUtils.serverTaskQueue}。完成后回调 {@code onComplete}。
-     * 工作项顺序：每岛先地形列 patch，再装饰（树/岩）、废墟、物资箱+怪物+登岛点。
-     */
-    public static void queueBuild(ServerLevel level, List<SixtySecondsIsland> islands,
-            LinkedHashMap<BlockPos, Snapshot> snapshots, boolean placeShelterDoors, Runnable onComplete) {
-        Placer placer = new LevelPlacer(level, snapshots);
-        List<Runnable> work = new ArrayList<>();
-        for (SixtySecondsIsland island : islands) {
-            int r = island.radius + WATER_SKIRT;
-            for (int px = island.centerX - r; px <= island.centerX + r; px += PATCH) {
-                for (int pz = island.centerZ - r; pz <= island.centerZ + r; pz += PATCH) {
-                    int x0 = px;
-                    int z0 = pz;
-                    work.add(() -> buildPatch(placer, islands, island, x0, z0,
-                            Math.min(x0 + PATCH - 1, island.centerX + r),
-                            Math.min(z0 + PATCH - 1, island.centerZ + r)));
-                }
-            }
-            work.add(() -> decorate(placer, island));
-            // 撤离点岛：跳过「专有建筑 / 地形模板」(Ruins)，避免生成废墟建筑，
-            // 同时也就不会生成 Ruins 自带的保底物资箱（撤离点岛本就不该有物资箱）。
-            if (!island.isEvacuation) {
-                work.add(() -> SixtySecondsRuins.placeAll(placer, island));
-            }
-            work.add(() -> populate(placer, island));
-            // 一级岛：地形建好后放一扇避难所门（走 Placer 记快照，还原时随地形自动清除）。
-            if (placeShelterDoors && island.level == 1) {
-                work.add(() -> placeShelterDoor(placer, island));
-            }
-        }
-        GameUtils.serverTaskQueue.add(new IslandTask(level, work,
-                "message.sixty_seconds.sixty_seconds.island.building", onComplete));
-    }
 
-    /**
-     * 在一级岛地表合适位置放一扇避难所门，并把门坐标写回 {@code island.shelterDoorX/Y/Z}
-     * （供 {@link net.exmo.sixty_seconds.island.SixtySecondsIslands} 在建造完成后登记门绑定/锚点）。
-     * 找不到落脚点则不放门（{@code hasShelterDoor()} 保持 false）。
-     */
-    static void placeShelterDoor(Placer p, SixtySecondsIsland island) {
-        RandomSource rng = RandomSource.create(island.seed ^ 0x5D00_0DL);
-        BlockPos ground = null;
-        for (int attempt = 0; attempt < 24 && ground == null; attempt++) {
-            ground = randomGround(p,island, rng, 0.0, 0.45); // 靠岛心一带
-        }
-        if (ground == null) {
-            ground = scanGround(p,island, island.centerX, island.centerZ);
-        }
-        if (ground == null) {
-            return;
-        }
-        // 门朝向背向岛心（人从岛心侧看到门正面）；两格实心地面上放单格实心门方块。
-        net.minecraft.core.Direction facing = outwardDir(island, ground);
-        p.set(ground, net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SHELTER_DOOR
-                .defaultBlockState()
-                .setValue(net.exmo.sixty_seconds.content.block.ShelterDoorBlock.FACING, facing));
-        island.shelterDoorX = ground.getX();
-        island.shelterDoorY = ground.getY();
-        island.shelterDoorZ = ground.getZ();
-    }
 
-    /** 从岛心指向该点的水平朝向（四向取最接近者）；用于门朝向背向岛心。 */
-    private static net.minecraft.core.Direction outwardDir(SixtySecondsIsland island, BlockPos pos) {
-        int dx = pos.getX() - island.centerX;
-        int dz = pos.getZ() - island.centerZ;
-        if (Math.abs(dx) >= Math.abs(dz)) {
-            return dx >= 0 ? net.minecraft.core.Direction.EAST : net.minecraft.core.Direction.WEST;
-        }
-        return dz >= 0 ? net.minecraft.core.Direction.SOUTH : net.minecraft.core.Direction.NORTH;
-    }
 
-    /** 把整个群岛的还原（清空+快照回写）排入任务队列。 */
-    public static void queueRestore(ServerLevel level, List<SixtySecondsIsland> islands,
-            LinkedHashMap<BlockPos, Snapshot> snapshots, Runnable onComplete) {
-        List<Runnable> work = new ArrayList<>();
-        for (SixtySecondsIsland island : islands) {
-            int r = island.radius + WATER_SKIRT;
-            for (int px = island.centerX - r; px <= island.centerX + r; px += PATCH) {
-                for (int pz = island.centerZ - r; pz <= island.centerZ + r; pz += PATCH) {
-                    int x0 = px;
-                    int z0 = pz;
-                    work.add(() -> restorePatch(level, island, snapshots, x0, z0,
-                            Math.min(x0 + PATCH - 1, island.centerX + r),
-                            Math.min(z0 + PATCH - 1, island.centerZ + r)));
-                }
-            }
-        }
-        work.add(() -> restoreSnapshots(level, snapshots));
-        GameUtils.serverTaskQueue.add(new IslandTask(level, work,
-                "message.sixty_seconds.sixty_seconds.island.restoring", onComplete));
-    }
 
-    /** 还原一个列 patch：把生成范围内所有方块清成空气（快照位除外，稍后统一回写）。 */
-    private static void restorePatch(ServerLevel level, SixtySecondsIsland island,
-            LinkedHashMap<BlockPos, Snapshot> snapshots, int x0, int z0, int x1, int z1) {
-        BlockState air = Blocks.AIR.defaultBlockState();
-        int yMin = island.seaY - DEPTH_BELOW_SEA;
-        int yMax = island.seaY + HEIGHT_ABOVE_SEA;
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-        for (int x = x0; x <= x1; x++) {
-            for (int z = z0; z <= z1; z++) {
-                for (int y = yMin; y <= yMax; y++) {
-                    pos.set(x, y, z);
-                    if (level.getBlockState(pos).isAir() || snapshots.containsKey(pos)) {
-                        continue;
-                    }
-                    net.minecraft.world.Clearable.tryClear(level.getBlockEntity(pos));
-                    level.setBlock(pos, air, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
-                }
-            }
-        }
-    }
 
-    /** 快照回写（还原收尾）：把生成前的非空气方块（含 BE NBT，坐标改回自身）原样放回。 */
-    private static void restoreSnapshots(ServerLevel level, LinkedHashMap<BlockPos, Snapshot> snapshots) {
-        for (var entry : snapshots.entrySet()) {
-            BlockPos pos = entry.getKey();
-            Snapshot snap = entry.getValue();
-            level.setBlock(pos, snap.state(), Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
-            if (snap.blockEntityTag() != null) {
-                BlockEntity be = level.getBlockEntity(pos);
-                if (be != null) {
-                    CompoundTag tag = snap.blockEntityTag().copy();
-                    tag.putInt("x", pos.getX());
-                    tag.putInt("y", pos.getY());
-                    tag.putInt("z", pos.getZ());
-                    be.loadWithComponents(tag, level.registryAccess());
-                }
-            }
-        }
-        snapshots.clear();
-    }
+
+
+
+
+
+
 
     // ── 地形 ────────────────────────────────────────────────────────────
 
@@ -800,79 +532,7 @@ public final class SixtySecondsIslandGenerator {
         return island.seaY + (int) h;
     }
 
-    /**
-     * 建一个 16×16 列 patch：净空 → 海床/海水/滩涂/陆地按列成形。
-     * 重叠区域融合：每列取覆盖本列且 landValue 最大的岛为主导（并列时 id 小者优先），
-     * 仅主导岛负责该列成形，使相邻岛屿的陆地自然连成一片，而非被后建的岛整体覆盖。
-     */
-    static void buildPatch(Placer p, List<SixtySecondsIsland> all, SixtySecondsIsland island,
-            int x0, int z0, int x1, int z1) {
-        int rOuter = island.radius + WATER_SKIRT;
-        Palette pal = palette(island);
-        BlockState water = Blocks.WATER.defaultBlockState();
-        int yMin = island.seaY - DEPTH_BELOW_SEA;
-        int yMax = island.seaY + HEIGHT_ABOVE_SEA;
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-        for (int x = x0; x <= x1; x++) {
-            for (int z = z0; z <= z1; z++) {
-                double distSqr = island.distSqr(x + 0.5, z + 0.5);
-                if (distSqr > (double) rOuter * rOuter) {
-                    continue;
-                }
-                // 重叠融合：取覆盖本列且 landValue 最大的岛主导；本岛非主导则跳过，
-                // 交由其主导岛在自己的 patch 轮次成形，避免把邻居陆地误判成海而切开。
-                SixtySecondsIsland dom = island;
-                float best = landValue(island, x, z);
-                for (SixtySecondsIsland o : all) {
-                    if (o == island) {
-                        continue;
-                    }
-                    float lv = landValue(o, x, z);
-                    if (lv > best || (lv == best && o.id < island.id)) {
-                        best = lv;
-                        dom = o;
-                    }
-                }
-                if (dom != island) {
-                    continue;
-                }
-                float landVal = best;
-                boolean land = landVal > LAND_THRESHOLD;
-                int surface = land ? surfaceY(island, x, z, landVal) : island.seaY - 2
-                        - (int) (2 * fbm(island.seed ^ 77L, x * 0.08, z * 0.08, 2));
-                // 净空：地表以上的原有方块全部清掉（含海面以上）
-                for (int y = Math.max(surface + 1, yMin); y <= yMax; y++) {
-                    pos.set(x, y, z);
-                    if (!p.getBlockState(pos).isAir()) {
-                        p.air(pos);
-                    }
-                }
-                if (land) {
-                    boolean beach = surface <= island.seaY;
-                    float topNoise = fbm(island.seed ^ 31L, x * 0.11, z * 0.11, 2);
-                    for (int y = yMin; y <= surface; y++) {
-                        pos.set(x, y, z);
-                        BlockState state;
-                        if (y == surface) {
-                            state = beach ? pal.beach() : (topNoise > 0.62F ? pal.topAlt() : pal.top());
-                        } else if (y >= surface - 2) {
-                            state = beach ? pal.beach() : pal.under();
-                        } else {
-                            state = pal.core();
-                        }
-                        p.set(pos, state);
-                    }
-                } else {
-                    // 海：海床 + 水体到海平面；最外两圈收成浅滩环（拦住水体，防止向单元格外流散）
-                    boolean rim = distSqr > (double) (rOuter - 2) * (rOuter - 2);
-                    for (int y = yMin; y <= island.seaY; y++) {
-                        pos.set(x, y, z);
-                        p.set(pos, y <= surface || rim ? pal.seabed() : water);
-                    }
-                }
-            }
-        }
-    }
+
 
     // ── 装饰：树木 / 岩石 / 植被 ───────────────────────────────────────────
 
@@ -1454,78 +1114,7 @@ public final class SixtySecondsIslandGenerator {
     /** 物资箱抽类别池。 */
     private static final String[] BOX_CATEGORIES = {"food", "water", "medicine", "tool", "material", "weapon"};
 
-    static void populate(Placer p, SixtySecondsIsland island) {
-        ServerLevel level = p.level();
-        RandomSource rng = RandomSource.create(island.seed ^ 0xB0B0L);
-        float sm = island.size.supplyMult;
-        // 登岛点：向群岛原点一侧的滩头（找不到就用岛心地表）
-        BlockPos dock = findDock(p, island);
-        island.dockX = dock.getX();
-        island.dockY = dock.getY();
-        island.dockZ = dock.getZ();
 
-        // 撤离点岛屿：不刷新任何物资箱（玩家只需抵达并最后一天登岛即可撤离）
-        boolean isEvacuation = island.isEvacuation || island.type == SixtySecondsIsland.Type.EVACUATION;
-        if (isEvacuation) {
-            // 仅生成驻岛怪（少量），保持可登陆但无物资诱惑
-            int guards = Math.max(1, (int) (sm * 1.5));
-            for (int i = 0; i < guards; i++) {
-                BlockPos spot = randomGround(p, island, rng, 0.1, 0.8);
-                if (spot == null) {
-                    continue;
-                }
-                SixtySecondsPveSystem.createMonster(level, spot, rollVariant(rng, 2), 1.0, 1.0);
-            }
-            return;
-        }
-
-        // 普通物资箱：数量遵循 SUPPLY_BOX_DENSITY 系数（在原始 0.9 基础上再降 50%，分布更稀疏）；约 70% 上锁。
-        // 其中 15% 为随机箱（不上锁），其余 85% 中 82% 上锁 → 整体上锁率 ≈ 0.85×0.82 ≈ 70%。
-        int normal = Math.max(1, (int) (sm * (6 + island.level * 2) * SixtySecondsBalance.SUPPLY_BOX_DENSITY)
-                + rng.nextInt(Math.max(1, (int) (sm * 5 * SixtySecondsBalance.SUPPLY_BOX_DENSITY))));
-        for (int i = 0; i < normal; i++) {
-            BlockPos spot = randomGround(p, island, rng, 0.05, 0.9);
-            if (spot == null) {
-                continue;
-            }
-            boolean asRandom = rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_RANDOM_RATE;
-            // 普通物资箱：约 82% 落实为上锁的物资箱方块（仅非随机箱参与）
-            boolean locked = !asRandom && rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_LOCK_RATE;
-            placeSupplyBox(p, spot, asRandom
-                    ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_LOW_TIER_RANDOM_SUPPLY_BOX
-                    : (locked
-                            ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_LOCKED
-                            : net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX),
-                    BOX_CATEGORIES[rng.nextInt(BOX_CATEGORIES.length)]);
-        }
-        // 高级物资箱：等级-1 个（按大小缩放，系数在 0.9 基础上再降 50% 至 0.45）；约 70% 上锁；少量随机箱
-        int advanced = Math.max(0, (int) (sm * (island.level - 1) * SixtySecondsBalance.SUPPLY_BOX_DENSITY));
-        for (int i = 0; i < advanced; i++) {
-            BlockPos spot = randomGround(p, island, rng, 0.0, 0.6);
-            if (spot == null) {
-                continue;
-            }
-            boolean asRandom = rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_RANDOM_RATE;
-            // 高级物资箱：约 82% 落实为上锁的高级物资箱方块（仅非随机箱参与）
-            boolean advancedLocked = !asRandom && rng.nextFloat() < SixtySecondsBalance.SUPPLY_BOX_LOCK_RATE;
-            placeSupplyBox(p, spot, asRandom
-                    ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_HIGH_TIER_RANDOM_SUPPLY_BOX
-                    : (advancedLocked
-                            ? net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED_LOCKED
-                            : net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ADVANCED),
-                    BOX_CATEGORIES[rng.nextInt(BOX_CATEGORIES.length)]);
-        }
-        // 初始驻岛怪：数量/强度随等级+大小（后续增援由 PveSystem 游荡怪按 levelAt 自动缩放）
-        int monsters = Math.max(1, (int) (sm * island.level * 2));
-        for (int i = 0; i < monsters; i++) {
-            BlockPos spot = randomGround(p, island, rng, 0.1, 0.8);
-            if (spot == null) {
-                continue;
-            }
-            SixtySecondsPveSystem.createMonster(level, spot, rollVariant(rng, island.level),
-                    1.0 + 0.15 * (island.level - 1), 1.0);
-        }
-    }
 
     /** 登岛怪/驻岛怪变体（等级越高精英占比越大）。 */
     public static SixtySecondsMonsterEntity.Variant rollVariant(RandomSource rng, int level) {
@@ -1551,25 +1140,7 @@ public final class SixtySecondsIslandGenerator {
         }
     }
 
-    /** 找登岛滩头：从岛心向群岛外围方向走到岸线附近的可站立点。 */
-    private static BlockPos findDock(Placer p, SixtySecondsIsland island) {
-        RandomSource rng = RandomSource.create(island.seed ^ 0xD0C4L);
-        for (int attempt = 0; attempt < 40; attempt++) {
-            double angle = rng.nextDouble() * Math.PI * 2;
-            double dist = island.radius * (0.55 + rng.nextDouble() * 0.35);
-            int x = island.centerX + (int) Math.round(Math.cos(angle) * dist);
-            int z = island.centerZ + (int) Math.round(Math.sin(angle) * dist);
-            if (!p.contains(x, z)) {
-                continue; // 越界列直接跳过：primer 路径下避免整岛扫描，性能关键
-            }
-            BlockPos ground = scanGround(p, island, x, z);
-            if (ground != null && ground.getY() <= island.seaY + 4) {
-                return ground;
-            }
-        }
-        BlockPos center = scanGround(p, island, island.centerX, island.centerZ);
-        return center != null ? center : new BlockPos(island.centerX, island.seaY, island.centerZ);
-    }
+
 
     /**
      * 岛上随机找一个可放置的地表空气格（其下为实心陆地、非水）；distMin/Max 为相对半径比例。
@@ -1611,53 +1182,5 @@ public final class SixtySecondsIslandGenerator {
         return null;
     }
 
-    /** 跨 tick 分批执行工作项的任务（仿 {@code SixtySecondsArena.BuildTask}）。 */
-    private static final class IslandTask extends ServerTaskInfoClasses.ServerTaskInfo {
-        private final ServerLevel level;
-        private final List<Runnable> work;
-        private final String progressKey;
-        private final Runnable onComplete;
-        private int index = 0;
-        private int tickCounter = 0;
 
-        private IslandTask(ServerLevel level, List<Runnable> work, String progressKey, Runnable onComplete) {
-            this.level = level;
-            this.work = work;
-            this.progressKey = progressKey;
-            this.onComplete = onComplete;
-        }
-
-        @Override
-        public boolean onTick(MinecraftServer server) {
-            long deadline = System.nanoTime() + TICK_BUDGET_NANOS;
-            int done = 0;
-            // 按时间预算自适应：至少跑 1 项（保证推进），超时或到硬上限即让出本 tick。
-            while (index < work.size() && done < MAX_ITEMS_PER_TICK) {
-                work.get(index).run();
-                index++;
-                done++;
-                if (System.nanoTime() >= deadline) {
-                    break;
-                }
-            }
-            if (index < work.size() && (++tickCounter % 10) == 0) {
-                int percent = (int) (100.0 * index / Math.max(1, work.size()));
-                Component msg = Component.translatable(progressKey, percent).withStyle(ChatFormatting.YELLOW);
-                for (ServerPlayer player : level.players()) {
-                    player.displayClientMessage(msg, true);
-                }
-            }
-            return index >= work.size();
-        }
-
-        @Override
-        public void onFinished() {
-            Component done = Component.translatable(progressKey, 100).withStyle(ChatFormatting.YELLOW);
-            for (ServerPlayer player : level.players()) {
-                player.displayClientMessage(done, true);
-            }
-            SixtySeconds.LOGGER.info("[60s] 海岛任务完成：{} 个工作项。", work.size());
-            onComplete.run();
-        }
-    }
 }

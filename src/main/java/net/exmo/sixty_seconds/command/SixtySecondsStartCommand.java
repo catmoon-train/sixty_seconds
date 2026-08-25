@@ -188,55 +188,10 @@ public final class SixtySecondsStartCommand {
                                 .executes(c -> showAutoJoin(c.getSource())))
                         // 海岛远征：/60s island start|stop（OP，独立于对局的地图机制开关）
                         // map=打开海图（所有玩家）、sail <id>=扬帆（海图点击触发）、home=返回住所
+                        // 海岛远征：/60s island（OP，独立于对局的地图机制开关）。
+                        // 地形由海洋维度（sixty_seconds:ocean）确定性生成，不再手动生成。
+                        // map=打开海图、sail <id>=扬帆、home=返回住所、list=列表、unlock=解锁队伍
                         .then(literal("island")
-                                .then(literal("start")
-                                        .requires(source -> source.hasPermission(2))
-                                        .then(argument("count", IntegerArgumentType.integer(3, 100))
-                                                // start <count> radius <r> —— 只改基准半径，其余用默认
-                                                .then(literal("radius")
-                                                        .then(argument("radius", IntegerArgumentType.integer(16, 5000))
-                                                                .executes(c -> islandStart(c.getSource(),
-                                                                        IntegerArgumentType.getInteger(c, "count"),
-                                                                        Integer.MIN_VALUE, Integer.MIN_VALUE,
-                                                                        Integer.MIN_VALUE,
-                                                                        IntegerArgumentType.getInteger(c, "radius")))))
-                                                .then(argument("centerX", IntegerArgumentType.integer())
-                                                        .then(argument("centerZ", IntegerArgumentType.integer())
-                                                                .then(argument("seaY", IntegerArgumentType
-                                                                        .integer(-60, 300))
-                                                                        // start <count> <x> <z> <seaY> [radius]
-                                                                        .then(argument("radius", IntegerArgumentType
-                                                                                .integer(16, 5000))
-                                                                                .executes(c -> islandStart(c.getSource(),
-                                                                                        IntegerArgumentType.getInteger(c, "count"),
-                                                                                        IntegerArgumentType.getInteger(c, "centerX"),
-                                                                                        IntegerArgumentType.getInteger(c, "centerZ"),
-                                                                                        IntegerArgumentType.getInteger(c, "seaY"),
-                                                                                        IntegerArgumentType.getInteger(c, "radius"))))
-                                                                        .executes(c -> islandStart(c.getSource(),
-                                                                                IntegerArgumentType.getInteger(c, "count"),
-                                                                                IntegerArgumentType.getInteger(c, "centerX"),
-                                                                                IntegerArgumentType.getInteger(c, "centerZ"),
-                                                                                IntegerArgumentType.getInteger(c, "seaY"),
-                                                                                Integer.MIN_VALUE)))
-                                                                .executes(c -> islandStart(c.getSource(),
-                                                                        IntegerArgumentType.getInteger(c, "count"),
-                                                                        IntegerArgumentType.getInteger(c, "centerX"),
-                                                                        IntegerArgumentType.getInteger(c, "centerZ"),
-                                                                        Integer.MIN_VALUE, Integer.MIN_VALUE))))
-                                                .executes(c -> islandStart(c.getSource(),
-                                                        IntegerArgumentType.getInteger(c, "count"),
-                                                        Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE,
-                                                        Integer.MIN_VALUE)))
-                                        .executes(c -> islandStart(c.getSource(), 9,
-                                                Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE,
-                                                Integer.MIN_VALUE)))
-                                .then(literal("stop")
-                                        .requires(source -> source.hasPermission(2))
-                                        .executes(c -> islandStop(c.getSource())))
-                                .then(literal("delete")
-                                        .requires(source -> source.hasPermission(2))
-                                        .executes(c -> islandDelete(c.getSource())))
                                 .then(literal("map").executes(c -> islandMap(c.getSource())))
                                 .then(literal("home").executes(c -> islandHome(c.getSource())))
                                 .then(literal("list")
@@ -1395,53 +1350,7 @@ public final class SixtySecondsStartCommand {
 
     private static final String ISLAND_LANG = net.exmo.sixty_seconds.island.SixtySecondsIsland.LANG;
 
-    /**
-     * 管理员：生成海岛群（异步）。centerX/centerZ/seaY/baseRadius 传 {@code Integer.MIN_VALUE} 用默认
-     * （半径默认 {@code SixtySecondsIslandGenerator.DEFAULT_BASE_RADIUS}=340；实际半径=基准+等级×6+随机0..10）。
-     */
-    private static int islandStart(CommandSourceStack source, int count, int centerX, int centerZ, int seaY,
-            int baseRadius) {
-        var level = source.getLevel();
-        // 默认落点：执行者脚下偏移一段（避免压在人头上），或世界固定远点
-        int cx = centerX != Integer.MIN_VALUE ? centerX
-                : source.getEntity() != null ? (int) source.getPosition().x : -3000;
-        int cz = centerZ != Integer.MIN_VALUE ? centerZ
-                : source.getEntity() != null ? (int) source.getPosition().z + 600 : 3000;
-        int sea = seaY != Integer.MIN_VALUE ? seaY
-                : source.getEntity() != null ? (int) source.getPosition().y : level.getSeaLevel();
-        int radius = baseRadius != Integer.MIN_VALUE ? baseRadius : 0; // ≤0 = 用默认
-        if (!net.exmo.sixty_seconds.island.SixtySecondsIslands.start(level, count, cx, cz, sea, radius)) {
-            source.sendFailure(Component.translatable(ISLAND_LANG + "start_fail"));
-            return 0;
-        }
-        int shownRadius = radius > 0 ? radius
-                : net.exmo.sixty_seconds.island.SixtySecondsIslandGenerator.DEFAULT_BASE_RADIUS;
-        source.sendSuccess(() -> Component.translatable(ISLAND_LANG + "start_ok_radius",
-                count, cx, cz, sea, shownRadius).withStyle(ChatFormatting.GREEN), true);
-        return 1;
-    }
 
-    /** 管理员：关闭海岛模式并回滚地形。 */
-    private static int islandStop(CommandSourceStack source) {
-        if (!net.exmo.sixty_seconds.island.SixtySecondsIslands.stop(source.getLevel())) {
-            source.sendFailure(Component.translatable(ISLAND_LANG + "stop_fail"));
-            return 0;
-        }
-        source.sendSuccess(() -> Component.translatable(ISLAND_LANG + "stop_ok")
-                .withStyle(ChatFormatting.GREEN), true);
-        return 1;
-    }
-
-    /** 管理员：强制删除所有海岛数据（不清除地形方块），允许重新生成。 */
-    private static int islandDelete(CommandSourceStack source) {
-        if (!net.exmo.sixty_seconds.island.SixtySecondsIslands.delete(source.getLevel())) {
-            source.sendFailure(Component.translatable(ISLAND_LANG + "delete_fail"));
-            return 0;
-        }
-        source.sendSuccess(() -> Component.translatable(ISLAND_LANG + "delete_ok")
-                .withStyle(ChatFormatting.GREEN), true);
-        return 1;
-    }
 
     /** 打开海图（服务端下发数据并令客户端弹出界面；聊天栏点击也走这里）。 */
     private static int islandMap(CommandSourceStack source) {
