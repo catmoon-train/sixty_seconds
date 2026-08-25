@@ -388,6 +388,8 @@ public final class SixtySecondsManager {
         if (firstDay) {
             teleportTeams(level, data, false);
             placeSupplyChests(level, data);
+            // 开局发放地图：普通模式给星图，海洋模式给海图
+            giveStartupMaps(level, data);
             // 传送完成后播放运镜动画（从远处拉回，时长=80tick=4s，距离30格，高10格）
             for (ServerPlayer player : level.players()) {
                 AdvancedCameraCommand.sendIntro(player, 80, 30.0, 10.0);
@@ -439,6 +441,25 @@ public final class SixtySecondsManager {
         }
         // 最后一天白天开始时再由 tickSubPhaseNotify 触发直升机撤离，
         // 替换了原先 startDay 清晨即触发的逻辑（详见 tickSubPhaseNotify 中的 MORNING→DAYTIME 检测）。
+    }
+
+    /**
+     * 游戏开局（第 1 天）给所有参与玩家发放地图：
+     * 普通模式发星图（{@link ModItems#STAR_MAP}），海洋模式发海图（{@link ModItems#SEA_CHART}）。
+     * 依据主对局所在维度判定模式——海洋维度即海洋模式（见 SixtySeconds.isOcean）。
+     */
+    private static void giveStartupMaps(ServerLevel level, SixtySecondsState.Data data) {
+        boolean ocean = net.exmo.sixty_seconds.SixtySeconds.isOcean(level);
+        Item mapItem = ocean ? ModItems.SEA_CHART.get() : ModItems.STAR_MAP.get();
+        for (ServerPlayer p : data.players) {
+            if (p == null) {
+                continue;
+            }
+            ItemStack stack = new ItemStack(mapItem);
+            if (!p.getInventory().add(stack)) {
+                p.drop(stack, false);
+            }
+        }
     }
 
     private static void finish(ServerLevel level, SixtySecondsState.Data data) {
