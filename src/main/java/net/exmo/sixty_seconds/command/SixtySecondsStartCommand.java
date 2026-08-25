@@ -268,6 +268,18 @@ public final class SixtySecondsStartCommand {
                                                         StringArgumentType.getString(c, "variant"))))
                                         .executes(c -> spawnBoss(c.getSource(),
                                                 IntegerArgumentType.getInteger(c, "level"))))
+                                // 海洋 Boss：leviathan=海洋终极 Boss（定时刷的那种）；kraken/serpent=普通海怪。
+                                // 不要求 60s 模式运行，可在海洋（海岛）维度使用。
+                                .then(literal("ocean")
+                                        .then(argument("type", StringArgumentType.word())
+                                                .suggests((ctx, builder) -> {
+                                                    for (String t : new String[]{"kraken", "serpent", "leviathan"}) {
+                                                        builder.suggest(t);
+                                                    }
+                                                    return builder.buildFuture();
+                                                })
+                                                .executes(c -> spawnOceanBoss(c.getSource(),
+                                                        StringArgumentType.getString(c, "type")))))
                                 .executes(c -> spawnBoss(c.getSource(), 1)))
                         // 管理员：Boss 刷新点绑定（与 Boss 魔杖物品等效；落盘 sixty_seconds_config.json）
                         .then(literal("boss_spawn")
@@ -1209,6 +1221,38 @@ public final class SixtySecondsStartCommand {
                 source.getLevel(), player.blockPosition().relative(player.getDirection(), 4),
                 bossLevel, false, variant);
         return boss != null ? 1 : 0;
+    }
+
+    /**
+     * 管理员：在自身/指令位置刷海洋 Boss。
+     * leviathan=海洋终极 Boss（定时刷的那种）；kraken/serpent=普通海怪。
+     * 不要求 60s 模式运行——可在海洋（海岛）维度使用；落点取执行者脚下，优先水面。
+     */
+    private static int spawnOceanBoss(CommandSourceStack source, String type) {
+        net.minecraft.server.level.ServerLevel level = source.getLevel();
+        net.minecraft.core.BlockPos pos = source.getEntity() instanceof ServerPlayer player
+                ? player.blockPosition() : net.minecraft.core.BlockPos.containing(source.getPosition());
+        net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity.Variant variant = switch (type.toLowerCase()) {
+            case "kraken" -> net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity.Variant.KRAKEN;
+            case "serpent" -> net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity.Variant.SERPENT;
+            case "leviathan" -> net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity.Variant.LEVIATHAN;
+            default -> {
+                source.sendFailure(Component.literal("未知海洋 Boss 类型: " + type
+                        + "，可用: kraken, serpent, leviathan"));
+                yield null;
+            }
+        };
+        if (variant == null) return 0;
+        net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity monster =
+                net.exmo.sixty_seconds.logic.OceanCreatureSpawner.spawnSeaMonster(level, pos, level.getRandom(), 1.0);
+        if (monster == null) {
+            source.sendFailure(Component.literal("生成失败：无法创建海洋 Boss 实体"));
+            return 0;
+        }
+        monster.applyVariant(variant);
+        source.sendSuccess(() -> Component.translatable("command.sixty_seconds.ocean.monster_spawned",
+                Component.translatable(variant.nameKey())).withStyle(ChatFormatting.DARK_PURPLE), true);
+        return 1;
     }
 
     // ── Boss 刷新点绑定（boss_spawn add/remove/list/clear）──────────────
