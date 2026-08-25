@@ -22,6 +22,11 @@ public final class WeatherSync {
     private WeatherSync() {
     }
 
+    /** 是否当前有指令强制天气生效（用于避免自然事件 endEvent 误清除预览）。 */
+    public static boolean isForced(ServerLevel level) {
+        return FORCED.containsKey(level);
+    }
+
     /** 向维度内所有玩家广播当前天气类型（null 表示清除）。 */
     public static void send(ServerLevel level, SixtySecondsEventSystem.EventType type) {
         byte id = type == null ? (byte) -1 : (byte) type.ordinal();
@@ -37,10 +42,11 @@ public final class WeatherSync {
         send(level, type);
     }
 
-    /** 清除（指令 / 自然事件结束）。 */
+    /** 清除指令预览。若当前仍有自然事件在运行，则切回自然事件显示，而非清空。 */
     public static void clear(ServerLevel level) {
         FORCED.remove(level);
-        send(level, null);
+        SixtySecondsEventSystem.EventType event = SixtySecondsEventSystem.activeEventType(level);
+        send(level, event); // event 为 null 时发 -1（清除）
     }
 
     /** 玩家登录补发（若当前有指令强制天气）。 */

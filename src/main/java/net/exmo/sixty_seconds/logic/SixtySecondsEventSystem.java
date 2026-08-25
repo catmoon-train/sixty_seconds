@@ -403,7 +403,10 @@ public final class SixtySecondsEventSystem {
     }
 
     private static void endEvent(ServerLevel level, Active active) {
-        net.exmo.sixty_seconds.weather.WeatherSync.send(level, null);
+        // 指令强制天气预览优先：若当前有 /60s weather 预览生效，自然事件结束时不清除它
+        if (!net.exmo.sixty_seconds.weather.WeatherSync.isForced(level)) {
+            net.exmo.sixty_seconds.weather.WeatherSync.send(level, null);
+        }
         switch (active.type) {
             case POLLUTION_RAIN -> {
                 level.setWeatherParameters(0, 0, false, false);

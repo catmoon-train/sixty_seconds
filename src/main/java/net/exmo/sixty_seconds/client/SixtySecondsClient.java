@@ -213,9 +213,14 @@ public final class SixtySecondsClient {
                     context.client().execute(() -> context.client().setScreen(new NewspaperScreen(payload.pages(),
                             payload.title().orElse(Component.literal("")),
                             payload.author().orElse(Component.literal(""))))));
-            Minecraft.getInstance().particleEngine.register(ModParticles.WEATHER_STREAK, new WeatherParticle.Provider(ResourceLocation.parse("particle/rain")));
-            Minecraft.getInstance().particleEngine.register(ModParticles.WEATHER_DUST, new WeatherParticle.Provider(ResourceLocation.parse("particle/smoke")));
+            // 先注册天气粒子生成器监听，确保即使下方粒子提供器注册异常也不影响生成器 tick
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onClientTick);
+            try {
+                Minecraft.getInstance().particleEngine.register(ModParticles.WEATHER_STREAK, new WeatherParticle.Provider(ResourceLocation.parse("particle/rain")));
+                Minecraft.getInstance().particleEngine.register(ModParticles.WEATHER_DUST, new WeatherParticle.Provider(ResourceLocation.parse("particle/smoke")));
+            } catch (Exception e) {
+                org.slf4j.LoggerFactory.getLogger(SixtySecondsClient.class).error("[60s-weather] 天气粒子提供器注册失败", e);
+            }
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onLogout);
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onWorldRender);
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onTooltip);

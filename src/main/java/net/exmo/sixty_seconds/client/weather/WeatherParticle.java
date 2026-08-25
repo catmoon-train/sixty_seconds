@@ -70,6 +70,11 @@ public class WeatherParticle extends TextureSheetParticle {
         return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
+    @Override
+    public int getLightColor(float partialTick) {
+        return (15 << 20) | 15; // 全亮，确保主题粒子清晰可见
+    }
+
     public static class Provider implements ParticleProvider<SimpleParticleType> {
         private final ResourceLocation spriteLoc;
         private TextureAtlasSprite sprite;
