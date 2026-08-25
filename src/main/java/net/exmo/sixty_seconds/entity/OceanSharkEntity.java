@@ -105,6 +105,7 @@ public class OceanSharkEntity extends OceanCreatureEntity {
     /** 生成时按变体装配（不经过 SynchedEntityData，给自然刷新/指令直接用）。 */
     public void applyVariant(Variant variant) {
         applyVariant(variant.id, variant.health, variant.speed, variant.scale, variant.nameKey());
+        setCustomNameVisible(false); // 鲨鱼不显示实体名称牌
     }
 
     public Variant getVariant() {

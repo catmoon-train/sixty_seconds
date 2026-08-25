@@ -24,9 +24,10 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 海洋生物刷新系统。
  *
- * <h3>鲨鱼 / 海盗 NPC（数据驱动刷新）</h3>
- * <p>{@code ocean_shark} 与海盗 NPC 已改为 NeoForge {@code biome_modifier} + {@code forge:add_spawns}
- * 数据驱动自然刷新（见 {@code data/sixty_seconds/forge/biome_modifier/ocean_creatures.json}），
+ * <h3>鲨鱼（数据驱动自然刷新，上限/节奏在 SpawnPlacement 判定中把关）</h3>
+ * <p>{@code ocean_shark} 走 NeoForge {@code biome_modifier} + {@code neoforge:add_spawns}
+ * 数据驱动自然刷新（权重/是否刷由数据包决定）；数量上限与刷新速度由
+ * {@code Sixty_seconds.registerSpawnPlacements} 的刷怪位置判定统一把关，避免“一进海域就刷一大堆、数量无上限”。
  * 变体稀有度由实体 {@code finalizeSpawn} 内按原概率随机决定。本类不再手动刷鲨鱼。
  *
  * <h3>海怪 KRAKEN / SERPENT（手动刷，含出场特效）</h3>
@@ -55,7 +56,6 @@ public final class OceanCreatureSpawner {
     /** 利维坦（LEVIATHAN）刷新周期：每 6 个由对局推进的游戏日（dayNumber）刷一只。 */
     public static final int LEVIATHAN_PERIOD_DAYS = 6;
 
-    private static final int MAX_NEARBY_SHARKS = 5;
     private static final int MAX_NEARBY_MONSTERS = 2;
     private static final double NEARBY_RADIUS = 64.0;
     private static final double MONSTER_FOG_RADIUS = 32.0; // 海怪浓雾作用半径
@@ -85,7 +85,7 @@ public final class OceanCreatureSpawner {
 
         // 前四天额外压降 ×0.3（保证前几天几乎不刷强怪）
         double earlyDayMult = dayNumber <= 4 ? 0.3 : 1.0;
-        // 海怪基础概率（鲨鱼已改数据驱动刷新，不在此手动刷）
+        // 海怪基础概率
         double monsterBase = (night ? 0.042 : 0.007) * dayRatio * earlyDayMult;
 
         RandomSource random = level.getRandom();
@@ -108,7 +108,6 @@ public final class OceanCreatureSpawner {
             int nearbyMonsters = countNearby(level, player, OceanSeaMonsterEntity.class, NEARBY_RADIUS);
 
             // ── 海怪刷新（KRAKEN / SERPENT，含出场特效）───────────────────
-            // 注：鲨鱼 ocean_shark 已通过 biome_modifier 数据驱动自然刷新，这里不再手动刷。
             if (nearbyMonsters < MAX_NEARBY_MONSTERS && random.nextDouble() < monsterBase) {
                 BlockPos spot = findWaterSpot(level, player.blockPosition(),
                         SPAWN_MIN_DIST + 8, SPAWN_MAX_DIST + 12, random);

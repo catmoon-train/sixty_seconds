@@ -6,6 +6,10 @@ import net.exmo.sixty_seconds.bridge.stubs.SixtySecSounds;
 import net.exmo.sixty_seconds.network.ModNetwork;
 import net.exmo.sixty_seconds.init.ModOceanEntities;
 import net.exmo.sixty_seconds.entity.OceanSharkEntity;
+import net.exmo.sixty_seconds.state.SixtySecondsState;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.phys.AABB;
 import net.exmo.sixty_seconds.registry.ModBlocks;
 import net.exmo.sixty_seconds.registry.ModEffects;
 import net.exmo.sixty_seconds.registry.ModEntities;
@@ -25,6 +29,16 @@ import net.neoforged.neoforge.common.NeoForge;
 @Mod(Sixty_seconds.MODID)
 public class Sixty_seconds {
     public static final String MODID = SixtySeconds.MOD_ID;
+
+    /**
+     * 海洋鲨鱼「数据驱动自然刷新」的上限与节奏控制（在 {@link #registerSpawnPlacements} 的
+     * 刷怪位置判定里强制执行）。biome_modifier 的 add_spawns 只决定「权重 / 是否刷」，
+     * 真正的数量上限与刷新速度由这里把关，避免进入海域瞬间刷出一大堆、且数量无上限。
+     */
+    public static final int SHARK_GLOBAL_CAP = 24;            // 海洋维度内鲨鱼总数上限
+    public static final int SHARK_AREA_CAP = 3;              // 单点附近（SHARK_AREA_RADIUS 内）的局部密度上限
+    public static final double SHARK_AREA_RADIUS = 48.0;     // 局部密度检测半径
+    public static final long SHARK_SPAWN_INTERVAL_TICKS = 20L * 90; // 两次成功刷新最小间隔（≈90 秒）
 
     public Sixty_seconds(IEventBus modEventBus, ModContainer modContainer) {
         ModBlocks.register(modEventBus);
@@ -55,14 +69,51 @@ public class Sixty_seconds {
      * 海洋鲨鱼数据刷怪（biome_modifier add_spawns）必需的刷怪位置规则登记。
      * NeoForge 1.21.1 通过 {@link RegisterSpawnPlacementsEvent}（mod 总线）注册，
      * 没有这一步，数据包里的 add_spawns 不会真正刷出实体。
+     * <p>判定函数额外把关「数量上限 + 刷新节奏」：
+     * 仅对 {@code NATURAL}（数据驱动）刷新生效，且只限海洋维度；
+     * 通过冷却时间限制刷新速度，通过全局/局部计数限制数量。
      */
     private void registerSpawnPlacements(final RegisterSpawnPlacementsEvent event) {
         event.register(ModOceanEntities.OCEAN_SHARK,
                 SpawnPlacementTypes.IN_WATER,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                (type, level, spawnType, pos, random) ->
-                        level.getFluidState(pos).is(FluidTags.WATER)
-                                && level.getFluidState(pos.above()).is(FluidTags.WATER),
+                (type, level, spawnType, pos, random) -> {
+                    // 必须是水下才合法
+                    if (!level.getFluidState(pos).is(FluidTags.WATER)
+                            || !level.getFluidState(pos.above()).is(FluidTags.WATER)) {
+                        return false;
+                    }
+                    // 仅拦截数据驱动的自然刷新；指令/其它方式放行
+                    if (spawnType != MobSpawnType.NATURAL) return true;
+                    if (!(level instanceof ServerLevel sl)) return true;
+                    if (sl.dimension() != OCEAN_DIMENSION) return true; // 只在海洋维度限流
+
+                    SixtySecondsState.Data data = SixtySecondsState.get(sl);
+                    long now = sl.getGameTime();
+
+                    // 1) 刷新速度：两次成功刷新之间至少间隔 SHARK_SPAWN_INTERVAL_TICKS
+                    //    （首只不限制，lastSharkSpawnTick == Long.MIN_VALUE 表示从未刷过）
+                    if (data.lastSharkSpawnTick != Long.MIN_VALUE
+                            && now - data.lastSharkSpawnTick < SHARK_SPAWN_INTERVAL_TICKS) {
+                        return false;
+                    }
+
+                    // 2) 全局数量上限（覆盖整个海洋维度）
+                    AABB whole = new AABB(-30_000_000, level.getMinBuildHeight(), -30_000_000,
+                            30_000_000, level.getMaxBuildHeight(), 30_000_000);
+                    if (sl.getEntitiesOfClass(OceanSharkEntity.class, whole).size() >= SHARK_GLOBAL_CAP) {
+                        return false;
+                    }
+
+                    // 3) 局部密度上限（候选点附近已有太多则不放，避免扎堆）
+                    int near = sl.getEntitiesOfClass(OceanSharkEntity.class,
+                            new AABB(pos).inflate(SHARK_AREA_RADIUS)).size();
+                    if (near >= SHARK_AREA_CAP) return false;
+
+                    // 通过：记录时间戳，保证“一次只放一条”的平滑节奏
+                    data.lastSharkSpawnTick = now;
+                    return true;
+                },
                 RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 }
