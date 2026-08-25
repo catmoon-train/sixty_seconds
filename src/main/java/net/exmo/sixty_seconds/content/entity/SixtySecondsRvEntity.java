@@ -841,6 +841,20 @@ public class SixtySecondsRvEntity extends SixtySecondsVehicleEntity {
             return InteractionResult.SUCCESS;
         }
         ItemStack held = player.getItemInHand(hand);
+        // 游戏未开始（INACTIVE）：右键直接上车；手持改装板直接打开改装界面（不再弹门菜单/显示无可用操作）
+        if (net.exmo.sixty_seconds.state.SixtySecondsState.get(serverPlayer.serverLevel()).phase
+                == net.exmo.sixty_seconds.SixtySecondsPhase.INACTIVE) {
+            if (held.getItem() instanceof net.exmo.sixty_seconds.content.item.SixtySecondsRvPartItem) {
+                net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking.send(serverPlayer,
+                        new net.exmo.sixty_seconds.network.OpenRvConsoleS2CPacket(this.getId()));
+                return InteractionResult.SUCCESS;
+            }
+            if (!this.isDisabled() && player.startRiding(this, true)) {
+                net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking.send(serverPlayer,
+                        new net.exmo.sixty_seconds.network.VehicleCameraS2CPacket(true));
+            }
+            return InteractionResult.SUCCESS;
+        }
         if (canUse(player)) {
             ServerLevel level = serverPlayer.serverLevel();
             // 手持门锁 / 门陷阱：安装（与庇护所门一致）

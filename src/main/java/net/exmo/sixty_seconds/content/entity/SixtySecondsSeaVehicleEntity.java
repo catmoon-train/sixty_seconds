@@ -2,6 +2,7 @@ package net.exmo.sixty_seconds.content.entity;
 
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -26,6 +27,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.exmo.sixty_seconds.registry.ModItems;
@@ -170,6 +172,11 @@ public class SixtySecondsSeaVehicleEntity extends Boat {
     @Override
     public void tick() {
         super.tick();
+        // 汽艇/渔船 bbox 很高，原版 Boat.floatBoat 初始瞬移会把它压到水下判为 UNDER_WATER 沉底
+        // （getWaterLevelAbove 只扫船顶一层，船顶高出水面就找不到水）。木筏 bbox 矮不受影响。
+        if (kind != Kind.RAFT) {
+            applySurfaceFloat();
+        }
         if (this.level().isClientSide) {
             return;
         }
@@ -187,6 +194,56 @@ public class SixtySecondsSeaVehicleEntity extends Boat {
         }
         lastX = getX();
         lastZ = getZ();
+    }
+
+    /**
+     * 水面浮力修正（汽艇/渔船专用）：大船 bbox 很高，原版 {@code Boat.floatBoat} 的
+     * {@code getWaterLevelAbove()} 只扫描船体顶部一层，船顶高出水面就找不到水，
+     * 初始瞬移会把船压到水下并判为 UNDER_WATER（浮力≈0）而沉底。
+     * 这里直接找车体所在水柱的水面，把船中心抬到「水面线上方一小段」——与木筏的
+     * 观感一致（模型船底压在实体原点，故中心即船底）。已在水中但位置合理时不动，
+     * 保留原版船的起伏动画。
+     */
+    private void applySurfaceFloat() {
+        Level level = this.level();
+        if (level == null || isRemoved()) {
+            return;
+        }
+        BlockPos c = blockPosition();
+        int cx = c.getX();
+        int cz = c.getZ();
+        int baseY = c.getY();
+        int minY = level.getMinBuildHeight();
+        int maxY = level.getMaxBuildHeight();
+        int topWaterY = -1;
+        for (int dy = -8; dy <= 8; dy++) {
+            int y = baseY + dy;
+            if (y < minY || y >= maxY) {
+                continue;
+            }
+            BlockPos bp = new BlockPos(cx, y, cz);
+            if (level.getFluidState(bp).is(FluidTags.WATER)
+                    && !level.getFluidState(bp.above()).is(FluidTags.WATER)) {
+                topWaterY = y;
+                break;
+            }
+        }
+        if (topWaterY < 0) {
+            return; // 不在水中
+        }
+        float surfaceLine = topWaterY + level.getFluidState(new BlockPos(cx, topWaterY, cz))
+                .getHeight(level, new BlockPos(cx, topWaterY, cz));
+        double targetY = surfaceLine - 0.15;
+        double curY = getY();
+        Vec3 v = getDeltaMovement();
+        if (curY < targetY - 0.1) {
+            // 沉没：拉回水面并清零下沉速度
+            this.setPos(getX(), targetY, getZ());
+            this.setDeltaMovement(v.x, 0.0, v.z);
+        } else if (curY < targetY + 1.0 && v.y < 0.0) {
+            // 水面附近：抑制继续下沉，保持漂浮
+            this.setDeltaMovement(v.x, 0.0, v.z);
+        }
     }
 
     // ── 耐久 ────────────────────────────────────────────────────────
