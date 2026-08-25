@@ -13,7 +13,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterials;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemAttributeModifiers;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.UseAnim;
@@ -1182,24 +1186,37 @@ public final class ModItems {
         return SIXTY_SECONDS_STEEL_SPEAR;
     });
 
+    /** 重锤共用属性：原版重锤基础伤害 5.0 / 攻速 -3.4，并按档位设置可损耗耐久。 */
+    private static Item.Properties maceProperties(int maxDamage) {
+        ItemAttributeModifiers attributes = ItemAttributeModifiers.builder()
+                .add(Attributes.ATTACK_DAMAGE,
+                        new AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, 5.0, AttributeModifier.Operation.ADD_VALUE),
+                        EquipmentSlotGroup.MAINHAND)
+                .add(Attributes.ATTACK_SPEED,
+                        new AttributeModifier(Item.BASE_ATTACK_SPEED_ID, -3.4, AttributeModifier.Operation.ADD_VALUE),
+                        EquipmentSlotGroup.MAINHAND)
+                .build();
+        return new Item.Properties().stacksTo(1).durability(maxDamage).attributes(attributes);
+    }
+
     public static Item SIXTY_SECONDS_IRON_MACE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_IRON_MACE = ITEMS.register("iron_mace", () -> {
         SIXTY_SECONDS_IRON_MACE = new net.exmo.sixty_seconds.content.item.SixtySecondsMaceItem(
-                50, 0.6F, 0.6F, 0.15F, new Item.Properties().stacksTo(1));
+                50, 0.6F, 0.6F, 0.15F, maceProperties(50));
         return SIXTY_SECONDS_IRON_MACE;
     });
 
     public static Item SIXTY_SECONDS_STEEL_MACE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_STEEL_MACE = ITEMS.register("steel_mace", () -> {
         SIXTY_SECONDS_STEEL_MACE = new net.exmo.sixty_seconds.content.item.SixtySecondsMaceItem(
-                150, 1.0F, 1.0F, 0.3F, new Item.Properties().stacksTo(1));
+                150, 1.0F, 1.0F, 0.3F, maceProperties(150));
         return SIXTY_SECONDS_STEEL_MACE;
     });
 
     public static Item SIXTY_SECONDS_ALLOY_MACE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_ALLOY_MACE = ITEMS.register("alloy_mace", () -> {
         SIXTY_SECONDS_ALLOY_MACE = new net.exmo.sixty_seconds.content.item.SixtySecondsMaceItem(
-                400, 1.5F, 1.5F, 0.5F, new Item.Properties().stacksTo(1));
+                400, 1.5F, 1.5F, 0.5F, maceProperties(400));
         return SIXTY_SECONDS_ALLOY_MACE;
     });
 
