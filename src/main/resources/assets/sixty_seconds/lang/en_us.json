@@ -1808,8 +1808,6 @@
   "screen.starrailexpress.math_progress": "Correct: %s / %s",
   "screen.starrailexpress.math_wrong": "Wrong: %s / %s",
   "screen.starrailexpress.minigame_quest_config": "Minigame Quest Config",
-  "screen.starrailexpress.sabotage_trigger_off": "Sabotage trigger: NO",
-  "screen.starrailexpress.sabotage_trigger_on": "Sabotage trigger: YES",
   "screen.starrailexpress.save": "Save",
   "message.sixty_seconds.sixty_seconds.minigame_too_late": "Task timed out — no tokens this time",
   "message.sixty_seconds.sixty_seconds.minigame_team_done": "Your team already completed this round's task — wait for the next refresh",

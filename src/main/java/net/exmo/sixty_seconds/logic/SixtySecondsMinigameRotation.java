@@ -200,9 +200,7 @@ public final class SixtySecondsMinigameRotation {
             BlockPos min = BlockPos.containing(box.minX, box.minY, box.minZ);
             BlockPos max = BlockPos.containing(box.maxX, box.maxY, box.maxZ);
             for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
-                // 破坏任务触发点不参与轮换（那是杀手技能的配置，换掉会破坏其语义）
-                if (level.getBlockEntity(pos) instanceof MinigameQuestBlockEntity be
-                        && !be.isSabotageTrigger()) {
+                if (level.getBlockEntity(pos) instanceof MinigameQuestBlockEntity) {
                     found.add(pos.immutable());
                 }
             }

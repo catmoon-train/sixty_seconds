@@ -1819,8 +1819,6 @@
   "screen.starrailexpress.math_progress": "正确: %s / %s",
   "screen.starrailexpress.math_wrong": "错误: %s / %s",
   "screen.starrailexpress.minigame_quest_config": "小游戏任务点配置",
-  "screen.starrailexpress.sabotage_trigger_off": "破坏任务触发: 否",
-  "screen.starrailexpress.sabotage_trigger_on": "破坏任务触发: 是",
   "screen.starrailexpress.save": "保存",
   "message.sixty_seconds.sixty_seconds.minigame_too_late": "任务超时，本次未获得代币",
   "message.sixty_seconds.sixty_seconds.minigame_team_done": "本队本轮已完成过任务，等下次刷新",

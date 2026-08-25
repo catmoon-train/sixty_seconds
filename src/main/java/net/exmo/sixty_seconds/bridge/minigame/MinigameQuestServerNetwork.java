@@ -42,10 +42,7 @@ public final class MinigameQuestServerNetwork {
         }
     }
 
-    /**
-     * 小游戏完成 — 统一触发标识。
-     * 若为破坏任务触发点，则启动破坏任务而非发放代币。
-     */
+    /** 小游戏完成 — 统一触发标识。 */
     private static void handleCompleteGame(MinigameQuestPayload.CompleteGame payload, ServerPlayer player) {
         if (!(player.level() instanceof ServerLevel level)) {
             return;
@@ -53,23 +50,6 @@ public final class MinigameQuestServerNetwork {
         BlockPos pos = payload.pos();
         BlockEntity be = level.getBlockEntity(pos);
         if (!(be instanceof MinigameQuestBlockEntity questBe)) {
-            return;
-        }
-        // 破坏任务触发点：杀手 + canUseSabotage 角色完成即视为破坏成功（含冷却检查）
-        if (questBe.isSabotageTrigger()) {
-            var role = net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent.KEY.get(level)
-                    .getRole(player);
-            if (role == null || (!role.isKiller() && !role.canUseSabotage())) {
-                return;
-            }
-            long now = level.getGameTime();
-            if (questBe.isSabotageOnCooldown(now)) {
-                player.displayClientMessage(
-                        Component.translatable("message.60s.sabotage_cooldown"), true);
-                return;
-            }
-            questBe.setLastSabotageTime(now);
-            level.playSound(null, pos, SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.BLOCKS, 1.0F, 1.0F);
             return;
         }
 
@@ -101,9 +81,6 @@ public final class MinigameQuestServerNetwork {
         data.putString("MinigameId", entity.getMinigameId());
         data.putInt("MarkerColor", entity.getMarkerColor());
         data.putBoolean("IsTaskMarker", entity.isTaskMarker());
-        data.putBoolean("IsSabotageTrigger", entity.isSabotageTrigger());
-        data.putInt("SabotageDuration", entity.getSabotageDuration());
-        data.putInt("SabotageCooldown", entity.getSabotageCooldown());
         ServerPlayNetworking.send(player, new MinigameQuestPayload.OpenConfig(pos, data));
     }
 

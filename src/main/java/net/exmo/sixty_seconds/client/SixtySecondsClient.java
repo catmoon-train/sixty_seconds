@@ -238,10 +238,7 @@ public final class SixtySecondsClient {
                                     payload.pos(),
                                     payload.data().getString("MinigameId"),
                                     payload.data().getInt("MarkerColor"),
-                                    payload.data().getBoolean("IsTaskMarker"),
-                                    payload.data().getBoolean("IsSabotageTrigger"),
-                                    payload.data().getInt("SabotageDuration"),
-                                    payload.data().getInt("SabotageCooldown")))));
+                                    payload.data().getBoolean("IsTaskMarker")))));
             ClientPlayNetworking.registerGlobalReceiver(net.exmo.sixty_seconds.network.MinigameQuestPayload.OpenGame.ID,
                     (payload, context) -> context.client().execute(() -> {
                         Runnable onSuccess = () -> net.exmo.sixty_seconds.bridge.fabric.ClientPlayNetworking.send(

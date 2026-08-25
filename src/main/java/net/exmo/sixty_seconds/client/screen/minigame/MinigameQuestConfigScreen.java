@@ -33,30 +33,21 @@ public class MinigameQuestConfigScreen extends Screen {
     private String selectedMinigameId;
     private int markerColor;
     private boolean isTaskMarker;
-    private boolean isSabotageTrigger;
-    private int sabotageDuration;
-    private int sabotageCooldown;
 
     private int scrollOffset = 0;
     private int maxScroll = 0;
 
     private EditBox colorInput;
-    private EditBox sabotageDurationInput;
-    private EditBox sabotageCooldownInput;
-    private Button markerBtn, sabotageBtn;
+    private Button markerBtn;
 
     private static final Component TITLE = Component.translatable("screen.starrailexpress.minigame_quest_config");
 
-    public MinigameQuestConfigScreen(BlockPos pos, String selectedMinigameId, int markerColor, boolean isTaskMarker,
-            boolean isSabotageTrigger, int sabotageDuration, int sabotageCooldown) {
+    public MinigameQuestConfigScreen(BlockPos pos, String selectedMinigameId, int markerColor, boolean isTaskMarker) {
         super(TITLE);
         this.pos = pos;
         this.selectedMinigameId = selectedMinigameId != null ? selectedMinigameId : QuestMinigames.getDefaultId();
         this.markerColor = markerColor;
         this.isTaskMarker = isTaskMarker;
-        this.isSabotageTrigger = isSabotageTrigger;
-        this.sabotageDuration = sabotageDuration > 0 ? sabotageDuration : 60;
-        this.sabotageCooldown = sabotageCooldown > 0 ? sabotageCooldown : 300;
     }
 
     // ── 布局常量 ──
@@ -98,46 +89,6 @@ public class MinigameQuestConfigScreen extends Screen {
                 .build();
         addRenderableWidget(markerBtn);
         cy += 22;
-
-        // ── 破坏任务触发开关 ──
-        sabotageBtn = Button.builder(
-                Component.translatable(isSabotageTrigger
-                        ? "screen.starrailexpress.sabotage_trigger_on"
-                        : "screen.starrailexpress.sabotage_trigger_off"),
-                btn -> {
-                    isSabotageTrigger = !isSabotageTrigger;
-                    btn.setMessage(Component.translatable(isSabotageTrigger
-                            ? "screen.starrailexpress.sabotage_trigger_on"
-                            : "screen.starrailexpress.sabotage_trigger_off"));
-                    sabotageDurationInput.setEditable(isSabotageTrigger);
-                    sabotageDurationInput.setVisible(isSabotageTrigger);
-                    sabotageCooldownInput.setEditable(isSabotageTrigger);
-                    sabotageCooldownInput.setVisible(isSabotageTrigger);
-                })
-                .pos(rx, cy)
-                .size(120, 18)
-                .build();
-        addRenderableWidget(sabotageBtn);
-        cy += 24;
-
-        // ── 破坏任务持续 / 冷却输入 ──
-        sabotageDurationInput = new EditBox(this.font, rx, cy, 55, 18, Component.literal("Dur"));
-        sabotageDurationInput.setValue(String.valueOf(sabotageDuration));
-        sabotageDurationInput.setFilter(s -> s.matches("[0-9]*"));
-        sabotageDurationInput.setMaxLength(4);
-        sabotageDurationInput.setEditable(isSabotageTrigger);
-        sabotageDurationInput.setVisible(isSabotageTrigger);
-        addRenderableWidget(sabotageDurationInput);
-        cy += 22;
-
-        sabotageCooldownInput = new EditBox(this.font, rx, cy, 55, 18, Component.literal("Cool"));
-        sabotageCooldownInput.setValue(String.valueOf(sabotageCooldown));
-        sabotageCooldownInput.setFilter(s -> s.matches("[0-9]*"));
-        sabotageCooldownInput.setMaxLength(4);
-        sabotageCooldownInput.setEditable(isSabotageTrigger);
-        sabotageCooldownInput.setVisible(isSabotageTrigger);
-        addRenderableWidget(sabotageCooldownInput);
-        cy += 28;
 
         // ── 保存按钮 ──
         addRenderableWidget(Button.builder(
@@ -210,15 +161,6 @@ public class MinigameQuestConfigScreen extends Screen {
         // 颜色预览
         int prevX = rx + 65;
         g.fill(prevX, top + 4, prevX + 18, top + 22, 0xFF000000 | markerColor);
-
-        // 破坏任务标签（与输入框同一水平线）
-        if (isSabotageTrigger && sabotageDurationInput != null && sabotageCooldownInput != null) {
-            int lx = sabotageDurationInput.getX() + sabotageDurationInput.getWidth() + 4;
-            g.drawString(this.font, Component.translatable("screen.starrailexpress.sabotage_duration"),
-                    lx, sabotageDurationInput.getY() + (sabotageDurationInput.getHeight() - 8) / 2, 0xAAAAAA);
-            g.drawString(this.font, Component.translatable("screen.starrailexpress.sabotage_cooldown"),
-                    lx, sabotageCooldownInput.getY() + (sabotageCooldownInput.getHeight() - 8) / 2, 0xAAAAAA);
-        }
     }
 
     @Override
@@ -276,17 +218,6 @@ public class MinigameQuestConfigScreen extends Screen {
         data.putString("MinigameId", selectedMinigameId != null ? selectedMinigameId : QuestMinigames.getDefaultId());
         data.putInt("MarkerColor", markerColor);
         data.putBoolean("IsTaskMarker", isTaskMarker);
-        data.putBoolean("IsSabotageTrigger", isSabotageTrigger);
-        if (sabotageDurationInput != null) {
-            try { sabotageDuration = Integer.parseInt(sabotageDurationInput.getValue()); }
-            catch (NumberFormatException ignored) { sabotageDuration = 60; }
-        }
-        data.putInt("SabotageDuration", sabotageDuration);
-        if (sabotageCooldownInput != null) {
-            try { sabotageCooldown = Integer.parseInt(sabotageCooldownInput.getValue()); }
-            catch (NumberFormatException ignored) { sabotageCooldown = 300; }
-        }
-        data.putInt("SabotageCooldown", sabotageCooldown);
         ClientPlayNetworking.send(new MinigameQuestPayload.SaveConfig(pos, data));
     }
 }

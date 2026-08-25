@@ -98,25 +98,6 @@ public class MinigameQuestBlock extends BaseEntityBlock
                 // 创造模式：打开配置界面
                 questBe.openConfigUI(sp);
             } else if (player instanceof ServerPlayer sp) {
-                // 破坏任务触发点：杀手 + canUseSabotage 角色可右键
-                if (questBe.isSabotageTrigger()) {
-                    var role = net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent.KEY.get(sp.level())
-                            .getRole(sp);
-                    if (role == null || (!role.isKiller() && !role.canUseSabotage())) {
-                        return InteractionResult.SUCCESS;
-                    }
-                    if (questBe.isSabotageOnCooldown(sp.level().getGameTime())) {
-                        sp.displayClientMessage(
-                                net.minecraft.network.chat.Component.translatable("message.60s.sabotage_cooldown"),
-                                true);
-                        return InteractionResult.SUCCESS;
-                    }
-                    String sabotageMinigameId = questBe.getMinigameId();
-                    if (sabotageMinigameId != null && !sabotageMinigameId.isEmpty()) {
-                        MinigameQuestServerNetwork.sendOpenGame(sp, pos, sabotageMinigameId);
-                    }
-                    return InteractionResult.SUCCESS;
-                }
                 // 冒险/生存模式：打开小游戏
                 String minigameId = questBe.getMinigameId();
                 if (minigameId != null && !minigameId.isEmpty()) {
@@ -220,8 +201,7 @@ public class MinigameQuestBlock extends BaseEntityBlock
 
         // 小游戏任务点(14/15)：仅在玩家有待办小游戏任务、该点本局未被使用、
         // 且该点的 minigameId 与玩家指派的目标类型匹配（或无指定目标）时才金色透视
-        boolean isMinigamePoint = level.getBlockEntity(pos) instanceof MinigameQuestBlockEntity questBe
-                && !questBe.isSabotageTrigger();
+        boolean isMinigamePoint = level.getBlockEntity(pos) instanceof MinigameQuestBlockEntity questBe;
         if (isMinigamePoint) {
             var mgComp = SixtySecPlayerMinigameTaskComponent.KEY.get(player);
             if (mgComp != null && mgComp.hasPendingTask() && !mgComp.isBlockUsed(pos)) {
@@ -244,15 +224,6 @@ public class MinigameQuestBlock extends BaseEntityBlock
         if (level != null) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof MinigameQuestBlockEntity questBe) {
-                // 破坏任务触发点：杀手 + canUseSabotage 角色可见
-                if (questBe.isSabotageTrigger()) {
-                    if (questBe.isSabotageOnCooldown(level.getGameTime())) {
-                        return false;
-                    }
-                    var role = net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent.KEY.get(level)
-                            .getRole(player);
-                    return role != null && (role.isKiller() || role.canUseSabotage());
-                }
                 return questBe.isTaskMarker();
             }
         }
@@ -265,12 +236,7 @@ public class MinigameQuestBlock extends BaseEntityBlock
         if (level != null) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof MinigameQuestBlockEntity questBe) {
-                int c = questBe.getMarkerColor();
-                // 破坏任务触发点：若颜色为默认金色则改为红色
-                if (questBe.isSabotageTrigger() && c == 0xFFD700) {
-                    return Color.RED;
-                }
-                return new Color(c);
+                return new Color(questBe.getMarkerColor());
             }
         }
         return new Color(255, 215, 0); // 金色
