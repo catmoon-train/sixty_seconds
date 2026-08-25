@@ -1185,21 +1185,21 @@ public final class ModItems {
     public static Item SIXTY_SECONDS_IRON_MACE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_IRON_MACE = ITEMS.register("iron_mace", () -> {
         SIXTY_SECONDS_IRON_MACE = new net.exmo.sixty_seconds.content.item.SixtySecondsMaceItem(
-                Tiers.IRON, 4.0F, -3.5F, new Item.Properties().stacksTo(1));
+                Tiers.IRON, 4.0F, -3.5F, 50, 0.6F, 0.6F, 0.15F, new Item.Properties().stacksTo(1));
         return SIXTY_SECONDS_IRON_MACE;
     });
 
     public static Item SIXTY_SECONDS_STEEL_MACE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_STEEL_MACE = ITEMS.register("steel_mace", () -> {
         SIXTY_SECONDS_STEEL_MACE = new net.exmo.sixty_seconds.content.item.SixtySecondsMaceItem(
-                Tiers.NETHERITE, 5.0F, -3.4F, new Item.Properties().stacksTo(1));
+                Tiers.DIAMOND, 5.0F, -3.4F, 150, 1.0F, 1.0F, 0.3F, new Item.Properties().stacksTo(1));
         return SIXTY_SECONDS_STEEL_MACE;
     });
 
     public static Item SIXTY_SECONDS_ALLOY_MACE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_ALLOY_MACE = ITEMS.register("alloy_mace", () -> {
         SIXTY_SECONDS_ALLOY_MACE = new net.exmo.sixty_seconds.content.item.SixtySecondsMaceItem(
-                Tiers.NETHERITE, 6.0F, -3.2F, new Item.Properties().stacksTo(1));
+                Tiers.NETHERITE, 6.0F, -3.2F, 400, 1.5F, 1.5F, 0.5F, new Item.Properties().stacksTo(1));
         return SIXTY_SECONDS_ALLOY_MACE;
     });
 
