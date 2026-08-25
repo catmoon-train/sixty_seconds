@@ -86,7 +86,7 @@ public class Sixty_seconds {
                     // 仅拦截数据驱动的自然刷新；指令/其它方式放行
                     if (spawnType != MobSpawnType.NATURAL) return true;
                     if (!(level instanceof ServerLevel sl)) return true;
-                    if (sl.dimension() != OCEAN_DIMENSION) return true; // 只在海洋维度限流
+                    if (sl.dimension() != SixtySeconds.OCEAN_DIMENSION) return true; // 只在海洋维度限流
 
                     SixtySecondsState.Data data = SixtySecondsState.get(sl);
                     long now = sl.getGameTime();
