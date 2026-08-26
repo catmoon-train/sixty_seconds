@@ -43,9 +43,9 @@ public class LostCityChunkFixerMixin {
     private static final float LOCK_RATIO = 0.7f;
 
     /** 每个 chunk 最多撒的箱子数（密度上限保护）。 */
-    private static final int MAX_BOXES = 60;
-    /** 密度倍率：实际撒箱数 = max(1, 星级) * DENSITY，显著提升物资箱密度。 */
-    private static final int DENSITY = 6;
+    private static final int MAX_BOXES = 30;
+    /** 密度倍率：实际撒箱数 = max(1, 星级) * DENSITY。 */
+    private static final int DENSITY = 3;
 
     @Inject(method = "executePostTodo", at = @At("HEAD"))
     private static void sixty_seconds_planSupplyBoxes(ChunkCoord coord, IDimensionInfo provider, CallbackInfo ci) {
