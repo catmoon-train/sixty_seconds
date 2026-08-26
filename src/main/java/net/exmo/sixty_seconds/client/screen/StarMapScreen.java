@@ -329,10 +329,11 @@ public class StarMapScreen extends Screen {
             drawThickLine(g, (int) corners[3][0], (int) corners[3][1],
                     (int) corners[0][0], (int) corners[0][1], color);
 
-            // 标签：星级符号 + 名称（区域中心偏上）
+            // 标签：星级符号 + 名称（区域中心偏上，名称为翻译键）
             int labelX = (int) ((corners[0][0] + corners[2][0]) / 2);
             int labelY = (int) ((corners[0][1] + corners[2][1]) / 2) - 2;
-            String label = region.starSymbol() + " " + region.name;
+            Component label = Component.literal(region.starSymbol() + " ")
+                    .append(Component.translatable(region.name));
             // 标签背景
             int labelW = font.width(label);
             g.fill(labelX - labelW / 2 - 2, labelY - 5, labelX + labelW / 2 + 2,

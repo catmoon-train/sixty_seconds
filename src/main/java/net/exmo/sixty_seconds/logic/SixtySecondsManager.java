@@ -308,6 +308,7 @@ public final class SixtySecondsManager {
                 reconcileHomeMapZones(level, data);      // 兜底：已回到家的玩家若区域地图未同步则补发（修复回来地图不显示坐标）
                 net.exmo.sixty_seconds.content.item.SixtySecondsClockItem.tickHeld(level);
                 SixtySecondsRescue.tick(level, data);    // 隐藏通关：救援信标倒计时
+                net.exmo.sixty_seconds.lostcities.SixtySecondsBuildingTitles.tick(level); // 进入建筑区域提示名称+星级
                 SixtySecondsHelicopterEvac.tick(level, data); // 直升机撤离：检测进入撤离区的玩家
                 tickSubPhaseNotify(level, data);         // 清晨/白天/晚上/睡觉 切换提示
                 tickTimeWarning(level, data);           // 提前预警：夜晚/睡觉将至（聊天栏）

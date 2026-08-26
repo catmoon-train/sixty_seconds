@@ -3,6 +3,8 @@ package net.exmo.sixty_seconds.network;
 import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
 import net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking;
+import net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesStarMap;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -67,10 +69,23 @@ public record SixtySecondsStarMapS2CPacket(List<RegionEntry> regions) implements
         return ID;
     }
 
-    /** 从当前地图配置打包并发送给指定玩家。 */
+    /**
+     * 打包并发送给指定玩家。参考海图加载方式：服务端从 LostCities 世界生成数据<b>动态计算</b>玩家附近的
+     * 「建筑星级区域」并下发（而非仅读取静态配置）。这样一来星图能真实反映哪一块城区属于什么星级。
+     * 管理员在配置里手写的 {@code areaLevelOverrides} 仍作为覆盖层叠加。
+     */
     public static void send(ServerPlayer player) {
         ServerLevel level = player.serverLevel();
+        BlockPos p = player.blockPosition();
+        int pcx = p.getX() >> 4;
+        int pcz = p.getZ() >> 4;
         List<RegionEntry> entries = new ArrayList<>();
+        // 1) 动态生成：扫描玩家周围已加载建筑区块，按连通同名建筑聚合成星级区域
+        for (SixtySecondsLostCitiesStarMap.BuildingRegion br
+                : SixtySecondsLostCitiesStarMap.buildingStarRegions(level, pcx, pcz, SixtySecondsLostCitiesStarMap.STAR_MAP_SCAN_RADIUS_CHUNKS)) {
+            entries.add(new RegionEntry(br.minX, br.minZ, br.maxX, br.maxZ, br.star, br.displayName));
+        }
+        // 2) 管理员覆盖层（若存在）
         SixtySecondsConfigStore.current(level).ifPresent(config -> {
             if (config.areaLevelOverrides != null) {
                 for (SixtySecondsConfig.LevelRegion lr : config.areaLevelOverrides) {

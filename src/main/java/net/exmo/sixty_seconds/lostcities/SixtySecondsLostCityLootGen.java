@@ -126,7 +126,7 @@ public final class SixtySecondsLostCityLootGen {
             }
         }
         if (candidates.isEmpty()) {
-            SixtySeconds.LOGGER.debug("[60s] LostCityLootGen chunk({},{}) building={} 无合法落箱点",
+            SixtySeconds.LOGGER.info("[60s-Loot] chunk({},{}) 建筑={} 无合法落箱点（候选为空，可能建筑内部在该阶段尚未写入 primer）",
                     chunkX, chunkZ, name);
             return;
         }
@@ -150,7 +150,7 @@ public final class SixtySecondsLostCityLootGen {
             boolean advanced = rng.nextFloat() < (0.1f + 0.12f * star);
             boolean locked = rng.nextFloat() < LOCK_RATIO;
             String category = CATEGORIES[rng.nextInt(CATEGORIES.length)];
-            info.addPostTodo(pos, () -> placeBox(info, pos, advanced, locked, category));
+            info.addPostTodo(pos, () -> placeBox(info, pos, advanced, locked, category, name, star));
             placed.add(pos);
         }
     }
@@ -159,11 +159,16 @@ public final class SixtySecondsLostCityLootGen {
      * 在 ChunkFixer 阶段（真实 chunk 已成型、所有地形生成完成）放置物资箱。
      * 必须先 setBlock 再 setBlockEntityNbt，保证方块与方块实体状态一致，避免 "does not allow it" 的 WARN。
      */
-    private static void placeBox(BuildingInfo info, BlockPos pos, boolean advanced, boolean locked, String category) {
+    private static void placeBox(BuildingInfo info, BlockPos pos, boolean advanced, boolean locked, String category, String buildingName, int starLevel) {
         WorldGenLevel inWorld = info.provider.getWorld();
+        // 日志：落点物资箱的具体「世界坐标」（不是区块坐标），便于排查是否真的生成
+        SixtySeconds.LOGGER.info("[60s-Loot] 物资箱落点 世界坐标=({}, {}, {}) 建筑={} 星级={} 类别={} 高级={} 上锁={}",
+                pos.getX(), pos.getY(), pos.getZ(), buildingName, starLevel, category, advanced, locked);
         // 二次校验：延迟到 ChunkFixer 才执行，若此时脚下已不是实心（地形被后续阶段改动），
         // 放下去会悬空，直接跳过该候选点。
         if (!inWorld.getBlockState(pos).isAir() || inWorld.getBlockState(pos.below()).isAir()) {
+            SixtySeconds.LOGGER.debug("[60s-Loot] 跳过落点 ({}, {}, {}) 原因=落点非空气或下方悬空 建筑={}",
+                    pos.getX(), pos.getY(), pos.getZ(), buildingName);
             return;
         }
         Block block = advanced

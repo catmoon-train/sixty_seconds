@@ -4,10 +4,18 @@ import mcjty.lostcities.api.ILostChunkInfo;
 import mcjty.lostcities.api.ILostCities;
 import mcjty.lostcities.api.ILostCityInformation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.locale.Language;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.packs.resources.ResourceManager;
 
 import javax.annotation.Nullable;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -68,6 +76,12 @@ public final class SixtySecondsLostCitiesStarMap {
      * 会直接返回 0 级（安全区）。
      */
     public static final int SAFE_STAR = -2;
+
+    /**
+     * 星图动态加载建筑星级区域时，服务端从玩家当前位置向外扫描的区块半径（仅扫描已加载区块，不强制生成）。
+     * 参考海图：服务端从世界生成数据计算区域并下发给客户端。默认 48 区块（≈768 格）半径，覆盖玩家附近城区。
+     */
+    public static final int STAR_MAP_SCAN_RADIUS_CHUNKS = 48;
 
     /** 多区块建筑统一 5 星。 */
     private static final int MULTI_BUILDING_STAR = 5;
@@ -352,5 +366,178 @@ public final class SixtySecondsLostCitiesStarMap {
         // 维度卸载后 WeakHashMap 自动清理，不会泄漏。
         INFO_CACHE.put(level, info);
         return info;
+    }
+
+    // ------------------------------------------------------------------
+    // 建筑显示名：仅登记翻译键后缀，具体文案见语言文件（en_us / zh_cn / zh_tw）。
+    // 玩家在星图 / 进入提示中看到的名称由调用方解析为 Component.translatable。
+    // ------------------------------------------------------------------
+    private static final String BUILDING_LANG = "building.sixty_seconds.sixty_seconds.";
+
+    private static final Map<String, String> BUILDING_DISPLAY = Map.ofEntries(
+            Map.entry("building1", "residential_ruin"),
+            Map.entry("building2", "residential_ruin"),
+            Map.entry("building3", "residential_ruin"),
+            Map.entry("building4", "residential_ruin"),
+            Map.entry("building5", "residential_ruin"),
+            Map.entry("building6", "residential_ruin"),
+            Map.entry("building7", "residential_ruin"),
+            Map.entry("building8", "residential_ruin"),
+            Map.entry("cabin", "cabin"),
+            Map.entry("center00", "downtown_ne"),
+            Map.entry("center01", "downtown_nw"),
+            Map.entry("center10", "downtown_se"),
+            Map.entry("center11", "downtown_sw"),
+            Map.entry("highway_gas_station", "gas_station"),
+            Map.entry("highway_restaurant", "highway_restaurant"),
+            Map.entry("highway_restaurant_parking", "highway_parking"),
+            Map.entry("library00", "library"),
+            Map.entry("library01", "library"),
+            Map.entry("library10", "library"),
+            Map.entry("library11", "library"),
+            Map.entry("oilrig00", "oil_rig"),
+            Map.entry("oilrig01", "oil_rig"),
+            Map.entry("oilrig10", "oil_rig"),
+            Map.entry("oilrig11", "oil_rig"),
+            Map.entry("radiotower", "radio_tower"),
+            Map.entry("shopping00", "shopping_mall"),
+            Map.entry("shopping01", "shopping_mall"),
+            Map.entry("shopping10", "shopping_mall"),
+            Map.entry("shopping11", "shopping_mall"),
+            Map.entry("shopping_open00", "open_market"),
+            Map.entry("shopping_open01", "open_market"),
+            Map.entry("shopping_open10", "open_market"),
+            Map.entry("shopping_open11", "open_market"),
+            Map.entry("town00", "townhouse"),
+            Map.entry("town01", "townhouse"),
+            Map.entry("town10", "townhouse"),
+            Map.entry("town11", "townhouse"),
+            Map.entry("safezone", "safe_zone"),
+            Map.entry("evacuationpoint", "evacuation")
+    );
+
+    /** 建筑 id（LostCities 资源文件名）→ 翻译键；未知 id 原样返回（兜底）。 */
+    public static String buildingDisplayKey(String id) {
+        if (id == null) {
+            return "?";
+        }
+        String suffix = BUILDING_DISPLAY.get(id.toLowerCase(Locale.ROOT));
+        return suffix != null ? BUILDING_LANG + suffix : id;
+    }
+
+    /**
+     * 在服务端按玩家自己的语言解析翻译键，返回可读文本。
+     * 这样即使客户端资源较旧、未携带新增的翻译键，也能正确显示建筑名称，而不会把翻译键本身渲染出来。
+     * 解析失败（语言文件缺失等）时回退到翻译键本身。
+     */
+    public static String resolveFor(ServerPlayer player, String key) {
+        if (key == null) {
+            return "?";
+        }
+        try {
+            String lang = player.getLanguage();
+            if (lang == null || lang.isEmpty()) {
+                lang = "en_us";
+            }
+            ResourceManager rm = player.getServer().getResourceManager();
+            Language language = Language.loadFrom(rm, lang);
+            return language.getOrDefault(key, key);
+        } catch (Exception e) {
+            return key;
+        }
+    }
+
+    /** 一个建筑连通区域的几何与星级信息，供星图下发。 */
+    public static final class BuildingRegion {
+        public final String id;
+        public final String displayName;
+        public final int star;
+        public final int minX, minZ, maxX, maxZ;
+
+        public BuildingRegion(String id, String displayName, int star, int minX, int minZ, int maxX, int maxZ) {
+            this.id = id;
+            this.displayName = displayName;
+            this.star = star;
+            this.minX = minX;
+            this.minZ = minZ;
+            this.maxX = maxX;
+            this.maxZ = maxZ;
+        }
+    }
+
+    /**
+     * 参考海图加载方式：服务端从 LostCities 世界生成数据动态计算「玩家附近建筑星级区域」，返回给星图渲染。
+     * 仅扫描<b>已加载</b>区块（{@code level.hasChunk}），不强制区块生成，因此不会在主线程阻塞。
+     * 对连通的同名建筑 chunk 做洪泛填充，得到其外接矩形（世界坐标）与星级。
+     *
+     * @param centerChunkX 玩家所在区块 X
+     * @param centerChunkZ 玩家所在区块 Z
+     * @param radiusChunks  扫描半径（区块）
+     */
+    public static List<BuildingRegion> buildingStarRegions(ServerLevel level, int centerChunkX, int centerChunkZ, int radiusChunks) {
+        ILostCityInformation info = cityInfo(level);
+        List<BuildingRegion> result = new ArrayList<>();
+        if (info == null) {
+            return result;
+        }
+        Set<Long> visited = new HashSet<>();
+        int r = radiusChunks;
+        for (int cx = centerChunkX - r; cx <= centerChunkX + r; cx++) {
+            for (int cz = centerChunkZ - r; cz <= centerChunkZ + r; cz++) {
+                long key = ((long) cx << 32) | (cz & 0xffffffffL);
+                if (!visited.add(key)) {
+                    continue; // 已并入某个区域，跳过
+                }
+                if (!level.hasChunk(cx, cz)) {
+                    continue; // 未加载：不强制生成，留待玩家探索后重开星图时再纳入
+                }
+                ILostChunkInfo c = info.getChunkInfo(cx, cz);
+                if (c == null || !c.isCity() || c.getBuildingId() == null) {
+                    continue;
+                }
+                String id = c.getBuildingId().getPath();
+                int star = starForBuildingName(id);
+                if (star < 1 || star > 5) {
+                    continue; // 仅危险度 1~5 的建筑上图（安全区/撤离点等不含星级）
+                }
+                // 洪泛填充：收集与当前 chunk 连通、且建筑 id 相同的所有已加载 chunk
+                int minCX = cx, minCZ = cz, maxCX = cx, maxCZ = cz;
+                Deque<long[]> stack = new ArrayDeque<>();
+                stack.push(new long[]{cx, cz});
+                while (!stack.isEmpty()) {
+                    long[] cur = stack.pop();
+                    int x = (int) cur[0], z = (int) cur[1];
+                    minCX = Math.min(minCX, x);
+                    minCZ = Math.min(minCZ, z);
+                    maxCX = Math.max(maxCX, x);
+                    maxCZ = Math.max(maxCZ, z);
+                    int[][] nb = {{x + 1, z}, {x - 1, z}, {x, z + 1}, {x, z - 1}};
+                    for (int[] n : nb) {
+                        int nx = n[0], nz = n[1];
+                        long nk = ((long) nx << 32) | (nz & 0xffffffffL);
+                        if (!visited.add(nk)) {
+                            continue;
+                        }
+                        if (!level.hasChunk(nx, nz)) {
+                            continue;
+                        }
+                        ILostChunkInfo nc = info.getChunkInfo(nx, nz);
+                        if (nc == null || !nc.isCity() || nc.getBuildingId() == null) {
+                            continue;
+                        }
+                        if (!nc.getBuildingId().getPath().equals(id)) {
+                            continue;
+                        }
+                        stack.push(new long[]{nx, nz});
+                    }
+                }
+                int minX = minCX * 16;
+                int minZ = minCZ * 16;
+                int maxX = maxCX * 16 + 15;
+                int maxZ = maxCZ * 16 + 15;
+                result.add(new BuildingRegion(id, buildingDisplayKey(id), star, minX, minZ, maxX, maxZ));
+            }
+        }
+        return result;
     }
 }

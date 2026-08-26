@@ -71,7 +71,7 @@ public final class SixtySecondsRescue {
             reset();
             return;
         }
-        ServerPlayer rescuer = rescuePlayer != null ? level.getPlayerByUUID(rescuePlayer) : null;
+        ServerPlayer rescuer = rescuePlayer != null ? (ServerPlayer) level.getPlayerByUUID(rescuePlayer) : null;
         boolean rescuerValid = rescuer != null
                 && !rescuer.isSpectator()
                 && GameUtils.isPlayerAliveAndSurvival(rescuer)
