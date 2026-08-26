@@ -4,6 +4,7 @@ import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
+import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -126,6 +127,8 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     private int constrictSeconds = 0;
     /** 狂暴反击：上次反击时间（防连触）。 */
     private long nextRetaliateTick = 0;
+    /** 刷出时所处的游戏日；用于「存活超过上限天数后自动潜回深海」。-1 表示尚未初始化（首个服务端 tick 用当前日数填充）。 */
+    private int spawnDay = -1;
 
     public OceanSeaMonsterEntity(EntityType<? extends OceanCreatureEntity> entityType, Level level) {
         super(entityType, level);
@@ -145,6 +148,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
 
     public void applyVariant(Variant variant) {
         applyVariant(variant.id, variant.health, variant.speed, variant.scale, variant.nameKey());
+        setPersistenceRequired(); // 海洋 Boss 永不失活，由寿命机制统一回收
         // Boss血条名称
         Component name = Component.translatable(variant.nameKey())
                 .withStyle(ChatFormatting.DARK_PURPLE);
@@ -160,6 +164,17 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
 
     public ResourceLocation textureLocation() {
         return SixtySeconds.id("textures/entity/" + getVariant().textureName + ".png");
+    }
+
+    // 海洋 Boss 永不失活：远离玩家也不消失，改由寿命机制（OCEAN_BOSS_MAX_LIFETIME_DAYS）统一回收。
+    @Override
+    public boolean requiresCustomPersistence() {
+        return true;
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distance) {
+        return false;
     }
 
     // ── Boss 血条 ─────────────────────────────────────────────────
@@ -243,6 +258,18 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     public void tick() {
         super.tick();
         if (!(level() instanceof ServerLevel serverLevel) || isRemoved()) return;
+
+        // 海洋 Boss 寿命：像普通夜晚 Boss 一样，久未被解决也会在超过上限天数后潜回深海，避免无限堆积
+        if (SixtySecondsMod.isActive(serverLevel)) {
+            if (spawnDay < 0) {
+                spawnDay = SixtySecondsState.get(serverLevel).dayNumber;
+            } else if (channel == 0 && !isEngagedByPlayer(serverLevel)
+                    && SixtySecondsState.get(serverLevel).dayNumber - spawnDay >= SixtySecondsBalance.OCEAN_BOSS_MAX_LIFETIME_DAYS) {
+                retreatToDeep(serverLevel);
+                return;
+            }
+        }
+
         bossEvent.setProgress(getHealth() / getMaxHealth());
 
         long now = serverLevel.getGameTime();
@@ -463,6 +490,10 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         for (Vec3 mark : fieldMarks) {
             sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, mark.x, mark.y, mark.z,
                     6, 0.3, 1.2, 0.3, 0.03);
+        }
+        // 预警期周期性低鸣，强化「危险将至」的听觉提示
+        if (sl.getGameTime() % 10 == 0) {
+            playSound(SoundEvents.ELDER_GUARDIAN_AMBIENT, 0.4F, 1.4F);
         }
     }
 
@@ -721,6 +752,8 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             // 粒子爆发
             sl.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 2, getZ(),
                     8, 2.0, 1.0, 2.0, 0);
+            // 死亡轰鸣
+            playSound(SoundEvents.GENERIC_EXPLODE, 1.4F, 0.6F);
             // 掉落战利品
             dropLoot(sl);
         }
@@ -771,15 +804,39 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
                 net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_RAW_TENTACLE_MEAT, 4));
     }
 
+    /** 是否有可被捕食的玩家在交战半径内（激战中则暂缓退场，避免把正在打的 Boss 抽走）。 */
+    private boolean isEngagedByPlayer(ServerLevel sl) {
+        double r2 = OCEAN_BOSS_ENGAGE_RADIUS * OCEAN_BOSS_ENGAGE_RADIUS;
+        for (ServerPlayer p : sl.players()) {
+            if (isValidOceanPrey(p) && distanceToSqr(p) <= r2) return true;
+        }
+        return false;
+    }
+
+    /** 寿命到期且无人在交战：潜回深海，全服播报并清理 Boss 血条与鲨鱼群。 */
+    private void retreatToDeep(ServerLevel sl) {
+        Component msg = Component.translatable("message.sixty_seconds.ocean.monster_retreat",
+                        getCustomName() != null ? getCustomName() : Component.literal("???"))
+                .withStyle(ChatFormatting.AQUA);
+        sl.getServer().getPlayerList().broadcastSystemMessage(msg, false);
+        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(),
+                40, 2.0, 1.5, 2.0, 0.06);
+        playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 1.0F, 0.5F);
+        bossEvent.removeAllPlayers();
+        discard();
+    }
+
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("OceanEnraged", enraged);
+        if (spawnDay >= 0) tag.putInt("OceanSpawnDay", spawnDay);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        if (tag.contains("OceanSpawnDay")) spawnDay = tag.getInt("OceanSpawnDay");
         // 重载后若还在狂暴血线以内，恢复狂暴血条外观（属性倍率已随存档的 base 值走，不重复叠加）
         if (tag.getBoolean("OceanEnraged")) {
             enraged = true;

@@ -361,6 +361,12 @@ public final class SixtySecondsBalance {
     public static final int COLD_SNAP_DURATION = 20 * 60 * 2; // 寒潮持续 2 分钟
     public static final int COLD_HUNGER_PER_10S = 1;          // 寒潮中·不在家：每 10s 额外饥饿
     public static final int AIRDROP_ROLLS = 9;                // 空投奖励箱一次性搜出的物资件数
+
+    // ── 海洋 Boss 寿命（OceanSeaMonsterEntity）────────────────────────────
+    /** 海洋 Boss 存活超过此天数（且无人交战）后潜回深海自动消失，避免无限堆积。普通夜晚 Boss 为 2 天。 */
+    public static final int OCEAN_BOSS_MAX_LIFETIME_DAYS = 3;
+    /** 退场判定时，若有可被捕食的玩家在此半径内则视为「激战中」，暂缓退场。 */
+    public static final double OCEAN_BOSS_ENGAGE_RADIUS = 40.0;
     /** 新天气事件的通用持续时间（酸雾/电磁风暴/虫潮/热浪 = 1.5分钟） */
     public static final int EVENT_BASE_DURATION = 20 * 60 * 3 / 2;
 

@@ -3492,6 +3492,7 @@
   "message.sixty_seconds.ocean.monster_sighted": "海中传来可怕的低吼……",
   "message.sixty_seconds.ocean.monster_warning": "深海巨物苏醒了！立即逃离海面！",
   "message.sixty_seconds.ocean.monster_killed": "深海巨物 %s 被击败！",
+  "message.sixty_seconds.ocean.monster_retreat": " %s 久未被解决，潜回了深海……",
   "message.sixty_seconds.ocean.fog_warning": "海雾笼罩着你，视野受限……",
   "message.sixty_seconds.ocean.enrage": "海怪陷入狂怒！",
   "message.sixty_seconds.ocean.aura": "海怪的压迫感令你无法逃离！",

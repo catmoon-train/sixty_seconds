@@ -86,7 +86,6 @@ public abstract class OceanCreatureEntity extends PathfinderMob {
         setHealth((float) health);
         setCustomName(net.minecraft.network.chat.Component.translatable(nameKey));
         setCustomNameVisible(true);
-        setPersistenceRequired();
     }
 
     public int getVariantId() {
@@ -215,14 +214,17 @@ public abstract class OceanCreatureEntity extends PathfinderMob {
         }
     }
 
+    // 普通海洋生物（鲨鱼等）允许原版「远离玩家后自然消失」：
+    // requiresCustomPersistence 返回 false、removeWhenFarAway 返回 true。
+    // 海洋 Boss（OceanSeaMonsterEntity）会覆写为永存，改由寿命机制统一回收。
     @Override
     public boolean requiresCustomPersistence() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean removeWhenFarAway(double distance) {
-        return false;
+        return true;
     }
 
     @Override

@@ -2606,6 +2606,7 @@
   "message.sixty_seconds.ocean.monster_sighted": "A menacing roar echoes from the sea...",
   "message.sixty_seconds.ocean.monster_warning": "A deep-sea behemoth has awakened! Flee the surface!",
   "message.sixty_seconds.ocean.monster_killed": "The deep-sea beast %s has been slain!",
+  "message.sixty_seconds.ocean.monster_retreat": "The %s receded back into the deep, unslain...",
   "message.sixty_seconds.ocean.fog_warning": "Sea fog surrounds you, vision limited...",
   "message.sixty_seconds.ocean.enrage": "The beast is enraged!",
   "message.sixty_seconds.ocean.aura": "The beast's presence prevents your escape!",
