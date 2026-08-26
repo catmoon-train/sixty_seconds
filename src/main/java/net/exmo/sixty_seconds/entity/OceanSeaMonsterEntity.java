@@ -570,6 +570,10 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         double r = 30.0;
         sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(),
                 10, 2.0, 1.5, 2.0, 0.05);
+        // 漩涡卷入期周期性轰鸣，配合视觉强化压迫感
+        if (now % 16 == 0) {
+            playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 0.7F, 0.4F);
+        }
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             // 强力卷向中心（比普通漩涡更凶，几乎挣不脱）
