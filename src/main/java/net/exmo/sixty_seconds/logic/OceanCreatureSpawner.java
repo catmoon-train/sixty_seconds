@@ -19,11 +19,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.exmo.sixty_seconds.registry.ModEffects;
-import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * 海洋生物刷新系统。
@@ -71,6 +72,13 @@ public final class OceanCreatureSpawner {
     private OceanCreatureSpawner() {}
 
     /**
+     * 各维度当前存活鲨鱼数（受控刷新上限用）。通过在鲨鱼加入/离开维度时增减维护，
+     * 避免 {@code tick} 每 14 秒用全世界巨型 AABB 全量扫描实体（O(全部实体)，实体多时极卡）。
+     * 维度卸载后随 WeakHashMap 的 key 被 GC 自然回收。
+     */
+    private static final Map<ServerLevel, Integer> SHARK_COUNT = new WeakHashMap<>();
+
+    /**
      * 对所有在线存活探索中玩家做海洋生物刷新判定。
      * 刷新概率 = 基础概率 × dayRatio（前四天额外 ×0.3）。
      */
@@ -97,8 +105,8 @@ public final class OceanCreatureSpawner {
         // 利维坦定时刷新（与鲨鱼/海怪独立，可共存）
         tickLeviathan(level, dayNumber);
 
-        // 世界范围内鲨鱼总数（受 SHARK_GLOBAL_CAP 约束），本 tick 内复用
-        int globalSharks = countAll(level, OceanSharkEntity.class);
+        // 世界范围内鲨鱼总数（受 SHARK_GLOBAL_CAP 约束）—— 由计数器维护，不再全图扫描
+        int globalSharks = getSharkCount(level);
 
         for (ServerPlayer player : level.players()) {
             if (player.isSpectator() || player.isCreative()
@@ -386,10 +394,19 @@ public final class OceanCreatureSpawner {
         return count;
     }
 
-    /** 世界范围内统计某类实体总数（用于全局数量上限判断）。 */
-    private static <T extends Entity> int countAll(ServerLevel level, Class<T> clazz) {
-        AABB whole = new AABB(-30_000_000, level.getMinBuildHeight(), -30_000_000,
-                30_000_000, level.getMaxBuildHeight(), 30_000_000);
-        return level.getEntitiesOfClass(clazz, whole).size();
+    /** 当前维度存活鲨鱼数（由 onSharkJoined / onSharkLeft 维护，O(1)）。 */
+    private static int getSharkCount(ServerLevel level) {
+        return SHARK_COUNT.getOrDefault(level, 0);
+    }
+
+    /** 鲨鱼加入维度（刷出 / 从存档加载 / 指令召唤）时 +1。由 NeoForgeEvents 在实体加入时调用。 */
+    static void onSharkJoined(ServerLevel level) {
+        SHARK_COUNT.merge(level, 1, Integer::sum);
+    }
+
+    /** 鲨鱼离开维度（死亡 / 失活 / 卸载）时 -1。由 NeoForgeEvents 在实体离开时调用。 */
+    static void onSharkLeft(ServerLevel level) {
+        int v = SHARK_COUNT.getOrDefault(level, 0) - 1;
+        SHARK_COUNT.put(level, Math.max(0, v));
     }
 }

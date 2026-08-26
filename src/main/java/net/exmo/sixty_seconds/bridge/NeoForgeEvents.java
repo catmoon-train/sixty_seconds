@@ -1,6 +1,7 @@
 package net.exmo.sixty_seconds.bridge;
 
 import net.exmo.sixty_seconds.SixtySeconds;
+import net.exmo.sixty_seconds.entity.OceanSharkEntity;
 import net.exmo.sixty_seconds.bridge.event.AllowPlayerDeathWithKiller;
 import net.exmo.sixty_seconds.bridge.fabric.AttackEntityCallback;
 import net.exmo.sixty_seconds.bridge.fabric.CommandRegistrationCallback;
@@ -20,6 +21,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.ServerChatEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
@@ -131,9 +133,20 @@ public final class NeoForgeEvents {
     @SubscribeEvent
     public static void onEntityJoin(EntityJoinLevelEvent event) {
         if (event.getLevel() instanceof ServerLevel level) {
+            if (event.getEntity() instanceof OceanSharkEntity) {
+                net.exmo.sixty_seconds.logic.OceanCreatureSpawner.onSharkJoined(level);
+            }
             for (ServerEntityEvents.Load listener : ServerEntityEvents.ENTITY_LOAD.invokers()) {
                 listener.onLoad(event.getEntity(), level);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityLeave(EntityLeaveLevelEvent event) {
+        if (event.getLevel() instanceof ServerLevel level
+                && event.getEntity() instanceof OceanSharkEntity) {
+            net.exmo.sixty_seconds.logic.OceanCreatureSpawner.onSharkLeft(level);
         }
     }
 
