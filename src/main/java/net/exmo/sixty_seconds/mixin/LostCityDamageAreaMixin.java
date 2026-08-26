@@ -37,9 +37,9 @@ public abstract class LostCityDamageAreaMixin {
     private static final float FORCED_BIG_CHANCE = 0.004f;
     /** 小炸弹坑（mini explosion）的强制生成概率（LostCities 默认 0.03，这里略高一点）。 */
     private static final float FORCED_MINI_CHANCE = 0.05f;
-    /** 大陨石坑半径浮动区间（含）：30~80。 */
+    /** 大陨石坑半径浮动区间（含）：30~65。 */
     private static final int BIG_EXPLOSION_MIN_RADIUS = 30;
-    private static final int BIG_EXPLOSION_MAX_RADIUS = 80;
+    private static final int BIG_EXPLOSION_MAX_RADIUS = 65;
     /** 小炸弹坑半径浮动区间（含）：5~30。 */
     private static final int MINI_EXPLOSION_MIN_RADIUS = 5;
     private static final int MINI_EXPLOSION_MAX_RADIUS = 30;
