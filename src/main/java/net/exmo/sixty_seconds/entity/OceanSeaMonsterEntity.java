@@ -757,7 +757,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             sl.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 2, getZ(),
                     8, 2.0, 1.0, 2.0, 0);
             // 死亡轰鸣
-            playSound(SoundEvents.GENERIC_EXPLODE, 1.4F, 0.6F);
+            playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.4F, 0.6F);
             // 掉落战利品
             dropLoot(sl);
         }
@@ -810,7 +810,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
 
     /** 是否有可被捕食的玩家在交战半径内（激战中则暂缓退场，避免把正在打的 Boss 抽走）。 */
     private boolean isEngagedByPlayer(ServerLevel sl) {
-        double r2 = OCEAN_BOSS_ENGAGE_RADIUS * OCEAN_BOSS_ENGAGE_RADIUS;
+        double r2 = SixtySecondsBalance.OCEAN_BOSS_ENGAGE_RADIUS * SixtySecondsBalance.OCEAN_BOSS_ENGAGE_RADIUS;
         for (ServerPlayer p : sl.players()) {
             if (isValidOceanPrey(p) && distanceToSqr(p) <= r2) return true;
         }
