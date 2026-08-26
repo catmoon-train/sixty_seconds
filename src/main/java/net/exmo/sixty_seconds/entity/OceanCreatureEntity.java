@@ -318,20 +318,70 @@ public abstract class OceanCreatureEntity extends PathfinderMob {
         }
     }
 
-    /** 水中追击目标（覆盖漫游）。 */
-    protected static class OceanMeleeAttackGoal extends net.minecraft.world.entity.ai.goal.MeleeAttackGoal {
+    /**
+     * 水中近战追击：直接用 {@link OceanMoveControl} 朝目标游去，<b>不做 A* 寻路</b>。
+     * 原版 MeleeAttackGoal 内部用 getNavigation().moveTo 做水下路径规划，水生物数量一多、
+     * 同时锁敌时会在同一 tick 内集体重算路径，造成 CPU 尖峰甚至触发服务器看门狗。
+     * 海洋是开放水域，直线游动足够，去掉寻路即可消除该尖峰。
+     */
+    protected static class OceanMeleeAttackGoal extends Goal {
+        private final PathfinderMob mob;
+        private final double speed;
+        private final boolean pauseWhenMobIdle;
+        private int attackTimer = 0;
+
         public OceanMeleeAttackGoal(PathfinderMob mob, double speed, boolean pauseWhenMobIdle) {
-            super(mob, speed, pauseWhenMobIdle);
+            this.mob = mob;
+            this.speed = speed;
+            this.pauseWhenMobIdle = pauseWhenMobIdle;
+            this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        }
+
+        private LivingEntity target() {
+            return mob.getTarget();
         }
 
         @Override
         public boolean canUse() {
-            return mob.isInWater() && super.canUse();
+            LivingEntity t = target();
+            return t != null && t.isAlive() && mob.isInWater()
+                    && (!pauseWhenMobIdle || !mob.isPassenger());
         }
 
         @Override
         public boolean canContinueToUse() {
-            return mob.isInWater() && super.canContinueToUse();
+            LivingEntity t = target();
+            return t != null && t.isAlive() && mob.isInWater();
+        }
+
+        @Override
+        public void start() {
+            this.attackTimer = 0;
+        }
+
+        @Override
+        public void stop() {
+            this.attackTimer = 0;
+        }
+
+        @Override
+        public void tick() {
+            LivingEntity t = target();
+            if (t == null) return;
+            mob.getLookControl().setLookAt(t, 30.0F, 30.0F);
+            double reach = mob.getBbWidth() * 0.5 + t.getBbWidth() * 0.5 + 1.0;
+            double d2 = mob.distanceToSqr(t);
+            if (d2 <= reach * reach) {
+                // 进入攻击距离：直接造成伤害（攻击间隔与原版近战一致）
+                if (attackTimer <= 0) {
+                    attackTimer = 20;
+                    mob.doHurtTarget(t);
+                }
+            } else {
+                // 直接游向目标位置，不寻路
+                mob.getMoveControl().setWantedPosition(t.getX(), t.getY(), t.getZ(), speed);
+            }
+            if (attackTimer > 0) attackTimer--;
         }
     }
 }

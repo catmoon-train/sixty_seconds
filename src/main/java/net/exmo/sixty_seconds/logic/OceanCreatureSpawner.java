@@ -400,12 +400,12 @@ public final class OceanCreatureSpawner {
     }
 
     /** 鲨鱼加入维度（刷出 / 从存档加载 / 指令召唤）时 +1。由 NeoForgeEvents 在实体加入时调用。 */
-    static void onSharkJoined(ServerLevel level) {
+    public static void onSharkJoined(ServerLevel level) {
         SHARK_COUNT.merge(level, 1, Integer::sum);
     }
 
     /** 鲨鱼离开维度（死亡 / 失活 / 卸载）时 -1。由 NeoForgeEvents 在实体离开时调用。 */
-    static void onSharkLeft(ServerLevel level) {
+    public static void onSharkLeft(ServerLevel level) {
         int v = SHARK_COUNT.getOrDefault(level, 0) - 1;
         SHARK_COUNT.put(level, Math.max(0, v));
     }
