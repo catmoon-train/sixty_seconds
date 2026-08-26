@@ -16,7 +16,8 @@
     "LostCityChunkFixerMixin",
     "LostCityDamageAreaMixin",
     "LostCityProfileMixin",
-    "GlobalTodoMixin"
+    "GlobalTodoMixin",
+    "LevelChunkSpawnerWarningMixin"
   ],
   "client": [
     "WeatherRendererMixin"
