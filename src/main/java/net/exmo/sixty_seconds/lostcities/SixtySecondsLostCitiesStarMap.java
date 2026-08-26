@@ -79,9 +79,10 @@ public final class SixtySecondsLostCitiesStarMap {
 
     /**
      * 星图动态加载建筑星级区域时，服务端从玩家当前位置向外扫描的区块半径（仅扫描已加载区块，不强制生成）。
-     * 参考海图：服务端从世界生成数据计算区域并下发给客户端。默认 48 区块（≈768 格）半径，覆盖玩家附近城区。
+     * 参考海图：服务端从世界生成数据计算区域并下发给客户端。默认 16 区块（≈256 格）半径，
+     * 只覆盖玩家附近城区，避免一次性扫描过多区块导致打开星图时卡顿。
      */
-    public static final int STAR_MAP_SCAN_RADIUS_CHUNKS = 48;
+    public static final int STAR_MAP_SCAN_RADIUS_CHUNKS = 16;
 
     /** 多区块建筑统一 5 星。 */
     private static final int MULTI_BUILDING_STAR = 5;
@@ -107,11 +108,12 @@ public final class SixtySecondsLostCitiesStarMap {
      * 仅当建筑名与本表键<b>完全一致</b>时才匹配，不使用任何前缀（startsWith）匹配，
      * 以避免新增大楼栋被错误归类。未出现在本表的城市建筑名返回 {@link #UNGRADED}（真正无级别）。
      */
+    // 约一半楼栋划为 2 星（蓝）：building1-8 / town00-11 / 高速加油站·餐厅·停车场 / 广播铁塔 / 露天集市
     private static final Map<String, Integer> BUILDING_STARS = Map.ofEntries(
-            Map.entry("building1", 3),
-            Map.entry("building2", 3),
-            Map.entry("building3", 3),
-            Map.entry("building4", 3),
+            Map.entry("building1", 2),
+            Map.entry("building2", 2),
+            Map.entry("building3", 2),
+            Map.entry("building4", 2),
             Map.entry("building5", 3),
             Map.entry("building6", 3),
             Map.entry("building7", 3),
@@ -121,30 +123,30 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("center01", 3),
             Map.entry("center10", 3),
             Map.entry("center11", 3),
-            Map.entry("highway_gas_station", 3),
+            Map.entry("highway_gas_station", 2),
             Map.entry("highway_restaurant", 2),
             Map.entry("highway_restaurant_parking", 2),
-            Map.entry("library00", 4),
-            Map.entry("library01", 4),
+            Map.entry("library00", 3),
+            Map.entry("library01", 3),
             Map.entry("library10", 4),
             Map.entry("library11", 4),
-            Map.entry("oilrig00", 4),
-            Map.entry("oilrig01", 4),
-            Map.entry("oilrig10", 4),
-            Map.entry("oilrig11", 4),
-            Map.entry("radiotower", 4),
+            Map.entry("oilrig00", 5),
+            Map.entry("oilrig01", 5),
+            Map.entry("oilrig10", 5),
+            Map.entry("oilrig11", 5),
+            Map.entry("radiotower", 5),
             Map.entry("shopping00", 4),
             Map.entry("shopping01", 4),
             Map.entry("shopping10", 4),
-            Map.entry("shopping11", 4),
-            Map.entry("shopping_open00", 4),
-            Map.entry("shopping_open01", 4),
-            Map.entry("shopping_open10", 4),
-            Map.entry("shopping_open11", 4),
-            Map.entry("town00", 3),
+            Map.entry("shopping11", 5),
+            Map.entry("shopping_open00", 3),
+            Map.entry("shopping_open01", 3),
+            Map.entry("shopping_open10", 3),
+            Map.entry("shopping_open11", 3),
+            Map.entry("town00", 2),
             Map.entry("town01", 3),
             Map.entry("town10", 3),
-            Map.entry("town11", 3)
+            Map.entry("town11", 2)
     );
 
     /**
