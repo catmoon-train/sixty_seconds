@@ -4,11 +4,8 @@ import mcjty.lostcities.api.ILostChunkInfo;
 import mcjty.lostcities.api.ILostCities;
 import mcjty.lostcities.api.ILostCityInformation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.locale.Language;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.packs.resources.ResourceManager;
 
 import javax.annotation.Nullable;
 import java.util.ArrayDeque;
@@ -425,28 +422,6 @@ public final class SixtySecondsLostCitiesStarMap {
         }
         String suffix = BUILDING_DISPLAY.get(id.toLowerCase(Locale.ROOT));
         return suffix != null ? BUILDING_LANG + suffix : id;
-    }
-
-    /**
-     * 在服务端按玩家自己的语言解析翻译键，返回可读文本。
-     * 这样即使客户端资源较旧、未携带新增的翻译键，也能正确显示建筑名称，而不会把翻译键本身渲染出来。
-     * 解析失败（语言文件缺失等）时回退到翻译键本身。
-     */
-    public static String resolveFor(ServerPlayer player, String key) {
-        if (key == null) {
-            return "?";
-        }
-        try {
-            String lang = player.getLanguage();
-            if (lang == null || lang.isEmpty()) {
-                lang = "en_us";
-            }
-            ResourceManager rm = player.getServer().getResourceManager();
-            Language language = Language.loadFrom(rm, lang);
-            return language.getOrDefault(key, key);
-        } catch (Exception e) {
-            return key;
-        }
     }
 
     /** 一个建筑连通区域的几何与星级信息，供星图下发。 */

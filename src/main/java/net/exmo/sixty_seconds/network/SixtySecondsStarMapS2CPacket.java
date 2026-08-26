@@ -83,8 +83,9 @@ public record SixtySecondsStarMapS2CPacket(List<RegionEntry> regions) implements
         // 1) 动态生成：扫描玩家周围已加载建筑区块，按连通同名建筑聚合成星级区域
         for (SixtySecondsLostCitiesStarMap.BuildingRegion br
                 : SixtySecondsLostCitiesStarMap.buildingStarRegions(level, pcx, pcz, SixtySecondsLostCitiesStarMap.STAR_MAP_SCAN_RADIUS_CHUNKS)) {
+            // 下发翻译键，由客户端 Component.translatable 按玩家语言渲染（语言文件随模组下发，客户端必含）
             entries.add(new RegionEntry(br.minX, br.minZ, br.maxX, br.maxZ, br.star,
-                    SixtySecondsLostCitiesStarMap.resolveFor(player, br.displayName)));
+                    br.displayName));
         }
         // 2) 管理员覆盖层（若存在）
         SixtySecondsConfigStore.current(level).ifPresent(config -> {

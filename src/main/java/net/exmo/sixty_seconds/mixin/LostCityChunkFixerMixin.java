@@ -1,10 +1,10 @@
 package net.exmo.sixty_seconds.mixin;
 
+import mcjty.lostcities.worldgen.ChunkFixer;
 import mcjty.lostcities.worldgen.LostCityTerrainFeature;
 import mcjty.lostcities.varia.ChunkCoord;
 import mcjty.lostcities.worldgen.IDimensionInfo;
 import mcjty.lostcities.worldgen.lost.BuildingInfo;
-import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesStarMap;
 import net.exmo.sixty_seconds.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
@@ -42,8 +42,10 @@ public class LostCityChunkFixerMixin {
     /** 上锁箱比例。 */
     private static final float LOCK_RATIO = 0.7f;
 
-    /** 每个 chunk 最多撒的箱子数（随星级线性增长，这里给出上限保护）。 */
-    private static final int MAX_BOXES = 15;
+    /** 每个 chunk 最多撒的箱子数（密度上限保护）。 */
+    private static final int MAX_BOXES = 60;
+    /** 密度倍率：实际撒箱数 = max(1, 星级) * DENSITY，显著提升物资箱密度。 */
+    private static final int DENSITY = 6;
 
     @Inject(method = "executePostTodo", at = @At("HEAD"))
     private static void sixty_seconds_planSupplyBoxes(ChunkCoord coord, IDimensionInfo provider, CallbackInfo ci) {
@@ -109,18 +111,13 @@ public class LostCityChunkFixerMixin {
             }
         }
         if (candidates.isEmpty()) {
-            SixtySeconds.LOGGER.info("[60s-Loot] chunk({},{}) 建筑={} 无合法落箱点（候选为空，可能建筑内部在该阶段尚未写入）",
-                    chunkX, chunkZ, name);
             return;
         }
 
         // 用 worldgen 随机源打乱候选顺序，保证分布随机且确定性可复现
         Collections.shuffle(candidates, new Random(rng.nextLong()));
 
-        int count = Math.min(star, MAX_BOXES);
-        count = Math.max(1, count); // 至少 1 个，避免星级≥1 却落空
-        SixtySeconds.LOGGER.debug("[60s] LostCityLootGen chunk({},{}) building={} 候选点={} 计划撒箱={}",
-                chunkX, chunkZ, name, candidates.size(), count);
+        int count = Math.min(MAX_BOXES, Math.max(1, star) * DENSITY); // 密度倍率，显著提升物资箱密度
         for (int i = 0; i < Math.min(count, candidates.size()); i++) {
             BlockPos pos = candidates.get(i);
             boolean advanced = rng.nextFloat() < (0.1f + 0.12f * star);
@@ -136,14 +133,10 @@ public class LostCityChunkFixerMixin {
      */
     private static void placeBox(BuildingInfo info, BlockPos pos, boolean advanced, boolean locked, String category, String buildingName, int starLevel) {
         WorldGenLevel inWorld = info.provider.getWorld();
-        // 日志：落点物资箱的具体「世界坐标」（不是区块坐标），便于排查是否真的生成
-        SixtySeconds.LOGGER.info("[60s-Loot] 物资箱落点 世界坐标=({}, {}, {}) 建筑={} 星级={} 类别={} 高级={} 上锁={}",
-                pos.getX(), pos.getY(), pos.getZ(), buildingName, starLevel, category, advanced, locked);
-        // 二次校验：延迟到 ChunkFixer 才执行，若此时脚下已不是实心（地形被后续阶段改动），
-        // 放下去会悬空，直接跳过该候选点。
+        // 二次校验：延迟到 ChunkFixer 才执行。同一区块在重新生成/并行生成竞态下 executePostTodo 可能被
+        // 再次触发；此时落点已被上一轮放好的箱子占据（非空气），直接跳过即可，既避免重复落箱，也避免重复刷日志。
+        // 注意：本校验必须放在日志之前，否则即便跳过也会打印「物资箱落点」造成后台刷屏。
         if (!inWorld.getBlockState(pos).isAir() || inWorld.getBlockState(pos.below()).isAir()) {
-            SixtySeconds.LOGGER.debug("[60s-Loot] 跳过落点 ({}, {}, {}) 原因=落点非空气或下方悬空 建筑={}",
-                    pos.getX(), pos.getY(), pos.getZ(), buildingName);
             return;
         }
         Block block = advanced

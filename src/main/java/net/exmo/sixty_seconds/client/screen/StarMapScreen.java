@@ -212,7 +212,8 @@ public class StarMapScreen extends Screen {
                     panCZ + (mouseY - ccy) / zoom);
             StarRegion hovered = StarMapManager.getRegionAt(worldX, worldZ);
             if (hovered != null) {
-                Component tip = Component.literal(hovered.starSymbol() + " " + hovered.name)
+                Component tip = Component.literal(hovered.starSymbol() + " ")
+                        .append(Component.translatable(hovered.name))
                         .withStyle(chatFormattingForStar(hovered.star));
                 g.renderTooltip(font, tip, mouseX, mouseY);
             }
@@ -329,11 +330,11 @@ public class StarMapScreen extends Screen {
             drawThickLine(g, (int) corners[3][0], (int) corners[3][1],
                     (int) corners[0][0], (int) corners[0][1], color);
 
-            // 标签：星级符号 + 名称（区域中心偏上，名称为翻译键）
+            // 标签：星级符号 + 名称（区域中心偏上，名称按客户端语言翻译）
             int labelX = (int) ((corners[0][0] + corners[2][0]) / 2);
             int labelY = (int) ((corners[0][1] + corners[2][1]) / 2) - 2;
             Component label = Component.literal(region.starSymbol() + " ")
-                    .append(Component.literal(region.name));
+                    .append(Component.translatable(region.name));
             // 标签背景
             int labelW = font.width(label);
             g.fill(labelX - labelW / 2 - 2, labelY - 5, labelX + labelW / 2 + 2,
@@ -479,7 +480,7 @@ public class StarMapScreen extends Screen {
             for (int i = 0; i < maxRegions; i++) {
                 StarRegion r = regions.get(i);
                 g.fill(x, y + 2, x + 8, y + 8, r.color);
-                String entry = r.starSymbol() + " " + r.name;
+                String entry = r.starSymbol() + " " + Component.translatable(r.name).getString();
                 // 截断过长的名称
                 if (font.width(entry) > sideX1 - sideX0 - 28) {
                     entry = font.plainSubstrByWidth(entry, sideX1 - sideX0 - 32) + "..";
