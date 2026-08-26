@@ -21,18 +21,19 @@ import java.util.WeakHashMap;
  * 通过 LostCities API 判断该坐标是否位于某个已知建筑内，若是则返回其对应星级。这样「创建世界后，建筑自动被划分到星级」——
  * 无需管理员手动用魔杖登记任何建筑。</p>
  *
- * <p>映射规则（与 LostCities 资源目录 {@code data/lostcities/lostcities/} 对应）：</p>
+ * <p>映射规则（与 LostCities 资源目录 {@code data/lostcities/lostcities/} 对应，<b>全部按 JSON 文件名精确登记，不使用任何前缀匹配</b>）：</p>
  * <ul>
  *   <li><b>多区块建筑</b> {@code multibuildings/}（center、townhall、multi1~5、huge1/2 等 14 个）→ <b>5 星</b>；</li>
- *   <li><b>散布建筑</b> {@code buildings/}：
+ *   <li><b>散布建筑</b> {@code buildings/}（按精确文件名登记于 {@code BUILDING_STARS}）：
  *     <ul>
- *       <li>{@code building1~8} 通用建筑 → 3 星；</li>
+ *       <li>{@code building1}~{@code building8} 通用建筑 → 3 星；</li>
  *       <li>{@code cabin} 小屋 → 1 星；</li>
  *       <li>{@code center00/01/10/11} 城市中心 → 3 星；</li>
  *       <li>{@code highway_gas_station} 加油站 → 3 星；</li>
- *       <li>{@code highway_restaurant(_parking)} 公路餐厅 → 2 星；</li>
- *       <li>{@code library} 图书馆、{@code oilrig} 油井、{@code radiotower} 无线电塔、
- *           {@code shopping(_open)} 购物中心/露天市场 → 4 星；</li>
+ *       <li>{@code highway_restaurant}、{@code highway_restaurant_parking} 公路餐厅 → 2 星；</li>
+ *       <li>{@code library00/01/10/11} 图书馆、{@code oilrig00/01/10/11} 油井、
+ *           {@code radiotower} 无线电塔、{@code shopping00/01/10/11} 与 {@code shopping_open00/01/10/11}
+ *           购物中心/露天市场 → 4 星；</li>
  *       <li>{@code town00/01/10/11} 城镇建筑 → 3 星。</li>
  *       <li>{@code safezone} 60秒模组自带安全区建筑（由 {@code export_building} 导出注册）→ <b>0 级（安全区）</b>。</li>
  *       <li>{@code evacuationpoint} 60秒模组自带撤离点建筑（由 {@code export_building} 导出注册）→ <b>不具有星级</b>
@@ -70,6 +71,8 @@ public final class SixtySecondsLostCitiesStarMap {
 
     /** 多区块建筑统一 5 星。 */
     private static final int MULTI_BUILDING_STAR = 5;
+    /** 物资箱生成专用：未登记的城市建筑（UNGRADED）默认给的星级，避免绝大多数建筑无箱。 */
+    public static final int DEFAULT_BUILDING_STAR = 3;
 
     /**
      * 60秒模组自带的安全区建筑集合（建筑文件名，不含命名空间）。这些建筑由 {@code export_building}
@@ -83,6 +86,52 @@ public final class SixtySecondsLostCitiesStarMap {
      * 撤离判定时被识别为撤离区（见 {@link #isEvacuationPoint}）。
      */
     private static final Set<String> EVAC_BUILDINGS = Set.of("evacuationpoint");
+
+    /**
+     * 城市建筑「精确名称 → 星级」映射表。键为 LostCities 资源目录
+     * {@code data/lostcities/lostcities/buildings/} 下的 JSON 文件名（不含命名空间）。
+     * 仅当建筑名与本表键<b>完全一致</b>时才匹配，不使用任何前缀（startsWith）匹配，
+     * 以避免新增大楼栋被错误归类。未出现在本表的城市建筑名返回 {@link #UNGRADED}（真正无级别）。
+     */
+    private static final Map<String, Integer> BUILDING_STARS = Map.ofEntries(
+            Map.entry("building1", 3),
+            Map.entry("building2", 3),
+            Map.entry("building3", 3),
+            Map.entry("building4", 3),
+            Map.entry("building5", 3),
+            Map.entry("building6", 3),
+            Map.entry("building7", 3),
+            Map.entry("building8", 3),
+            Map.entry("cabin", 1),
+            Map.entry("center00", 3),
+            Map.entry("center01", 3),
+            Map.entry("center10", 3),
+            Map.entry("center11", 3),
+            Map.entry("highway_gas_station", 3),
+            Map.entry("highway_restaurant", 2),
+            Map.entry("highway_restaurant_parking", 2),
+            Map.entry("library00", 4),
+            Map.entry("library01", 4),
+            Map.entry("library10", 4),
+            Map.entry("library11", 4),
+            Map.entry("oilrig00", 4),
+            Map.entry("oilrig01", 4),
+            Map.entry("oilrig10", 4),
+            Map.entry("oilrig11", 4),
+            Map.entry("radiotower", 4),
+            Map.entry("shopping00", 4),
+            Map.entry("shopping01", 4),
+            Map.entry("shopping10", 4),
+            Map.entry("shopping11", 4),
+            Map.entry("shopping_open00", 4),
+            Map.entry("shopping_open01", 4),
+            Map.entry("shopping_open10", 4),
+            Map.entry("shopping_open11", 4),
+            Map.entry("town00", 3),
+            Map.entry("town01", 3),
+            Map.entry("town10", 3),
+            Map.entry("town11", 3)
+    );
 
     /**
      * {@code ILostCityInformation} 按维度缓存：它在单个 {@code ServerLevel} 生命周期内是稳定的，
@@ -135,53 +184,11 @@ public final class SixtySecondsLostCitiesStarMap {
         if (buildingName == null) {
             return NO_STAR;
         }
-        // 防御：调用方可能误传入带命名空间的全名（如 lostcities:building1），统一取路径部分，
-        // 否则下面的 startsWith(...) 全部失败，都会落入 UNGRADED 导致不生成箱子。
-        String name = buildingName;
+        // 防御：调用方可能误传入带命名空间的全名（如 lostcities:building1），统一取路径部分。
+        String name = buildingName.toLowerCase(Locale.ROOT);
         int sep = name.indexOf(':');
         if (sep >= 0) {
             name = name.substring(sep + 1);
-        }
-        name = name.toLowerCase(Locale.ROOT);
-        // 通用建筑 building1~8 → 3 星
-        if (name.startsWith("building")) {
-            return 3;
-        }
-        // 城市中心 center00/01/10/11 → 3 星
-        if (name.startsWith("center")) {
-            return 3;
-        }
-        // 城镇 town00/01/10/11 → 3 星
-        if (name.startsWith("town")) {
-            return 3;
-        }
-        // 公路餐厅 highway_restaurant(_parking) → 2 星
-        if (name.startsWith("highway_restaurant")) {
-            return 2;
-        }
-        // 加油站 highway_gas_station → 3 星
-        if (name.startsWith("highway_gas_station")) {
-            return 3;
-        }
-        // 图书馆 library* → 4 星
-        if (name.startsWith("library")) {
-            return 4;
-        }
-        // 石油钻井平台 oilrig* → 4 星
-        if (name.startsWith("oilrig")) {
-            return 4;
-        }
-        // 无线电塔 radiotower → 4 星
-        if (name.startsWith("radiotower")) {
-            return 4;
-        }
-        // 购物中心/露天市场 shopping(_open) → 4 星
-        if (name.startsWith("shopping")) {
-            return 4;
-        }
-        // 小屋 cabin → 1 星
-        if ("cabin".equals(name)) {
-            return 1;
         }
         // 60秒模组自带的安全区建筑（由 export_building 导出的结构注册而来）：固定为安全区（SAFE_STAR）。
         if (SAFE_BUILDINGS.contains(name)) {
@@ -192,9 +199,48 @@ public final class SixtySecondsLostCitiesStarMap {
         if (EVAC_BUILDINGS.contains(name)) {
             return UNGRADED;
         }
+        // 精确名称匹配：仅当建筑名与 BUILDING_STARS 中的键完全一致时才返回对应星级。
+        Integer star = BUILDING_STARS.get(name);
+        if (star != null) {
+            return star;
+        }
         // 未知建筑名：该坐标确实位于某 LostCities 建筑内，但本表未登记其危险度。
         // 返回 UNGRADED（而非 NO_STAR/星级），让上层把它当作真正「无级别」的地方处理。
         return UNGRADED;
+    }
+
+    /**
+     * 物资箱生成专用星级（与 {@link #starAt} 的危险等级语义解耦）：
+     * <ul>
+     *   <li>已知建筑 → 返回其原映射星级（1..5）；</li>
+     *   <li>安全区（SAFE_STAR）→ 0，不撒箱；</li>
+     *   <li>撤离点（EVAC）→ 0，不撒箱；</li>
+     *   <li>其余「位于城市建筑内但未登记」的建筑（UNGRADED，如各类默认建筑、multibuilding 大建筑）
+     *       返回 {@link #DEFAULT_BUILDING_STAR}，避免 LostCities 绝大多数建筑类型不在白名单而被整栋跳过、
+     *       导致「大多数建筑没有物资箱」。</li>
+     * </ul>
+     */
+    public static int lootStarForBuildingName(String buildingName) {
+        int s = starForBuildingName(buildingName);
+        if (s == SAFE_STAR) {
+            return 0;
+        }
+        if (s == UNGRADED) {
+            return isEvacuationBuildingName(buildingName) ? 0 : DEFAULT_BUILDING_STAR;
+        }
+        return s;
+    }
+
+    private static boolean isEvacuationBuildingName(String buildingName) {
+        if (buildingName == null) {
+            return false;
+        }
+        String name = buildingName.toLowerCase(Locale.ROOT);
+        int sep = name.indexOf(':');
+        if (sep >= 0) {
+            name = name.substring(sep + 1);
+        }
+        return EVAC_BUILDINGS.contains(name);
     }
 
     /**

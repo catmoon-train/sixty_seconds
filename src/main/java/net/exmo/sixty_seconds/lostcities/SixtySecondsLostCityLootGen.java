@@ -9,7 +9,6 @@ import mcjty.lostcities.worldgen.IDimensionInfo;
 import mcjty.lostcities.worldgen.lost.BuildingInfo;
 import net.exmo.sixty_seconds.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -30,8 +29,8 @@ import java.util.Random;
  * <ul>
  *   <li>星级（1..5）越高，撒的数量越多、高级箱占比越大；</li>
  *   <li>约 70% 为上锁箱（{@code *_LOCKED} 变体），需撬锁；</li>
- *   <li>箱子贴地面生成（脚下实心、头顶空气），且水平至少 2 侧为空气，避免贴墙体/悬空/贴天花板；</li>
- *   <li>任意两箱水平间距 ≥ 4 格，避免扎堆过密；</li>
+ *   <li>仅保留「不悬空」（脚下有实心支撑）这一约束：不再限制贴地面 / 头顶空气 / 水平侧向开放 / 最小间距，
+ *       以最大化候选点，解决 LostCities 内部小房间 / 走廊 / 贴墙结构无箱的问题；</li>
  *   <li>无星级 / 撤离点 / 安全区（{@code star <= 0}）不生成。</li>
  * </ul>
  * 在 {@code CharacteristicsEvent} 缓存本 chunk 的建筑名与城市海拔，到 {@code PostGenCityChunkEvent}
@@ -44,9 +43,6 @@ public final class SixtySecondsLostCityLootGen {
 
     /** 上锁箱比例。 */
     private static final float LOCK_RATIO = 0.7f;
-
-    /** 任意两箱水平最小间距的平方（格）。 */
-    private static final int MIN_SPACING_SQ = 4 * 4;
 
     /** 每个 chunk 最多撒的箱子数（随星级线性增长，这里给出上限保护）。 */
     private static final int MAX_BOXES = 15;
@@ -82,8 +78,10 @@ public final class SixtySecondsLostCityLootGen {
             return; // 街道/空地：无建筑
         }
         String name = id.getPath();
-        // 星级 ≤ 0（无星级 / 撤离点 UNGRADED / 安全区 SAFE_STAR）不生成物资箱
-        int star = SixtySecondsLostCitiesStarMap.starForBuildingName(name);
+        // 物资箱专用星级：已知建筑用原映射；安全区/撤离点返回 0（不撒箱）；
+        // 其余「位于城市建筑内但未登记」的建筑给默认星级——否则 LostCities 绝大多数建筑类型不在白名单里
+        // 会被整栋跳过，导致「大多数建筑没有物资箱」。
+        int star = SixtySecondsLostCitiesStarMap.lootStarForBuildingName(name);
         // 诊断：确认每个建筑 chunk 是否进入撒箱逻辑、星级是否正确
         SixtySeconds.LOGGER.debug("[60s] LostCityLootGen chunk({},{}) building={} star={} floors={} cellars={}",
                 chunkX, chunkZ, name, star, info.getNumFloors(), info.cellars);
@@ -105,7 +103,9 @@ public final class SixtySecondsLostCityLootGen {
         int bottomY = groundY - Math.max(0, info.cellars) * floorHeight; // 含地下室底
         int topY = groundY + Math.max(1, info.getNumFloors()) * floorHeight;
 
-        // 收集本 chunk 内所有合法地板候选点（贴地、非贴墙、不悬空/不天花板）
+        // 收集本 chunk 内所有「不悬空」候选点：仅要求脚下有实心支撑（不悬空）。
+        // 放宽历史限制：不再要求贴地面 / 头顶空气 / 水平侧向开放 / 最小间距，
+        // 仅保留「不悬空」这一约束，解决 LostCities 内部小房间 / 走廊 / 贴墙结构候选点骤降甚至为 0 的问题。
         List<BlockPos> candidates = new ArrayList<>();
         for (int lx = 0; lx < 16; lx++) {
             for (int lz = 0; lz < 16; lz++) {
@@ -113,7 +113,7 @@ public final class SixtySecondsLostCityLootGen {
                 int z = baseZ + lz;
                 for (int y = bottomY - 1; y <= topY; y++) {
                     BlockPos pos = new BlockPos(x, y, z);
-                    if (isFloor(primer, pos) && hasOpenSides(primer, pos)) {
+                    if (!primer.getBlockState(pos.below()).isAir()) {
                         candidates.add(pos);
                     }
                 }
@@ -135,9 +135,6 @@ public final class SixtySecondsLostCityLootGen {
         for (BlockPos pos : candidates) {
             if (placed.size() >= count) {
                 break;
-            }
-            if (tooClose(placed, pos)) {
-                continue;
             }
             // 关键：不能现在直接写 primer —— PostGenCityChunkEvent 之后 LostCities 还会跑
             // generateRuins / generateRubble / generateStuff 等阶段，会把箱子位置覆盖成
@@ -180,42 +177,4 @@ public final class SixtySecondsLostCityLootGen {
         inWorld.getChunk(pos).setBlockEntityNbt(tag);
     }
 
-    /** primer 中该格是否为合法落箱点：当前空气、脚下实心、头顶空气（贴地面，不悬空/不天花板）。 */
-    private static boolean isFloor(ChunkAccess primer, BlockPos pos) {
-        if (!primer.getBlockState(pos).isAir()) {
-            return false;
-        }
-        if (primer.getBlockState(pos.below()).isAir()) {
-            return false;
-        }
-        return primer.getBlockState(pos.above()).isAir();
-    }
-
-    /**
-     * 放置格水平四向至少 1 侧为空气即可。
-     * 原要求 >= 2 侧会把 LostCities 标准建筑内部大量小房间/走廊/贴墙的合法地板全排除
-     * （这些结构通常只有 1~2 侧空气），导致建筑里候选点骤降甚至为 0 —— 即“建筑内不生成物资箱”。
-     * 防悬空交给 placeBox 的二次校验（脚下必须实心）兜底。
-     */
-    private static boolean hasOpenSides(ChunkAccess primer, BlockPos pos) {
-        int open = 0;
-        for (Direction d : Direction.Plane.HORIZONTAL) {
-            if (primer.getBlockState(pos.relative(d)).isAir()) {
-                open++;
-            }
-        }
-        return open >= 1;
-    }
-
-    /** 与已放置点水平距离过近（< 4 格）则返回 true。 */
-    private static boolean tooClose(List<BlockPos> placed, BlockPos pos) {
-        for (BlockPos p : placed) {
-            int dx = p.getX() - pos.getX();
-            int dz = p.getZ() - pos.getZ();
-            if (dx * dx + dz * dz < MIN_SPACING_SQ) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
