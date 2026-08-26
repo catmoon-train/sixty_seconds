@@ -22,7 +22,7 @@ public final class SixtySecondsBuildingTitles {
     }
 
     public static void tick(ServerLevel level) {
-        if (level.getGameTime() % 10 != 0) {
+        if (level.getGameTime() % 60 != 0) {
             return;
         }
         ILostCityInformation info = SixtySecondsLostCitiesStarMap.cityInfo(level);
@@ -40,22 +40,30 @@ public final class SixtySecondsBuildingTitles {
             if (!level.hasChunk(cx, cz)) {
                 continue; // 区块未加载时不查询，避免触发生成阻塞主线程
             }
-            // 先查玩家所在区块；取不到建筑时（站在建筑边缘的街道格）向周围 8 个区块兜底，
-            // 优先取玩家所在区块，其次最近的建筑区块。
+            // 先查玩家所在区块；取不到建筑时（站在建筑边缘的街道/走廊/入口格）向周围辐射查找最近的
+            // 建筑区块（半径 2，约 32 格，覆盖大厅与入口）。注：LostCities 仅在真正的建筑占地区块上
+            // getBuildingId() 非 null，城市街道/入口虽 isCity() 但无建筑 id，故需向外兜底。
             String id = null;
             ILostChunkInfo self = info.getChunkInfo(cx, cz);
             if (self != null && self.isCity() && self.getBuildingId() != null) {
                 id = self.getBuildingId().getPath();
             } else {
-                int[][] offs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
-                for (int[] o : offs) {
-                    if (!level.hasChunk(cx + o[0], cz + o[1])) {
-                        continue;
-                    }
-                    ILostChunkInfo n = info.getChunkInfo(cx + o[0], cz + o[1]);
-                    if (n != null && n.isCity() && n.getBuildingId() != null) {
-                        id = n.getBuildingId().getPath();
-                        break;
+                int r = 2;
+                outer:
+                for (int dx = -r; dx <= r; dx++) {
+                    for (int dz = -r; dz <= r; dz++) {
+                        if (dx == 0 && dz == 0) {
+                            continue;
+                        }
+                        int nx = cx + dx, nz = cz + dz;
+                        if (!level.hasChunk(nx, nz)) {
+                            continue;
+                        }
+                        ILostChunkInfo n = info.getChunkInfo(nx, nz);
+                        if (n != null && n.isCity() && n.getBuildingId() != null) {
+                            id = n.getBuildingId().getPath();
+                            break outer;
+                        }
                     }
                 }
             }
