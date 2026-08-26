@@ -10,6 +10,7 @@ import mcjty.lostcities.worldgen.lost.BuildingInfo;
 import net.exmo.sixty_seconds.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -78,6 +79,11 @@ public final class SixtySecondsLostCityLootGen {
             return; // 街道/空地：无建筑
         }
         String name = id.getPath();
+        // 撤离点建筑（evacuationpoint）在生成时登记其中心，供指南针/直升机撤离系统直接读取，
+        // 避免在物品使用（主线程）时全图扫描 getChunkInfo 造成卡顿。
+        if (name.toLowerCase().contains("evac")) {
+            SixtySecondsLostCitiesStarMap.registerEvacuationPoint((ServerLevel) world.getLevel(), info.getCenter(info.getCityGroundLevel()));
+        }
         // 物资箱专用星级：已知建筑用原映射；安全区/撤离点返回 0（不撒箱）；
         // 其余「位于城市建筑内但未登记」的建筑给默认星级——否则 LostCities 绝大多数建筑类型不在白名单里
         // 会被整栋跳过，导致「大多数建筑没有物资箱」。

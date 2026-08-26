@@ -141,8 +141,60 @@ public final class SixtySecondsLostCitiesStarMap {
      */
     private static final Map<ServerLevel, ILostCityInformation> INFO_CACHE = new WeakHashMap<>();
 
+    /**
+     * 撤离点建筑中心坐标缓存（按维度）。世界生成阶段（{@code PostGenCityChunkEvent}）由
+     * {@link #registerEvacuationPoint} 登记；撤离点指南针 / 直升机撤离系统直接读取本表，
+     * <b>避免在物品使用（主线程 {@code ServerboundUseItemPacket.handle}）时全图扫描 {@code getChunkInfo}</b>——
+     * 那种扫描既重又会在未生成区块上阻塞主线程（spark 中表现为 {@code managedBlock}/{@code waitingForTask} 卡顿）。
+     * 用 {@link WeakHashMap} 以免阻止世界对象被 GC（维度卸载后自动清理）。
+     * 值用 {@link java.util.concurrent.CopyOnWriteArrayList}：写入（生成期）少、读取（右键/每 tick）多，且读时不加锁也更安全。
+     */
+    private static final Map<ServerLevel, java.util.List<BlockPos>> EVAC_CENTERS = new WeakHashMap<>();
+    private static final Object EVAC_LOCK = new Object();
+
     private SixtySecondsLostCitiesStarMap() {
     }
+
+    /**
+     * 世界生成期调用：登记一个撤离点建筑的中心坐标（水平方向用于最近点判定）。
+     * 可能在区块生成工作线程上调用，故加 {@link #EVAC_LOCK} 保护。
+     */
+    public static void registerEvacuationPoint(ServerLevel level, BlockPos center) {
+        if (level == null || center == null) {
+            return;
+        }
+        synchronized (EVAC_LOCK) {
+            EVAC_CENTERS.computeIfAbsent(level, k -> new java.util.concurrent.CopyOnWriteArrayList<>()).add(center);
+        }
+    }
+
+    /**
+     * 读取缓存，返回离 {@code playerPos} 最近的撤离点建筑中心（按水平距离），无则返回 {@code null}。
+     * 复杂度 O(缓存大小)，纯内存遍历，不触碰任何区块加载 / 世界生成，绝不在主线程阻塞。
+     */
+    @Nullable
+    public static BlockPos nearestEvacuationPoint(ServerLevel level, BlockPos playerPos) {
+        java.util.List<BlockPos> list;
+        synchronized (EVAC_LOCK) {
+            list = EVAC_CENTERS.get(level);
+        }
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
+        BlockPos best = null;
+        double bestSqr = Double.MAX_VALUE;
+        for (BlockPos c : list) {
+            double dx = c.getX() - playerPos.getX();
+            double dz = c.getZ() - playerPos.getZ();
+            double d = dx * dx + dz * dz;
+            if (d < bestSqr) {
+                bestSqr = d;
+                best = c;
+            }
+        }
+        return best;
+    }
+
 
     /**
      * 反查某坐标是否位于 LostCities 已知建筑内，返回对应星级（1..5）；未知建筑名返回 {@link #UNGRADED}（真正无级别）；

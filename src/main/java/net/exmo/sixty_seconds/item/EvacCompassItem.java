@@ -97,17 +97,30 @@ public class EvacCompassItem extends Item {
     }
 
     private static BlockPos nearestEvacBuilding(ServerLevel level, BlockPos playerPos) {
+        // 优先读取世界生成期缓存的撤离点中心：O(缓存大小) 纯内存遍历，绝不在主线程阻塞。
+        BlockPos cached = SixtySecondsLostCitiesStarMap.nearestEvacuationPoint(level, playerPos);
+        if (cached != null) {
+            return cached;
+        }
+        // 缓存为空（撤离点区块尚未生成）：仅在「已加载」区块内做小范围（13×13）扫描，
+        // 不强制加载/生成区块，避免在 ServerboundUseItemPacket.handle（主线程）中因等待世界生成而卡死
+        // （spark 中表现为 managedBlock / waitingForTask 标红）。
         ILostCityInformation info = SixtySecondsLostCitiesStarMap.cityInfo(level);
-        if (info == null) return null;
+        if (info == null) {
+            return null;
+        }
         int pcx = playerPos.getX() >> 4;
         int pcz = playerPos.getZ() >> 4;
-        int radius = 48; // 扫描 48 个区块半径，足以覆盖整座城市
+        int radius = 6; // 仅已加载区块的小范围回退扫描
         BlockPos best = null;
         double bestSqr = Double.MAX_VALUE;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dz = -radius; dz <= radius; dz++) {
                 int cx = pcx + dx;
                 int cz = pcz + dz;
+                if (!level.hasChunk(cx, cz)) {
+                    continue; // 仅扫描已加载区块，避免触发区块生成阻塞主线程
+                }
                 ILostChunkInfo chunk = info.getChunkInfo(cx, cz);
                 if (chunk == null || !chunk.isCity() || chunk.getBuildingId() == null) continue;
                 if (!chunk.getBuildingId().getPath().toLowerCase(Locale.ROOT).contains("evac")) continue;
