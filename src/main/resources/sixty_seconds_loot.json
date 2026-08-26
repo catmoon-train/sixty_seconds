@@ -1677,6 +1677,11 @@
         "itemId": "minecraft:nether_wart",
         "count": 1,
         "weight": 3.0
+      },
+      {
+        "itemId": "sixty_seconds:sixty_seconds_rescue_beacon",
+        "count": 1,
+        "weight": 1
       }
     ],
     "advanced_food": [

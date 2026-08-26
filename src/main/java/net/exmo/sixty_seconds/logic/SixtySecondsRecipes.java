@@ -811,9 +811,6 @@ public final class SixtySecondsRecipes {
         add(list, "floodlight", Station.ADV_WORKBENCH, "mob_defense_2", true,
                 List.of(in(elec, 5), in(wire, 5), in(steel, 3)),
                 net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_FLOODLIGHT.asItem(), 1);
-        add(list, "rescue_beacon", Station.ADV_WORKBENCH, "mob_defense_2", true,
-                List.of(in(battery, 3), in(elec, 3), in(wire, 3), in(scrap, 14)),
-                ModItems.SIXTY_SECONDS_RESCUE_BEACON, 1);
         add(list, "lure_item", Station.ADV_WORKBENCH, "mob_defense_2", true,
                 List.of(in(ModItems.SIXTY_SECONDS_JERKY, 4), in(chem, 3)), ModItems.SIXTY_SECONDS_LURE, 1);
         add(list, "reinforced_barricade", Station.ADV_WORKBENCH, "mob_defense_3", false,

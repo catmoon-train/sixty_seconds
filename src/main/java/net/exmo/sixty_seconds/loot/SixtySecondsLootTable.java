@@ -265,7 +265,9 @@ public class SixtySecondsLootTable {
                 new Entry("sixty_seconds:sixty_seconds_medicine", 1, 1.0F),
                 new Entry("sixty_seconds:sixty_seconds_anti_pollution_serum", 1, 0.8F),
                 new Entry("minecraft:golden_apple", 1, 0.6F),
-                new Entry("sixty_seconds:sixty_seconds_fertilizer", 2, 1.5F))));
+                new Entry("sixty_seconds:sixty_seconds_fertilizer", 2, 1.5F),
+                // 救援信标：已从科技线移除配方，改为小概率（~0.3%）空投产出
+                new Entry("sixty_seconds:sixty_seconds_rescue_beacon", 1, 0.08F))));
         // ══ 高级物资箱专属（advanced_* 类别，与普通物资箱完全分开）══════════════
         // 高级食品：更稀有、更高价值的食物
         table.categories.put("advanced_food", new ArrayList<>(List.of(

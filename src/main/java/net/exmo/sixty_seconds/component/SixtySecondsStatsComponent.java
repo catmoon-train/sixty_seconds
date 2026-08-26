@@ -90,6 +90,8 @@ public class SixtySecondsStatsComponent implements RoleComponent {
     public int playerKills = 0;
     /** 已解锁的额外背包槽位数（0-18，通过扩容模块获得，总可用槽位=基础+此值）。 */
     public int extraUnlockedSlots = 0;
+    /** 救援信标标记：使用者激活信标后被置位，使其可在撤离点建筑内直接撤离（见 SixtySecondsRescue）。 */
+    public boolean rescueMarked = false;
     /** 绷带缓慢恢复剩余生命值（不使用后重置，无需持久化）。 */
     public transient int bandageHealRemaining = 0;
 
@@ -137,6 +139,7 @@ public class SixtySecondsStatsComponent implements RoleComponent {
         sanZeroTick = 0L;
         playerKills = 0;
         extraUnlockedSlots = 0;
+        rescueMarked = false;
         lastSentHealth = -1;
         lastSentHealthMax = -1;
         sync();
@@ -206,6 +209,7 @@ public class SixtySecondsStatsComponent implements RoleComponent {
         buf.writeVarLong(reviveEndTick);   // 自动复活 HUD 倒计时（死亡/复活时才变化）
         buf.writeVarInt(reviveCount);      // 本局已用复活次数（死亡/复活时才变化，HUD 显示剩余）
         buf.writeVarInt(extraUnlockedSlots);
+        buf.writeBoolean(rescueMarked);
 
     }
 
@@ -248,6 +252,7 @@ public class SixtySecondsStatsComponent implements RoleComponent {
         reviveEndTick = buf.readVarLong();
         reviveCount = buf.readVarInt();
         extraUnlockedSlots = buf.readVarInt();
+        rescueMarked = buf.readBoolean();
     }
 
     /** 已被上面的紧凑二进制同步取代，仅保留以满足接口（不再被调用）。 */
@@ -281,6 +286,7 @@ public class SixtySecondsStatsComponent implements RoleComponent {
         tag.putLong("SanZeroTick", sanZeroTick);
         tag.putInt("PlayerKills", playerKills);
         tag.putInt("ExtraUnlockedSlots", extraUnlockedSlots);
+        tag.putBoolean("RescueMarked", rescueMarked);
     }
 
     @Override
@@ -318,6 +324,7 @@ public class SixtySecondsStatsComponent implements RoleComponent {
             playerKills = tag.getInt("PlayerKills");
         }
         extraUnlockedSlots = tag.contains("ExtraUnlockedSlots") ? tag.getInt("ExtraUnlockedSlots") : 0;
+        rescueMarked = tag.getBoolean("RescueMarked");
     }
 
     @Override
