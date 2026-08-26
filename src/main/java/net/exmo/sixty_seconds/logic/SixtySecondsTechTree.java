@@ -91,6 +91,8 @@ public final class SixtySecondsTechTree {
         chain(list, "survival", null, "work_env_1", "work_env_2", "work_env_3", "work_env_4");
         chain(list, "survival", null, "materials_1", "materials_2", "materials_3");
         chain(list, "survival", null, "tools_1", "tools_2", "tools_3");
+        // 挖掘工具：与「工具-I」同级的独立一栏，通电制作采掘镐 / 采掘锹
+        chain(list, "survival", null, "mining_tools");
         // 背包在裁缝台制作 → 需先解锁「更好的工作环境-I」；扩容模块需要背包-III 后再解锁
         chain(list, "survival", "work_env_1", "backpack_1", "backpack_2", "backpack_3", "backpack_4", "backpack_5");
         chain(list, "survival", "backpack_3", "backpack_expand_1", "backpack_expand_2", "backpack_expand_3");
@@ -213,6 +215,7 @@ public final class SixtySecondsTechTree {
             case "work_env_2": return 8;
             case "work_env_3": return 14;
             case "work_env_4": return 20;
+            case "mining_tools": return 3;
             case "tea", "drinks_1": return 4;
             case "drinks_2": return 8;
             case "tobacco": return 5;

@@ -514,6 +514,16 @@ public final class SixtySecondsRecipes {
                 List.of(in(steel, 6), in(ModItems.SIXTY_SECONDS_WIRE, 4), in(ModItems.SIXTY_SECONDS_BATTERY, 2)),
                 ModItems.EVAC_COMPASS, 1);
 
+        // ── 挖掘工具（与「工具-I」同级，需通电）─────────────────────────
+        // 采掘镐：铁锭*3 + 木棍*2；采掘锹：铁锭*1 + 木棍*2。材质继承原版铁镐/铁锹，
+        // 采掘等级=铁、耐久=铁；可采掘方块由物品自带的 minecraft:tool 组件（原版 NBT）声明。
+        add(list, "mining_pickaxe", Station.WORKBENCH, "mining_tools", true,
+                List.of(in(Items.IRON_INGOT, 3), in(Items.STICK, 2)),
+                net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_MINING_PICKAXE, 1);
+        add(list, "mining_shovel", Station.WORKBENCH, "mining_tools", true,
+                List.of(in(Items.IRON_INGOT, 1), in(Items.STICK, 2)),
+                net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_MINING_SHOVEL, 1);
+
         // ── 背包（裁缝台）─────────────────────────────────────────────
         add(list, "backpack_small", Station.TAILOR, "backpack_1", false,
                 List.of(in(Items.LEATHER, 2), in(Items.STRING, 1)), ModItems.SIXTY_SECONDS_BACKPACK_SMALL, 1);

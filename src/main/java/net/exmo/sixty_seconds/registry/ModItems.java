@@ -21,11 +21,15 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.Tool;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 public final class ModItems {
@@ -1449,6 +1453,32 @@ public final class ModItems {
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_NOTE = ITEMS.register("sixty_seconds_note", () -> {
         SIXTY_SECONDS_NOTE = new net.exmo.sixty_seconds.content.item.SixtySecondsNoteItem(new Item.Properties().stacksTo(16));
         return SIXTY_SECONDS_NOTE;
+    });
+
+    // ── 挖掘工具（挖掘工具科技线，与工具-I 同级）────────────────────────
+    // 材质继承原版铁镐 / 铁锹；采掘等级=铁、耐久=铁(250)。
+    // 可采掘的方块通过原版 minecraft:tool 组件（NBT）声明（correct_for_drops + 铁镐速度 6.0）。
+    public static Item SIXTY_SECONDS_MINING_PICKAXE;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_MINING_PICKAXE = ITEMS.register("sixty_seconds_mining_pickaxe", () -> {
+        Tool pickaxeTool = new Tool(List.of(Tool.Rule.minesAndDrops(List.of(
+                Blocks.STONE, Blocks.COBBLESTONE, Blocks.ANDESITE, Blocks.GRANITE,
+                Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.NETHERRACK, Blocks.PRISMARINE,
+                Blocks.BLACKSTONE, Blocks.BASALT, Blocks.CALCITE, Blocks.DEEPSLATE,
+                Blocks.COBBLED_DEEPSLATE, Blocks.TUFF, Blocks.ICE, Blocks.PACKED_ICE, Blocks.BLUE_ICE
+        ), 6.0F)), 1.0F, 1);
+        SIXTY_SECONDS_MINING_PICKAXE = new Item(new Item.Properties().durability(250).component(DataComponents.TOOL, pickaxeTool));
+        return SIXTY_SECONDS_MINING_PICKAXE;
+    });
+
+    public static Item SIXTY_SECONDS_MINING_SHOVEL;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_MINING_SHOVEL = ITEMS.register("sixty_seconds_mining_shovel", () -> {
+        Tool shovelTool = new Tool(List.of(Tool.Rule.minesAndDrops(List.of(
+                Blocks.DIRT, Blocks.SAND, Blocks.GRAVEL, Blocks.SNOW, Blocks.SNOW_BLOCK,
+                Blocks.POWDER_SNOW, Blocks.GRASS_BLOCK, Blocks.MYCELIUM, Blocks.PODZOL,
+                Blocks.COARSE_DIRT, Blocks.MUD, Blocks.SHORT_GRASS, Blocks.TALL_GRASS, Blocks.DIRT_PATH
+        ), 6.0F)), 1.0F, 1);
+        SIXTY_SECONDS_MINING_SHOVEL = new Item(new Item.Properties().durability(250).component(DataComponents.TOOL, shovelTool));
+        return SIXTY_SECONDS_MINING_SHOVEL;
     });
 
     public static Item SIXTY_SECONDS_BIG_NOTE;

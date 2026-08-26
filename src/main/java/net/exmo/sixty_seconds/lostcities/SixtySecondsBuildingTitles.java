@@ -5,7 +5,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -79,7 +78,7 @@ public final class SixtySecondsBuildingTitles {
             // 副标题里的「星级」按各自星级对应的颜色逐颗上色（与星图 StarRegion.STAR_COLORS 完全一致）
             MutableComponent stars = Component.literal("");
             for (int i = 0; i < hit.star && i < STAR_COLORS.length; i++) {
-                stars.append(Component.literal("★").withColor(TextColor.fromRgb(STAR_COLORS[i])));
+                stars.append(Component.literal("★").withColor(STAR_COLORS[i]));
             }
             Component subtitle = Component.translatable("building.sixty_seconds.sixty_seconds.danger",
                     stars, hit.star);
