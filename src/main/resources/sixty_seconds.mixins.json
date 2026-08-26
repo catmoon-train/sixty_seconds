@@ -13,7 +13,8 @@
     "SixtySecondsMobPeacefulMixin",
     "SixtySecondsCakeBlockMixin",
     "SixtySecondsHealMixin",
-    "LostCityChunkFixerMixin"
+    "LostCityChunkFixerMixin",
+    "LostCityDamageAreaMixin"
   ],
   "client": [
     "WeatherRendererMixin"
