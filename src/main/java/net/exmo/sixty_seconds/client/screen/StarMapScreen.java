@@ -333,7 +333,7 @@ public class StarMapScreen extends Screen {
             int labelX = (int) ((corners[0][0] + corners[2][0]) / 2);
             int labelY = (int) ((corners[0][1] + corners[2][1]) / 2) - 2;
             Component label = Component.literal(region.starSymbol() + " ")
-                    .append(Component.translatable(region.name));
+                    .append(Component.literal(region.name));
             // 标签背景
             int labelW = font.width(label);
             g.fill(labelX - labelW / 2 - 2, labelY - 5, labelX + labelW / 2 + 2,

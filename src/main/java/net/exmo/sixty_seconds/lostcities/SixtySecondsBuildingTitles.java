@@ -55,17 +55,22 @@ public final class SixtySecondsBuildingTitles {
             LAST_BUILDING.put(player, id);
             int star = SixtySecondsLostCitiesStarMap.starForBuildingName(id);
             String displayKey = SixtySecondsLostCitiesStarMap.buildingDisplayKey(id);
-            Component title = Component.translatable(displayKey);
+            // 服务端按玩家自己的语言解析翻译键，避免客户端资源较旧时把原始键渲染出来
+            Component title = Component.literal(SixtySecondsLostCitiesStarMap.resolveFor(player, displayKey));
             Component subtitle;
             if (star >= 1 && star <= 5) {
-                subtitle = Component.translatable("building.sixty_seconds.sixty_seconds.danger",
-                        "★".repeat(star), star);
+                String tmpl = SixtySecondsLostCitiesStarMap.resolveFor(player,
+                        "building.sixty_seconds.sixty_seconds.danger");
+                subtitle = Component.literal(String.format(tmpl, "★".repeat(star), star));
             } else if (star == SixtySecondsLostCitiesStarMap.SAFE_STAR) {
-                subtitle = Component.translatable("building.sixty_seconds.sixty_seconds.safe_zone");
+                subtitle = Component.literal(SixtySecondsLostCitiesStarMap.resolveFor(player,
+                        "building.sixty_seconds.sixty_seconds.safe_zone"));
             } else if (star == SixtySecondsLostCitiesStarMap.UNGRADED) {
-                subtitle = Component.translatable("building.sixty_seconds.sixty_seconds.evacuation");
+                subtitle = Component.literal(SixtySecondsLostCitiesStarMap.resolveFor(player,
+                        "building.sixty_seconds.sixty_seconds.evacuation"));
             } else {
-                subtitle = Component.translatable("building.sixty_seconds.sixty_seconds.unknown");
+                subtitle = Component.literal(SixtySecondsLostCitiesStarMap.resolveFor(player,
+                        "building.sixty_seconds.sixty_seconds.unknown"));
             }
             SubtitleCommand.sendToPlayerTop(player, title, subtitle, 70);
         }
