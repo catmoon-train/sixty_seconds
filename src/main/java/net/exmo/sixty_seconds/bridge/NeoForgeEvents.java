@@ -60,6 +60,7 @@ public final class NeoForgeEvents {
     @SubscribeEvent
     public static void onLevelTick(LevelTickEvent.Post event) {
         if (event.getLevel() instanceof ServerLevel level) {
+            net.exmo.sixty_seconds.lostcities.SixtySecondsBuildingTitles.tick(level);
             SixtySecGameWorldComponent.KEY.get(level).serverTick();
             // 海洋（海岛）维度：独立于主世界对局，自行驱动海洋生物刷新、海盗 NPC 与海岛登岛检测
             if (level.dimension() == SixtySeconds.OCEAN_DIMENSION) {

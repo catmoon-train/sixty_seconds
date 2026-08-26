@@ -153,6 +153,8 @@ public final class SixtySecondsLostCitiesStarMap {
      * 用 WeakHashMap 以免阻止世界对象被 GC（维度卸载后自动清理）。
      */
     private static final Map<ServerLevel, ILostCityInformation> INFO_CACHE = new WeakHashMap<>();
+    /** 解析为 null（维度暂未就绪 / 非城市维度）时的重试冷却时间戳，避免每 tick 反复调用 getLostInfo，也避免首帧失败就永久失效。 */
+    private static final Map<ServerLevel, Long> NULL_RETRY_AT = new WeakHashMap<>();
 
     /**
      * 撤离点建筑中心坐标缓存（按维度）。世界生成阶段（{@code PostGenCityChunkEvent}）由
@@ -340,12 +342,15 @@ public final class SixtySecondsLostCitiesStarMap {
 
     @Nullable
     private static ILostCityInformation cachedLostCitiesInfo(ServerLevel level) {
-        // 缓存已命中：直接返回，避免每次查询都走 api()/getLostInfo() + try/catch。
         ILostCityInformation cached = INFO_CACHE.get(level);
         if (cached != null) {
             return cached;
         }
-        // 缓存未命中：仅在首次查询该维度（或上次降级为 null）时解析一次。
+        // 之前解析为 null（维度暂未就绪 / 非城市维度）：未到重试冷却则继续返回 null，避免每 tick 反复调用。
+        Long retryAt = NULL_RETRY_AT.get(level);
+        if (retryAt != null && level.getGameTime() < retryAt) {
+            return null;
+        }
         return resolveAndCache(level);
     }
 
@@ -361,9 +366,12 @@ public final class SixtySecondsLostCitiesStarMap {
             // LostCities 不可用（未安装/类路径缺失）：静默降级为无建筑星级。
             info = null;
         }
-        // 即使解析为 null 也写入缓存，避免对同一维度反复重试（维度不支持城市/LostCities 未接入时），
-        // 维度卸载后 WeakHashMap 自动清理，不会泄漏。
-        INFO_CACHE.put(level, info);
+        if (info != null) {
+            INFO_CACHE.put(level, info);   // 仅缓存成功结果
+        } else {
+            // 解析失败/暂不可用：约 5 秒后重试，避免“首帧未就绪就永久失效”，也不会每 tick 狂调 getLostInfo。
+            NULL_RETRY_AT.put(level, level.getGameTime() + 100);
+        }
         return info;
     }
 

@@ -258,8 +258,8 @@ public final class SixtySecondsManager {
         SixtySecondsInventoryLimit.tick(level);
         // 世界时间跟随日内子相位（清晨=日出/白天/晚上），准备阶段固定清晨
         net.exmo.sixty_seconds.SixtySecondsDayCycle.applyWorldTime(level, data);
-        // 进入建筑提示（名称+星级）与游戏相位无关：准备/白天/夜晚都应触发，故在相位 switch 外每 3 秒轮询
-        net.exmo.sixty_seconds.lostcities.SixtySecondsBuildingTitles.tick(level);
+        // 注意：进入建筑报幕（SixtySecondsBuildingTitles.tick）已移至 NeoForgeEvents.onLevelTick，
+        // 与游戏相位无关，未开始 60秒对局时也会触发，故此处不再调用。
         switch (data.phase) {
             case PREPARATION -> {
                 // 过渡动画中：冻结所有系统，仅等待动画结束
