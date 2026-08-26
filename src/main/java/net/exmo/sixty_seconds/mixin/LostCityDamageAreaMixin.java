@@ -34,12 +34,14 @@ import java.util.Random;
 public abstract class LostCityDamageAreaMixin {
 
     /** 大陨石坑（big explosion）的强制生成概率（LostCities 默认 0.002）。 */
-    private static final float FORCED_BIG_CHANCE = 0.08f;
-    /** 小炸弹坑（mini explosion）的强制生成概率（LostCities 默认 0.03）。 */
-    private static final float FORCED_MINI_CHANCE = 0.25f;
-    /** 大陨石坑半径上限（含），即坑最大半径 150。 */
-    private static final int BIG_EXPLOSION_MAX_RADIUS = 150;
-    /** 小炸弹坑半径上限（含），即坑最大半径 30。 */
+    private static final float FORCED_BIG_CHANCE = 0.004f;
+    /** 小炸弹坑（mini explosion）的强制生成概率（LostCities 默认 0.03，这里略高一点）。 */
+    private static final float FORCED_MINI_CHANCE = 0.05f;
+    /** 大陨石坑半径浮动区间（含）：30~80。 */
+    private static final int BIG_EXPLOSION_MIN_RADIUS = 30;
+    private static final int BIG_EXPLOSION_MAX_RADIUS = 80;
+    /** 小炸弹坑半径浮动区间（含）：5~30。 */
+    private static final int MINI_EXPLOSION_MIN_RADIUS = 5;
     private static final int MINI_EXPLOSION_MAX_RADIUS = 30;
 
     @Shadow private long seed;
@@ -53,9 +55,9 @@ public abstract class LostCityDamageAreaMixin {
         // 与原始 getExplosionAt 完全一致的随机序列：先 roll 概率，再依次取半径/x/y/z
         Random r = new Random(seed + (long) coord.chunkZ() * 295075153L + (long) coord.chunkX() * 797003437L);
         if (r.nextFloat() < FORCED_BIG_CHANCE) {
-            int lo = profile.EXPLOSION_MINRADIUS;
-            int radius = lo >= BIG_EXPLOSION_MAX_RADIUS ? lo
-                    : lo + r.nextInt(BIG_EXPLOSION_MAX_RADIUS - lo + 1);
+            int hi = Math.max(BIG_EXPLOSION_MIN_RADIUS, BIG_EXPLOSION_MAX_RADIUS);
+            int lo = Math.min(BIG_EXPLOSION_MIN_RADIUS, BIG_EXPLOSION_MAX_RADIUS);
+            int radius = lo + r.nextInt(hi - lo + 1);
             int y = BuildingInfo.getBuildingInfo(coord, provider).cityLevel * 6
                     + profile.EXPLOSION_MINHEIGHT + r.nextInt(profile.EXPLOSION_MAXHEIGHT - profile.EXPLOSION_MINHEIGHT);
             cir.setReturnValue(new Explosion(radius, new BlockPos(
@@ -74,9 +76,9 @@ public abstract class LostCityDamageAreaMixin {
         // 与原始 getMiniExplosionAt 完全一致的随机序列（不同乘子）
         Random r = new Random(seed + (long) coord.chunkZ() * 1400305337L + (long) coord.chunkX() * 573259391L);
         if (r.nextFloat() < FORCED_MINI_CHANCE) {
-            int lo = profile.MINI_EXPLOSION_MINRADIUS;
-            int radius = lo >= MINI_EXPLOSION_MAX_RADIUS ? lo
-                    : lo + r.nextInt(MINI_EXPLOSION_MAX_RADIUS - lo + 1);
+            int hi = Math.max(MINI_EXPLOSION_MIN_RADIUS, MINI_EXPLOSION_MAX_RADIUS);
+            int lo = Math.min(MINI_EXPLOSION_MIN_RADIUS, MINI_EXPLOSION_MAX_RADIUS);
+            int radius = lo + r.nextInt(hi - lo + 1);
             int y = BuildingInfo.getBuildingInfo(coord, provider).cityLevel * 6
                     + profile.MINI_EXPLOSION_MINHEIGHT + r.nextInt(profile.MINI_EXPLOSION_MAXHEIGHT - profile.MINI_EXPLOSION_MINHEIGHT);
             cir.setReturnValue(new Explosion(radius, new BlockPos(

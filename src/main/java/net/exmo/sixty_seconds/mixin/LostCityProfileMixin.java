@@ -17,15 +17,15 @@ public abstract class LostCityProfileMixin {
     /** 建筑被削顶/塌陷的概率（默认 0.05）。 */
     private static final float FORCED_RUIN_CHANCE = 0.5f;
     /** 废墟破坏层起始高度占楼高的最小比例（默认 0.8）。调低=更多楼从更低处被削。 */
-    private static final float FORCED_RUIN_MINLEVEL_PERCENT = 0.3f;
+    private static final float FORCED_RUIN_MINLEVEL_PERCENT = 0.5f;
     /** 废墟破坏层起始高度占楼高的最大比例（默认 1.0）。 */
     private static final float FORCED_RUIN_MAXLEVEL_PERCENT = 0.9f;
 
     // ===== 爆炸碎块外溢 =====
     /** 受损区块碎块溢出到相邻区块的系数（默认 200，越小碎块越多）。 */
-    private static final int FORCED_DEBRIS_FACTOR = 60;
-    /** 爆炸坑最大高度（默认 90，越大坑越深/越凿穿）。 */
-    private static final int FORCED_EXPLOSION_MAXHEIGHT = 120;
+    private static final int FORCED_DEBRIS_FACTOR = 100;
+    /** 爆炸坑最大高度（默认 90）。 */
+    private static final int FORCED_EXPLOSION_MAXHEIGHT = 90;
 
     // ===== 瓦砾 / 植被覆盖 =====
     /** 泥土覆盖层尺度（默认 3.0，越小层越厚）。 */
@@ -33,11 +33,11 @@ public abstract class LostCityProfileMixin {
     /** 落叶覆盖层尺度（默认 6.0，越小层越厚）。 */
     private static final float FORCED_RUBBLE_LEAVE_SCALE = 2.0f;
     /** 建筑外墙爬藤概率（默认 0.009）。 */
-    private static final float FORCED_VINE_CHANCE = 0.06f;
+    private static final float FORCED_VINE_CHANCE = 0.014f;
     /** 楼与街道边界杂叶概率（默认 0.1）。 */
-    private static final float FORCED_RANDOM_LEAF_BLOCK_CHANCE = 0.3f;
+    private static final float FORCED_RANDOM_LEAF_BLOCK_CHANCE = 0.18f;
     /** 杂叶厚度（默认 2）。 */
-    private static final int FORCED_RANDOM_LEAF_BLOCK_THICKNESS = 3;
+    private static final int FORCED_RANDOM_LEAF_BLOCK_THICKNESS = 2;
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void sixtySecondsForceApocalypticProfile(CallbackInfo ci) {
