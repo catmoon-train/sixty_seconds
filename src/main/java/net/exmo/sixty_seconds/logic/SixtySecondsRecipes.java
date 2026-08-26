@@ -474,7 +474,7 @@ public final class SixtySecondsRecipes {
                 List.of(in(Items.PAPER, 2), in(Items.LEATHER, 1)), Items.WRITABLE_BOOK, 1);
         add(list, "trainmurdermystery_note", Station.WORKBENCH, "tools_1", false,
                 List.of(in(Items.PAPER, 2)),
-                BuiltInRegistries.ITEM.get(ResourceLocation.tryBuild("trainmurdermystery", "note")), 1);
+                ModItems.SIXTY_SECONDS_NOTE, 1);
         add(list, "radio", Station.WORKBENCH, "tools_1", false,
                 List.of(in(elec, 2), in(wire, 3), in(battery, 2)), ModItems.SIXTY_SECONDS_RADIO, 1);
         add(list, "compass", Station.WORKBENCH, "tools_1", false,
