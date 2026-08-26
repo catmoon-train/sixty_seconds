@@ -1287,8 +1287,7 @@ public final class SixtySecondsDailyEvents {
                 }
                 List<ItemStack> gained = rollLoot(level, 1, "food");
                 gained.addAll(rollLoot(level, 1, "water"));
-                gained.add(new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM
-                        .get(net.minecraft.resources.ResourceLocation.parse("watheextraitems:wild_rice_seeds"))));
+                gained.add(new ItemStack(ModItems.SIXTY_SECONDS_WILD_RICE_SEEDS));
                 give(clicker, gained);
                 result(level, team, "smoker.r1", itemsText(gained));
             } else if (option == 2) {
@@ -1303,8 +1302,7 @@ public final class SixtySecondsDailyEvents {
                 for (int i = 0; i < 5; i++) gained.addAll(rollLoot(level, 1, "food"));
                 for (int i = 0; i < 5; i++) gained.addAll(rollLoot(level, 1, "water"));
                 gained.addAll(rollLoot(level, 3, "medicine"));
-                gained.add(new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM
-                        .get(net.minecraft.resources.ResourceLocation.parse("watheextraitems:industrial_hemp_seeds"))));
+                gained.add(new ItemStack(ModItems.SIXTY_SECONDS_HEMP_SEEDS));
                 give(clicker, gained);
                 result(level, team, "smoker.r2", itemsText(gained));
             } else {
@@ -1777,8 +1775,7 @@ public final class SixtySecondsDailyEvents {
                 tokens.addTokens(-5);
                 List<ItemStack> gained = rollLoot(level, 2, "food");
                 gained.addAll(rollLoot(level, 1, "medicine"));
-                gained.add(new ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM
-                        .get(net.minecraft.resources.ResourceLocation.parse("watheextraitems:wild_rice_seeds"))));
+                gained.add(new ItemStack(ModItems.SIXTY_SECONDS_WILD_RICE_SEEDS));
                 give(clicker, gained);
                 result(level, team, "seed_merchant.r1", itemsText(gained));
             } else {

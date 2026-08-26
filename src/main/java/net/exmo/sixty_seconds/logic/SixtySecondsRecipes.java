@@ -331,7 +331,7 @@ public final class SixtySecondsRecipes {
         };
     }
 
-    /** 第三方物品产物（watheextraitems 香烟/雪茄等）：运行时按 id 查，未装该 mod 时返回 null（跳过配方）。 */
+    /** 第三方物品产物（TACZ 枪械/弹药/配件）：运行时按 id 查，未装该 mod 时返回 null（跳过配方）。 */
     private static Item external(String id) {
         Item item = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(id));
         return item == Items.AIR ? null : item;
