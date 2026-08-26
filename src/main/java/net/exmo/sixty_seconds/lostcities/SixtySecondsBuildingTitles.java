@@ -4,6 +4,8 @@ import net.exmo.sixty_seconds.bridge.stubs.SubtitleCommand;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -24,6 +26,14 @@ public final class SixtySecondsBuildingTitles {
     private static final WeakHashMap<ServerPlayer, String> LAST_BUILDING = new WeakHashMap<>();
     /** 星图扫描半径（区块）。玩家处于建筑内，洪泛填充会从玩家所在区块扩展至整栋，故半径无需很大。 */
     private static final int STAR_TITLE_SCAN_RADIUS = 3;
+    /** 1~5 星对应的颜色，与星图 StarRegion.STAR_COLORS 保持一致（绿→青→金→橙→红）。 */
+    private static final int[] STAR_COLORS = {
+            0xFF55CC55, // ★ 绿
+            0xFF4AB8C0, // ★★ 青
+            0xFFFFD700, // ★★★ 金
+            0xFFE07B39, // ★★★★ 橙
+            0xFFD94040  // ★★★★★ 红
+    };
 
     private SixtySecondsBuildingTitles() {
     }
@@ -62,14 +72,17 @@ public final class SixtySecondsBuildingTitles {
                 continue; // 同一建筑内移动：不重复提示
             }
             LAST_BUILDING.put(player, id);
-            // 与「登上岛屿」报幕一致的上色：危险度（星级）越高越红，标题加粗
+            // 标题（建筑名）随危险度上色：越高越红，并加粗
             ChatFormatting nameColor = hit.star >= 4 ? ChatFormatting.RED
                     : hit.star >= 3 ? ChatFormatting.GOLD : ChatFormatting.AQUA;
-            ChatFormatting subColor = hit.star >= 4 ? ChatFormatting.DARK_RED
-                    : hit.star >= 3 ? ChatFormatting.YELLOW : ChatFormatting.GREEN;
             Component title = Component.translatable(hit.displayName).withStyle(nameColor, ChatFormatting.BOLD);
+            // 副标题里的「星级」按各自星级对应的颜色逐颗上色（与星图 StarRegion.STAR_COLORS 完全一致）
+            MutableComponent stars = Component.literal("");
+            for (int i = 0; i < hit.star && i < STAR_COLORS.length; i++) {
+                stars.append(Component.literal("★").withColor(TextColor.fromRgb(STAR_COLORS[i])));
+            }
             Component subtitle = Component.translatable("building.sixty_seconds.sixty_seconds.danger",
-                    "★".repeat(hit.star), hit.star).withStyle(subColor);
+                    stars, hit.star);
             SubtitleCommand.sendToPlayerTop(player, title, subtitle, 70);
         }
     }

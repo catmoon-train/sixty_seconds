@@ -20,6 +20,7 @@ import net.exmo.sixty_seconds.bridge.stubs.SubtitleCommand;
 import net.exmo.sixty_seconds.bridge.fabric.UseItemCallback;
 import net.exmo.sixty_seconds.bridge.fabric.ServerLivingEntityEvents;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -513,9 +514,13 @@ public final class SixtySecondsIslands {
         ChatFormatting nameColor = lv >= 4 ? ChatFormatting.RED : lv >= 3 ? ChatFormatting.GOLD
                 : ChatFormatting.AQUA;
         Component main = island.name().copy().withStyle(nameColor, ChatFormatting.BOLD);
+        // 危险等级按「星级对应的颜色」逐档上色（与星图 StarRegion.STAR_COLORS 完全一致：绿→青→金→橙→红）
+        final int[] STAR_COLORS = {
+                0xFF55CC55, 0xFF4AB8C0, 0xFFFFD700, 0xFFE07B39, 0xFFD94040
+        };
+        int subColor = STAR_COLORS[Math.max(0, Math.min(lv, STAR_COLORS.length) - 1)];
         Component sub = Component.translatable(LANG + "level", lv)
-                .withStyle(lv >= 4 ? ChatFormatting.DARK_RED : lv >= 3 ? ChatFormatting.YELLOW
-                        : ChatFormatting.GREEN);
+                .withColor(TextColor.fromRgb(subColor));
         SubtitleCommand.sendToPlayerTop(player, main, sub, 90, false);
         // 登岛返航锁：上岛后 30 秒内不许返航——否则「扬帆→抓一箱→立刻撤」能把海岛刷成零风险自助餐。
         // 用 gameTime 时间戳记一次，到点自然失效（不 tick 递减、不同步；见 ai_doc.md）。
