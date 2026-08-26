@@ -14,7 +14,8 @@
     "SixtySecondsCakeBlockMixin",
     "SixtySecondsHealMixin",
     "LostCityChunkFixerMixin",
-    "LostCityDamageAreaMixin"
+    "LostCityDamageAreaMixin",
+    "LostCityProfileMixin"
   ],
   "client": [
     "WeatherRendererMixin"
