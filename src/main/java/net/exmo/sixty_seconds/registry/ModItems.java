@@ -17,14 +17,16 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.AdventureModePredicate;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.component.AdventureModePredicate;
 import net.minecraft.world.item.component.Tool;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.predicate.BlockPredicate;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -1472,8 +1474,7 @@ public final class ModItems {
         Tool pickaxeTool = new Tool(List.of(Tool.Rule.minesAndDrops(pickaxeBlocks, 6.0F)), 1.0F, 1);
         SIXTY_SECONDS_MINING_PICKAXE = new Item(new Item.Properties().durability(250)
                 .component(DataComponents.TOOL, pickaxeTool)
-                .component(DataComponents.CAN_BREAK, AdventureModePredicate.Builder.loose()
-                        .add(pickaxeBlocks.toArray(new Block[0])).build()));
+                .component(DataComponents.CAN_BREAK, toAdventurePredicate(pickaxeBlocks)));
         return SIXTY_SECONDS_MINING_PICKAXE;
     });
 
@@ -1486,10 +1487,18 @@ public final class ModItems {
         Tool shovelTool = new Tool(List.of(Tool.Rule.minesAndDrops(shovelBlocks, 6.0F)), 1.0F, 1);
         SIXTY_SECONDS_MINING_SHOVEL = new Item(new Item.Properties().durability(250)
                 .component(DataComponents.TOOL, shovelTool)
-                .component(DataComponents.CAN_BREAK, AdventureModePredicate.Builder.loose()
-                        .add(shovelBlocks.toArray(new Block[0])).build()));
+                .component(DataComponents.CAN_BREAK, toAdventurePredicate(shovelBlocks)));
         return SIXTY_SECONDS_MINING_SHOVEL;
     });
+
+    // 把方块列表转成冒险模式的 can_break 谓词（宽松匹配：方块任意状态都允许，如雪的任意层数）。
+    private static AdventureModePredicate toAdventurePredicate(List<Block> blocks) {
+        List<BlockPredicate> predicates = new java.util.ArrayList<>(blocks.size());
+        for (Block block : blocks) {
+            predicates.add(BlockPredicate.forBlock(block));
+        }
+        return new AdventureModePredicate(predicates, false);
+    }
 
     public static Item SIXTY_SECONDS_BIG_NOTE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_BIG_NOTE = ITEMS.register("sixty_seconds_big_note", () -> {
