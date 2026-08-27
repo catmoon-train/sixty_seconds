@@ -304,7 +304,7 @@ public final class SixtySecondsManager {
             }
         }
         if (!toRemove.isEmpty()) {
-            SixtySeconds.LOGGER.info("[60s] 建图完毕，清理了 {} 个残留掉落物", toRemove.size());
+            SixtySeconds.LOGGER.info("[60s] Build done, cleared {} leftover drops", toRemove.size());
         }
     }
 
@@ -550,7 +550,7 @@ public final class SixtySecondsManager {
         }
         // 最后一天结束：有存活幸存者→幸存者胜，否则败（详见 SixtySecondsWinConditions）。
         SixtySecondsWinConditions.finish(level, data);
-        SixtySeconds.LOGGER.info("[60s] 最后一天结束，直升机撤离 {} 人，游戏结算。", evacCount);
+        SixtySeconds.LOGGER.info("[60s] Last day ended, helicopter evacuated {} people, game settling.", evacCount);
     }
 
     /**

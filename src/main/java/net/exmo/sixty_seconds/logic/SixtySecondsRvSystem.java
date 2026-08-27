@@ -89,7 +89,7 @@ public final class SixtySecondsRvSystem {
             spawnRv(level, config, data, team, index);
             index++;
         }
-        SixtySeconds.LOGGER.info("[60s] 房车模式：为 {} 支队伍生成常驻房车。", data.teams.size());
+        SixtySeconds.LOGGER.info("[60s] RV mode: spawned persistent RVs for {} teams.", data.teams.size());
     }
 
     /** 游戏结束/重置：解除本系统的所有强载区块并清除房车实体与相关状态。 */

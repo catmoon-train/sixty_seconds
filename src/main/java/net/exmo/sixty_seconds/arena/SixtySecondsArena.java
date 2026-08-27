@@ -109,7 +109,7 @@ public final class SixtySecondsArena {
         restoreAll(level);
         if (config == null || !config.isComplete()) {
             clearArenaEntities(level, config, List.of(), List.of(), data);
-            SixtySeconds.LOGGER.warn("[60s] 未配置完整的区域模板（sixty_seconds_config.json），跳过按队克隆建图。");
+            SixtySeconds.LOGGER.warn("[60s] Area template config incomplete (sixty_seconds_config.json) — skipping per-team clone build.");
             onComplete.run();
             return;
         }
@@ -228,8 +228,8 @@ public final class SixtySecondsArena {
         }
         int teams = data.teams.size();
         if (!exitDoorBindings.isEmpty() && exitDoorBindings.size() < teams) {
-            SixtySeconds.LOGGER.warn("[60s] 探索区出口门只有 {} 扇，少于 {} 支队伍：多出的队没有专属回家门"
-                    + "（夜袭锚点缺省、回家只能走自家避难所门）。建议在探索区多绑几扇出口门。",
+            SixtySeconds.LOGGER.warn("[60s] Exploration zone has only {} exit doors, fewer than {} teams: extra teams have no dedicated home door"
+                    + " (night-raid anchor defaults to null, can only return via their own shelter door). Suggest binding more exit doors in the exploration zone.",
                     exitDoorBindings.size(), teams);
         }
         warnOverlappingShelters(config, shelterOffsets);
@@ -247,7 +247,7 @@ public final class SixtySecondsArena {
             work.add(new WorkItem(floorBox, BlockPos.ZERO, FLOOR_STATE));
         }
         GameUtils.serverTaskQueue.add(new BuildTask(level, snapshots, work, onComplete, teams));
-        SixtySeconds.LOGGER.info("[60s] 开始异步建图：{} 支队伍，{} 个子盒分批放置。", teams, work.size());
+        SixtySeconds.LOGGER.info("[60s] Starting async build: {} teams, {} sub-boxes placed in batches.", teams, work.size());
     }
 
     /**
@@ -274,8 +274,8 @@ public final class SixtySecondsArena {
             index++;
         }
         if (!ok) {
-            SixtySeconds.LOGGER.error("[60s] 克隆区超出世界建筑高度（{}~{}），已中止建图——否则会「建图有进度但一格没生成、"
-                    + "玩家被传送到半空」。请按上面各行给出的可用范围改 sixty_seconds_config.json 后重开一局。",
+            SixtySeconds.LOGGER.error("[60s] Clone region exceeds world build height ({}~{}) — build aborted to avoid 'build shows progress but places nothing, "
+                    + "players teleported into mid-air'. Adjust sixty_seconds_config.json within the ranges given above, then restart the game.",
                     minY, maxY);
         }
         return ok;
@@ -289,8 +289,8 @@ public final class SixtySecondsArena {
         if (lo >= minY && hi <= maxY) {
             return true;
         }
-        SixtySeconds.LOGGER.error("[60s] 第 {} 队的{}克隆到 y={}~{}，超出世界建筑高度 {}~{}。"
-                        + "模板 y={}~{}（{} 格高），当前 Y 偏移 {}；{} 的可用范围是 {}~{}。",
+        SixtySeconds.LOGGER.error("[60s] Team {}'s {} clone at y={}~{} exceeds world build height {}~{}."
+                        + " Template y={}~{} ({} tall), current Y offset {}; usable range for {} is {}~{}.",
                 index + 1, what, lo, hi, minY, maxY,
                 template.minY(), template.maxY(), template.getYSpan(), offset.getY(),
                 field, minY - template.minY(), maxY - template.maxY());
@@ -312,8 +312,8 @@ public final class SixtySecondsArena {
                 AABB boxA = boxOf(template, shelterOffsets.get(a)).inflate(CLEAR_MARGIN);
                 AABB boxB = boxOf(template, shelterOffsets.get(b)).inflate(CLEAR_MARGIN);
                 if (boxA.intersects(boxB)) {
-                    SixtySeconds.LOGGER.warn("[60s] 第 {} 队与第 {} 队的避难所落位重叠（出口门挨得比避难所模板还近）："
-                            + "后建的会盖掉先建的。请把这两扇探索区出口门拉开到大于避难所模板尺寸 + {} 格净空。",
+                    SixtySeconds.LOGGER.warn("[60s] Team {} and team {} shelter placements overlap (exit doors closer than the shelter template):"
+                            + " later one overwrites earlier. Move these two exploration-zone exit doors apart by more than shelter template size + {} clearance.",
                             a + 1, b + 1, CLEAR_MARGIN);
                 }
             }
@@ -352,8 +352,8 @@ public final class SixtySecondsArena {
         boolean wantAnchor = config.shelterAtSearchDoorEnabled;
         BlockPos anchor = config.shelterAnchorDoor == null ? null : config.shelterAnchorDoor.toBlockPos();
         if (wantAnchor && anchor == null) {
-            SixtySeconds.LOGGER.warn("[60s] shelter_at_door 已开启但未登记避难所锚点门"
-                    + "（/60s_area anchor <x y z>），本局避难所回退到网格克隆。");
+            SixtySeconds.LOGGER.warn("[60s] shelter_at_door enabled but no shelter anchor door registered"
+                    + " (/60s_area anchor <x y z>); this game's shelters fall back to grid clone.");
         }
         List<BlockPos> offsets = new ArrayList<>();
         int anchored = 0;
@@ -371,8 +371,8 @@ public final class SixtySecondsArena {
             }
         }
         if (wantAnchor && anchor != null && anchored < data.teams.size()) {
-            SixtySeconds.LOGGER.warn("[60s] shelter_at_door 已开启，但只有 {} / {} 支队伍分到了探索区出口门，"
-                    + "其余队的避难所回退到网格克隆。请在探索区多绑几扇出口门。", anchored, data.teams.size());
+            SixtySeconds.LOGGER.warn("[60s] shelter_at_door enabled, but only {} / {} teams got an exploration-zone exit door,"
+                    + " the rest fall back to grid clone. Bind more exit doors in the exploration zone.", anchored, data.teams.size());
         }
         return offsets;
     }
@@ -408,7 +408,7 @@ public final class SixtySecondsArena {
             }
             offsets.set(i, new BlockPos(off.getX(), newY, off.getZ()));
         }
-        SixtySeconds.LOGGER.info("[60s] 避难所含活板门 → 智能下沉埋地（{} 支队伍按各自地表对齐活板门）。", offsets.size());
+        SixtySeconds.LOGGER.info("[60s] Shelter contains trapdoor → smart sink-burial ({} teams aligned to their own surface).", offsets.size());
         return true;
     }
 
@@ -448,20 +448,20 @@ public final class SixtySecondsArena {
             try (java.io.InputStream in = Files.newInputStream(nbtPath)) {
                 return NbtIo.readCompressed(in, new NbtAccounter(Long.MAX_VALUE, Integer.MAX_VALUE));
             } catch (Exception e) {
-                SixtySeconds.LOGGER.warn("[60s] 加载模板 {} 失败：{}", name, e.getMessage());
+                SixtySeconds.LOGGER.warn("[60s] Failed to load template {}: {}", name, e.getMessage());
             }
         }
         // 2) 回退到模组内置默认模板
         try (java.io.InputStream in = SixtySeconds.class
                 .getResourceAsStream("/data/sixty_seconds/templates/" + name + ".nbt")) {
             if (in != null) {
-                SixtySeconds.LOGGER.info("[60s] 使用模组内置模板：{}", name);
+                SixtySeconds.LOGGER.info("[60s] Using built-in mod template: {}", name);
                 return NbtIo.readCompressed(in, new NbtAccounter(Long.MAX_VALUE, Integer.MAX_VALUE));
             }
         } catch (Exception e) {
-            SixtySeconds.LOGGER.warn("[60s] 加载内置模板 {} 失败：{}", name, e.getMessage());
+            SixtySeconds.LOGGER.warn("[60s] Failed to load built-in template {}: {}", name, e.getMessage());
         }
-        SixtySeconds.LOGGER.warn("[60s] 未找到模板 {}（世界导出目录与模组内置均无，将回退从世界克隆）", name);
+        SixtySeconds.LOGGER.warn("[60s] Template {} not found (neither world export dir nor built-in mod) — falling back to world clone", name);
         return null;
     }
 
@@ -545,7 +545,7 @@ public final class SixtySecondsArena {
             }
         }
         if (!toRemove.isEmpty()) {
-            SixtySeconds.LOGGER.info("[60s] 清理竞技场残留：{} 个尸体/掉落物。", toRemove.size());
+            SixtySeconds.LOGGER.info("[60s] Cleaned arena leftovers: {} corpses/drops.", toRemove.size());
         }
 
         // 布防迟到实体清理窗口：建图全程生效（deadline 由 BuildTask 完成后收尾）
@@ -880,7 +880,7 @@ public final class SixtySecondsArena {
             if (cancelled) {
                 return;
             }
-            SixtySeconds.LOGGER.info("[60s] 异步建图完成：{} 支队伍。", teams);
+            SixtySeconds.LOGGER.info("[60s] Async build complete: {} teams.", teams);
             // 进度收尾：与其他模式一致，最后在 actionbar 打出 100%（黄色），保证进度视觉走满。
             Component done = Component.translatable("message.sixty_seconds.sixty_seconds.building", 100)
                     .withStyle(net.minecraft.ChatFormatting.YELLOW);

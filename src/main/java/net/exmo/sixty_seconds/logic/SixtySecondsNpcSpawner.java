@@ -135,7 +135,7 @@ public final class SixtySecondsNpcSpawner {
         // 搭图期留下的预览立牌先清掉：下面会按同一份 config 重新生成正式 NPC，不清就是两份
         int cleared = clearPreviews(level);
         if (cleared > 0) {
-            net.exmo.sixty_seconds.SixtySeconds.LOGGER.info("[60s] 清理搭图预览 NPC {} 只，按配置重新生成。", cleared);
+            net.exmo.sixty_seconds.SixtySeconds.LOGGER.info("[60s] Cleared {} build-preview NPCs, regenerating per config.", cleared);
         }
         SixtySecondsConfig config = SixtySecondsConfigStore.current(level).orElse(null);
         if (config == null || config.npcSpawns == null || config.npcSpawns.isEmpty()) {

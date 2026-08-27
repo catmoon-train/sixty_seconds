@@ -1158,7 +1158,7 @@ public final class SixtySecondsIslands {
                 data.save.islands = loaded.islands != null ? loaded.islands : new ArrayList<>();
             }
         } catch (IOException | RuntimeException e) {
-            SixtySeconds.LOGGER.warn("[60s] 读取 {} 失败：{}", FILE_NAME, e.toString());
+            SixtySeconds.LOGGER.warn("[60s] Failed to read {}: {}", FILE_NAME, e.toString());
         }
     }
 
@@ -1170,7 +1170,7 @@ public final class SixtySecondsIslands {
                 GSON.toJson(data.save, writer);
             }
         } catch (IOException e) {
-            SixtySeconds.LOGGER.warn("[60s] 写入 {} 失败：{}", FILE_NAME, e.toString());
+            SixtySeconds.LOGGER.warn("[60s] Failed to write {}: {}", FILE_NAME, e.toString());
         }
     }
 }

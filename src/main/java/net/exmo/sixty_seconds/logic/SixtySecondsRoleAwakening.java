@@ -89,7 +89,7 @@ public final class SixtySecondsRoleAwakening {
             assigned++;
         }
         if (assigned > 0) {
-            SixtySeconds.LOGGER.info("[60s] 今日觉醒 {} 名玩家职业。", assigned);
+            SixtySeconds.LOGGER.info("[60s] Today awakened jobs for {} players.", assigned);
         }
     }
 

@@ -62,7 +62,7 @@ public final class SixtySecondsRandomBoxConfigStore {
                     return data;
                 }
             } catch (IOException | RuntimeException e) {
-                SixtySeconds.LOGGER.warn("[60s] 读取 {} 失败：{}", FILE_NAME, e.toString());
+                SixtySeconds.LOGGER.warn("[60s] Failed to read {}: {}", FILE_NAME, e.toString());
             }
         }
         Data data = defaultConfig();
@@ -78,7 +78,7 @@ public final class SixtySecondsRandomBoxConfigStore {
                 GSON.toJson(data, writer);
             }
         } catch (IOException e) {
-            SixtySeconds.LOGGER.warn("[60s] 写入 {} 失败：{}", FILE_NAME, e.toString());
+            SixtySeconds.LOGGER.warn("[60s] Failed to write {}: {}", FILE_NAME, e.toString());
         }
     }
 

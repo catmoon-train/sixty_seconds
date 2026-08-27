@@ -79,7 +79,7 @@ public final class SixtySecondsConfigStore {
             SixtySecondsConfig config = GSON.fromJson(reader, SixtySecondsConfig.class);
             return Optional.ofNullable(config);
         } catch (IOException | RuntimeException e) {
-            SixtySeconds.LOGGER.warn("[60s] 读取 {} 失败：{}", configPath.getFileName(), e.toString());
+            SixtySeconds.LOGGER.warn("[60s] Failed to read {}: {}", configPath.getFileName(), e.toString());
             return Optional.empty();
         }
     }
@@ -97,9 +97,9 @@ public final class SixtySecondsConfigStore {
             try (Writer writer = Files.newBufferedWriter(configPath, StandardCharsets.UTF_8)) {
                 GSON.toJson(config, writer);
             }
-            SixtySeconds.LOGGER.info("[60s] 配置已保存：{}", describe(level));
+            SixtySeconds.LOGGER.info("[60s] Config saved: {}", describe(level));
         } catch (IOException e) {
-            SixtySeconds.LOGGER.warn("[60s] 写入 {} 失败：{}", configPath.getFileName(), e.toString());
+            SixtySeconds.LOGGER.warn("[60s] Failed to write {}: {}", configPath.getFileName(), e.toString());
         }
     }
 }

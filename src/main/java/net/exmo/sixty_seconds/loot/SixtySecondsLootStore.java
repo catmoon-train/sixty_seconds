@@ -53,7 +53,7 @@ public final class SixtySecondsLootStore {
                     return table;
                 }
             } catch (IOException | RuntimeException e) {
-                SixtySeconds.LOGGER.warn("[60s] 读取 {} 失败：{}", FILE_NAME, e.toString());
+                SixtySeconds.LOGGER.warn("[60s] Failed to read {}: {}", FILE_NAME, e.toString());
             }
         }
         SixtySecondsLootTable table = loadBuiltinDefault();
@@ -73,7 +73,7 @@ public final class SixtySecondsLootStore {
                 }
             }
         } catch (IOException | RuntimeException e) {
-            SixtySeconds.LOGGER.warn("[60s] 读取内置默认 loot 表失败：{}", e.toString());
+            SixtySeconds.LOGGER.warn("[60s] Failed to load built-in default loot table: {}", e.toString());
         }
         return SixtySecondsLootTable.defaultTable();
     }
@@ -86,7 +86,7 @@ public final class SixtySecondsLootStore {
                 GSON.toJson(table, writer);
             }
         } catch (IOException e) {
-            SixtySeconds.LOGGER.warn("[60s] 写入 {} 失败：{}", FILE_NAME, e.toString());
+            SixtySeconds.LOGGER.warn("[60s] Failed to write {}: {}", FILE_NAME, e.toString());
         }
     }
 }

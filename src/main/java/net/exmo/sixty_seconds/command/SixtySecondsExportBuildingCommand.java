@@ -219,7 +219,7 @@ public final class SixtySecondsExportBuildingCommand {
         } catch (Exception e) {
             source.sendFailure(Component.translatable("commands.60s.export_building.fail", e.getMessage())
                     .withStyle(ChatFormatting.RED));
-            SixtySeconds.LOGGER.warn("[60s] export_building 写文件失败", e);
+            SixtySeconds.LOGGER.warn("[60s] export_building failed to write file", e);
             return 0;
         }
     }

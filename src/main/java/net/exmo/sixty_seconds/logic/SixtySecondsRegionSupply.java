@@ -80,7 +80,7 @@ public final class SixtySecondsRegionSupply {
                 placed++;
             }
         }
-        SixtySeconds.LOGGER.info("[60s] 区域自动撒箱：等级 {}，目标 {}，实放 {} 个。", areaLevel, want, placed);
+        SixtySeconds.LOGGER.info("[60s] Regional auto-supply: level {}, target {}, placed {}.", areaLevel, want, placed);
         return placed;
     }
 
