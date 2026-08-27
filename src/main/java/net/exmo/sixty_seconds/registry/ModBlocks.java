@@ -668,6 +668,14 @@ public final class ModBlocks {
                 return SIXTY_SECONDS_MINIGAME_QUEST_ENTITY;
             });
 
+    // 老鼠洞方块（每天右键可掏出基础资源，也有可能掏不到）
+    public static Block SIXTY_SECONDS_RAT_HOLE;
+    public static final DeferredBlock<Block> HOLD_SIXTY_SECONDS_RAT_HOLE = BLOCKS.register(
+            "sixty_seconds_rat_hole", () -> {
+                SIXTY_SECONDS_RAT_HOLE = new net.exmo.sixty_seconds.content.block.SixtySecondsRatHoleBlock(
+                        BlockBehaviour.Properties.of().strength(1.5F));
+                return SIXTY_SECONDS_RAT_HOLE;
+            });
     public static BlockEntityType<net.exmo.sixty_seconds.content.block_entity.SixtySecondsRatHoleBlockEntity> SIXTY_SECONDS_RAT_HOLE_ENTITY;
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<net.exmo.sixty_seconds.content.block_entity.SixtySecondsRatHoleBlockEntity>> HOLD_SIXTY_SECONDS_RAT_HOLE_ENTITY =
             BLOCK_ENTITIES.register("sixty_seconds_rat_hole", () -> {
@@ -689,14 +697,6 @@ public final class ModBlocks {
             "sixty_seconds_spawn_point",
             () -> new BlockItem(HOLD_SIXTY_SECONDS_SPAWN_POINT.get(), new Item.Properties()));
 
-    // 老鼠洞方块（每天右键可掏出基础资源，也有可能掏不到）
-    public static Block SIXTY_SECONDS_RAT_HOLE;
-    public static final DeferredBlock<Block> HOLD_SIXTY_SECONDS_RAT_HOLE = BLOCKS.register(
-            "sixty_seconds_rat_hole", () -> {
-                SIXTY_SECONDS_RAT_HOLE = new net.exmo.sixty_seconds.content.block.SixtySecondsRatHoleBlock(
-                        BlockBehaviour.Properties.of().strength(1.5F));
-                return SIXTY_SECONDS_RAT_HOLE;
-            });
     public static final DeferredItem<Item> ITEM_SIXTY_SECONDS_RAT_HOLE = ITEMS.register(
             "sixty_seconds_rat_hole",
             () -> new BlockItem(HOLD_SIXTY_SECONDS_RAT_HOLE.get(), new Item.Properties()));
