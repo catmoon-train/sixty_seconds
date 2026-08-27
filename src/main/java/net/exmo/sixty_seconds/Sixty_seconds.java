@@ -43,8 +43,8 @@ public class Sixty_seconds {
         net.exmo.sixty_seconds.world.OceanChunkGenerator.CHUNK_GENERATORS.register(modEventBus); // 海洋维度生成器
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(ModNetwork::register);
-        // 客户端 HUD：自定义状态栏图层（RegisterGuiLayersEvent）+ 隐藏原版生命/饥饿等条（RenderGuiLayerEvent.Pre）
-        modEventBus.addListener(net.exmo.sixty_seconds.client.SixtySecondsClientHud::registerGuiLayers);
+        // 客户端 HUD：全部绘制统一收敛到 RenderGuiEvent.Post（见 SixtySecondsClientHud）；
+        // 原版生命/饥饿等条隐藏在 RenderGuiLayerEvent.Pre。
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.register(net.exmo.sixty_seconds.client.SixtySecondsClientHud.class);
         ModParticles.register(modEventBus);
         modContainer.registerConfig(ModConfig.Type.CLIENT, WeatherVisualConfig.SPEC);

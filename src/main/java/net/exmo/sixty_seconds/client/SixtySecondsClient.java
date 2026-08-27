@@ -320,19 +320,6 @@ public final class SixtySecondsClient {
         }
     }
 
-    @SubscribeEvent
-    public static void registerGui(RegisterGuiLayersEvent event) {
-        event.registerAboveAll(SixtySeconds.id("hud"), (graphics, deltaTracker) -> {
-            for (HudRenderCallback callback : HudRenderCallback.EVENT.invokers()) {
-                callback.onHudRender(graphics, deltaTracker);
-            }
-            FakeGuiGraphics fake = new FakeGuiGraphics(graphics, true);
-            for (var consumer : CommonHudRenderCallback.EVENT.getConsumer()) {
-                consumer.accept(fake, deltaTracker);
-            }
-        });
-    }
-
     private static void onClientTick(ClientTickEvent.Post event) {
         Minecraft client = Minecraft.getInstance();
         if (client.level != null) {
