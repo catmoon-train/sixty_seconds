@@ -22,7 +22,8 @@
   ],
   "client": [
     "WeatherRendererMixin",
-    "GuiMixin"
+    "GuiMixin",
+    "LocalPlayerDropMixin"
   ],
   "injectors": {
     "defaultRequire": 1
