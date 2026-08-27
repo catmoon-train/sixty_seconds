@@ -668,6 +668,18 @@ public final class ModBlocks {
                 return SIXTY_SECONDS_MINIGAME_QUEST_ENTITY;
             });
 
+    // 出生点方块（透明、无碰撞，放在已登记的住宅/庇护所模板内即登记该建筑出生点）
+    public static Block SIXTY_SECONDS_SPAWN_POINT;
+    public static final DeferredBlock<Block> HOLD_SIXTY_SECONDS_SPAWN_POINT = BLOCKS.register(
+            "sixty_seconds_spawn_point", () -> {
+                SIXTY_SECONDS_SPAWN_POINT = new net.exmo.sixty_seconds.content.block.SixtySecondsSpawnPointBlock(
+                        BlockBehaviour.Properties.of().strength(2.5F).noOcclusion().noCollission());
+                return SIXTY_SECONDS_SPAWN_POINT;
+            });
+    public static final DeferredItem<Item> ITEM_SIXTY_SECONDS_SPAWN_POINT = ITEMS.register(
+            "sixty_seconds_spawn_point",
+            () -> new BlockItem(HOLD_SIXTY_SECONDS_SPAWN_POINT.get(), new Item.Properties()));
+
     private ModBlocks() {}
 
     public static void register(IEventBus bus) {

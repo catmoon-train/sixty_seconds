@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "layers": [
+    { "layer0": "minecraft:item/compass" }
+  ]
+}
