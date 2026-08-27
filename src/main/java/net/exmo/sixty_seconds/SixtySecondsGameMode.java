@@ -89,7 +89,6 @@ public class SixtySecondsGameMode extends GameMode {
     public void initializeGame(ServerLevel serverWorld, SixtySecGameWorldComponent gameWorldComponent,
             List<ServerPlayer> players) {
         SixtySecondsSearchZones.reset(serverWorld);
-        SixtySecondsArena.restoreAll(serverWorld);
         SixtySecondsState.reset(serverWorld);
         SixtySecondsManager.begin(serverWorld, gameWorldComponent, players);
     }
@@ -136,7 +135,6 @@ public class SixtySecondsGameMode extends GameMode {
         net.exmo.sixty_seconds.logic.TrapCageSystem.reset(world);
         net.exmo.sixty_seconds.logic.SixtySecondsRvSystem.reset(world); // 房车：解除强载区块 + 清房车（须在 State.reset 前）
         SixtySecondsSearchZones.reset(world);
-        SixtySecondsArena.restoreAll(world);
         SixtySecondsState.reset(world);
         // 区域地图回退到全图 playArea
         for (net.minecraft.server.level.ServerPlayer player : world.players()) {

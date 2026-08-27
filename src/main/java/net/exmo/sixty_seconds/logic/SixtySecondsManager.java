@@ -176,8 +176,8 @@ public final class SixtySecondsManager {
             p.displayClientMessage(buildingHint, true);
         }
         // 预建复用：只要此前 /60s build 留下过锚点，就<b>复用该锚点</b>建造——不再要求开局队伍数与预建时完全一致。
-        // 否则队伍数一变（如 build 后又有玩家加入）就跳过本分支、跑去网格原点 (teamBase) 重建并用 restoreAll 清掉
-        // 玩家建好的避难所，导致「开局没传送到我 build 的避难所」。现在始终在你 build 的位置建并传送过去。
+        // 否则队伍数一变（如 build 后又有玩家加入）就跳过本分支、跑去网格原点 (teamBase) 重建，
+        // 从而清掉玩家建好的避难所，导致「开局没传送到我 build 的避难所」。现在始终在你 build 的位置建并传送过去。
         if (SixtySecondsMod.PREBUILT_ANCHOR != null && !data.teams.isEmpty()) {
             net.minecraft.core.BlockPos anchor = SixtySecondsMod.PREBUILT_ANCHOR;
             // 队伍数一致 → 只补建「尚未预建」的部分（build all 时 needMask=0，已全部建好，直接复用）；
@@ -200,7 +200,7 @@ public final class SixtySecondsManager {
             }, needMask, anchor, null);
             return;
         }
-        // 无预建锚点：清掉残留标记，走正常异步建图（会先 restoreAll 还原任何上一局残留）
+        // 无预建锚点：清掉残留标记，走正常异步建图（复原机制已移除，不再还原上一局残留）
         SixtySecondsMod.PREBUILT_DATA = null;
         SixtySecondsMod.PREBUILT_MASK = 0;
         SixtySecondsMod.PREBUILT_ANCHOR = null;

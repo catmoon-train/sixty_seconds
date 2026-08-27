@@ -143,14 +143,10 @@ public final class SixtySecondsArena {
 
     /**
      * 建图核心实现。
-     * @param restore true=先 {@link #restoreAll} 清掉上一局/上一次预建的方块再建（默认开局路径）；
-     *               false=续建，保留已有方块与快照，仅把缺失部分追加进去（供 {@link #buildContinue} 使用）。
-     * @param existingSnapshots 续建时复用/追加的快照表；restore=true 时忽略。
      */
     private static void build(ServerLevel level, SixtySecondsState.Data data, SixtySecondsConfig config,
             Runnable onComplete, int buildMask, BlockPos anchor, boolean restore,
             LinkedHashMap<BlockPos, Snapshot> existingSnapshots) {
-        if (restore) restoreAll(level);
         if (config == null || !config.isComplete()) {
             clearArenaEntities(level, config, List.of(), List.of(), data);
             SixtySeconds.LOGGER.warn("[60s] Area template config incomplete (sixty_seconds_config.json) — skipping per-team clone build.");
@@ -541,33 +537,6 @@ public final class SixtySecondsArena {
         return null;
     }
 
-    /** 结束/重开时把所有克隆写入的方块按快照还原。 */
-    public static void restoreAll(ServerLevel level) {
-        LinkedHashMap<BlockPos, Snapshot> snapshots = ARENAS.remove(level);
-        if (snapshots == null) {
-            return;
-        }
-        List<Map.Entry<BlockPos, Snapshot>> entries = new ArrayList<>(snapshots.entrySet());
-        for (int i = entries.size() - 1; i >= 0; i--) {
-            BlockPos pos = entries.get(i).getKey();
-            Snapshot snapshot = entries.get(i).getValue();
-            // 先清空局内建出的容器（物资箱/箱子等）再还原：否则 setBlock 顶掉容器触发 onRemove
-            // 把内容物全喷到地上，区块卸载后变成下一局「清不掉的残留掉落物」
-            net.minecraft.world.Clearable.tryClear(level.getBlockEntity(pos));
-            // KNOWN_SHAPE：按快照原样回写，抑制邻块形状更新——否则还原过程中挂靠方块
-            // （火把/门/压力板等）会因邻块暂缺被判定失去支撑而掉落成物品
-            level.setBlock(pos, snapshot.state, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
-            if (snapshot.blockEntityTag != null && level.getBlockEntity(pos) instanceof BlockEntity be) {
-                CompoundTag tag = snapshot.blockEntityTag.copy();
-                tag.putInt("x", pos.getX());
-                tag.putInt("y", pos.getY());
-                tag.putInt("z", pos.getZ());
-                be.loadWithComponents(tag, level.registryAccess());
-                be.setChanged();
-            }
-            level.getLightEngine().checkBlock(pos);
-        }
-    }
 
     /**
      * 清理竞技场区域（模板区 + 各队克隆区）内上一局残留的尸体和掉落物。
@@ -736,7 +705,6 @@ public final class SixtySecondsArena {
                         if (level.getBlockState(dst).isAir()) {
                             continue;
                         }
-                        snapshot(level, snapshots, dst);
                         net.minecraft.world.Clearable.tryClear(level.getBlockEntity(dst));
                         level.setBlock(dst, fs, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
                         level.getLightEngine().checkBlock(dst);
@@ -758,7 +726,6 @@ public final class SixtySecondsArena {
                         if (level.getBlockState(dst).isAir()) {
                             continue;
                         }
-                        snapshot(level, snapshots, dst);
                         net.minecraft.world.Clearable.tryClear(level.getBlockEntity(dst));
                         level.setBlock(dst, air, Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
                         level.getLightEngine().checkBlock(dst);
@@ -771,10 +738,6 @@ public final class SixtySecondsArena {
             for (int x = src.minX(); x <= src.maxX(); x++) {
                 for (int z = src.minZ(); z <= src.maxZ(); z++) {
                     BlockPos dst = new BlockPos(x + offset.getX(), y + offset.getY(), z + offset.getZ());
-                    snapshot(level, snapshots, dst);
-                    // 快照存好内容物后清空目标位容器：setBlock 换掉容器方块会触发 onRemove →
-                    // dropContentsOnDestroy 把内容物全喷到地上（住宅克隆顶掉旧箱子出现满地掉落的根因）；
-                    // 还原时快照 NBT 会把内容物写回，不丢数据
                     net.minecraft.world.Clearable.tryClear(level.getBlockEntity(dst));
                 }
             }
@@ -871,15 +834,6 @@ public final class SixtySecondsArena {
             this.state = state;
             this.nbt = nbt;
         }
-    }
-
-    private static void snapshot(ServerLevel level, LinkedHashMap<BlockPos, Snapshot> snapshots, BlockPos pos) {
-        if (snapshots.containsKey(pos)) {
-            return;
-        }
-        BlockEntity be = level.getBlockEntity(pos);
-        CompoundTag tag = be == null ? null : be.saveWithFullMetadata(level.registryAccess());
-        snapshots.put(pos.immutable(), new Snapshot(level.getBlockState(pos), tag));
     }
 
     private static AABB boxOf(BoundingBox box, BlockPos offset) {
