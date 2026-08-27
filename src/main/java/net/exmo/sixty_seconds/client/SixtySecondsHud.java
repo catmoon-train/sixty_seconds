@@ -64,7 +64,7 @@ public final class SixtySecondsHud {
         // 不再依赖 CommonHudRenderCallback 的触发点，避免重复绘制。
     }
 
-    private static void render(FakeGuiGraphics graphics) {
+    static void render(FakeGuiGraphics graphics) {
         Minecraft client = Minecraft.getInstance();
         if (client.player == null || client.level == null || SixtySecBridgeClient.gameComponent == null
                 || !SixtySecBridgeClient.gameComponent.isRunning()

@@ -182,7 +182,9 @@ public final class SixtySecondsArena {
         List<BlockPos> shelterOffsets = shelterOffsets(config, data, exitDoorBindings, ocean);
         // 住宅落位：始终贴网格。ocean 模式把整座建筑压到 y≈-39，地板贴在 Y=-40（海洋维度 min_y=-64，可达）；
         // 普通模式最低层落在 y≈0。
-        int residentialBaseY = ocean ? (-39 - config.residentialTemplate.min.y) : (-config.residentialTemplate.min.y);
+        // 住宅建造基准 Y 调到 -30：最低层落在 Y=-30（模板 min.y 通常为 0，故偏移 = -30 - min.y）。
+        // ocean 模式仍压到 -39 / 地板 -40（海洋维度专用）。
+        int residentialBaseY = ocean ? (-39 - config.residentialTemplate.min.y) : (-30 - config.residentialTemplate.min.y);
         List<BlockPos> residentialOffsets = new ArrayList<>();
         for (int i = 0; i < data.teams.size(); i++) {
             BlockPos grid = config.teamOffset(i);
@@ -417,9 +419,9 @@ public final class SixtySecondsArena {
         if (config.rvEnabled) {
             List<BlockPos> offsets = new ArrayList<>();
             for (int index = 0; index < data.teams.size(); index++) {
-                // 庇护所贴地：模板最低层落在 y≈0（房子与庇护所全部生成到 y 轴 0 格附近）
+                // 庇护所建造基准 Y 调到 -30：模板最低层落在 Y=-30（门锚定模式才走上面分支贴出口门）
                 BlockPos g = config.teamOffset(index);
-                offsets.add(new BlockPos(g.getX(), -config.shelterTemplate.min.y, g.getZ()));
+                offsets.add(new BlockPos(g.getX(), -30 - config.shelterTemplate.min.y, g.getZ()));
             }
             return offsets;
         }
@@ -439,9 +441,9 @@ public final class SixtySecondsArena {
                 offsets.add(exitDoor.door.toBlockPos().subtract(anchor));
                 anchored++;
             } else {
-                // 庇护所贴地：模板最低层落在 y≈0（门锚定模式才走上面分支贴出口门）
+                // 庇护所建造基准 Y 调到 -30：模板最低层落在 Y=-30（门锚定模式才走上面分支贴出口门）
                 BlockPos g = config.teamOffset(index);
-                offsets.add(new BlockPos(g.getX(), -config.shelterTemplate.min.y, g.getZ()));
+                offsets.add(new BlockPos(g.getX(), -30 - config.shelterTemplate.min.y, g.getZ()));
             }
         }
         if (wantAnchor && anchor != null && anchored < data.teams.size()) {
