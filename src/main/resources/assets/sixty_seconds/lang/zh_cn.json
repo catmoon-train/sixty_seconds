@@ -157,6 +157,7 @@
   "tooltip.sixty_seconds.sixty_seconds_sniper": "超远射程，一枪打空目标健康（直接倒地）,一次需要3发子弹。右键开镜、开镜后再右键射击；冷却 20 秒，与所有枪械共享。",
   "tooltip.sixty_seconds.sixty_seconds_rpg": "发射爆炸火箭——命中处范围爆炸，波及所有人（包括你自己）。每发消耗 5 发子弹，冷却 8 秒，与所有枪械共享。",
   "hud.sixty_seconds.sixty_seconds.prep_countdown": "陨石坠落倒计时 %1$s 秒！",
+  "hud.sixty_seconds.sixty_seconds.prep_title": "准备阶段",
   "hud.sixty_seconds.sixty_seconds.sick_warning": "⚠ 生病了！尽快服药，否则发烧掉血",
   "hud.sixty_seconds.sixty_seconds.explore_cooldown": "探索归来冷却 %1$s 秒",
   "hud.sixty_seconds.sixty_seconds.door_purpose.search": "搜索门",

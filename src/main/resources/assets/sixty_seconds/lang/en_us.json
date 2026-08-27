@@ -153,6 +153,7 @@
   "tooltip.sixty_seconds.sixty_seconds_sniper": "Extreme range; one shot drains full health (instant down). Right-click to scope, right-click again to fire; 20s cooldown shared across all guns.",
   "tooltip.sixty_seconds.sixty_seconds_rpg": "Fires an explosive rocket — blast hits everyone near impact, including you. Costs 5 ammo per shot; 8s cooldown shared across all guns.",
   "hud.sixty_seconds.sixty_seconds.prep_countdown": "Meteor impact in %1$ss!",
+  "hud.sixty_seconds.sixty_seconds.prep_title": "Prep Phase",
   "hud.sixty_seconds.sixty_seconds.sick_warning": "⚠ Sick! Take medicine or the fever will drain you",
   "hud.sixty_seconds.sixty_seconds.explore_cooldown": "Return cooldown %1$ss",
   "hud.sixty_seconds.sixty_seconds.door_purpose.search": "Search",

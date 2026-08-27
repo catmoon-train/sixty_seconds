@@ -17,10 +17,12 @@
     "LostCityDamageAreaMixin",
     "LostCityProfileMixin",
     "GlobalTodoMixin",
-    "LevelChunkSpawnerWarningMixin"
+    "LevelChunkSpawnerWarningMixin",
+    "AbstractContainerMenuMixin"
   ],
   "client": [
-    "WeatherRendererMixin"
+    "WeatherRendererMixin",
+    "GuiMixin"
   ],
   "injectors": {
     "defaultRequire": 1

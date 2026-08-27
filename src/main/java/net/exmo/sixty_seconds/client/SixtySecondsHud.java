@@ -75,6 +75,8 @@ public final class SixtySecondsHud {
         LocalPlayer player = client.player;
         SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
 
+        renderPrepBanner(graphics, client, stats);
+
         if (stats.teamId < 0) {
             SixtySecondsStateAlerts.reset();
             return;
@@ -382,5 +384,34 @@ public final class SixtySecondsHud {
             return false;
         }
         return zone.contains(player.getX(), player.getY(), player.getZ());
+    }
+
+    /** 开局准备阶段（第 0 天）在屏幕上方居中显示醒目的倒计时横幅。 */
+    private static void renderPrepBanner(FakeGuiGraphics graphics, Minecraft client, SixtySecondsStatsComponent stats) {
+        long gameTime = client.level.getGameTime();
+        long remaining = stats.phaseEndTick - gameTime;
+        if (stats.dayNumber != 0 || remaining <= 0) {
+            return;
+        }
+        int seconds = (int) Math.ceil(remaining / 20.0);
+        int cx = graphics.guiWidth() / 2;
+        int top = 60;
+
+        Component title = Component.translatable("hud.sixty_seconds.sixty_seconds.prep_title");
+        graphics.pose().pushPose();
+        graphics.pose().translate(cx, top, 0);
+        graphics.pose().scale(1.4f, 1.4f, 1f);
+        int tw = client.font.width(title);
+        graphics.drawString(client.font, title, -tw / 2, 0, 0xFFE8D9A8, false);
+        graphics.pose().popPose();
+
+        Component time = Component.literal(String.valueOf(seconds));
+        int color = seconds <= 10 ? 0xFFFF5050 : 0xFFFFC857;
+        graphics.pose().pushPose();
+        graphics.pose().translate(cx, top + 26, 0);
+        graphics.pose().scale(2.6f, 2.6f, 1f);
+        int w2 = client.font.width(time);
+        graphics.drawString(client.font, time, -w2 / 2, 0, color, false);
+        graphics.pose().popPose();
     }
 }

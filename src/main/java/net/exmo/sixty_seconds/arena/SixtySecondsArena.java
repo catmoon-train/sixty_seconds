@@ -309,12 +309,16 @@ public final class SixtySecondsArena {
                 if (shelterOffsets.get(a).equals(shelterOffsets.get(b))) {
                     continue; // 同偏移=同一份回退网格位（网格本就按队错开，不是重叠）
                 }
-                AABB boxA = boxOf(template, shelterOffsets.get(a)).inflate(CLEAR_MARGIN);
-                AABB boxB = boxOf(template, shelterOffsets.get(b)).inflate(CLEAR_MARGIN);
-                if (boxA.intersects(boxB)) {
+                AABB baseA = boxOf(template, shelterOffsets.get(a));
+                AABB baseB = boxOf(template, shelterOffsets.get(b));
+                if (baseA.inflate(CLEAR_MARGIN).intersects(baseB.inflate(CLEAR_MARGIN))) {
                     SixtySeconds.LOGGER.warn("[60s] Team {} and team {} shelter placements overlap (exit doors closer than the shelter template):"
                             + " later one overwrites earlier. Move these two exploration-zone exit doors apart by more than shelter template size + {} clearance.",
                             a + 1, b + 1, CLEAR_MARGIN);
+                } else if (baseA.inflate(100).intersects(baseB)) {
+                    // 未重叠但间距不足 100 格（anchor 模式跟随出口门，无法自动校正，仅报警）。
+                    SixtySeconds.LOGGER.error("[60s] Team {} and team {} shelter placements are closer than 100 blocks; generation will be incomplete.",
+                            a + 1, b + 1);
                 }
             }
         }

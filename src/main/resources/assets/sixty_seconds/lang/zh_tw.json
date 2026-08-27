@@ -150,6 +150,7 @@
   "tooltip.sixty_seconds.sixty_seconds_sniper": "超遠射程，一槍打空目標健康（直接倒地）。右鍵開鏡、開鏡後再右鍵射擊；冷卻 20 秒，與所有槍械共享。",
   "tooltip.sixty_seconds.sixty_seconds_rpg": "發射爆炸火箭——命中處範圍爆炸，波及所有人（包括你自己）。每發消耗 5 發子彈，冷卻 8 秒，與所有槍械共享。",
   "hud.sixty_seconds.sixty_seconds.prep_countdown": "隕石墜落倒計時 %1$s 秒！",
+  "hud.sixty_seconds.sixty_seconds.prep_title": "準備階段",
   "hud.sixty_seconds.sixty_seconds.sick_warning": "⚠ 生病了！儘快服藥，否則發燒掉血",
   "hud.sixty_seconds.sixty_seconds.explore_cooldown": "探索歸來冷卻 %1$s 秒",
   "hud.sixty_seconds.sixty_seconds.door_purpose.search": "搜索門",

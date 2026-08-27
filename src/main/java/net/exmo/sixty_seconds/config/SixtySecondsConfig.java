@@ -304,7 +304,21 @@ public class SixtySecondsConfig {
 
     /** 第 index（从 0 起）支队伍的网格偏移。 */
     public BlockPos teamOffset(int index) {
-        return new BlockPos(teamBase.x + index * teamGridSpacing, teamBase.y, teamBase.z);
+        // 自动校正间距下限：相邻队伍（房子/庇护所）至少相隔 100 格，避免生成不完全。
+        int spacing = Math.max(teamGridSpacing, minTeamSpacing());
+        return new BlockPos(teamBase.x + index * spacing, teamBase.y, teamBase.z);
+    }
+
+    /** 相邻队伍最小间距下限 = 模板最大宽度 + 100 格。 */
+    private int minTeamSpacing() {
+        int maxWidth = 0;
+        if (residentialTemplate != null) {
+            maxWidth = Math.max(maxWidth, Math.abs(residentialTemplate.max.x - residentialTemplate.min.x));
+        }
+        if (shelterTemplate != null) {
+            maxWidth = Math.max(maxWidth, Math.abs(shelterTemplate.max.x - shelterTemplate.min.x));
+        }
+        return maxWidth + 100;
     }
 
     public boolean isComplete() {
