@@ -90,7 +90,7 @@
   "message.sixty_seconds.sixty_seconds.rat_hole_canned": "一只肥硕的老鼠叼着半罐肉罐头钻出来，被你一把抢下！",
   "message.sixty_seconds.sixty_seconds.rat_hole_dirty": "老鼠把脏水打翻在你脚边……你只捞到一点浑水。",
   "message.sixty_seconds.sixty_seconds.rat_hole_cooldown": "今天已经掏过老鼠洞了，明早再来吧。",
-  "message.sixty_seconds.sixty_seconds.rat_hole_inactive": "游戏还没开始，老鼠洞里空荡荡的。"
+  "message.sixty_seconds.sixty_seconds.rat_hole_inactive": "游戏还没开始，老鼠洞里空荡荡的。",
   "block.sixty_seconds.sixty_seconds_shelter_panel": "避难所控制面板",
   "tooltip.sixty_seconds.sixty_seconds_shelter_panel": "避难所控制面板：右键查看全队仪表盘——家门耐久、电力、科技与成员状态。",
   "gui.sixty_seconds.sixty_seconds.power_title": "电力系统",
@@ -3665,5 +3665,27 @@
   "building.sixty_seconds.sixty_seconds.safe_zone": "安全区",
   "building.sixty_seconds.sixty_seconds.evacuation": "撤离点",
   "building.sixty_seconds.sixty_seconds.danger": "%1$s 危险度 %2$s",
-  "building.sixty_seconds.sixty_seconds.unknown": "未知区域"
+  "building.sixty_seconds.sixty_seconds.unknown": "未知区域",
+
+  "effect.sixty_seconds.used_baned": "按键封印",
+  "effect.sixty_seconds.move_baned": "移动封印",
+  "effect.sixty_seconds.break_in_intruder": "破门闯入者",
+  "effect.sixty_seconds.vision_fog": "视野迷雾",
+  "effect.sixty_seconds.invincible": "无敌",
+  "item.sixty_seconds.newspaper.author": "作者：%s",
+  "item.sixty_seconds.newspaper.draft": "报纸草稿 %s",
+  "item.sixty_seconds.newspaper.draft.warp": "（上次修改：%s）",
+  "item.sixty_seconds.newspaper.lore.draft": "（草稿）",
+  "item.sixty_seconds.newspaper.name": "报纸 %s",
+  "item.sixty_seconds.newspaper.title": "标题：%s",
+  "item.sixty_seconds.newspaper.title.warp": "（标题：%s）",
+  "message.sixty_seconds.hotline.intel.report": "§e第%s天 · %s支队伍存活 · %s人在线 · 天气：%s",
+  "message.sixty_seconds.hotline.recycle.confirmed": "§a回收成功！明早将把 %s 份废料兑换为 %s 枚游戏币放入你的邮箱。",
+  "message.sixty_seconds.hotline.weather.current": "§e当前天气：%s",
+  "message.sixty_seconds.hotline.weather.forecast": "§b第%s天：%s\n§b第%s天：%s\n§b第%s天：%s",
+  "message.sixty_seconds.sixty_seconds.filthy_jar_filled": "§c污秽玻璃罐已装满血液。",
+  "message.sixty_seconds.sixty_seconds.revive_not_teammate": "§c无法复活：对方不是你的队友。",
+  "message.sixty_seconds.sixty_seconds.revive_offline": "§c无法复活：对方不在线。",
+  "message.sixty_seconds.sixty_seconds.totem_saved": "§6图腾救了你一命！"
+
 }
