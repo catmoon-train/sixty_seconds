@@ -23,7 +23,6 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.core.component.DataComponents;
-import net.exmo.sixty_seconds.content.item.AdventureBlockItem;
 import net.exmo.sixty_seconds.content.item.MiningShearsItem;
 import net.exmo.sixty_seconds.content.item.MiningToolItem;
 import net.minecraft.world.item.ShearsItem;
@@ -1500,8 +1499,13 @@ public final class ModItems {
                 Blocks.CYAN_TERRACOTTA, Blocks.PURPLE_TERRACOTTA, Blocks.BLUE_TERRACOTTA,
                 Blocks.BROWN_TERRACOTTA, Blocks.GREEN_TERRACOTTA, Blocks.RED_TERRACOTTA, Blocks.BLACK_TERRACOTTA,
                 Blocks.IRON_BARS, Blocks.COBBLESTONE_WALL, Blocks.QUARTZ_BLOCK, Blocks.SMOOTH_QUARTZ,
-                // 铺路方块（本模组；世界中即灰色混凝土）/ 灯笼（本模组）
-                Blocks.GRAY_CONCRETE, Blocks.LANTERN);
+                // 铺路方块 / 铺路灯笼（本模组独立方块）
+                ModBlocks.HOLD_SIXTY_SECONDS_PAVING_BLOCK.get(), ModBlocks.HOLD_SIXTY_SECONDS_LANTERN.get(),
+                // 门：铁门 + 所有种类的木门
+                Blocks.IRON_DOOR,
+                Blocks.OAK_DOOR, Blocks.SPRUCE_DOOR, Blocks.BIRCH_DOOR, Blocks.JUNGLE_DOOR,
+                Blocks.ACACIA_DOOR, Blocks.DARK_OAK_DOOR, Blocks.CRIMSON_DOOR, Blocks.WARPED_DOOR,
+                Blocks.MANGROVE_DOOR, Blocks.CHERRY_DOOR, Blocks.BAMBOO_DOOR);
         Tool pickaxeTool = new Tool(List.of(Tool.Rule.minesAndDrops(pickaxeBlocks, 6.0F)), 1.0F, 1);
         SIXTY_SECONDS_MINING_PICKAXE = new MiningToolItem(new Item.Properties().durability(250)
                 .component(DataComponents.TOOL, pickaxeTool)
@@ -1537,20 +1541,6 @@ public final class ModItems {
         SIXTY_SECONDS_MINING_SHEARS = new MiningShearsItem(new Item.Properties().durability(238)
                 .component(DataComponents.CAN_BREAK, toAdventurePredicate(shearsBlocks)));
         return SIXTY_SECONDS_MINING_SHEARS;
-    });
-
-    // 铺路方块：材质继承灰色混凝土；可在冒险模式放置（无需通电，任意方块 ×4 合成）。
-    public static Item SIXTY_SECONDS_PAVING_BLOCK;
-    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_PAVING_BLOCK = ITEMS.register("sixty_seconds_paving_block", () -> {
-        SIXTY_SECONDS_PAVING_BLOCK = new AdventureBlockItem(Blocks.GRAY_CONCRETE, new Item.Properties());
-        return SIXTY_SECONDS_PAVING_BLOCK;
-    });
-
-    // 灯笼：继承原版灯笼（材质/行为一致），可在冒险模式放置（无需通电，任意方块 ×2 + 木炭 ×1 合成）。
-    public static Item SIXTY_SECONDS_LANTERN;
-    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_LANTERN = ITEMS.register("sixty_seconds_lantern", () -> {
-        SIXTY_SECONDS_LANTERN = new AdventureBlockItem(Blocks.LANTERN, new Item.Properties());
-        return SIXTY_SECONDS_LANTERN;
     });
 
     // 把方块列表转成冒险模式的 can_break 谓词（宽松匹配：方块任意状态都允许，如雪的任意层数）。

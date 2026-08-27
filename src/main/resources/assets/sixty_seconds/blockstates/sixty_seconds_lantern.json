@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "hanging=false": { "model": "sixty_seconds:block/sixty_seconds_lantern" },
+    "hanging=true": { "model": "sixty_seconds:block/sixty_seconds_lantern_hanging" }
+  }
+}

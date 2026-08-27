@@ -531,11 +531,11 @@ public final class SixtySecondsRecipes {
         // 铺路方块：任意方块 ×4（铺路方块科技线，无需通电）
         add(list, "paving_block", Station.WORKBENCH, "paving_blocks", false,
                 List.of(any("vanilla_block", 4, vanillaBlockItems())),
-                net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_PAVING_BLOCK, 1);
+                net.exmo.sixty_seconds.registry.ModBlocks.ITEM_SIXTY_SECONDS_PAVING_BLOCK.get(), 1);
         // 灯笼：任意方块 ×2 + 木炭 ×1（铺路方块科技线，无需通电）
         add(list, "lantern", Station.WORKBENCH, "paving_blocks", false,
                 List.of(any("vanilla_block", 2, vanillaBlockItems()), in(Items.CHARCOAL, 1)),
-                net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_LANTERN, 1);
+                net.exmo.sixty_seconds.registry.ModBlocks.ITEM_SIXTY_SECONDS_LANTERN.get(), 1);
 
         // ── 背包（裁缝台）─────────────────────────────────────────────
         add(list, "backpack_small", Station.TAILOR, "backpack_1", false,

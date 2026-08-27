@@ -6,7 +6,6 @@ import net.exmo.sixty_seconds.SixtySecondsPhase;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.logic.SixtySecondsRescue;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -88,7 +87,5 @@ public class SixtySecondsRescueBeaconItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
-        tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.rescue_beacon")
-                .withStyle(ChatFormatting.GRAY));
     }
 }

@@ -12,6 +12,12 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
+import java.util.List;
+import net.minecraft.advancements.critereon.BlockPredicate;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.AdventureModePredicate;
+import net.minecraft.world.level.block.LanternBlock;
+import net.exmo.sixty_seconds.content.item.SixtySecondsShelterPlaceableBlockItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class ModBlocks {
@@ -129,6 +135,30 @@ public final class ModBlocks {
         return SIXTY_SECONDS_DISMANTLER;
     });
     public static final DeferredItem<Item> ITEM_SIXTY_SECONDS_DISMANTLER = ITEMS.register("sixty_seconds_dismantler", () -> new net.exmo.sixty_seconds.content.item.SixtySecondsPlaceableBlockItem(HOLD_SIXTY_SECONDS_DISMANTLER.get(), new Item.Properties()));
+
+    // 铺路方块：独立方块，贴图继承灰色混凝土；只能在白色混凝土标记附近放置，且庇护所内禁止放置。
+    public static Block SIXTY_SECONDS_PAVING_BLOCK;
+    public static final DeferredBlock<Block> HOLD_SIXTY_SECONDS_PAVING_BLOCK = BLOCKS.register("sixty_seconds_paving_block", () -> {
+        SIXTY_SECONDS_PAVING_BLOCK = new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.GRAY_CONCRETE).strength(2.0F));
+        return SIXTY_SECONDS_PAVING_BLOCK;
+    });
+    public static final DeferredItem<Item> ITEM_SIXTY_SECONDS_PAVING_BLOCK = ITEMS.register("sixty_seconds_paving_block", () -> new SixtySecondsShelterPlaceableBlockItem(
+            HOLD_SIXTY_SECONDS_PAVING_BLOCK.get(),
+            new Item.Properties().component(DataComponents.CAN_PLACE_ON,
+                    new AdventureModePredicate(List.of(BlockPredicate.Builder.block().build()), false))));
+
+    // 铺路灯笼：独立方块，材质/行为继承原版灯笼（发光、可悬挂）；只能在白色混凝土标记附近放置，且庇护所内禁止放置。
+    public static Block SIXTY_SECONDS_LANTERN;
+    public static final DeferredBlock<Block> HOLD_SIXTY_SECONDS_LANTERN = BLOCKS.register("sixty_seconds_lantern", () -> {
+        SIXTY_SECONDS_LANTERN = new LanternBlock(BlockBehaviour.Properties.of()
+                .lightLevel(s -> 15).strength(0.3F)
+                .sound(net.minecraft.world.level.block.SoundType.LANTERN).noCollission());
+        return SIXTY_SECONDS_LANTERN;
+    });
+    public static final DeferredItem<Item> ITEM_SIXTY_SECONDS_LANTERN = ITEMS.register("sixty_seconds_lantern", () -> new SixtySecondsShelterPlaceableBlockItem(
+            HOLD_SIXTY_SECONDS_LANTERN.get(),
+            new Item.Properties().component(DataComponents.CAN_PLACE_ON,
+                    new AdventureModePredicate(List.of(BlockPredicate.Builder.block().build()), false))));
 
     public static Block SIXTY_SECONDS_WORKBENCH;
     public static final DeferredBlock<Block> HOLD_SIXTY_SECONDS_WORKBENCH = BLOCKS.register("sixty_seconds_workbench", () -> {
