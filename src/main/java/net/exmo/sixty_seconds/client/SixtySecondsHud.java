@@ -60,7 +60,8 @@ public final class SixtySecondsHud {
     }
 
     public static void register() {
-        CommonHudRenderCallback.EVENT.register((graphics, deltaTracker) -> render(graphics));
+        // 自定义 HUD 现统一通过 RegisterGuiLayersEvent（SixtySecondsClientHud）每帧可靠绘制，
+        // 不再依赖 CommonHudRenderCallback 的触发点，避免重复绘制。
     }
 
     private static void render(FakeGuiGraphics graphics) {

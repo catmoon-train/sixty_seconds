@@ -132,7 +132,11 @@ public class SixtySecGameWorldComponent implements AutoSyncedComponent {
         this.gameStatus = buf.readEnum(GameStatus.class);
         if (buf.readBoolean()) {
             ResourceLocation id = buf.readResourceLocation();
-            this.gameMode = SixtySecGameModes.get(id);
+            // 客户端按 id 查到的 GameMode 是另一份实例，与服务器侧的 SixtySecondsMod.MODE 不是同一个对象，
+            // 导致所有「getGameMode() == SixtySecondsMod.MODE」判断在客户端恒为 false（HUD/状态栏全不显示）。
+            // 对本模组自己的模式，直接复用 SixtySecondsMod.MODE 实例，使 == 比较在客户端也成立。
+            this.gameMode = id.equals(SixtySecondsMod.MODE_ID) && SixtySecondsMod.MODE != null
+                    ? SixtySecondsMod.MODE : SixtySecGameModes.get(id);
         } else {
             this.gameMode = null;
         }
