@@ -313,6 +313,9 @@ public final class SixtySecondsArena {
                     new BlockPos(arenaMaxX + margin, -40, arenaMaxZ + margin));
             work.add(new WorkItem(floorBox, BlockPos.ZERO, FLOOR_STATE));
         }
+        // 预建（/60s build）时游戏尚未 RUNNING，但仍需建图，故用独立的 BUILDING 标记驱动 BuildTask，
+        // 不再依赖 RUNNING（否则预建会在首 tick 被误判中止）。
+        net.exmo.sixty_seconds.SixtySecondsMod.BUILDING = true;
         GameUtils.serverTaskQueue.add(new BuildTask(level, snapshots, work, onComplete, teams));
         SixtySeconds.LOGGER.info("[60s] Starting async build: {} teams, {} sub-boxes placed in batches.", teams, work.size());
     }
@@ -647,8 +650,9 @@ public final class SixtySecondsArena {
     /** 把模板盒切成 ≈{@link #CHUNK_TARGET} 方块的子盒，每个配上该队偏移，作为一个放置工作项。
      *  {@code template} 非空时该工作项按导出结构模板 NBT 放置（保留箱子内容物），否则从世界克隆。 */
     private static void addChunks(List<WorkItem> work, BoundingBox templateBox, BlockPos offset, CompoundTag template) {
+        BlockPos boxOrigin = new BlockPos(templateBox.minX(), templateBox.minY(), templateBox.minZ());
         for (BoundingBox chunk : buildChunks(templateBox, CHUNK_TARGET)) {
-            work.add(new WorkItem(chunk, offset, template));
+            work.add(new WorkItem(chunk, offset, template, boxOrigin));
         }
     }
 
@@ -774,7 +778,7 @@ public final class SixtySecondsArena {
             }
         }
         if (item.template() != null) {
-            copyFromTemplate(level, src, offset, item.template());
+            copyFromTemplate(level, src, item.boxOrigin(), offset, item.template());
         } else {
             BlockCopyUtils.copyLayer(level, src, offset);
         }
@@ -782,41 +786,48 @@ public final class SixtySecondsArena {
 
     /**
      * 按导出的结构模板 NBT（保留方块实体/箱子内容物）把子盒克隆到目标偏移。
-     * 与 {@link BlockCopyUtils#copyLayer} 行为一致：src 为模板在世界中的绝对源盒（子盒），
-     * 模板坐标为相对其 min 的 0-based 偏移——用 {@code src.min} 作为 templateMin 把相对坐标映射回世界源坐标，
-     * 从而复用同一套源子盒与偏移语义。未列出的方块（空气）按空气放置。
+     * {@code boxOrigin} 为<b>完整</b>模板盒（config 盒）的原点，{@code src} 是它被切成的一个子盒；
+     * 落点换算统一用 boxOrigin（而非 src.min，否则分块后每块各自原点错位），使模板内相对坐标正确映射到
+     * 世界位置，且不受模板 NBT 原始捕获坐标空间影响（内置 shelter1 等也能落到玩家配置的 region）。
+     * 未列出的方块（空气）按空气放置。
      */
-    private static void copyFromTemplate(ServerLevel level, BoundingBox src, BlockPos offset, CompoundTag template) {
+    private static void copyFromTemplate(ServerLevel level, BoundingBox src, BlockPos boxOrigin, BlockPos offset, CompoundTag template) {
         ListTag blocks = template.getList("blocks", Tag.TAG_COMPOUND);
         ListTag palette = template.getList("palette", Tag.TAG_COMPOUND);
-        // 相对坐标 → (方块状态, 方块实体 NBT)
-        Map<BlockPos, TemplateBlock> lookup = new HashMap<>();
-        // 模板原点 = NBT 内所有方块 pos 的最小值（不是子盒 src.min！模板被切成多子盒后，
-        // 只有第一块的子盒 min 才等于模板原点，其余子盒若用自身 min 当原点会整体错位，
-        // 命中不到正确方块而反复放置模板起点那一块 —— 表现即「房子只重复一块」）
+        if (blocks.isEmpty()) {
+            return; // 空模板，无内容可放
+        }
+        // 模板自身原点 = NBT 内所有方块 pos 的最小值（与克隆区 config 盒坐标无关）
         int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE, minZ = Integer.MAX_VALUE;
         for (int i = 0; i < blocks.size(); i++) {
-            CompoundTag e = blocks.getCompound(i);
-            int[] pos = e.getIntArray("pos");
+            int[] pos = blocks.getCompound(i).getIntArray("pos");
             minX = Math.min(minX, pos[0]);
             minY = Math.min(minY, pos[1]);
             minZ = Math.min(minZ, pos[2]);
-            BlockPos rel = new BlockPos(pos[0], pos[1], pos[2]);
+        }
+        BlockPos templateMin = new BlockPos(minX, minY, minZ);
+        // 相对坐标（模板内，以 NBT 自身原点为 0）→ (方块状态, 方块实体 NBT)。
+        // 旧实现用 NBT 绝对坐标当 key、并要求 config 盒坐标 == NBT 坐标空间，导致内置模板
+        // （如 shelter1，捕获于原点坐标）与玩家配置的 region（世界其它位置）对不上 → 整片空放。
+        // 现统一按「模板相对原点」建查表，落点只取决于 config 盒原点 + 偏移，与模板原始坐标空间无关。
+        Map<BlockPos, TemplateBlock> lookup = new HashMap<>();
+        for (int i = 0; i < blocks.size(); i++) {
+            CompoundTag e = blocks.getCompound(i);
+            int[] pos = e.getIntArray("pos");
+            BlockPos rel = new BlockPos(pos[0] - minX, pos[1] - minY, pos[2] - minZ);
             BlockState state = NbtUtils.readBlockState(level.holderLookup(net.minecraft.core.registries.Registries.BLOCK),
                     palette.getCompound(e.getInt("state")));
             CompoundTag nbt = e.contains("nbt") ? e.getCompound("nbt") : null;
             lookup.put(rel, new TemplateBlock(state, nbt));
         }
-        if (blocks.isEmpty() || minX == Integer.MAX_VALUE) {
-            return; // 空模板，无内容可放
-        }
-        BlockPos templateMin = new BlockPos(minX, minY, minZ);
-        // 先放方块（air 为未列出项默认）
+        BlockPos srcOrigin = boxOrigin;
+        // 先放方块（air 为未列出项默认）：克隆区每一格按「相对完整盒原点」去查模板相对原点 → 不论模板 NBT
+        // 原始坐标在哪儿，都能正确落到 config 盒所在的世界位置（分块子盒也统一以完整盒原点换算）。
         for (int y = src.minY(); y <= src.maxY(); y++) {
             for (int x = src.minX(); x <= src.maxX(); x++) {
                 for (int z = src.minZ(); z <= src.maxZ(); z++) {
                     BlockPos srcPos = new BlockPos(x, y, z);
-                    BlockPos rel = srcPos.subtract(templateMin);
+                    BlockPos rel = srcPos.subtract(srcOrigin);
                     TemplateBlock tb = lookup.get(rel);
                     BlockState state = tb != null ? tb.state : Blocks.AIR.defaultBlockState();
                     BlockPos dst = srcPos.offset(offset);
@@ -830,7 +841,7 @@ public final class SixtySecondsArena {
             for (int x = src.minX(); x <= src.maxX(); x++) {
                 for (int z = src.minZ(); z <= src.maxZ(); z++) {
                     BlockPos srcPos = new BlockPos(x, y, z);
-                    BlockPos rel = srcPos.subtract(templateMin);
+                    BlockPos rel = srcPos.subtract(srcOrigin);
                     TemplateBlock tb = lookup.get(rel);
                     if (tb == null || tb.nbt == null) {
                         continue;
@@ -891,18 +902,23 @@ public final class SixtySecondsArena {
     /** 一个放置工作项：源模板子盒 + 该队网格偏移；{@code clearOnly}=净空项（目标区挖成空气，不克隆）。
      *  {@code template} 非空时按导出的结构模板 NBT（保留方块实体/箱子内容物）放置，否则从世界克隆。
      *  {@code floor} 非空时为本项铺设地板（ocean 模式 Y=-40 一层）。三者互斥。 */
-    private record WorkItem(BoundingBox src, BlockPos offset, boolean clearOnly, CompoundTag template, BlockState floor) {
+    private record WorkItem(BoundingBox src, BlockPos offset, boolean clearOnly, CompoundTag template, BlockState floor, BlockPos boxOrigin) {
         WorkItem(BoundingBox src, BlockPos offset) {
-            this(src, offset, false, null, null);
+            this(src, offset, false, null, null, null);
         }
         WorkItem(BoundingBox src, BlockPos offset, boolean clearOnly) {
-            this(src, offset, clearOnly, null, null);
+            this(src, offset, clearOnly, null, null, null);
         }
         WorkItem(BoundingBox src, BlockPos offset, CompoundTag template) {
-            this(src, offset, false, template, null);
+            this(src, offset, false, template, null, null);
+        }
+        /** template 非空时携带「完整模板盒原点」，供 copyFromTemplate 按模板相对原点映射，
+         *  避免分块后每个子盒各自以自身 min 当原点导致整体错位。 */
+        WorkItem(BoundingBox src, BlockPos offset, CompoundTag template, BlockPos boxOrigin) {
+            this(src, offset, false, template, null, boxOrigin);
         }
         WorkItem(BoundingBox src, BlockPos offset, BlockState floor) {
-            this(src, offset, false, null, floor);
+            this(src, offset, false, null, floor, null);
         }
         boolean isFloor() {
             return floor != null;
@@ -930,8 +946,9 @@ public final class SixtySecondsArena {
 
         @Override
         public boolean onTick(MinecraftServer server) {
-            // 建图途中若游戏已停止：立即中止，不再放置、不触发完成回调（避免复活已结束的对局）
-            if (!net.exmo.sixty_seconds.SixtySecondsMod.RUNNING) {
+            // 建图途中若已标记「不在建图」（/60s stop 或 finalizeGame 清了 BUILDING）：立即中止，
+            // 不再放置、不触发完成回调（避免复活已结束的对局）。预建时 RUNNING 为 false，故不能依赖它。
+            if (!net.exmo.sixty_seconds.SixtySecondsMod.BUILDING) {
                 this.cancelled = true;
                 return true;
             }
@@ -956,6 +973,8 @@ public final class SixtySecondsArena {
 
         @Override
         public void onFinished() {
+            // 建图收尾：无论正常完成还是中途取消，都清掉 BUILDING，避免残留 true 卡住后续建图
+            net.exmo.sixty_seconds.SixtySecondsMod.BUILDING = false;
             // 无论正常完成还是中途取消，都把迟到实体清理窗口收成短尾窗（否则常驻误删局内掉落）
             armClearZonesTail(level);
             if (cancelled) {

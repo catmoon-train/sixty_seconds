@@ -22,6 +22,10 @@ public final class SixtySecondsMod {
     /** 本模式是否正在进行（供无世界上下文的 mixin 判断，如食物不可堆叠）。开局置 true，结束置 false。 */
     public static volatile boolean RUNNING = false;
 
+    /** 是否正在建图（含预建 /60s build 与正式 /60s start）。独立于 RUNNING：预建时游戏未开始但建图仍需进行，
+     *  BuildTask 以本标记为唯一中止依据（/60s stop 或收尾时置 false），避免预建因 RUNNING=false 被误中止。 */
+    public static volatile boolean BUILDING = false;
+
     /** 预建结果：/60s build 预先建好的住宅+避难所数据，/60s start 时若队伍数一致则跳过建图直接复用。 */
     public static net.exmo.sixty_seconds.state.SixtySecondsState.Data PREBUILT_DATA = null;
     /** 预建掩码（BUILD_RESIDENTIAL / BUILD_SHELTER / BUILD_ALL，见 SixtySecondsArena）。 */

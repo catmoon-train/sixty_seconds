@@ -130,6 +130,7 @@ public final class GameUtils {
         SixtySecGameWorldComponent component = SixtySecGameWorldComponent.KEY.get(world);
         component.setGameStatus(SixtySecGameWorldComponent.GameStatus.INACTIVE);
         SixtySecondsMod.RUNNING = false;
+        SixtySecondsMod.BUILDING = false;
         isGameStarted = false;
         isStartingGame = false;
         serverTaskQueue.clear();
