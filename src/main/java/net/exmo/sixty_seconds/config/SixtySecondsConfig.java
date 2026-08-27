@@ -46,14 +46,14 @@ public class SixtySecondsConfig {
      * （保留箱子内容物等方块实体数据），否则回退从世界里的模板区克隆。为空表示不使用导出文件。
      */
     @SerializedName("residentialTemplateFile")
-    public String residentialTemplateFile;
+    public String residentialTemplateFile = "house1";
 
     /**
      * 庇护所模板的 .nbt 文件名（不含扩展名）。含义同 {@link #residentialTemplateFile}，对应
-     * {@code /60s export_template shelter <name>}。为空表示不使用导出文件。
+     * {@code /60s export_template shelter <name>}。为空表示不使用导出文件。默认 shelter1（用 /60s apply_template 切换）。
      */
     @SerializedName("shelterTemplateFile")
-    public String shelterTemplateFile;
+    public String shelterTemplateFile = "shelter1";
 
     /**
      * 以下出生点写<b>模板内的绝对坐标</b>——建图时自动换算成相对模板 min 的偏移量套到每队克隆区

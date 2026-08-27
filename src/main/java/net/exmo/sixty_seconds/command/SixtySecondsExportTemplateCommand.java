@@ -2,13 +2,14 @@ package net.exmo.sixty_seconds.command;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
 import net.exmo.sixty_seconds.bridge.fabric.CommandRegistrationCallback;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;
@@ -31,15 +32,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * /60s export_template <residential|shelter> <name>
+ * /60s_export_template <residential|shelter> <name> [<x1> <y1> <z1> <x2> <y2> <z2>]
  *
- * <p>把当前已在配置里登记（{@code /60s_area template}）的住宅/庇护所模板区，连同方块实体数据
- * （箱子内容物、展示框、旗帜等）一起，作为 Minecraft 原生结构模板（标准 {@code .nbt}，含 palette/blocks/nbt）
- * 导出到世界存档的 {@code sixty_seconds_templates/<name>.nbt}。同时把文件名回写到当前地图配置
- * （{@code residentialTemplateFile}/{@code shelterTemplateFile}）。</p>
+ * <p>把住宅/庇护所模板区连同方块实体数据（箱子内容物、展示框、旗帜等）一起，作为 Minecraft 原生结构模板
+ * （标准 {@code .nbt}，含 palette/blocks/nbt）导出到世界存档的 {@code sixty_seconds_templates/<name>.nbt}，
+ * 同时把文件名回写到当前地图配置（{@code residentialTemplateFile}/{@code shelterTemplateFile}）。</p>
  *
- * <p>开局建图时 {@code SixtySecondsArena} 会优先按该文件生成（保留箱子内容），不再依赖世界里的手搭模板区。
- * 导出时坐标基准为模板盒 min，故生成时最低层会贴到生成偏移处（住宅/庇护所默认落在 y≈0 附近）。</p>
+ * <p>导出范围来源：
+ * <ul>
+ *   <li>未给坐标时 → 使用已在配置里登记（{@code /60s_area template}）的模板区；</li>
+ *   <li>给定两点坐标时 → 直接使用该矩形范围，无需事先登记模板区。</li>
+ * </ul>
+ * 两点顺序任意（程序会归一化为 min/max）。</p>
  */
 public final class SixtySecondsExportTemplateCommand {
 
@@ -54,7 +58,14 @@ public final class SixtySecondsExportTemplateCommand {
                                     return builder.buildFuture();
                                 })
                                 .then(Commands.argument("name", StringArgumentType.word())
-                                        .executes(SixtySecondsExportTemplateCommand::run)))));
+                                        .executes(SixtySecondsExportTemplateCommand::run)
+                                        .then(argument("x1", IntegerArgumentType.integer())
+                                                .then(argument("y1", IntegerArgumentType.integer())
+                                                        .then(argument("z1", IntegerArgumentType.integer())
+                                                                .then(argument("x2", IntegerArgumentType.integer())
+                                                                        .then(argument("y2", IntegerArgumentType.integer())
+                                                                                .then(argument("z2", IntegerArgumentType.integer())
+                                                                                        .executes(SixtySecondsExportTemplateCommand::run)))))))))));
     }
 
     private static int run(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
@@ -68,23 +79,43 @@ public final class SixtySecondsExportTemplateCommand {
             return 0;
         }
 
-        var configOpt = SixtySecondsConfigStore.load(level);
-        if (configOpt.isEmpty()) {
-            src.sendFailure(Component.translatable("commands.60s.export_template.no_config"));
-            return 0;
+        BlockPos p1, p2;
+        boolean hasCoords = false;
+        for (var node : ctx.getNodes()) {
+            if (node.getNode().getName().equals("x1")) {
+                hasCoords = true;
+                break;
+            }
         }
-        SixtySecondsConfig config = configOpt.get();
-
-        var region = kind.equals("residential") ? config.residentialTemplate : config.shelterTemplate;
-        if (region == null) {
-            src.sendFailure(Component.translatable("commands.60s.export_template.not_registered", kind));
-            return 0;
+        if (hasCoords) {
+            // 直接给定两点坐标，无需事先登记模板区
+            int x1 = IntegerArgumentType.getInteger(ctx, "x1");
+            int y1 = IntegerArgumentType.getInteger(ctx, "y1");
+            int z1 = IntegerArgumentType.getInteger(ctx, "z1");
+            int x2 = IntegerArgumentType.getInteger(ctx, "x2");
+            int y2 = IntegerArgumentType.getInteger(ctx, "y2");
+            int z2 = IntegerArgumentType.getInteger(ctx, "z2");
+            p1 = new BlockPos(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2));
+            p2 = new BlockPos(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2));
+        } else {
+            // 回退到已登记的模板区
+            var configOpt = SixtySecondsConfigStore.load(level);
+            if (configOpt.isEmpty()) {
+                src.sendFailure(Component.translatable("commands.60s.export_template.no_config"));
+                return 0;
+            }
+            SixtySecondsConfig config = configOpt.get();
+            var region = kind.equals("residential") ? config.residentialTemplate : config.shelterTemplate;
+            if (region == null) {
+                src.sendFailure(Component.translatable("commands.60s.export_template.not_registered", kind));
+                return 0;
+            }
+            BlockPos min = region.min.toBlockPos();
+            BlockPos max = region.max.toBlockPos();
+            p1 = new BlockPos(Math.min(min.getX(), max.getX()), Math.min(min.getY(), max.getY()), Math.min(min.getZ(), max.getZ()));
+            p2 = new BlockPos(Math.max(min.getX(), max.getX()), Math.max(min.getY(), max.getY()), Math.max(min.getZ(), max.getZ()));
         }
 
-        BlockPos min = region.min.toBlockPos();
-        BlockPos max = region.max.toBlockPos();
-        BlockPos p1 = new BlockPos(Math.min(min.getX(), max.getX()), Math.min(min.getY(), max.getY()), Math.min(min.getZ(), max.getZ()));
-        BlockPos p2 = new BlockPos(Math.max(min.getX(), max.getX()), Math.max(min.getY(), max.getY()), Math.max(min.getZ(), max.getZ()));
         int sizeX = p2.getX() - p1.getX() + 1;
         int sizeY = p2.getY() - p1.getY() + 1;
         int sizeZ = p2.getZ() - p1.getZ() + 1;
@@ -140,12 +171,15 @@ public final class SixtySecondsExportTemplateCommand {
             return 0;
         }
 
-        if (kind.equals("residential")) {
-            config.residentialTemplateFile = name;
-        } else {
-            config.shelterTemplateFile = name;
-        }
-        SixtySecondsConfigStore.save(level, config);
+        // 把文件名回写到当前地图配置，便于开局按该模板文件生成
+        SixtySecondsConfigStore.load(level).ifPresent(config -> {
+            if (kind.equals("residential")) {
+                config.residentialTemplateFile = name;
+            } else {
+                config.shelterTemplateFile = name;
+            }
+            SixtySecondsConfigStore.save(level, config);
+        });
 
         src.sendSuccess(() -> Component.translatable("commands.60s.export_template.done",
                 kind, name, dir.getFileName() + "/" + name + ".nbt", sizeX, sizeY, sizeZ), false);
