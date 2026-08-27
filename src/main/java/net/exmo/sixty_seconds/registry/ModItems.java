@@ -27,6 +27,7 @@ import net.exmo.sixty_seconds.content.item.MiningShearsItem;
 import net.exmo.sixty_seconds.content.item.MiningToolItem;
 import net.exmo.sixty_seconds.content.item.SixtySecondsBoxPryItem;
 import net.exmo.sixty_seconds.content.item.SixtySecondsPliersItem;
+import net.exmo.sixty_seconds.content.item.SixtySecondsPhoneItem;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.component.Tool;
 import java.util.ArrayList;
@@ -1155,7 +1156,7 @@ public final class ModItems {
 
     public static Item SIXTY_SECONDS_PHONE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_PHONE = ITEMS.register("sixty_seconds_phone", () -> {
-        SIXTY_SECONDS_PHONE = new Item(new Item.Properties().stacksTo(1));
+        SIXTY_SECONDS_PHONE = new SixtySecondsPhoneItem(new Item.Properties().stacksTo(1));
         return SIXTY_SECONDS_PHONE;
     });
 
