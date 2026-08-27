@@ -724,7 +724,7 @@
   "item.sixty_seconds.sixty_seconds_mining_pickaxe": "采掘镐",
   "item.sixty_seconds.sixty_seconds_mining_shovel": "采掘锹",
   "item.sixty_seconds.sixty_seconds_mining_shears": "采掘剪刀",
-  "item.sixty_seconds.sixty_seconds_paving_block": "铺路方块",
+  "block.sixty_seconds.sixty_seconds_paving_block": "铺路方块",
   "block.sixty_seconds.sixty_seconds_lantern": "铺路灯笼",
   "tooltip.sixty_seconds.sixty_seconds.mining_tool": "可以用于挖掘常见方块，无法在庇护所内使用",
   "tech.sixty_seconds.sixty_seconds.paving_blocks": "铺路方块",
