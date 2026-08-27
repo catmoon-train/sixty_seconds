@@ -1120,6 +1120,8 @@
   "item.sixty_seconds.sixty_seconds_magnet": "Magnet",
   "item.sixty_seconds.sixty_seconds_box_pry": "Box Pry",
   "item.sixty_seconds.sixty_seconds_pliers": "Pliers",
+  "tooltip.sixty_seconds.sixty_seconds.box_pry": "Pries open locked supply boxes (normal lock); consumes 1 durability per use.",
+  "tooltip.sixty_seconds.sixty_seconds.pliers": "Pries open locked supply boxes (advanced lock); consumes 1 durability per use.",
   "item.sixty_seconds.sixty_seconds_vault_pick_kit": "Vault Lockpick Kit",
   "item.sixty_seconds.sixty_seconds_detach_wrench": "Disassembly Wrench",
   "message.sixty_seconds.sixty_seconds.wrench.other_shelter": "§cCannot dismantle functional blocks in other teams' shelters!",

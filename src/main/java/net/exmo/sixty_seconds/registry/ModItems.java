@@ -25,6 +25,8 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.core.component.DataComponents;
 import net.exmo.sixty_seconds.content.item.MiningShearsItem;
 import net.exmo.sixty_seconds.content.item.MiningToolItem;
+import net.exmo.sixty_seconds.content.item.SixtySecondsBoxPryItem;
+import net.exmo.sixty_seconds.content.item.SixtySecondsPliersItem;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.component.Tool;
 import java.util.ArrayList;
@@ -1568,13 +1570,13 @@ public final class ModItems {
 
     public static Item SIXTY_SECONDS_BOX_PRY;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_BOX_PRY = ITEMS.register("sixty_seconds_box_pry", () -> {
-        SIXTY_SECONDS_BOX_PRY = new Item(new Item.Properties().stacksTo(1).durability(16));
+        SIXTY_SECONDS_BOX_PRY = new SixtySecondsBoxPryItem(new Item.Properties().stacksTo(1).durability(16));
         return SIXTY_SECONDS_BOX_PRY;
     });
 
     public static Item SIXTY_SECONDS_PLIERS;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_PLIERS = ITEMS.register("sixty_seconds_pliers", () -> {
-        SIXTY_SECONDS_PLIERS = new Item(new Item.Properties().stacksTo(1).durability(16));
+        SIXTY_SECONDS_PLIERS = new SixtySecondsPliersItem(new Item.Properties().stacksTo(1).durability(16));
         return SIXTY_SECONDS_PLIERS;
     });
 

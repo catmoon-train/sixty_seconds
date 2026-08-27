@@ -988,6 +988,8 @@
   "item.sixty_seconds.sixty_seconds_magnet": "磁鐵",
   "item.sixty_seconds.sixty_seconds_box_pry": "撬箱起子",
   "item.sixty_seconds.sixty_seconds_pliers": "鉗子",
+  "tooltip.sixty_seconds.sixty_seconds.box_pry": "用於撬開上鎖的物資箱（普通鎖）；每次撬鎖消耗 1 點耐久。",
+  "tooltip.sixty_seconds.sixty_seconds.pliers": "用於撬開上鎖的物資箱（高級鎖）；每次撬鎖消耗 1 點耐久。",
   "item.sixty_seconds.sixty_seconds_vault_pick_kit": "保險庫撬鎖器套組",
   "item.sixty_seconds.sixty_seconds_detach_wrench": "拆卸扳手",
   "message.sixty_seconds.sixty_seconds.wrench.other_shelter": "§c無法拆除別人避難所裡的功能方塊！",

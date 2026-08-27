@@ -1134,6 +1134,8 @@
   "item.sixty_seconds.sixty_seconds_magnet": "磁铁",
   "item.sixty_seconds.sixty_seconds_box_pry": "撬箱起子",
   "item.sixty_seconds.sixty_seconds_pliers": "钳子",
+  "tooltip.sixty_seconds.sixty_seconds.box_pry": "用于撬开上锁的物资箱（普通锁）；每次撬锁消耗 1 点耐久。",
+  "tooltip.sixty_seconds.sixty_seconds.pliers": "用于撬开上锁的物资箱（高级锁）；每次撬锁消耗 1 点耐久。",
   "item.sixty_seconds.sixty_seconds_vault_pick_kit": "保险库撬锁器套组",
   "item.sixty_seconds.sixty_seconds_detach_wrench": "拆卸扳手",
   "tooltip.sixty_seconds.sixty_seconds_detach_wrench": "蹲下右键可拆卸白色混凝土上的方块。消耗 1 耐久。",
