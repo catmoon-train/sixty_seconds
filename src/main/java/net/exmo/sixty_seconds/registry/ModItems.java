@@ -24,9 +24,9 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.Tool;
+import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.predicate.BlockPredicate;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -1495,7 +1495,7 @@ public final class ModItems {
     private static AdventureModePredicate toAdventurePredicate(List<Block> blocks) {
         List<BlockPredicate> predicates = new java.util.ArrayList<>(blocks.size());
         for (Block block : blocks) {
-            predicates.add(BlockPredicate.forBlock(block));
+            predicates.add(BlockPredicate.Builder.block().of(block).build());
         }
         return new AdventureModePredicate(predicates, false);
     }
