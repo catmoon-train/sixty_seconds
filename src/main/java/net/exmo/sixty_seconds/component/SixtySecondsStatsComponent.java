@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds.component;
 
-import net.exmo.sixty_seconds.bridge.RoleComponent;
+import net.exmo.sixty_seconds.bridge.cca.AutoSyncedComponent;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -17,9 +17,9 @@ import net.exmo.sixty_seconds.bridge.cca.ComponentRegistry;
  * 实际扣减 / 生病 / 变怪等后果留 TODO（见 {@code docs/末日60秒生存模式.md}）。
  * <p>
  * 参照 {@code net.exmo.sre.repair.component.RepairRolePlayerComponent}。仅同步给玩家自己
- * （{@link RoleComponent#shouldSyncWith} 默认），重大更改时才 {@link #sync()}（见 ai_doc.md）。
+ * （{@link AutoSyncedComponent#shouldSyncWith} 默认），重大更改时才 {@link #sync()}（见 ai_doc.md）。
  */
-public class SixtySecondsStatsComponent implements RoleComponent {
+public class SixtySecondsStatsComponent implements AutoSyncedComponent {
     public static final ComponentKey<SixtySecondsStatsComponent> KEY = ComponentRegistry.getOrCreate(
             ResourceLocation.fromNamespaceAndPath(SixtySeconds.MOD_ID, "sixty_seconds_stats"),
             SixtySecondsStatsComponent.class);
@@ -105,12 +105,10 @@ public class SixtySecondsStatsComponent implements RoleComponent {
         this.player = player;
     }
 
-    @Override
     public Player getPlayer() {
         return player;
     }
 
-    @Override
     public void init() {
         hunger = MAX;
         thirst = MAX;
@@ -145,7 +143,6 @@ public class SixtySecondsStatsComponent implements RoleComponent {
         sync();
     }
 
-    @Override
     public void clear() {
         init();
     }
@@ -256,7 +253,6 @@ public class SixtySecondsStatsComponent implements RoleComponent {
     }
 
     /** 已被上面的紧凑二进制同步取代，仅保留以满足接口（不再被调用）。 */
-    @Override
     public void writeToSyncNbt(@NotNull CompoundTag tag, HolderLookup.Provider registryLookup) {
         tag.putInt("Hunger", hunger);
         tag.putInt("Thirst", thirst);
@@ -289,7 +285,6 @@ public class SixtySecondsStatsComponent implements RoleComponent {
         tag.putBoolean("RescueMarked", rescueMarked);
     }
 
-    @Override
     public void readFromSyncNbt(@NotNull CompoundTag tag, HolderLookup.Provider registryLookup) {
         hunger = tag.getInt("Hunger");
         thirst = tag.getInt("Thirst");
@@ -327,12 +322,10 @@ public class SixtySecondsStatsComponent implements RoleComponent {
         rescueMarked = tag.getBoolean("RescueMarked");
     }
 
-    @Override
     public void writeToNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
         // 局内状态，不落磁盘（仅同步）。
     }
 
-    @Override
     public void readFromNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
     }
 }

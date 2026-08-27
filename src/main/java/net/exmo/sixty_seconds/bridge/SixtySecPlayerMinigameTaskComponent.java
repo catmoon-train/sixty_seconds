@@ -1,11 +1,13 @@
 package net.exmo.sixty_seconds.bridge;
 
 import net.exmo.sixty_seconds.SixtySeconds;
+import net.exmo.sixty_seconds.bridge.cca.AutoSyncedComponent;
 import net.exmo.sixty_seconds.bridge.cca.ComponentKey;
 import net.exmo.sixty_seconds.bridge.cca.ComponentRegistry;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
-public class SixtySecPlayerMinigameTaskComponent implements RoleComponent {
+public class SixtySecPlayerMinigameTaskComponent implements AutoSyncedComponent {
     public static final ComponentKey<SixtySecPlayerMinigameTaskComponent> KEY = ComponentRegistry.getOrCreate(
             SixtySeconds.id("minigame_task"), SixtySecPlayerMinigameTaskComponent.class);
 
@@ -19,10 +21,11 @@ public class SixtySecPlayerMinigameTaskComponent implements RoleComponent {
         this.player = player;
     }
 
-    @Override
     public Player getPlayer() {
         return player;
     }
+
+    @Override public boolean shouldSyncWith(ServerPlayer player) { return this.getPlayer() == player; }
 
     public int getTokens() {
         return tokens;
@@ -56,13 +59,11 @@ public class SixtySecPlayerMinigameTaskComponent implements RoleComponent {
         KEY.sync(this.player);
     }
 
-    @Override
     public void init() {
         this.tokens = 0;
         sync();
     }
 
-    @Override
     public void clear() {
         init();
     }
