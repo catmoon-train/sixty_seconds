@@ -668,6 +668,15 @@ public final class ModBlocks {
                 return SIXTY_SECONDS_MINIGAME_QUEST_ENTITY;
             });
 
+    public static BlockEntityType<net.exmo.sixty_seconds.content.block_entity.SixtySecondsRatHoleBlockEntity> SIXTY_SECONDS_RAT_HOLE_ENTITY;
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<net.exmo.sixty_seconds.content.block_entity.SixtySecondsRatHoleBlockEntity>> HOLD_SIXTY_SECONDS_RAT_HOLE_ENTITY =
+            BLOCK_ENTITIES.register("sixty_seconds_rat_hole", () -> {
+                SIXTY_SECONDS_RAT_HOLE_ENTITY = BlockEntityType.Builder.of(
+                        net.exmo.sixty_seconds.content.block_entity.SixtySecondsRatHoleBlockEntity::new,
+                        SIXTY_SECONDS_RAT_HOLE).build(null);
+                return SIXTY_SECONDS_RAT_HOLE_ENTITY;
+            });
+
     // 出生点方块（透明、无碰撞，放在已登记的住宅/庇护所模板内即登记该建筑出生点）
     public static Block SIXTY_SECONDS_SPAWN_POINT;
     public static final DeferredBlock<Block> HOLD_SIXTY_SECONDS_SPAWN_POINT = BLOCKS.register(
@@ -679,6 +688,18 @@ public final class ModBlocks {
     public static final DeferredItem<Item> ITEM_SIXTY_SECONDS_SPAWN_POINT = ITEMS.register(
             "sixty_seconds_spawn_point",
             () -> new BlockItem(HOLD_SIXTY_SECONDS_SPAWN_POINT.get(), new Item.Properties()));
+
+    // 老鼠洞方块（每天右键可掏出基础资源，也有可能掏不到）
+    public static Block SIXTY_SECONDS_RAT_HOLE;
+    public static final DeferredBlock<Block> HOLD_SIXTY_SECONDS_RAT_HOLE = BLOCKS.register(
+            "sixty_seconds_rat_hole", () -> {
+                SIXTY_SECONDS_RAT_HOLE = new net.exmo.sixty_seconds.content.block.SixtySecondsRatHoleBlock(
+                        BlockBehaviour.Properties.of().strength(1.5F));
+                return SIXTY_SECONDS_RAT_HOLE;
+            });
+    public static final DeferredItem<Item> ITEM_SIXTY_SECONDS_RAT_HOLE = ITEMS.register(
+            "sixty_seconds_rat_hole",
+            () -> new BlockItem(HOLD_SIXTY_SECONDS_RAT_HOLE.get(), new Item.Properties()));
 
     private ModBlocks() {}
 
