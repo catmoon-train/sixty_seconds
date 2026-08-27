@@ -431,25 +431,38 @@ public final class SixtySecondsArena {
     }
 
     /**
-     * 从世界存档 {@code sixty_seconds_templates/<name>.nbt} 加载导出的结构模板 NBT（保留方块实体/箱子内容物）。
-     * 文件名为空或不存在时返回 null，此时调用方应回退到从世界克隆。
+     * 加载结构模板 NBT（保留方块实体/箱子内容物）。优先读世界存档
+     * {@code sixty_seconds_templates/<name>.nbt}（玩家用 {@code /60s export_template} 导出的自定义模板），
+     * 不存在时回退到模组内置默认模板 {@code data/sixty_seconds/templates/<name>.nbt}
+     * （默认 {@code house1}/{@code shelter1}，随模组 jar 分发）。两者均无时返回 null，
+     * 此时调用方应回退到从世界克隆。
      */
     private static CompoundTag loadTemplate(ServerLevel level, String name) {
         if (name == null || name.isBlank()) {
             return null;
         }
+        // 1) 世界存档下的自定义导出模板优先（覆盖模组内置）
         Path dir = level.getServer().getWorldPath(LevelResource.ROOT).resolve("sixty_seconds_templates");
         Path nbtPath = dir.resolve(name + ".nbt");
-        if (!Files.exists(nbtPath)) {
-            SixtySeconds.LOGGER.warn("[60s] 未找到导出的模板文件：{}（将回退从世界克隆）", nbtPath);
-            return null;
+        if (Files.exists(nbtPath)) {
+            try (java.io.InputStream in = Files.newInputStream(nbtPath)) {
+                return NbtIo.readCompressed(in, new NbtAccounter(Long.MAX_VALUE, Integer.MAX_VALUE));
+            } catch (Exception e) {
+                SixtySeconds.LOGGER.warn("[60s] 加载模板 {} 失败：{}", name, e.getMessage());
+            }
         }
-        try (java.io.InputStream in = Files.newInputStream(nbtPath)) {
-            return NbtIo.readCompressed(in, new NbtAccounter(Long.MAX_VALUE, Integer.MAX_VALUE));
+        // 2) 回退到模组内置默认模板
+        try (java.io.InputStream in = SixtySeconds.class
+                .getResourceAsStream("/data/sixty_seconds/templates/" + name + ".nbt")) {
+            if (in != null) {
+                SixtySeconds.LOGGER.info("[60s] 使用模组内置模板：{}", name);
+                return NbtIo.readCompressed(in, new NbtAccounter(Long.MAX_VALUE, Integer.MAX_VALUE));
+            }
         } catch (Exception e) {
-            SixtySeconds.LOGGER.warn("[60s] 加载模板 {} 失败：{}", name, e.getMessage());
-            return null;
+            SixtySeconds.LOGGER.warn("[60s] 加载内置模板 {} 失败：{}", name, e.getMessage());
         }
+        SixtySeconds.LOGGER.warn("[60s] 未找到模板 {}（世界导出目录与模组内置均无，将回退从世界克隆）", name);
+        return null;
     }
 
     /** 结束/重开时把所有克隆写入的方块按快照还原。 */

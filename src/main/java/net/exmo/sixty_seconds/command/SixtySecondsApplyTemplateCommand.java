@@ -27,17 +27,21 @@ import static net.minecraft.commands.Commands.literal;
  * /60s apply_template <residential> <shelter>
  * /60s apply_template list
  *
- * <p>把指定的初始房子 / 避难所模板（不含后缀，对应 {@code sixty_seconds_templates/<name>.nbt}）写入当前地图配置，
- * 下一次开局建图时即使用它们。{@code house1} / {@code shelter1} 为默认模板。便于以后随时切换不同种类的房子/避难所。</p>
+ * <p>把指定的初始房子 / 避难所模板（不含后缀，对应 {@code sixty_seconds_templates/<name>.nbt} 或模组内置
+ * {@code data/sixty_seconds/templates/<name>.nbt}）写入当前地图配置，下一次开局建图时即使用它们。
+ * {@code house1} / {@code shelter1} 为模组内置的默认模板。便于以后随时切换不同种类的房子/避难所。</p>
  *
  * <p>用法示例：
  * <ul>
- *   <li>{@code /60s apply_template house1 shelter1} — 恢复默认</li>
- *   <li>{@code /60s apply_template cabin2 bunker3} — 改用其它模板</li>
- *   <li>{@code /60s apply_template list} — 列出已导出的模板文件</li>
+ *   <li>{@code /60s apply_template house1 shelter1} — 恢复默认（模组内置）</li>
+ *   <li>{@code /60s apply_template cabin2 bunker3} — 改用其它（已导出的）模板</li>
+ *   <li>{@code /60s apply_template list} — 列出可用模板（世界导出目录 + 模组内置）</li>
  * </ul>
  */
 public final class SixtySecondsApplyTemplateCommand {
+
+    /** 模组内置的默认模板（随模组 jar 分发，无需导出即可使用）。 */
+    private static final String[] BUILTIN_TEMPLATES = {"house1", "shelter1"};
 
     public static void register() {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
@@ -59,6 +63,22 @@ public final class SixtySecondsApplyTemplateCommand {
         return level.getServer().getWorldPath(LevelResource.ROOT).resolve("sixty_seconds_templates");
     }
 
+    /** 模板可用 = 世界存档目录已导出 或 模组内置资源存在。 */
+    private static boolean templateExists(ServerLevel level, String name) {
+        if (name == null || name.isBlank()) {
+            return false;
+        }
+        if (Files.exists(templatesDir(level).resolve(name + ".nbt"))) {
+            return true;
+        }
+        try (java.io.InputStream in = SixtySeconds.class
+                .getResourceAsStream("/data/sixty_seconds/templates/" + name + ".nbt")) {
+            return in != null;
+        } catch (java.io.IOException e) {
+            return false;
+        }
+    }
+
     private static int apply(CommandContext<CommandSourceStack> ctx) {
         CommandSourceStack src = ctx.getSource();
         ServerLevel level = src.getLevel();
@@ -71,11 +91,10 @@ public final class SixtySecondsApplyTemplateCommand {
             return 0;
         }
 
-        // 校验模板文件是否存在（导出过的才允许应用，避免开局静默回退到世界克隆）
-        Path dir = templatesDir(level);
+        // 校验模板可用（世界目录导出的 或 模组内置的才允许应用，避免开局静默回退到世界克隆）
         List<String> missing = new ArrayList<>();
-        if (!Files.exists(dir.resolve(residential + ".nbt"))) missing.add(residential);
-        if (!Files.exists(dir.resolve(shelter + ".nbt"))) missing.add(shelter);
+        if (!templateExists(level, residential)) missing.add(residential);
+        if (!templateExists(level, shelter)) missing.add(shelter);
         if (!missing.isEmpty()) {
             src.sendFailure(Component.translatable("commands.60s.apply_template.missing",
                     String.join(", ", missing)));
@@ -97,14 +116,23 @@ public final class SixtySecondsApplyTemplateCommand {
         ServerLevel level = src.getLevel();
         Path dir = templatesDir(level);
 
-        List<String> names = new ArrayList<>();
+        // 世界存档目录导出的模板
+        Set<String> worldNames = new LinkedHashSet<>();
         if (Files.exists(dir)) {
             try (var stream = Files.list(dir)) {
                 stream.filter(p -> p.toString().endsWith(".nbt"))
                         .map(p -> p.getFileName().toString().replaceAll("\\.nbt$", ""))
-                        .sorted()
-                        .forEach(names::add);
+                        .forEach(worldNames::add);
             } catch (IOException ignored) {
+            }
+        }
+        // 模组内置默认模板
+        Set<String> builtinNames = new LinkedHashSet<>();
+        for (String n : BUILTIN_TEMPLATES) {
+            try (java.io.InputStream in = SixtySeconds.class
+                    .getResourceAsStream("/data/sixty_seconds/templates/" + n + ".nbt")) {
+                if (in != null) builtinNames.add(n);
+            } catch (java.io.IOException ignored) {
             }
         }
 
@@ -112,7 +140,7 @@ public final class SixtySecondsApplyTemplateCommand {
         String curHouse = configOpt.map(c -> c.residentialTemplateFile).orElse(null);
         String curShelter = configOpt.map(c -> c.shelterTemplateFile).orElse(null);
 
-        if (names.isEmpty()) {
+        if (worldNames.isEmpty() && builtinNames.isEmpty()) {
             src.sendSuccess(() -> Component.translatable("commands.60s.apply_template.list_empty"), false);
             return 1;
         }
@@ -123,14 +151,34 @@ public final class SixtySecondsApplyTemplateCommand {
             sb.append("\n").append(Component.translatable("commands.60s.apply_template.list_current",
                     curHouse == null ? "-" : curHouse, curShelter == null ? "-" : curShelter).getString());
         }
-        for (String n : names) {
+        // 世界目录导出的模板（来源标注 = 导出）
+        List<String> worldSorted = new ArrayList<>(worldNames);
+        worldSorted.sort(null);
+        for (String n : worldSorted) {
             List<String> tags = new ArrayList<>();
-            if (n.equals(curHouse)) tags.add("house");
-            if (n.equals(curShelter)) tags.add("shelter");
+            if (n.equals(curHouse)) tags.add(tagText("commands.60s.apply_template.list_tag_house"));
+            if (n.equals(curShelter)) tags.add(tagText("commands.60s.apply_template.list_tag_shelter"));
+            tags.add(tagText("commands.60s.apply_template.list_tag_exported"));
+            String tag = tags.isEmpty() ? "" : "  §7[" + String.join("/", tags) + "]";
+            sb.append("\n - ").append(n).append(tag);
+        }
+        // 模组内置的模板（来源标注 = 内置）
+        List<String> builtinSorted = new ArrayList<>(builtinNames);
+        builtinSorted.sort(null);
+        for (String n : builtinSorted) {
+            List<String> tags = new ArrayList<>();
+            if (n.equals(curHouse)) tags.add(tagText("commands.60s.apply_template.list_tag_house"));
+            if (n.equals(curShelter)) tags.add(tagText("commands.60s.apply_template.list_tag_shelter"));
+            tags.add(tagText("commands.60s.apply_template.list_tag_builtin"));
             String tag = tags.isEmpty() ? "" : "  §7[" + String.join("/", tags) + "]";
             sb.append("\n - ").append(n).append(tag);
         }
         src.sendSuccess(() -> Component.literal(sb.toString()), false);
         return 1;
+    }
+
+    /** 解析翻译键为当前语言下的文本。 */
+    private static String tagText(String key) {
+        return Component.translatable(key).getString();
     }
 }
