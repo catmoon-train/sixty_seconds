@@ -74,7 +74,6 @@ public final class SixtySecondsGameSetup {
                 // 冷却字段在运行时不可用则跳过
             }
         }
-        gameWorldComponent.clearRoleMap(true);
         SixtySecGameTimeComponent.KEY.get(serverWorld).reset();
     }
 

@@ -12,6 +12,7 @@ import net.exmo.sixty_seconds.arena.SixtySecondsArena;
 import net.exmo.sixty_seconds.arena.SixtySecondsSearchZones;
 import net.exmo.sixty_seconds.component.FamilyPosition;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
+import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.core.BlockPos;
@@ -499,7 +500,6 @@ public final class SixtySecondsManager {
         SixtySecondsNewspaper.collectDrafts(level, data);
         SixtySecondsNewspaper.publish(level, data); // 末日日报：每日一期，聊天栏点击阅读
         SixtySecondsHotlineSystem.processDeliveries(level, data); // 处理快递/购物/救援投递
-        SixtySecondsRoleAwakening.awaken(level, data);
         broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.day_start", day, totalDays(level)));
         // PvP 状态聊天栏广播：前三天为保护期，第 4 天起开放 PvP
         if (day <= 3) {

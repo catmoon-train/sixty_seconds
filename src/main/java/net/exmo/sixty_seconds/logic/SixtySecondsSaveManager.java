@@ -5,8 +5,6 @@ import net.exmo.sixty_seconds.SixtySecondsPhase;
 import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.bridge.SixtySecGameTimeComponent;
 import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
-import net.exmo.sixty_seconds.bridge.SixtySecRole;
-import net.exmo.sixty_seconds.bridge.stubs.SixtySecRoles;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.ChatFormatting;
@@ -170,8 +168,6 @@ public final class SixtySecondsSaveManager {
             freshData.helicopterArrived = snap.helicopterArrived;
             freshData.helicopterEvacuated.clear();
             freshData.helicopterEvacuated.addAll(snap.helicopterEvacuated);
-            freshData.usedAwakenRoles.clear();
-            freshData.usedAwakenRoles.addAll(snap.usedAwakenRoles);
 
             // 各队进度（保留新建地图的坐标，仅覆盖数值型进度）
             for (SixtySecondsState.TeamData ft : freshData.teams.values()) {
@@ -180,10 +176,6 @@ public final class SixtySecondsSaveManager {
                     applyTeam(ft, st);
                 }
             }
-
-            // 职业分配
-            SixtySecGameWorldComponent comp = SixtySecGameWorldComponent.KEY.get(level);
-            comp.setRoles(snap.roles);
 
             // 玩家背包 + 状态
             for (PlayerSave ps : snap.players) {
@@ -239,10 +231,7 @@ public final class SixtySecondsSaveManager {
             p.getInventory().load(ps.inventory);
             SixtySecondsStatsComponent comp = SixtySecondsStatsComponent.KEY.get(p);
             comp.readFromSyncNbt(ps.stats, level.registryAccess());
-            if (ps.role != null) {
-                SixtySecGameWorldComponent.KEY.get(level).setRole(p, ps.role);
-            }
-        } catch (Exception e) {
+            } catch (Exception e) {
             System.err.println("[SixtySecondsSaveManager] 恢复玩家 " + ps.uuid + " 失败: " + e);
         }
     }
@@ -260,14 +249,11 @@ public final class SixtySecondsSaveManager {
         g.lastNpcRvSpawnDay = data.lastNpcRvSpawnDay;
         g.helicopterArrived = data.helicopterArrived;
         g.helicopterEvacuated = new ArrayList<>(data.helicopterEvacuated);
-        g.usedAwakenRoles = new ArrayList<>(data.usedAwakenRoles);
 
         g.teams = new ArrayList<>();
         for (SixtySecondsState.TeamData t : data.teams.values()) {
             g.teams.add(buildTeam(t, provider));
         }
-
-        g.roles = new HashMap<>(SixtySecGameWorldComponent.KEY.get(level).getRoles());
 
         g.players = new ArrayList<>();
         for (ServerPlayer p : level.players()) {
@@ -281,7 +267,6 @@ public final class SixtySecondsSaveManager {
             CompoundTag st = new CompoundTag();
             comp.writeToSyncNbt(st, provider);
             ps.stats = st;
-            ps.role = SixtySecGameWorldComponent.KEY.get(level).getRole(p);
             g.players.add(ps);
         }
         return g;
@@ -323,20 +308,11 @@ public final class SixtySecondsSaveManager {
         root.putInt("lastNpcRvSpawnDay", g.lastNpcRvSpawnDay);
         root.putBoolean("helicopterArrived", g.helicopterArrived);
         root.put("helicopterEvacuated", uuidList(g.helicopterEvacuated));
-        root.put("usedAwakenRoles", stringList(g.usedAwakenRoles));
         ListTag teams = new ListTag();
         for (TeamSave t : g.teams) {
             teams.add(writeTeam(t, provider));
         }
         root.put("teams", teams);
-        ListTag roles = new ListTag();
-        for (Map.Entry<UUID, SixtySecRole> e : g.roles.entrySet()) {
-            CompoundTag rc = new CompoundTag();
-            rc.putString("uuid", e.getKey().toString());
-            rc.putString("role", e.getValue().getIdentifier().toString());
-            roles.add(rc);
-        }
-        root.put("roles", roles);
         ListTag pls = new ListTag();
         for (PlayerSave p : g.players) {
             pls.add(writePlayer(p));
@@ -366,15 +342,9 @@ public final class SixtySecondsSaveManager {
             g.lastNpcRvSpawnDay = root.getInt("lastNpcRvSpawnDay");
             g.helicopterArrived = root.getBoolean("helicopterArrived");
             g.helicopterEvacuated = readUuidList(root.getList("helicopterEvacuated", Tag.TAG_STRING));
-            g.usedAwakenRoles = readStringList(root.getList("usedAwakenRoles", Tag.TAG_STRING));
             g.teams = new ArrayList<>();
             for (Tag t : root.getList("teams", Tag.TAG_COMPOUND)) {
                 g.teams.add(readTeam((CompoundTag) t, level.registryAccess()));
-            }
-            g.roles = new HashMap<>();
-            for (Tag t : root.getList("roles", Tag.TAG_COMPOUND)) {
-                CompoundTag rc = (CompoundTag) t;
-                g.roles.put(UUID.fromString(rc.getString("uuid")), lookupRole(rc.getString("role")));
             }
             g.players = new ArrayList<>();
             for (Tag t : root.getList("players", Tag.TAG_COMPOUND)) {
@@ -462,9 +432,6 @@ public final class SixtySecondsSaveManager {
         c.putString("uuid", p.uuid.toString());
         c.put("inventory", p.inventory);
         c.put("stats", p.stats);
-        if (p.role != null) {
-            c.putString("role", p.role.getIdentifier().toString());
-        }
         return c;
     }
 
@@ -473,12 +440,7 @@ public final class SixtySecondsSaveManager {
         p.uuid = UUID.fromString(c.getString("uuid"));
         p.inventory = c.getList("inventory", Tag.TAG_COMPOUND);
         p.stats = c.getCompound("stats");
-        p.role = c.contains("role") ? lookupRole(c.getString("role")) : null;
         return p;
-    }
-
-    private static SixtySecRole lookupRole(String id) {
-        return SixtySecRoles.ROLES.get(ResourceLocation.parse(id));
     }
 
     private static ListTag uuidList(List<UUID> list) {
@@ -523,9 +485,7 @@ public final class SixtySecondsSaveManager {
         int lastNpcRvSpawnDay;
         boolean helicopterArrived;
         List<UUID> helicopterEvacuated;
-        List<String> usedAwakenRoles;
         List<TeamSave> teams;
-        Map<UUID, SixtySecRole> roles;
         List<PlayerSave> players;
 
         TeamSave teamById(int id) {
@@ -564,6 +524,5 @@ public final class SixtySecondsSaveManager {
         UUID uuid;
         ListTag inventory;
         CompoundTag stats;
-        SixtySecRole role;
     }
 }

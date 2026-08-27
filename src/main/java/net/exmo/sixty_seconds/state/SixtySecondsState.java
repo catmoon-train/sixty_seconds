@@ -153,8 +153,6 @@ public final class SixtySecondsState {
         public final Map<Integer, TeamData> teams = new LinkedHashMap<>();
         /** ocean 模式：teamId → 房车在岛屿陆地上的自动落点（仅海岛模式填充；普通模式为空，房车落于庇护所）。 */
         public final Map<Integer, BlockPos> oceanRvSpots = new HashMap<>();
-        /** 本局已觉醒（分配过）的职业 ID 字符串——保证每职业只出现一次。 */
-        public final java.util.Set<String> usedAwakenRoles = new java.util.HashSet<>();
         /** 上次广播过的日内阶段（0=清晨 1=白天 2=晚上 3=睡觉，-1=未初始化），用于子相位切换提示。 */
         public int lastDayStage = -1;
         /** 上次在房车门口刷过 NPC 的天数（-1=从未）；与 dayNumber 比较实现"一天只刷一次"。 */

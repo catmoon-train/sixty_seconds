@@ -500,12 +500,6 @@ public final class SixtySecondsBalance {
     public static final double GUN_RPG_BLAST_RADIUS = 4.0;      // 爆炸半径（波及自己，小心近射）
     public static final double GUN_RPG_ROCKET_SPEED = 1.6;      // 火箭飞行速度（格/tick）
 
-    // ── 觉醒职业的本模式数值修正（末日生存平衡；见 SixtySecondsRoleTweaks）───────
-    public static final double JADE_GENERAL_COOLDOWN_MULT = 2.0; // 玉将军 技能冷却×2（35s→70s）
-    public static final double FIGHTER_COOLDOWN_MULT = 3.0;      // 斗士 技能冷却×3（120s→360s）
-    public static final int BROADCASTER_BROADCAST_COST = 100;    // 广播员 每次广播消耗（原版 50）
-    public static final int REPORTER_NOTE_COUNT = 8;             // 记者 觉醒补发便签数（原版 4，×2）
-
     // ── NPC（商人/军人/强盗/旅者/海盗；见 SixtySecondsNpcEntity）────────────────────
     public static final double NPC_HEALTH_MERCHANT = 40.0;
     public static final double NPC_HEALTH_SOLDIER = 80.0;

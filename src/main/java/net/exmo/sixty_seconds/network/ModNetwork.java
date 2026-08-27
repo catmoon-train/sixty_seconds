@@ -13,7 +13,6 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 import net.exmo.sixty_seconds.bridge.stubs.AdvancedCameraPayload;
-import net.exmo.sixty_seconds.bridge.stubs.AnnounceWelcomePayload;
 import net.exmo.sixty_seconds.bridge.stubs.ShootMuzzleS2CPayload;
 import net.exmo.sixty_seconds.bridge.stubs.TriggerScreenEdgeEffectPayload;
 import net.exmo.sixty_seconds.network.WeatherS2CPacket;
@@ -106,7 +105,6 @@ public final class ModNetwork {
         registrar.playToServer(VisitRequestC2SPacket.ID, adapt(VisitRequestC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(VisitResponseC2SPacket.ID, adapt(VisitResponseC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToClient(AdvancedCameraPayload.TYPE, adapt(AdvancedCameraPayload.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
-        registrar.playToClient(AnnounceWelcomePayload.TYPE, adapt(AnnounceWelcomePayload.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(ShootMuzzleS2CPayload.TYPE, adapt(ShootMuzzleS2CPayload.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(TriggerScreenEdgeEffectPayload.TYPE, adapt(TriggerScreenEdgeEffectPayload.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(WeatherS2CPacket.TYPE, adapt(WeatherS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));

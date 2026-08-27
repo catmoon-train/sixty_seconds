@@ -46,7 +46,7 @@ public class SixtySecondsGameMode extends GameMode {
         return false;
     }
 
-    /** 家庭身份不是 SixtySecRole：允许没有职业的存活生还者（否则会被强制变旁观）。 */
+    /** 本模组不依赖角色系统：允许没有职业的存活生还者（否则会被强制变旁观）。 */
     @Override
     public boolean requiresAssignedRole() {
         return false;
@@ -59,7 +59,7 @@ public class SixtySecondsGameMode extends GameMode {
     }
 
     /**
-     * 尸体可拿取：60s 玩家无 SixtySecRole（{@link #requiresAssignedRole()} 返 false），若不覆写此项，
+     * 尸体可拿取：60s 玩家没有角色身份（{@link #requiresAssignedRole()} 返 false），若不覆写此项，
      * {@code PlayerBodyEntityContainer} 的取物门控全部回退到 role==null → false，导致「能开尸体箱却拿不出东西」。
      * 与 {@code canSeeBodyContent} 成对开启（对照 RepairEscapeGameMode）。
      */

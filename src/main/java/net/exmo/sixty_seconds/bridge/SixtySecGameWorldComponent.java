@@ -29,7 +29,6 @@ public class SixtySecGameWorldComponent implements AutoSyncedComponent {
     private boolean canJump = true;
     private int startingPlayerCount = 0;
     private int playerCount = 0;
-    private final Map<UUID, SixtySecRole> roles = new HashMap<>();
 
     public SixtySecGameWorldComponent(Level world) {
         this.world = world;
@@ -77,51 +76,6 @@ public class SixtySecGameWorldComponent implements AutoSyncedComponent {
 
     public void setStartingPlayerCount(int count) {
         this.startingPlayerCount = Math.max(0, count);
-        sync();
-    }
-
-    public SixtySecRole getRole(Player player) {
-        return player == null ? null : roles.get(player.getUUID());
-    }
-
-    public SixtySecRole getRole(UUID uuid) {
-        return uuid == null ? null : roles.get(uuid);
-    }
-
-    public void setRole(Player player, SixtySecRole role) {
-        if (player == null) {
-            return;
-        }
-        if (role == null) {
-            roles.remove(player.getUUID());
-        } else {
-            roles.put(player.getUUID(), role);
-        }
-        sync();
-    }
-
-    public void clearRoleMap(boolean sync) {
-        roles.clear();
-        if (sync) {
-            sync();
-        }
-    }
-
-    public void clearRoleMap() {
-        clearRoleMap(true);
-    }
-
-    /** 读取当前职业分配（用于存档恢复）。 */
-    public Map<UUID, SixtySecRole> getRoles() {
-        return new java.util.HashMap<>(roles);
-    }
-
-    /** 覆盖职业分配（用于存档恢复）。 */
-    public void setRoles(Map<UUID, SixtySecRole> newRoles) {
-        roles.clear();
-        if (newRoles != null) {
-            roles.putAll(newRoles);
-        }
         sync();
     }
 
