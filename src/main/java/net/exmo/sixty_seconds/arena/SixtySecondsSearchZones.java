@@ -165,17 +165,25 @@ public final class SixtySecondsSearchZones {
     }
 
     /**
-     * 传送落点安全校正：目标格或头顶被方块（避难所门/墙）占住时，就近找一个双格净空的落脚点
-     * （优先有实心地面的格子），找不到则原样返回——防止玩家被传进方块里窒息。
+     * 传送落点安全校正（精准落点版）：出生点方块即玩家要站立的位置，不做水平漂移。
+     * <ul>
+     *   <li>出生方块本身是空气（脚+头两格皆净空）→ 直接站上去，精准落在 {@code target}。</li>
+     *   <li>出生方块是实心（地板/墙基）→ 站在其正上方 {@code target.above()}，即「踩在出生方块上」。</li>
+     *   <li>仅当出生列被彻底嵌死（出生方块与头顶都不可站）时才兜底就近检索，避免传进方块窒息。</li>
+     * </ul>
      * 公开给闯入（{@code SixtySecondsBreakIn}）/拜访/做客离开等所有进出避难所的传送共用。
      */
     public static BlockPos findSafeSpot(ServerLevel level, BlockPos target) {
+        // 1) 出生方块本身是净空落脚点 → 精准落点
         if (isClear(level, target)) {
             return target;
         }
-        // 放大搜索窗口（±4 水平、上探至 +8、下探至 -3）：优先「净空且脚下有支撑」的落脚点，其次任意净空点。
-        // 旧窗口（±2 水平、dy∈{0,1,-1,2}）太小，出生点若埋在墙/门里且周围紧凑时会找不到而原样返回 → 撬锁/撬棍闯入
-        // 落进方块窒息（本次要修的 BUG）。所有进出避难所的传送（闯入/回家/出门探索/拜访离开）共用此校正。
+        // 2) 出生方块是实心（如地板）：站在它正上方，即踩在出生方块上，不做水平偏移
+        BlockPos onTop = target.above();
+        if (isClear(level, onTop)) {
+            return onTop;
+        }
+        // 3) 出生列彻底嵌死（出生方块与头顶都不可站）：退回就近搜索兜底，防止窒息
         BlockPos fallback = null;
         int[] dys = { 0, 1, 2, -1, 3, 4, -2, 5, 6, -3, 7, 8 };
         for (int dy : dys) {

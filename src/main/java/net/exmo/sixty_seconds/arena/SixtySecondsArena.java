@@ -224,12 +224,11 @@ public final class SixtySecondsArena {
         // 避难所模板还近，队1的净空就会把队0<b>已经建好</b>的避难所挖出洞来。全局先净空后克隆则与顺序无关。
         List<WorkItem> clearance = new ArrayList<>();
         List<WorkItem> clones = new ArrayList<>();
-        int index = 0;
         int arenaMinX = Integer.MAX_VALUE, arenaMaxX = Integer.MIN_VALUE;
         int arenaMinZ = Integer.MAX_VALUE, arenaMaxZ = Integer.MIN_VALUE;
         for (SixtySecondsState.TeamData team : data.teams.values()) {
-            BlockPos offset = residentialOffsets.get(index);
-            BlockPos shelterOffset = shelterOffsets.get(index);
+            BlockPos offset = residentialOffsets.get(team.teamId);
+            BlockPos shelterOffset = shelterOffsets.get(team.teamId);
             arenaMinX = Math.min(arenaMinX, residentialBox.minX() + offset.getX());
             arenaMaxX = Math.max(arenaMaxX, residentialBox.maxX() + offset.getX());
             arenaMinZ = Math.min(arenaMinZ, residentialBox.minZ() + offset.getZ());
@@ -264,8 +263,8 @@ public final class SixtySecondsArena {
             team.searchZoneSpawn = null;
             team.returnDoorPos = null;
             team.searchZoneBox = null;
-            SixtySecondsConfig.DoorBinding exitDoor = index < exitDoorBindings.size()
-                    ? exitDoorBindings.get(index)
+            SixtySecondsConfig.DoorBinding exitDoor = team.teamId < exitDoorBindings.size()
+                    ? exitDoorBindings.get(team.teamId)
                     : null;
             if (exitDoor != null) {
                 team.searchZoneSpawn = exitDoor.spawn.toBlockPos().offset(arenaDelta);
@@ -289,7 +288,6 @@ public final class SixtySecondsArena {
                 AABB boxAbs = aabbOf(b.boxMin, b.boxMax, BlockPos.ZERO);
                 team.searchDoors.put(doorAbs, new SixtySecondsState.TeamData.SearchLink(spawnAbs, boxAbs));
             }
-            index++;
         }
         int teams = data.teams.size();
         if (!exitDoorBindings.isEmpty() && exitDoorBindings.size() < teams) {
