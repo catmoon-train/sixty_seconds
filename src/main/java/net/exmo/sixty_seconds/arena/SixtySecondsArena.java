@@ -437,7 +437,7 @@ public final class SixtySecondsArena {
      * （默认 {@code house1}/{@code shelter1}，随模组 jar 分发）。两者均无时返回 null，
      * 此时调用方应回退到从世界克隆。
      */
-    private static CompoundTag loadTemplate(ServerLevel level, String name) {
+    public static CompoundTag loadTemplate(ServerLevel level, String name) {
         if (name == null || name.isBlank()) {
             return null;
         }

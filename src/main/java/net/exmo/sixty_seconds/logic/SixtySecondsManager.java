@@ -33,6 +33,7 @@ import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.registry.ModEffects;
 import net.exmo.sixty_seconds.registry.ModItems;
 import net.minecraft.world.item.Item;
+import net.minecraft.nbt.CompoundTag;
 
 import java.util.HashSet;
 import java.util.List;
@@ -124,17 +125,27 @@ public final class SixtySecondsManager {
         SixtySecondsRvRaidSystem.reset(level);  // 房车夜袭突袭者/尸潮
         SixtySecondsRvSystem.reset(level); // 房车：解除上一局强载区块 + 清残留房车实体
         net.exmo.sixty_seconds.network.SixtySecondsMapZoneS2CPacket.clearAll(); // 清跨局区域记忆
-        // 配置不完整 = 建不出住宅/避难所 → 直接终止开局（否则玩家原地/虚空卡死）
+        // 配置不完整时，尝试用内置默认模板（house1/shelter1）自动补全区域盒与出生点，
+        // 让没搭图的管理员也能直接开局；补全失败（连内置模板都缺失）才终止。
         var config = SixtySecondsConfigStore.current(level).orElse(null);
         if (config == null || !config.isComplete()) {
-            broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.config_incomplete")
-                    .withStyle(net.minecraft.ChatFormatting.RED));
-            SixtySeconds.LOGGER.warn("[60s] 区域配置不完整（sixty_seconds_config.json），终止开局。用 /60s_area show 检查。");
-            net.exmo.sixty_seconds.SixtySecondsMod.RUNNING = false;
-            // 延迟一 tick 停止：此刻仍处于核心 initializeGame 中途，直接 stopGame 会被随后的
-            // setGameStatus(ACTIVE) 覆盖；等本次开局流程走完再完整地走停止流程。
-            level.getServer().execute(() -> GameUtils.stopGame(level));
-            return;
+            SixtySecondsConfig completed = buildDefaultArenaConfig(level, config);
+            if (completed != null && completed.isComplete()) {
+                config = completed;
+                SixtySeconds.LOGGER.info("[60s] Area config incomplete — auto-applied default config (built-in templates {} / {}) for building.",
+                        config.residentialTemplateFile, config.shelterTemplateFile);
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.config_defaulted")
+                        .withStyle(net.minecraft.ChatFormatting.YELLOW));
+            } else {
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.config_incomplete")
+                        .withStyle(net.minecraft.ChatFormatting.RED));
+                SixtySeconds.LOGGER.warn("[60s] Area config incomplete (sixty_seconds_config.json) and cannot be completed with defaults, aborting game start. Check with /60s_area show, or ensure built-in templates house1/shelter1 exist.");
+                net.exmo.sixty_seconds.SixtySecondsMod.RUNNING = false;
+                // 延迟一 tick 停止：此刻仍处于核心 initializeGame 中途，直接 stopGame 会被随后的
+                // setGameStatus(ACTIVE) 覆盖；等本次开局流程走完再完整地走停止流程。
+                level.getServer().execute(() -> GameUtils.stopGame(level));
+                return;
+            }
         }
 
         // ★ 新流程：先建图，后分配
@@ -167,6 +178,63 @@ public final class SixtySecondsManager {
             assignFamilies(level, data, byUuid, allocResult);
             onBuildComplete(level, data);
         });
+    }
+
+    /**
+     * 区域配置不完整时的兜底：基于内置/导出的住宅、避难所模板 NBT（house1/shelter1，由
+     * {@link SixtySecondsArena#loadTemplate} 解析 size）自动生成一个<b>完整可用的默认配置</b>——
+     * 住宅模板盒落在 (0,0,0) 起、避难所模板盒沿 X 轴错开放置（间距大于净空环带，避免克隆重叠/互挖），
+     * 出生点取各自盒内中心略高处。仅在对应字段为空时补全，已登记的值原样保留。
+     * <p>返回 null 表示连内置模板都缺失、无法补全（调用方应终止开局）。
+     */
+    private static SixtySecondsConfig buildDefaultArenaConfig(ServerLevel level, SixtySecondsConfig cfg) {
+        if (cfg == null) {
+            cfg = new SixtySecondsConfig();
+        }
+        // 模板文件名兜底为模组内置默认
+        if (cfg.residentialTemplateFile == null || cfg.residentialTemplateFile.isBlank()) {
+            cfg.residentialTemplateFile = "house1";
+        }
+        if (cfg.shelterTemplateFile == null || cfg.shelterTemplateFile.isBlank()) {
+            cfg.shelterTemplateFile = "shelter1";
+        }
+        CompoundTag resTpl = SixtySecondsArena.loadTemplate(level, cfg.residentialTemplateFile);
+        CompoundTag shelTpl = SixtySecondsArena.loadTemplate(level, cfg.shelterTemplateFile);
+        if (resTpl == null || shelTpl == null) {
+            SixtySeconds.LOGGER.warn("[60s] Cannot complete default config: built-in/exported templates {} / {} not found.",
+                    cfg.residentialTemplateFile, cfg.shelterTemplateFile);
+            return null;
+        }
+        int[] rs = resTpl.getIntArray("size");
+        int[] ss = shelTpl.getIntArray("size");
+        if (rs == null || rs.length < 3 || ss == null || ss.length < 3 || rs[0] <= 0 || ss[0] <= 0) {
+            SixtySeconds.LOGGER.warn("[60s] Cannot complete default config: templates {} / {} missing valid size.",
+                    cfg.residentialTemplateFile, cfg.shelterTemplateFile);
+            return null;
+        }
+        int RW = rs[0], RH = rs[1], RD = rs[2];
+        int SW = ss[0], SH = ss[1], SD = ss[2];
+
+        // 模板盒：住宅 (0,0,0) 起；避难所沿 +X 错开，间距 > 2*CLEAR_MARGIN 以免净空互挖
+        int shelterX = RW + 16;
+        if (cfg.residentialTemplate == null) {
+            cfg.residentialTemplate = new SixtySecondsConfig.Region(
+                    new SixtySecondsConfig.Vec(0, 0, 0),
+                    new SixtySecondsConfig.Vec(RW - 1, RH - 1, RD - 1));
+        }
+        if (cfg.shelterTemplate == null) {
+            cfg.shelterTemplate = new SixtySecondsConfig.Region(
+                    new SixtySecondsConfig.Vec(shelterX, 0, 0),
+                    new SixtySecondsConfig.Vec(shelterX + SW - 1, SH - 1, SD - 1));
+        }
+        // 出生点：各自模板盒内、地板上方一格、X/Z 居中
+        if (cfg.residentialSpawn == null) {
+            cfg.residentialSpawn = new SixtySecondsConfig.Vec(RW / 2, 1, RD / 2);
+        }
+        if (cfg.shelterSpawn == null) {
+            cfg.shelterSpawn = new SixtySecondsConfig.Vec(shelterX + SW / 2, 1, SD / 2);
+        }
+        return cfg;
     }
 
     /** 异步建图完成回调：清理建图过程中被顶掉的掉落物 → 传送各队到住宅出生点 → 进入 65s 准备阶段。 */
