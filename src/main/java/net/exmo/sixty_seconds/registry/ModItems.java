@@ -22,6 +22,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.AdventureModePredicate;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
@@ -1457,27 +1458,36 @@ public final class ModItems {
 
     // ── 挖掘工具（挖掘工具科技线，与工具-I 同级）────────────────────────
     // 材质继承原版铁镐 / 铁锹；采掘等级=铁、耐久=铁(250)。
-    // 可采掘的方块通过原版 minecraft:tool 组件（NBT）声明（correct_for_drops + 铁镐速度 6.0）。
+    // 可采掘方块分两层声明：
+    //   1. minecraft:tool 组件 —— 生存/创造模式下的挖掘速度与掉落（correct_for_drops + 铁镐速度 6.0）。
+    //   2. minecraft:can_break 组件 —— 冒险模式下允许破坏的方块（原版 CanDestroy 的继任者）。
+    //      两者互不替代：冒险模式只认 can_break，所以必须单独声明，否则冒险模式挖不动。
     public static Item SIXTY_SECONDS_MINING_PICKAXE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_MINING_PICKAXE = ITEMS.register("sixty_seconds_mining_pickaxe", () -> {
-        Tool pickaxeTool = new Tool(List.of(Tool.Rule.minesAndDrops(List.of(
+        List<Block> pickaxeBlocks = List.of(
                 Blocks.STONE, Blocks.COBBLESTONE, Blocks.ANDESITE, Blocks.GRANITE,
                 Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.NETHERRACK, Blocks.PRISMARINE,
                 Blocks.BLACKSTONE, Blocks.BASALT, Blocks.CALCITE, Blocks.DEEPSLATE,
-                Blocks.COBBLED_DEEPSLATE, Blocks.TUFF, Blocks.ICE, Blocks.PACKED_ICE, Blocks.BLUE_ICE
-        ), 6.0F)), 1.0F, 1);
-        SIXTY_SECONDS_MINING_PICKAXE = new Item(new Item.Properties().durability(250).component(DataComponents.TOOL, pickaxeTool));
+                Blocks.COBBLED_DEEPSLATE, Blocks.TUFF, Blocks.ICE, Blocks.PACKED_ICE, Blocks.BLUE_ICE);
+        Tool pickaxeTool = new Tool(List.of(Tool.Rule.minesAndDrops(pickaxeBlocks, 6.0F)), 1.0F, 1);
+        SIXTY_SECONDS_MINING_PICKAXE = new Item(new Item.Properties().durability(250)
+                .component(DataComponents.TOOL, pickaxeTool)
+                .component(DataComponents.CAN_BREAK, AdventureModePredicate.Builder.loose()
+                        .add(pickaxeBlocks.toArray(new Block[0])).build()));
         return SIXTY_SECONDS_MINING_PICKAXE;
     });
 
     public static Item SIXTY_SECONDS_MINING_SHOVEL;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_MINING_SHOVEL = ITEMS.register("sixty_seconds_mining_shovel", () -> {
-        Tool shovelTool = new Tool(List.of(Tool.Rule.minesAndDrops(List.of(
+        List<Block> shovelBlocks = List.of(
                 Blocks.DIRT, Blocks.SAND, Blocks.GRAVEL, Blocks.SNOW, Blocks.SNOW_BLOCK,
                 Blocks.POWDER_SNOW, Blocks.GRASS_BLOCK, Blocks.MYCELIUM, Blocks.PODZOL,
-                Blocks.COARSE_DIRT, Blocks.MUD, Blocks.SHORT_GRASS, Blocks.TALL_GRASS, Blocks.DIRT_PATH
-        ), 6.0F)), 1.0F, 1);
-        SIXTY_SECONDS_MINING_SHOVEL = new Item(new Item.Properties().durability(250).component(DataComponents.TOOL, shovelTool));
+                Blocks.COARSE_DIRT, Blocks.MUD, Blocks.SHORT_GRASS, Blocks.TALL_GRASS, Blocks.DIRT_PATH);
+        Tool shovelTool = new Tool(List.of(Tool.Rule.minesAndDrops(shovelBlocks, 6.0F)), 1.0F, 1);
+        SIXTY_SECONDS_MINING_SHOVEL = new Item(new Item.Properties().durability(250)
+                .component(DataComponents.TOOL, shovelTool)
+                .component(DataComponents.CAN_BREAK, AdventureModePredicate.Builder.loose()
+                        .add(shovelBlocks.toArray(new Block[0])).build()));
         return SIXTY_SECONDS_MINING_SHOVEL;
     });
 
