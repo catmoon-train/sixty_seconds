@@ -175,26 +175,32 @@ public final class SixtySecondsManager {
         for (ServerPlayer p : level.players()) {
             p.displayClientMessage(buildingHint, true);
         }
-        // 预建复用：若此前 /60s build 已按相同队伍数建好部分结构，则跳过已建部分、只续建缺失部分
-        // （住宅/避难所各自独立），所有结构仍落在预建锚点（玩家脚下）处，开局直接进入建筑。
-        if (SixtySecondsMod.PREBUILT_DATA != null
-                && SixtySecondsMod.PREBUILT_ANCHOR != null
-                && !data.teams.isEmpty()
-                && SixtySecondsMod.PREBUILT_DATA.teams.size() == data.teams.size()) {
-            // 仅建造「尚未预建」的部分：房子预建过就只补避难所，反之同理
-            int needMask = SixtySecondsArena.BUILD_ALL & ~SixtySecondsMod.PREBUILT_MASK;
+        // 预建复用：只要此前 /60s build 留下过锚点，就<b>复用该锚点</b>建造——不再要求开局队伍数与预建时完全一致。
+        // 否则队伍数一变（如 build 后又有玩家加入）就跳过本分支、跑去网格原点 (teamBase) 重建并用 restoreAll 清掉
+        // 玩家建好的避难所，导致「开局没传送到我 build 的避难所」。现在始终在你 build 的位置建并传送过去。
+        if (SixtySecondsMod.PREBUILT_ANCHOR != null && !data.teams.isEmpty()) {
             net.minecraft.core.BlockPos anchor = SixtySecondsMod.PREBUILT_ANCHOR;
+            // 队伍数一致 → 只补建「尚未预建」的部分（build all 时 needMask=0，已全部建好，直接复用）；
+            // 队伍数变化（build 后又有玩家加入/退出）→ 以同一锚点重建全部当前队伍的结构，
+            // restore=false 保留已建好的方块、不整体还原清场，建筑仍落在玩家 build 的位置。
+            int needMask;
+            if (SixtySecondsMod.PREBUILT_DATA != null
+                    && SixtySecondsMod.PREBUILT_DATA.teams.size() == data.teams.size()) {
+                needMask = SixtySecondsArena.BUILD_ALL & ~SixtySecondsMod.PREBUILT_MASK;
+            } else {
+                needMask = SixtySecondsArena.BUILD_ALL;
+            }
             SixtySecondsMod.PREBUILT_DATA = null;
             SixtySecondsMod.PREBUILT_MASK = 0;
             SixtySecondsMod.PREBUILT_ANCHOR = null;
-            // 续建：保留预建方块与快照，按同一锚点把缺失部分补上（needMask 可能含住宅/避难所之一，或二者皆无）
+            // 续建：保留预建方块与快照，按同一锚点把当前所需部分补上（needMask 可能为 0，此时仅重算出生点并直接传送）
             SixtySecondsArena.buildContinue(level, data, config, () -> {
                 assignFamilies(level, data, byUuid, allocResult);
                 onBuildComplete(level, data);
             }, needMask, anchor, null);
             return;
         }
-        // 无有效预建则清掉残留标记，走正常异步建图（会先 restoreAll 还原任何上一局残留）
+        // 无预建锚点：清掉残留标记，走正常异步建图（会先 restoreAll 还原任何上一局残留）
         SixtySecondsMod.PREBUILT_DATA = null;
         SixtySecondsMod.PREBUILT_MASK = 0;
         SixtySecondsMod.PREBUILT_ANCHOR = null;

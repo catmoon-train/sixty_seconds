@@ -956,7 +956,12 @@ public final class SixtySecondsArena {
             }
             int done = 0;
             while (index < work.size() && done < MAX_CHUNKS_PER_TICK) {
-                placeWorkItem(level, snapshots, work.get(index));
+                // 单个工项容错：某块放置抛异常（如 1.21 下模板 NBT 解析异常）只跳过并记日志，
+                try {
+                    placeWorkItem(level, snapshots, work.get(index));
+                } catch (Exception e) {
+                    net.exmo.sixty_seconds.SixtySeconds.LOGGER.error("Construction work item failed and skipped：{}", work.get(index), e);
+                }
                 index++;
                 done++;
             }
