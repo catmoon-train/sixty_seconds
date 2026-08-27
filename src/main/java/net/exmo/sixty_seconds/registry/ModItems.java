@@ -23,7 +23,12 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.core.component.DataComponents;
+import net.exmo.sixty_seconds.content.item.AdventureBlockItem;
+import net.exmo.sixty_seconds.content.item.MiningShearsItem;
+import net.exmo.sixty_seconds.content.item.MiningToolItem;
+import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.component.Tool;
+import java.util.ArrayList;
 import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -1467,12 +1472,38 @@ public final class ModItems {
     public static Item SIXTY_SECONDS_MINING_PICKAXE;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_MINING_PICKAXE = ITEMS.register("sixty_seconds_mining_pickaxe", () -> {
         List<Block> pickaxeBlocks = List.of(
+                // 原基础方块
                 Blocks.STONE, Blocks.COBBLESTONE, Blocks.ANDESITE, Blocks.GRANITE,
                 Blocks.SANDSTONE, Blocks.RED_SANDSTONE, Blocks.NETHERRACK, Blocks.PRISMARINE,
                 Blocks.BLACKSTONE, Blocks.BASALT, Blocks.CALCITE, Blocks.DEEPSLATE,
-                Blocks.COBBLED_DEEPSLATE, Blocks.TUFF, Blocks.ICE, Blocks.PACKED_ICE, Blocks.BLUE_ICE);
+                Blocks.COBBLED_DEEPSLATE, Blocks.TUFF, Blocks.ICE, Blocks.PACKED_ICE, Blocks.BLUE_ICE,
+                // 玻璃（含所有染色玻璃）
+                Blocks.GLASS,
+                Blocks.WHITE_STAINED_GLASS, Blocks.ORANGE_STAINED_GLASS, Blocks.MAGENTA_STAINED_GLASS,
+                Blocks.LIGHT_BLUE_STAINED_GLASS, Blocks.YELLOW_STAINED_GLASS, Blocks.LIME_STAINED_GLASS,
+                Blocks.PINK_STAINED_GLASS, Blocks.GRAY_STAINED_GLASS, Blocks.LIGHT_GRAY_STAINED_GLASS,
+                Blocks.CYAN_STAINED_GLASS, Blocks.PURPLE_STAINED_GLASS, Blocks.BLUE_STAINED_GLASS,
+                Blocks.BROWN_STAINED_GLASS, Blocks.GREEN_STAINED_GLASS, Blocks.RED_STAINED_GLASS, Blocks.BLACK_STAINED_GLASS,
+                // 玻璃板（含所有染色玻璃板）
+                Blocks.GLASS_PANE,
+                Blocks.WHITE_STAINED_GLASS_PANE, Blocks.ORANGE_STAINED_GLASS_PANE, Blocks.MAGENTA_STAINED_GLASS_PANE,
+                Blocks.LIGHT_BLUE_STAINED_GLASS_PANE, Blocks.YELLOW_STAINED_GLASS_PANE, Blocks.LIME_STAINED_GLASS_PANE,
+                Blocks.PINK_STAINED_GLASS_PANE, Blocks.GRAY_STAINED_GLASS_PANE, Blocks.LIGHT_GRAY_STAINED_GLASS_PANE,
+                Blocks.CYAN_STAINED_GLASS_PANE, Blocks.PURPLE_STAINED_GLASS_PANE, Blocks.BLUE_STAINED_GLASS_PANE,
+                Blocks.BROWN_STAINED_GLASS_PANE, Blocks.GREEN_STAINED_GLASS_PANE, Blocks.RED_STAINED_GLASS_PANE, Blocks.BLACK_STAINED_GLASS_PANE,
+                // 石质建筑方块
+                Blocks.STONE_BRICKS, Blocks.MOSSY_COBBLESTONE, Blocks.MOSSY_STONE_BRICKS, Blocks.CRACKED_STONE_BRICKS,
+                Blocks.SMOOTH_STONE_SLAB, Blocks.TERRACOTTA,
+                Blocks.WHITE_TERRACOTTA, Blocks.ORANGE_TERRACOTTA, Blocks.MAGENTA_TERRACOTTA,
+                Blocks.LIGHT_BLUE_TERRACOTTA, Blocks.YELLOW_TERRACOTTA, Blocks.LIME_TERRACOTTA,
+                Blocks.PINK_TERRACOTTA, Blocks.GRAY_TERRACOTTA, Blocks.LIGHT_GRAY_TERRACOTTA,
+                Blocks.CYAN_TERRACOTTA, Blocks.PURPLE_TERRACOTTA, Blocks.BLUE_TERRACOTTA,
+                Blocks.BROWN_TERRACOTTA, Blocks.GREEN_TERRACOTTA, Blocks.RED_TERRACOTTA, Blocks.BLACK_TERRACOTTA,
+                Blocks.IRON_BARS, Blocks.COBBLESTONE_WALL, Blocks.QUARTZ_BLOCK, Blocks.SMOOTH_QUARTZ,
+                // 铺路方块（本模组；世界中即灰色混凝土）/ 灯笼（本模组）
+                Blocks.GRAY_CONCRETE, Blocks.LANTERN);
         Tool pickaxeTool = new Tool(List.of(Tool.Rule.minesAndDrops(pickaxeBlocks, 6.0F)), 1.0F, 1);
-        SIXTY_SECONDS_MINING_PICKAXE = new Item(new Item.Properties().durability(250)
+        SIXTY_SECONDS_MINING_PICKAXE = new MiningToolItem(new Item.Properties().durability(250)
                 .component(DataComponents.TOOL, pickaxeTool)
                 .component(DataComponents.CAN_BREAK, toAdventurePredicate(pickaxeBlocks)));
         return SIXTY_SECONDS_MINING_PICKAXE;
@@ -1481,19 +1512,50 @@ public final class ModItems {
     public static Item SIXTY_SECONDS_MINING_SHOVEL;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_MINING_SHOVEL = ITEMS.register("sixty_seconds_mining_shovel", () -> {
         List<Block> shovelBlocks = List.of(
+                // 原基础方块
                 Blocks.DIRT, Blocks.SAND, Blocks.GRAVEL, Blocks.SNOW, Blocks.SNOW_BLOCK,
                 Blocks.POWDER_SNOW, Blocks.GRASS_BLOCK, Blocks.MYCELIUM, Blocks.PODZOL,
-                Blocks.COARSE_DIRT, Blocks.MUD, Blocks.SHORT_GRASS, Blocks.TALL_GRASS, Blocks.DIRT_PATH);
+                Blocks.COARSE_DIRT, Blocks.MUD, Blocks.SHORT_GRASS, Blocks.TALL_GRASS, Blocks.DIRT_PATH,
+                // 新增：蕨、大型蕨、苔藓块、苔藓地毯
+                Blocks.FERN, Blocks.LARGE_FERN, Blocks.MOSS_BLOCK, Blocks.MOSS_CARPET);
         Tool shovelTool = new Tool(List.of(Tool.Rule.minesAndDrops(shovelBlocks, 6.0F)), 1.0F, 1);
-        SIXTY_SECONDS_MINING_SHOVEL = new Item(new Item.Properties().durability(250)
+        SIXTY_SECONDS_MINING_SHOVEL = new MiningToolItem(new Item.Properties().durability(250)
                 .component(DataComponents.TOOL, shovelTool)
                 .component(DataComponents.CAN_BREAK, toAdventurePredicate(shovelBlocks)));
         return SIXTY_SECONDS_MINING_SHOVEL;
     });
 
+    // 采掘剪刀：通电制作（2 铁）。可挖掘所有树叶、藤蔓、蜘蛛网（冒险模式 can_break）。
+    public static Item SIXTY_SECONDS_MINING_SHEARS;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_MINING_SHEARS = ITEMS.register("sixty_seconds_mining_shears", () -> {
+        List<Block> shearsBlocks = List.of(
+                Blocks.OAK_LEAVES, Blocks.SPRUCE_LEAVES, Blocks.BIRCH_LEAVES, Blocks.JUNGLE_LEAVES,
+                Blocks.ACACIA_LEAVES, Blocks.DARK_OAK_LEAVES, Blocks.MANGROVE_LEAVES, Blocks.CHERRY_LEAVES,
+                Blocks.AZALEA_LEAVES, Blocks.FLOWERING_AZALEA_LEAVES,
+                Blocks.VINE, Blocks.WEEPING_VINES, Blocks.TWISTING_VINES, Blocks.CAVE_VINES,
+                Blocks.COBWEB);
+        SIXTY_SECONDS_MINING_SHEARS = new MiningShearsItem(new Item.Properties().durability(238)
+                .component(DataComponents.CAN_BREAK, toAdventurePredicate(shearsBlocks)));
+        return SIXTY_SECONDS_MINING_SHEARS;
+    });
+
+    // 铺路方块：材质继承灰色混凝土；可在冒险模式放置（无需通电，任意方块 ×4 合成）。
+    public static Item SIXTY_SECONDS_PAVING_BLOCK;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_PAVING_BLOCK = ITEMS.register("sixty_seconds_paving_block", () -> {
+        SIXTY_SECONDS_PAVING_BLOCK = new AdventureBlockItem(Blocks.GRAY_CONCRETE, new Item.Properties());
+        return SIXTY_SECONDS_PAVING_BLOCK;
+    });
+
+    // 灯笼：继承原版灯笼（材质/行为一致），可在冒险模式放置（无需通电，任意方块 ×2 + 木炭 ×1 合成）。
+    public static Item SIXTY_SECONDS_LANTERN;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_LANTERN = ITEMS.register("sixty_seconds_lantern", () -> {
+        SIXTY_SECONDS_LANTERN = new AdventureBlockItem(Blocks.LANTERN, new Item.Properties());
+        return SIXTY_SECONDS_LANTERN;
+    });
+
     // 把方块列表转成冒险模式的 can_break 谓词（宽松匹配：方块任意状态都允许，如雪的任意层数）。
     private static AdventureModePredicate toAdventurePredicate(List<Block> blocks) {
-        List<BlockPredicate> predicates = new java.util.ArrayList<>(blocks.size());
+        List<BlockPredicate> predicates = new ArrayList<>(blocks.size());
         for (Block block : blocks) {
             predicates.add(BlockPredicate.Builder.block().of(block).build());
         }

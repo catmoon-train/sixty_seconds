@@ -28,6 +28,14 @@ import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.exmo.sixty_seconds.SixtySecondsMod;
+import net.exmo.sixty_seconds.logic.SixtySecondsDailyEvents;
+import net.exmo.sixty_seconds.registry.ModItems;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 public final class NeoForgeEvents {
@@ -215,6 +223,26 @@ public final class NeoForgeEvents {
             for (ServerPlayConnectionEvents.Disconnect listener : ServerPlayConnectionEvents.DISCONNECT.invokers()) {
                 listener.onPlayDisconnect(handler, player.getServer());
             }
+        }
+    }
+
+    // 庇护所内禁止使用采掘镐 / 采掘锹 / 采掘剪刀挖掘方块。
+    @SubscribeEvent
+    public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (!(event.getPlayer() instanceof ServerPlayer player)) {
+            return;
+        }
+        Level level = player.level();
+        if (!SixtySecondsMod.isActive(level) || !SixtySecondsDailyEvents.isPlayerInShelter(player)) {
+            return;
+        }
+        Item held = player.getMainHandItem().getItem();
+        if (held == ModItems.SIXTY_SECONDS_MINING_PICKAXE
+                || held == ModItems.SIXTY_SECONDS_MINING_SHOVEL
+                || held == ModItems.SIXTY_SECONDS_MINING_SHEARS) {
+            event.setCanceled(true);
+            player.displayClientMessage(Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.mining_tool.disabled_in_shelter").withStyle(ChatFormatting.RED), true);
         }
     }
 }

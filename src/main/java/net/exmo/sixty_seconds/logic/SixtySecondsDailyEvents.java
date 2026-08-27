@@ -376,6 +376,23 @@ public final class SixtySecondsDailyEvents {
                 || (team.residentialBox != null && team.residentialBox.contains(x, y, z));
     }
 
+    /** 判断玩家当前是否处于本队庇护所（含住宅）范围内，供挖掘工具拦截使用。 */
+    public static boolean isPlayerInShelter(ServerPlayer player) {
+        SixtySecondsState.Data data = SixtySecondsState.get(player.serverLevel());
+        if (data == null) {
+            return false;
+        }
+        SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
+        if (stats == null) {
+            return false;
+        }
+        SixtySecondsState.TeamData team = data.teams.get(stats.teamId);
+        if (team == null) {
+            return false;
+        }
+        return isPlayerInShelter(player, data, team);
+    }
+
     private static boolean isMemberOnline(ServerLevel level, SixtySecondsState.TeamData team, UUID uuid) {
         return level.getPlayerByUUID(uuid) instanceof ServerPlayer p && !GameUtils.isPlayerEliminated(p);
     }

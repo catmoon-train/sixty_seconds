@@ -10,6 +10,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.block.Blocks;
@@ -523,6 +524,18 @@ public final class SixtySecondsRecipes {
         add(list, "mining_shovel", Station.WORKBENCH, "mining_tools", true,
                 List.of(in(Items.IRON_INGOT, 1), in(Items.STICK, 2)),
                 net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_MINING_SHOVEL, 1);
+        // 采掘剪刀：2 铁，通电
+        add(list, "mining_shears", Station.WORKBENCH, "mining_tools", true,
+                List.of(in(Items.IRON_INGOT, 2)),
+                net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_MINING_SHEARS, 1);
+        // 铺路方块：任意方块 ×4（铺路方块科技线，无需通电）
+        add(list, "paving_block", Station.WORKBENCH, "paving_blocks", false,
+                List.of(any("vanilla_block", 4, vanillaBlockItems())),
+                net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_PAVING_BLOCK, 1);
+        // 灯笼：任意方块 ×2 + 木炭 ×1（铺路方块科技线，无需通电）
+        add(list, "lantern", Station.WORKBENCH, "paving_blocks", false,
+                List.of(any("vanilla_block", 2, vanillaBlockItems()), in(Items.CHARCOAL, 1)),
+                net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_LANTERN, 1);
 
         // ── 背包（裁缝台）─────────────────────────────────────────────
         add(list, "backpack_small", Station.TAILOR, "backpack_1", false,
@@ -1592,5 +1605,20 @@ public final class SixtySecondsRecipes {
     /** 「任意 X」组配料：groupKey 对应 {@code group.sixty_seconds.sixty_seconds.<key>} 展示名。 */
     private static Ingredient any(String groupKey, int count, List<Item> items) {
         return new Ingredient(items, count, groupKey);
+    }
+
+    /** 所有「我的世界原版」方块物品（minecraft 命名空间下的 BlockItem），用于「任意方块」组配料。 */
+    private static List<Item> vanillaBlockItems() {
+        List<Item> list = new ArrayList<>();
+        for (ResourceLocation id : BuiltInRegistries.ITEM.keySet()) {
+            if (!id.getNamespace().equals("minecraft")) {
+                continue;
+            }
+            Item item = BuiltInRegistries.ITEM.get(id);
+            if (item instanceof BlockItem) {
+                list.add(item);
+            }
+        }
+        return list;
     }
 }
