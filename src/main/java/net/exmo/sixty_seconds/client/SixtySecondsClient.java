@@ -100,6 +100,7 @@ import net.exmo.sixty_seconds.network.SixtySecondsStarMapS2CPacket;
 import net.exmo.sixty_seconds.network.SixtySecondsStationStockS2CPacket;
 import net.exmo.sixty_seconds.network.SupplySearchS2CPacket;
 import net.exmo.sixty_seconds.network.VaultLockpickCompleteC2SPacket;
+import net.exmo.sixty_seconds.client.screen.minigame.LockpickMinigameScreen;
 import net.exmo.sixty_seconds.network.VehicleCameraS2CPacket;
 import net.exmo.sixty_seconds.network.VisitChatMessageS2CPacket;
 import net.exmo.sixty_seconds.registry.ModBlocks;
@@ -500,7 +501,12 @@ public final class SixtySecondsClient {
                 context.client().execute(() -> context.client().setScreen(
                         new BreakInSelectScreen(payload.teamIds(), payload.labels(), payload.alarms()))));
         ClientPlayNetworking.registerGlobalReceiver(OpenVaultLockpickS2CPacket.ID, (payload, context) ->
-                context.client().execute(() -> ClientPlayNetworking.send(new VaultLockpickCompleteC2SPacket(payload.vaultPos()))));
+                context.client().execute(() -> {
+                    // 收到开保险库指令：弹出模组内撬锁小游戏，完成小游戏后才把完成包发回服务端开箱
+                    net.minecraft.core.BlockPos pos = payload.vaultPos();
+                    context.client().setScreen(new LockpickMinigameScreen(pos, () ->
+                            ClientPlayNetworking.send(new VaultLockpickCompleteC2SPacket(pos))));
+                }));
         ClientPlayNetworking.registerGlobalReceiver(OpenTradeS2CPacket.ID, (payload, context) ->
                 context.client().execute(() -> context.client().setScreen(new TradeScreen(payload.partnerName()))));
         ClientPlayNetworking.registerGlobalReceiver(SupplySearchS2CPacket.ID, (payload, context) ->
