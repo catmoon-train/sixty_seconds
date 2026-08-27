@@ -174,6 +174,29 @@ public final class SixtySecondsManager {
         for (ServerPlayer p : level.players()) {
             p.displayClientMessage(buildingHint, true);
         }
+        // 预建复用：若此前 /60s build 已按相同队伍数建好部分结构，则跳过已建部分、只续建缺失部分
+        // （住宅/避难所各自独立），所有结构仍落在预建锚点（玩家脚下）处，开局直接进入建筑。
+        if (SixtySecondsMod.PREBUILT_DATA != null
+                && SixtySecondsMod.PREBUILT_ANCHOR != null
+                && !data.teams.isEmpty()
+                && SixtySecondsMod.PREBUILT_DATA.teams.size() == data.teams.size()) {
+            // 仅建造「尚未预建」的部分：房子预建过就只补避难所，反之同理
+            int needMask = SixtySecondsArena.BUILD_ALL & ~SixtySecondsMod.PREBUILT_MASK;
+            net.minecraft.core.BlockPos anchor = SixtySecondsMod.PREBUILT_ANCHOR;
+            SixtySecondsMod.PREBUILT_DATA = null;
+            SixtySecondsMod.PREBUILT_MASK = 0;
+            SixtySecondsMod.PREBUILT_ANCHOR = null;
+            // 续建：保留预建方块与快照，按同一锚点把缺失部分补上（needMask 可能含住宅/避难所之一，或二者皆无）
+            SixtySecondsArena.buildContinue(level, data, config, () -> {
+                assignFamilies(level, data, byUuid, allocResult);
+                onBuildComplete(level, data);
+            }, needMask, anchor, null);
+            return;
+        }
+        // 无有效预建则清掉残留标记，走正常异步建图（会先 restoreAll 还原任何上一局残留）
+        SixtySecondsMod.PREBUILT_DATA = null;
+        SixtySecondsMod.PREBUILT_MASK = 0;
+        SixtySecondsMod.PREBUILT_ANCHOR = null;
         SixtySecondsArena.build(level, data, config, () -> {
             // 3) 建图完成 → 分配家庭身份 → 传送进家 → 进准备阶段
             assignFamilies(level, data, byUuid, allocResult);
@@ -188,7 +211,7 @@ public final class SixtySecondsManager {
      * 出生点取各自盒内中心略高处。仅在对应字段为空时补全，已登记的值原样保留。
      * <p>返回 null 表示连内置模板都缺失、无法补全（调用方应终止开局）。
      */
-    private static SixtySecondsConfig buildDefaultArenaConfig(ServerLevel level, SixtySecondsConfig cfg) {
+    public static SixtySecondsConfig buildDefaultArenaConfig(ServerLevel level, SixtySecondsConfig cfg) {
         if (cfg == null) {
             cfg = new SixtySecondsConfig();
         }
@@ -559,6 +582,18 @@ public final class SixtySecondsManager {
      * 要求 {@code data.teams} 中队伍槽位已创建（空队伍含建图时写入的 spawn/box/door）；
      * 此方法仅填充成员并回写玩家 stats。
      */
+    /** 将已预建好的队伍建筑数据（盒子/出生点/搜索门等）复制到目标队伍，供 /60s start 跳过建图时复用。 */
+    private static void copyTeamBuild(SixtySecondsState.TeamData src, SixtySecondsState.TeamData dst) {
+        dst.residentialBox = src.residentialBox;
+        dst.shelterBox = src.shelterBox;
+        dst.residentialSpawn = src.residentialSpawn;
+        dst.shelterSpawn = src.shelterSpawn;
+        dst.searchZoneSpawn = src.searchZoneSpawn;
+        dst.returnDoorPos = src.returnDoorPos;
+        dst.searchZoneBox = src.searchZoneBox;
+        dst.searchDoors.putAll(src.searchDoors);
+    }
+
     private static void assignFamilies(ServerLevel level, SixtySecondsState.Data data,
             java.util.Map<java.util.UUID, ServerPlayer> byUuid, SixtySecondsTeamAllocator.Result result) {
         // 参与名单在开局瞬间（begin）捕获，而本方法在异步建图完成后才执行——中间可能隔几十秒。

@@ -22,6 +22,13 @@ public final class SixtySecondsMod {
     /** 本模式是否正在进行（供无世界上下文的 mixin 判断，如食物不可堆叠）。开局置 true，结束置 false。 */
     public static volatile boolean RUNNING = false;
 
+    /** 预建结果：/60s build 预先建好的住宅+避难所数据，/60s start 时若队伍数一致则跳过建图直接复用。 */
+    public static net.exmo.sixty_seconds.state.SixtySecondsState.Data PREBUILT_DATA = null;
+    /** 预建掩码（BUILD_RESIDENTIAL / BUILD_SHELTER / BUILD_ALL，见 SixtySecondsArena）。 */
+    public static int PREBUILT_MASK = 0;
+    /** 预建锚点：/60s build 时指令输入玩家脚下的坐标，用于让 start 续建缺失部分时落位一致。 */
+    public static net.minecraft.core.BlockPos PREBUILT_ANCHOR = null;
+
     private SixtySecondsMod() {
     }
 

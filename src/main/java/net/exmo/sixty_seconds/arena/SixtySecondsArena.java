@@ -48,10 +48,16 @@ import java.util.WeakHashMap;
  * 建完后再回调 {@code onComplete}（传送/进准备阶段）。坐标/出生点等轻量计算仍在 {@link #build} 同步完成。
  */
 public final class SixtySecondsArena {
-    /** 每 tick 处理的子盒数（每盒约 {@link #CHUNK_TARGET} 方块）。 */
-    private static final int MAX_CHUNKS_PER_TICK = 3;
-    /** 单个子盒目标方块数（越大每 tick 越重）。 */
-    private static final int CHUNK_TARGET = 4000;
+    /** 每 tick 处理的子盒数（每盒约 {@link #CHUNK_TARGET} 方块）。
+     *  调小可减轻单 tick 方块放置量，避免开局建图时服务器「Can't keep up」卡死。 */
+    private static final int MAX_CHUNKS_PER_TICK = 1;
+    /** 单个子盒目标方块数（越大每 tick 越重）。调小使单 tick 负载低于 tick 预算，消除开局卡顿。 */
+    private static final int CHUNK_TARGET = 2000;
+
+    /** 建造掩码：住宅 / 避难所 / 全部。供 /60s build 选择性预建。 */
+    public static final int BUILD_RESIDENTIAL = 1;
+    public static final int BUILD_SHELTER = 2;
+    public static final int BUILD_ALL = BUILD_RESIDENTIAL | BUILD_SHELTER;
 
     private static final Map<ServerLevel, LinkedHashMap<BlockPos, Snapshot>> ARENAS = new WeakHashMap<>();
 
@@ -106,7 +112,45 @@ public final class SixtySecondsArena {
      */
     public static void build(ServerLevel level, SixtySecondsState.Data data, SixtySecondsConfig config,
             Runnable onComplete) {
-        restoreAll(level);
+        build(level, data, config, onComplete, BUILD_ALL, null, true, null);
+    }
+
+    public static void build(ServerLevel level, SixtySecondsState.Data data, SixtySecondsConfig config,
+            Runnable onComplete, int buildMask) {
+        build(level, data, config, onComplete, buildMask, null, true, null);
+    }
+
+    /**
+     * 建图主入口（默认开局路径：先还原上一局再按网格建图）。
+     * @param anchor 预建锚点：不为 null 时把整座竞技场从默认网格原点（{@code teamBase}）刚性平移到该坐标（仅水平位移，
+     *               建筑 Y 仍按模板自然落位），用于 {@code /60s build} 在指令输入玩家脚下就地预建。为 null 时走原网格布局。
+     */
+    public static void build(ServerLevel level, SixtySecondsState.Data data, SixtySecondsConfig config,
+            Runnable onComplete, int buildMask, BlockPos anchor) {
+        build(level, data, config, onComplete, buildMask, anchor, true, null);
+    }
+
+    /**
+     * 续建：在已有预建（保留其方块与快照）基础上，仅建造 {@code buildMask} 指定的缺失部分，
+     * 所有结构仍按 {@code anchor}（= 预建锚点）落位，保证几何与预建一致、可被 /60s start 直接复用。
+     * @param existingSnapshots 已有快照表（预建阶段写入的）；传 null 时自动复用 {@link #ARENAS} 中该维度的表。
+     */
+    public static void buildContinue(ServerLevel level, SixtySecondsState.Data data, SixtySecondsConfig config,
+            Runnable onComplete, int buildMask, BlockPos anchor,
+            LinkedHashMap<BlockPos, Snapshot> existingSnapshots) {
+        build(level, data, config, onComplete, buildMask, anchor, false, existingSnapshots);
+    }
+
+    /**
+     * 建图核心实现。
+     * @param restore true=先 {@link #restoreAll} 清掉上一局/上一次预建的方块再建（默认开局路径）；
+     *               false=续建，保留已有方块与快照，仅把缺失部分追加进去（供 {@link #buildContinue} 使用）。
+     * @param existingSnapshots 续建时复用/追加的快照表；restore=true 时忽略。
+     */
+    private static void build(ServerLevel level, SixtySecondsState.Data data, SixtySecondsConfig config,
+            Runnable onComplete, int buildMask, BlockPos anchor, boolean restore,
+            LinkedHashMap<BlockPos, Snapshot> existingSnapshots) {
+        if (restore) restoreAll(level);
         if (config == null || !config.isComplete()) {
             clearArenaEntities(level, config, List.of(), List.of(), data);
             SixtySeconds.LOGGER.warn("[60s] Area template config incomplete (sixty_seconds_config.json) — skipping per-team clone build.");
@@ -144,6 +188,19 @@ public final class SixtySecondsArena {
             BlockPos grid = config.teamOffset(i);
             residentialOffsets.add(new BlockPos(grid.getX(), residentialBaseY, grid.getZ()));
         }
+
+        // 预建锚点：把整座竞技场沿水平刚性平移到指令输入玩家脚下（默认网格原点 teamBase → anchor）。
+        // 仅平移 X/Z，建筑 Y 仍按模板自然落位；下方所有坐标（盒/出生点/门）统一叠加该偏移，保证几何自洽。
+        BlockPos arenaDelta = BlockPos.ZERO;
+        if (anchor != null) {
+            arenaDelta = new BlockPos(anchor.getX() - config.teamBase.x, 0, anchor.getZ() - config.teamBase.z);
+            List<BlockPos> shiftedS = new ArrayList<>(shelterOffsets.size());
+            for (BlockPos o : shelterOffsets) shiftedS.add(o.offset(arenaDelta));
+            shelterOffsets = shiftedS;
+            List<BlockPos> shiftedR = new ArrayList<>(residentialOffsets.size());
+            for (BlockPos o : residentialOffsets) shiftedR.add(o.offset(arenaDelta));
+            residentialOffsets = shiftedR;
+        }
         // 模板含活板门 → 按地表智能下沉埋地（把每队避难所偏移的 Y 压到让活板门齐地表）。
         // ocean 模式不埋地：埋地会按地表（海洋维度海床 ~Y72）对齐活板门，与 -40 地板相悖。
         boolean buried = ocean ? false : applyShelterBurial(level, config, shelterOffsets);
@@ -154,7 +211,14 @@ public final class SixtySecondsArena {
         }
         clearArenaEntities(level, config, shelterOffsets, residentialOffsets, data);
 
-        LinkedHashMap<BlockPos, Snapshot> snapshots = new LinkedHashMap<>();
+        LinkedHashMap<BlockPos, Snapshot> snapshots;
+        if (restore) {
+            // 开局路径：开一张新快照表，整局结束后按它还原
+            snapshots = new LinkedHashMap<>();
+        } else {
+            // 续建路径：复用预建阶段已写入的快照表，把新部分追加进去（不重新还原预建方块）
+            snapshots = existingSnapshots != null ? existingSnapshots : ARENAS.getOrDefault(level, new LinkedHashMap<>());
+        }
         ARENAS.put(level, snapshots);
 
         // 净空与克隆分两阶段收集，最后 clearance 全部排在 clone 之前（见下方拼接）：
@@ -181,14 +245,17 @@ public final class SixtySecondsArena {
             CompoundTag shelTpl = loadTemplate(level, config.shelterTemplateFile);
             // 先净空（挖开克隆区四周/上方的自然地形），再克隆——队数无上限后克隆区会排进山里；
             // 锚定模式下避难所落在探索区门口，净空同样负责挖开门口的原生地形/建筑
-            addClearance(level, clearance, config.residentialTemplate.toBox(), offset);
+            if ((buildMask & BUILD_RESIDENTIAL) != 0)
+                addClearance(level, clearance, config.residentialTemplate.toBox(), offset);
             // 下沉埋地模式<b>不</b>给避难所净空：copyLayer 直接把埋在地下的模板体（含内部空气）搬过去，
             // 上方地形保留覆盖、只露活板门——净空会把地表挖成坑、暴露基地（本功能要避免的正是这个）。
-            if (!buried) {
+            if (!buried && (buildMask & BUILD_SHELTER) != 0) {
                 addClearance(level, clearance, config.shelterTemplate.toBox(), shelterOffset);
             }
-            addChunks(clones, config.residentialTemplate.toBox(), offset, resTpl);
-            addChunks(clones, config.shelterTemplate.toBox(), shelterOffset, shelTpl);
+            if ((buildMask & BUILD_RESIDENTIAL) != 0)
+                addChunks(clones, config.residentialTemplate.toBox(), offset, resTpl);
+            if ((buildMask & BUILD_SHELTER) != 0)
+                addChunks(clones, config.shelterTemplate.toBox(), shelterOffset, shelTpl);
             // 搜索区不克隆：所有队共用原模板区域（各队玩家会在同一片野外相遇——搜打撤对抗即来源于此）
 
             team.residentialSpawn = spawnFor(config.residentialSpawn, residentialBox, offset);
@@ -203,8 +270,8 @@ public final class SixtySecondsArena {
                     ? exitDoorBindings.get(index)
                     : null;
             if (exitDoor != null) {
-                team.searchZoneSpawn = exitDoor.spawn.toBlockPos();
-                team.returnDoorPos = exitDoor.door.toBlockPos();
+                team.searchZoneSpawn = exitDoor.spawn.toBlockPos().offset(arenaDelta);
+                team.returnDoorPos = exitDoor.door.toBlockPos().offset(arenaDelta);
                 AABB bound = aabbOf(exitDoor.boxMin, exitDoor.boxMax, BlockPos.ZERO);
                 // 绑定盒太小（快速绑定点了同一格等）视为未圈定 → 留 null（该区无危险区盒，按全局基线算等级）
                 if (bound.getXsize() >= 8 && bound.getZsize() >= 8) {
@@ -220,7 +287,7 @@ public final class SixtySecondsArena {
                 // 绑定的探索区用原区域（不加偏移，全队共用）
                 BlockPos templateDoor = b.door.toBlockPos();
                 BlockPos doorAbs = templateDoor.offset(shelterBox.isInside(templateDoor) ? shelterOffset : offset);
-                BlockPos spawnAbs = b.spawn.toBlockPos();
+                BlockPos spawnAbs = b.spawn.toBlockPos().offset(arenaDelta);
                 AABB boxAbs = aabbOf(b.boxMin, b.boxMax, BlockPos.ZERO);
                 team.searchDoors.put(doorAbs, new SixtySecondsState.TeamData.SearchLink(spawnAbs, boxAbs));
             }
@@ -720,20 +787,30 @@ public final class SixtySecondsArena {
      * 从而复用同一套源子盒与偏移语义。未列出的方块（空气）按空气放置。
      */
     private static void copyFromTemplate(ServerLevel level, BoundingBox src, BlockPos offset, CompoundTag template) {
-        BlockPos templateMin = new BlockPos(src.minX(), src.minY(), src.minZ());
         ListTag blocks = template.getList("blocks", Tag.TAG_COMPOUND);
         ListTag palette = template.getList("palette", Tag.TAG_COMPOUND);
         // 相对坐标 → (方块状态, 方块实体 NBT)
         Map<BlockPos, TemplateBlock> lookup = new HashMap<>();
+        // 模板原点 = NBT 内所有方块 pos 的最小值（不是子盒 src.min！模板被切成多子盒后，
+        // 只有第一块的子盒 min 才等于模板原点，其余子盒若用自身 min 当原点会整体错位，
+        // 命中不到正确方块而反复放置模板起点那一块 —— 表现即「房子只重复一块」）
+        int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE, minZ = Integer.MAX_VALUE;
         for (int i = 0; i < blocks.size(); i++) {
             CompoundTag e = blocks.getCompound(i);
             int[] pos = e.getIntArray("pos");
+            minX = Math.min(minX, pos[0]);
+            minY = Math.min(minY, pos[1]);
+            minZ = Math.min(minZ, pos[2]);
             BlockPos rel = new BlockPos(pos[0], pos[1], pos[2]);
             BlockState state = NbtUtils.readBlockState(level.holderLookup(net.minecraft.core.registries.Registries.BLOCK),
                     palette.getCompound(e.getInt("state")));
             CompoundTag nbt = e.contains("nbt") ? e.getCompound("nbt") : null;
             lookup.put(rel, new TemplateBlock(state, nbt));
         }
+        if (blocks.isEmpty() || minX == Integer.MAX_VALUE) {
+            return; // 空模板，无内容可放
+        }
+        BlockPos templateMin = new BlockPos(minX, minY, minZ);
         // 先放方块（air 为未列出项默认）
         for (int y = src.minY(); y <= src.maxY(); y++) {
             for (int x = src.minX(); x <= src.maxX(); x++) {

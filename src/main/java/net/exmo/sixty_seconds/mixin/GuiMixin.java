@@ -19,13 +19,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class GuiMixin {
 
     private static boolean isActive() {
-        return SixtySecondsMod.RUNNING && SixtySecondsMod.MODE != null
+        return SixtySecondsMod.MODE != null
                 && SixtySecBridgeClient.gameComponent != null
                 && SixtySecBridgeClient.gameComponent.isRunning()
                 && SixtySecBridgeClient.gameComponent.getGameMode() == SixtySecondsMod.MODE;
     }
 
-    @Inject(method = "renderHeartst(Lnet/minecraft/client/gui/GuiGraphics;)V", at = @At("HEAD"), cancellable = true, require = 0)
+    @Inject(method = "renderHearts(Lnet/minecraft/client/gui/GuiGraphics;)V", at = @At("HEAD"), cancellable = true, require = 0)
     private void sixtySeconds_hideHearts(GuiGraphics guiGraphics, CallbackInfo ci) {
         if (isActive()) ci.cancel();
     }

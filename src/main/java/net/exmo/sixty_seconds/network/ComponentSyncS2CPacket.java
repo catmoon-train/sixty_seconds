@@ -41,8 +41,15 @@ public record ComponentSyncS2CPacket(String keyId, UUID entityId, byte[] data) i
         if (key == null) {
             return;
         }
-        Player target = mc.level.getPlayerByUUID(payload.entityId());
-        Object provider = target != null ? target : mc.level;
+        // 世界组件（如 SixtySecGameWorldComponent / AreasWorldComponent）挂在 Level 上，
+        // 同步包里携带的是收包玩家的 UUID，但客户端必须挂到 ClientLevel，不能挂到玩家。
+        Object provider;
+        if (key.isWorldAttached()) {
+            provider = mc.level;
+        } else {
+            Player target = mc.level.getPlayerByUUID(payload.entityId());
+            provider = target != null ? target : mc.level;
+        }
         key.applyFromPacket(provider, payload.data(), mc.player);
     }
 }

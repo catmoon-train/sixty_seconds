@@ -109,6 +109,11 @@ public final class ComponentKey<T> {
         return (ComponentKey<T>) KEYS.get(id);
     }
 
+    /** 该组件是否挂载在 Level（世界组件）而非 Player（玩家组件）上。 */
+    public boolean isWorldAttached() {
+        return hasCtor(Level.class) && !hasCtor(Player.class);
+    }
+
     private T instantiate(Object provider) {
         try {
             for (Constructor<?> ctor : type.getDeclaredConstructors()) {

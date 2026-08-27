@@ -68,6 +68,22 @@ public final class SixtySecondsStartCommand {
                                 .then(literal("force_all_players")
                                         .executes(context -> start(context.getSource(), StartMode.NORMAL, -1, true)))
                                 .executes(context -> start(context.getSource(), StartMode.NORMAL, -1, false)))
+                        // 预建：开局前先把住宅/避难所建好，start 时跳过建造阶段直接进入建筑（不开始游戏）
+                        .then(literal("build")
+                                .requires(source -> source.hasPermission(2))
+                                .then(argument("type", StringArgumentType.word())
+                                        .suggests((context, builder) -> {
+                                            builder.suggest("all");
+                                            builder.suggest("房子");
+                                            builder.suggest("庇护所");
+                                            return builder.buildFuture();
+                                        })
+                                        .executes(context -> buildCommand(context.getSource(),
+                                                StringArgumentType.getString(context, "type"), null))
+                                        .then(argument("name", StringArgumentType.word())
+                                                .executes(context -> buildCommand(context.getSource(),
+                                                        StringArgumentType.getString(context, "type"),
+                                                        StringArgumentType.getString(context, "name"))))))
                         // 赛前组队大厅（对所有玩家开放；游戏进行中不可用）
                         .then(literal("team").executes(context -> openTeamLobby(context.getSource())))
                         // 科技树（对所有玩家开放；仅本模式进行中可用）
@@ -689,6 +705,86 @@ public final class SixtySecondsStartCommand {
             // 容错：非 normal/ocean 视为拼写错误，回退 normal
         }
         return StartMode.NORMAL;
+    }
+
+    /**
+     * /60s build <all|房子|庇护所> [建筑名称] —— 仅预建住宅/避难所（不开始游戏）。
+     * 先按当前在线人数预计算队伍、算出所需建造数量，再在指令输入玩家脚下就地建好（整座竞技场水平平移到玩家处）。
+     * 建好后把几何数据存入 SixtySecondsMod.PREBUILT_*，/60s start 若队伍数一致则跳过建造阶段直接进入建筑。
+     */
+    private static int buildCommand(CommandSourceStack source, String type, String name) {
+        ServerPlayer player = source.getPlayer();
+        if (player == null) {
+            source.sendFailure(Component.translatable("message.sixty_seconds.sixty_seconds.build_need_player"));
+            return 0;
+        }
+        ServerLevel level = player.serverLevel();
+        if (SixtySecondsMod.RUNNING) {
+            source.sendFailure(Component.translatable("message.sixty_seconds.sixty_seconds.build_running"));
+            return 0;
+        }
+        // 解析并补全区域配置（与 begin 的自动套用默认区配置一致）
+        net.exmo.sixty_seconds.config.SixtySecondsConfig config =
+                net.exmo.sixty_seconds.config.SixtySecondsConfigStore.current(level).orElse(null);
+        if (config == null || !config.isComplete()) {
+            config = net.exmo.sixty_seconds.logic.SixtySecondsManager.buildDefaultArenaConfig(level, config);
+        }
+        if (config == null || !config.isComplete()) {
+            source.sendFailure(Component.translatable("message.sixty_seconds.sixty_seconds.build_config_incomplete"));
+            return 0;
+        }
+        int mask;
+        String typeKey;
+        if ("房子".equals(type)) {
+            mask = net.exmo.sixty_seconds.arena.SixtySecondsArena.BUILD_RESIDENTIAL;
+            typeKey = "message.sixty_seconds.sixty_seconds.build_type_residential";
+        } else if ("庇护所".equals(type)) {
+            mask = net.exmo.sixty_seconds.arena.SixtySecondsArena.BUILD_SHELTER;
+            typeKey = "message.sixty_seconds.sixty_seconds.build_type_shelter";
+        } else {
+            mask = net.exmo.sixty_seconds.arena.SixtySecondsArena.BUILD_ALL;
+            typeKey = "message.sixty_seconds.sixty_seconds.build_type_all";
+        }
+        // 名称覆盖：深拷贝配置后再改模板文件名，避免污染 /60s_area 持久化的区域配置
+        if (name != null && !name.isBlank()) {
+            if (net.exmo.sixty_seconds.arena.SixtySecondsArena.loadTemplate(level, name) == null) {
+                source.sendFailure(Component.translatable("message.sixty_seconds.sixty_seconds.build_template_not_found", name));
+            } else {
+                com.google.gson.Gson gson = new com.google.gson.Gson();
+                net.exmo.sixty_seconds.config.SixtySecondsConfig copy =
+                        gson.fromJson(gson.toJson(config), net.exmo.sixty_seconds.config.SixtySecondsConfig.class);
+                if (mask != net.exmo.sixty_seconds.arena.SixtySecondsArena.BUILD_SHELTER) copy.residentialTemplateFile = name;
+                if (mask != net.exmo.sixty_seconds.arena.SixtySecondsArena.BUILD_RESIDENTIAL) copy.shelterTemplateFile = name;
+                config = copy;
+            }
+        }
+        // 先按当前在线人数预计算队伍，确定要建造的队伍/建筑数量
+        java.util.List<java.util.UUID> participants = new java.util.ArrayList<>();
+        for (ServerPlayer p : level.players()) participants.add(p.getUUID());
+        net.exmo.sixty_seconds.logic.SixtySecondsTeamAllocator.Result alloc =
+                net.exmo.sixty_seconds.logic.SixtySecondsTeamAllocator.allocate(participants,
+                        net.exmo.sixty_seconds.logic.SixtySecondsTeamLobby.partiesForAllocation(level.getServer()),
+                        new java.util.Random(level.getRandom().nextLong()));
+        int teamCount = Math.max(1, alloc.teams().size());
+        // 在指令输入玩家脚下就地预建：以玩家坐标为锚点，整座竞技场水平平移到此处
+        net.minecraft.core.BlockPos anchor = player.blockPosition();
+        net.exmo.sixty_seconds.state.SixtySecondsState.Data data = new net.exmo.sixty_seconds.state.SixtySecondsState.Data();
+        for (int i = 0; i < teamCount; i++) {
+            data.teams.put(i, new net.exmo.sixty_seconds.state.SixtySecondsState.TeamData(i));
+        }
+        source.sendSuccess(() -> Component.translatable("message.sixty_seconds.sixty_seconds.build_start",
+                        Component.translatable(typeKey), teamCount, teamCount)
+                .withStyle(net.minecraft.ChatFormatting.YELLOW), true);
+        net.exmo.sixty_seconds.arena.SixtySecondsArena.build(level, data, config, () -> {
+            SixtySecondsMod.PREBUILT_DATA = data;
+            SixtySecondsMod.PREBUILT_MASK = mask;
+            SixtySecondsMod.PREBUILT_ANCHOR = anchor;
+            for (ServerPlayer p : level.players()) {
+                p.displayClientMessage(Component.translatable("message.sixty_seconds.sixty_seconds.build_done", teamCount)
+                        .withStyle(net.minecraft.ChatFormatting.GREEN), true);
+            }
+        }, mask, anchor);
+        return 1;
     }
 
     private static int start(CommandSourceStack source, StartMode mode, int days, boolean forceAll) {

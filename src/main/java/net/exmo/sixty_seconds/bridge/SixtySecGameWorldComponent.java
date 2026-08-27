@@ -5,7 +5,10 @@ import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.bridge.cca.AutoSyncedComponent;
 import net.exmo.sixty_seconds.bridge.cca.ComponentKey;
 import net.exmo.sixty_seconds.bridge.cca.ComponentRegistry;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
@@ -109,5 +112,31 @@ public class SixtySecGameWorldComponent implements AutoSyncedComponent {
             net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient.gameComponent = this;
             net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient.areaComponent = AreasWorldComponent.KEY.get(world);
         }
+    }
+    
+    @Override
+    public void writeSyncPacket(RegistryFriendlyByteBuf buf, ServerPlayer recipient) {
+        buf.writeEnum(gameStatus);
+        if (gameMode != null) {
+            buf.writeBoolean(true);
+            buf.writeResourceLocation(gameMode.identifier);
+        } else {
+            buf.writeBoolean(false);
+        }
+        buf.writeInt(fade);
+        buf.writeBoolean(isSkillAvailable);
+    }
+
+    @Override
+    public void applySyncPacket(RegistryFriendlyByteBuf buf) {
+        this.gameStatus = buf.readEnum(GameStatus.class);
+        if (buf.readBoolean()) {
+            ResourceLocation id = buf.readResourceLocation();
+            this.gameMode = SixtySecGameModes.get(id);
+        } else {
+            this.gameMode = null;
+        }
+        this.fade = buf.readInt();
+        this.isSkillAvailable = buf.readBoolean();
     }
 }
