@@ -802,11 +802,11 @@ public final class SixtySecondsStartCommand {
             return 0;
         }
 
-        // days：-1 表示无尽模式，否则为游戏启用的天数（默认 7）
-        int resolvedDays = days >= 0 ? days : SixtySecondsMod.MODE.defaultStartTime;
         // 配置按地图名共享（主世界与海洋维度同名地图读同一文件），天数写入当前世界即可
         var config = net.exmo.sixty_seconds.config.SixtySecondsConfigStore.current(mainLevel)
                 .orElseGet(net.exmo.sixty_seconds.config.SixtySecondsConfig::new);
+        // days：-1 表示无尽模式；>=0 直接用指定天数；缺省（/60s start 不带 days）沿用已配置天数（默认 7）。
+        int resolvedDays = days >= 0 ? days : config.totalDays;
         config.totalDays = resolvedDays;
         net.exmo.sixty_seconds.config.SixtySecondsConfigStore.save(mainLevel, config);
 
