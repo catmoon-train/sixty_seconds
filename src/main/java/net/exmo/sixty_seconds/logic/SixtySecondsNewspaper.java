@@ -403,13 +403,13 @@ public final class SixtySecondsNewspaper {
             if (i > 0) fullPage = fullPage.copy().append(CommonComponents.NEW_LINE).append(CommonComponents.NEW_LINE);
             fullPage = fullPage.copy().append(paperContent.get(i));
         }
-        net.minecraft.world.item.component.WrittenBookContent bookContent =
-                new net.minecraft.world.item.component.WrittenBookContent(
+        net.exmo.sixty_seconds.content.item.component.SixtySecWrittenBookContent bookContent =
+                new net.exmo.sixty_seconds.content.item.component.SixtySecWrittenBookContent(
                         net.minecraft.server.network.Filterable.passThrough(title.getString()),
-                        author.getString(), 0,
+                        author.getString(),
                         List.of(net.minecraft.server.network.Filterable.passThrough(fullPage)),
                         true);
-        newspaper.set(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT, bookContent);
+        newspaper.set(net.exmo.sixty_seconds.index.SixtySecDataComponentTypes.WRITTEN_BOOK_CONTENT, bookContent);
 
         for (BlockPos pos : mailboxes) {
             BlockEntity be = level.getBlockEntity(pos);
@@ -612,14 +612,14 @@ public final class SixtySecondsNewspaper {
             if (i > 0) fullPage = fullPage.copy().append(CommonComponents.NEW_LINE).append(CommonComponents.NEW_LINE);
             fullPage = fullPage.copy().append(sections.get(i));
         }
-        net.minecraft.world.item.component.WrittenBookContent bookContent =
-                new net.minecraft.world.item.component.WrittenBookContent(
+        net.exmo.sixty_seconds.content.item.component.SixtySecWrittenBookContent bookContent =
+                new net.exmo.sixty_seconds.content.item.component.SixtySecWrittenBookContent(
                         net.minecraft.server.network.Filterable.passThrough(
                                 Component.translatable(LANG + "title", 7).getString()),
-                        Component.translatable(LANG + "author").getString(), 0,
+                        Component.translatable(LANG + "author").getString(),
                         List.of(net.minecraft.server.network.Filterable.passThrough(fullPage)),
                         true);
-        stack.set(net.minecraft.core.component.DataComponents.WRITTEN_BOOK_CONTENT, bookContent);
+        stack.set(net.exmo.sixty_seconds.index.SixtySecDataComponentTypes.WRITTEN_BOOK_CONTENT, bookContent);
         return stack;
     }
 
