@@ -208,7 +208,7 @@ public final class SixtySecondsExportBuildingCommand {
             source.sendSuccess(() -> Component.translatable("commands.60s.export_building.done",
                     parts.size(), sizeX, sizeY, sizeZ, palette.size())
                     .withStyle(ChatFormatting.GREEN), false);
-            source.sendSuccess(() -> Component.translatable("commands.60s.export_building.file", out)
+            source.sendSuccess(() -> Component.translatable("commands.60s.export_building.file", out.toString())
                     .withStyle(ChatFormatting.GRAY), false);
             source.sendSuccess(() -> Component.translatable("commands.60s.export_building.safe_cmd")
                     .withStyle(ChatFormatting.YELLOW), false);
