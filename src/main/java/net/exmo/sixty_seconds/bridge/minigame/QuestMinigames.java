@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * 小游戏注册表（纯服务端安全，不引用任何客户端类）
- * 所有小游戏任务点可用的小游戏都在这里注册
+ * 所有电脑可用的小游戏都在这里注册
  */
 public class QuestMinigames {
 

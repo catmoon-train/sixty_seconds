@@ -16,7 +16,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 /**
- * 小游戏任务点方块 — 服务端网络处理
+ * 电脑方块 — 服务端网络处理
  * 完成通知统一走 {@link MinigameQuestPayload.CompleteGame} → {@link #handleCompleteGame}，
  * 由 {@link SixtySecondsMinigameRotation#tryReward} 做「50s 限时窗口 + 每队每周期一次」门控，
  * 通过才给 {@link SixtySecPlayerMinigameTaskComponent#addTokens} 发放游戏币。

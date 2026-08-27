@@ -38,7 +38,7 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 
 /**
- * 小游戏任务点方块
+ * 电脑方块
  * 透明、可含水、无碰撞体积，类似实体交互方块
  * 创造模式玩家右键可打开小游戏选择GUI
  * 冒险模式玩家右键直接打开配置的小游戏
@@ -199,7 +199,7 @@ public class MinigameQuestBlock extends BaseEntityBlock
     @Override
     public boolean shouldRenderTaskInstinct(Level level, BlockState state, BlockPos pos, Player player) {
 
-        // 小游戏任务点(14/15)：仅在玩家有待办小游戏任务、该点本局未被使用、
+        // 电脑(14/15)：仅在玩家有待办小游戏任务、该点本局未被使用、
         // 且该点的 minigameId 与玩家指派的目标类型匹配（或无指定目标）时才金色透视
         boolean isMinigamePoint = level.getBlockEntity(pos) instanceof MinigameQuestBlockEntity questBe;
         if (isMinigamePoint) {

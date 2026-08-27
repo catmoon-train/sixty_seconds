@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * 出生点方块
- * 材质/碰撞继承「小游戏任务点方块」：透明、不可见、无碰撞体积。
+ * 材质/碰撞继承「电脑方块」：透明、不可见、无碰撞体积。
  * 自动生成的庇护所 / 房子不方便用指令设置出生点，故放置此方块即可把所在位置登记为
  * 该建筑的出生点（自动判定其落在「住宅模板」还是「庇护所模板」范围内）。
  */
@@ -39,7 +39,7 @@ public class SixtySecondsSpawnPointBlock extends Block {
         return CODEC;
     }
 
-    // ── 继承小游戏任务点方块的材质：透明、不可见、无碰撞 ──
+    // ── 继承电脑方块的材质：透明、不可见、无碰撞 ──
 
     @Override
     protected RenderShape getRenderShape(BlockState state) {

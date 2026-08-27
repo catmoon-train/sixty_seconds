@@ -17,7 +17,7 @@ import org.lwjgl.glfw.GLFW;
 import java.util.List;
 
 /**
- * 小游戏任务点配置界面
+ * 电脑配置界面
  * 左侧：可滚动的小游戏列表
  * 右侧：列向排列的配置控件
  */

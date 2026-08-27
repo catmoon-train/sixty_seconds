@@ -9,7 +9,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
 /**
- * 小游戏任务点方块的网络通信
+ * 电脑方块的网络通信
  */
 public class MinigameQuestPayload {
 

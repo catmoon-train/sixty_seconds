@@ -39,7 +39,7 @@ import java.awt.*;
 import java.util.Map;
 
 /**
- * 小游戏任务点镶板
+ * 电脑
  * 透明、可含水、无碰撞体积，类似实体交互镶板
  * 只有一面，可贴在其他方块上
  */
@@ -186,7 +186,7 @@ public class MinigameQuestPanelBlock extends BaseEntityBlock
     @Override
     public boolean shouldRenderTaskInstinct(Level level, BlockState state, BlockPos pos, Player player) {
         
-        // 小游戏任务点(14/15)：仅在玩家有待办小游戏任务、该点本局未被使用、
+        // 电脑(14/15)：仅在玩家有待办小游戏任务、该点本局未被使用、
         // 且该点的 minigameId 与玩家指派的目标类型匹配（或无指定目标）时才金色透视
         boolean isMinigamePoint = level.getBlockEntity(pos) instanceof MinigameQuestBlockEntity questBe;
         if (isMinigamePoint) {

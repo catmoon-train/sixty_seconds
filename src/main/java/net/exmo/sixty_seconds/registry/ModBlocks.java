@@ -639,7 +639,7 @@ public final class ModBlocks {
             });
 
 
-    // 小游戏任务点镶板（透明贴面、可贴墙）
+    // 电脑（透明贴面、可贴墙）
     public static Block SIXTY_SECONDS_MINIGAME_QUEST_PANEL;
     public static final DeferredBlock<Block> HOLD_SIXTY_SECONDS_MINIGAME_QUEST_PANEL = BLOCKS.register(
             "sixty_seconds_minigame_quest_panel", () -> {
