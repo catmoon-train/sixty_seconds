@@ -26,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -40,6 +41,39 @@ import java.util.Set;
  */
 public final class SixtySecondsNpcSpawner {
     private SixtySecondsNpcSpawner() {
+    }
+
+    /**
+     * 批量刷新期间对世界 NPC 数的本地计数；{@code null} 表示不在批量中。
+     *
+     * <p>{@link #countNpcs} 要遍历 {@code getAllEntities()}（O(实体总数)）。
+     * 视距 28 下实体数可达数千，而 {@link #populateConfigured} 会对<b>每个配置点 × 每队</b>
+     * 都调一次 {@link #spawnAt}——若每次都重数一遍，就是每 10 秒几十万次无谓迭代。
+     * 批量期间改由 {@link #beginBatch} 数一次，之后靠「刷成功就 +1」维护，
+     * 语义与逐次重数完全等价（中途唯一能改变真实数量的就是我们自己刷出来的新 NPC）。</p>
+     *
+     * <p>用 {@code ThreadLocal}：批量一定发生在服务端线程的单次调用内，
+     * 但这样可避免万一被其他线程调用时相互串扰。</p>
+     */
+    private static final ThreadLocal<int[]> BATCH_COUNT = new ThreadLocal<>();
+
+    /** 开启一次批量刷新：以当前世界 NPC 数为基准，之后本地自增。 */
+    private static void beginBatch(ServerLevel level) {
+        BATCH_COUNT.set(new int[] { countNpcs(level) });
+    }
+
+    /** 结束批量刷新，释放计数。 */
+    private static void endBatch() {
+        BATCH_COUNT.remove();
+    }
+
+    /** 批量中返回本地计数并自增 1；不在批量中返回 -1。 */
+    private static int takeBatchSlot() {
+        int[] c = BATCH_COUNT.get();
+        if (c == null) {
+            return -1;
+        }
+        return c[0]++;
     }
 
     /** 普通生成入口：在 pos 造一只 NPC 并装配变体/朝向/驻守/归属队；受世界数量上限约束。 */
@@ -60,8 +94,11 @@ public final class SixtySecondsNpcSpawner {
     public static SixtySecondsNpcEntity spawnAt(ServerLevel level, BlockPos pos,
             SixtySecondsNpcEntity.Variant variant, float yaw, String profile, int garrisonRadius,
             int ownerTeamId, boolean ignoreCap) {
-        // 世界 NPC 总数硬上限：所有常规刷新路径共用这一道闸门
-        if (!ignoreCap && countNpcs(level) >= SixtySecondsBalance.NPC_WORLD_CAP) {
+        // 世界 NPC 总数硬上限：所有常规刷新路径共用这一道闸门。
+        // 批量刷新中直接取本地计数（beginBatch 已数过一次），避免每个点都全量遍历实体。
+        int slot = takeBatchSlot();
+        int current = slot >= 0 ? slot : countNpcs(level);
+        if (!ignoreCap && current >= SixtySecondsBalance.NPC_WORLD_CAP) {
             return null;
         }
         SixtySecondsNpcEntity npc = ModEntities.SIXTY_SECONDS_NPC.create(level);
@@ -178,24 +215,30 @@ public final class SixtySecondsNpcSpawner {
         if (config == null || config.npcSpawns == null || config.npcSpawns.isEmpty()) {
             return;
         }
-        for (SixtySecondsConfig.NpcSpawn spawn : config.npcSpawns) {
-            if (spawn.pos == null) {
-                continue;
+        // 批量：世界 NPC 数只数一次，后续由「刷成功就 +1」维护（见 BATCH_COUNT 说明）
+        beginBatch(level);
+        try {
+            for (SixtySecondsConfig.NpcSpawn spawn : config.npcSpawns) {
+                if (spawn.pos == null) {
+                    continue;
+                }
+                BlockPos template = spawn.pos.toBlockPos();
+                SixtySecondsNpcEntity.Variant variant = SixtySecondsNpcEntity.Variant.byId(spawn.variant);
+                if (!isInPerTeamTemplate(config, template)) {
+                    // 野外/搜索区：单份，全队共用（搜索区不克隆）
+                    populateAt(level, template, spawn, variant, -1);
+                    continue;
+                }
+                // 住宅/避难所：每队一份。点已是模板<b>绝对</b>坐标且落在模板盒内，
+                // 故换算与 SixtySecondsArena.spawnFor 一致——直接叠加该队的网格偏移即可。
+                int index = 0;
+                for (SixtySecondsState.TeamData team : data.teams.values()) {
+                    populateAt(level, template.offset(config.teamOffset(index)), spawn, variant, team.teamId);
+                    index++;
+                }
             }
-            BlockPos template = spawn.pos.toBlockPos();
-            SixtySecondsNpcEntity.Variant variant = SixtySecondsNpcEntity.Variant.byId(spawn.variant);
-            if (!isInPerTeamTemplate(config, template)) {
-                // 野外/搜索区：单份，全队共用（搜索区不克隆）
-                populateAt(level, template, spawn, variant, -1);
-                continue;
-            }
-            // 住宅/避难所：每队一份。点已是模板<b>绝对</b>坐标且落在模板盒内，
-            // 故换算与 SixtySecondsArena.spawnFor 一致——直接叠加该队的网格偏移即可。
-            int index = 0;
-            for (SixtySecondsState.TeamData team : data.teams.values()) {
-                populateAt(level, template.offset(config.teamOffset(index)), spawn, variant, team.teamId);
-                index++;
-            }
+        } finally {
+            endBatch();
         }
     }
 
@@ -324,51 +367,57 @@ public final class SixtySecondsNpcSpawner {
     public static void spawnDaily(ServerLevel level, SixtySecondsState.Data data, boolean night) {
         RandomSource random = level.getRandom();
         int base = SixtySecondsBalance.NPC_DAILY_PER_ZONE_BASE + data.dayNumber / 2;
-        for (AABB zone : searchZones(data)) {
-            // 只围绕玩家刷新：没玩家踏足的搜刮区整块跳过，不在世界各处凭空堆 NPC
-            if (!isPlayerNearZone(level, zone)) {
-                continue;
-            }
-            int existing = level.getEntitiesOfClass(SixtySecondsNpcEntity.class, zone).size();
-            int want = Math.min(base, SixtySecondsBalance.NPC_ZONE_CAP - existing);
-            // 夜晚刷强盗：每区最多 2 只
-            if (night) {
-                want = Math.min(want, 2);
-            }
-            int banditSpawned = 0;
-            for (int i = 0; i < want; i++) {
-                BlockPos spot = findGroundSpot(level, zone, random);
-                // 落点要「有玩家在附近」且「不贴脸」，否则换一个点重试一次
-                if (spot == null || !isSpawnSpotSuitable(level, spot)) {
-                    // 重试一次：换个位置
-                    spot = findGroundSpot(level, zone, random);
-                    if (spot == null || !isSpawnSpotSuitable(level, spot)) {
-                        continue;
-                    }
+        // 批量：世界 NPC 数只数一次（每区每只都重数会退化为 O(区数×配额×实体总数)）
+        beginBatch(level);
+        try {
+            for (AABB zone : searchZones(data)) {
+                // 只围绕玩家刷新：没玩家踏足的搜刮区整块跳过，不在世界各处凭空堆 NPC
+                if (!isPlayerNearZone(level, zone)) {
+                    continue;
                 }
-                SixtySecondsNpcEntity.Variant variant = night
-                        ? SixtySecondsNpcEntity.Variant.BANDIT
-                        : (random.nextFloat() < SixtySecondsBalance.NPC_DAY_TRAVELER_RATIO
-                                ? SixtySecondsNpcEntity.Variant.TRAVELER
-                                : SixtySecondsNpcEntity.Variant.MERCHANT);
-                spawnAt(level, spot, variant, random.nextFloat() * 360.0F, "default", 8, -1);
+                int existing = level.getEntitiesOfClass(SixtySecondsNpcEntity.class, zone).size();
+                int want = Math.min(base, SixtySecondsBalance.NPC_ZONE_CAP - existing);
+                // 夜晚刷强盗：每区最多 2 只
                 if (night) {
-                    banditSpawned++;
+                    want = Math.min(want, 2);
                 }
-            }
-            // 强盗提示：通知搜刮区内的玩家
-            if (banditSpawned > 0) {
-                Component banditMsg = Component.translatable(
-                        "message.sixty_seconds.sixty_seconds.npc.bandit_sighted")
-                        .withStyle(ChatFormatting.RED);
-                for (ServerPlayer player : level.players()) {
-                    if (zone.contains(player.getX(), player.getY(), player.getZ())) {
-                        player.displayClientMessage(banditMsg, true);
-                        player.playNotifySound(SoundEvents.ZOMBIE_AMBIENT,
-                                SoundSource.HOSTILE, 0.8F, 0.7F);
+                int banditSpawned = 0;
+                for (int i = 0; i < want; i++) {
+                    BlockPos spot = findGroundSpot(level, zone, random);
+                    // 落点要「有玩家在附近」且「不贴脸」，否则换一个点重试一次
+                    if (spot == null || !isSpawnSpotSuitable(level, spot)) {
+                        // 重试一次：换个位置
+                        spot = findGroundSpot(level, zone, random);
+                        if (spot == null || !isSpawnSpotSuitable(level, spot)) {
+                            continue;
+                        }
+                    }
+                    SixtySecondsNpcEntity.Variant variant = night
+                            ? SixtySecondsNpcEntity.Variant.BANDIT
+                            : (random.nextFloat() < SixtySecondsBalance.NPC_DAY_TRAVELER_RATIO
+                                    ? SixtySecondsNpcEntity.Variant.TRAVELER
+                                    : SixtySecondsNpcEntity.Variant.MERCHANT);
+                    if (spawnAt(level, spot, variant, random.nextFloat() * 360.0F, "default", 8, -1) != null
+                            && night) {
+                        banditSpawned++;
+                    }
+                }
+                // 强盗提示：通知搜刮区内的玩家
+                if (banditSpawned > 0) {
+                    Component banditMsg = Component.translatable(
+                            "message.sixty_seconds.sixty_seconds.npc.bandit_sighted")
+                            .withStyle(ChatFormatting.RED);
+                    for (ServerPlayer player : level.players()) {
+                        if (zone.contains(player.getX(), player.getY(), player.getZ())) {
+                            player.displayClientMessage(banditMsg, true);
+                            player.playNotifySound(SoundEvents.ZOMBIE_AMBIENT,
+                                    SoundSource.HOSTILE, 0.8F, 0.7F);
+                        }
                     }
                 }
             }
+        } finally {
+            endBatch();
         }
     }
 

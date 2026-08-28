@@ -339,27 +339,59 @@ public final class SixtySecondsManager {
         net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.applyPendingOverlay(level, data);
     }
 
-    /** 扫描各队避难所 / 住宅区盒内的邮箱方块并注册到报纸投递系统。模板克隆不触发 setPlacedBy，须开局补注册。 */
+    /**
+     * 扫描各队避难所 / 住宅区盒内的邮箱方块并注册到报纸投递系统。模板克隆不触发 setPlacedBy，须开局补注册。
+     */
     private static void scanAndRegisterMailboxes(ServerLevel level, SixtySecondsState.Data data) {
         for (SixtySecondsState.TeamData team : data.teams.values()) {
             // 避难所 + 住宅区盒子：遍历两个盒子的并集
-            java.util.List<net.minecraft.world.phys.AABB> boxes = new java.util.ArrayList<>();
-            if (team.shelterBox != null)
-                boxes.add(team.shelterBox);
-            if (team.residentialBox != null)
-                boxes.add(team.residentialBox);
-            for (net.minecraft.world.phys.AABB box : boxes) {
-                BlockPos min = BlockPos.containing(box.minX, box.minY, box.minZ);
-                BlockPos max = BlockPos.containing(box.maxX, box.maxY, box.maxZ);
-                for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
-                    if (level.getBlockEntity(pos) instanceof net.exmo.sixty_seconds.content.block_entity.SixtySecondsMailboxBlockEntity mailbox) {
-                        // 补写 ownerTeamId（模板克隆时 BE 的 NBT 里可能没有 teamId）
-                        if (mailbox.ownerTeamId < 0) {
-                            mailbox.ownerTeamId = team.teamId;
-                            mailbox.setChanged();
-                        }
-                        SixtySecondsNewspaper.registerMailbox(level, team.teamId, pos.immutable());
+            if (team.shelterBox != null) {
+                scanMailboxesInBox(level, team, team.shelterBox);
+            }
+            if (team.residentialBox != null) {
+                scanMailboxesInBox(level, team, team.residentialBox);
+            }
+        }
+    }
+
+    /** 在一个 AABB 内按区块扫描邮箱方块实体。 */
+    private static void scanMailboxesInBox(ServerLevel level, SixtySecondsState.TeamData team,
+            net.minecraft.world.phys.AABB box) {
+        int minX = (int) Math.floor(box.minX);
+        int minY = (int) Math.floor(box.minY);
+        int minZ = (int) Math.floor(box.minZ);
+        int maxX = (int) Math.floor(box.maxX);
+        int maxY = (int) Math.floor(box.maxY);
+        int maxZ = (int) Math.floor(box.maxZ);
+
+        int cx0 = net.minecraft.core.SectionPos.blockToSectionCoord(minX);
+        int cz0 = net.minecraft.core.SectionPos.blockToSectionCoord(minZ);
+        int cx1 = net.minecraft.core.SectionPos.blockToSectionCoord(maxX);
+        int cz1 = net.minecraft.core.SectionPos.blockToSectionCoord(maxZ);
+
+        for (int cx = cx0; cx <= cx1; cx++) {
+            for (int cz = cz0; cz <= cz1; cz++) {
+                // 只查已完整加载的区块：未加载区块内不可能有刚克隆进来的模板方块实体
+                if (!level.getChunkSource().hasChunk(cx, cz)) {
+                    continue;
+                }
+                net.minecraft.world.level.chunk.LevelChunk chunk = level.getChunk(cx, cz);
+                for (java.util.Map.Entry<BlockPos, net.minecraft.world.level.block.entity.BlockEntity> e
+                        : chunk.getBlockEntities().entrySet()) {
+                    BlockPos bp = e.getKey();
+                    if (bp.getX() < minX || bp.getX() > maxX || bp.getY() < minY || bp.getY() > maxY
+                            || bp.getZ() < minZ || bp.getZ() > maxZ) {
+                        continue;
                     }
+                    if (!(e.getValue() instanceof net.exmo.sixty_seconds.content.block_entity.SixtySecondsMailboxBlockEntity mailbox)) {
+                        continue;
+                    }
+                    // 补写 ownerTeamId（模板克隆时 BE 的 NBT 里可能没有 teamId）
+                    if (mailbox.ownerTeamId < 0) {
+                        mailbox.ownerTeamId = team.teamId;
+                        mailbox.setChanged();
+                    }
+                    SixtySecondsNewspaper.registerMailbox(level, team.teamId, bp.immutable());
                 }
             }
         }
