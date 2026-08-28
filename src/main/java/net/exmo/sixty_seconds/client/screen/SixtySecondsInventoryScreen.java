@@ -14,14 +14,25 @@ import net.minecraft.world.item.Items;
 /**
  * 受限背包界面。
  * <ul>
+ *   <li>背景顶部 {@value #HEADER_HEIGHT}px 用受限背包条 {@code sixty_seconds:textures/gui/container/limited_inventory.png}
+ *       （移植自 SRE 的 {@code wathe:textures/gui/container/limited_inventory.png}，已改用本模组命名空间）；
+ *       其下沿用原版背包底图，保证槽位布局不失真。</li>
  *   <li>仅隐藏被屏障锁定的槽位（与 {@code SixtySecondsInventoryLimit} 的屏障占位保持一致）。</li>
  *   <li>装备栏（4 格盔甲 + 副手）以专用金色边框高亮，并标注当前护甲值。</li>
  *   <li>底部提供「兑换实体币」按钮，打开 {@link TokenExchangeScreen} 把游戏币余额兑成实体币。</li>
  * </ul>
  */
 public class SixtySecondsInventoryScreen extends AbstractContainerScreen<InventoryMenu> {
-    private static final ResourceLocation INVENTORY_TEXTURE =
+    /** 受限背包条（本模组命名空间）。 */
+    private static final ResourceLocation LIMITED_INVENTORY_TEXTURE =
+            ResourceLocation.fromNamespaceAndPath("sixty_seconds", "textures/gui/container/limited_inventory.png");
+
+    /** 受限背包条下方沿用原版背包底图（两张图同为 256×256，UV 可直接拼接）。 */
+    private static final ResourceLocation VANILLA_INVENTORY_TEXTURE =
             ResourceLocation.parse("minecraft:textures/gui/container/inventory.png");
+
+    /** 受限背包条的高度：贴图可用区域（与 SRE 的 {@code backgroundHeight} 一致）。 */
+    private static final int HEADER_HEIGHT = 32;
 
     /** 游戏币（代币）图标。 */
     private static final ResourceLocation GAME_COIN =
@@ -65,7 +76,10 @@ public class SixtySecondsInventoryScreen extends AbstractContainerScreen<Invento
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
         int left = this.leftPos;
         int top = this.topPos;
-        guiGraphics.blit(INVENTORY_TEXTURE, left, top, 0, 0, this.imageWidth, this.imageHeight);
+        int restHeight = this.imageHeight - HEADER_HEIGHT;
+        guiGraphics.blit(LIMITED_INVENTORY_TEXTURE, left, top, 0, 0, this.imageWidth, HEADER_HEIGHT, 256, 256);
+        guiGraphics.blit(VANILLA_INVENTORY_TEXTURE, left, top + HEADER_HEIGHT,
+                0, HEADER_HEIGHT, this.imageWidth, restHeight, 256, 256);
         renderEquipmentFrames(guiGraphics, left, top);
         renderTokenBalance(guiGraphics, left, top);
     }

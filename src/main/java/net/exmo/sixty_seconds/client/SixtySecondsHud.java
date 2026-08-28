@@ -101,6 +101,7 @@ public final class SixtySecondsHud {
         Minecraft client = Minecraft.getInstance();
         if (client.player == null || client.level == null || !SixtySecBridgeClient.shouldShowHud()) {
             SixtySecondsStateAlerts.reset();
+            SixtySecondsSanityShader.instance.resetVisualEffects();
             frozenSnapshot = null;
             return;
         }
@@ -123,6 +124,7 @@ public final class SixtySecondsHud {
             }
             stats = frozenSnapshot;
             SixtySecondsStateAlerts.reset();
+            SixtySecondsSanityShader.instance.resetVisualEffects();
         }
 
         if (running) {
@@ -131,9 +133,13 @@ public final class SixtySecondsHud {
             // 未分配家庭（旁观/未加入）不画状态栏
             if (stats.teamId < 0) {
                 SixtySecondsStateAlerts.reset();
+                SixtySecondsSanityShader.instance.resetVisualEffects();
                 return;
             }
             SixtySecondsStateAlerts.tick(graphics, client, player, stats);
+            // 低理智滤镜 / 血丝 / 幻听：后处理由 GameRendererMixin 每帧消费，这里只推进状态机与覆盖层
+            SixtySecondsSanityShader.instance.tick(player, graphics.getDefaultGuiGraphics(),
+                    client.getTimer().getGameTimeDeltaPartialTick(true));
         }
 
         if (stats.downed) {

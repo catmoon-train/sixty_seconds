@@ -23,7 +23,8 @@
   "client": [
     "WeatherRendererMixin",
     "LocalPlayerDropMixin",
-    "MinecraftMixin"
+    "MinecraftMixin",
+    "GameRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

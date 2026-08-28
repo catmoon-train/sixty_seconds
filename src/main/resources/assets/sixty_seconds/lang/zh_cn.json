@@ -3716,6 +3716,29 @@
   "message.sixty_seconds.sixty_seconds.filthy_jar_filled": "§c污秽玻璃罐已装满血液。",
   "message.sixty_seconds.sixty_seconds.revive_not_teammate": "§c无法复活：对方不是你的队友。",
   "message.sixty_seconds.sixty_seconds.revive_offline": "§c无法复活：对方不在线。",
-  "message.sixty_seconds.sixty_seconds.totem_saved": "§6图腾救了你一命！"
+  "message.sixty_seconds.sixty_seconds.totem_saved": "§6图腾救了你一命！",
+
+  "gui.sixty_seconds.hint00": "别回头。它一直站在你身后。",
+  "gui.sixty_seconds.hint01": "罐头上的日期……是你进避难所那天。",
+  "gui.sixty_seconds.hint02": "水还在滴。可水箱昨天就空了。",
+  "gui.sixty_seconds.hint03": "有人在数你的呼吸。别停。",
+  "gui.sixty_seconds.hint04": "门是锁着的。你亲手锁的。",
+  "gui.sixty_seconds.hint05": "墙里的声音叫的是你的名字。",
+  "gui.sixty_seconds.hint06": "数到六十。数错了就得重来。",
+  "gui.sixty_seconds.hint07": "他们还在等你分配口粮。",
+  "gui.sixty_seconds.hint08": "手电筒闪了三下。你只按了一次。",
+  "gui.sixty_seconds.hint09": "收音机里的播报在重复同一句话。",
+  "gui.sixty_seconds.hint010": "不要相信镜子里那个人。",
+  "gui.sixty_seconds.hint011": "你已经很久没听见外面的风了。",
+
+  "gui.sixty_seconds.hint10": "今天的口粮……好像少了一点。",
+  "gui.sixty_seconds.hint11": "谁把铲子放回了原位？",
+  "gui.sixty_seconds.hint12": "门口的脚印比人多一双。",
+  "gui.sixty_seconds.hint13": "避难所的灯刚才灭了一次。",
+  "gui.sixty_seconds.hint14": "有人在夜里翻过你的背包。",
+  "gui.sixty_seconds.hint15": "收音机的杂音里混进了人声。",
+  "gui.sixty_seconds.hint16": "地图上多了一条你没画过的线。",
+  "gui.sixty_seconds.hint17": "水壶是满的。你记得是空的。",
+  "gui.sixty_seconds.hint18": "别数天数了。数不清的。"
 
 }

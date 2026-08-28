@@ -158,6 +158,41 @@ public final class SixtySecondsManager {
             byUuid.put(player.getUUID(), player);
             participants.add(player.getUUID());
         }
+
+        // 续档恢复：世界里的住宅/避难所是上一局留下的真实方块（本模组不还原地形），
+        // 因此直接沿用存档记录的队伍划分与建筑坐标，绝不重新克隆一套——
+        // 否则会在玩家脚下再堆一栋房子，而上一局建好的房子也不会消失。
+        java.util.Map<Integer, java.util.List<java.util.UUID>> resumeTeams =
+                net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.takeResumeLayout(level, data);
+        if (resumeTeams != null) {
+            java.util.List<java.util.List<java.util.UUID>> teamLists = new java.util.ArrayList<>();
+            java.util.Set<java.util.UUID> placed = new java.util.HashSet<>();
+            for (java.util.List<java.util.UUID> members : resumeTeams.values()) {
+                teamLists.add(new java.util.ArrayList<>(members));
+                placed.addAll(members);
+            }
+            // 存档里没有的新玩家：补进当前成员最少的队（队数保持与存档一致，建筑坐标才对得上）
+            for (java.util.UUID uuid : participants) {
+                if (placed.contains(uuid)) {
+                    continue;
+                }
+                java.util.List<java.util.UUID> smallest = null;
+                for (java.util.List<java.util.UUID> t : teamLists) {
+                    if (smallest == null || t.size() < smallest.size()) {
+                        smallest = t;
+                    }
+                }
+                if (smallest != null) {
+                    smallest.add(uuid);
+                }
+            }
+            // 队伍槽位（含建筑坐标）已在 takeResumeLayout 中按存档 teamId 建好
+            assignFamilies(level, data, byUuid,
+                    new SixtySecondsTeamAllocator.Result(teamLists, java.util.Set.of()));
+            onBuildComplete(level, data);
+            return;
+        }
+
         SixtySecondsTeamAllocator.Result allocResult = SixtySecondsTeamAllocator.allocate(participants,
                 SixtySecondsTeamLobby.partiesForAllocation(level.getServer()),
                 new java.util.Random(level.getRandom().nextLong()));
@@ -275,7 +310,10 @@ public final class SixtySecondsManager {
     private static void onBuildComplete(ServerLevel level, SixtySecondsState.Data data) {
         // 建图克隆时会替换掉既有方块（包括容器），容器内物品会变成 ItemEntity 洒落一地。
         // 必须在传送前全图清理，否则玩家出生点四周全是上局残留掉落物。
-        clearAllDroppedItems(level);
+        // 续档恢复不建图，没有克隆残留；此时清掉落物只会误删玩家上一局摆在地面上的物资。
+        if (!net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.isResuming()) {
+            clearAllDroppedItems(level);
+        }
         // 建图后各队避难所/搜索区区块已加载：清掉上一局遗留在其中的夜袭者（和平难度下被 mixin 豁免、
         // 自身永不消失——「开始游戏时避难所的僵尸/突袭者不消失」根因）。须在传送玩家进家前扫。
         SixtySecondsDefenseSystem.discardTaggedMobs(level);

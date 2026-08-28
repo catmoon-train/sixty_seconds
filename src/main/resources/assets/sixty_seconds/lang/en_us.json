@@ -2859,6 +2859,29 @@
   "message.sixty_seconds.sixty_seconds.newspaper_given": "A simulated daily newspaper has been given to you.",
   "message.sixty_seconds.sixty_seconds.revive_not_teammate": "§cCannot revive: the target is not your teammate.",
   "message.sixty_seconds.sixty_seconds.revive_offline": "§cCannot revive: the target is offline.",
-  "message.sixty_seconds.sixty_seconds.totem_saved": "§6The totem saved your life!"
+  "message.sixty_seconds.sixty_seconds.totem_saved": "§6The totem saved your life!",
+
+  "gui.sixty_seconds.hint00": "Don't look back. It has been standing behind you the whole time.",
+  "gui.sixty_seconds.hint01": "The date on the can... is the day you entered the shelter.",
+  "gui.sixty_seconds.hint02": "Water is still dripping. But the tank went empty yesterday.",
+  "gui.sixty_seconds.hint03": "Someone is counting your breaths. Don't stop.",
+  "gui.sixty_seconds.hint04": "The door is locked. You locked it yourself.",
+  "gui.sixty_seconds.hint05": "The voice in the wall is calling your name.",
+  "gui.sixty_seconds.hint06": "Count to sixty. Miscount and you start over.",
+  "gui.sixty_seconds.hint07": "They are still waiting for you to hand out the rations.",
+  "gui.sixty_seconds.hint08": "The flashlight blinked three times. You pressed it once.",
+  "gui.sixty_seconds.hint09": "The radio broadcast keeps repeating the same sentence.",
+  "gui.sixty_seconds.hint010": "Don't trust the person in the mirror.",
+  "gui.sixty_seconds.hint011": "You haven't heard the wind outside in a long time.",
+
+  "gui.sixty_seconds.hint10": "Today's rations... seem a little short.",
+  "gui.sixty_seconds.hint11": "Who put the shovel back where it was?",
+  "gui.sixty_seconds.hint12": "There is one more set of footprints at the door than there are people.",
+  "gui.sixty_seconds.hint13": "The shelter lights went out just now.",
+  "gui.sixty_seconds.hint14": "Someone went through your pack last night.",
+  "gui.sixty_seconds.hint15": "There is a human voice mixed into the radio static.",
+  "gui.sixty_seconds.hint16": "There is a line on the map you never drew.",
+  "gui.sixty_seconds.hint17": "The canteen is full. You remember it being empty.",
+  "gui.sixty_seconds.hint18": "Stop counting the days. They don't add up anymore."
 
 }

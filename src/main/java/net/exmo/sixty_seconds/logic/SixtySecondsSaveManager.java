@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -22,6 +23,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelResource;
+import net.minecraft.world.phys.AABB;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -30,6 +32,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -47,9 +50,10 @@ import java.util.WeakHashMap;
  *       使“玩家/主机退出存档再进入”能继续上一局。</li>
  * </ul>
  *
- * <p>恢复采用“重开 + 覆盖进度”策略：先走正常开局建图（保证所有子系统的临时结构齐备），
- * 建图完成后再把存档中的进度（天数/阶段/队伍数值/科技/供电/家门/玩家背包与状态/职业）覆盖回去。
- * 地图坐标来自新建的地图（旧地图已不存在），故位置类字段不恢复。</p>
+ * <p>恢复采用“沿用布局 + 覆盖进度”策略：世界里的住宅/避难所是上一局留下的<b>真实方块</b>
+ * （本模组不做地形还原、不回滚），因此续档时<b>不再重新建图</b>，而是直接沿用存档记录的队伍划分与
+ * 建筑坐标（住宅/避难所出生点与范围盒、回家门、夜袭门、房车安全点等），
+ * 只把天数/阶段/队伍数值/科技/供电/家门/玩家背包与状态覆盖回去。</p>
  */
 public final class SixtySecondsSaveManager {
     private static final String FILE_NAME = "sixty_seconds_save.dat";
@@ -150,6 +154,47 @@ public final class SixtySecondsSaveManager {
         }
     }
 
+    /** 当前是否处于「重载世界后恢复上一局」流程（开局回调据此跳过重新建图等副作用）。 */
+    public static boolean isResuming() {
+        return pendingSnapshot != null;
+    }
+
+    /**
+     * 续档恢复：把存档中的<b>队伍划分与建筑坐标</b>写回本局 data，并返回「teamId → 该队在线成员」。
+     *
+     * <p>世界里的住宅/避难所是上一局留下的真实方块（本模组不做地形还原、不回滚），
+     * 因此续档时必须沿用存档中的坐标，<b>绝不能重新克隆一套</b>——否则会在玩家脚下再堆一栋房子，
+     * 而上一局建好的房子也不会消失。</p>
+     *
+     * <p>队伍槽位按存档的 teamId 原样重建，保证建筑坐标与队伍一一对应；
+     * 存档里没有的新玩家稍后由调用方补进成员最少的队。</p>
+     *
+     * @return null 表示当前不在恢复流程、或存档不含布局（旧存档）——调用方应回退到正常开局建图。
+     */
+    public static Map<Integer, List<UUID>> takeResumeLayout(ServerLevel level, SixtySecondsState.Data data) {
+        SavedGame snap = pendingSnapshot;
+        if (snap == null || !snap.hasLayout || snap.teams == null || snap.teams.isEmpty()) {
+            return null;
+        }
+        Map<Integer, List<UUID>> byTeam = new LinkedHashMap<>();
+        data.teams.clear();
+        for (TeamSave st : snap.teams) {
+            SixtySecondsState.TeamData team = new SixtySecondsState.TeamData(st.teamId);
+            applyTeamLayout(team, st);
+            data.teams.put(st.teamId, team);
+            List<UUID> online = new ArrayList<>();
+            for (UUID uuid : st.members) {
+                if (level.getPlayerByUUID(uuid) != null) {
+                    online.add(uuid);
+                }
+            }
+            byTeam.put(st.teamId, online);
+        }
+        System.out.println("[SixtySecondsSaveManager] 续档：沿用上一局建筑布局，"
+                + data.teams.size() + " 队，跳过重新建图。");
+        return byTeam;
+    }
+
     /**
      * 由 {@code SixtySecondsManager.onBuildComplete} 在建图完成后调用，把存档进度覆盖到新建的本局上。
      */
@@ -169,7 +214,7 @@ public final class SixtySecondsSaveManager {
             freshData.helicopterEvacuated.clear();
             freshData.helicopterEvacuated.addAll(snap.helicopterEvacuated);
 
-            // 各队进度（保留新建地图的坐标，仅覆盖数值型进度）
+            // 各队进度（建筑坐标已由 takeResumeLayout 沿用存档，这里只覆盖数值型进度）
             for (SixtySecondsState.TeamData ft : freshData.teams.values()) {
                 TeamSave st = snap.teamById(ft.teamId);
                 if (st != null) {
@@ -226,6 +271,21 @@ public final class SixtySecondsSaveManager {
         ft.sisterUUID = st.sisterUUID;
     }
 
+    /** 把存档中的建筑布局（位置类字段）覆盖回队伍：续档沿用上一局留在世界里的住宅/避难所。 */
+    private static void applyTeamLayout(SixtySecondsState.TeamData ft, TeamSave st) {
+        ft.residentialSpawn = st.residentialSpawn;
+        ft.shelterSpawn = st.shelterSpawn;
+        ft.residentialBox = st.residentialBox;
+        ft.shelterBox = st.shelterBox;
+        ft.searchZoneSpawn = st.searchZoneSpawn;
+        ft.searchZoneBox = st.searchZoneBox;
+        ft.returnDoorPos = st.returnDoorPos;
+        ft.doorPos = st.doorPos;
+        ft.rvLastSafePos = st.rvLastSafePos;
+        ft.searchDoors.clear();
+        ft.searchDoors.putAll(st.searchDoors);
+    }
+
     private static void restorePlayer(ServerPlayer p, PlayerSave ps, ServerLevel level) {
         try {
             p.getInventory().load(ps.inventory);
@@ -254,6 +314,9 @@ public final class SixtySecondsSaveManager {
         for (SixtySecondsState.TeamData t : data.teams.values()) {
             g.teams.add(buildTeam(t, provider));
         }
+
+        g.hasLayout = true;
+        g.buildAnchor = net.exmo.sixty_seconds.SixtySecondsMod.PREBUILT_ANCHOR;
 
         g.players = new ArrayList<>();
         for (ServerPlayer p : level.players()) {
@@ -293,6 +356,17 @@ public final class SixtySecondsSaveManager {
         s.dailyModifiers = new HashMap<>(t.dailyModifiers);
         s.sisterOutside = t.sisterOutside;
         s.sisterUUID = t.sisterUUID;
+        // 建筑布局：续档时沿用世界里的既有住宅/避难所，不重新克隆
+        s.residentialSpawn = t.residentialSpawn;
+        s.shelterSpawn = t.shelterSpawn;
+        s.residentialBox = t.residentialBox;
+        s.shelterBox = t.shelterBox;
+        s.searchZoneSpawn = t.searchZoneSpawn;
+        s.searchZoneBox = t.searchZoneBox;
+        s.returnDoorPos = t.returnDoorPos;
+        s.doorPos = t.doorPos;
+        s.rvLastSafePos = t.rvLastSafePos;
+        s.searchDoors = new HashMap<>(t.searchDoors);
         return s;
     }
 
@@ -308,6 +382,10 @@ public final class SixtySecondsSaveManager {
         root.putInt("lastNpcRvSpawnDay", g.lastNpcRvSpawnDay);
         root.putBoolean("helicopterArrived", g.helicopterArrived);
         root.put("helicopterEvacuated", uuidList(g.helicopterEvacuated));
+        root.putBoolean("hasLayout", g.hasLayout);
+        if (g.buildAnchor != null) {
+            root.putLong("buildAnchor", g.buildAnchor.asLong());
+        }
         ListTag teams = new ListTag();
         for (TeamSave t : g.teams) {
             teams.add(writeTeam(t, provider));
@@ -342,6 +420,10 @@ public final class SixtySecondsSaveManager {
             g.lastNpcRvSpawnDay = root.getInt("lastNpcRvSpawnDay");
             g.helicopterArrived = root.getBoolean("helicopterArrived");
             g.helicopterEvacuated = readUuidList(root.getList("helicopterEvacuated", Tag.TAG_STRING));
+            g.hasLayout = root.getBoolean("hasLayout");
+            if (root.contains("buildAnchor")) {
+                g.buildAnchor = BlockPos.of(root.getLong("buildAnchor"));
+            }
             g.teams = new ArrayList<>();
             for (Tag t : root.getList("teams", Tag.TAG_COMPOUND)) {
                 g.teams.add(readTeam((CompoundTag) t, level.registryAccess()));
@@ -391,7 +473,69 @@ public final class SixtySecondsSaveManager {
         if (t.sisterUUID != null) {
             c.putString("sisterUUID", t.sisterUUID.toString());
         }
+        // 建筑布局（位置类字段）
+        if (t.residentialSpawn != null) {
+            c.putLong("residentialSpawn", t.residentialSpawn.asLong());
+        }
+        if (t.shelterSpawn != null) {
+            c.putLong("shelterSpawn", t.shelterSpawn.asLong());
+        }
+        if (t.residentialBox != null) {
+            writeBox(c, "residentialBox", t.residentialBox);
+        }
+        if (t.shelterBox != null) {
+            writeBox(c, "shelterBox", t.shelterBox);
+        }
+        if (t.searchZoneSpawn != null) {
+            c.putLong("searchZoneSpawn", t.searchZoneSpawn.asLong());
+        }
+        if (t.searchZoneBox != null) {
+            writeBox(c, "searchZoneBox", t.searchZoneBox);
+        }
+        if (t.returnDoorPos != null) {
+            c.putLong("returnDoorPos", t.returnDoorPos.asLong());
+        }
+        if (t.doorPos != null) {
+            c.putLong("doorPos", t.doorPos.asLong());
+        }
+        if (t.rvLastSafePos != null) {
+            c.putLong("rvLastSafePos", t.rvLastSafePos.asLong());
+        }
+        ListTag doors = new ListTag();
+        for (Map.Entry<BlockPos, SixtySecondsState.TeamData.SearchLink> e : t.searchDoors.entrySet()) {
+            CompoundTag d = new CompoundTag();
+            d.putLong("door", e.getKey().asLong());
+            if (e.getValue().spawn() != null) {
+                d.putLong("spawn", e.getValue().spawn().asLong());
+            }
+            if (e.getValue().box() != null) {
+                writeBox(d, "box", e.getValue().box());
+            }
+            doors.add(d);
+        }
+        c.put("searchDoors", doors);
         return c;
+    }
+
+    private static void writeBox(CompoundTag c, String key, AABB box) {
+        ListTag l = new ListTag();
+        for (double v : new double[] { box.minX, box.minY, box.minZ, box.maxX, box.maxY, box.maxZ }) {
+            l.add(net.minecraft.nbt.DoubleTag.valueOf(v));
+        }
+        c.put(key, l);
+    }
+
+    @org.jetbrains.annotations.Nullable
+    private static AABB readBox(CompoundTag c, String key) {
+        ListTag l = c.getList(key, Tag.TAG_DOUBLE);
+        if (l.size() < 6) {
+            return null;
+        }
+        double[] v = new double[6];
+        for (int i = 0; i < 6; i++) {
+            v[i] = ((net.minecraft.nbt.DoubleTag) l.get(i)).getAsDouble();
+        }
+        return new AABB(v[0], v[1], v[2], v[3], v[4], v[5]);
     }
 
     private static TeamSave readTeam(CompoundTag c, HolderLookup.Provider provider) {
@@ -423,6 +567,45 @@ public final class SixtySecondsSaveManager {
         t.sisterOutside = c.getBoolean("sisterOutside");
         if (c.contains("sisterUUID")) {
             t.sisterUUID = UUID.fromString(c.getString("sisterUUID"));
+        }
+        // 建筑布局（位置类字段）
+        if (c.contains("residentialSpawn")) {
+            t.residentialSpawn = BlockPos.of(c.getLong("residentialSpawn"));
+        }
+        if (c.contains("shelterSpawn")) {
+            t.shelterSpawn = BlockPos.of(c.getLong("shelterSpawn"));
+        }
+        if (c.contains("residentialBox")) {
+            t.residentialBox = readBox(c, "residentialBox");
+        }
+        if (c.contains("shelterBox")) {
+            t.shelterBox = readBox(c, "shelterBox");
+        }
+        if (c.contains("searchZoneSpawn")) {
+            t.searchZoneSpawn = BlockPos.of(c.getLong("searchZoneSpawn"));
+        }
+        if (c.contains("searchZoneBox")) {
+            t.searchZoneBox = readBox(c, "searchZoneBox");
+        }
+        if (c.contains("returnDoorPos")) {
+            t.returnDoorPos = BlockPos.of(c.getLong("returnDoorPos"));
+        }
+        if (c.contains("doorPos")) {
+            t.doorPos = BlockPos.of(c.getLong("doorPos"));
+        }
+        if (c.contains("rvLastSafePos")) {
+            t.rvLastSafePos = BlockPos.of(c.getLong("rvLastSafePos"));
+        }
+        t.searchDoors = new HashMap<>();
+        for (Tag d : c.getList("searchDoors", Tag.TAG_COMPOUND)) {
+            CompoundTag dc = (CompoundTag) d;
+            if (!dc.contains("door")) {
+                continue;
+            }
+            BlockPos door = BlockPos.of(dc.getLong("door"));
+            BlockPos spawn = dc.contains("spawn") ? BlockPos.of(dc.getLong("spawn")) : null;
+            AABB box = dc.contains("box") ? readBox(dc, "box") : null;
+            t.searchDoors.put(door, new SixtySecondsState.TeamData.SearchLink(spawn, box));
         }
         return t;
     }
@@ -487,6 +670,10 @@ public final class SixtySecondsSaveManager {
         List<UUID> helicopterEvacuated;
         List<TeamSave> teams;
         List<PlayerSave> players;
+        /** 是否记录了建筑布局；旧存档没有该字段，续档时回退到正常开局建图。 */
+        boolean hasLayout = false;
+        /** 建图锚点（诊断/核对用，恢复不依赖它）。 */
+        BlockPos buildAnchor;
 
         TeamSave teamById(int id) {
             for (TeamSave t : teams) {
@@ -518,6 +705,18 @@ public final class SixtySecondsSaveManager {
         Map<String, Double> dailyModifiers;
         boolean sisterOutside;
         UUID sisterUUID;
+
+        // ── 建筑布局（续档复用世界里的既有建筑，不重新克隆）──────────────
+        BlockPos residentialSpawn;
+        BlockPos shelterSpawn;
+        AABB residentialBox;
+        AABB shelterBox;
+        BlockPos searchZoneSpawn;
+        AABB searchZoneBox;
+        BlockPos returnDoorPos;
+        BlockPos doorPos;
+        BlockPos rvLastSafePos;
+        Map<BlockPos, SixtySecondsState.TeamData.SearchLink> searchDoors = new HashMap<>();
     }
 
     private static final class PlayerSave {

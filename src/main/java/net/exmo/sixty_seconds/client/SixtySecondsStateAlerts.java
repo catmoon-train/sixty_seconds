@@ -23,7 +23,7 @@ import java.util.Arrays;
  *   <li><b>低状态文本提示</b>：五值分「偏低/危急」两档（污染反向），<b>只在恶化跨档瞬间发一次</b>聊天消息
  *       + 提示音；好转需回升超过阈值+{@link #HYST} 才退档，防止在阈值附近抖动反复触发。绝不逐 tick 重发。</li>
  * </ul>
- * 另供 {@code SansRenderer}（低 san 滤镜复用）与 {@code ImmersiveFilterShader}（低状态滤镜）读取本地 60s 状态。
+ * 另供 {@link SixtySecondsSanityShader}（低理智滤镜 / 血丝 / 幻听）读取本地 60s 理智作为驱动值。
  */
 public final class SixtySecondsStateAlerts {
     private static final int MAX = SixtySecondsStatsComponent.MAX;
@@ -65,13 +65,16 @@ public final class SixtySecondsStateAlerts {
     }
 
     /**
-     * 60s 理智映射为低 san 滤镜的驱动值（0..1，等价于情绪 mood）；非 60s 局内恒 1（滤镜不生效）。
-     * 供 {@code SansRenderer} 取 min(情绪, 本值)——60s 里玩家无 REAL 情绪职业、mood 恒为 1，
-     * 因此滤镜强度实际完全由 60s 理智驱动。
+     * 本地玩家的理智比例（0..1），作为低理智滤镜 / 血丝 / 幻听的驱动值。
+     * 不在 60s 局内（或已淘汰/旁观）返回 1，等价于「滤镜关闭」。
      */
-    public static float sanityMoodScale() {
+    public static float sanityScale() {
         SixtySecondsStatsComponent stats = localStats();
-        return stats == null ? 1f : Mth.clamp(stats.sanity / (float) MAX, 0f, 1f);
+        if (stats == null) {
+            return 1f;
+        }
+        int max = Math.max(stats.sanityMax, 1);
+        return Mth.clamp(stats.sanity / (float) max, 0f, 1f);
     }
 
     /** 每 tick 由 {@link SixtySecondsHud} 调用（HUD 已保证在 60s 局内）。 */
