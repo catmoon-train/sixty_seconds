@@ -49,6 +49,13 @@ public class SixtySecondsInventoryScreen extends LimitedHandledScreen<InventoryM
     private static final int COIN_BTN_W = 90;
     private static final int COIN_BTN_H = 14;
 
+    /** 游戏币余额距屏幕边缘的留白（屏幕右上角，与物品栏面板位置无关）。 */
+    private static final int COIN_MARGIN = 8;
+    /** 游戏币图标边长。 */
+    private static final int COIN_ICON = 16;
+    /** 图标与数字之间的间距。 */
+    private static final int COIN_GAP = 2;
+
     private static final int COIN_TEXT = 0xFFFFF4DC;
     private static final int OUTLINE_DARK = 0xFF1A1813;
     private static final int OUTLINE_GOLD = 0xFFABA376;
@@ -101,13 +108,13 @@ public class SixtySecondsInventoryScreen extends LimitedHandledScreen<InventoryM
     @Override
     protected void drawBackground(GuiGraphics context, float delta, int mouseX, int mouseY) {
         context.blit(BACKGROUND_TEXTURE, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight);
-        renderTokenBalance(context);
     }
 
     @Override
     public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
 
+        renderTokenBalance(context);
         ItemStack hoveredBackpack = renderRow(context, BACKPACK_SLOTS,
                 rowStartX(BACKPACK_SLOTS.length), backpackRowY(), mouseX, mouseY);
         ItemStack hoveredEquip = renderRow(context, EQUIP_SLOTS,
@@ -162,15 +169,23 @@ public class SixtySecondsInventoryScreen extends LimitedHandledScreen<InventoryM
         return hovered;
     }
 
-    /** 右上角显示本人游戏币余额（图标取自 game_coin.png，与 HUD 一致）。 */
+    /**
+     * 屏幕右上角显示本人游戏币余额（图标取自 game_coin.png，与 HUD 一致）。
+     *
+     * <p>坐标基于<b>整个屏幕</b>（{@code this.width}）而非物品栏面板（{@code this.x + backgroundWidth}），
+     * 因此面板位置/大小怎么变，余额都固定在屏幕右上角。
+     * 绘制在 {@link #render} 而非 {@link #drawBackground} 中——此时位姿是屏幕空间，
+     * 且画在槽位之上，不会被面板遮住。</p>
+     */
     private void renderTokenBalance(GuiGraphics context) {
         int tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(this.player).getTokens();
         Component text = Component.literal(String.valueOf(tokens));
         int textW = this.font.width(text);
-        int iconX = this.x + this.backgroundWidth - 8 - textW - 18;
-        int y = this.y + 8;
-        context.blit(GAME_COIN, iconX, y, 0, 0, 16, 16, 16, 16);
-        context.drawString(this.font, text, iconX + 18, y + 4, COIN_TEXT, false);
+        int iconX = this.width - COIN_MARGIN - textW - COIN_GAP - COIN_ICON;
+        int y = COIN_MARGIN;
+        context.blit(GAME_COIN, iconX, y, 0, 0, COIN_ICON, COIN_ICON, COIN_ICON, COIN_ICON);
+        // 现在浮在半透明的世界画面上（不再垫着物品栏底图），加描边阴影保证可读
+        context.drawString(this.font, text, iconX + COIN_ICON + COIN_GAP, y + 4, COIN_TEXT, true);
     }
 
     private void renderCoinButton(GuiGraphics context, int mouseX, int mouseY) {
