@@ -75,7 +75,7 @@ public record SixtySecondsSeaChartPositionsS2CPacket(boolean hasShelter, int she
         // 优先使用房车实体的实时位置，使海图显示的是房车实际所在而非静态出生点
         BlockPos shelter = null;
         if (team != null) {
-            net.exmo.sixty_seconds.entity.SixtySecondsRvEntity rv =
+            net.exmo.sixty_seconds.content.entity.SixtySecondsRvEntity rv =
                     net.exmo.sixty_seconds.logic.SixtySecondsRvSystem.getTeamRv(level, team);
             if (rv != null && !rv.isRemoved()) {
                 shelter = rv.blockPosition();

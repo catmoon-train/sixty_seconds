@@ -219,13 +219,13 @@ public class OceanSharkEntity extends OceanCreatureEntity {
 
     /** 受击音效使用原版鱼类音效，按变体区分 */
     @Override
-    protected net.minecraft.sounds.SoundEvent getHurtSound(Level level, net.minecraft.world.damagesource.DamageSource source) {
+    protected net.minecraft.sounds.SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource source) {
         return switch (getVariant()) {
             case REEF_SHARK -> SoundEvents.COD_HURT;
             case TIGER_SHARK -> SoundEvents.SALMON_HURT;
             case HAMMERHEAD -> SoundEvents.TROPICAL_FISH_HURT;
-            case GREAT_WHITE -> SoundEvents.PUFFERFISH_HURT;
-            case MEGALODON -> SoundEvents.PUFFERFISH_HURT;
+            case GREAT_WHITE -> SoundEvents.PUFFER_FISH_BLOW_OUT;
+            case MEGALODON -> SoundEvents.PUFFER_FISH_BLOW_OUT;
         };
     }
 }
