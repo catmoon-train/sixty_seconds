@@ -112,6 +112,10 @@ public final class SixtySecondsAreaLevels {
             if (player.isSpectator()) {
                 continue;
             }
+            // 在自家住宅（开局 60 秒的房子）或庇护所内时，不报幕区域名 title（避免房内误触管理员星级区域）
+            if (SixtySecondsDailyEvents.isPlayerInShelter(player)) {
+                continue;
+            }
             SixtySecondsConfig.LevelRegion region = overrideAt(config, player.blockPosition());
             String key = region == null ? "" : regionKey(region);
             String previous = lastRegions.put(player.getUUID(), key);

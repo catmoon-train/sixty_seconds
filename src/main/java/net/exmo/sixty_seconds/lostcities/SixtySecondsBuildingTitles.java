@@ -1,6 +1,7 @@
 package net.exmo.sixty_seconds.lostcities;
 
 import net.exmo.sixty_seconds.bridge.stubs.SubtitleCommand;
+import net.exmo.sixty_seconds.logic.SixtySecondsDailyEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -44,6 +45,10 @@ public final class SixtySecondsBuildingTitles {
         for (ServerPlayer player : level.players()) {
             if (!player.isAlive() || player.isSpectator()) {
                 LAST_BUILDING.remove(player);
+                continue;
+            }
+            // 在自家住宅（开局 60 秒的房子）或庇护所内时，不报幕建筑名 / 岛屿名 title 与星级副 title
+            if (SixtySecondsDailyEvents.isPlayerInShelter(player)) {
                 continue;
             }
             BlockPos pos = player.blockPosition();
