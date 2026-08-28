@@ -8,6 +8,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -18,6 +19,28 @@ public class SixtySecondsMailboxBlockEntity extends BlockEntity implements Conta
 
     public SixtySecondsMailboxBlockEntity(BlockPos pos, BlockState state) {
         super(net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_MAILBOX_ENTITY, pos, state);
+    }
+
+    /**
+     * 方块实体加载时自动注册到报纸投递系统。
+     * <ul>
+     *   <li>ownerTeamId ≥ 0（NBT 里已有队伍 ID）：直接精准注册，零扫描开销。</li>
+     *   <li>ownerTeamId &lt; 0（模板克隆未写入 teamId）：加入待注册集合，
+     *       由 {@code scanAndRegisterMailboxes} 轻量遍历补写 teamId 后注册。</li>
+     * </ul>
+     */
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (level instanceof ServerLevel serverLevel) {
+            if (ownerTeamId >= 0) {
+                net.exmo.sixty_seconds.logic.SixtySecondsNewspaper
+                        .registerMailbox(serverLevel, ownerTeamId, getBlockPos());
+            } else {
+                net.exmo.sixty_seconds.logic.SixtySecondsNewspaper
+                        .addUnregisteredMailbox(serverLevel, getBlockPos());
+            }
+        }
     }
 
     @Override

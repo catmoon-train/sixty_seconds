@@ -324,7 +324,8 @@ public final class SixtySecondsManager {
         net.exmo.sixty_seconds.island.SixtySecondsIslands.onGameStart(level);
         net.exmo.sixty_seconds.island.SixtySecondsIslands.syncChartAll(level);
         // 模板克隆用 level.setBlock() 不触发 setPlacedBy，邮箱方块不会被自动注册。
-        // 这里扫描各队避难所/住宅区内的邮箱并注册——否则每天早上报纸和物资无法投递。
+        // 但邮箱 BE 的 onLoad() 会将自身加入待注册集合（teamId 已有时直接注册）。
+        // 这里仅轻量遍历待注册集合（通常 0~4 个）补写 teamId 并注册，无需逐区块扫描。
         scanAndRegisterMailboxes(level, data);
         // 出生点方块同理：克隆不触发 setPlacedBy，且 setPlacedBy 比对的是模板库坐标而非游戏坐标，
         // 故放置在庇护所里的出生点方块不会被登记到 cfg.shelterSpawn。这里补扫，让玩家放入庇护所的
@@ -340,62 +341,32 @@ public final class SixtySecondsManager {
     }
 
     /**
-     * 扫描各队避难所 / 住宅区盒内的邮箱方块并注册到报纸投递系统。模板克隆不触发 setPlacedBy，须开局补注册。
+     * 补注册模板克隆时 teamId 缺失的邮箱方块。
+     * <p>邮箱 BE 的 {@code onLoad()} 已将 teamId&lt;0 的邮箱加入待注册集合，
+     * 此方法取出集合逐一定位所属队伍、补写 teamId 并注册——仅遍历待注册集合
+     * （通常 0~4 个），不再逐区块扫描所有方块实体。</p>
      */
     private static void scanAndRegisterMailboxes(ServerLevel level, SixtySecondsState.Data data) {
-        for (SixtySecondsState.TeamData team : data.teams.values()) {
-            // 避难所 + 住宅区盒子：遍历两个盒子的并集
-            if (team.shelterBox != null) {
-                scanMailboxesInBox(level, team, team.shelterBox);
-            }
-            if (team.residentialBox != null) {
-                scanMailboxesInBox(level, team, team.residentialBox);
-            }
-        }
-    }
-
-    /** 在一个 AABB 内按区块扫描邮箱方块实体。 */
-    private static void scanMailboxesInBox(ServerLevel level, SixtySecondsState.TeamData team,
-            net.minecraft.world.phys.AABB box) {
-        int minX = (int) Math.floor(box.minX);
-        int minY = (int) Math.floor(box.minY);
-        int minZ = (int) Math.floor(box.minZ);
-        int maxX = (int) Math.floor(box.maxX);
-        int maxY = (int) Math.floor(box.maxY);
-        int maxZ = (int) Math.floor(box.maxZ);
-
-        int cx0 = net.minecraft.core.SectionPos.blockToSectionCoord(minX);
-        int cz0 = net.minecraft.core.SectionPos.blockToSectionCoord(minZ);
-        int cx1 = net.minecraft.core.SectionPos.blockToSectionCoord(maxX);
-        int cz1 = net.minecraft.core.SectionPos.blockToSectionCoord(maxZ);
-
-        for (int cx = cx0; cx <= cx1; cx++) {
-            for (int cz = cz0; cz <= cz1; cz++) {
-                // 只查已完整加载的区块：未加载区块内不可能有刚克隆进来的模板方块实体
-                if (!level.getChunkSource().hasChunk(cx, cz)) {
-                    continue;
-                }
-                net.minecraft.world.level.chunk.LevelChunk chunk = level.getChunk(cx, cz);
-                for (java.util.Map.Entry<BlockPos, net.minecraft.world.level.block.entity.BlockEntity> e
-                        : chunk.getBlockEntities().entrySet()) {
-                    BlockPos bp = e.getKey();
-                    if (bp.getX() < minX || bp.getX() > maxX || bp.getY() < minY || bp.getY() > maxY
-                            || bp.getZ() < minZ || bp.getZ() > maxZ) {
-                        continue;
-                    }
-                    if (!(e.getValue() instanceof net.exmo.sixty_seconds.content.block_entity.SixtySecondsMailboxBlockEntity mailbox)) {
-                        continue;
-                    }
-                    // 补写 ownerTeamId（模板克隆时 BE 的 NBT 里可能没有 teamId）
-                    if (mailbox.ownerTeamId < 0) {
+        java.util.Set<BlockPos> unregistered = SixtySecondsNewspaper.drainUnregisteredMailboxes(level);
+        for (BlockPos pos : unregistered) {
+            for (SixtySecondsState.TeamData team : data.teams.values()) {
+                boolean inShelter = team.shelterBox != null && team.shelterBox.contains(
+                        pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+                boolean inResidential = team.residentialBox != null && team.residentialBox.contains(
+                        pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+                if (inShelter || inResidential) {
+                    net.minecraft.world.level.block.entity.BlockEntity be = level.getBlockEntity(pos);
+                    if (be instanceof net.exmo.sixty_seconds.content.block_entity.SixtySecondsMailboxBlockEntity mailbox) {
                         mailbox.ownerTeamId = team.teamId;
                         mailbox.setChanged();
+                        SixtySecondsNewspaper.registerMailbox(level, team.teamId, pos.immutable());
                     }
-                    SixtySecondsNewspaper.registerMailbox(level, team.teamId, bp.immutable());
+                    break;
                 }
             }
         }
     }
+
 
     /** 建图后扫描各队避难所盒内的「出生点方块」，据此覆盖 team.shelterSpawn。
      *  模板克隆不触发 setPlacedBy（与邮箱同理），且 setPlacedBy 比对的是模板库坐标而非游戏坐标，

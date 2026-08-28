@@ -2,6 +2,7 @@ package net.exmo.sixty_seconds.logic;
 
 import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.SixtySecondsMod;
+import net.exmo.sixty_seconds.bridge.fabric.UseBlockCallback;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.content.block_entity.SixtySecondsVaultBlockEntity;
 import net.exmo.sixty_seconds.network.OpenStationS2CPacket;
@@ -14,6 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -45,15 +47,36 @@ public final class SixtySecondsStations {
     public static void register() {
         net.exmo.sixty_seconds.bridge.fabric.ServerTickEvents.END_WORLD_TICK
                 .register(SixtySecondsStations::tickSmelts); // 冶金炉延迟发放
+
+        // 拦截原版工作方块右键 → 打开模组工作站界面。
+        // 模组方块（SixtySecondsStationBlock / SixtySecondsUsableBlock）仍走 useWithoutItem
+        // （冒险模式更稳定），此处放行；原版方块（工作台/熔炉/铁砧等）由 serverOpen 处理，
+        // 返回 SUCCESS 拦截原版 GUI。
+        UseBlockCallback.EVENT.register((player, level, hand, hitResult) -> {
+            if (level.isClientSide() || !(player instanceof ServerPlayer)) {
+                return InteractionResult.PASS;
+            }
+            BlockState state = level.getBlockState(hitResult.getBlockPos());
+            // 模组方块走 useWithoutItem，回调放行
+            if (state.getBlock() instanceof net.exmo.sixty_seconds.content.block.SixtySecondsStationBlock
+                    || state.getBlock() instanceof net.exmo.sixty_seconds.content.block.SixtySecondsUsableBlock) {
+                return InteractionResult.PASS;
+            }
+            // 原版方块：用 serverOpen 处理（stationOf 映射到合成站则打开模组 GUI，否则放行）
+            return serverOpen(player, level, state, hitResult);
+        });
     }
 
     /**
-     * 方块自身右键打开合成/研究/拆解界面。由 {@code SixtySecondsStationBlock} 与
-     * {@code SixtySecondsUsableBlock} 的 {@code useWithoutItem} 调用。
-     * <p>
-     * <b>为什么走 useWithoutItem 而非 UseBlockCallback</b>：60s 模式把玩家强制设为冒险模式，
-     * 而冒险模式下方块交互的规范入口就是 {@code useWithoutItem}（箱子/熔炉同理）；事件层在
-     * 某些环境下不稳定，故直接在方块上处理，保证冒险模式也能稳定打开界面。
+     * 方块自身右键打开合成/研究/拆解界面。由两条路径调用：
+     * <ol>
+     *   <li>模组方块（{@code SixtySecondsStationBlock} / {@code SixtySecondsUsableBlock}）的
+     *       {@code useWithoutItem} —— 冒险模式下稳定。</li>
+     *   <li>{@code register()} 中注册的 {@code UseBlockCallback.EVENT} —— 拦截原版工作方块
+     *       （工作台/熔炉/铁砧等），返回 SUCCESS 阻止原版 GUI 打开。</li>
+     * </ol>
+     * 模组方块走 useWithoutItem 而非回调：冒险模式下方块交互的规范入口是 useWithoutItem，
+     * 事件层在某些环境下不稳定；原版方块只能走回调拦截（无法覆写原版方块的 useWithoutItem）。
      */
     public static InteractionResult serverOpen(Player player, Level level, BlockState state, BlockHitResult hitResult) {
         if (level.isClientSide() || !(player instanceof ServerPlayer serverPlayer)) {

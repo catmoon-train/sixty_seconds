@@ -33,6 +33,8 @@ public final class SixtySecondsNewspaper {
 
     /** 邮箱方块注册表：teamId → [pos1, pos2, ...] */
     private static final Map<ServerLevel, Map<Integer, List<BlockPos>>> MAILBOX_REGISTRY = new WeakHashMap<>();
+    /** ownerTeamId 尚未写入的邮箱方块（模板克隆未携带 teamId），等待开局时补注册 */
+    private static final Map<ServerLevel, Set<BlockPos>> UNREGISTERED_MAILBOXES = new WeakHashMap<>();
     /** 当天被溢出清理过物品的队伍（早上通知后清除） */
     private static final Set<Integer> CLEARED_TEAMS = new java.util.HashSet<>();
 
@@ -113,9 +115,22 @@ public final class SixtySecondsNewspaper {
 
     // ── 邮箱注册 ──
     public static void registerMailbox(ServerLevel level, int teamId, BlockPos pos) {
-        MAILBOX_REGISTRY.computeIfAbsent(level, k -> new ConcurrentHashMap<>())
-                .computeIfAbsent(teamId, k -> Collections.synchronizedList(new ArrayList<>()))
-                .add(pos);
+        List<BlockPos> list = MAILBOX_REGISTRY.computeIfAbsent(level, k -> new ConcurrentHashMap<>())
+                .computeIfAbsent(teamId, k -> Collections.synchronizedList(new ArrayList<>()));
+        if (!list.contains(pos)) {
+            list.add(pos);
+        }
+    }
+
+    /** 模板克隆未携带 teamId 的邮箱加入待注册集合，等开局补写 teamId 后注册 */
+    public static void addUnregisteredMailbox(ServerLevel level, BlockPos pos) {
+        UNREGISTERED_MAILBOXES.computeIfAbsent(level, k -> ConcurrentHashMap.newKeySet()).add(pos);
+    }
+
+    /** 取出并清空待注册集合（由 scanAndRegisterMailboxes 调用） */
+    public static Set<BlockPos> drainUnregisteredMailboxes(ServerLevel level) {
+        Set<BlockPos> set = UNREGISTERED_MAILBOXES.remove(level);
+        return set != null ? set : Set.of();
     }
 
     /**
@@ -138,6 +153,7 @@ public final class SixtySecondsNewspaper {
     public static void reset(ServerLevel level) {
         STATE.remove(level);
         MAILBOX_REGISTRY.remove(level);
+        UNREGISTERED_MAILBOXES.remove(level);
         CLEARED_TEAMS.clear();
     }
 
