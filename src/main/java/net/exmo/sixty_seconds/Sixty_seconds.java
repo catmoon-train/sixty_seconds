@@ -48,6 +48,7 @@ public class Sixty_seconds {
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.register(net.exmo.sixty_seconds.client.SixtySecondsClientHud.class);
         ModParticles.register(modEventBus);
         modContainer.registerConfig(ModConfig.Type.CLIENT, WeatherVisualConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, SixtySecondsClientConfig.SPEC);
         NeoForge.EVENT_BUS.register(NeoForgeEvents.class);
         net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesAccess.init(); // 通过 IMC 获取 LostCities API（建筑星级映射）
     }

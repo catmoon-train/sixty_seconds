@@ -1,5 +1,6 @@
 package net.exmo.sixty_seconds.content.block;
 
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
 import net.minecraft.ChatFormatting;
@@ -75,11 +76,16 @@ public class SixtySecondsSpawnPointBlock extends Block {
             return;
         }
         SixtySecondsConfigStore.load(serverLevel).ifPresent(cfg -> {
+            // 只按 X/Z 判断方块落在哪个模板范围内（忽略 Y），避免模板盒高度未包住方块导致登记失败；
+            // 出生点存「相对模板原点」的坐标，与 /60s_area spawn 的「模板绝对坐标」约定一致，
+            // 落到克隆体里时由 SixtySecondsArena.spawnFor 的兜底按模板原点换算回世界坐标。
             BoundingBox resBox = cfg.residentialTemplate != null ? cfg.residentialTemplate.toBox() : null;
             BoundingBox shelBox = cfg.shelterTemplate != null ? cfg.shelterTemplate.toBox() : null;
-            boolean residential = resBox != null && resBox.isInside(pos);
-            boolean shelter = shelBox != null && shelBox.isInside(pos);
+            boolean residential = resBox != null && insideXZ(resBox, pos);
+            boolean shelter = shelBox != null && insideXZ(shelBox, pos);
             if (!residential && !shelter) {
+                SixtySeconds.LOGGER.warn("[60s] 出生点方块 @{} 不在任何已登记模板的 X/Z 范围内，未登记。"
+                        + " shelterTemplate={} residentialTemplate={}", pos, cfg.shelterTemplate, cfg.residentialTemplate);
                 if (placer instanceof Player player) {
                     player.displayClientMessage(Component.translatable(
                             "message.sixty_seconds.sixty_seconds.spawn_point_outside_template", pos.toShortString())
@@ -88,10 +94,10 @@ public class SixtySecondsSpawnPointBlock extends Block {
                 return;
             }
             if (residential) {
-                cfg.residentialSpawn = new SixtySecondsConfig.Vec(pos.getX(), pos.getY(), pos.getZ());
+                cfg.residentialSpawn = toTemplateRelative(resBox, pos);
             }
             if (shelter) {
-                cfg.shelterSpawn = new SixtySecondsConfig.Vec(pos.getX(), pos.getY(), pos.getZ());
+                cfg.shelterSpawn = toTemplateRelative(shelBox, pos);
             }
             SixtySecondsConfigStore.save(serverLevel, cfg);
             if (placer instanceof Player player) {
@@ -100,6 +106,23 @@ public class SixtySecondsSpawnPointBlock extends Block {
                         "message.sixty_seconds.sixty_seconds.spawn_point_set",
                         which, pos.getX(), pos.getY(), pos.getZ()).withStyle(ChatFormatting.GREEN), true);
             }
+            SixtySeconds.LOGGER.info("[60s] 出生点方块 @{} 已登记（{}）。shelterSpawn(相对模板)={} residentialSpawn(相对模板)={}",
+                    pos, (residential ? "住宅" : "") + (shelter ? (residential ? "+" : "") + "庇护所" : ""),
+                    cfg.shelterSpawn, cfg.residentialSpawn);
         });
+    }
+
+    /** 仅判断 X/Z 是否落在盒内（忽略 Y），让模板盒高度未包住方块时仍能正确登记。 */
+    private static boolean insideXZ(BoundingBox box, BlockPos pos) {
+        return pos.getX() >= box.minX() && pos.getX() <= box.maxX()
+                && pos.getZ() >= box.minZ() && pos.getZ() <= box.maxZ();
+    }
+
+    /** 把世界坐标转成「相对模板原点」的坐标（模板绝对坐标），存进配置，便于克隆时按原点换算。 */
+    private static SixtySecondsConfig.Vec toTemplateRelative(BoundingBox box, BlockPos pos) {
+        return new SixtySecondsConfig.Vec(
+                pos.getX() - box.minX(),
+                pos.getY() - box.minY(),
+                pos.getZ() - box.minZ());
     }
 }

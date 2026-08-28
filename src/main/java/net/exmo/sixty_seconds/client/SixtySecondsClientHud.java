@@ -1,5 +1,6 @@
 package net.exmo.sixty_seconds.client;
 
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
 import net.exmo.sixty_seconds.bridge.client.CommonHudRenderCallback;
@@ -7,11 +8,12 @@ import net.exmo.sixty_seconds.bridge.client.FakeGuiGraphics;
 import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.fabric.HudRenderCallback;
 import net.exmo.sixty_seconds.client.SixtySecondsHud;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 /**
  * 末日60秒客户端的 HUD 与覆盖层管理。
@@ -34,12 +36,13 @@ public final class SixtySecondsClientHud {
     /** 统一 HUD 绘制：每帧在所有原生 GUI 图层之上绘制本模组全部 HUD（主状态栏 + 各子 HUD）。 */
     @SubscribeEvent
     public static void onRenderGuiPost(RenderGuiEvent.Post event) {
-        if (!SixtySecBridgeClient.shouldShowHud()) {
+        boolean show = SixtySecBridgeClient.shouldShowHud();
+        if (!show) {
             return;
         }
         GuiGraphics gui = event.getGuiGraphics();
         var delta = event.getPartialTick();
-        SixtySecondsHud.render(new FakeGuiGraphics(gui));
+        SixtySecondsHud.render(new FakeGuiGraphics(gui, true));
         for (HudRenderCallback callback : HudRenderCallback.EVENT.invokers()) {
             callback.onHudRender(gui, delta);
         }
@@ -52,15 +55,15 @@ public final class SixtySecondsClientHud {
     /** 进行中时隐藏原版生命/饥饿/护甲/氧气/骑乘生命条 */
     @SubscribeEvent
     public static void onRenderGuiLayerPre(RenderGuiLayerEvent.Pre event) {
-        if (!SixtySecBridgeClient.shouldShowHud()) {
+        boolean show = SixtySecBridgeClient.shouldShowHud();
+        if (!show) {
             return;
         }
         ResourceLocation id = event.getName();
-        if (id.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "health"))
-                || id.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "food"))
-                || id.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "armor"))
-                || id.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "air"))
-                || id.equals(ResourceLocation.fromNamespaceAndPath("minecraft", "mount_health"))) {
+        // 1.21.x 原版图层名见 VanillaGuiLayers：PLAYER_HEALTH / FOOD_LEVEL / ARMOR_LEVEL / AIR_LEVEL / VEHICLE_HEALTH
+        if (id.equals(VanillaGuiLayers.PLAYER_HEALTH) || id.equals(VanillaGuiLayers.FOOD_LEVEL)
+                || id.equals(VanillaGuiLayers.ARMOR_LEVEL) || id.equals(VanillaGuiLayers.AIR_LEVEL)
+                || id.equals(VanillaGuiLayers.VEHICLE_HEALTH)) {
             event.setCanceled(true);
         }
     }

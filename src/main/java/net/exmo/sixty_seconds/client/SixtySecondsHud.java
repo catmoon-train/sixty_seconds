@@ -11,13 +11,16 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.bridge.client.CommonHudRenderCallback;
+import net.exmo.sixty_seconds.client.SixtySecondsClientConfig;
 
 /**
  * 末日60秒模式 HUD：<b>血条（居中、紧贴物品栏）</b> + <b>右中下角状态竖排</b> + <b>左上角时间信息</b>。
  * <p>
  * 时间信息（第 X/N 天 · 家庭身份 · 时钟 · 警示）放在屏幕左上角，从 y=30 向下自动排列。
- * 血条居中、紧贴物品栏上方；饥饿/口渴/理智/污染 移至右中下角竖排（一行一个）。
+ * 血条居中、紧贴物品栏上方；饥饿/口渴/理智/污染 状态栏默认绘制在左中侧竖排（一行一个），
+ * 可在客户端配置 hudSide 切换为右侧。
  * <ul>
  *   <li>健康值上限 = {@link SixtySecondsStatsComponent#HEALTH_MAX}（150），不再被 100 截断。</li>
  *   <li>理智上限缺口（杀人永久降上限）保留：sanityMax &lt; 100 时画暗红锁死区。</li>
@@ -286,8 +289,11 @@ public final class SixtySecondsHud {
         int rowContentW = nameMaxW + 4 + statBarW + 4 + valMaxW;
         int panelW = rowContentW + PAD * 2;
         int panelH = PAD + STAT_COUNT * ROW_H + (STAT_COUNT - 1) * ROW_GAP_V + PAD;
-        int panelX = screenW - statsRight - panelW;
-        int panelY = screenH - 170;
+
+        // 状态栏位置：默认左侧（左中侧），可在客户端配置 hudSide 切换为右侧
+        boolean left = SixtySecondsClientConfig.isLeft();
+        int panelX = left ? statsRight : screenW - statsRight - panelW;
+        int panelY = (screenH - panelH) / 2;
 
         // 背景面板
         int colPanelBg = 0x80000000;

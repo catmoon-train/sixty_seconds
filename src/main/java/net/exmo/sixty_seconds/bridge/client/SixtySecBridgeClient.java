@@ -25,8 +25,10 @@ public final class SixtySecBridgeClient {
      * 仅排除 {@code INACTIVE}（真正未载入模式 / 游戏已彻底结束），避免结束后仍残留自定义 HUD。
      */
     public static boolean shouldShowHud() {
-        return inSixtySecondsMode() && gameComponent.getGameStatus()
-                != SixtySecGameWorldComponent.GameStatus.INACTIVE;
+        boolean inMode = inSixtySecondsMode();
+        SixtySecGameWorldComponent.GameStatus status =
+                gameComponent != null ? gameComponent.getGameStatus() : null;
+        return inMode && status != SixtySecGameWorldComponent.GameStatus.INACTIVE;
     }
 
     public static boolean isPlayerAliveAndInSurvivalIgnoreShitSplit() {
