@@ -34,13 +34,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 /**
- * 按队克隆住宅 / 避难所 / 搜索区模板（{@code BlockCopyUtils.copyLayer}），并在结束时快照还原。
+ * 按队克隆住宅 / 避难所 / 搜索区模板（{@code BlockCopyUtils.copyLayer}）。本模组不做任何地形还原。
  * <p>
  * <b>异步建图</b>：整图克隆方块量巨大，一 tick 内同步完成会触发服务器看门狗 60s 超时卡死。
  * 因此仿 {@code net.exmo.sixty_seconds.bridge.ServerTaskInfoClasses.FullTrainResetTask} 的做法，把工作切成子盒，
@@ -58,8 +56,6 @@ public final class SixtySecondsArena {
     public static final int BUILD_RESIDENTIAL = 1;
     public static final int BUILD_SHELTER = 2;
     public static final int BUILD_ALL = BUILD_RESIDENTIAL | BUILD_SHELTER;
-
-    private static final Map<ServerLevel, LinkedHashMap<BlockPos, Snapshot>> ARENAS = new WeakHashMap<>();
 
     // ── 迟到实体清理窗口（仿列车重置的 chunksToClearEntities 机制）────────────
     // 同步清扫（clearArenaEntities）只能扫到【已加载】的实体；上一局残留在卸载区块里的
@@ -112,41 +108,21 @@ public final class SixtySecondsArena {
      */
     public static void build(ServerLevel level, SixtySecondsState.Data data, SixtySecondsConfig config,
             Runnable onComplete) {
-        build(level, data, config, onComplete, BUILD_ALL, null, true, null);
+        build(level, data, config, onComplete, BUILD_ALL, null);
     }
 
     public static void build(ServerLevel level, SixtySecondsState.Data data, SixtySecondsConfig config,
             Runnable onComplete, int buildMask) {
-        build(level, data, config, onComplete, buildMask, null, true, null);
+        build(level, data, config, onComplete, buildMask, null);
     }
 
     /**
-     * 建图主入口（默认开局路径：先还原上一局再按网格建图）。
+     * 建图主入口（按网格建图；预建锚点不为 null 时刚性平移到该坐标）。
      * @param anchor 预建锚点：不为 null 时把整座竞技场从默认网格原点（{@code teamBase}）刚性平移到该坐标（仅水平位移，
      *               建筑 Y 仍按模板自然落位），用于 {@code /60s build} 在指令输入玩家脚下就地预建。为 null 时走原网格布局。
      */
     public static void build(ServerLevel level, SixtySecondsState.Data data, SixtySecondsConfig config,
             Runnable onComplete, int buildMask, BlockPos anchor) {
-        build(level, data, config, onComplete, buildMask, anchor, true, null);
-    }
-
-    /**
-     * 续建：在已有预建（保留其方块与快照）基础上，仅建造 {@code buildMask} 指定的缺失部分，
-     * 所有结构仍按 {@code anchor}（= 预建锚点）落位，保证几何与预建一致、可被 /60s start 直接复用。
-     * @param existingSnapshots 已有快照表（预建阶段写入的）；传 null 时自动复用 {@link #ARENAS} 中该维度的表。
-     */
-    public static void buildContinue(ServerLevel level, SixtySecondsState.Data data, SixtySecondsConfig config,
-            Runnable onComplete, int buildMask, BlockPos anchor,
-            LinkedHashMap<BlockPos, Snapshot> existingSnapshots) {
-        build(level, data, config, onComplete, buildMask, anchor, false, existingSnapshots);
-    }
-
-    /**
-     * 建图核心实现。
-     */
-    private static void build(ServerLevel level, SixtySecondsState.Data data, SixtySecondsConfig config,
-            Runnable onComplete, int buildMask, BlockPos anchor, boolean restore,
-            LinkedHashMap<BlockPos, Snapshot> existingSnapshots) {
         if (config == null || !config.isComplete()) {
             clearArenaEntities(level, config, List.of(), List.of(), data);
             SixtySeconds.LOGGER.warn("[60s] Area template config incomplete (sixty_seconds_config.json) — skipping per-team clone build.");
@@ -209,15 +185,7 @@ public final class SixtySecondsArena {
         }
         clearArenaEntities(level, config, shelterOffsets, residentialOffsets, data);
 
-        LinkedHashMap<BlockPos, Snapshot> snapshots;
-        if (restore) {
-            // 开局路径：开一张新快照表，整局结束后按它还原
-            snapshots = new LinkedHashMap<>();
-        } else {
-            // 续建路径：复用预建阶段已写入的快照表，把新部分追加进去（不重新还原预建方块）
-            snapshots = existingSnapshots != null ? existingSnapshots : ARENAS.getOrDefault(level, new LinkedHashMap<>());
-        }
-        ARENAS.put(level, snapshots);
+        // 本模组不做任何地形还原：不记录快照、不回滚上一局残留方块，建图直接就地放置。
 
         // 净空与克隆分两阶段收集，最后 clearance 全部排在 clone 之前（见下方拼接）：
         // 工作项按列表顺序跨 tick 执行，若按队交错成「队0净空→队0克隆→队1净空→…」，锚定模式下两队的出口门若挨得比
@@ -242,12 +210,15 @@ public final class SixtySecondsArena {
             CompoundTag shelTpl = loadTemplate(level, config.shelterTemplateFile);
             // 先净空（挖开克隆区四周/上方的自然地形），再克隆——队数无上限后克隆区会排进山里；
             // 锚定模式下避难所落在探索区门口，净空同样负责挖开门口的原生地形/建筑
-            if ((buildMask & BUILD_RESIDENTIAL) != 0)
+            if ((buildMask & BUILD_RESIDENTIAL) != 0) {
                 addClearance(level, clearance, config.residentialTemplate.toBox(), offset);
+                addConcreteShell(level, clearance, config.residentialTemplate.toBox(), offset);
+            }
             // 下沉埋地模式<b>不</b>给避难所净空：copyLayer 直接把埋在地下的模板体（含内部空气）搬过去，
             // 上方地形保留覆盖、只露活板门——净空会把地表挖成坑、暴露基地（本功能要避免的正是这个）。
             if (!buried && (buildMask & BUILD_SHELTER) != 0) {
                 addClearance(level, clearance, config.shelterTemplate.toBox(), shelterOffset);
+                addConcreteShell(level, clearance, config.shelterTemplate.toBox(), shelterOffset);
             }
             if ((buildMask & BUILD_RESIDENTIAL) != 0)
                 addChunks(clones, config.residentialTemplate.toBox(), offset, resTpl);
@@ -307,12 +278,12 @@ public final class SixtySecondsArena {
             BoundingBox floorBox = BoundingBox.fromCorners(
                     new BlockPos(arenaMinX - margin, -40, arenaMinZ - margin),
                     new BlockPos(arenaMaxX + margin, -40, arenaMaxZ + margin));
-            work.add(new WorkItem(floorBox, BlockPos.ZERO, FLOOR_STATE));
+            work.add(new WorkItem(floorBox, BlockPos.ZERO, FLOOR_STATE, false));
         }
         // 预建（/60s build）时游戏尚未 RUNNING，但仍需建图，故用独立的 BUILDING 标记驱动 BuildTask，
         // 不再依赖 RUNNING（否则预建会在首 tick 被误判中止）。
         net.exmo.sixty_seconds.SixtySecondsMod.BUILDING = true;
-        GameUtils.serverTaskQueue.add(new BuildTask(level, snapshots, work, onComplete, teams));
+        GameUtils.serverTaskQueue.add(new BuildTask(level, work, onComplete, teams));
         SixtySeconds.LOGGER.info("[60s] Starting async build: {} teams, {} sub-boxes placed in batches.", teams, work.size());
     }
 
@@ -613,7 +584,11 @@ public final class SixtySecondsArena {
         if (!template.isInside(pos)) {
             pos = pos.offset(template.minX(), template.minY(), template.minZ());
         }
-        return pos.offset(offset);
+        BlockPos result = pos.offset(offset);
+        SixtySeconds.LOGGER.info("[60s] spawnFor: spawn(相对/绝对)={} template=[{},{},{}]~[{},{},{}] offset={} -> 世界落点={}",
+                spawn, template.minX(), template.minY(), template.minZ(),
+                template.maxX(), template.maxY(), template.maxZ(), offset, result);
+        return result;
     }
 
     /** 把模板盒切成 ≈{@link #CHUNK_TARGET} 方块的子盒，每个配上该队偏移，作为一个放置工作项。
@@ -630,6 +605,9 @@ public final class SixtySecondsArena {
     private static final int CLEAR_HEADROOM = 12;
     /** ocean 模式竞技场地板方块（Y=-40 一层，托住所有建筑）。 */
     private static final BlockState FLOOR_STATE = Blocks.STONE.defaultBlockState();
+    /** 凿空区外围外壳方块（黑色混凝土，不渗液）：在凿空区最外层 5 面（顶 + 四壁，底面不铺）封一圈，
+     *  防止建图瞬间周边液体（水/岩浆）大量涌入凿空区、触发海量方块更新与光照重算把整合服务器压死。 */
+    private static final BlockState CONCRETE_SHELL = Blocks.BLACK_CONCRETE.defaultBlockState();
 
     /**
      * 净空工作项：把克隆目标区<b>四周 {@link #CLEAR_MARGIN} 格环带 + 上方 {@link #CLEAR_HEADROOM} 格</b>
@@ -669,6 +647,43 @@ public final class SixtySecondsArena {
         }
     }
 
+    /**
+     * 在凿空区（净空盒）最外层铺一层黑色混凝土外壳——顶面 + 四壁共 5 面，<b>底面不铺</b>。
+     * <p>为什么要有这层壳：建图瞬间净空会把模板四周/上方的自然地形整片挖开。若挖进水体或岩浆层，
+     * 周边液体会立刻从四面八方涌入刚挖空的区域，每一格流动方块都会触发一次方块更新 + 光照重算，
+     * 在「每 tick 最多放 2000 格、且带 UPDATE_CLIENTS」的建图节奏下，这两股洪流叠加会把整合服务器线程压死，
+     * 客户端等不到世界同步数据而超时（即建图期出现的 "Timed out waiting for world statistics"）。
+     * 在最外层包一圈不渗水的黑色混凝土，等于给挖开区加了个盖子，把「瞬时液体大量流动」压到接近零。</p>
+     * <p>本模组<b>不做任何地形还原</b>（建图快照只记录、从不回放），所以这层外壳是永久的——
+     * 它把建筑体封在一只不渗液的混凝土盒子里，建图后一直留着，正好持续隔绝周边液体。</p>
+     * <p>必须在 {@link #addClearance} <b>之后</b>调用：先由净空把外壳所在位置挖成空气，再由本方法覆写成混凝土。</p>
+     */
+    private static void addConcreteShell(ServerLevel level, List<WorkItem> work, BoundingBox templateBox,
+            BlockPos offset) {
+        int minX = templateBox.minX() - CLEAR_MARGIN;
+        int maxX = templateBox.maxX() + CLEAR_MARGIN;
+        int minY = templateBox.minY();
+        int minZ = templateBox.minZ() - CLEAR_MARGIN;
+        int maxZ = templateBox.maxZ() + CLEAR_MARGIN;
+        int topY = Math.min(templateBox.maxY() + CLEAR_HEADROOM, level.getMaxBuildHeight() - 1 - offset.getY());
+        // 顶面（y=topY 一整片）
+        work.add(new WorkItem(BoundingBox.fromCorners(
+                new BlockPos(minX, topY, minZ), new BlockPos(maxX, topY, maxZ)), offset, CONCRETE_SHELL, true));
+        // 西壁（x=minX）
+        work.add(new WorkItem(BoundingBox.fromCorners(
+                new BlockPos(minX, minY, minZ), new BlockPos(minX, topY, maxZ)), offset, CONCRETE_SHELL, true));
+        // 东壁（x=maxX）
+        work.add(new WorkItem(BoundingBox.fromCorners(
+                new BlockPos(maxX, minY, minZ), new BlockPos(maxX, topY, maxZ)), offset, CONCRETE_SHELL, true));
+        // 北壁（z=minZ）
+        work.add(new WorkItem(BoundingBox.fromCorners(
+                new BlockPos(minX, minY, minZ), new BlockPos(maxX, topY, minZ)), offset, CONCRETE_SHELL, true));
+        // 南壁（z=maxZ）
+        work.add(new WorkItem(BoundingBox.fromCorners(
+                new BlockPos(minX, minY, maxZ), new BlockPos(maxX, topY, maxZ)), offset, CONCRETE_SHELL, true));
+        // 底面不铺（保持开放）
+    }
+
     /** 三维分块（仿 {@code FullTrainResetTask.buildChunks}）：按体积比例切分，保证至少 1 块。 */
     private static List<BoundingBox> buildChunks(BoundingBox box, int target) {
         List<BoundingBox> chunks = new ArrayList<>();
@@ -692,15 +707,17 @@ public final class SixtySecondsArena {
         return chunks;
     }
 
-    /** 放置一个工作项：先快照目标区（copyLayer 会覆写），再克隆；净空项 = 快照后挖成空气；地板项 = 铺方块。 */
-    private static void placeWorkItem(ServerLevel level, LinkedHashMap<BlockPos, Snapshot> snapshots, WorkItem item) {
-        if (item.isFloor()) {
-            BlockState fs = item.floor();
+    /** 放置一个工作项：净空项 = 清容器后挖成空气；克隆项 = 按模板/世界克隆；地板项 = 铺方块。本模组不做地形还原。 */
+    private static void placeWorkItem(ServerLevel level, WorkItem item) {
+        if (item.isFill()) {
+            // 铺设方块项（ocean Y=-40 地板 / 凿空区黑色混凝土外壳）<b>不</b>记录任何原始地形：
+            // 本模组不做任何地形还原（快照只记不回放），且此处落点本就被净空挖成了空气，再记只会把空气当原状污染快照表。
+            BlockState fs = item.fill();
             for (int y = item.src.minY(); y <= item.src.maxY(); y++) {
                 for (int x = item.src.minX(); x <= item.src.maxX(); x++) {
                     for (int z = item.src.minZ(); z <= item.src.maxZ(); z++) {
                         BlockPos dst = new BlockPos(x + item.offset.getX(), y + item.offset.getY(), z + item.offset.getZ());
-                        if (level.getBlockState(dst).isAir()) {
+                        if (!item.overwrite() && level.getBlockState(dst).isAir()) {
                             continue;
                         }
                         net.minecraft.world.Clearable.tryClear(level.getBlockEntity(dst));
@@ -714,7 +731,7 @@ public final class SixtySecondsArena {
         BoundingBox src = item.src;
         BlockPos offset = item.offset;
         if (item.clearOnly()) {
-            // 净空：只处理非空气格（山体/树木等），快照 → 清容器 → 挖成空气；局末快照还原
+            // 净空：只处理非空气格（山体/树木等），清容器 → 挖成空气
             net.minecraft.world.level.block.state.BlockState air =
                     net.minecraft.world.level.block.Blocks.AIR.defaultBlockState();
             for (int y = src.minY(); y <= src.maxY(); y++) {
@@ -850,49 +867,47 @@ public final class SixtySecondsArena {
         return new AABB(minX, minY, minZ, maxX + 1, maxY + 1, maxZ + 1);
     }
 
-    private record Snapshot(BlockState state, CompoundTag blockEntityTag) {
-    }
-
     /** 一个放置工作项：源模板子盒 + 该队网格偏移；{@code clearOnly}=净空项（目标区挖成空气，不克隆）。
      *  {@code template} 非空时按导出的结构模板 NBT（保留方块实体/箱子内容物）放置，否则从世界克隆。
-     *  {@code floor} 非空时为本项铺设地板（ocean 模式 Y=-40 一层）。三者互斥。 */
-    private record WorkItem(BoundingBox src, BlockPos offset, boolean clearOnly, CompoundTag template, BlockState floor, BlockPos boxOrigin) {
+     *  {@code fill} 非空时为本项铺设方块：ocean 模式 Y=-40 地板（石）或凿空区黑色混凝土外壳；本模组不做任何地形还原，故不记快照。
+     *  {@code overwrite}=true 时连空气格也强制覆写（混凝土外壳需覆盖已凿空的空气区），false 时跳过空气（地板沿用旧行为）。三者互斥。 */
+    private record WorkItem(BoundingBox src, BlockPos offset, boolean clearOnly, CompoundTag template,
+            BlockState fill, boolean overwrite, BlockPos boxOrigin) {
         WorkItem(BoundingBox src, BlockPos offset) {
-            this(src, offset, false, null, null, null);
+            this(src, offset, false, null, null, false, null);
         }
         WorkItem(BoundingBox src, BlockPos offset, boolean clearOnly) {
-            this(src, offset, clearOnly, null, null, null);
+            this(src, offset, clearOnly, null, null, false, null);
         }
         WorkItem(BoundingBox src, BlockPos offset, CompoundTag template) {
-            this(src, offset, false, template, null, null);
+            this(src, offset, false, template, null, false, null);
         }
         /** template 非空时携带「完整模板盒原点」，供 copyFromTemplate 按模板相对原点映射，
          *  避免分块后每个子盒各自以自身 min 当原点导致整体错位。 */
         WorkItem(BoundingBox src, BlockPos offset, CompoundTag template, BlockPos boxOrigin) {
-            this(src, offset, false, template, null, boxOrigin);
+            this(src, offset, false, template, null, false, boxOrigin);
         }
-        WorkItem(BoundingBox src, BlockPos offset, BlockState floor) {
-            this(src, offset, false, null, floor, null);
+        /** fill 非空时铺设该方块；overwrite=true 时连空气格也覆盖（混凝土外壳用），false 时跳过空气（地板）。 */
+        WorkItem(BoundingBox src, BlockPos offset, BlockState fill, boolean overwrite) {
+            this(src, offset, false, null, fill, overwrite, null);
         }
-        boolean isFloor() {
-            return floor != null;
+        boolean isFill() {
+            return fill != null;
         }
     }
 
     /** 跨 tick 分批放置方块的任务；全部完成后回调 {@code onComplete}。 */
     private static final class BuildTask extends ServerTaskInfo {
         private final ServerLevel level;
-        private final LinkedHashMap<BlockPos, Snapshot> snapshots;
         private final List<WorkItem> work;
         private final Runnable onComplete;
         private final int teams;
         private int index = 0;
         private int tickCounter = 0;
 
-        private BuildTask(ServerLevel level, LinkedHashMap<BlockPos, Snapshot> snapshots, List<WorkItem> work,
+        private BuildTask(ServerLevel level, List<WorkItem> work,
                 Runnable onComplete, int teams) {
             this.level = level;
-            this.snapshots = snapshots;
             this.work = work;
             this.onComplete = onComplete;
             this.teams = teams;
@@ -910,7 +925,7 @@ public final class SixtySecondsArena {
             while (index < work.size() && done < MAX_CHUNKS_PER_TICK) {
                 // 单个工项容错：某块放置抛异常（如 1.21 下模板 NBT 解析异常）只跳过并记日志，
                 try {
-                    placeWorkItem(level, snapshots, work.get(index));
+                    placeWorkItem(level, work.get(index));
                 } catch (Exception e) {
                     net.exmo.sixty_seconds.SixtySeconds.LOGGER.error("Construction work item failed and skipped：{}", work.get(index), e);
                 }
@@ -946,6 +961,18 @@ public final class SixtySecondsArena {
             for (ServerPlayer player : level.players()) {
                 player.displayClientMessage(done, true);
             }
+            // 建图收尾：强制清掉所有残留物品掉落物（生成过程中从容器/方块实体掉出、或液体冲刷带出的实体），
+            // 避免局内实体与网络同步负载堆积。此时玩家尚未进场，清干净不影响任何玩家物品。
+            int clearedDrops = 0;
+            for (Entity e : level.getAllEntities()) {
+                if (e instanceof ItemEntity && !e.isRemoved()) {
+                    e.discard();
+                    clearedDrops++;
+                }
+            }
+            if (clearedDrops > 0)
+                SixtySeconds.LOGGER.info("[60s] Build complete: force-cleared {} leftover item drops.", clearedDrops);
+
             onComplete.run();
         }
     }

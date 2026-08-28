@@ -193,11 +193,11 @@ public final class SixtySecondsManager {
             SixtySecondsMod.PREBUILT_DATA = null;
             SixtySecondsMod.PREBUILT_MASK = 0;
             SixtySecondsMod.PREBUILT_ANCHOR = null;
-            // 续建：保留预建方块与快照，按同一锚点把当前所需部分补上（needMask 可能为 0，此时仅重算出生点并直接传送）
-            SixtySecondsArena.buildContinue(level, data, config, () -> {
+            // 续建：保留预建方块，按同一锚点把当前所需部分补上（needMask 可能为 0，此时仅重算出生点并直接传送）
+            SixtySecondsArena.build(level, data, config, () -> {
                 assignFamilies(level, data, byUuid, allocResult);
                 onBuildComplete(level, data);
-            }, needMask, anchor, null);
+            }, needMask, anchor);
             return;
         }
         // 无预建锚点：清掉残留标记，走正常异步建图（复原机制已移除，不再还原上一局残留）

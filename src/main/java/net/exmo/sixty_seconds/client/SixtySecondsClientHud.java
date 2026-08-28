@@ -64,7 +64,8 @@ public final class SixtySecondsClientHud {
         // 1.21.x 原版图层名见 VanillaGuiLayers：PLAYER_HEALTH / FOOD_LEVEL / ARMOR_LEVEL / AIR_LEVEL / VEHICLE_HEALTH
         if (id.equals(VanillaGuiLayers.PLAYER_HEALTH) || id.equals(VanillaGuiLayers.FOOD_LEVEL)
                 || id.equals(VanillaGuiLayers.ARMOR_LEVEL) || id.equals(VanillaGuiLayers.AIR_LEVEL)
-                || id.equals(VanillaGuiLayers.VEHICLE_HEALTH)) {
+                || id.equals(VanillaGuiLayers.VEHICLE_HEALTH) || id.equals(VanillaGuiLayers.EXPERIENCE_BAR)
+                || id.equals(VanillaGuiLayers.EXPERIENCE_LEVEL)) {
             event.setCanceled(true);
         }
     }
