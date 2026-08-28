@@ -288,6 +288,10 @@ public final class SixtySecondsManager {
         // 模板克隆用 level.setBlock() 不触发 setPlacedBy，邮箱方块不会被自动注册。
         // 这里扫描各队避难所/住宅区内的邮箱并注册——否则每天早上报纸和物资无法投递。
         scanAndRegisterMailboxes(level, data);
+        // 出生点方块同理：克隆不触发 setPlacedBy，且 setPlacedBy 比对的是模板库坐标而非游戏坐标，
+        // 故放置在庇护所里的出生点方块不会被登记到 cfg.shelterSpawn。这里补扫，让玩家放入庇护所的
+        // 出生点方块真正成为进庇护所/重生的落点。
+        scanAndRegisterSpawnPoints(level, data);
         data.phase = SixtySecondsPhase.PREPARATION;
         data.dayNumber = 0;
         data.phaseEndTick = level.getGameTime() + PREP_TICKS;
@@ -319,6 +323,32 @@ public final class SixtySecondsManager {
                         SixtySecondsNewspaper.registerMailbox(level, team.teamId, pos.immutable());
                     }
                 }
+            }
+        }
+    }
+
+    /** 建图后扫描各队避难所盒内的「出生点方块」，据此覆盖 team.shelterSpawn。
+     *  模板克隆不触发 setPlacedBy（与邮箱同理），且 setPlacedBy 比对的是模板库坐标而非游戏坐标，
+     *  故放置在庇护所内的出生点方块须在此补扫，才能真正成为进庇护所 / 重生的落点。 */
+    private static void scanAndRegisterSpawnPoints(ServerLevel level, SixtySecondsState.Data data) {
+        for (SixtySecondsState.TeamData team : data.teams.values()) {
+            if (team.shelterBox == null) {
+                continue;
+            }
+            BlockPos min = BlockPos.containing(team.shelterBox.minX, team.shelterBox.minY, team.shelterBox.minZ);
+            BlockPos max = BlockPos.containing(team.shelterBox.maxX, team.shelterBox.maxY, team.shelterBox.maxZ);
+            BlockPos found = null;
+            for (BlockPos pos : BlockPos.betweenClosed(min, max)) {
+                if (level.getBlockState(pos).is(
+                        net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_SPAWN_POINT)) {
+                    found = pos.immutable();
+                    break;
+                }
+            }
+            if (found != null) {
+                team.shelterSpawn = found;
+                SixtySeconds.LOGGER.info("[60s] team {} shelterSpawn overridden by spawn-point block at {}",
+                        team.teamId, found);
             }
         }
     }
@@ -529,6 +559,16 @@ public final class SixtySecondsManager {
         TrapCageSystem.processDaily(level); // 捕捉笼：每天早上消耗诱饵，概率产出动物
         // 生成当日热线号码
         SixtySecondsHotlineSystem.generateDailyHotlines(level);
+        // 预先安排今日天气事件：让末日日报的「天气预报」与实际触发的事件保持一致
+        if (SixtySecondsEventSystem.getScheduledForDay(level, data.dayNumber) == null) {
+            if (level.getRandom().nextDouble() < 0.5) {
+                var pool = SixtySecondsEventSystem.FORECASTABLE_TYPES;
+                SixtySecondsEventSystem.scheduleForDay(level, data.dayNumber,
+                        pool[level.getRandom().nextInt(pool.length)]);
+            } else {
+                SixtySecondsEventSystem.scheduleForDay(level, data.dayNumber, null);
+            }
+        }
         // 收集稿纸投稿 + 发布末日日报（含邮箱投递）
         SixtySecondsNewspaper.collectDrafts(level, data);
         SixtySecondsNewspaper.publish(level, data); // 末日日报：每日一期，聊天栏点击阅读

@@ -196,10 +196,8 @@ public final class SixtySecondsDoorMenu {
                 }
             }
             case ACTION_EVENT -> {
-                if (data.phase == SixtySecondsPhase.DAY) {
-                    ServerPlayNetworking.send(player,
-                            new OpenSixtySecondsDoorS2CPacket(DoorPurpose.EVENT.ordinal(), pos));
-                }
+                // 在聊天栏回顾今日事件与决策（事件夜晚触发，白天未刷新时提示「到晚上再看看吧」）
+                SixtySecondsDailyEvents.review(player);
             }
             case ACTION_VISIT -> {
                 if (data.phase == SixtySecondsPhase.DAY) {

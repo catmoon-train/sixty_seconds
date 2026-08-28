@@ -231,9 +231,9 @@ public final class SixtySecondsNewspaper {
         headline.append(Component.literal("≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡"));
         sections.add(headline.withStyle(ChatFormatting.DARK_RED));
 
-        // 2. 天气播报
+        // 2. 天气播报（使用「今日预报」而非「正在发生的事件」，否则清晨发布时永远显示晴朗）
         MutableComponent weather = Component.translatable(LANG + "section_weather").append(CommonComponents.NEW_LINE).append(CommonComponents.NEW_LINE);
-        String weatherKey = SixtySecondsEventSystem.activeEventKey(level);
+        String weatherKey = SixtySecondsEventSystem.getScheduledEventKey(level, data.dayNumber);
         if (weatherKey != null) {
             weather.append(Component.translatable("message.sixty_seconds.sixty_seconds.weather_active"));
             weather.append(Component.translatable(weatherKey));
@@ -254,7 +254,7 @@ public final class SixtySecondsNewspaper {
         else if (data.dayNumber <= 10) zoneKey = "zone_security_decay";
         else if (data.dayNumber <= 20) zoneKey = "zone_no_mans_land";
         else zoneKey = "zone_ecosystem_rebuild";
-        if (SixtySecondsEventSystem.activeEventKey(level) != null) zoneKey = "zone_event_active";
+        if (SixtySecondsEventSystem.getScheduledEventKey(level, data.dayNumber) != null) zoneKey = "zone_event_active";
 
         if (deceased > 10) {
             zone.append(Component.translatable("message.sixty_seconds.sixty_seconds.zone_mass_casualty"));
@@ -497,10 +497,10 @@ public final class SixtySecondsNewspaper {
         headline.append("≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡");
         sections.add(Component.literal(headline.toString()).withStyle(ChatFormatting.DARK_RED));
 
-        // 2. 天气播报
+        // 2. 天气播报（使用今日预报）
         StringBuilder weather = new StringBuilder();
         weather.append(Component.translatable(LANG + "section_weather").getString()).append("\n\n");
-        String weatherKey = SixtySecondsEventSystem.activeEventKey(level);
+        String weatherKey = SixtySecondsEventSystem.getScheduledEventKey(level, SixtySecondsState.get(level).dayNumber);
         if (weatherKey != null) {
             weather.append(Component.translatable("message.sixty_seconds.sixty_seconds.weather_active").getString());
             weather.append(Component.translatable(weatherKey).getString());

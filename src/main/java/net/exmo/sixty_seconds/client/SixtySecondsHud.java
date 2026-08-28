@@ -13,7 +13,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.bridge.client.CommonHudRenderCallback;
+import net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent;
 import net.exmo.sixty_seconds.weather.WeatherVisualConfig;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * 末日60秒模式 HUD：<b>血条（居中、紧贴物品栏）</b> + <b>右中下角状态竖排</b> + <b>左上角时间信息</b>。
@@ -43,6 +45,9 @@ public final class SixtySecondsHud {
     private static final int STAT_GAP = 4;
     private static final int STAT_COUNT = 4; // 饥饿/口渴/理智/污染（健康单独一行）
     private static final int ROW_GAP = 3;
+    /** 游戏币（代币）图标。 */
+    private static final ResourceLocation GAME_COIN =
+            ResourceLocation.fromNamespaceAndPath("sixty_seconds", "textures/gui/game_coin.png");
     private static final double LOW_RATIO = 0.25;
 
     // ── 左上角信息布局 ──
@@ -201,6 +206,14 @@ public final class SixtySecondsHud {
             graphics.drawString(client.font,
                     Component.empty().append(subName).append(Component.literal(" " + time)), x, y, color);
             y += INFO_LINE_H;
+            // 游戏币（代币）余额：显示在时钟下方；图标取自 StarRailExpress
+            LocalPlayer coinPlayer = client.player;
+            if (coinPlayer != null) {
+                int tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(coinPlayer).getTokens();
+                graphics.getDefaultGuiGraphics().blit(GAME_COIN, x, y, 0, 0, 16, 16, 16, 16);
+                graphics.drawString(client.font, " " + tokens, x + 18, y + 4, 0xFFFFFF);
+                y += INFO_LINE_H;
+            }
         }
 
         // 准备阶段倒计时（最后 10 秒红色脉冲）

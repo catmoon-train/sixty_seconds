@@ -148,6 +148,20 @@ public final class SixtySecondsDailyEvents {
         final Map<Integer, EventDef> todayEvent = new HashMap<>();
         /** 已看到事件的玩家 UUID（避免重复推送）。 */
         final Set<UUID> seenPlayers = new HashSet<>();
+        /** teamId → 今日事件回顾（供庇护所「事件门」查看）。 */
+        final Map<Integer, EventReview> review = new HashMap<>();
+    }
+
+    /** 今日事件回顾记录（仅供本会话内「事件门」查看）。 */
+    private static final class EventReview {
+        final String eventId;
+        String chosenByName; // 做出抉择的玩家名（瞬发事件为 null）
+        int option;          // 选择的选项（1/2，0=未抉择/瞬发）
+        EventReview(String eventId, String chosenByName, int option) {
+            this.eventId = eventId;
+            this.chosenByName = chosenByName;
+            this.option = option;
+        }
     }
 
     private static final Map<ServerLevel, LevelState> STATE = new WeakHashMap<>();
@@ -289,6 +303,8 @@ public final class SixtySecondsDailyEvents {
                         Component.translatable(LANG + def.id + ".title"))
                         .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
                 def.choice.choose(level, team, representative, 2);
+                EventReview rev = st.review.get(team.teamId);
+                if (rev != null) { rev.chosenByName = representative.getGameProfile().getName(); rev.option = 2; }
             }
         }
     }
@@ -464,6 +480,7 @@ public final class SixtySecondsDailyEvents {
     /** 播报剧情（title + 聊天栏故事）；抉择事件再挂上待决状态与可点击选项。只显示给在庇护所的成员。 */
     private static void trigger(ServerLevel level, LevelState st, SixtySecondsState.TeamData team, EventDef def) {
         SixtySecondsState.Data data = SixtySecondsState.get(level);
+        st.review.put(team.teamId, new EventReview(def.id, null, 0));
         MutableComponent tag = Component.literal("[")
                 .append(Component.translatable(def.type.tagKey()))
                 .append(Component.literal("]"))
@@ -559,12 +576,51 @@ public final class SixtySecondsDailyEvents {
             return; // 前置不满足（已提示点击者），保持待决
         }
         st.pending.remove(team.teamId);
+        EventReview rev = st.review.get(team.teamId);
+        if (rev != null) { rev.chosenByName = player.getGameProfile().getName(); rev.option = opt; }
         Component chosen = Component.translatable(LANG + "chosen_by", player.getGameProfile().getName(),
                 Component.translatable(LANG + def.id + ".opt" + opt)).withStyle(ChatFormatting.GRAY);
         for (ServerPlayer member : onlineMembers(level, team)) {
             if (member != player) {
                 member.displayClientMessage(chosen, false);
             }
+        }
+    }
+
+    /** 在聊天栏回顾今日事件与已做出的决策（供庇护所「事件门」使用）。 */
+    public static void review(ServerPlayer player) {
+        ServerLevel level = player.serverLevel();
+        LevelState st = STATE.get(level);
+        SixtySecondsState.Data data = SixtySecondsState.get(level);
+        SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
+        SixtySecondsState.TeamData team = data.teams.get(stats.teamId);
+        if (team == null) return;
+        EventReview r = st == null ? null : st.review.get(team.teamId);
+        if (r == null || r.eventId == null) {
+            player.displayClientMessage(Component.translatable(LANG + "review_not_ready")
+                    .withStyle(ChatFormatting.GRAY), false);
+            return;
+        }
+        EventDef def = EVENTS.get(r.eventId);
+        player.displayClientMessage(Component.translatable(LANG + "review_header", data.dayNumber)
+                .withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD), false);
+        if (def != null) {
+            player.displayClientMessage(Component.literal("[")
+                            .append(Component.translatable(def.type.tagKey()))
+                            .append("] ").append(Component.translatable(LANG + def.id + ".title"))
+                            .withStyle(def.type.color),
+                    false);
+            player.displayClientMessage(Component.translatable(LANG + def.id + ".desc")
+                    .withStyle(ChatFormatting.GRAY), false);
+        }
+        if (r.option > 0 && r.chosenByName != null) {
+            Component optText = def == null ? Component.literal("?")
+                    : Component.translatable(LANG + def.id + ".opt" + r.option);
+            player.displayClientMessage(Component.translatable(LANG + "review_decision",
+                    r.chosenByName, optText).withStyle(ChatFormatting.YELLOW), false);
+        } else {
+            player.displayClientMessage(Component.translatable(LANG + "review_no_decision")
+                    .withStyle(ChatFormatting.GRAY), false);
         }
     }
 

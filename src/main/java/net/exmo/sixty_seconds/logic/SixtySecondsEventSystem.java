@@ -110,12 +110,14 @@ public final class SixtySecondsEventSystem {
         // 优先检查当天是否有预报安排的天气
         SixtySecondsState.Data stateData = SixtySecondsState.get(level);
         Map<Integer, EventType> schedule = SCHEDULED.get(level);
-        if (schedule != null) {
+        if (schedule != null && schedule.containsKey(stateData.dayNumber)) {
+            // 当天已由 startDay / 热线预报明确安排（含「晴朗」null）：
+            // 触发对应事件；若为晴朗则不再随机补足，保证末日日报预报与实际一致。
             EventType scheduled = schedule.remove(stateData.dayNumber);
             if (scheduled != null) {
                 startEvent(level, scheduled, now);
-                return;
             }
+            return;
         }
         if (now % SixtySecondsBalance.EVENT_CHECK_INTERVAL == 0
                 && level.getRandom().nextDouble() < SixtySecondsBalance.EVENT_CHANCE) {

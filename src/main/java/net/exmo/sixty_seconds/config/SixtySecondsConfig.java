@@ -29,7 +29,7 @@ public class SixtySecondsConfig {
      * 不再依赖探索区出口门或避难所锚点。由 {@code /60s_area rv} 配置。
      */
     @SerializedName("rvEnabled")
-    public boolean rvEnabled = false;
+    public boolean rvEnabled = true;
 
     /**
      * 按队伍序号排列的房车刷新点（世界绝对坐标）。条目不足时，系统会在该队住宅出生点旁找安全位置作为兼容回退。

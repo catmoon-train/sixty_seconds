@@ -11,11 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * 禁止玩家把 60s 模式用来占位的 BARRIER 扔进世界。
- *
- * <p>StarRailExpress 原始实现依赖基础模组 {@code io.wifi.starrailexpress} 的
- * {@code KeyBindingMixin}（全局禁丢）+ {@code DropRules#canDrop}（本模式放行丢弃但排除屏障）。
- * 本模组不依赖该基础模组，故改用 mixin 直拦：在 {@code LocalPlayer.drop(boolean)} 的
- * HEAD 取消，确保在物品被移出背包之前就拦截，不会造成物品丢失。</p>
  */
 @Mixin(LocalPlayer.class)
 public abstract class LocalPlayerDropMixin {

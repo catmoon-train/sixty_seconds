@@ -128,6 +128,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.exmo.sixty_seconds.content.entity.WheelchairEntityModel;
 import net.exmo.sixty_seconds.content.entity.WheelchairEntityRenderer;
 import net.exmo.sixty_seconds.content.entity.WheelchairFieldItemRenderer;
@@ -453,16 +454,38 @@ public final class SixtySecondsClient {
         if (!(screen instanceof InventoryScreen)) {
             return;
         }
-        if (!SixtySecBridgeClient.inSixtySecondsMode()) {
-            return;
-        }
         LocalPlayer player = Minecraft.getInstance().player;
         if (player == null || player.isCreative() || player.isSpectator()) {
+            return;
+        }
+        // 受限背包：60s 模式会对锁定槽位塞入屏障占位方块。只要检测到占位即切换受限界面，
+        // 不依赖客户端 mode 标记（避免 gameComponent 未及时刷新的边界情况导致仍显示原版物品栏）。
+        boolean restricted = SixtySecBridgeClient.inSixtySecondsMode() || hasBarrierSlots(player.getInventory());
+        if (!restricted) {
             return;
         }
         InventoryMenu menu = ((InventoryScreen) screen).getMenu();
         event.setNewScreen(new SixtySecondsInventoryScreen(
                 menu, player.getInventory(), Component.translatable("container.inventory")));
+    }
+
+    private static boolean hasBarrierSlots(net.minecraft.world.entity.player.Inventory inv) {
+        for (ItemStack s : inv.items) {
+            if (s.is(Items.BARRIER)) {
+                return true;
+            }
+        }
+        for (ItemStack s : inv.armor) {
+            if (s.is(Items.BARRIER)) {
+                return true;
+            }
+        }
+        for (ItemStack s : inv.offhand) {
+            if (s.is(Items.BARRIER)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static HumanoidMobRenderer<PlayerBodyEntity, HumanoidModel<PlayerBodyEntity>> bodyRenderer(

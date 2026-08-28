@@ -94,7 +94,10 @@ public class SixtySecondsRatHoleBlock extends BaseEntityBlock {
         }
 
         long now = serverLevel.getGameTime();
+        // lastLootTick 默认为 0（从未掏过）。只有真正掏过（>0）且仍处于同一游戏日内才进入冷却，
+        // 避免第一天尚未掏过却被误判为「已掏过」。
         if (!serverPlayer.isCreative()
+                && hole.getLastLootTick() > 0
                 && now - hole.getLastLootTick() < SixtySecondsDayCycle.DAY_TOTAL_TICKS) {
             player.displayClientMessage(
                     Component.translatable("message.sixty_seconds.sixty_seconds.rat_hole_cooldown"), true);
