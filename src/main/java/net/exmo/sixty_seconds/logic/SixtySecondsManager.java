@@ -200,15 +200,18 @@ public final class SixtySecondsManager {
             }, needMask, anchor);
             return;
         }
-        // 无预建锚点：清掉残留标记，走正常异步建图（复原机制已移除，不再还原上一局残留）
+        // 无预建锚点：清掉残留标记，走正常异步建图（复原机制已移除，不再还原上一局残留）。
+        // 以「开局指令玩家」脚下为锚点，让房子与庇护所螺旋建在玩家身边，
+        // 避免远距传送 + 远区块批量加载把 LostCities 城市生成队列压死（表现为卡成原版地形、建筑不再刷新）。
         SixtySecondsMod.PREBUILT_DATA = null;
         SixtySecondsMod.PREBUILT_MASK = 0;
         SixtySecondsMod.PREBUILT_ANCHOR = null;
+        net.minecraft.core.BlockPos startAnchor = players.isEmpty() ? null : players.get(0).blockPosition();
         SixtySecondsArena.build(level, data, config, () -> {
             // 3) 建图完成 → 分配家庭身份 → 传送进家 → 进准备阶段
             assignFamilies(level, data, byUuid, allocResult);
             onBuildComplete(level, data);
-        });
+        }, SixtySecondsArena.BUILD_ALL, startAnchor);
     }
 
     /**

@@ -8,18 +8,21 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
  * 末日60秒模式的地图配置（Gson 序列化，存世界存档目录 JSON，见 {@link SixtySecondsConfigStore}）。
  * <p>
  * 授权模型：管理员手搭<b>一份</b>住宅 / 避难所 / 搜索区模板并登记其 AABB 与出生点；开局
- * {@code SixtySecondsArena} 对每队按网格偏移 {@code teamBase + idx*teamGridSpacing} 用
- * {@code BlockCopyUtils.copyLayer} 克隆出一份。门 / 物资箱等方块直接建在模板里，随克隆自动复制，无需在此登记。
+ * {@code SixtySecondsArena} 以 {@code teamBase}（或开局传入的玩家脚下锚点）为中心，按 Ulam 螺旋
+ * {@code teamOffset(idx)} 一圈圈向外扩散克隆出每队一份。门 / 物资箱等方块直接建在模板里，随克隆自动复制，无需在此登记。
  */
 public class SixtySecondsConfig {
 
-    /** 第一支队伍相对模板的克隆偏移。 */
+    /**
+     * 螺旋布局的中心点（第 0 支队伍落点）。开局 / 预建若传入玩家脚下锚点，整片螺旋会平移到该锚点周围，
+     * 从而把房子与庇护所都建在玩家身边、避免远距传送与远区块批量加载（LostCities 城市生成会卡死主线程）。
+     */
     @SerializedName("teamBase")
     public Vec teamBase = new Vec(2048, 0, 0);
 
-    /** 每支队伍在 X 轴上的额外偏移间距（须大于模板尺寸，避免重叠）。 */
+    /** 螺旋相邻建筑之间的中心间距（格）。默认 30：仅保证建筑基础不重叠即可，可按模板尺寸按需调大。 */
     @SerializedName("teamGridSpacing")
-    public int teamGridSpacing = 512;
+    public int teamGridSpacing = 30;
 
     /**
      * 房车模式：每队生成一辆常驻房车，并让避难所与住宅一样按 {@link #teamBase} 网格克隆，
@@ -302,23 +305,62 @@ public class SixtySecondsConfig {
     @SerializedName("helicopterLandingPos")
     public Vec helicopterLandingPos = new Vec(0, 0, 0);
 
-    /** 第 index（从 0 起）支队伍的网格偏移。 */
+    /**
+     * 第 index（从 0 起）支队伍的螺旋偏移：以 {@link #teamBase} 为中心、由内向外一圈圈扩散（Ulam 螺旋）。
+     * 开局 / 预建传入玩家脚下锚点时，整片螺旋随 {@code anchor - teamBase} 平移到玩家身边。
+     */
     public BlockPos teamOffset(int index) {
-        // 自动校正间距下限：相邻队伍（房子/庇护所）至少相隔 100 格，避免生成不完全。
+        // 间距下限仅取模板最大边长，保证相邻建筑不互相覆盖即可；用户设置的 teamGridSpacing（默认 30）优先。
         int spacing = Math.max(teamGridSpacing, minTeamSpacing());
-        return new BlockPos(teamBase.x + index * spacing, teamBase.y, teamBase.z);
+        int[] s = spiralXY(index);
+        return new BlockPos(teamBase.x + s[0] * spacing, teamBase.y, teamBase.z + s[1] * spacing);
     }
 
-    /** 相邻队伍最小间距下限 = 模板最大宽度 + 100 格。 */
+    /**
+     * Ulam 螺旋第 index（0 起）格相对中心 (0,0) 的 (dx, dz) 偏移。每步走一格，相邻格恒相距 1，
+     * 故实际最小建筑中心距 = spacing，天然呈「由内向外一环一环扩散」。
+     */
+    private static int[] spiralXY(int index) {
+        int n = index + 1;
+        int k = (int) Math.ceil((Math.sqrt(n) - 1) / 2.0);
+        int t = 2 * k + 1;
+        int m = t * t;
+        t = t - 1;
+        int[] r = new int[2];
+        if (n >= m - t) {
+            r[0] = k - (m - n);
+            r[1] = -k;
+        } else {
+            m -= t;
+            if (n >= m - t) {
+                r[0] = -k;
+                r[1] = -k + (m - n);
+            } else {
+                m -= t;
+                if (n >= m - t) {
+                    r[0] = -k + (m - n);
+                    r[1] = k;
+                } else {
+                    r[0] = k;
+                    r[1] = k - (m - n - t);
+                }
+            }
+        }
+        return r;
+    }
+
+    /** 相邻建筑最小间距下限 = 模板最大边长（X / Z 取大，仅防止建筑互相覆盖）。 */
     private int minTeamSpacing() {
-        int maxWidth = 0;
+        int maxExtent = 0;
         if (residentialTemplate != null) {
-            maxWidth = Math.max(maxWidth, Math.abs(residentialTemplate.max.x - residentialTemplate.min.x));
+            maxExtent = Math.max(maxExtent, Math.abs(residentialTemplate.max.x - residentialTemplate.min.x));
+            maxExtent = Math.max(maxExtent, Math.abs(residentialTemplate.max.z - residentialTemplate.min.z));
         }
         if (shelterTemplate != null) {
-            maxWidth = Math.max(maxWidth, Math.abs(shelterTemplate.max.x - shelterTemplate.min.x));
+            maxExtent = Math.max(maxExtent, Math.abs(shelterTemplate.max.x - shelterTemplate.min.x));
+            maxExtent = Math.max(maxExtent, Math.abs(shelterTemplate.max.z - shelterTemplate.min.z));
         }
-        return maxWidth + 100;
+        return maxExtent;
     }
 
     public boolean isComplete() {

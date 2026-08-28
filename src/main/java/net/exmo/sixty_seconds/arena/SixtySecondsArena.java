@@ -117,9 +117,9 @@ public final class SixtySecondsArena {
     }
 
     /**
-     * 建图主入口（按网格建图；预建锚点不为 null 时刚性平移到该坐标）。
-     * @param anchor 预建锚点：不为 null 时把整座竞技场从默认网格原点（{@code teamBase}）刚性平移到该坐标（仅水平位移，
-     *               建筑 Y 仍按模板自然落位），用于 {@code /60s build} 在指令输入玩家脚下就地预建。为 null 时走原网格布局。
+     * 建图主入口（以 {@code teamBase} 为中心按 Ulam 螺旋建图；预建锚点不为 null 时把整片螺旋刚性平移到该坐标）。
+     * @param anchor 预建锚点：不为 null 时把整座竞技场（螺旋中心）从默认中心（{@code teamBase}）刚性平移到该坐标（仅水平位移，
+     *               建筑 Y 仍按模板自然落位），用于 {@code /60s build} / 开局在指令输入玩家脚下就地建图。为 null 时走默认中心布局。
      */
     public static void build(ServerLevel level, SixtySecondsState.Data data, SixtySecondsConfig config,
             Runnable onComplete, int buildMask, BlockPos anchor) {
