@@ -4,6 +4,7 @@ import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
 import net.exmo.sixty_seconds.bridge.client.CommonHudRenderCallback;
 import net.exmo.sixty_seconds.bridge.client.FakeGuiGraphics;
+import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.client.TaskBlockOverlayRenderer;
 import net.exmo.sixty_seconds.bridge.entity.PlayerBodyEntity;
 import net.exmo.sixty_seconds.bridge.fabric.ClientPlayConnectionEvents;
@@ -34,6 +35,11 @@ import net.exmo.sixty_seconds.client.render.SixtySecondsTurretRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsVehicleRenderer;
 import net.exmo.sixty_seconds.client.gui.screen.NewspaperScreen;
 import net.exmo.sixty_seconds.client.gui.screen.RadioChannelScreen;
+import net.exmo.sixty_seconds.client.screen.SixtySecondsInventoryScreen;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.player.LocalPlayer;
+import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.exmo.sixty_seconds.client.screen.AirdropLootEditScreen;
 import net.exmo.sixty_seconds.client.screen.BreakInSelectScreen;
 import net.exmo.sixty_seconds.client.screen.DismantleScreen;
@@ -120,6 +126,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
 import net.exmo.sixty_seconds.content.entity.WheelchairEntityModel;
 import net.exmo.sixty_seconds.content.entity.WheelchairEntityRenderer;
@@ -256,6 +263,7 @@ public final class SixtySecondsClient {
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onLogout);
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onWorldRender);
             NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onTooltip);
+            NeoForge.EVENT_BUS.addListener(SixtySecondsClient::onScreenOpening);
         });
     }
 
@@ -435,6 +443,26 @@ public final class SixtySecondsClient {
         for (ItemTooltipCallback callback : ItemTooltipCallback.EVENT.invokers()) {
             callback.getTooltip(stack, event.getContext(), event.getFlags(), lines);
         }
+    }
+
+    /**
+     * 只呈现当前可用槽位（被 SixtySecondsInventoryLimit 屏障锁定的槽位不在界面上显示）。
+     */
+    private static void onScreenOpening(ScreenEvent.Opening event) {
+        Screen screen = event.getScreen();
+        if (!(screen instanceof InventoryScreen)) {
+            return;
+        }
+        if (!SixtySecBridgeClient.inSixtySecondsMode()) {
+            return;
+        }
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player == null || player.isCreative() || player.isSpectator()) {
+            return;
+        }
+        InventoryMenu menu = ((InventoryScreen) screen).getMenu();
+        event.setNewScreen(new SixtySecondsInventoryScreen(
+                menu, player.getInventory(), Component.translatable("container.inventory")));
     }
 
     private static HumanoidMobRenderer<PlayerBodyEntity, HumanoidModel<PlayerBodyEntity>> bodyRenderer(

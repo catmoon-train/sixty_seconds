@@ -17,6 +17,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Vex;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -228,11 +229,22 @@ public final class SixtySecondsWhisperSystem {
     /** 队伍内是否有人背包（含主手/副手/盔甲槽，{@code getItems()} 覆盖全部）携带手电筒或火把。 */
     private static boolean memberCarriesLight(ServerLevel level, SixtySecondsState.TeamData team) {
         for (UUID uuid : team.members) {
-            ServerPlayer player = level.getPlayerByUUID(uuid);
+            ServerPlayer player = (ServerPlayer) level.getPlayerByUUID(uuid);
             if (player == null || !GameUtils.isPlayerAliveAndSurvival(player)) {
                 continue;
             }
-            for (ItemStack stack : player.getInventory().getItems()) {
+            Inventory inv = player.getInventory();
+            for (ItemStack stack : inv.items) {
+                if (stack.is(ModItems.SIXTY_SECONDS_FLASHLIGHT) || stack.is(ModItems.SIXTY_SECONDS_TORCH)) {
+                    return true;
+                }
+            }
+            for (ItemStack stack : inv.armor) {
+                if (stack.is(ModItems.SIXTY_SECONDS_FLASHLIGHT) || stack.is(ModItems.SIXTY_SECONDS_TORCH)) {
+                    return true;
+                }
+            }
+            for (ItemStack stack : inv.offhand) {
                 if (stack.is(ModItems.SIXTY_SECONDS_FLASHLIGHT) || stack.is(ModItems.SIXTY_SECONDS_TORCH)) {
                     return true;
                 }
@@ -268,7 +280,7 @@ public final class SixtySecondsWhisperSystem {
             return null;
         }
         for (UUID uuid : team.members) {
-            ServerPlayer player = level.getPlayerByUUID(uuid);
+            ServerPlayer player = (ServerPlayer) level.getPlayerByUUID(uuid);
             if (player != null && GameUtils.isPlayerAliveAndSurvival(player)
                     && box.contains(player.position())) {
                 return player.blockPosition();
@@ -290,7 +302,7 @@ public final class SixtySecondsWhisperSystem {
             return null;
         }
         // 一次性收集玩家身边的发光方块（电灯/火把/灯笼…），刷新点只取不被其照亮的站位
-        List<int[]> lamps = lampBlocks(level, bias, SPAWN_BIAS_RADIUS + LAMP_REACH);
+        List<int[]> lamps = lampBlocks(level, bias, (int) (SPAWN_BIAS_RADIUS + LAMP_REACH));
         double r = Math.min(SPAWN_BIAS_RADIUS, Math.min((box.maxX - box.minX) / 2,
                 Math.min((box.maxY - box.minY) / 2, (box.maxZ - box.minZ) / 2)));
         for (int i = 0; i < SAMPLES_PER_BOX; i++) {
@@ -359,7 +371,7 @@ public final class SixtySecondsWhisperSystem {
             if (p == null) {
                 continue;
             }
-            List<int[]> lamps = lampBlocks(level, p, SPAWN_BIAS_RADIUS + LAMP_REACH);
+            List<int[]> lamps = lampBlocks(level, p, (int) (SPAWN_BIAS_RADIUS + LAMP_REACH));
             if (lamps.isEmpty()) {
                 continue;
             }
@@ -381,21 +393,6 @@ public final class SixtySecondsWhisperSystem {
                 }
             }
         }
-    }
-
-    /** 取队伍中位于指定盒（庇护所/住宅）内的在线存活玩家脚底坐标，作为低语怪刷新的「玩家侧」偏向中心。 */
-    private static BlockPos playerInsideBox(ServerLevel level, SixtySecondsState.TeamData team, AABB box) {
-        if (box == null) {
-            return null;
-        }
-        for (UUID uuid : team.members) {
-            ServerPlayer player = level.getPlayerByUUID(uuid);
-            if (player != null && GameUtils.isPlayerAliveAndSurvival(player)
-                    && box.contains(player.position())) {
-                return player.blockPosition();
-            }
-        }
-        return null;
     }
 
     private static int countTeamWhispers(ServerLevel level, List<UUID> whispers, SixtySecondsState.TeamData team) {

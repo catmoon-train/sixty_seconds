@@ -26,7 +26,7 @@ public class SixtySecondsTorchItem extends StandingAndWallBlockItem implements A
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, net.minecraft.world.item.Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip.sixty_seconds.sixty_seconds.sleep_avoid_unease").withStyle(net.minecraft.ChatFormatting.GRAY));
     }
 
