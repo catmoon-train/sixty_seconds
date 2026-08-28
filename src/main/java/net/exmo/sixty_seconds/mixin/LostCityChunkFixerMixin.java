@@ -19,11 +19,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 /**
  * 在 LostCities 处理每一个城市区块时（{@code ChunkFixer.executePostTodo}，世界生成阶段）为建筑区块
  * 规划并延迟放置 60秒 物资箱。落箱逻辑完全在本 mixin 内完成，不依赖任何外部手动放置代码。
@@ -97,29 +92,44 @@ public class LostCityChunkFixerMixin {
         // 收集本 chunk 内所有「不悬空」候选点：要求落脚点是空气、且脚下有实心支撑（不悬空）。
         // 必须显式校验落脚点为空气——否则候选点可能落在墙/地板实心块上，
         // ChunkFixer 阶段的 placeBox 会因落点非空气而跳过，最终一个箱子都放不出来。
-        List<BlockPos> candidates = new ArrayList<>();
+        BlockPos[] reservoir = new BlockPos[MAX_BOXES];
+        int seen = 0;
+        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
         for (int lx = 0; lx < 16; lx++) {
             for (int lz = 0; lz < 16; lz++) {
                 int x = baseX + lx;
                 int z = baseZ + lz;
+                cursor.set(x, bottomY - 1, z);
+                boolean belowAir = world.getBlockState(cursor).isAir();
                 for (int y = bottomY; y <= topY; y++) {
-                    BlockPos pos = new BlockPos(x, y, z);
-                    if (world.getBlockState(pos).isAir() && !world.getBlockState(pos.below()).isAir()) {
-                        candidates.add(pos);
+                    cursor.set(x, y, z);
+                    boolean hereAir = world.getBlockState(cursor).isAir();
+                    if (hereAir && !belowAir) {
+                        BlockPos hit = new BlockPos(x, y, z);
+                        if (seen < MAX_BOXES) {
+                            reservoir[seen] = hit;
+                        } else {
+                            int j = rng.nextInt(seen + 1);
+                            if (j < MAX_BOXES) {
+                                reservoir[j] = hit;
+                            }
+                        }
+                        seen++;
                     }
+                    // 本次的 pos 即下次迭代的 pos.below()，直接复用省掉一次 getBlockState
+                    belowAir = hereAir;
                 }
             }
         }
-        if (candidates.isEmpty()) {
+        if (seen == 0) {
             return;
         }
 
-        // 用 worldgen 随机源打乱候选顺序，保证分布随机且确定性可复现
-        Collections.shuffle(candidates, new Random(rng.nextLong()));
-
         int count = Math.min(MAX_BOXES, Math.max(1, star) * DENSITY); // 密度倍率，显著提升物资箱密度
-        for (int i = 0; i < Math.min(count, candidates.size()); i++) {
-            BlockPos pos = candidates.get(i);
+        int take = Math.min(count, Math.min(seen, MAX_BOXES));
+        // 蓄水池内的顺序本身已是随机的，直接取前 take 个
+        for (int i = 0; i < take; i++) {
+            BlockPos pos = reservoir[i];
             boolean advanced = rng.nextFloat() < (0.1f + 0.12f * star);
             boolean locked = rng.nextFloat() < LOCK_RATIO;
             String category = CATEGORIES[rng.nextInt(CATEGORIES.length)];
