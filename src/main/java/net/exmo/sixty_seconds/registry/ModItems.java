@@ -1150,7 +1150,7 @@ public final class ModItems {
 
     public static Item SIXTY_SECONDS_DRAFT_PAPER;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_DRAFT_PAPER = ITEMS.register("sixty_seconds_draft_paper", () -> {
-        SIXTY_SECONDS_DRAFT_PAPER = new Item(new Item.Properties().stacksTo(16));
+        SIXTY_SECONDS_DRAFT_PAPER = new net.exmo.sixty_seconds.content.item.SixtySecondsNoteItem(new Item.Properties().stacksTo(16));
         return SIXTY_SECONDS_DRAFT_PAPER;
     });
 

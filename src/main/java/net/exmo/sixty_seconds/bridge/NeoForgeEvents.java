@@ -37,6 +37,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 
 public final class NeoForgeEvents {
@@ -74,12 +75,15 @@ public final class NeoForgeEvents {
             // 海洋（海岛）维度：独立于主世界对局，自行驱动海洋生物刷新、海盗 NPC 与海岛登岛检测
             if (level.dimension() == SixtySeconds.OCEAN_DIMENSION) {
                 net.exmo.sixty_seconds.island.SixtySecondsIslands.ensureOceanStarted(level);
-                net.exmo.sixty_seconds.logic.OceanCreatureSpawner.tick(level);
                 net.exmo.sixty_seconds.island.SixtySecondsIslands.tick(level);
-                // 海盗等海面 NPC：海洋维度内（不依赖搜索区/对局）按固定间隔刷新
-                net.exmo.sixty_seconds.state.SixtySecondsState.Data od =
-                        net.exmo.sixty_seconds.state.SixtySecondsState.get(level);
-                net.exmo.sixty_seconds.logic.SixtySecondsNpcSpawner.spawnPirates(level, od, level.isNight());
+                // 对局未开始时不刷新海洋生物与海盗 NPC，避免无意义生成
+                if (SixtySecondsMod.RUNNING) {
+                    net.exmo.sixty_seconds.logic.OceanCreatureSpawner.tick(level);
+                    // 海盗等海面 NPC：海洋维度内（不依赖搜索区/对局）按固定间隔刷新
+                    net.exmo.sixty_seconds.state.SixtySecondsState.Data od =
+                            net.exmo.sixty_seconds.state.SixtySecondsState.get(level);
+                    net.exmo.sixty_seconds.logic.SixtySecondsNpcSpawner.spawnPirates(level, od, level.isNight());
+                }
             }
             for (ServerTickEvents.EndWorldTick listener : ServerTickEvents.END_WORLD_TICK.invokers()) {
                 listener.onEndTick(level);
@@ -225,7 +229,19 @@ public final class NeoForgeEvents {
      * 表现为天数为 0、状态栏与 HUD 不显示、背包只剩 2 格等随机症状。</p>
      */
     @SubscribeEvent
+    public static void onServerStopping(ServerStoppingEvent event) {
+        // 服务器即将关闭：立即保存当前对局进度，避免退出存档后进度丢失
+        for (ServerLevel level : event.getServer().getAllLevels()) {
+            if (SixtySecondsMod.RUNNING && SixtySecondsMod.isActive(level)) {
+                net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.save(level);
+            }
+        }
+    }
+
+    @SubscribeEvent
     public static void onServerStopped(ServerStoppedEvent event) {
+        // 先重置 RUNNING 标志，否则重进存档时 onPlayerJoin 检查 !RUNNING 为 false，不会触发 resume
+        SixtySecondsMod.RUNNING = false;
         net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.resetRuntimeState();
     }
 

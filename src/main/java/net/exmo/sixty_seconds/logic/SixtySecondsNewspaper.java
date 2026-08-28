@@ -172,11 +172,19 @@ public final class SixtySecondsNewspaper {
                     for (int i = 0; i < mb.getContainerSize(); i++) {
                         ItemStack stack = mb.getItem(i);
                         if (stack.is(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_DRAFT_PAPER)) {
-                            CustomData customData = stack.get(DataComponents.CUSTOM_DATA);
-                            if (customData != null) {
-                                String text = customData.copyTag().getString("DraftText");
-                                if (!text.isEmpty()) {
-                                    st.drafts.computeIfAbsent(teamId, k -> new ArrayList<>()).add(text);
+                            net.exmo.sixty_seconds.content.item.component.SixtySecWritableBookContent content =
+                                    stack.get(net.exmo.sixty_seconds.index.SixtySecDataComponentTypes.WRITABLE_BOOK_CONTENT);
+                            if (content != null && !content.pages().isEmpty()) {
+                                StringBuilder sb = new StringBuilder();
+                                for (var page : content.pages()) {
+                                    String text = page.raw();
+                                    if (text != null && !text.isEmpty()) {
+                                        sb.append(text).append("\n");
+                                    }
+                                }
+                                String draftText = sb.toString().trim();
+                                if (!draftText.isEmpty()) {
+                                    st.drafts.computeIfAbsent(teamId, k -> new ArrayList<>()).add(draftText);
                                 }
                             }
                             mb.setItem(i, ItemStack.EMPTY);

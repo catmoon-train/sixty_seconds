@@ -72,7 +72,18 @@ public record SixtySecondsSeaChartPositionsS2CPacket(boolean hasShelter, int she
         ServerLevel level = player.serverLevel();
         int teamId = SixtySecondsStatsComponent.KEY.get(player).teamId;
         SixtySecondsState.TeamData team = teamId < 0 ? null : SixtySecondsState.get(level).teams.get(teamId);
-        BlockPos shelter = team == null ? null : team.shelterSpawn;
+        // 优先使用房车实体的实时位置，使海图显示的是房车实际所在而非静态出生点
+        BlockPos shelter = null;
+        if (team != null) {
+            net.exmo.sixty_seconds.entity.SixtySecondsRvEntity rv =
+                    net.exmo.sixty_seconds.logic.SixtySecondsRvSystem.getTeamRv(level, team);
+            if (rv != null && !rv.isRemoved()) {
+                shelter = rv.blockPosition();
+            }
+            if (shelter == null) {
+                shelter = team.rvLastSafePos != null ? team.rvLastSafePos : team.shelterSpawn;
+            }
+        }
         List<Mate> mates = new ArrayList<>();
         if (team != null) {
             for (UUID uuid : team.members) {

@@ -99,7 +99,7 @@ public class OceanSharkEntity extends OceanCreatureEntity {
         this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, ServerPlayer.class,
-                10, true, false, p -> isValidOceanPrey((ServerPlayer) p)));
+                10, true, true, p -> isValidOceanPrey((ServerPlayer) p)));
     }
 
     /** 生成时按变体装配（不经过 SynchedEntityData，给自然刷新/指令直接用）。 */
@@ -146,7 +146,7 @@ public class OceanSharkEntity extends OceanCreatureEntity {
             return false;
         }
         player.invulnerableTime = 10;
-        playSound(SoundEvents.POLAR_BEAR_WARNING, 0.4F, 0.5F);
+        playSound(SoundEvents.COD_HURT, 0.4F, 0.5F);
         int injury = getVariant().injury;
         // 大白鲨/巨齿鲨额外流血
         if (getVariant() == Variant.GREAT_WHITE || getVariant() == Variant.MEGALODON) {
@@ -171,7 +171,7 @@ public class OceanSharkEntity extends OceanCreatureEntity {
                 chargeDir = target != null ? target.position().subtract(position()).normalize() : getLookAngle();
                 setDeltaMovement(chargeDir.x * 1.8, chargeDir.y * 0.3, chargeDir.z * 1.8);
                 hurtMarked = true;
-                playSound(SoundEvents.POLAR_BEAR_WARNING, 0.6F, 1.2F);
+                playSound(SoundEvents.SALMON_HURT, 0.6F, 1.2F);
                 serverLevel.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP,
                         getX(), getY() + 0.5, getZ(), 10, 0.8, 0.4, 0.8, 0.05);
             }
@@ -215,5 +215,17 @@ public class OceanSharkEntity extends OceanCreatureEntity {
             spawnAtLocation(new net.minecraft.world.item.ItemStack(
                     net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_RAW_SHARK_STEAK, 2));
         }
+    }
+
+    /** 受击音效使用原版鱼类音效，按变体区分 */
+    @Override
+    protected net.minecraft.sounds.SoundEvent getHurtSound(Level level, net.minecraft.world.damagesource.DamageSource source) {
+        return switch (getVariant()) {
+            case REEF_SHARK -> SoundEvents.COD_HURT;
+            case TIGER_SHARK -> SoundEvents.SALMON_HURT;
+            case HAMMERHEAD -> SoundEvents.TROPICAL_FISH_HURT;
+            case GREAT_WHITE -> SoundEvents.PUFFERFISH_HURT;
+            case MEGALODON -> SoundEvents.PUFFERFISH_HURT;
+        };
     }
 }
