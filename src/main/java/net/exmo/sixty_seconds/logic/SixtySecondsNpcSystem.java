@@ -88,6 +88,11 @@ public final class SixtySecondsNpcSystem {
         if (now % SixtySecondsBalance.PIRATE_CHECK_INTERVAL == 0) {
             SixtySecondsNpcSpawner.spawnPirates(level, data, SixtySecondsDayCycle.isNight(data, now));
         }
+        // 配置刷新点补刷：NPC 现为「远离玩家即消失」，配置点只开局具现一次的话，
+        // 玩家离开后那些商人/军人就再也不回来了。这里周期性地把「玩家已走近且空着」的点补回来。
+        if (now % SixtySecondsBalance.NPC_POPULATE_INTERVAL == 0) {
+            SixtySecondsNpcSpawner.populateConfigured(level, data);
+        }
         // 海洋生物（鲨鱼/海怪）：每 OCEAN_CHECK_INTERVAL 对水上玩家做刷新判定
         if (now % OceanCreatureSpawner.CHECK_INTERVAL == 0) {
             OceanCreatureSpawner.tick(level);

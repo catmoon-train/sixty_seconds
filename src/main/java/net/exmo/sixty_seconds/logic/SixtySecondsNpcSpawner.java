@@ -42,10 +42,28 @@ public final class SixtySecondsNpcSpawner {
     private SixtySecondsNpcSpawner() {
     }
 
-    /** 普通生成入口：在 pos 造一只 NPC 并装配变体/朝向/驻守/归属队。 */
+    /** 普通生成入口：在 pos 造一只 NPC 并装配变体/朝向/驻守/归属队；受世界数量上限约束。 */
     public static SixtySecondsNpcEntity spawnAt(ServerLevel level, BlockPos pos,
             SixtySecondsNpcEntity.Variant variant, float yaw, String profile, int garrisonRadius,
             int ownerTeamId) {
+        return spawnAt(level, pos, variant, yaw, profile, garrisonRadius, ownerTeamId, false);
+    }
+
+    /**
+     * 生成入口（可绕过世界数量上限）。
+     *
+     * @param ignoreCap 是否无视 {@link SixtySecondsBalance#NPC_WORLD_CAP}。
+     *        仅两类调用方置 true：<b>搭图预览</b>（管理员手动摆放的立牌，不该被上限挡住）与
+     *        <b>夜袭强盗</b>（脚本化事件，数量由事件本身决定；被上限截断会让夜袭空场，
+     *        而它们清晨就由 DefenseSystem 统一消散，不会长期堆积）。
+     */
+    public static SixtySecondsNpcEntity spawnAt(ServerLevel level, BlockPos pos,
+            SixtySecondsNpcEntity.Variant variant, float yaw, String profile, int garrisonRadius,
+            int ownerTeamId, boolean ignoreCap) {
+        // 世界 NPC 总数硬上限：所有常规刷新路径共用这一道闸门
+        if (!ignoreCap && countNpcs(level) >= SixtySecondsBalance.NPC_WORLD_CAP) {
+            return null;
+        }
         SixtySecondsNpcEntity npc = ModEntities.SIXTY_SECONDS_NPC.create(level);
         if (npc == null) {
             return null;
@@ -78,7 +96,8 @@ public final class SixtySecondsNpcSpawner {
      */
     public static SixtySecondsNpcEntity spawnPreview(ServerLevel level, BlockPos pos,
             SixtySecondsNpcEntity.Variant variant, float yaw, String profile, int garrisonRadius) {
-        SixtySecondsNpcEntity npc = spawnAt(level, pos, variant, yaw, profile, garrisonRadius, -1);
+        // 管理员手动摆放：绕过世界上限
+        SixtySecondsNpcEntity npc = spawnAt(level, pos, variant, yaw, profile, garrisonRadius, -1, true);
         if (npc != null) {
             npc.setEditorPreview(true);
         }
@@ -127,9 +146,11 @@ public final class SixtySecondsNpcSpawner {
     // ── 路径 1：按配置的手动放置点生成（开局第一天） ─────────────────────────
 
     /**
-     * 按 {@code config.npcSpawns} 生成：点落在住宅/避难所模板盒内 → <b>每队各克隆一份</b>
-     * （模板相对偏移 + 队伍网格偏移，与 {@code SixtySecondsArena.spawnFor} 的换算一致）；
-     * 否则（搜索区/野外）→ <b>只生成一份</b>（全队共用，不克隆）。
+     * 开局第一天：按 {@code config.npcSpawns} 落位手动放置的 NPC。
+     *
+     * <p>先清掉搭图期留下的预览立牌（下面会按同一份 config 重新具现为正式 NPC，不清就是两份），
+     * 再走 {@link #populateConfigured} 的同一套具现逻辑。<b>只调用一次</b>；
+     * 此后的补刷一律由 {@link #populateConfigured} 驱动。</p>
      */
     public static void spawnConfigured(ServerLevel level, SixtySecondsState.Data data) {
         // 搭图期留下的预览立牌先清掉：下面会按同一份 config 重新生成正式 NPC，不清就是两份
@@ -137,6 +158,22 @@ public final class SixtySecondsNpcSpawner {
         if (cleared > 0) {
             net.exmo.sixty_seconds.SixtySeconds.LOGGER.info("[60s] Cleared {} build-preview NPCs, regenerating per config.", cleared);
         }
+        populateConfigured(level, data);
+    }
+
+    /**
+     * 配置刷新点的<b>动态具现</b>：只把「玩家已经走近」的点补上 NPC。
+     *
+     * <p>点落在住宅/避难所模板盒内 → <b>每队各克隆一份</b>（模板相对偏移 + 队伍网格偏移，
+     * 与 {@code SixtySecondsArena.spawnFor} 的换算一致）；否则（搜索区/野外）→
+     * <b>只生成一份</b>（全队共用，不克隆）。</p>
+     *
+     * <p>NPC 现已改为「远离玩家即消失」，配置点若只在第一天具现一次，
+     * 那些 NPC 会在玩家离开后消失且<b>再也不回来</b>，商栈就成了永久空摊位。
+     * 故改为周期性（{@link SixtySecondsBalance#NPC_POPULATE_INTERVAL}）调用本方法：
+     * 点上有活体 NPC 就跳过，没有且玩家在附近就补一只。</p>
+     */
+    public static void populateConfigured(ServerLevel level, SixtySecondsState.Data data) {
         SixtySecondsConfig config = SixtySecondsConfigStore.current(level).orElse(null);
         if (config == null || config.npcSpawns == null || config.npcSpawns.isEmpty()) {
             return;
@@ -149,18 +186,35 @@ public final class SixtySecondsNpcSpawner {
             SixtySecondsNpcEntity.Variant variant = SixtySecondsNpcEntity.Variant.byId(spawn.variant);
             if (!isInPerTeamTemplate(config, template)) {
                 // 野外/搜索区：单份，全队共用（搜索区不克隆）
-                spawnAt(level, template, variant, spawn.yaw, spawn.profile, spawn.garrisonRadius, -1);
+                populateAt(level, template, spawn, variant, -1);
                 continue;
             }
             // 住宅/避难所：每队一份。点已是模板<b>绝对</b>坐标且落在模板盒内，
             // 故换算与 SixtySecondsArena.spawnFor 一致——直接叠加该队的网格偏移即可。
             int index = 0;
             for (SixtySecondsState.TeamData team : data.teams.values()) {
-                BlockPos at = template.offset(config.teamOffset(index));
-                spawnAt(level, at, variant, spawn.yaw, spawn.profile, spawn.garrisonRadius, team.teamId);
+                populateAt(level, template.offset(config.teamOffset(index)), spawn, variant, team.teamId);
                 index++;
             }
         }
+    }
+
+    /** 单个具现点：玩家在附近 + 未被占位 + 未达世界上限，才补刷一只。 */
+    private static void populateAt(ServerLevel level, BlockPos at, SixtySecondsConfig.NpcSpawn spawn,
+            SixtySecondsNpcEntity.Variant variant, int ownerTeamId) {
+        // 只围绕玩家刷新：附近没人就不具现
+        if (!hasPlayerWithin(level, at, SixtySecondsBalance.NPC_SPAWN_PLAYER_RADIUS)) {
+            return;
+        }
+        // 该点已有活体 NPC（上一只还没被回收）→ 不重复刷
+        AABB around = new AABB(at).inflate(SixtySecondsBalance.NPC_POINT_OCCUPIED_RADIUS);
+        for (SixtySecondsNpcEntity npc : level.getEntitiesOfClass(SixtySecondsNpcEntity.class, around)) {
+            if (npc.isAlive() && !npc.isEditorPreview()) {
+                return;
+            }
+        }
+        // spawnAt 内部还会再校验一次世界数量上限
+        spawnAt(level, at, variant, spawn.yaw, spawn.profile, spawn.garrisonRadius, ownerTeamId);
     }
 
     /** 该模板点是否落在「每队克隆」的模板盒（住宅/避难所）内——是则要按队各生成一份。 */
@@ -194,18 +248,76 @@ public final class SixtySecondsNpcSpawner {
     }
 
     /**
-     * 检查刷怪落点 {radius} 格内是否有存活玩家。
-     * 用于避免 NPC/强盗直接刷在玩家脸上。
+     * 指定坐标 {@code radius} 格内是否存在「有效玩家」。
+     *
+     * <p>有效玩家 = 非旁观、非创造、未被淘汰（{@code GameUtils.isPlayerEliminated}）：
+     * 旁观者与已出局者不该凭空撑起一片刷新区。
+     * 本方法是<b>刷新与回收共用的唯一判据</b>——生成要求它为 true，存活同样要求它为 true；
+     * 二者靠半径差（{@link SixtySecondsBalance#NPC_SPAWN_PLAYER_RADIUS} 与
+     * {@link SixtySecondsBalance#NPC_DESPAWN_PLAYER_RADIUS}）形成滞回带，
+     * 避免玩家在边界上徘徊时把 NPC 反复刷出来又刷掉。</p>
      */
-    private static boolean hasPlayerWithin(ServerLevel level, BlockPos spot, double radius) {
+    public static boolean hasPlayerWithin(ServerLevel level, double x, double y, double z, double radius) {
         double radiusSq = radius * radius;
         for (ServerPlayer player : level.players()) {
-            if (player.isSpectator() || player.isCreative()) continue;
-            if (player.distanceToSqr(spot.getX() + 0.5, spot.getY() + 0.5, spot.getZ() + 0.5) <= radiusSq) {
+            if (player.isSpectator() || player.isCreative()
+                    || net.exmo.sixty_seconds.bridge.GameUtils.isPlayerEliminated(player)) {
+                continue;
+            }
+            if (player.distanceToSqr(x, y, z) <= radiusSq) {
                 return true;
             }
         }
         return false;
+    }
+
+    /** {@link #hasPlayerWithin(ServerLevel, double, double, double, double)} 的方块坐标版。 */
+    public static boolean hasPlayerWithin(ServerLevel level, BlockPos spot, double radius) {
+        return hasPlayerWithin(level, spot.getX() + 0.5, spot.getY() + 0.5, spot.getZ() + 0.5, radius);
+    }
+
+    /**
+     * 世界内现存 NPC 总数（所有变体，含夜袭强盗；不含搭图预览立牌）。
+     *
+     * <p>遍历 {@code getAllEntities()} 是 O(实体总数)，但<b>只在刷新时刻调用</b>
+     * （每日刷新 / 门口刷新 / 海盗遭遇 / 配置点补刷，且全部经由 {@link #spawnAt} 这一统一入口），
+     * 不在每 tick 的热路径上。</p>
+     */
+    public static int countNpcs(ServerLevel level) {
+        int count = 0;
+        for (net.minecraft.world.entity.Entity entity : level.getAllEntities()) {
+            if (entity instanceof SixtySecondsNpcEntity npc && npc.isAlive() && !npc.isEditorPreview()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 该搜刮区（外扩 {@link SixtySecondsBalance#NPC_SPAWN_PLAYER_RADIUS}）内是否有有效玩家。
+     * 没人踏足的区域整块跳过——这是「只围绕玩家刷新」的主闸门。
+     */
+    private static boolean isPlayerNearZone(ServerLevel level, AABB zone) {
+        AABB reach = zone.inflate(SixtySecondsBalance.NPC_SPAWN_PLAYER_RADIUS);
+        for (ServerPlayer player : level.players()) {
+            if (player.isSpectator() || player.isCreative()
+                    || net.exmo.sixty_seconds.bridge.GameUtils.isPlayerEliminated(player)) {
+                continue;
+            }
+            if (reach.contains(player.getX(), player.getY(), player.getZ())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 落点是否合格：<b>必须有玩家在附近</b>（{@link SixtySecondsBalance#NPC_SPAWN_PLAYER_RADIUS}，
+     * 只围绕玩家刷新），同时又<b>不能贴着玩家</b>（24 格，避免强盗直接刷在脸上）。
+     */
+    private static boolean isSpawnSpotSuitable(ServerLevel level, BlockPos spot) {
+        return hasPlayerWithin(level, spot, SixtySecondsBalance.NPC_SPAWN_PLAYER_RADIUS)
+                && !hasPlayerWithin(level, spot, 24);
     }
 
     /** 白天刷商人/旅者，夜晚刷强盗。每个搜刮区（多队共用的去重后）各刷若干。每晚每区最多 2 只强盗。 */
@@ -213,6 +325,10 @@ public final class SixtySecondsNpcSpawner {
         RandomSource random = level.getRandom();
         int base = SixtySecondsBalance.NPC_DAILY_PER_ZONE_BASE + data.dayNumber / 2;
         for (AABB zone : searchZones(data)) {
+            // 只围绕玩家刷新：没玩家踏足的搜刮区整块跳过，不在世界各处凭空堆 NPC
+            if (!isPlayerNearZone(level, zone)) {
+                continue;
+            }
             int existing = level.getEntitiesOfClass(SixtySecondsNpcEntity.class, zone).size();
             int want = Math.min(base, SixtySecondsBalance.NPC_ZONE_CAP - existing);
             // 夜晚刷强盗：每区最多 2 只
@@ -222,14 +338,11 @@ public final class SixtySecondsNpcSpawner {
             int banditSpawned = 0;
             for (int i = 0; i < want; i++) {
                 BlockPos spot = findGroundSpot(level, zone, random);
-                if (spot == null) {
-                    continue;
-                }
-                // 检查落点附近（24 格）是否有玩家——避免强盗刷在玩家脸上
-                if (hasPlayerWithin(level, spot, 24)) {
+                // 落点要「有玩家在附近」且「不贴脸」，否则换一个点重试一次
+                if (spot == null || !isSpawnSpotSuitable(level, spot)) {
                     // 重试一次：换个位置
                     spot = findGroundSpot(level, zone, random);
-                    if (spot == null || hasPlayerWithin(level, spot, 24)) {
+                    if (spot == null || !isSpawnSpotSuitable(level, spot)) {
                         continue;
                     }
                 }
@@ -313,6 +426,14 @@ public final class SixtySecondsNpcSpawner {
                 // findSafeSpot 是现成的 public 工具（探索区落点找安全位）
                 BlockPos spot = net.exmo.sixty_seconds.arena.SixtySecondsSearchZones
                         .findSafeSpot(level, link.spawn());
+                // findSafeSpot 找不到安全位时会返回 null，原代码没判空会 NPE
+                if (spot == null) {
+                    continue;
+                }
+                // 只围绕玩家刷新：没人走到门外就不刷
+                if (!hasPlayerWithin(level, spot, SixtySecondsBalance.NPC_SPAWN_PLAYER_RADIUS)) {
+                    continue;
+                }
                 SixtySecondsNpcEntity.Variant variant = night
                         ? SixtySecondsNpcEntity.Variant.BANDIT
                         : (random.nextFloat() < SixtySecondsBalance.NPC_DAY_TRAVELER_RATIO
@@ -343,6 +464,7 @@ public final class SixtySecondsNpcSpawner {
         }
         // 刷 1~2 个 NPC（夜晚强盗限制最多 2 只）
         int count = 1 + random.nextInt(2);
+        int spawnedTotal = 0;
         for (SixtySecondsState.TeamData team : data.teams.values()) {
             SixtySecondsRvEntity rv = SixtySecondsRvSystem.getTeamRv(level, team);
             if (rv == null) {
@@ -359,7 +481,12 @@ public final class SixtySecondsNpcSpawner {
             if (spot == null) {
                 continue;
             }
+            // 只围绕玩家刷新：没人靠近房车就不刷
+            if (!hasPlayerWithin(level, spot, SixtySecondsBalance.NPC_SPAWN_PLAYER_RADIUS)) {
+                continue;
+            }
             int banditSpawned = 0;
+            int spawnedHere = 0;
             for (int i = 0; i < count; i++) {
                 SixtySecondsNpcEntity.Variant variant = night
                         ? SixtySecondsNpcEntity.Variant.BANDIT
@@ -373,13 +500,19 @@ public final class SixtySecondsNpcSpawner {
                         random.nextInt(5) - 2);
                 BlockPos safeScatter = net.exmo.sixty_seconds.arena.SixtySecondsSearchZones
                         .findSafeSpot(level, scatter);
-                if (safeScatter != null) {
-                    spawnAt(level, safeScatter, variant, random.nextFloat() * 360.0F, "default", 6, -1);
+                // 散开后的落点仍要确认在玩家附近（可能飘出了范围）
+                if (safeScatter == null
+                        || !hasPlayerWithin(level, safeScatter, SixtySecondsBalance.NPC_SPAWN_PLAYER_RADIUS)) {
+                    continue;
+                }
+                if (spawnAt(level, safeScatter, variant, random.nextFloat() * 360.0F, "default", 6, -1) != null) {
+                    spawnedHere++;
                     if (night) {
                         banditSpawned++;
                     }
                 }
             }
+            spawnedTotal += spawnedHere;
             // 强盗提示：通知本队在线成员
             if (banditSpawned > 0 && team.members != null) {
                 Component banditMsg = Component.translatable(
@@ -394,8 +527,11 @@ public final class SixtySecondsNpcSpawner {
                 }
             }
         }
-        // 标记今天已刷
-        data.lastNpcRvSpawnDay = data.dayNumber;
+        // 只有真刷出来了才记「今天已刷」：早上玩家不在房车附近的话，
+        // 晚上那次判定仍可重试，否则整天都没机会刷。
+        if (spawnedTotal > 0) {
+            data.lastNpcRvSpawnDay = data.dayNumber;
+        }
     }
 
     // ── 路径 6：海盗（海上乘船随机遭遇）────────────────────────────────────
@@ -533,8 +669,9 @@ public final class SixtySecondsNpcSpawner {
             spots.add(spot);
         }
         for (BlockPos spot : spots) {
+            // 夜袭是脚本化事件：绕过世界上限，否则上限一满夜袭就空场
             SixtySecondsNpcEntity npc = spawnAt(level, spot, SixtySecondsNpcEntity.Variant.BANDIT,
-                    random.nextFloat() * 360.0F, "default", 8, team.teamId);
+                    random.nextFloat() * 360.0F, "default", 8, team.teamId, true);
             if (npc == null) {
                 continue;
             }

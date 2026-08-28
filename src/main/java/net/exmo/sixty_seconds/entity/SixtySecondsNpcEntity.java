@@ -3,6 +3,7 @@ package net.exmo.sixty_seconds.entity;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
+import net.exmo.sixty_seconds.logic.SixtySecondsNpcSpawner;
 import net.exmo.sixty_seconds.logic.SixtySecondsWeapons;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -119,6 +120,16 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
     /** 战场 NPC（夜袭强盗）：无人也不自散。 */
     private boolean battleMob = false;
     /**
+     * 免回收标记：<b>不受「远离玩家即消失」与清理逻辑影响</b>。
+     *
+     * <p>只授予少数有主的存在——目前是<b>被玩家花代币招募的军人</b>
+     * （{@link #startHire} 置位、{@link #endHire} 清除）：雇佣是有期限的契约关系，
+     * 不能因为雇主走远两步就让雇佣兵凭空消失，否则玩家白花代币。
+     * 与 {@link #battleMob} 的区别：那是「事件怪」（夜袭强盗，无人也要冲门），
+     * 这是「有主的随从」，二者独立。</p>
+     */
+    private boolean keepAlive = false;
+    /**
      * 搭图预览 NPC（NPC 放置器 / {@code /60s npc} 指令放下的样板）：<b>模式外也不自毁</b>。
      * <p>
      * 普通 NPC 在 {@link #tick} 里发现模式未激活就 discard——而放置器是<b>开局前</b>用的搭图工具，
@@ -128,8 +139,6 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
      * {@code SixtySecondsNpcSpawner.spawnConfigured} 清掉并按配置重生成正式 NPC。
      */
     private boolean editorPreview = false;
-    /** 身边无人累计 tick（非战场 NPC 2 分钟自散）。 */
-    private int lonelyTicks = 0;
     /** 商人被打后的逃跑倒计时（tick），归零即 discard。0=未触发。 */
     private int fleeTicks = 0;
 
@@ -490,16 +499,18 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
         if (getVariant() == Variant.PIRATE) {
             tickPirateBoat(serverLevel);
         }
-        // 非战场 NPC：身边 64 格无人累计 2 分钟自散（防搜刮区 NPC 越攒越多）
-        if (!battleMob && tickCount % 20 == 0) {
-            lonelyTicks = serverLevel.getNearestPlayer(this, 64) == null ? lonelyTicks + 20 : 0;
-            // 海盗自散更快：漂在海上的空船纯粹是垃圾
-            int limit = getVariant() == Variant.PIRATE
-                    ? SixtySecondsBalance.PIRATE_LONELY_DESPAWN_TICKS
-                    : SixtySecondsBalance.NPC_LONELY_DESPAWN_TICKS;
-            if (lonelyTicks >= limit) {
-                discard();
-            }
+        // 远离玩家即回收：身边 NPC_DESPAWN_PLAYER_RADIUS 格内没有玩家就<b>直接消失</b>，
+        // 不再等计时器——只有玩家附近才该有 NPC，否则搜刮区的 NPC 会一天天越攒越多。
+        // 每 20 tick 检查一次（1 秒）；刷新不再由距离驱动，因此不存在边界抖动。
+        //
+        // 免回收的三类（缺一不可）：
+        //   · battleMob  —— 夜袭强盗，玩家不在场也要冲门，否则夜袭形同虚设；
+        //   · keepAlive  —— 被玩家招募的军人，雇佣期内不能凭空消失；
+        //   · editorPreview —— 搭图立牌，已在上面提前 return。
+        if (!battleMob && !keepAlive && tickCount > 0 && tickCount % 20 == 0
+                && !SixtySecondsNpcSpawner.hasPlayerWithin(serverLevel, getX(), getY(), getZ(),
+                        SixtySecondsBalance.NPC_DESPAWN_PLAYER_RADIUS)) {
+            discard();
         }
     }
 
@@ -562,6 +573,8 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
         hiredBy = employer.getUUID();
         hireEndTick = employer.serverLevel().getGameTime() + durationTicks;
         setHired(true);
+        // 招募即免回收：这是玩家花代币买下的随从，不能因为雇主走远就凭空消失
+        keepAlive = true;
         // 雇佣期间解除驻守，否则 MoveTowardsRestrictionGoal 会把它拽回巡逻点
         clearRestriction();
     }
@@ -576,6 +589,8 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
         hireEndTick = 0L;
         setHired(false);
         setTarget(null);
+        // 契约结束，免回收标记一并撤销——它重新变回普通 NPC，照样会被远离玩家回收
+        keepAlive = false;
         // 回到驻守点
         if (garrison != null) {
             restrictTo(garrison, garrisonRadius);
@@ -631,6 +646,19 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
 
     public void setBattleMob(boolean battleMob) {
         this.battleMob = battleMob;
+    }
+
+    /**
+     * 免回收标记（被玩家招募的随从）：不受「远离玩家即消失」约束。
+     * 由 {@link #startHire} 置位、{@link #endHire} 撤销；读档从 NBT 恢复。
+     */
+    public boolean isKeepAlive() {
+        return keepAlive;
+    }
+
+    /** 手动置免回收标记（供特殊 NPC 使用；普通刷新逻辑不应调用）。 */
+    public void setKeepAlive(boolean keepAlive) {
+        this.keepAlive = keepAlive;
     }
 
     public boolean isEditorPreview() {
@@ -703,6 +731,7 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
         tag.putInt("SreNpcVariant", this.entityData.get(VARIANT));
         tag.putByte("SreNpcFlags", this.entityData.get(FLAGS));
         tag.putBoolean("SreNpcBattle", battleMob);
+        tag.putBoolean("SreNpcKeepAlive", keepAlive);
         tag.putBoolean("SreNpcEditor", editorPreview);
         tag.putInt("SreNpcTeam", ownerTeamId);
         tag.putString("SreNpcShopProfile", shopProfile);
@@ -733,6 +762,7 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
         this.entityData.set(VARIANT, tag.getInt("SreNpcVariant"));
         this.entityData.set(FLAGS, tag.getByte("SreNpcFlags"));
         battleMob = tag.getBoolean("SreNpcBattle");
+        keepAlive = tag.getBoolean("SreNpcKeepAlive");
         // 直接写字段：不走 setEditorPreview，避免读档时覆写存档里的 NoAi
         editorPreview = tag.getBoolean("SreNpcEditor");
         ownerTeamId = tag.contains("SreNpcTeam") ? tag.getInt("SreNpcTeam") : -1;

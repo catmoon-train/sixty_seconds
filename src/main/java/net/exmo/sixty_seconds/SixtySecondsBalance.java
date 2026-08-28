@@ -538,16 +538,31 @@ public final class SixtySecondsBalance {
     public static final double PIRATE_SIGHT = 40.0;
     /** 逼近到这么近就弃船跳水近战（船上够不着人）。 */
     public static final double PIRATE_DISMOUNT_DIST = 4.0;
-    /** 海盗身边无人多久自散（连船一起清；比普通 NPC 短——海上漂着的空船是纯垃圾）。 */
-    public static final int PIRATE_LONELY_DESPAWN_TICKS = 20 * 60;
     /** 强盗对家门/路障每秒伤害（夜袭时由 DefenseSystem 结算；介于拖行者 2 与重锤兽 5 之间）。 */
     public static final int NPC_BANDIT_DOOR_DPS = 3;
     /** NPC 单次受击封顶：防枪械「即死」伤害（狙击 100）一枪清场，强制多打几发。 */
     public static final float NPC_MAX_SINGLE_HIT = 40.0F;
     /** 记仇传染半径（军人抱团 / 旅者互相通气）。 */
     public static final double NPC_ALERT_RADIUS = 16.0;
-    /** 非战场 NPC 身边 64 格无人多久自散（2 分钟，比自研怪的 1 分钟宽，NPC 更该等玩家来）。 */
-    public static final int NPC_LONELY_DESPAWN_TICKS = 20 * 120;
+
+    // ── 动态人口控制：只围绕玩家刷新，远离玩家即回收 ───────────────────────────
+    /** 世界内 NPC 总数硬上限（所有变体合计）。达到上限后一切常规刷新都会被拒绝。 */
+    public static final int NPC_WORLD_CAP = 24;
+    /**
+     * 生成门槛：刷新点本距离内<b>必须有玩家</b>才刷。
+     * 这条把「在全世界铺满 NPC」改成「只在玩家周围生成」。
+     */
+    public static final double NPC_SPAWN_PLAYER_RADIUS = 56.0;
+    /**
+     * 存活门槛：本距离内<b>没有玩家</b>即立即消失。
+     * 必须明显大于 {@link #NPC_SPAWN_PLAYER_RADIUS}，留一条滞回带，
+     * 否则玩家在边界上徘徊会把 NPC 生成后立刻又刷掉。
+     */
+    public static final double NPC_DESPAWN_PLAYER_RADIUS = 80.0;
+    /** 配置刷新点的补刷检查间隔（tick）：点空了且玩家走近时把 NPC 补回来。 */
+    public static final int NPC_POPULATE_INTERVAL = 20 * 10;
+    /** 判定「该刷新点已被 NPC 占位」的半径（格）：已有活体 NPC 就不重复刷。 */
+    public static final double NPC_POINT_OCCUPIED_RADIUS = 6.0;
     /** 商人被打后多久消失（不掉货）。 */
     public static final int NPC_MERCHANT_FLEE_TICKS = 20 * 5;
 
