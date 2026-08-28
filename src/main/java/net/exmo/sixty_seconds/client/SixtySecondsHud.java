@@ -2,7 +2,6 @@ package net.exmo.sixty_seconds.client;
 
 import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.client.FakeGuiGraphics;
-import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.content.item.SixtySecondsClockItem;
 import net.minecraft.client.Minecraft;
@@ -64,26 +63,70 @@ public final class SixtySecondsHud {
         // 不再依赖 CommonHudRenderCallback 的触发点，避免重复绘制。
     }
 
+    /** 游戏未开始（开局准备阶段）时冻结的显示快照，避免数值在无游戏推进时跳动。 */
+    private static SixtySecondsStatsComponent frozenSnapshot;
+
+    private static void copyStats(SixtySecondsStatsComponent dst, SixtySecondsStatsComponent src) {
+        dst.dayNumber = src.dayNumber;
+        dst.totalDays = src.totalDays;
+        dst.phaseEndTick = src.phaseEndTick;
+        dst.health = src.health;
+        dst.healthMax = src.healthMax;
+        dst.hunger = src.hunger;
+        dst.hungerMax = src.hungerMax;
+        dst.thirst = src.thirst;
+        dst.thirstMax = src.thirstMax;
+        dst.sanity = src.sanity;
+        dst.sanityMax = src.sanityMax;
+        dst.pollution = src.pollution;
+        dst.pollutionMax = src.pollutionMax;
+        dst.teamId = src.teamId;
+        dst.familyPosition = src.familyPosition;
+        dst.sick = src.sick;
+        dst.monster = src.monster;
+        dst.downed = src.downed;
+        dst.reviveEndTick = src.reviveEndTick;
+        dst.exploreCooldownEndTick = src.exploreCooldownEndTick;
+    }
+
     static void render(FakeGuiGraphics graphics) {
         Minecraft client = Minecraft.getInstance();
-        if (client.player == null || client.level == null || SixtySecBridgeClient.gameComponent == null
-                || !SixtySecBridgeClient.gameComponent.isRunning()
-                || SixtySecondsMod.MODE == null
-                || SixtySecBridgeClient.gameComponent.getGameMode() != SixtySecondsMod.MODE) {
+        if (client.player == null || client.level == null || !SixtySecBridgeClient.shouldShowHud()) {
             SixtySecondsStateAlerts.reset();
+            frozenSnapshot = null;
             return;
         }
         LocalPlayer player = client.player;
-        SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
+        SixtySecondsStatsComponent live = SixtySecondsStatsComponent.KEY.get(player);
+        boolean running = SixtySecBridgeClient.gameComponent.isRunning();
 
-        renderPrepBanner(graphics, client, stats);
-
-        if (stats.teamId < 0) {
+        // 进行中：实时刷新显示；未开始（开局准备）：使用冻结快照，数值不变化
+        SixtySecondsStatsComponent stats;
+        if (running) {
+            if (frozenSnapshot == null) {
+                frozenSnapshot = new SixtySecondsStatsComponent(player);
+            }
+            copyStats(frozenSnapshot, live);
+            stats = live;
+        } else {
+            if (frozenSnapshot == null) {
+                frozenSnapshot = new SixtySecondsStatsComponent(player);
+                copyStats(frozenSnapshot, live);
+            }
+            stats = frozenSnapshot;
             SixtySecondsStateAlerts.reset();
-            return;
         }
 
-        SixtySecondsStateAlerts.tick(graphics, client, player, stats);
+        if (running) {
+            renderPrepBanner(graphics, client, stats);
+
+            // 未分配家庭（旁观/未加入）不画状态栏
+            if (stats.teamId < 0) {
+                SixtySecondsStateAlerts.reset();
+                return;
+            }
+            SixtySecondsStateAlerts.tick(graphics, client, player, stats);
+        }
 
         if (stats.downed) {
             renderDownedOverlay(graphics, client, player, stats);

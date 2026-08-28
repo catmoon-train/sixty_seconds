@@ -128,6 +128,7 @@ public final class GameUtils {
 
     public static void finalizeGame(ServerLevel world) {
         SixtySecGameWorldComponent component = SixtySecGameWorldComponent.KEY.get(world);
+        component.gameMode = null;
         component.setGameStatus(SixtySecGameWorldComponent.GameStatus.INACTIVE);
         SixtySecondsMod.RUNNING = false;
         SixtySecondsMod.BUILDING = false;

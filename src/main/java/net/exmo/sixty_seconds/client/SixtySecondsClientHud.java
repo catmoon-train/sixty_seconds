@@ -34,7 +34,7 @@ public final class SixtySecondsClientHud {
     /** 统一 HUD 绘制：每帧在所有原生 GUI 图层之上绘制本模组全部 HUD（主状态栏 + 各子 HUD）。 */
     @SubscribeEvent
     public static void onRenderGuiPost(RenderGuiEvent.Post event) {
-        if (!isActive()) {
+        if (!SixtySecBridgeClient.shouldShowHud()) {
             return;
         }
         GuiGraphics gui = event.getGuiGraphics();
@@ -52,7 +52,7 @@ public final class SixtySecondsClientHud {
     /** 进行中时隐藏原版生命/饥饿/护甲/氧气/骑乘生命条 */
     @SubscribeEvent
     public static void onRenderGuiLayerPre(RenderGuiLayerEvent.Pre event) {
-        if (!isActive()) {
+        if (!SixtySecBridgeClient.shouldShowHud()) {
             return;
         }
         ResourceLocation id = event.getName();

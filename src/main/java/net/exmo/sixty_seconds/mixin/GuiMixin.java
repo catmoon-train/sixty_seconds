@@ -2,7 +2,6 @@ package net.exmo.sixty_seconds.mixin;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
-import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,10 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class GuiMixin {
 
     private static boolean isActive() {
-        return SixtySecondsMod.MODE != null
-                && SixtySecBridgeClient.gameComponent != null
-                && SixtySecBridgeClient.gameComponent.isRunning()
-                && SixtySecBridgeClient.gameComponent.getGameMode() == SixtySecondsMod.MODE;
+        return SixtySecBridgeClient.shouldShowHud();
     }
 
     @Inject(method = "renderHearts(Lnet/minecraft/client/gui/GuiGraphics;)V", at = @At("HEAD"), cancellable = true, require = 0)
