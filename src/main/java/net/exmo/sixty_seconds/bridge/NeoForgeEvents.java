@@ -37,6 +37,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 
 public final class NeoForgeEvents {
     private NeoForgeEvents() {
@@ -214,6 +215,18 @@ public final class NeoForgeEvents {
             net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.onPlayerJoin(player);
             net.exmo.sixty_seconds.weather.WeatherSync.resend(player);
         }
+    }
+
+    /**
+     * 服务器停止（单人游戏里即「退出到主菜单 / 关闭存档」）时清空模组运行时状态。
+     *
+     * <p>本模组的存档相关状态是 static 的，而单人游戏换世界并不会重启 JVM，
+     * 静态字段会原样带到下一个世界。残留的待恢复快照会让新世界的一局被上一世界的存档覆盖，
+     * 表现为天数为 0、状态栏与 HUD 不显示、背包只剩 2 格等随机症状。</p>
+     */
+    @SubscribeEvent
+    public static void onServerStopped(ServerStoppedEvent event) {
+        net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.resetRuntimeState();
     }
 
     @SubscribeEvent

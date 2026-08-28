@@ -62,6 +62,16 @@ public final class SixtySecondsSaveManager {
 
     /** 建图完成回调中等待覆盖的存档快照。 */
     private static volatile SavedGame pendingSnapshot = null;
+    /**
+     * {@link #pendingSnapshot} 所属世界的标识（世界根目录绝对路径）。
+     *
+     * <p>这些状态是 <b>static 的，不会被世界切换重置</b>：单人游戏里「退出到主菜单 → 新建/打开另一个世界」
+     * 仍在同一个 JVM 进程内，静态字段原样保留。若上一世界的快照残留到新世界，
+     * {@link #applyPendingOverlay} 就会把旧存档的进度与玩家组件覆盖到全新的一局上，
+     * 表现为天数为 0、状态栏/HUD 不显示、背包只剩 2 格等随机症状。
+     * 故快照必须绑定世界，取用时校验。</p>
+     */
+    private static volatile String pendingWorldId = null;
     /** 防止同一进程内重复触发恢复。 */
     private static volatile boolean resumeTriggered = false;
     /** 建图时尚未上线的玩家：待其加入时再恢复。 */
@@ -90,6 +100,7 @@ public final class SixtySecondsSaveManager {
         } catch (Exception ignored) {
         }
         pendingSnapshot = null;
+        pendingWorldId = null;
         resumeTriggered = false;
         offlineRestores.clear();
     }
@@ -144,6 +155,9 @@ public final class SixtySecondsSaveManager {
                 return;
             }
             pendingSnapshot = snap;
+            // 快照与世界绑定：后续 takeResumeLayout / applyPendingOverlay / isResuming 都会校验，
+            // 一旦进程内换了世界，这份快照会被自动丢弃而不是污染新局。
+            pendingWorldId = worldIdOf(level);
             // 不限制参与玩家：重载后首位在线的非旁观玩家即可开局（minPlayerCount=1）
             GameUtils.startGame(level, SixtySecondsMod.MODE, snap.minutes);
         } catch (Exception e) {
@@ -151,12 +165,57 @@ public final class SixtySecondsSaveManager {
             e.printStackTrace();
             resumeTriggered = false;
             pendingSnapshot = null;
+            pendingWorldId = null;
         }
     }
 
+    /**
+     * 世界标识：取世界根目录的绝对路径。
+     * 单人游戏里换存档 / 新建世界都会得到不同路径，可据此判断快照是否属于当前世界。
+     */
+    private static String worldIdOf(ServerLevel level) {
+        try {
+            return level.getServer().getWorldPath(LevelResource.ROOT).toAbsolutePath().normalize().toString();
+        } catch (Exception e) {
+            // 兜底：拿不到路径时退化为「维度 + 世界名」，至少能区分主世界与其他维度
+            return level.dimension().location() + "@" + level.getServer().getWorldData().getLevelName();
+        }
+    }
+
+    /**
+     * 取出属于<b>当前世界</b>的待覆盖快照；不属于则丢弃残留并返回 null。
+     *
+     * <p>这是跨世界静态残留的唯一防线：任何消费 {@link #pendingSnapshot} 的入口都必须走这里，
+     * 不能直接读字段。</p>
+     */
+    private static SavedGame pendingFor(ServerLevel level) {
+        SavedGame snap = pendingSnapshot;
+        if (snap == null) {
+            return null;
+        }
+        String current = worldIdOf(level);
+        if (pendingWorldId == null || !pendingWorldId.equals(current)) {
+            System.out.println("[SixtySecondsSaveManager] 丢弃不属于当前世界的待恢复快照"
+                    + "（残留自 " + pendingWorldId + "，当前为 " + current + "），本局按全新开局处理。");
+            pendingSnapshot = null;
+            pendingWorldId = null;
+            return null;
+        }
+        return snap;
+    }
+
     /** 当前是否处于「重载世界后恢复上一局」流程（开局回调据此跳过重新建图等副作用）。 */
-    public static boolean isResuming() {
-        return pendingSnapshot != null;
+    public static boolean isResuming(ServerLevel level) {
+        return pendingFor(level) != null;
+    }
+
+    /** 清空全部运行时状态：进程内换世界 / 关服时调用，杜绝静态残留跨局生效。 */
+    public static void resetRuntimeState() {
+        pendingSnapshot = null;
+        pendingWorldId = null;
+        resumeTriggered = false;
+        offlineRestores.clear();
+        lastAutoSave.clear();
     }
 
     /**
@@ -172,7 +231,7 @@ public final class SixtySecondsSaveManager {
      * @return null 表示当前不在恢复流程、或存档不含布局（旧存档）——调用方应回退到正常开局建图。
      */
     public static Map<Integer, List<UUID>> takeResumeLayout(ServerLevel level, SixtySecondsState.Data data) {
-        SavedGame snap = pendingSnapshot;
+        SavedGame snap = pendingFor(level);
         if (snap == null || !snap.hasLayout || snap.teams == null || snap.teams.isEmpty()) {
             return null;
         }
@@ -199,11 +258,13 @@ public final class SixtySecondsSaveManager {
      * 由 {@code SixtySecondsManager.onBuildComplete} 在建图完成后调用，把存档进度覆盖到新建的本局上。
      */
     public static void applyPendingOverlay(ServerLevel level, SixtySecondsState.Data freshData) {
-        SavedGame snap = pendingSnapshot;
-        pendingSnapshot = null;
+        // 注意：必须先校验世界。直接读字段会把上一世界的残留快照盖到全新的一局上。
+        SavedGame snap = pendingFor(level);
         if (snap == null) {
             return;
         }
+        pendingSnapshot = null;
+        pendingWorldId = null;
         try {
             freshData.dayNumber = snap.dayNumber;
             freshData.phase = snap.phase;
@@ -291,8 +352,12 @@ public final class SixtySecondsSaveManager {
             p.getInventory().load(ps.inventory);
             SixtySecondsStatsComponent comp = SixtySecondsStatsComponent.KEY.get(p);
             comp.readFromSyncNbt(ps.stats, level.registryAccess());
-            } catch (Exception e) {
+            // 必须同步给客户端：readFromSyncNbt 只改了服务端组件，
+            // 不 sync 的话客户端仍是建图时那一份初值，HUD / 状态栏 / 背包显示会与服务端不一致。
+            comp.sync();
+        } catch (Exception e) {
             System.err.println("[SixtySecondsSaveManager] 恢复玩家 " + ps.uuid + " 失败: " + e);
+            e.printStackTrace();
         }
     }
 

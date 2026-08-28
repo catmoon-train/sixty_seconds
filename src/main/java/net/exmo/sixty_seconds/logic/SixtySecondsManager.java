@@ -311,7 +311,7 @@ public final class SixtySecondsManager {
         // 建图克隆时会替换掉既有方块（包括容器），容器内物品会变成 ItemEntity 洒落一地。
         // 必须在传送前全图清理，否则玩家出生点四周全是上局残留掉落物。
         // 续档恢复不建图，没有克隆残留；此时清掉落物只会误删玩家上一局摆在地面上的物资。
-        if (!net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.isResuming()) {
+        if (!net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.isResuming(level)) {
             clearAllDroppedItems(level);
         }
         // 建图后各队避难所/搜索区区块已加载：清掉上一局遗留在其中的夜袭者（和平难度下被 mixin 豁免、
