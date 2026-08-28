@@ -23,7 +23,7 @@ import java.util.Optional;
  * <p>
  * 兼容旧档：未加载地图（mapName 为空）或按图文件不存在时，回退读写旧的全局
  * {@code sixty_seconds_config.json}；在按图路径下保存过一次后即完成迁移。
- * 仿 {@code io.wifi.starrailexpress.game.data.ServerMapConfig} 的 Gson 单例 + 落盘做法。
+ * 仿 {@code io.wifi.sixty_seconds.game.data.ServerMapConfig} 的 Gson 单例 + 落盘做法。
  * <p>
  * ⚠️ CCA/组件 {@code sync()} 只同步不落盘；GUI/命令改动必须走此处显式写文件才能重启不丢
  * （见 memory {@code configsync-gui-edit-not-persisted-server}）。

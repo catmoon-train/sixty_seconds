@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * 借鉴 StarRailExpress 的思路：直接拦截 Minecraft.setScreen，
  * 在打开原版玩家物品栏时替换为受限制的 {@link SixtySecondsInventoryScreen}。
  * 比 ScreenEvent.Opening 更可靠（始终拦截得到 E 键打开背包的调用）。
  */

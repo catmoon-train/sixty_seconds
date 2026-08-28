@@ -46,7 +46,7 @@ public class CookingMinigameScreen extends Screen {
     private int uiTicks;
 
     public CookingMinigameScreen(BlockPos questPos, Runnable onSuccess) {
-        super(Component.translatable("screen.starrailexpress.cooking_minigame"));
+        super(Component.translatable("screen.sixty_seconds.cooking_minigame"));
         this.onSuccess = onSuccess;
     }
 
@@ -132,7 +132,7 @@ public class CookingMinigameScreen extends Screen {
         int iconY = cardY + 7;
         guiGraphics.blit(foodTextures[targetType], iconX, iconY, 0, 0, FOOD_SIZE, FOOD_SIZE, FOOD_SIZE, FOOD_SIZE);
         guiGraphics.drawString(this.font,
-                Component.translatable("screen.starrailexpress.cooking_count", caughtCount, TARGET_COUNT),
+                Component.translatable("screen.sixty_seconds.cooking_count", caughtCount, TARGET_COUNT),
                 iconX + FOOD_SIZE + 8, iconY + (FOOD_SIZE - 8) / 2, FOOD_COLORS[targetType]);
 
         // 掉落食材
@@ -151,7 +151,7 @@ public class CookingMinigameScreen extends Screen {
 
         // 操作提示
         guiGraphics.drawCenteredString(this.font,
-                Component.translatable("screen.starrailexpress.cooking_hint"),
+                Component.translatable("screen.sixty_seconds.cooking_hint"),
                 this.width / 2, this.height - 15, MinigameUI.MUTED);
     }
 

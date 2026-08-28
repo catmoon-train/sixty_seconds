@@ -18,7 +18,7 @@ import net.minecraft.world.item.Items;
  *   <li><b>介绍描述</b>：所有 {@code sixty_seconds_*} 物品/方块显示 {@code tooltip.sixty_seconds.<id>} 说明（<b>任何时候</b>都显示，便于了解）。</li>
  *   <li><b>恢复值</b>：食物/水在本模式激活时追加「解渴 +X / 饱食 +Y」。</li>
  * </ul>
- * 参照 {@code io.wifi.starrailexpress.client.util.TMMItemTooltips}。
+ * 参照 {@code io.wifi.sixty_seconds.client.util.TMMItemTooltips}。
  */
 public final class SixtySecondsTooltips {
     private SixtySecondsTooltips() {

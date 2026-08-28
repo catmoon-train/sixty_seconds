@@ -1,6 +1,6 @@
 package net.exmo.sixty_seconds;
 
-import net.exmo.sixty_seconds.bridge.StarRailExpressID;
+import net.exmo.sixty_seconds.bridge.SixtySecID;
 import net.exmo.sixty_seconds.bridge.GameMode;
 import net.exmo.sixty_seconds.bridge.SixtySecGameModes;
 import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
  */
 public final class SixtySecondsMod {
     /** 模式 ID：{@code sixty_seconds:sixty_seconds}，可用 {@code /60s start} 启动。 */
-    public static final ResourceLocation MODE_ID = StarRailExpressID.shortId("sixty_seconds");
+    public static final ResourceLocation MODE_ID = SixtySecID.shortId("sixty_seconds");
 
     /** 注册后的模式实例（init 后非空）。 */
     public static GameMode MODE;

@@ -133,7 +133,7 @@ public class MinigameQuestBlock extends BaseEntityBlock
                             sp.displayClientMessage(
                                     net.minecraft.network.chat.Component.translatable("message.60s.minigame_wrong_type",
                                             net.minecraft.network.chat.Component.translatable(
-                                                    "minigame.starrailexpress." + mgComp.targetMinigameId)),
+                                                    "minigame.sixty_seconds." + mgComp.targetMinigameId)),
                                     true);
                             return InteractionResult.SUCCESS;
                         }

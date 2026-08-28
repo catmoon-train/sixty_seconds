@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
- * 普通功能方块（研究台 / 拆解台）的基类：交互方式对齐 starrailexpress 的
+ * 普通功能方块（研究台 / 拆解台）的基类：交互方式对齐 SixtySeconds 的
  * {@code EntityInteractionBlock}——{@code useItemOn} 交给 {@code useWithoutItem}，
  * 后者<b>客户端返回 SUCCESS</b>（消费交互、确保右键包发送到服务端），服务端再执行
  * {@link SixtySecondsStations#serverOpen}。这样 60s 模式强制的冒险模式下也能稳定打开界面。

@@ -40,7 +40,7 @@ public class MinigameQuestConfigScreen extends Screen {
     private EditBox colorInput;
     private Button markerBtn;
 
-    private static final Component TITLE = Component.translatable("screen.starrailexpress.minigame_quest_config");
+    private static final Component TITLE = Component.translatable("screen.sixty_seconds.minigame_quest_config");
 
     public MinigameQuestConfigScreen(BlockPos pos, String selectedMinigameId, int markerColor, boolean isTaskMarker) {
         super(TITLE);
@@ -77,12 +77,12 @@ public class MinigameQuestConfigScreen extends Screen {
 
         // ── 任务路标开关 ──
         markerBtn = Button.builder(
-                Component.translatable(isTaskMarker ? "screen.starrailexpress.marker_on" : "screen.starrailexpress.marker_off"),
+                Component.translatable(isTaskMarker ? "screen.sixty_seconds.marker_on" : "screen.sixty_seconds.marker_off"),
                 btn -> {
                     isTaskMarker = !isTaskMarker;
                     btn.setMessage(Component.translatable(isTaskMarker
-                            ? "screen.starrailexpress.marker_on"
-                            : "screen.starrailexpress.marker_off"));
+                            ? "screen.sixty_seconds.marker_on"
+                            : "screen.sixty_seconds.marker_off"));
                 })
                 .pos(rx, cy)
                 .size(120, 18)
@@ -92,7 +92,7 @@ public class MinigameQuestConfigScreen extends Screen {
 
         // ── 保存按钮 ──
         addRenderableWidget(Button.builder(
-                Component.translatable("screen.starrailexpress.save"),
+                Component.translatable("screen.sixty_seconds.save"),
                 btn -> saveConfig())
                 .pos(rx + 30, cy)
                 .size(60, 18)

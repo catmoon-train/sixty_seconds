@@ -133,10 +133,10 @@ public class MathMinigameScreen extends Screen {
             guiGraphics.drawCenteredString(this.font, failText, this.width / 2, this.height / 2 - 40, 0x888888);
         } else {
             guiGraphics.drawCenteredString(this.font,
-                    Component.translatable("screen.starrailexpress.math_progress", correctCount, REQUIRED_CORRECT),
+                    Component.translatable("screen.sixty_seconds.math_progress", correctCount, REQUIRED_CORRECT),
                     this.width / 2, 30, 0xFFFFFF);
             guiGraphics.drawCenteredString(this.font,
-                    Component.translatable("screen.starrailexpress.math_wrong", wrongCount, MAX_WRONG),
+                    Component.translatable("screen.sixty_seconds.math_wrong", wrongCount, MAX_WRONG),
                     this.width / 2, 42, 0xFF8888);
         }
 

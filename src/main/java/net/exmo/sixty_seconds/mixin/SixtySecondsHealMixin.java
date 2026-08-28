@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class SixtySecondsHealMixin {
 
     @Inject(method = "heal", at = @At("HEAD"), cancellable = true)
-    private void sre$convertHealToStatsHealth(float amount, CallbackInfo ci) {
+    private void sixtysec$convertHealToStatsHealth(float amount, CallbackInfo ci) {
         LivingEntity self = (LivingEntity) (Object) this;
         if (!(self instanceof ServerPlayer player)) return;
         if (!SixtySecondsMod.isActive(player.level())) return;

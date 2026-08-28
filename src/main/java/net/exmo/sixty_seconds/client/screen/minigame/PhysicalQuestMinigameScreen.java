@@ -86,7 +86,7 @@ public class PhysicalQuestMinigameScreen extends Screen {
     private float dragStartX, dragStartY;
 
     public PhysicalQuestMinigameScreen(BlockPos pos, Runnable onSuccess, Kind kind) {
-        super(Component.translatable("minigame.starrailexpress." + kind.id));
+        super(Component.translatable("minigame.sixty_seconds." + kind.id));
         this.onSuccess = onSuccess;
         this.kind = kind;
     }
@@ -237,7 +237,7 @@ public class PhysicalQuestMinigameScreen extends Screen {
         // success overlay (outside scale transform)
         if (successTicks >= 0) {
             g.fill(l, t, l + W, t + H, 0xAA102414);
-            g.drawCenteredString(font, Component.translatable("minigame.starrailexpress.common.done"),
+            g.drawCenteredString(font, Component.translatable("minigame.sixty_seconds.common.done"),
                     width / 2, t + 128, GREEN);
         }
     }
@@ -278,7 +278,7 @@ public class PhysicalQuestMinigameScreen extends Screen {
             }
         }
         MinigameUI.progressBar(g, l + 100, t + 232, 230, 10, fireSize, 0xFFFF6B22);
-        g.drawString(font, Component.translatable("minigame.starrailexpress.extinguish.hint"),
+        g.drawString(font, Component.translatable("minigame.sixty_seconds.extinguish.hint"),
                 l + 100, t + 250, 0xFF8899AA);
     }
 
@@ -341,7 +341,7 @@ public class PhysicalQuestMinigameScreen extends Screen {
     // ==================== 调酒 ====================
 
     private void renderMixDrink(GuiGraphics g, int l, int t) {
-        g.drawString(font, Component.translatable("minigame.starrailexpress.mix_drink.desk"),
+        g.drawString(font, Component.translatable("minigame.sixty_seconds.mix_drink.desk"),
                 l + 30, t + 195, 0xFF8899AA);
 
         for (DragItem item : ingredients) {
@@ -442,7 +442,7 @@ public class PhysicalQuestMinigameScreen extends Screen {
         g.fill(pX - 14, pTop + 44, pX, pTop + 50, 0xFF6A7A90);
 
         MinigameUI.progressBar(g, l + 90, t + 232, 220, 10, balloon, 0xFFFF5C8A);
-        g.drawString(font, Component.translatable("minigame.starrailexpress.balloon.hint"),
+        g.drawString(font, Component.translatable("minigame.sixty_seconds.balloon.hint"),
                 l + 90, t + 250, 0xFF8899AA);
     }
 
@@ -469,7 +469,7 @@ public class PhysicalQuestMinigameScreen extends Screen {
         g.fill(basketX, basketY + 6, basketX + 4, basketY + 48, 0xFF6A4A2A);
         g.fill(basketX + 56, basketY + 6, basketX + 60, basketY + 48, 0xFF6A4A2A);
         g.fill(basketX + 4, basketY + 42, basketX + 56, basketY + 48, 0xFF6A4A2A);
-        g.drawString(font, Component.translatable("minigame.starrailexpress.throw_ball.basket"),
+        g.drawString(font, Component.translatable("minigame.sixty_seconds.throw_ball.basket"),
                 basketX + 8, basketY - 14, 0xFF8899AA);
 
         // 鸟球

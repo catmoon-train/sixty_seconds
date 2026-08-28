@@ -108,7 +108,7 @@ public class LockpickMinigameScreen extends Screen {
     private int unlockingIdx = 0;
 
     public LockpickMinigameScreen(BlockPos questPos, Runnable onSuccess) {
-        super(Component.translatable("screen.starrailexpress.lockpick_minigame"));
+        super(Component.translatable("screen.sixty_seconds.lockpick_minigame"));
         this.onSuccess = onSuccess;
         this.simulatedLock = new SimulatedLock(LOCK_LENGTH, RESISTANCE);
     }
@@ -161,7 +161,7 @@ public class LockpickMinigameScreen extends Screen {
         animations.forEach(animation -> animation.renderUpdate(partialTick));
         animations.removeIf(AbstractAnimation::isFinished);
         guiGraphics.drawCenteredString(this.font,
-                Component.translatable("screen.starrailexpress.lockpick_hint"),
+                Component.translatable("screen.sixty_seconds.lockpick_hint"),
                 width / 2, height - pixelSize * 2, 0xFFFFFFFF);
     }
 

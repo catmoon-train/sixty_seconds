@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * 拦截容器槽点击，阻止玩家手动拿取/移动背包里的屏障占位格。
- * 直接调用本模组自带的 {@link SixtySecondsInventoryLimit#shouldBlockClick}，不依赖 StarRailExpress 基础模组。
+ * 直接调用本模组自带的 {@link SixtySecondsInventoryLimit#shouldBlockClick}，不依赖 SixtySeconds 基础模组。
  */
 @Mixin(AbstractContainerMenu.class)
 public class AbstractContainerMenuMixin {

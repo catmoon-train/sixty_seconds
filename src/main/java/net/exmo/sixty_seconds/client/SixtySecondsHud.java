@@ -206,7 +206,7 @@ public final class SixtySecondsHud {
             graphics.drawString(client.font,
                     Component.empty().append(subName).append(Component.literal(" " + time)), x, y, color);
             y += INFO_LINE_H;
-            // 游戏币（代币）余额：显示在时钟下方；图标取自 StarRailExpress
+            // 游戏币（代币）余额：显示在时钟下方；图标取自 SixtySeconds
             LocalPlayer coinPlayer = client.player;
             if (coinPlayer != null) {
                 int tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(coinPlayer).getTokens();

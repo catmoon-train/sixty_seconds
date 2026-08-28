@@ -16,7 +16,7 @@ import java.util.*;
 
 /**
  * 任务点小游戏的共用界面，承载所有无需自定义贴图的小游戏。
- * 所有界面文字均走语言键（minigame.starrailexpress.*），并统一了面板/动画风格。
+ * 所有界面文字均走语言键（minigame.sixty_seconds.*），并统一了面板/动画风格。
  */
 public class SimpleQuestMinigameScreen extends Screen {
 
@@ -350,25 +350,25 @@ public class SimpleQuestMinigameScreen extends Screen {
     private static final int SUCCESS_ANIM_TICKS = 16;
 
     public SimpleQuestMinigameScreen(BlockPos questPos, Runnable onSuccess, Mode mode) {
-        super(Component.translatable("minigame.starrailexpress." + mode.id));
+        super(Component.translatable("minigame.sixty_seconds." + mode.id));
         this.onSuccess = onSuccess;
         this.mode = mode;
     }
 
     private Component tr(String key) {
-        return Component.translatable("minigame.starrailexpress." + key);
+        return Component.translatable("minigame.sixty_seconds." + key);
     }
 
     private Component tr(String key, Object... args) {
-        return Component.translatable("minigame.starrailexpress." + key, args);
+        return Component.translatable("minigame.sixty_seconds." + key, args);
     }
 
     private Component modeText(String suffix) {
-        return Component.translatable("minigame.starrailexpress." + mode.id + "." + suffix);
+        return Component.translatable("minigame.sixty_seconds." + mode.id + "." + suffix);
     }
 
     private Component modeText(String suffix, Object... args) {
-        return Component.translatable("minigame.starrailexpress." + mode.id + "." + suffix, args);
+        return Component.translatable("minigame.sixty_seconds." + mode.id + "." + suffix, args);
     }
 
     @Override
@@ -498,7 +498,7 @@ public class SimpleQuestMinigameScreen extends Screen {
                 ItemStack[] items = {GLASS_BOTTLE, IRON_INGOT, PAPER, APPLE, POISONOUS_POTATO, GUNPOWDER};
                 String[] names = {"label.bottle", "label.iron", "label.paper", "label.apple", "label.potato", "label.dust"};
                 for (int i = 0; i < items.length; i++) {
-                    Piece p = new Piece(Component.translatable("minigame.starrailexpress." + names[i]),
+                    Piece p = new Piece(Component.translatable("minigame.sixty_seconds." + names[i]),
                             i % 3, i < 3 ? BLUE : YELLOW,
                             left + 45 + i * 60, top + 200, i < 3 ? 0 : 1);
                     p.item = items[i];
@@ -898,7 +898,7 @@ public class SimpleQuestMinigameScreen extends Screen {
             case CATCH_EGGS -> renderCatchEggs(g, left, top);
             case COLOR_SORT -> renderColorSort(g, left, top);
             case GUESS_NUMBER -> { g.drawCenteredString(font,Component.literal(guessLow+" - "+guessHigh),width/2,top+50,WHITE); g.drawCenteredString(font,tr("guess_number.hint"),width/2,top+75,MUTED); int ix=left+120; MinigameUI.roundRect(g,ix,top+95,ix+190,top+120,4,0xFF334455); g.drawString(font,guessInput,ix+6,top+101,WHITE); int bx=left+(PANEL_W-60)/2; MinigameUI.roundRect(g,bx,top+125,bx+60,top+148,4,GREEN); g.drawCenteredString(font,tr("common.confirm"),bx+30,top+129,0xFF101010); g.drawCenteredString(font,tr("guess_number.count",guessCount),width/2,top+155,MUTED); }
-            case REACTION_TEST -> { int col=reactState==0?MUTED:reactState==1?YELLOW:reactFailed?RED:GREEN; net.minecraft.network.chat.Component txt=reactState==0?tr("reaction_test.waiting"):reactState==1?tr("reaction_test.click_now"):reactFailed?Component.translatable("minigame.starrailexpress.reaction_test.failed",reactElapsed):Component.literal(reactElapsed+"ms"); g.drawCenteredString(font,txt,width/2,top+100,col); if(reactState==1){int bx=width/2-40,by=top+120;MinigameUI.roundRect(g,bx,by,bx+80,by+30,6,GREEN);g.drawCenteredString(font,tr("reaction_test.click_me"),width/2,by+8,0xFF101010);} g.drawCenteredString(font,tr("common.hits",reactSuccess,3),width/2,top+6,WHITE); }
+            case REACTION_TEST -> { int col=reactState==0?MUTED:reactState==1?YELLOW:reactFailed?RED:GREEN; net.minecraft.network.chat.Component txt=reactState==0?tr("reaction_test.waiting"):reactState==1?tr("reaction_test.click_now"):reactFailed?Component.translatable("minigame.sixty_seconds.reaction_test.failed",reactElapsed):Component.literal(reactElapsed+"ms"); g.drawCenteredString(font,txt,width/2,top+100,col); if(reactState==1){int bx=width/2-40,by=top+120;MinigameUI.roundRect(g,bx,by,bx+80,by+30,6,GREEN);g.drawCenteredString(font,tr("reaction_test.click_me"),width/2,by+8,0xFF101010);} g.drawCenteredString(font,tr("common.hits",reactSuccess,3),width/2,top+6,WHITE); }
             case LINK_MATCH -> renderLinkMatch(g, left, top);
             case TETRIS -> renderTetris(g, left, top);
             case MEMORY_MATCH -> renderMemMatch(g, left, top);

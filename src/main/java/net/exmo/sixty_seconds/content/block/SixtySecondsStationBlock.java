@@ -20,7 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
  * {@link SixtySecondsRecipes#stationOf} 识别），供避难所里没有对应原版家具时自行制作摆放。
  * 冒险模式仅可放在白色混凝土标记上方（{@code SixtySecondsPlaceableBlockItem}），扳手可拆除返还。
  * <p>
- * 交互方式对齐 starrailexpress 的 {@code EntityInteractionBlock}：{@code useItemOn} 交给
+ * 交互方式对齐 SixtySeconds 的 {@code EntityInteractionBlock}：{@code useItemOn} 交给
  * {@code useWithoutItem}，后者<b>客户端返回 SUCCESS</b>（消费交互、确保右键包发送到服务端），
  * 服务端再执行 {@link SixtySecondsStations#serverOpen}。这样 60s 模式强制的冒险模式下也能稳定打开界面。
  */

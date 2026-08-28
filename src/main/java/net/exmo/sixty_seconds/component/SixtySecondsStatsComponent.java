@@ -16,7 +16,7 @@ import net.exmo.sixty_seconds.bridge.cca.ComponentRegistry;
  * P0 骨架：字段、同步、NBT、HUD 已就位；{@code SixtySecondsStatsSystem} 目前空跑，
  * 实际扣减 / 生病 / 变怪等后果留 TODO（见 {@code docs/末日60秒生存模式.md}）。
  * <p>
- * 参照 {@code net.exmo.sre.repair.component.RepairRolePlayerComponent}。仅同步给玩家自己
+ * 参照 {@code net.exmo.sixty_seconds.repair.component.RepairRolePlayerComponent}。仅同步给玩家自己
  * （{@link AutoSyncedComponent#shouldSyncWith} 默认），重大更改时才 {@link #sync()}（见 ai_doc.md）。
  */
 public class SixtySecondsStatsComponent implements AutoSyncedComponent {

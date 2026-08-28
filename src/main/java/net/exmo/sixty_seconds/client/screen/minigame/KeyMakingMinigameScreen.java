@@ -33,7 +33,7 @@ public class KeyMakingMinigameScreen extends Screen {
     private int flashTicks = 0;
 
     public KeyMakingMinigameScreen(BlockPos questPos, Runnable onSuccess) {
-        super(Component.translatable("screen.starrailexpress.key_making_minigame"));
+        super(Component.translatable("screen.sixty_seconds.key_making_minigame"));
         this.onSuccess = onSuccess;
     }
 
@@ -116,7 +116,7 @@ public class KeyMakingMinigameScreen extends Screen {
         MinigameUI.panel(guiGraphics, panelLeft, panelTop, panelRight, panelBottom, 22);
         guiGraphics.drawCenteredString(this.font, this.title, centerX, panelTop + 7, MinigameUI.WHITE);
         guiGraphics.drawCenteredString(this.font,
-                Component.translatable("screen.starrailexpress.key_making_progress", hitCount, REQUIRED_HITS),
+                Component.translatable("screen.sixty_seconds.key_making_progress", hitCount, REQUIRED_HITS),
                 centerX, centerY - 36, MinigameUI.WHITE);
 
         int barWidth = 230;
@@ -140,7 +140,7 @@ public class KeyMakingMinigameScreen extends Screen {
         MinigameUI.filledCircle(guiGraphics, markerX, barY - 8, 3, MinigameUI.RED);
 
         guiGraphics.drawCenteredString(this.font,
-                Component.translatable("screen.starrailexpress.key_making_hint"),
+                Component.translatable("screen.sixty_seconds.key_making_hint"),
                 centerX, centerY + 34, MinigameUI.MUTED);
         guiGraphics.pose().popPose();
 

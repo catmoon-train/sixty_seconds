@@ -3,8 +3,8 @@ package net.exmo.sixty_seconds.bridge;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.minecraft.resources.ResourceLocation;
 
-public final class StarRailExpressID {
-    private StarRailExpressID() {
+public final class SixtySecID {
+    private SixtySecID() {
     }
 
     public static ResourceLocation shortId(String path) {
