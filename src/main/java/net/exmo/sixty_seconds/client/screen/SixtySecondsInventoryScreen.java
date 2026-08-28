@@ -1,138 +1,291 @@
 package net.exmo.sixty_seconds.client.screen;
 
+import com.mojang.datafixers.util.Pair;
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
- * 受限背包界面。
- * <ul>
- *   <li>背景顶部 {@value #HEADER_HEIGHT}px 用受限背包条 {@code sixty_seconds:textures/gui/container/limited_inventory.png}
- *       （移植自 SRE 的 {@code wathe:textures/gui/container/limited_inventory.png}，已改用本模组命名空间）；
- *       其下沿用原版背包底图，保证槽位布局不失真。</li>
- *   <li>仅隐藏被屏障锁定的槽位（与 {@code SixtySecondsInventoryLimit} 的屏障占位保持一致）。</li>
- *   <li>装备栏（4 格盔甲 + 副手）以专用金色边框高亮，并标注当前护甲值。</li>
- *   <li>底部提供「兑换实体币」按钮，打开 {@link TokenExchangeScreen} 把游戏币余额兑成实体币。</li>
- * </ul>
+ * 60s 受限背包界面：<b>只显示快捷栏一条</b>，不画原版 176×166 背包网格。
+ * 服务端侧的容器点击在 60s 模式已由 {@code SixtySecondsInventoryLimit} 放行，故这里只补客户端表现。
  */
-public class SixtySecondsInventoryScreen extends AbstractContainerScreen<InventoryMenu> {
-    /** 受限背包条（本模组命名空间）。 */
-    private static final ResourceLocation LIMITED_INVENTORY_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath("sixty_seconds", "textures/gui/container/limited_inventory.png");
+public class SixtySecondsInventoryScreen extends LimitedHandledScreen<InventoryMenu> {
 
-    /** 受限背包条下方沿用原版背包底图（两张图同为 256×256，UV 可直接拼接）。 */
-    private static final ResourceLocation VANILLA_INVENTORY_TEXTURE =
-            ResourceLocation.parse("minecraft:textures/gui/container/inventory.png");
-
-    /** 受限背包条的高度：贴图可用区域（与 SRE 的 {@code backgroundHeight} 一致）。 */
-    private static final int HEADER_HEIGHT = 32;
+    public static final ResourceLocation BACKGROUND_TEXTURE =
+            SixtySeconds.id("textures/gui/container/limited_inventory.png");
 
     /** 游戏币（代币）图标。 */
     private static final ResourceLocation GAME_COIN =
             ResourceLocation.fromNamespaceAndPath("sixty_seconds", "textures/gui/game_coin.png");
 
-    /** 装备栏在 InventoryMenu 中的槽位序号：5–8 为盔甲，45 为副手。 */
-    private static final int ARMOR_SLOT_START = 5;
-    private static final int ARMOR_SLOT_END = 8;
-    private static final int OFFHAND_SLOT = 45;
+    /** 装备槽在 InventoryMenu 中的菜单槽序号：头(5)/胸(6)/腿(7)/脚(8) + 副手(45)。 */
+    private static final int[] EQUIP_SLOTS = { 5, 6, 7, 8, 45 };
+    /** 背包第二排在 InventoryMenu 中的菜单槽序号（=容器槽 9..17）。 */
+    private static final int[] BACKPACK_SLOTS = { 9, 10, 11, 12, 13, 14, 15, 16, 17 };
 
-    private static final int EQUIP_BORDER = 0xFF8B6914;      // 装备栏金色边框
-    private static final int EQUIP_BORDER_DIM = 0x66FFE8C0;  // 内侧高光
-    private static final int EQUIP_TEXT = 0xFFE8D9A8;        // 装备栏文字（浅金）
-    private static final int COIN_TEXT = 0xFFFFF4DC;         // 余额文字
+    private static final int SLOT_STEP = 18;
+    /** 两排附加槽的行高（16 槽 + 双描边 3+3 + 2 间距）。 */
+    private static final int ROW_STEP = 24;
+    /**
+     * 背景贴图里槽位框的起点：快捷栏槽内容绘制在背景 (8,8) 起、步进 18，
+     * 故含 1px 描边的槽位框在贴图 (7,7) 处、每格 18×18。
+     * 附加行直接按格数横向切割这条槽位框带，与快捷栏观感完全一致。
+     */
+    private static final int SLOT_TEX_U = 7;
+    private static final int SLOT_TEX_V = 7;
 
-    private static final int EXCHANGE_BTN_W = 96;
-    private static final int EXCHANGE_BTN_H = 18;
+    private static final int COIN_BTN_W = 90;
+    private static final int COIN_BTN_H = 14;
 
-    public SixtySecondsInventoryScreen(InventoryMenu menu, Inventory playerInventory, Component title) {
-        super(menu, playerInventory, title);
-        this.imageWidth = 176;
-        this.imageHeight = 166;
+    private static final int COIN_TEXT = 0xFFFFF4DC;
+    private static final int OUTLINE_DARK = 0xFF1A1813;
+    private static final int OUTLINE_GOLD = 0xFFABA376;
+    private static final int PLACEHOLDER_BG = 0xFF9E8B6E;
+
+    public final LocalPlayer player;
+
+    public SixtySecondsInventoryScreen(@NotNull LocalPlayer player) {
+        super(player.inventoryMenu, player.getInventory(), Component.translatable("container.inventory"));
+        this.player = player;
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // 附加行布局（相对屏幕左上角；与快捷栏窄条同 x，位于其下方）
+    // ─────────────────────────────────────────────────────────────────
+
+    /** 一排附加槽的左起 X（在窄条下方居中）。 */
+    private int rowStartX(int slotCount) {
+        return this.x + (this.backgroundWidth - slotCount * SLOT_STEP) / 2 + 1;
+    }
+
+    /** 背包第二排的顶部 Y（窄条正下方留出描边 3px + 间距 3px）。 */
+    private int backpackRowY() {
+        return this.y + this.backgroundHeight + 6;
+    }
+
+    /** 装备槽这一排的顶部 Y（背包第二排之下）。 */
+    private int equipRowY() {
+        return backpackRowY() + ROW_STEP;
+    }
+
+    private int coinButtonX() {
+        return this.x + (this.backgroundWidth - COIN_BTN_W) / 2;
+    }
+
+    private int coinButtonY() {
+        return equipRowY() + ROW_STEP;
+    }
+
+    private boolean inCoinButton(double mouseX, double mouseY) {
+        int bx = coinButtonX();
+        int by = coinButtonY();
+        return mouseX >= bx && mouseX < bx + COIN_BTN_W && mouseY >= by && mouseY < by + COIN_BTN_H;
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // 绘制
+    // ─────────────────────────────────────────────────────────────────
+
+    @Override
+    protected void drawBackground(GuiGraphics context, float delta, int mouseX, int mouseY) {
+        context.blit(BACKGROUND_TEXTURE, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight);
+        renderTokenBalance(context);
     }
 
     @Override
-    protected void init() {
-        super.init();
-        int btnX = this.leftPos + (this.imageWidth - EXCHANGE_BTN_W) / 2;
-        // 贴在背包下沿；窗口过矮时向内收，避免溢出屏幕
-        int btnY = Math.min(this.topPos + this.imageHeight + 4, this.height - EXCHANGE_BTN_H - 2);
-        this.addRenderableWidget(Button.builder(
-                Component.translatable("message.sixty_seconds.sixty_seconds.coin_exchange_button"),
-                b -> {
-                    if (this.minecraft != null) {
-                        this.minecraft.setScreen(new TokenExchangeScreen());
-                    }
-                }).bounds(btnX, btnY, EXCHANGE_BTN_W, EXCHANGE_BTN_H).build());
-    }
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
 
-    @Override
-    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-        int left = this.leftPos;
-        int top = this.topPos;
-        int restHeight = this.imageHeight - HEADER_HEIGHT;
-        guiGraphics.blit(LIMITED_INVENTORY_TEXTURE, left, top, 0, 0, this.imageWidth, HEADER_HEIGHT, 256, 256);
-        guiGraphics.blit(VANILLA_INVENTORY_TEXTURE, left, top + HEADER_HEIGHT,
-                0, HEADER_HEIGHT, this.imageWidth, restHeight, 256, 256);
-        renderEquipmentFrames(guiGraphics, left, top);
-        renderTokenBalance(guiGraphics, left, top);
-    }
+        ItemStack hoveredBackpack = renderRow(context, BACKPACK_SLOTS,
+                rowStartX(BACKPACK_SLOTS.length), backpackRowY(), mouseX, mouseY);
+        ItemStack hoveredEquip = renderRow(context, EQUIP_SLOTS,
+                rowStartX(EQUIP_SLOTS.length), equipRowY(), mouseX, mouseY);
+        renderCoinButton(context, mouseX, mouseY);
 
-    /** 给装备栏（盔甲 4 格 + 副手）逐格描金边，与受限主背包区分开。 */
-    private void renderEquipmentFrames(GuiGraphics guiGraphics, int left, int top) {
-        for (int i = 0; i < this.menu.slots.size(); i++) {
-            if (!isEquipmentSlot(i)) {
-                continue;
+        if (this.handler.getCarried().isEmpty()) {
+            if (!hoveredBackpack.isEmpty()) {
+                context.renderTooltip(this.font, hoveredBackpack, mouseX, mouseY);
+            } else if (!hoveredEquip.isEmpty()) {
+                context.renderTooltip(this.font, hoveredEquip, mouseX, mouseY);
             }
-            Slot slot = this.menu.slots.get(i);
-            int x = left + slot.x - 2;
-            int y = top + slot.y - 2;
-            guiGraphics.renderOutline(x, y, 20, 20, EQUIP_BORDER);
-            guiGraphics.fill(x + 1, y + 1, x + 19, y + 2, EQUIP_BORDER_DIM);
         }
-
-        int armorValue = this.minecraft != null && this.minecraft.player != null
-                ? this.minecraft.player.getArmorValue() : 0;
-        Component label = Component.translatable("message.sixty_seconds.sixty_seconds.inventory_equipment");
-        Component armorText = Component.translatable(
-                "message.sixty_seconds.sixty_seconds.inventory_armor_value", armorValue);
-        guiGraphics.drawString(this.font, label, left + 30, top + 8, EQUIP_TEXT, false);
-        guiGraphics.drawString(this.font, armorText, left + 30, top + 20, EQUIP_TEXT, false);
     }
 
-    private static boolean isEquipmentSlot(int index) {
-        return (index >= ARMOR_SLOT_START && index <= ARMOR_SLOT_END) || index == OFFHAND_SLOT;
+    /** 画一排附加槽，返回当前 hover 的物品（无则 EMPTY）。 */
+    private ItemStack renderRow(GuiGraphics context, int[] menuSlots, int startX, int rowY,
+            int mouseX, int mouseY) {
+        Minecraft mc = Minecraft.getInstance();
+        Font font = mc.font;
+        ItemStack hovered = ItemStack.EMPTY;
+        int w = menuSlots.length * SLOT_STEP;
+        // 外深内金双描边：复刻背景面板自身的边框配色，否则附加行贴在深色界面上看不出边界
+        context.renderOutline(startX - 3, rowY - 3, w + 4, 22, OUTLINE_DARK);
+        context.renderOutline(startX - 2, rowY - 2, w + 2, 20, OUTLINE_GOLD);
+        // 槽位底：从背景贴图的快捷栏槽位框整条切割（按槽数取宽）
+        context.blit(BACKGROUND_TEXTURE, startX - 1, rowY - 1,
+                SLOT_TEX_U, SLOT_TEX_V, w, 18);
+        for (int i = 0; i < menuSlots.length; i++) {
+            Slot slot = this.handler.slots.get(menuSlots[i]);
+            int sx = startX + i * SLOT_STEP;
+            ItemStack stack = slot.getItem();
+            if (stack.isEmpty()) {
+                Pair<ResourceLocation, ResourceLocation> icon = slot.getNoItemIcon();
+                if (icon != null) {
+                    // 占位剪影是纯 #555555，直接画在近黑槽底上不可见；先垫一层浅褐底
+                    context.fill(sx, rowY, sx + 16, rowY + 16, PLACEHOLDER_BG);
+                    TextureAtlasSprite sprite = mc.getTextureAtlas(icon.getFirst()).apply(icon.getSecond());
+                    context.blit(sx, rowY, 0, 16, 16, sprite);
+                }
+            } else {
+                context.renderItem(stack, sx, rowY);
+                context.renderItemDecorations(font, stack, sx, rowY);
+            }
+            if (mouseX >= sx && mouseX < sx + 16 && mouseY >= rowY && mouseY < rowY + 16) {
+                drawSlotHighlight(context, sx, rowY, 0);
+                if (!stack.isEmpty()) {
+                    hovered = stack;
+                }
+            }
+        }
+        return hovered;
     }
 
     /** 右上角显示本人游戏币余额（图标取自 game_coin.png，与 HUD 一致）。 */
-    private void renderTokenBalance(GuiGraphics guiGraphics, int left, int top) {
-        int tokens = this.minecraft != null && this.minecraft.player != null
-                ? SixtySecPlayerMinigameTaskComponent.KEY.get(this.minecraft.player).getTokens() : 0;
+    private void renderTokenBalance(GuiGraphics context) {
+        int tokens = SixtySecPlayerMinigameTaskComponent.KEY.get(this.player).getTokens();
         Component text = Component.literal(String.valueOf(tokens));
         int textW = this.font.width(text);
-        int iconX = left + this.imageWidth - 8 - textW - 18;
-        int y = top + 6;
-        guiGraphics.blit(GAME_COIN, iconX, y, 0, 0, 16, 16, 16, 16);
-        guiGraphics.drawString(this.font, text, iconX + 18, y + 4, COIN_TEXT, false);
+        int iconX = this.x + this.backgroundWidth - 8 - textW - 18;
+        int y = this.y + 8;
+        context.blit(GAME_COIN, iconX, y, 0, 0, 16, 16, 16, 16);
+        context.drawString(this.font, text, iconX + 18, y + 4, COIN_TEXT, false);
+    }
+
+    private void renderCoinButton(GuiGraphics context, int mouseX, int mouseY) {
+        int bx = coinButtonX();
+        int by = coinButtonY();
+        boolean hovered = inCoinButton(mouseX, mouseY);
+        context.fillGradient(bx, by, bx + COIN_BTN_W, by + COIN_BTN_H, 0xD81A1008, 0xD820140A);
+        context.renderOutline(bx, by, COIN_BTN_W, COIN_BTN_H, hovered ? 0xFFD4AF37 : 0xFF8B6914);
+        context.drawCenteredString(this.font,
+                Component.translatable("message.sixty_seconds.sixty_seconds.coin_exchange_button"),
+                bx + COIN_BTN_W / 2, by + (COIN_BTN_H - 8) / 2 + 1, hovered ? 0xFFFFF4DC : 0xFFC8B898);
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // 交互
+    // ─────────────────────────────────────────────────────────────────
+
+    /** 一排附加槽的命中测试：鼠标落在某槽内则返回对应 Slot。 */
+    @Nullable
+    private Slot rowSlotAt(int[] menuSlots, int startX, int rowY, double mouseX, double mouseY) {
+        for (int i = 0; i < menuSlots.length; i++) {
+            int sx = startX + i * SLOT_STEP;
+            if (mouseX >= sx && mouseX < sx + 16 && mouseY >= rowY && mouseY < rowY + 16) {
+                return this.handler.slots.get(menuSlots[i]);
+            }
+        }
+        return null;
+    }
+
+    /** 让附加行也参与命中测试——父类的拾取/放置/拖拽状态机由此自动覆盖它们。 */
+    @Override
+    @Nullable
+    protected Slot getSlotAt(double x, double y) {
+        Slot extra = rowSlotAt(BACKPACK_SLOTS, rowStartX(BACKPACK_SLOTS.length), backpackRowY(), x, y);
+        if (extra == null) {
+            extra = rowSlotAt(EQUIP_SLOTS, rowStartX(EQUIP_SLOTS.length), equipRowY(), x, y);
+        }
+        return extra != null ? extra : super.getSlotAt(x, y);
     }
 
     @Override
-    protected void renderSlot(GuiGraphics guiGraphics, Slot slot) {
-        // 与 SixtySecondsInventoryLimit 的屏障占位保持一致：被屏障锁定的槽位不渲染。
-        if (slot.getItem().is(Items.BARRIER)) {
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (button == 0 && inCoinButton(mouseX, mouseY)) {
+            Minecraft mc = Minecraft.getInstance();
+            mc.getSoundManager().play(net.minecraft.client.resources.sounds.SimpleSoundInstance.forUI(
+                    net.minecraft.sounds.SoundEvents.UI_BUTTON_CLICK, 1.0F));
+            mc.setScreen(new TokenExchangeScreen());
+            return true;
+        }
+        return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        Minecraft mc = Minecraft.getInstance();
+        // Q → 屏障区批量丢弃；Shift+1~9 → 屏障区转移到对应快捷栏
+        if (mc.options.keyDrop.matches(keyCode, scanCode) && !hasControlDown()) {
+            quickDropFromBarrierArea();
+            return true;
+        }
+        if (hasShiftDown()) {
+            for (int i = 0; i < 9; i++) {
+                if (mc.options.keyHotbarSlots[i].matches(keyCode, scanCode)) {
+                    transferFromBarrierToHotbar(i);
+                    return true;
+                }
+            }
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // 屏障区快捷操作（被 SixtySecondsInventoryLimit 锁定的槽位塞有屏障占位）
+    // ─────────────────────────────────────────────────────────────────
+
+    /** 找到背包中第一个屏障占位槽的索引（0-35），没有则返回 36。 */
+    private int findFirstBarrierSlot() {
+        for (int i = 0; i <= 35; i++) {
+            if (player.getInventory().getItem(i).is(Items.BARRIER)) {
+                return i;
+            }
+        }
+        return 36;
+    }
+
+    /** Q：把屏障区中非屏障物品全部丢到地面。 */
+    private void quickDropFromBarrierArea() {
+        int firstBarrier = findFirstBarrierSlot();
+        if (firstBarrier > 35) {
             return;
         }
-        super.renderSlot(guiGraphics, slot);
+        for (int i = firstBarrier; i <= 35; i++) {
+            ItemStack stack = player.getInventory().getItem(i);
+            if (!stack.isEmpty() && !stack.is(Items.BARRIER)) {
+                this.minecraft.gameMode.handleInventoryMouseClick(
+                        this.handler.containerId, i, 0, net.minecraft.world.inventory.ClickType.THROW,
+                        this.minecraft.player);
+            }
+        }
     }
 
-    @Override
-    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        guiGraphics.drawString(this.font, this.title, 8, 6, 0x404040, false);
+    /** Shift+数字键：把屏障区第一个非屏障物品换入指定快捷栏（索引 0-8）。 */
+    private void transferFromBarrierToHotbar(int hotbarIndex) {
+        int firstBarrier = findFirstBarrierSlot();
+        if (firstBarrier > 35) {
+            return;
+        }
+        for (int i = firstBarrier; i <= 35; i++) {
+            ItemStack stack = player.getInventory().getItem(i);
+            if (!stack.isEmpty() && !stack.is(Items.BARRIER)) {
+                this.minecraft.gameMode.handleInventoryMouseClick(
+                        this.handler.containerId, i, hotbarIndex,
+                        net.minecraft.world.inventory.ClickType.SWAP, this.minecraft.player);
+                return;
+            }
+        }
     }
 }

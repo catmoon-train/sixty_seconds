@@ -464,9 +464,7 @@ public final class SixtySecondsClient {
         if (!restricted) {
             return;
         }
-        InventoryMenu menu = ((InventoryScreen) screen).getMenu();
-        event.setNewScreen(new SixtySecondsInventoryScreen(
-                menu, player.getInventory(), Component.translatable("container.inventory")));
+        event.setNewScreen(new SixtySecondsInventoryScreen(player));
     }
 
     private static boolean hasBarrierSlots(net.minecraft.world.entity.player.Inventory inv) {

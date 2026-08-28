@@ -7,12 +7,16 @@ import net.exmo.sixty_seconds.content.entity.SixtySecondsRvEntity;
 import net.exmo.sixty_seconds.content.entity.SixtySecondsRvPart;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.phys.AABB;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.island.SixtySecondsIsland;
 import net.exmo.sixty_seconds.island.SixtySecondsIslands;
@@ -21,7 +25,9 @@ import net.exmo.sixty_seconds.registry.ModEntities;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
@@ -45,6 +51,70 @@ public final class SixtySecondsRvSystem {
     private static final int FORCE_RADIUS = 1;
     /** 上一次安全落点低于当前高度超过此格数即判定坠坑，整车回退。 */
     private static final int PIT_DROP_THRESHOLD = 6;
+    /**
+     * 房车车体净空高度（格）。车体 {@code sized(4.8f, 3.2f)}（见 {@code ModEntities#HOLD_RV}），
+     * 向上取整得 4；房车比玩家高得多，落点必须按这个高度校验，不能沿用「双格净空」。
+     */
+    private static final int RV_CLEAR_HEIGHT = 4;
+    /** 与住宅/避难所外墙保持的水平间距（格），避免车体蹭墙。 */
+    private static final int RV_STRUCTURE_MARGIN = 2;
+    /** 从结构体外缘向外搜索房车落点的最大扩展圈数。 */
+    private static final int RV_SEARCH_RINGS = 24;
+    /** 地形基准高度之下允许再往下找支撑的格数（街道被炸出坑、或有下沉庭院时向下兜底）。 */
+    private static final int RV_SCAN_BELOW = 10;
+    /** 地形基准高度之上允许再往上找落脚点的格数（地表堆了废墟残骸时向上抬）。 */
+    private static final int RV_SCAN_ABOVE = 8;
+
+    /**
+     * 地形基准高度缓存：(x,z) → 站立高度。
+     *
+     * <p>{@code getBaseHeight} 要迭代整根噪声列，代价不小；环形搜索里同一列可能反复命中，故按列缓存。
+     * 每次搜索开始由 {@link #beginGroundCache()} 清空。</p>
+     */
+    private static final Map<Long, Integer> GROUND_CACHE = new HashMap<>();
+
+    private static void beginGroundCache() {
+        GROUND_CACHE.clear();
+    }
+
+    private static long colKey(int x, int z) {
+        return ((long) x << 32) ^ (z & 0xFFFFFFFFL);
+    }
+
+    /**
+     * 地形基准高度（脚部站立 Y）——取自 LostCities 的做法。
+     *
+     * <p>LostCities 在 {@code ChunkHeightmap#calculateAccurateHeight} 与
+     * {@code LostCityTerrainFeature#getHeightmap} 中用它判定地表：
+     * <pre>{@code
+     * generator.getBaseHeight(x, z, Heightmap.Types.OCEAN_FLOOR_WG, region, randomState)
+     * }</pre>
+     * 返回的是<b>世界生成器算出的地形高度</b>（第一个阻挡方块的上一格），
+     * 只反映自然地形，<b>不包含任何后来叠加上去的建筑方块</b>。
+     * 因此在 LostCities 城市里它就是<b>街道地面</b>的高度，而不是屋顶——这正是房车该停的地方。</p>
+     *
+     * <p>对比 {@code Heightmap.Types.MOTION_BLOCKING_NO_LEAVES}（当前最高的阻挡方块）：
+     * 那一档会把房屋的屋顶、高架桥都算进去，用它定位房车就会把车生成在楼顶/室内。</p>
+     */
+    private static int baseGroundY(ServerLevel level, int x, int z) {
+        long key = colKey(x, z);
+        Integer cached = GROUND_CACHE.get(key);
+        if (cached != null) {
+            return cached;
+        }
+        int y;
+        try {
+            ServerChunkCache source = level.getChunkSource();
+            y = source.getGenerator().getBaseHeight(x, z, Heightmap.Types.OCEAN_FLOOR_WG, level,
+                    source.randomState());
+        } catch (Exception e) {
+            // 生成器不支持（如自定义扁平生成器）时退回当前地表
+            y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+        }
+        y = Mth.clamp(y, level.getMinBuildHeight() + 1, level.getMaxBuildHeight() - RV_CLEAR_HEIGHT - 1);
+        GROUND_CACHE.put(key, y);
+        return y;
+    }
     /** 每 20 tick（1s）跑一次巡检：重生、强载跟随、坠坑回退。 */
     private static final int UPKEEP_INTERVAL = 20;
     /** 已扫除孤立房车的 Level（防每局多次全量扫描）。 */
@@ -243,7 +313,8 @@ public final class SixtySecondsRvSystem {
         team.rvForcedChunkZ = cur.z;
     }
 
-    /** 刷新点：ocean 模式用各队岛屿陆地落点；否则配置的 {@code rvSpawnPoints[index]} 优先，再回退住宅出生点旁。 */
+    /** 刷新点：ocean 模式用各队岛屿陆地落点；否则配置的 {@code rvSpawnPoints[index]} 优先，
+     *  再回退到<b>住宅/避难所墙体之外的地表</b>（房车宽 4.8、高 3.2，绝不能生成在房子内部）。 */
     private static BlockPos resolveSpawn(ServerLevel level, SixtySecondsConfig config,
             SixtySecondsState.Data data, SixtySecondsState.TeamData team, int index) {
         // ocean 模式优先用各队在岛屿陆地上的自动落点（已在 onGameStart 预计算，避水）
@@ -252,19 +323,201 @@ public final class SixtySecondsRvSystem {
             BlockPos safe = SixtySecondsSearchZones.findSafeSpot(level, spot);
             return safe != null ? safe : spot;
         }
-        if (config == null) {
-            return null;
-        }
-        if (config.rvSpawnPoints != null && index < config.rvSpawnPoints.size()
+        if (config != null && config.rvSpawnPoints != null && index < config.rvSpawnPoints.size()
                 && config.rvSpawnPoints.get(index) != null) {
             BlockPos configured = config.rvSpawnPoints.get(index).toBlockPos();
-            return SixtySecondsSearchZones.findSafeSpot(level, configured);
+            // 配置点是「人站得住」的坐标；房车体积远大于玩家，必须就近扩到能容纳车体的落点
+            return fitRvNear(level, configured);
         }
         if (team.residentialSpawn != null) {
-            // 兼容回退：在住宅出生点旁（避开门口正中）就近找一个双格净空、脚下有支撑的落点。
+            BlockPos outside = findOutsideRvSpot(level, team);
+            if (outside != null) {
+                return outside;
+            }
+            // 兜底：住宅外确实找不到（如结构体被地形完全包住）时，沿用旧行为在出生点旁落脚
             return SixtySecondsSearchZones.findSafeSpot(level, team.residentialSpawn.offset(3, 0, 3));
         }
         return null;
+    }
+
+    /**
+     * 在住宅/避难所<b>结构体之外的地表</b>找一个能容纳房车的落脚点。
+     *
+     * <p>此前直接用 {@link SixtySecondsSearchZones#findSafeSpot}（双格净空 + 脚下有支撑）而已，
+     * 而室内天然满足该条件，于是房车被生成在房子里。这里改为：
+     * <ol>
+     *   <li>取住宅/避难所范围盒（{@code residentialBox}/{@code shelterBox}）的并集作为结构体轮廓，
+     *       向外留 {@value #RV_STRUCTURE_MARGIN} 格间距——仅作快速预筛，跳过大量无谓的地形查询；</li>
+     *   <li>由内向外逐圈取候选 (x,z)，每根柱子用 LostCities 的地形基准高度
+     *       （{@link #baseGroundY}，自然地形/街道地面，不含建筑方块）定位地表；</li>
+     *   <li>校验车体放得下（先试 5×5 占地，再放宽到 3×3）——
+     *       这一步是真正判据：建筑物正上方会被建筑方块占满净空而落选，
+     *       所以在 LostCities 城市里房车只会停在街道上，绝不会上屋顶、也不会进室内。</li>
+     * </ol>
+     */
+    private static BlockPos findOutsideRvSpot(ServerLevel level, SixtySecondsState.TeamData team) {
+        BlockPos anchor = team.residentialSpawn;
+        if (anchor == null) {
+            return null;
+        }
+        AABB res = team.residentialBox;
+        AABB shel = team.shelterBox;
+        // 结构体轮廓：住宅与避难所的并集（二者可能不在同一处）
+        double minX = Math.min(res != null ? res.minX : anchor.getX(), shel != null ? shel.minX : anchor.getX());
+        double maxX = Math.max(res != null ? res.maxX : anchor.getX(), shel != null ? shel.maxX : anchor.getX());
+        double minZ = Math.min(res != null ? res.minZ : anchor.getZ(), shel != null ? shel.minZ : anchor.getZ());
+        double maxZ = Math.max(res != null ? res.maxZ : anchor.getZ(), shel != null ? shel.maxZ : anchor.getZ());
+        double topY = Math.max(res != null ? res.maxY : anchor.getY(), shel != null ? shel.maxY : anchor.getY());
+        double bottomY = Math.min(res != null ? res.minY : anchor.getY(), shel != null ? shel.minY : anchor.getY());
+        if (res == null && shel == null) {
+            // 没有范围盒（老存档/跳过建图）时，按出生点周围兜底成一个假想结构体
+            minX = anchor.getX() - 6; maxX = anchor.getX() + 7;
+            minZ = anchor.getZ() - 6; maxZ = anchor.getZ() + 7;
+            topY = anchor.getY() + 5; bottomY = anchor.getY() - 5;
+        }
+
+        int cx = (int) Math.floor((minX + maxX) / 2.0);
+        int cz = (int) Math.floor((minZ + maxZ) / 2.0);
+        int halfX = (int) Math.ceil((maxX - minX) / 2.0);
+        int halfZ = (int) Math.ceil((maxZ - minZ) / 2.0);
+        beginGroundCache();
+
+        for (int ring = RV_STRUCTURE_MARGIN; ring <= RV_STRUCTURE_MARGIN + RV_SEARCH_RINGS; ring++) {
+            BlockPos best = null;
+            double bestDist = Double.MAX_VALUE;
+            int ex = halfX + ring;
+            int ez = halfZ + ring;
+            for (int dx = -ex; dx <= ex; dx++) {
+                for (int dz = -ez; dz <= ez; dz++) {
+                    // 只取当前圈的外沿，内圈上一轮已经试过
+                    if (Math.abs(dx) < ex && Math.abs(dz) < ez) {
+                        continue;
+                    }
+                    int x = cx + dx;
+                    int z = cz + dz;
+                    BlockPos feet = surfaceAt(level, x, z);
+                    if (feet == null) {
+                        continue;
+                    }
+                    // 落点高度仍落在结构体竖向区间内 → 多半是楼板/屋顶，跳过。
+                    // 水平「结构体外」判定只作快速预筛，真正的判据是 fitsRv 的车体净空校验。
+                    if (feet.getY() + RV_CLEAR_HEIGHT > bottomY && feet.getY() < topY
+                            && x >= minX - RV_STRUCTURE_MARGIN && x < maxX + RV_STRUCTURE_MARGIN
+                            && z >= minZ - RV_STRUCTURE_MARGIN && z < maxZ + RV_STRUCTURE_MARGIN) {
+                        continue;
+                    }
+                    if (!fitsRv(level, feet, 2) && !fitsRv(level, feet, 1)) {
+                        continue;
+                    }
+                    double d = feet.distSqr(anchor);
+                    if (d < bestDist) {
+                        bestDist = d;
+                        best = feet;
+                    }
+                }
+            }
+            if (best != null) {
+                return best;
+            }
+        }
+        return null;
+    }
+
+    /** 配置刷新点：若原地放不下车体，就近向外找一个能容纳车体的地表落点。 */
+    private static BlockPos fitRvNear(ServerLevel level, BlockPos target) {
+        BlockPos base = SixtySecondsSearchZones.findSafeSpot(level, target);
+        if (base != null && (fitsRv(level, base, 2) || fitsRv(level, base, 1))) {
+            return base;
+        }
+        beginGroundCache();
+        for (int ring = 2; ring <= 12; ring++) {
+            for (int dx = -ring; dx <= ring; dx++) {
+                for (int dz = -ring; dz <= ring; dz++) {
+                    if (Math.max(Math.abs(dx), Math.abs(dz)) < ring) {
+                        continue; // 只扫当前圈外沿
+                    }
+                    BlockPos feet = surfaceAt(level, target.getX() + dx, target.getZ() + dz);
+                    if (feet != null && (fitsRv(level, feet, 2) || fitsRv(level, feet, 1))) {
+                        return feet;
+                    }
+                }
+            }
+        }
+        return base;
+    }
+
+    /**
+     * 求该列的落脚点：以 LostCities 的<b>地形基准高度</b>为锚，就近微调到真实表面。
+     *
+     * <p>{@link #baseGroundY} 给出的是自然地形（街道地面）的站立高度。真实表面可能因
+     * 废墟残骸略高、因战损坑洞略低，故以基准为中心在
+     * {@code [base - RV_SCAN_BELOW, base + RV_SCAN_ABOVE]} 内找离基准最近的可站立位，
+     * <b>先向上、后向下</b>：
+     * <ol>
+     *   <li><b>向上</b>：基准位被残骸/车辆占据时抬到杂物顶面（最多抬 {@value #RV_SCAN_ABOVE} 格）；
+     *       基准位本身空着则直接命中——这是绝大多数情况；</li>
+     *   <li><b>向下</b>：向上整段都被实心塞满（基准被埋），或街道被炸穿形成坑洞时，
+     *       往下落到坑底的支撑面上（最多降 {@value #RV_SCAN_BELOW} 格）。</li>
+     * </ol>
+     * 关键是<b>绝不会扫到屋顶</b>——锚点只认自然地形，
+     * 而建筑方块不属于地形，向上 8 格已是放宽上限（车高也就 3.2 格）。</p>
+     */
+    private static BlockPos surfaceAt(ServerLevel level, int x, int z) {
+        int base = baseGroundY(level, x, z);
+        int below = Math.max(base - RV_SCAN_BELOW, level.getMinBuildHeight() + 1);
+        int above = Math.min(base + RV_SCAN_ABOVE, level.getMaxBuildHeight() - RV_CLEAR_HEIGHT - 1);
+
+        BlockPos.MutableBlockPos p = new BlockPos.MutableBlockPos();
+        // 1) 先向上：基准位空着则直接命中；被占则抬到杂物顶面
+        for (int feetY = base; feetY <= above; feetY++) {
+            if (canStandAt(level, p, x, feetY, z)) {
+                return new BlockPos(x, feetY, z);
+            }
+        }
+        // 2) 再向下：向上整段被埋 / 街道被炸穿时，落到坑底的支撑面上
+        for (int feetY = base - 1; feetY >= below; feetY--) {
+            if (canStandAt(level, p, x, feetY, z)) {
+                return new BlockPos(x, feetY, z);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 该站立位是否可用：<b>脚下一格</b>实心、无流体、有碰撞体（撑得住车），
+     * 且<b>站立位本身</b>无碰撞体（车放得进去）。车体净空由 {@link #fitsRv} 另行校验。
+     */
+    private static boolean canStandAt(ServerLevel level, BlockPos.MutableBlockPos p, int x, int feetY, int z) {
+        p.set(x, feetY - 1, z);
+        BlockState ground = level.getBlockState(p);
+        if (ground.isAir() || !ground.getFluidState().isEmpty()
+                || ground.getCollisionShape(level, p).isEmpty()) {
+            return false;
+        }
+        p.set(x, feetY, z);
+        return level.getBlockState(p).getCollisionShape(level, p).isEmpty();
+    }
+
+    /**
+     * 该落点能否容纳车体：{@code (2*radius+1)}² 底面 × {@value #RV_CLEAR_HEIGHT} 格净空（无碰撞、无流体），
+     * 且脚下中心格实心无流体。
+     */
+    private static boolean fitsRv(ServerLevel level, BlockPos feet, int radius) {
+        BlockPos.MutableBlockPos p = new BlockPos.MutableBlockPos();
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                for (int dy = 0; dy < RV_CLEAR_HEIGHT; dy++) {
+                    p.set(feet.getX() + dx, feet.getY() + dy, feet.getZ() + dz);
+                    BlockState s = level.getBlockState(p);
+                    if (!s.getFluidState().isEmpty() || !s.getCollisionShape(level, p).isEmpty()) {
+                        return false;
+                    }
+                }
+            }
+        }
+        p.set(feet.getX(), feet.getY() - 1, feet.getZ());
+        BlockState below = level.getBlockState(p);
+        return below.getFluidState().isEmpty() && !below.getCollisionShape(level, p).isEmpty();
     }
 
     /** ocean 模式：在岛屿陆地（避水）上找一个双格净空、脚下有支撑的房车落点。 */

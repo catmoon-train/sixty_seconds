@@ -6,8 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.entity.player.Inventory;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,7 +22,7 @@ public abstract class MinecraftMixin {
 
     @Inject(method = "setScreen", at = @At("HEAD"), cancellable = true)
     private void sixtySecondsReplaceInventoryScreen(Screen screen, CallbackInfo ci) {
-        if (!(screen instanceof InventoryScreen inv)) {
+        if (!(screen instanceof InventoryScreen)) {
             return;
         }
         Minecraft mc = (Minecraft) (Object) this;
@@ -39,9 +37,7 @@ public abstract class MinecraftMixin {
         if (!restricted) {
             return;
         }
-        InventoryMenu menu = inv.getMenu();
-        Screen replacement = new SixtySecondsInventoryScreen(
-                menu, player.getInventory(), Component.translatable("container.inventory"));
+        Screen replacement = new SixtySecondsInventoryScreen(player);
         ci.cancel();
         mc.setScreen(replacement); // 递归调用：replacement 非 InventoryScreen，不会再次拦截
     }
