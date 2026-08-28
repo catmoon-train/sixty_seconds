@@ -224,6 +224,7 @@
   "tooltip.sixty_seconds.sixty_seconds_battery": "Battery. Right-click the generator for 120s of power. Also recharges the flashlight.",
   "tooltip.sixty_seconds.sixty_seconds_flashlight": "Flashlight. Held: night vision + immunity to whisper drain. Right-click: a beam that dispels nearby whisperers (costs 50 charge, ~3 uses).",
   "tooltip.sixty_seconds.sixty_seconds_torch": "Torch. Simple lighting.",
+  "tooltip.sixty_seconds.sixty_seconds.sleep_avoid_unease": "Held while sleeping to avoid unease during sleep",
   "tooltip.sixty_seconds.sixty_seconds_clock": "Clock. Shows the current time and day phase.",
   "tooltip.sixty_seconds.sixty_seconds_wrench": "Wrench. Repairs machines and reinforces the door.",
   "tooltip.sixty_seconds.sixty_seconds_pipe": "Metal pipe. Improvised weapon or building material.",

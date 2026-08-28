@@ -201,6 +201,7 @@
   "tooltip.sixty_seconds.sixty_seconds_battery": "電池，右鍵發電機供電 120 秒，也可為手電充能。",
   "tooltip.sixty_seconds.sixty_seconds_flashlight": "手電筒。手持：夜視 + 免疫低語侵蝕；右鍵：強光驅散周圍低語怪（耗 50 電量，約 3 次）。",
   "tooltip.sixty_seconds.sixty_seconds_torch": "火把，簡易照明。",
+  "tooltip.sixty_seconds.sixty_seconds.sleep_avoid_unease": "拿在手上睡覺可以避免睡覺時的不安",
   "tooltip.sixty_seconds.sixty_seconds_clock": "時鐘，查看當前時間與晝夜相位。",
   "tooltip.sixty_seconds.sixty_seconds_wrench": "扳手，維修機械、加固家門。",
   "tooltip.sixty_seconds.sixty_seconds_pipe": "鐵管，可作近戰武器或建材。",
