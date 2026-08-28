@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.bridge.client.CommonHudRenderCallback;
-import net.exmo.sixty_seconds.client.SixtySecondsClientConfig;
+import net.exmo.sixty_seconds.weather.WeatherVisualConfig;
 
 /**
  * 末日60秒模式 HUD：<b>血条（居中、紧贴物品栏）</b> + <b>右中下角状态竖排</b> + <b>左上角时间信息</b>。
@@ -291,7 +291,7 @@ public final class SixtySecondsHud {
         int panelH = PAD + STAT_COUNT * ROW_H + (STAT_COUNT - 1) * ROW_GAP_V + PAD;
 
         // 状态栏位置：默认左侧（左中侧），可在客户端配置 hudSide 切换为右侧
-        boolean left = SixtySecondsClientConfig.isLeft();
+        boolean left = WeatherVisualConfig.isHudLeft();
         int panelX = left ? statsRight : screenW - statsRight - panelW;
         int panelY = (screenH - panelH) / 2;
 

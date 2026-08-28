@@ -10,6 +10,7 @@ import net.exmo.sixty_seconds.bridge.fabric.HudRenderCallback;
 import net.exmo.sixty_seconds.client.SixtySecondsHud;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
