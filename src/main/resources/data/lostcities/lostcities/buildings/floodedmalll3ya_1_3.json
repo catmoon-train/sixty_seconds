@@ -30,15 +30,15 @@
   ],
   "parts2": [
     {
-      "part": "lostcities:floodedmalll3ya_1_3_1_parts2",
+      "part": "floodedmalll3ya_1_3_1_parts2",
       "floor": 0
     },
     {
-      "part": "lostcities:floodedmalll3ya_1_3_2_parts2",
+      "part": "floodedmalll3ya_1_3_2_parts2",
       "floor": 1
     },
     {
-      "part": "lostcities:floodedmalll3ya_1_3_3_parts2",
+      "part": "floodedmalll3ya_1_3_3_parts2",
       "floor": 2
     }
   ]

@@ -53,11 +53,11 @@
   ],
   "parts2": [
     {
-      "part": "lostcities:massivebuildingwithhelicopter_0_1_0_parts2",
+      "part": "massivebuildingwithhelicopter_0_1_0_parts2",
       "floor": 0
     },
     {
-      "part": "lostcities:massivebuildingwithhelicopter_0_1_2_parts2",
+      "part": "massivebuildingwithhelicopter_0_1_2_parts2",
       "floor": 2
     }
   ]

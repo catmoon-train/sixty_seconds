@@ -25,19 +25,19 @@
   ],
   "parts2": [
     {
-      "part": "lostcities:bufschooll3ya_5_1_0_parts2",
+      "part": "bufschooll3ya_5_1_0_parts2",
       "floor": 0
     },
     {
-      "part": "lostcities:bufschooll3ya_5_1_1_parts2",
+      "part": "bufschooll3ya_5_1_1_parts2",
       "floor": 1
     },
     {
-      "part": "lostcities:bufschooll3ya_5_1_2_parts2",
+      "part": "bufschooll3ya_5_1_2_parts2",
       "floor": 2
     },
     {
-      "part": "lostcities:bufschooll3ya_5_1_3_parts2",
+      "part": "bufschooll3ya_5_1_3_parts2",
       "floor": 3
     }
   ]

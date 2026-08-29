@@ -46,15 +46,15 @@
   ],
   "parts2": [
     {
-      "part": "lostcities:bigmall_4_4_2_parts2",
+      "part": "bigmall_4_4_2_parts2",
       "floor": 0
     },
     {
-      "part": "lostcities:bigmall_4_4_4_parts2",
+      "part": "bigmall_4_4_4_parts2",
       "floor": 2
     },
     {
-      "part": "lostcities:bigmall_4_4_5_parts2",
+      "part": "bigmall_4_4_5_parts2",
       "floor": 3
     }
   ]

@@ -1,0 +1,209 @@
+{
+  "outsidestyle": "outside",
+  "settings": {
+    "railwayavoidance": "ignore",
+    "railpartheight6": 1
+  },
+  "multisettings": {
+    "areasize": 10,
+    "minimum": 1,
+    "maximum": 5,
+    "correctstylefactor": 0.8,
+    "attempts": 50
+  },
+  "scattered": {
+    "areasize": 8,
+    "chance": 0.7,
+    "weightnone": 30,
+    "list": [
+      {
+        "name": "radiotower",
+        "weight": 15,
+        "maxheightdiff": 3,
+        "biomes": {
+          "excluding": [
+            "#minecraft:is_ocean",
+            "#minecraft:is_river",
+            "#minecraft:is_beach"
+          ]
+        }
+      },
+      {
+        "name": "oilrig",
+        "weight": 4,
+        "maxheightdiff": 100,
+        "biomes": {
+          "if_any": [
+            "#minecraft:is_deep_ocean"
+          ]
+        }
+      },
+      {
+        "name": "cabin",
+        "weight": 10,
+        "maxheightdiff": 2,
+        "biomes": {
+          "excluding": [
+            "#minecraft:is_ocean",
+            "#minecraft:is_river",
+            "#minecraft:is_beach"
+          ]
+        }
+      },
+      {
+        "name": "highway_gas_station",
+        "weight": 12,
+        "nearhighway": true,
+        "maxheightdiff": 12,
+        "biomes": {
+          "excluding": [
+            "#minecraft:is_ocean",
+            "#minecraft:is_river",
+            "#minecraft:is_beach"
+          ]
+        }
+      },
+      {
+        "name": "highway_restaurant",
+        "weight": 9,
+        "nearhighway": true,
+        "maxheightdiff": 12,
+        "biomes": {
+          "excluding": [
+            "#minecraft:is_ocean",
+            "#minecraft:is_river",
+            "#minecraft:is_beach"
+          ]
+        }
+      },
+      {
+        "name": "crashedhelicopter2",
+        "weight": 15,
+        "maxheightdiff": 2,
+        "biomes": {
+          "excluding": [
+            "#minecraft:is_ocean",
+            "#minecraft:is_river",
+            "#minecraft:is_beach"
+          ]
+        }
+      },
+      {
+        "name": "scatteredhouse2",
+        "weight": 12,
+        "maxheightdiff": 3,
+        "biomes": {
+          "excluding": [
+            "#minecraft:is_ocean",
+            "#minecraft:is_river",
+            "#minecraft:is_beach"
+          ]
+        }
+      },
+      {
+        "name": "radio_tower1",
+        "weight": 10,
+        "maxheightdiff": 6,
+        "biomes": {
+          "excluding": [
+            "#minecraft:is_ocean",
+            "#minecraft:is_river",
+            "#minecraft:is_beach"
+          ]
+        }
+      },
+      {
+        "name": "radio_tower2",
+        "weight": 8,
+        "maxheightdiff": 5,
+        "biomes": {
+          "excluding": [
+            "#minecraft:is_ocean",
+            "#minecraft:is_river",
+            "#minecraft:is_beach"
+          ]
+        }
+      },
+      {
+        "name": "watch_tower1",
+        "weight": 10,
+        "maxheightdiff": 6,
+        "biomes": {
+          "excluding": [
+            "#minecraft:is_ocean",
+            "#minecraft:is_river",
+            "#minecraft:is_beach"
+          ]
+        }
+      },
+      {
+        "name": "l3ya_spruceforest_cabin_1",
+        "weight": 6,
+        "maxheightdiff": 2,
+        "biomes": {
+          "excluding": [
+            "#minecraft:is_ocean",
+            "#minecraft:is_river",
+            "#minecraft:is_beach"
+          ]
+        }
+      },
+      {
+        "name": "observatory",
+        "weight": 2,
+        "maxheightdiff": 3,
+        "biomes": {
+          "excluding": [
+            "#minecraft:is_ocean",
+            "#minecraft:is_river",
+            "#minecraft:is_beach"
+          ]
+        }
+      },
+      {
+        "name": "aircraftcarrier2",
+        "weight": 2,
+        "maxheightdiff": 50,
+        "biomes": {
+          "if_any": [
+            "#minecraft:is_ocean"
+          ]
+        }
+      }
+    ]
+  },
+  "citybiomemultipliers": [
+    {
+      "multiplier": 0.1,
+      "biomes": {
+        "if_any": [
+          "#minecraft:is_ocean"
+        ]
+      }
+    },
+    {
+      "multiplier": 0.3,
+      "biomes": {
+        "if_any": [
+          "#minecraft:is_river"
+        ]
+      }
+    }
+  ],
+  "citystyles": [
+    {
+      "factor": 0.5,
+      "citystyle": "citystyle_standard"
+    },
+    {
+      "factor": 9.0,
+      "biomes": {
+        "if_any": [
+          "minecraft:desert",
+          "minecraft:badlands"
+        ]
+      },
+      "citystyle": "citystyle_desert"
+    }
+  ]
+}

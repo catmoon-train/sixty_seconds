@@ -125,6 +125,114 @@
       {
         "factor": 0.05,
         "value": "huge2"
+      },
+      {
+        "factor": 0.15,
+        "value": "mbd"
+      },
+      {
+        "factor": 0.005,
+        "value": "tallbuilding2"
+      },
+      {
+        "factor": 0.02,
+        "value": "firestation12"
+      },
+      {
+        "factor": 0.05,
+        "value": "smallshop"
+      },
+      {
+        "factor": 0.005,
+        "value": "massivebuildingwithhelicopter"
+      },
+      {
+        "factor": 0.05,
+        "value": "4buildingsrow"
+      },
+      {
+        "factor": 0.02,
+        "value": "observatory"
+      },
+      {
+        "factor": 0.005,
+        "value": "mediumbuildingczp1"
+      },
+      {
+        "factor": 0.005,
+        "value": "skyscraper"
+      },
+      {
+        "factor": 0.005,
+        "value": "skyscraper1"
+      },
+      {
+        "factor": 0.005,
+        "value": "hugebuilding1"
+      },
+      {
+        "factor": 0.05,
+        "value": "gasstation1"
+      },
+      {
+        "factor": 0.005,
+        "value": "hugebuilding2"
+      },
+      {
+        "factor": 0.025,
+        "value": "shop2"
+      },
+      {
+        "factor": 0.01,
+        "value": "shop3"
+      },
+      {
+        "factor": 0.05,
+        "value": "walmart2"
+      },
+      {
+        "factor": 0.0005,
+        "value": "gianthospital"
+      },
+      {
+        "factor": 0.01,
+        "value": "bigmall"
+      },
+      {
+        "factor": 0.01,
+        "value": "policestation"
+      },
+      {
+        "factor": 0.005,
+        "value": "tv_tower"
+      },
+      {
+        "factor": 0.002,
+        "value": "wd1imp"
+      },
+      {
+        "factor": 0.25,
+        "value": "subhousel3ya_1_2_combo"
+      },
+      {
+        "factor": 0.15,
+        "value": "subhousel3ya_3_bend_street"
+      },
+      {
+        "factor": 0.15,
+        "value": "subhousel3ya_4_and_5_combo"
+      },
+      {
+        "factor": 0.15,
+        "value": "subhousel3ya_3_6_7_8_9_structurebundel"
+      },
+      {
+        "factor": 0.1,
+        "value": "floodedmalll3ya"
+      },
+      {
+        "factor": 0.01,
+        "value": "bufschooll3ya"
       }
     ],
     "bridges": [

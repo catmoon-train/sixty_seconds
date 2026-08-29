@@ -33,11 +33,11 @@
   ],
   "parts2": [
     {
-      "part": "lostcities:mbd_2_7_0_parts2",
+      "part": "mbd_2_7_0_parts2",
       "floor": 0
     },
     {
-      "part": "lostcities:mbd_2_7_3_parts2",
+      "part": "mbd_2_7_3_parts2",
       "floor": 3
     }
   ]

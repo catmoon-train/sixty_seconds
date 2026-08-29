@@ -21,11 +21,11 @@
   ],
   "parts2": [
     {
-      "part": "lostcities:shop2_3_1_0_parts2",
+      "part": "shop2_3_1_0_parts2",
       "floor": 0
     },
     {
-      "part": "lostcities:shop2_3_1_1_parts2",
+      "part": "shop2_3_1_1_parts2",
       "floor": 1
     }
   ]

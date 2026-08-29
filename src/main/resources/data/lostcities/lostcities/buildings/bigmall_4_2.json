@@ -47,10 +47,10 @@
   "parts2": [
     {
       "cellar": true,
-      "part": "lostcities:bigmall_4_2_1_parts2"
+      "part": "bigmall_4_2_1_parts2"
     },
     {
-      "part": "lostcities:bigmall_4_2_2_parts2",
+      "part": "bigmall_4_2_2_parts2",
       "floor": 0
     }
   ]

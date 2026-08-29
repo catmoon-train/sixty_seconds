@@ -97,11 +97,11 @@
   ],
   "parts2": [
     {
-      "part": "lostcities:skyscraper_1_0_0_parts2",
+      "part": "skyscraper_1_0_0_parts2",
       "floor": 0
     },
     {
-      "part": "lostcities:skyscraper_1_0_15_parts2",
+      "part": "skyscraper_1_0_15_parts2",
       "floor": 15
     }
   ]

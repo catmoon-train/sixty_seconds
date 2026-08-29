@@ -29,15 +29,15 @@
   ],
   "parts2": [
     {
-      "part": "lostcities:policestation_1_1_0_parts2",
+      "part": "policestation_1_1_0_parts2",
       "floor": 0
     },
     {
-      "part": "lostcities:policestation_1_1_2_parts2",
+      "part": "policestation_1_1_2_parts2",
       "floor": 2
     },
     {
-      "part": "lostcities:policestation_1_1_3_parts2",
+      "part": "policestation_1_1_3_parts2",
       "floor": 3
     }
   ]
