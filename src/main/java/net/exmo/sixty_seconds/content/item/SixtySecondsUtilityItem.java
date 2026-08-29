@@ -116,11 +116,10 @@ public class SixtySecondsUtilityItem extends Item {
         if (home == null) {
             home = team.shelterSpawn;
         }
-        // 房车模式：罗盘优先指向本队房车
+        // 求生罗盘优先指向本队房车：只要本队存在房车实体（普通房车模式或海洋模式）即指向它，
+        // 无房车（房车模式未开启）时回退到归队门/避难所出生点。
         net.minecraft.server.level.ServerLevel level = player.serverLevel();
-        net.exmo.sixty_seconds.config.SixtySecondsConfig cfg =
-                net.exmo.sixty_seconds.config.SixtySecondsConfigStore.current(level).orElse(null);
-        if (cfg != null && cfg.rvEnabled && team.rvEntityUuid != null) {
+        if (team.rvEntityUuid != null) {
             net.minecraft.world.entity.Entity rv = level.getEntity(team.rvEntityUuid);
             if (rv != null) {
                 home = rv.blockPosition();
