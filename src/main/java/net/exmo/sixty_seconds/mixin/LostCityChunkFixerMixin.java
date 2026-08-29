@@ -1,5 +1,6 @@
 package net.exmo.sixty_seconds.mixin;
 
+import mcjty.lostcities.api.ILostChunkInfo;
 import mcjty.lostcities.worldgen.ChunkFixer;
 import mcjty.lostcities.worldgen.LostCityTerrainFeature;
 import mcjty.lostcities.varia.ChunkCoord;
@@ -74,7 +75,10 @@ public class LostCityChunkFixerMixin {
         // 物资箱专用星级：已知建筑用原映射；安全区/撤离点返回 0（不撒箱）；
         // 其余「位于城市建筑内但未登记」的建筑给默认星级——否则 LostCities 绝大多数建筑类型不在白名单里
         // 会被整栋跳过，导致「大多数建筑没有物资箱」。
-        int star = SixtySecondsLostCitiesStarMap.lootStarForBuildingName(name);
+        ILostChunkInfo.MultiBuildingInfo multiBuilding = info.getMultiBuildingInfo();
+        int star = multiBuilding != null
+                ? SixtySecondsLostCitiesStarMap.lootStarForMultiBuilding(multiBuilding.buildingType().toString())
+                : SixtySecondsLostCitiesStarMap.lootStarForBuildingName(name);
         if (star <= 0) {
             return;
         }

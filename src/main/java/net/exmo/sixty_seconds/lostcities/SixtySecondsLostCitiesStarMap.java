@@ -515,15 +515,11 @@ public final class SixtySecondsLostCitiesStarMap {
         if (chunk == null || !chunk.isCity()) {
             return NO_STAR;
         }
-        // 多区块建筑优先判定 5 星（无论其内部 chunk 归属哪个 building part）；
-        // 但 lcmt 的功能型 multibuilding 需按类型细分（library/shopping/townhall 为 4 星）。
+        // 多区块建筑按 multibuilding 的 id 判定星级（不是子块 id，见 starForMultiBuilding 注释）；
+        // lcmt 的功能型 multibuilding 细分为 4/5 星，LCE/LCE2 按 BUILDING_STARS 登记的父名细分，其余兜底 5 星。
         ILostChunkInfo.MultiBuildingInfo multiBuilding = chunk.getMultiBuildingInfo();
         if (multiBuilding != null) {
-            Integer lcmtMultiStar = LCMT_MULTI_BUILDING_STARS.get(multiBuilding.buildingType().toString());
-            if (lcmtMultiStar != null) {
-                return lcmtMultiStar;
-            }
-            return MULTI_BUILDING_STAR;
+            return starForMultiBuilding(multiBuilding.buildingType().toString());
         }
         // 普通建筑：按名称映射
         ResourceLocation id = chunk.getBuildingId();
@@ -583,6 +579,36 @@ public final class SixtySecondsLostCitiesStarMap {
     }
 
     /**
+     * 多区块建筑（multibuilding）的星级（1..5）。
+     *
+     * <p><b>为什么不能用子块的 buildingId 查表</b>：LCE/LCE2 数据包的建筑<b>全部</b>以 multibuilding 形式
+     * 组织——每一个 multibuilding（如 {@code lce:skyscraper}）由若干 {@code _行_列} 子块构成
+     * （{@code lce:skyscraper_0_0}、{@code _0_1}、{@code _1_0}、{@code _1_1}）。
+     * LostCities 的 {@code ILostChunkInfo#getBuildingId()} 返回的是<b>子块</b> id，
+     * 而 {@code #getMultiBuildingInfo()#buildingType()} 返回的是<b>父</b> id。
+     * {@link #BUILDING_STARS} 中 {@code lce:*} / {@code lce2:*} 登记的是<b>父名</b>，
+     * 因此必须用 multibuilding id 查表，拿子块 id 精确匹配永远命中不了。
+     *
+     * <p>lcmt 的功能型 multibuilding 细分为 4/5 星（见 {@link #LCMT_MULTI_BUILDING_STARS}）；
+     * 其余未登记的 multibuilding 统一 {@link #MULTI_BUILDING_STAR}。
+     */
+    public static int starForMultiBuilding(String multiBuildingId) {
+        if (multiBuildingId == null) {
+            return MULTI_BUILDING_STAR;
+        }
+        String name = multiBuildingId.toLowerCase(Locale.ROOT);
+        Integer lcmtStar = LCMT_MULTI_BUILDING_STARS.get(name);
+        if (lcmtStar != null) {
+            return lcmtStar;
+        }
+        Integer star = BUILDING_STARS.get(name);
+        if (star != null) {
+            return star;
+        }
+        return MULTI_BUILDING_STAR;
+    }
+
+    /**
      * 物资箱生成专用星级（与 {@link #starAt} 的危险等级语义解耦）：
      * <ul>
      *   <li>已知建筑 → 返回其原映射星级（1..5）；</li>
@@ -600,6 +626,22 @@ public final class SixtySecondsLostCitiesStarMap {
         }
         if (s == UNGRADED) {
             return isEvacuationBuildingName(buildingName) ? 0 : DEFAULT_BUILDING_STAR;
+        }
+        return s;
+    }
+
+    /**
+     * 物资箱生成专用星级（多区块建筑版本）。
+     *
+     * <p>LCE/LCE2 的建筑全部是 multibuilding，{@code BuildingInfo#getBuildingId()} 给的是子块名
+     * （{@code lce:skyscraper_0_0}），若拿它走 {@link #lootStarForBuildingName} 会因精确匹配失败而落到
+     * {@link #DEFAULT_BUILDING_STAR} 兜底，导致整栋楼的星级细分失效（全部一样）。
+     * 这里改用 multibuilding 父名（{@code lce:skyscraper}）查表，与 {@link #starForMultiBuilding} 一致。
+     */
+    public static int lootStarForMultiBuilding(String multiBuildingId) {
+        int s = starForMultiBuilding(multiBuildingId);
+        if (s < 1) {
+            return DEFAULT_BUILDING_STAR;
         }
         return s;
     }
@@ -946,12 +988,26 @@ public final class SixtySecondsLostCitiesStarMap {
                 if (c == null || !c.isCity() || c.getBuildingId() == null) {
                     continue;
                 }
-                String id = c.getBuildingId().toString();
-                int star = starForBuildingName(id);
+                // 区域标识与星级：
+                //  · 多区块建筑（LCE/LCE2 的 lce:skyscraper 等）各子块 buildingId 互不相同
+                //    （_0_0 / _0_1 / _1_0 / _1_1），必须整体按 multibuilding 的父 id 处理——
+                //    否则既查不到星级映射（表里登记的是父名），又会被洪泛切成若干碎片区域。
+                //  · 普通建筑直接用 buildingId。
+                String regionKey = regionKeyOf(c);
+                ILostChunkInfo.MultiBuildingInfo mb = c.getMultiBuildingInfo();
+                String id;
+                int star;
+                if (mb != null) {
+                    id = mb.buildingType().toString();
+                    star = starForMultiBuilding(id);
+                } else {
+                    id = c.getBuildingId().toString();
+                    star = starForBuildingName(id);
+                }
                 if (star < 1 || star > 5) {
                     continue; // 仅危险度 1~5 的建筑上图（安全区/撤离点等不含星级）
                 }
-                // 洪泛填充：收集与当前 chunk 连通、且建筑 id 相同的所有已加载 chunk
+                // 洪泛填充：收集与当前 chunk 连通、且属于同一栋楼的所有已加载 chunk
                 int minCX = cx, minCZ = cz, maxCX = cx, maxCZ = cz;
                 Deque<long[]> stack = new ArrayDeque<>();
                 stack.push(new long[]{cx, cz});
@@ -976,7 +1032,7 @@ public final class SixtySecondsLostCitiesStarMap {
                         if (nc == null || !nc.isCity() || nc.getBuildingId() == null) {
                             continue;
                         }
-                        if (!nc.getBuildingId().toString().equals(id)) {
+                        if (!regionKeyOf(nc).equals(regionKey)) {
                             continue;
                         }
                         stack.push(new long[]{nx, nz});
@@ -990,5 +1046,18 @@ public final class SixtySecondsLostCitiesStarMap {
             }
         }
         return result;
+    }
+
+    /**
+     * 区块所属「一栋楼」的标识：多区块建筑用其 multibuilding 父 id，普通建筑用 buildingId。
+     * 用于星图洪泛填充时判断两个 chunk 是否属于同一栋建筑。
+     */
+    private static String regionKeyOf(ILostChunkInfo chunk) {
+        ILostChunkInfo.MultiBuildingInfo mb = chunk.getMultiBuildingInfo();
+        if (mb != null) {
+            return "m:" + mb.buildingType();
+        }
+        ResourceLocation id = chunk.getBuildingId();
+        return "b:" + (id == null ? "" : id);
     }
 }
