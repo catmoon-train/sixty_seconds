@@ -841,7 +841,41 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("lce2:scattered_watertank", "scat_watertank"),
             Map.entry("lce2:wind_mill", "scat_windmill"),
             Map.entry("lce2:warship", "ship_warship"),
-            Map.entry("lce2:mega_platform", "offshore_mega_platform")
+            Map.entry("lce2:mega_platform", "offshore_mega_platform"),
+            // ---- lostcities-modern-tweaks（lcmt）建筑显示名：避免回退成裸 id（如 factory/factory_00）----
+            Map.entry("lcmt:factory/factory_00", "lcmt_fac_00"),
+            Map.entry("lcmt:factory/factory_01", "lcmt_fac_01"),
+            Map.entry("lcmt:factory/factory_02", "lcmt_fac_02"),
+            Map.entry("lcmt:factory/factory_10", "lcmt_fac_10"),
+            Map.entry("lcmt:factory/factory_11", "lcmt_fac_11"),
+            Map.entry("lcmt:factory/factory_12", "lcmt_fac_12"),
+            Map.entry("lcmt:center", "lcmt_center"),
+            Map.entry("lcmt:factory", "lcmt_factory"),
+            Map.entry("lcmt:library", "lcmt_library"),
+            Map.entry("lcmt:shopping", "lcmt_shopping"),
+            Map.entry("lcmt:shopping_open", "lcmt_shopping_open"),
+            Map.entry("lcmt:townhall", "lcmt_townhall"),
+            // ---- lcmt 子建筑（裸名含子目录，需全名映射避免回退成 center/center00 等）----
+            Map.entry("lcmt:center/center00", "lcmt_center_00"),
+            Map.entry("lcmt:center/center01", "lcmt_center_01"),
+            Map.entry("lcmt:center/center10", "lcmt_center_10"),
+            Map.entry("lcmt:center/center11", "lcmt_center_11"),
+            Map.entry("lcmt:library/library00", "lcmt_lib_00"),
+            Map.entry("lcmt:library/library01", "lcmt_lib_01"),
+            Map.entry("lcmt:library/library10", "lcmt_lib_10"),
+            Map.entry("lcmt:library/library11", "lcmt_lib_11"),
+            Map.entry("lcmt:shopping/shopping00", "lcmt_shop_00"),
+            Map.entry("lcmt:shopping/shopping01", "lcmt_shop_01"),
+            Map.entry("lcmt:shopping/shopping10", "lcmt_shop_10"),
+            Map.entry("lcmt:shopping/shopping11", "lcmt_shop_11"),
+            Map.entry("lcmt:shopping/shopping_open00", "lcmt_shopopen_00"),
+            Map.entry("lcmt:shopping/shopping_open01", "lcmt_shopopen_01"),
+            Map.entry("lcmt:shopping/shopping_open10", "lcmt_shopopen_10"),
+            Map.entry("lcmt:shopping/shopping_open11", "lcmt_shopopen_11"),
+            Map.entry("lcmt:townhall/town00", "lcmt_town_00"),
+            Map.entry("lcmt:townhall/town01", "lcmt_town_01"),
+            Map.entry("lcmt:townhall/town10", "lcmt_town_10"),
+            Map.entry("lcmt:townhall/town11", "lcmt_town_11")
     );
 
     /** 建筑 id（LostCities 资源文件名，含命名空间）→ 翻译键；未知 id 原样返回（兜底）。 */
