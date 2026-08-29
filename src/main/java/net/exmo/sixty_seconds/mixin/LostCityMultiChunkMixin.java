@@ -63,7 +63,7 @@ public class LostCityMultiChunkMixin {
     @Redirect(method = "getOrCreate",
             at = @At(value = "INVOKE",
                     target = "Lmcjty/lostcities/worldgen/lost/regassets/data/MultiSettings;areasize()I"))
-    private int sixtySecondsEnlargeAreasize(MultiSettings settings) {
+    private static int sixtySecondsEnlargeAreasize(MultiSettings settings) {
         return Math.max(settings.areasize(), MIN_AREASIZE);
     }
 
