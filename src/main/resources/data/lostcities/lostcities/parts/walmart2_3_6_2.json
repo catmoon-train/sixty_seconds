@@ -1,0 +1,166 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:white_stained_glass"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:smooth_stone"
+      },
+      {
+        "char": "头",
+        "block": "minecraft:rail[shape=south_east,waterlogged=false]"
+      },
+      {
+        "char": "考",
+        "block": "minecraft:rail[shape=south_west,waterlogged=false]"
+      },
+      {
+        "char": "城",
+        "block": "minecraft:rail[shape=north_south,waterlogged=false]"
+      },
+      {
+        "char": "难",
+        "block": "minecraft:rail[shape=north_east,waterlogged=false]"
+      },
+      {
+        "char": "喜",
+        "block": "minecraft:rail[shape=north_west,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "eefppefeeeoefpff",
+      "heepefefefhhhhhh",
+      "hfopfffpeohhhhhh",
+      "hffeeeffeehhhhhh",
+      "hefffeepfohhhhhh",
+      "hfeffoffpehhhhhh",
+      "heefofpfeehhhhhh",
+      "hefoefeeephhhhhh",
+      "effeeofefefffope",
+      "fohhhhhhhepfepee",
+      "fphhhhhhhffppeoe",
+      "ffhhhhhhheoefoee",
+      "efhhhhhhhpoffoee",
+      "fehhhhhhhfooefff",
+      "pehhhhhhhfefffeo",
+      "eehhhhhhhpfeoeep"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "    xx          ",
+      "    xx          ",
+      "    xx          ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "    头考          ",
+      "    城城          ",
+      "    难喜          ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

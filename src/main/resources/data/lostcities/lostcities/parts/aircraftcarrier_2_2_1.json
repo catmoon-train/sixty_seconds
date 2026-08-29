@@ -1,0 +1,421 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:chiseled_quartz_block"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:green_stained_glass"
+      },
+      {
+        "char": "螂",
+        "block": "minecraft:quartz_pillar[axis=z]"
+      },
+      {
+        "char": "珊",
+        "block": "minecraft:quartz_pillar[axis=x]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "缝",
+        "block": "minecraft:lime_stained_glass_pane[east=true,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "杆",
+        "block": "minecraft:lime_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:iron_block"
+      },
+      {
+        "char": "娇",
+        "block": "minecraft:lime_stained_glass_pane[east=false,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "愧",
+        "block": "minecraft:lime_stained_glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "坠",
+        "block": "minecraft:lime_stained_glass_pane[east=true,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "吁",
+        "block": "minecraft:lime_stained_glass_pane[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "咕",
+        "block": "minecraft:green_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:quartz_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:quartz_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ϑ",
+        "block": "minecraft:birch_wall_sign[facing=south,waterlogged=false]",
+        "tag": {
+          "z": 953,
+          "x": -527,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 112,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Workshop\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "愈",
+        "block": "minecraft:birch_wall_sign[facing=west,waterlogged=false]",
+        "tag": {
+          "z": 979,
+          "x": -456,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 116,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Officer's bunks\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"^\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"|\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "尚",
+        "block": "minecraft:birch_wall_sign[facing=east,waterlogged=false]",
+        "tag": {
+          "z": 945,
+          "x": -465,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 109,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Battery:\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Charlie\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "奉",
+        "block": "minecraft:lever[face=wall,facing=east,powered=true]"
+      },
+      {
+        "char": "Ӯ",
+        "block": "minecraft:birch_wall_sign[facing=north,waterlogged=false]",
+        "tag": {
+          "z": 955,
+          "x": -442,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 108,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Exodus Squadron\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Quarters\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "袖",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:black_carpet"
+      },
+      {
+        "char": "逼",
+        "block": "minecraft:fletching_table"
+      },
+      {
+        "char": "遥",
+        "block": "minecraft:cartography_table"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:quartz_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "挽",
+        "block": "minecraft:grindstone[face=floor,facing=north]"
+      },
+      {
+        "char": "几",
+        "block": "minecraft:quartz_stairs[facing=east,half=top,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "辽",
+        "block": "minecraft:anvil[facing=west]"
+      },
+      {
+        "char": "厕",
+        "block": "minecraft:lectern[facing=north,has_book=false,powered=false]",
+        "tag": {
+          "z": 976,
+          "x": -438,
+          "ForgeCaps": {},
+          "id": "minecraft:lectern",
+          "y": 107
+        }
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "            cccd",
+      "        ccdbeaca",
+      "    aeaecedccaaM",
+      "aabdeabaeeecewvL",
+      "acdabdbedabawvG螂",
+      "dabcdeabddedvGG螂",
+      "ecececcebcdML珊珊M",
+      "ccaeadbeadcavGG螂",
+      "dddeceaebadexvG螂",
+      "bdceaadedbeeeCvL",
+      "cabccddcbebccdcM",
+      "dcceccbeaecbdbac",
+      "dbadceecbccabcab",
+      "ebaecaaadccaeead",
+      "addcebbabcaedaaM"
+    ],
+    [
+      "                ",
+      "            bacd",
+      "        caeb    ",
+      "    bbebed  缝杆杆M",
+      "cbbaEEEEEd 缝娇 wv",
+      "g   g   ga 愧 Cvv",
+      "         b 愧wvgv",
+      "         a MvvvM",
+      "    g   ga 愧xvgv",
+      "    EEEEEc 愧 xvv",
+      "g   g   Ea 坠吁 Cv",
+      "c咕咕adbcbab  坠杆杆M",
+      "               ϓ",
+      "                ",
+      "               H",
+      "b  daebbad  缝杆杆M"
+    ],
+    [
+      "           beebb",
+      "       dbbecg   ",
+      "   dcbdagag     ",
+      "abcbEEEEEa     M",
+      "g ϑ愈E    e     w",
+      "E   EEEEEb    wv",
+      "E        e   wvv",
+      "E尚       b MCvvM",
+      "E   EEEEEb   xvv",
+      "E  愈E    e    Cv",
+      "E   EEEEEa     x",
+      "f咕咕fffffff     M",
+      "尚  ϑ           ϑ",
+      "                ",
+      "奉  Ӯ           Ӯ",
+      "f  fffffff     M"
+    ],
+    [
+      "           bdaec",
+      "       baeaeg   ",
+      "   dbabdgag     ",
+      "cbaag    a     M",
+      "g   EEEEEb      ",
+      "g   g   gb     w",
+      "         c    wv",
+      "         e M CvL",
+      "    g   gd    Cv",
+      "    EEEEEb     x",
+      "g   g    e      ",
+      "ffffffffff     M",
+      "  ϑ      f      ",
+      "     袖袖袖   袖袖袖  ",
+      "         f      ",
+      "ffffffffff     M"
+    ],
+    [
+      "      eccbcdddee",
+      "  dcbacadaebdebe",
+      "debbbeeccadcdedb",
+      "aceeabcadbcdeaae",
+      "ccacadceddabcbae",
+      "aacaabcadaaaabdc",
+      "cdabeedebbccbaea",
+      "dcbbbdaebdcbeaaa",
+      "ceaebdecbdeaccbe",
+      "caaedecacdebddad",
+      "aebcbcddeccbbacb",
+      "eebbdbaaeccdedaa",
+      "ddeccbeddbeccabc",
+      "ggebagggeccgggab",
+      "cadbcaabdacdaaac",
+      "bcecdcbeecadaebb"
+    ],
+    [
+      "      ebeebf    ",
+      "  bdabd         ",
+      "bea             ",
+      "           fffff",
+      "    ffffjjffg   ",
+      "   gf逼逼jjj遥f x J",
+      "ffffg逼jjjjkf   J",
+      "挽挽挽挽jjjjjj遥fHHH几",
+      "jjjjjjjjjjkf ϑ  ",
+      "jjjjjjjjjj遥f    ",
+      "jj辽辽kg厕gk辽kf  ww",
+      "jjaeddbcccba  ac",
+      "                ",
+      "                ",
+      "                ",
+      "  ccaddbecab  bb"
+    ]
+  ]
+}

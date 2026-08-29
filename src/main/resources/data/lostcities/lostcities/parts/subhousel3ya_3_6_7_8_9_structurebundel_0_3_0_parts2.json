@@ -1,0 +1,543 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ý",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "Х",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӊ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ό",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Υ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϙ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Е",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѧ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "і",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "1",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "6",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ί",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ю",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͺ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϒ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "Ϝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "新",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "љ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӷ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "出",
+        "block": "minecraft:air",
+        "tag": {
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          },
+          "x": -437,
+          "ForgeCaps": {},
+          "y": -59,
+          "z": -141,
+          "id": "refurbished_furniture:basin"
+        }
+      },
+      {
+        "char": "ё",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "好",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӏ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӣ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "无",
+        "block": "minecraft:air",
+        "tag": {
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          },
+          "x": -437,
+          "ForgeCaps": {},
+          "y": -59,
+          "z": -140,
+          "id": "refurbished_furniture:toilet"
+        }
+      },
+      {
+        "char": "Ҁ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "机",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϣ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Џ",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "x": -437,
+          "y": -59,
+          "Items": [],
+          "z": -136,
+          "id": "refurbished_furniture:kitchen_drawer"
+        }
+      },
+      {
+        "char": "科",
+        "block": "minecraft:air",
+        "tag": {
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          },
+          "x": -440,
+          "ForgeCaps": {},
+          "y": -59,
+          "z": -136,
+          "id": "refurbished_furniture:kitchen_sink"
+        }
+      },
+      {
+        "char": "Ҭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ф",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϧ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӻ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӛ",
+        "block": "minecraft:air",
+        "tag": {
+          "CanExtract": "0b",
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "x": -438,
+          "y": -58,
+          "Items": [],
+          "z": -136,
+          "PlacedByPlayer": "0b",
+          "id": "refurbished_furniture:cutting_board"
+        }
+      },
+      {
+        "char": "看",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "过",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѐ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "έ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "η",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ъ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "У",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "x": -437,
+          "y": -57,
+          "Items": [],
+          "z": -136,
+          "id": "refurbished_furniture:cabinet"
+        }
+      },
+      {
+        "char": "ҋ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Π",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "҃",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "҄",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "4",
+        "block": "minecraft:air"
+      },
+      {
+        "char": ";",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "μ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "κ",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaýaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "kvmomoiaaokokkoo",
+      "mmoivmoimoaoiovi",
+      "ookvvkiivmvkomvo",
+      "koaaioikkaiaoiim",
+      "mioomkiiaamikmkk"
+    ],
+    [
+      "NeeeХnhllllӉllll",
+      "beeenehlΌlΥlllΥl",
+      "beeeeϘhllllllllΥ",
+      "b ХeϔϪhllllͿͿlll",
+      "b eЕMehllllͿӫͿlΌ",
+      "NeѦMіehΥllllllll",
+      "bn1MҨehll6lllllΌ",
+      "bnenbehlΥlΊlllΌΌ",
+      "NbbbenhllllllΥll",
+      "bnbbenhhhhhhhhhh",
+      "bLbbbbLbbLbbLbbL",
+      "    j jjj    t  ",
+      " t     j  tj j j",
+      " j j tj  jj     ",
+      "jtjj   t Vjj j t",
+      " j  j j jt     t"
+    ],
+    [
+      "N     fjЮjV  fͺϒ",
+      "N   r fϜ Ϝ新V fGj",
+      "b    Zf љ ffffӶ ",
+      "b    Ϙfffff出 ffё",
+      "b  ЕҨ f好ӏӣf无 Ҁ  ",
+      "b ѦM  f 机ЮffffG ",
+      "br M  fϣj jӜfG  ",
+      "Nr r Zfϣ j   j  ",
+      "N j   fЏ科ҬЏЏfфљj",
+      "brЮb  hfffffffff",
+      "bbLLbbbbbLLbbbLL",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "     ZfG     f  ",
+      "      K      fG ",
+      "     ZfфE ffff  ",
+      "      fffff  ffG",
+      "      f   f  Ҝ  ",
+      "   M  K   ffff  ",
+      "   ϧ  f     fG  ",
+      "      K         ",
+      "      fӺ  Ӛ看fE 过",
+      "     Zhfffffffff",
+      "     tЀ    ЀDt  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "      f      f  ",
+      "     έK      f  ",
+      "   y  fE  ffffE ",
+      "  ͱ  Cfffff  ffG",
+      "     Cf   f  η  ",
+      "   M έK   ffff  ",
+      "   ϧ yf     fъ  ",
+      "   yCέK         ",
+      "      fУУҋУУfфE ",
+      "      hfffffffff",
+      "      DD  DD    ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "   yezfddddddfdd",
+      "     zfddddddfdd",
+      "    yzfdddffffdd",
+      " ͱΠ  zfffffddfff",
+      "  ͱЕ҃zf ddfddfdd",
+      " 3 M҄zfdddffffdd",
+      " 4;μ zfdddddfddd",
+      "     zfdddddfddd",
+      "  yyezfdddddfddd",
+      "    Czhfffffffff",
+      "     zzκκκκκκκκκ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

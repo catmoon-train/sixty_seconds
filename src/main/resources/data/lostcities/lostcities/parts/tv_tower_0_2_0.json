@@ -1,0 +1,316 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "科",
+        "block": "minecraft:sandstone"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:gray_wool"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:red_wool"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:chiseled_quartz_block"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "话",
+        "block": "minecraft:hopper[enabled=true,facing=down]",
+        "tag": {
+          "z": -264,
+          "x": -45,
+          "TransferCooldown": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "id": "minecraft:hopper",
+          "y": -53,
+          "Items": []
+        }
+      },
+      {
+        "char": "J",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "资",
+        "block": "minecraft:dirt"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "面",
+        "block": "minecraft:lectern[facing=north,has_book=false,powered=false]",
+        "tag": {
+          "z": -267,
+          "x": -45,
+          "id": "minecraft:lectern",
+          "y": -52
+        }
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "ѵ",
+        "block": "minecraft:dark_oak_planks"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:cauldron"
+      },
+      {
+        "char": "第",
+        "block": "minecraft:cobblestone_wall[east=none,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "事",
+        "block": "minecraft:spruce_door[facing=north,half=lower,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "心",
+        "block": "minecraft:spruce_door[facing=south,half=lower,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "时",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "前",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -268,
+          "x": -29,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:basin",
+          "y": -40,
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          }
+        }
+      },
+      {
+        "char": "ӿ",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "ҟ",
+        "block": "minecraft:spruce_trapdoor[facing=south,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "此",
+        "block": "minecraft:stone_brick_wall[east=none,north=low,south=none,up=true,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "经",
+        "block": "minecraft:spruce_door[facing=north,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "工",
+        "block": "minecraft:spruce_door[facing=south,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "自",
+        "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ѱ",
+        "block": "minecraft:brown_carpet"
+      },
+      {
+        "char": "想",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "系",
+        "block": "minecraft:spruce_fence[east=true,north=false,south=false,waterlogged=false,west=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "yyyadaba科dLLXLLL",
+      "bydQabycbaLLXLLL",
+      "dabQdbcybbLLXLLL",
+      "aybcaQdcdyLLXLLL",
+      "aQacbacbddLLXXXX",
+      "cQycabadccLLLLLL",
+      "ybbaybdcccLLLLLL",
+      "ydyybcby科brKooor",
+      "cdaycddbacnCorC话",
+      "ccdQyydyQcCrorrC",
+      "baaQadyyacJKnCCC",
+      "ybQybbdbbenornCr",
+      "aQddyycccaJrrKrn",
+      "QbyccQacycrKrrJK",
+      "dccyaQdcy资rnoJno",
+      "QcbacdbybcCCrJJK"
+    ],
+    [
+      "        ad    ϔ ",
+      "   U     c      ",
+      "   U     eo     ",
+      "     U   ar     ",
+      " U       d      ",
+      " U       a    面 ",
+      "        ai ѵѵѵѵ ",
+      "        gicaaeda",
+      "         dxcxa第 ",
+      "   U    Ua事b事a  ",
+      "   U     a      ",
+      "  U      e      ",
+      " U       c心c心d  ",
+      "时    U   bxaxa 前",
+      "     U   dcdadcd",
+      "时        bbdbdac"
+    ],
+    [
+      "        bӿ      ",
+      "   V     d      ",
+      "   V     do     ",
+      "     V   cr     ",
+      " V       e      ",
+      " V       a      ",
+      "        ig  fff ",
+      "        agddedea",
+      "         bҟeҟc此 ",
+      "   V    Va经a经e  ",
+      "   V     d      ",
+      "  V      c      ",
+      " V       e工d工d  ",
+      "     V   d自d自d  ",
+      "     V   aabddab",
+      "         aaccade"
+    ],
+    [
+      "        eӿ      ",
+      "         a      ",
+      "         aJ     ",
+      "         dn     ",
+      "         c      ",
+      "         c      ",
+      "        gg  ѱѱѱ ",
+      "        agaaeaea",
+      "         c c a  ",
+      "         a c d  ",
+      "         d      ",
+      "         e      ",
+      "         a c e  ",
+      "         c c a  ",
+      "         caeeeaa",
+      "         aaeddca"
+    ],
+    [
+      "        想ӿ      ",
+      "         b      ",
+      "         e      ",
+      "         d      ",
+      "         e      ",
+      "         a      ",
+      "        aa      ",
+      "        aacabdee",
+      "         c      ",
+      "         a      ",
+      "         c      ",
+      "         e      ",
+      "        系a      ",
+      "         d      ",
+      "         cecabdc",
+      "         cdcaecd"
+    ],
+    [
+      "         d      ",
+      "         e      ",
+      "         a      ",
+      "         e      ",
+      "         e      ",
+      "         b      ",
+      "        aa      ",
+      "        aabdebce",
+      "         d      ",
+      "         a      ",
+      "         c      ",
+      "         c      ",
+      "         c      ",
+      "         a      ",
+      "         ccebade",
+      "         ebbeade"
+    ]
+  ]
+}

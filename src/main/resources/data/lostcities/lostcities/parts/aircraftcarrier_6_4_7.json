@@ -1,0 +1,221 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "ҕ",
+        "block": "minecraft:chest[facing=south,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 942,
+          "x": -502,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ѷ",
+        "block": "minecraft:chest[facing=south,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 940,
+          "x": -437,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "晨",
+        "block": "minecraft:chest[facing=south,type=single,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 947,
+          "x": -390,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 108,
+          "Items": []
+        }
+      },
+      {
+        "char": "o",
+        "block": "minecraft:black_stained_glass"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "Җ",
+        "block": "minecraft:observer[facing=west,powered=false]"
+      },
+      {
+        "char": "捧",
+        "block": "minecraft:dispenser[facing=up,triggered=false]",
+        "tag": {
+          "z": 938,
+          "x": -457,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:dispenser",
+          "y": 111,
+          "Items": []
+        }
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   aaebeddddc   ",
+      "eedҕѶ ҕѶ ҕѶ 晨o  ",
+      "              o ",
+      "               o",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   beaddcdbeb   ",
+      "daa          o  ",
+      "              o ",
+      "               o",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   oooooooooo   ",
+      "ooo          o  ",
+      "              o ",
+      "               o",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   bcebaececb   ",
+      "baag        ge  ",
+      "g            gc ",
+      "              ga",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  iabeaededcbei ",
+      "bedaeecaaacbbbci",
+      "aeabecdacadcdded",
+      "ccabbbcaddecabbc",
+      "ceabeebcbaabacea",
+      "bbbecaaaeccaebce",
+      "bcdebcecggdaadac"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "    a           ",
+      "    ciiii       ",
+      "i   i    i      ",
+      "    eiiiic      ",
+      "    e  iiii     ",
+      "Җ捧 ia i    i eb "
+    ]
+  ]
+}

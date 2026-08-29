@@ -1,0 +1,169 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "淘",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 938,
+          "x": -369,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:computer",
+          "y": 122,
+          "NodePos": "-101429943820166L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "               a",
+      "        dcdedcce",
+      " deccbeddeecddec"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              eb",
+      "       eebcaaad ",
+      "adbcbaaa        ",
+      "cfffff          "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "             bba",
+      "      aacbbbcc  ",
+      "dcdaeab         ",
+      "  fff           ",
+      " fz bf          "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            eacb",
+      "     eeadbade   ",
+      "ddbaae          ",
+      "                ",
+      "  fff           ",
+      " f  淘f          "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "           bbced",
+      "    bdddbcea    ",
+      "dcaca           ",
+      "                ",
+      "                ",
+      "  fff           ",
+      " f   f          "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "           aeaea",
+      "    bcbbdcag    ",
+      "bdccg           ",
+      "                ",
+      "                ",
+      "  fff           ",
+      " f   f          "
+    ]
+  ]
+}

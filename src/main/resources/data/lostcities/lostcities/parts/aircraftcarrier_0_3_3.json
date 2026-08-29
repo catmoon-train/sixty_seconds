@@ -1,0 +1,162 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:gold_block"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "    dcededcbdccc",
+      "    eddcbaaeadbe",
+      "    ebaddecdcaeb",
+      "     cbadcebebdd",
+      "      dadcccbbcb",
+      "       acddbbeaa",
+      "        cccacdda",
+      "          decadb",
+      "            aeea",
+      "              ca",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "   e        y   ",
+      "   b      y     ",
+      "   c            ",
+      "   ee           ",
+      "    dc          ",
+      "     bb         ",
+      "      ee        ",
+      "       aec      ",
+      "         bab    ",
+      "           bee  ",
+      "             dcc",
+      "               e",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "  c       sss   ",
+      "  a      ws     ",
+      "  b             ",
+      "  a             ",
+      "  eb            ",
+      "   be           ",
+      "    dd          ",
+      "     ac         ",
+      "      cee       ",
+      "        abb     ",
+      "          dbade ",
+      "            eae ",
+      "              ca",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      " c              ",
+      " a              ",
+      " e              ",
+      " e              ",
+      " e              ",
+      " bd             ",
+      "  cd            ",
+      "   eb           ",
+      "    bb          ",
+      "     ddb        ",
+      "       cae   qq ",
+      "         ced qq ",
+      "           eecq ",
+      "             adc",
+      "               c",
+      "                "
+    ],
+    [
+      "b               ",
+      "d               ",
+      "b               ",
+      "b               ",
+      "d               ",
+      "d               ",
+      "dcg             ",
+      " eag            ",
+      "  aeg           ",
+      "   dag          ",
+      "    aaag     qq ",
+      "      ccdg   qq ",
+      "        ded  qq ",
+      "          eccqq ",
+      "            dedg",
+      "              eb"
+    ],
+    [
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      " b              ",
+      "  e             ",
+      "   c            ",
+      "    ad          ",
+      "      ca     qq ",
+      "        ce   qq ",
+      "          cc qq ",
+      "            acq ",
+      "              ee"
+    ]
+  ]
+}

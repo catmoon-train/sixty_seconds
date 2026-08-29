@@ -1,0 +1,423 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӵ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=true]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:spruce_planks"
+      },
+      {
+        "char": "Ӣ",
+        "block": "minecraft:spruce_stairs[facing=east,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:spruce_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:spruce_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ӂ",
+        "block": "minecraft:spruce_stairs[facing=south,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:spruce_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:spruce_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Ӎ",
+        "block": "minecraft:spruce_stairs[facing=south,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "公",
+        "block": "minecraft:stone_brick_wall[east=low,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "ў",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "ҁ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "м",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ӯ",
+        "block": "minecraft:stone_brick_wall[east=low,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "в",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ь",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "帝",
+        "block": "minecraft:stone_brick_wall[east=low,north=none,south=tall,up=true,waterlogged=false,weathering=true,west=low]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:andesite"
+      },
+      {
+        "char": "џ",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=top,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "Ѩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "й",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "物",
+        "block": "minecraft:stone_brick_wall[east=low,north=tall,south=tall,up=false,waterlogged=false,weathering=true,west=low]"
+      },
+      {
+        "char": "к",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ѧ",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "宿",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -499,
+          "x": -716,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:basin",
+          "y": -53,
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          }
+        }
+      },
+      {
+        "char": "毕",
+        "block": "minecraft:stone_brick_wall[east=none,north=tall,south=tall,up=true,waterlogged=false,weathering=true,west=low]"
+      },
+      {
+        "char": "部",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -353,
+          "x": -698,
+          "ForgeData": {},
+          "id": "refurbished_furniture:drawer",
+          "y": -53,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ш",
+        "block": "minecraft:spruce_button[face=floor,facing=north,powered=false]"
+      },
+      {
+        "char": "进",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "八",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ъ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "次",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "守",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "э",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "接",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ж",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "乱",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "а",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "个",
+        "block": "minecraft:stone_brick_wall[east=none,north=tall,south=tall,up=false,waterlogged=false,weathering=true,west=none]"
+      },
+      {
+        "char": "词",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "冷",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "鱼",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "省",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "响",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "生",
+        "block": "minecraft:stone_brick_wall[east=none,north=tall,south=tall,up=false,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӻ",
+        "block": "minecraft:stone_brick_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "Ѵ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "资",
+        "block": "minecraft:stone_brick_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "法",
+        "block": "minecraft:stone_brick_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,weathering=true,west=tall]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:smooth_stone_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҵ",
+        "block": "minecraft:infested_cracked_stone_bricks"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:stone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:polished_andesite_slab[type=top,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "       h        ",
+      "nhӵӵӵnӵӵӵnӵӵӵ ӵӵ",
+      "uabfuuuuaabfbfab",
+      "eeeeeeeeeeeeeeee",
+      "ffdddddddӢOddMOd",
+      "ffdӂdLddMdOddddK",
+      "ffdLddddddddLddӍ"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "n               ",
+      "hh     hh       ",
+      " 公ўҁмӯвҁмӯўҁь帝вҁ",
+      "eleeeleelelelell",
+      "baџѨй物кѨѦ物к宿й毕部 ",
+      "bbhhШa进进八bhhъbi次",
+      "bahq 守Ѹэ接bжq 乱iъ"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " hp     n       ",
+      " а   а  hа   а  ",
+      "llTDTeTDheTDTlTD",
+      "bahѼ 个iѼh个h词i个冷 ",
+      "abh  b  qbq  a鱼 ",
+      "ab   省   b   响  "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " h              ",
+      "nа   а   а   а  ",
+      "leTDTeTDTlTDTlTD",
+      "aahp 生  i个 q 生  ",
+      "bbq oap ob  oup ",
+      "aa   b  oap oa  "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " n              ",
+      " hp             ",
+      " h              ",
+      "nа   а   а   а  ",
+      "leTDTlTDTeTDTeTD",
+      "aa   生   个 q 生  ",
+      "bb  oup obp  a  ",
+      "aap  a   q   bp "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " hp             ",
+      " ӻџѴй资кѴй法џѴѦ资кѴ",
+      "elleleeeeeleeele",
+      "baџHйuкIйҴкFйuкH",
+      "aaFHCCIIFCHFFuIH",
+      "aaHCIHFFCyIIHaCI"
+    ]
+  ]
+}

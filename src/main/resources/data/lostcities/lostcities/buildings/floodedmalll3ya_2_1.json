@@ -1,0 +1,45 @@
+{
+  "filler": "#",
+  "rubble": "}",
+  "minfloors": 3,
+  "maxfloors": 3,
+  "maxcellars": 1,
+  "allowDoors": false,
+  "allowFillers": false,
+  "parts": [
+    {
+      "cellar": true,
+      "part": "floodedmalll3ya_2_1_0"
+    },
+    {
+      "part": "floodedmalll3ya_2_1_1",
+      "floor": 0
+    },
+    {
+      "part": "floodedmalll3ya_2_1_2",
+      "floor": 1
+    },
+    {
+      "part": "floodedmalll3ya_2_1_3",
+      "floor": 2
+    },
+    {
+      "part": "floodedmalll3ya_2_1_4",
+      "floor": 3
+    }
+  ],
+  "parts2": [
+    {
+      "part": "lostcities:floodedmalll3ya_2_1_1_parts2",
+      "floor": 0
+    },
+    {
+      "part": "lostcities:floodedmalll3ya_2_1_2_parts2",
+      "floor": 1
+    },
+    {
+      "part": "lostcities:floodedmalll3ya_2_1_3_parts2",
+      "floor": 2
+    }
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:gold_block"
+      },
+      {
+        "char": "弥",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "怅",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "奉",
+        "block": "minecraft:lever[face=wall,facing=east,powered=true]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "璞",
+        "block": "minecraft:redstone_wall_torch[facing=south,lit=true]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "坛",
+        "block": "minecraft:redstone_wall_torch[facing=west,lit=true]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "b               ",
+      "cbaaea          ",
+      "caeebeadcbdb    ",
+      "acadcccabebbeeba",
+      "cbcaccdccdecbebe",
+      "becaeeecaccaac  "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "dd              ",
+      " dedaab         ",
+      "      dcbacec   ",
+      "            ebce",
+      "            Cfff",
+      "             ffc",
+      "             fqq"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "dce             ",
+      "  eeeebe        ",
+      "       adbeaeb  ",
+      "             aaa",
+      "             fff",
+      "             弥 z",
+      "             f a",
+      "             fqq"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "cdca            ",
+      "   baebdb       ",
+      "      n badaeac ",
+      "              dd",
+      "                ",
+      "             fff",
+      "             怅  ",
+      "             f奉d",
+      "             fqq"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "eccb            ",
+      "    bbacea      ",
+      "        gdeeeebe",
+      "ffff  n       gd",
+      "ffffff          ",
+      "ffffff          ",
+      "fffffff      fff",
+      "fffffff      f  ",
+      "fffffff      f a",
+      "fffffff      fqq"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "adbb            ",
+      "    ecdebb      ",
+      "ffff      eeaddd",
+      "cbceffn         ",
+      "璞  璞agf         ",
+      " ww dbf         ",
+      "bcbe 坛df     fff",
+      "gdgc  af     f  ",
+      "egecz af     f e",
+      "gcgc  bf     fqq"
+    ]
+  ]
+}

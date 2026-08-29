@@ -1,0 +1,657 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ј",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϟ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Φ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϗ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϯ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϲ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Џ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "φ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "τ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "ϐ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "н",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "э",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ј",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Я",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "͵",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ћ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϴ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѕ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ς",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "љ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "и",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѧ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϖ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϣ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "σ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϰ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Υ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ё",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ъ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ʹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ω",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "І",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 329,
+          "x": 140,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 134,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "χ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Щ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 330,
+          "x": 131,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 134
+        }
+      },
+      {
+        "char": "ρ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 333,
+          "x": 128,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 134,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"John:\"}",
+              "{\"text\":\"Keep eyes on\"}",
+              "{\"text\":\"city for the\"}",
+              "{\"text\":\"Horde\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "Ѫ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 332,
+          "x": 129,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 134
+        }
+      },
+      {
+        "char": "Ͱ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 332,
+          "x": 144,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 143,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"North Side\"}",
+              "{\"text\":\"Watch\"}",
+              "{\"text\":\"<----\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "θ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϛ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϙ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͻ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 331,
+          "x": 130,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 135
+        }
+      },
+      {
+        "char": "ѭ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 333,
+          "x": 140,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "Energy": 0,
+          "y": 134,
+          "id": "refurbished_furniture:freezer",
+          "ForgeCaps": {},
+          "Enabled": "0b",
+          "MaxProcessTime": 0,
+          "Powered": "0b",
+          "Items": [],
+          "NodePos": "38482908336262L",
+          "Connections": [
+            "L"
+          ],
+          "ProcessTime": 0
+        }
+      },
+      {
+        "char": "б",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ф",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 339,
+          "x": 133,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 134
+        }
+      },
+      {
+        "char": "ц",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϧ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 335,
+          "x": 129,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 134,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "϶",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѯ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 335,
+          "x": 134,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 134
+        }
+      },
+      {
+        "char": "Г",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 335,
+          "x": 135,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 134
+        }
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ъ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϸ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ώ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϑ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϯ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϗ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "з",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Р",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 329,
+          "x": 138,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 135
+        }
+      },
+      {
+        "char": "а",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 330,
+          "x": 128,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 135
+        }
+      },
+      {
+        "char": "ѳ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 333,
+          "x": 140,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:fridge",
+          "y": 135,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ϟ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "х",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 335,
+          "x": 132,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 135
+        }
+      },
+      {
+        "char": "Ѥ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϕ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ћ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "м",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbЈϟbϟϟЈbbbbcbbb",
+      "bbbϟϟЈbϟbbccbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbcbbbbb",
+      "bbbcccbccccccccc",
+      "bbcccccccccccccc",
+      "bbcccccccccccccc",
+      "bbcccccccccccccc",
+      "bbcccccccccccccc",
+      "bbcccccccccccccc",
+      "bccacccccccccccc",
+      "bca accccccccccc",
+      "bba accccccccccc"
+    ],
+    [
+      "ϱͱΦͱͱͱΦΦϡ ϏϯϲЏϡ ",
+      "φ τffϐf ϐfнэffff",
+      "φfffffτfττffffff",
+      "jfј    Яfff ͵ ff",
+      "jf   ћ  f ͵ϴf ff",
+      "j f ѕ  fff ffffϐ",
+      "jfτ    ςffљf ffς",
+      "jffϴϴиѧϴaaaaaaaa",
+      "jfaaaaaaaeϖeeeee",
+      "jϐaeeeeeeeeeeeee",
+      "φfaeeeeeeeeeeeee",
+      "jfaeeeeeeeeeeeee",
+      "jfaeeeeeeeeeeeee",
+      "Ϣσaeeeeeeeeeeeee",
+      "Ϩσaeeeeeeeeeeeee",
+      "f a eeeeeeeeeeee"
+    ],
+    [
+      "ϱΦͱΦͱͱͱͱΦϡ  ϲϰ ϲ",
+      "j               ",
+      "j               ",
+      "φ               ",
+      "j               ",
+      "φ               ",
+      "j       ςς     ς",
+      "j      Υkkёaaakk",
+      "φ akkaakaъϯʹaωІІ",
+      "j aχ͵ Щ͵a ϯ     ",
+      "j a  ͵    ͵     ",
+      "jΥkρѪ  Ͱ ͵͵aθθϚ ",
+      "jϩkρ   ϙaϽ ϙ  aѭ",
+      "Ϣбa͵ Ф ϙa ͵aaaaa",
+      "цσa͵ϧ϶϶χaѮГahθЪθ",
+      "Ϸ aaaaaaa  a    "
+    ],
+    [
+      "    ώΦϑ  Ϯ     ώ",
+      "                ",
+      "                ",
+      "                ",
+      "ϓ               ",
+      "ϗ               ",
+      "        ςͰ Ͱ Ͱ Ͱ",
+      "    ͰͰ Υahзhahah",
+      "  akhhakkѡ ϖaР  ",
+      "ϓ aаР  ͵a       ",
+      "φ k  Ͻ          ",
+      "ϗΥkρ     ͵͵aaθϚ ",
+      " ϩkρ    a   ϙ aѳ",
+      "ΥϞa        aaaaa",
+      " σa͵   хa  ahθЪθ",
+      "  aaaaaaa  a    "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        ςͰͰͰ Ͱ Ͱ",
+      "    ͰͰ Ѥahhhahah",
+      "  aahhaaa ʹ χ   ",
+      "  a    Гa       ",
+      "  k     ϕ       ",
+      " Υaρ    ϕ  aaaϚ ",
+      " ϩaρ    a    ϙaω",
+      "ΥσЋ     a  aaaaa",
+      " σaϽ    a  aωωωω",
+      "  aaaaaaχ  a    "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        ςςς    ς",
+      "  nnnnnмakkakaaa",
+      "  aaaaaaadϖddddd",
+      "  addddddddddddd",
+      "  addddddddddddd",
+      " Υkddddddddaaaad",
+      " ϩkdddddddd   ϙd",
+      "ΥϞaddddddddaaaad",
+      " σaddddddddddddd",
+      "  addddddddddddd"
+    ]
+  ]
+}

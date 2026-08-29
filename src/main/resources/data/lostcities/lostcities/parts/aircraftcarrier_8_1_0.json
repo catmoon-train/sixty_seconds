@@ -1,0 +1,202 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "瘟",
+        "block": "minecraft:water[level=3]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "罩",
+        "block": "minecraft:water[level=2]"
+      },
+      {
+        "char": "趁",
+        "block": "minecraft:sticky_piston[extended=false,facing=south]"
+      },
+      {
+        "char": "瑟",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=14,south=none,west=side]"
+      },
+      {
+        "char": "俏",
+        "block": "minecraft:redstone_wire[east=none,north=none,power=15,south=side,west=side]"
+      },
+      {
+        "char": "俊",
+        "block": "minecraft:observer[facing=north,powered=false]"
+      },
+      {
+        "char": "坛",
+        "block": "minecraft:redstone_wall_torch[facing=west,lit=true]"
+      },
+      {
+        "char": "Җ",
+        "block": "minecraft:observer[facing=west,powered=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "黎",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=side,west=none]"
+      },
+      {
+        "char": "苛",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=side,west=none]"
+      },
+      {
+        "char": "黏",
+        "block": "minecraft:redstone_wire[east=none,north=none,power=0,south=side,west=side]"
+      },
+      {
+        "char": "瘦",
+        "block": "minecraft:repeater[delay=1,facing=north,locked=false,powered=false]"
+      },
+      {
+        "char": "范",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=none,west=none]"
+      },
+      {
+        "char": "顽",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=0,south=none,west=side]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "c               ",
+      "ac              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "ecd             ",
+      "瘟cb             ",
+      "罩趁ab            "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "ccd             ",
+      "c瑟俏e            ",
+      " 俊坛edcc         ",
+      "Җ趁 debdd        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "c               ",
+      "bbe             ",
+      " gaac           ",
+      "c b黎dce         ",
+      "b  苛黏gdac       ",
+      " bb瘦范顽黏gbdc     "
+    ]
+  ]
+}

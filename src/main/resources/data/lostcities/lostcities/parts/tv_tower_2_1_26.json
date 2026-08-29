@@ -1,0 +1,266 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:iron_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:iron_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ӟ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "如",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "讯",
+        "block": "minecraft:rail[shape=south_east,waterlogged=false]"
+      },
+      {
+        "char": "去",
+        "block": "minecraft:rail[shape=south_west,waterlogged=false]"
+      },
+      {
+        "char": "知",
+        "block": "minecraft:rail[shape=north_east,waterlogged=false]"
+      },
+      {
+        "char": "只",
+        "block": "minecraft:rail[shape=north_west,waterlogged=false]"
+      },
+      {
+        "char": "啦",
+        "block": "minecraft:cobblestone_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "和",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "新",
+        "block": "minecraft:stone_brick_wall[east=tall,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "行",
+        "block": "minecraft:stone_brick_wall[east=none,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "Р",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "己",
+        "block": "minecraft:stone_brick_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "转",
+        "block": "minecraft:cobblestone_wall[east=tall,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "第",
+        "block": "minecraft:cobblestone_wall[east=none,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "又",
+        "block": "minecraft:stone_brick_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "若",
+        "block": "minecraft:stone_brick_wall[east=tall,north=tall,south=tall,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "友",
+        "block": "minecraft:stone_brick_wall[east=none,north=tall,south=tall,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "Z",
+        "block": "minecraft:stone_brick_wall[east=tall,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "文",
+        "block": "minecraft:iron_bars[east=true,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "国",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "并",
+        "block": "minecraft:cobblestone_wall[east=tall,north=tall,south=tall,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "位",
+        "block": "minecraft:iron_bars[east=true,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "像",
+        "block": "minecraft:iron_bars[east=false,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "论",
+        "block": "minecraft:stone_brick_wall[east=low,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:iron_bars[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "点",
+        "block": "minecraft:stone_brick_wall[east=tall,north=low,south=low,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "更",
+        "block": "minecraft:stone_brick_wall[east=none,north=low,south=low,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "日",
+        "block": "minecraft:stone_brick_wall[east=low,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=low]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "  a b   sg      ",
+      "        a ll    ",
+      "            Ӟ   ",
+      "             Ӟ  ",
+      "              如 ",
+      "      讯去 讯去   如 ",
+      "      知只 知只    a",
+      "              gl",
+      "      讯去 讯去     ",
+      "      知只 知只     ",
+      "                ",
+      "      讯去 讯去     ",
+      "      知只 知只     ",
+      "啦b和             ",
+      "ecd   讯去 讯去     ",
+      "新b行   知只 知只     "
+    ],
+    [
+      "  Р Р    a      ",
+      "        a       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "               a",
+      "              a ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "己d和             ",
+      "bab             ",
+      "转e第             "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "啦e和             ",
+      "cad             ",
+      "新d行             "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "己又和             ",
+      "若a友             ",
+      "新Z行             "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "文又国             ",
+      "并e友             ",
+      "位Z像             "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "文论提             ",
+      "点d更             ",
+      "位日像             "
+    ]
+  ]
+}

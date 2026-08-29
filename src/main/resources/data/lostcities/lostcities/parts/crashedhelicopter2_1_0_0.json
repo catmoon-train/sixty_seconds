@@ -1,0 +1,170 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:dirt"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:stone_button[face=floor,facing=north,powered=false]"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:stone_button[face=floor,facing=west,powered=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:coarse_dirt"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:stone_button[face=wall,facing=north,powered=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:smooth_stone_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaddddddddd",
+      "aaaaaaaddddddddd",
+      "adddaaaddddddddd",
+      "adddaaddddddaaad",
+      "adddaadddaaaaddd",
+      "aaaaaadddaaaaddd",
+      "aaaaaaaaaaaaaddd",
+      "aaaaaaaaaadddaaa",
+      "aaaaaaaaaadddaaa",
+      "aaaaaaaaaadddaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaadddaa",
+      "aaaaaaaaaaadddaa",
+      "aaaaaaaaaaadddaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaadd"
+    ],
+    [
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbabbbbbbbbbbbbb",
+      "bbbbbbabbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "baaabbbbbbbbbbbb"
+    ],
+    [
+      " c cc c c c   c ",
+      "c    ccccc c cc ",
+      " cccc ccfc  cccc",
+      "   c cccccc c fc",
+      "cccfccc c  c c c",
+      "ccccf  c ccc ccc",
+      "cfcc cc cccccccc",
+      "ccrcc cc  cccfcc",
+      "cccccc c c ff cc",
+      "Jcccc cccc ccfc ",
+      "c ccc ccccc cccc",
+      " cg c cccccc  cc",
+      "   c cgccfccf c ",
+      " c   ccccf cfc c",
+      "ccL  ccccc cffc ",
+      "fmemcccccccfcfc "
+    ],
+    [
+      "                ",
+      "                ",
+      "        j       ",
+      "              j ",
+      "   j            ",
+      "    j           ",
+      "                ",
+      "             j  ",
+      "           jj   ",
+      "             j  ",
+      "                ",
+      "                ",
+      "      c     j   ",
+      "            j   ",
+      "            jj  ",
+      "  m        j j  "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

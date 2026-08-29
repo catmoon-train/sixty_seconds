@@ -1,0 +1,515 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "近",
+        "block": "minecraft:potted_dead_bush"
+      },
+      {
+        "char": "呀",
+        "block": "minecraft:player_head[rotation=8]",
+        "tag": {
+          "z": 305,
+          "x": 137,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 126
+        }
+      },
+      {
+        "char": "无",
+        "block": "minecraft:birch_wall_sign[facing=south,waterlogged=false]",
+        "tag": {
+          "z": 309,
+          "x": 114,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 134,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Register Closed\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "句",
+        "block": "minecraft:skeleton_skull[rotation=4]",
+        "tag": {
+          "z": 305,
+          "x": 142,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 126
+        }
+      },
+      {
+        "char": "Ӌ",
+        "block": "minecraft:white_carpet"
+      },
+      {
+        "char": "ғ",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "掉",
+        "block": "minecraft:player_head[rotation=12]",
+        "tag": {
+          "z": 322,
+          "x": 133,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 126
+        }
+      },
+      {
+        "char": "Ғ",
+        "block": "minecraft:oak_wall_sign[facing=north,waterlogged=false]",
+        "tag": {
+          "z": 336,
+          "x": 144,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 135,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"MALL\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"CLOSED\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"DUE TO\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"OUTBREAK\"}],\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "医",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ї",
+        "block": "minecraft:water[level=8]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "8",
+        "block": "minecraft:chiseled_stone_bricks[weathering=false]"
+      },
+      {
+        "char": "ӟ",
+        "block": "minecraft:glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "他",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӊ",
+        "block": "minecraft:oak_wall_sign[facing=west,waterlogged=false]",
+        "tag": {
+          "z": 326,
+          "x": 175,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 144,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"1. Wcdouble\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"2. Quarter\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Pounder\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"3. Filet O' Fish\"}],\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "i",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "嘛",
+        "block": "minecraft:birch_door[facing=south,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "乡",
+        "block": "minecraft:birch_door[facing=south,half=upper,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "半",
+        "block": "minecraft:chest[facing=south,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 305,
+          "x": 120,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 125,
+          "Items": []
+        }
+      },
+      {
+        "char": "夜",
+        "block": "minecraft:chest[facing=south,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 305,
+          "x": 121,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 125,
+          "Items": []
+        }
+      },
+      {
+        "char": "长",
+        "block": "minecraft:chest[facing=south,type=single,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 338,
+          "x": 108,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 133,
+          "Items": []
+        }
+      },
+      {
+        "char": "宝",
+        "block": "minecraft:player_head[rotation=4]",
+        "tag": {
+          "z": 358,
+          "x": 164,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 134
+        }
+      },
+      {
+        "char": "ϊ",
+        "block": "minecraft:oak_wall_sign[facing=south,waterlogged=false]",
+        "tag": {
+          "z": 347,
+          "x": 115,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 142,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"<-----\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Carmicheal's\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "恐",
+        "block": "minecraft:yellow_wall_banner[facing=south]",
+        "tag": {
+          "z": 313,
+          "Patterns": [],
+          "x": 135,
+          "ForgeCaps": {},
+          "id": "minecraft:banner",
+          "y": 127,
+          "CustomName": "{\"text\":\"HappyNow Insurances\"}"
+        }
+      },
+      {
+        "char": "В",
+        "block": "minecraft:oak_wall_sign[facing=east,waterlogged=false]",
+        "tag": {
+          "z": 332,
+          "x": 143,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 126,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"16th Century\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Loom\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"$530.99\"}],\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "Ӛ",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "典",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:stone_brick_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "人",
+        "block": "minecraft:redstone_lamp[lit=true]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "ό",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "间",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "5",
+        "block": "minecraft:water[level=0]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "jcEEEEEEEEEEjccc",
+      "jE      近呀无 Ej句Ӌ",
+      "ғ           Lg  ",
+      "ғ近          Ee  ",
+      "ғ    掉      Eg Ғ",
+      "ғ           Ee医c",
+      "ғ近   掉      Lg  ",
+      "cE      ї   Ej  ",
+      "d8LEEELӟL他他LE8ee",
+      "        无无无无    ",
+      "                ",
+      "                ",
+      "                ",
+      "              Ғ ",
+      " Ӊ8gggjeeӟi嘛i乡iӟ",
+      "  g半夜长ce宝       "
+    ],
+    [
+      "geEEEEEEEEEEccgg",
+      "eE          Ej ϊ",
+      "ғ           Ee  ",
+      "ғ           Ec  ",
+      "ғ           Lc  ",
+      "ғ           Eeec",
+      "ғ           Ee  ",
+      "gE      ї   Eg  ",
+      "e8EELEEӟLLLLE8gc",
+      "       恐 ϊϊ     ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " Ӊ8ceecejӟiiiiiӟ",
+      "  c   jcВ       "
+    ],
+    [
+      "ccEEEEEEEEEEjcec",
+      "jE          Eg  ",
+      "eE          Ld  ",
+      "gE          Ed  ",
+      "cE          Ec  ",
+      "dE          Eecj",
+      "eE          Lg  ",
+      "gE      ї   Ee  ",
+      "c8ELELEEEEEEE8cc",
+      "ӚӚ     典FFFFFFFF",
+      "                ",
+      "                ",
+      "                ",
+      "FFFFFFFFFFFFFFFF",
+      " Ӊ8ccgedjӟiiiiiӟ",
+      "  e   je        "
+    ],
+    [
+      "dcddggceedcddjcd",
+      "ecLLLLLLLLLLdjjg",
+      "gdLEEEEEEEELjgdc",
+      "gdLHEEEHEE人Lejge",
+      "dgL人EEEHEEHLcced",
+      "dcLHEEEHEEHLcjec",
+      "gdLEEEEEEEELdcHj",
+      "egLLLLLLїLLLdcHj",
+      "gedccgcccdddegcd",
+      "cdgedjgdcdddddgg",
+      "dHgcgHccgHcedHcc",
+      "eHecdHdccHecdHce",
+      "cHgcdHdcgHcccHgc",
+      "gjdcecjddjdgccdc",
+      "ccgcddgcejddeegc",
+      "eeccgdgdgdceeded"
+    ],
+    [
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaόaaaaaaa",
+      "aaaaaaaaїόaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaόaaaaaaa",
+      "aaaaaaaaїόaaaaaa",
+      "aaaaaaa间5όaaaaaa",
+      "aaaaaaaόό间aaaaaa",
+      "aaaaaaaόόaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaόaόaaaaaa",
+      "aaaaaaaόόόaaaaaa",
+      "aaaaaaaaόόaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ]
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "filler": "#",
+  "rubble": "}",
+  "minfloors": 3,
+  "maxfloors": 3,
+  "maxcellars": 0,
+  "allowDoors": false,
+  "parts": [
+    {
+      "part": "4buildingsrow_1_0_0",
+      "floor": 0
+    },
+    {
+      "part": "4buildingsrow_1_0_1",
+      "floor": 1
+    },
+    {
+      "part": "4buildingsrow_1_0_2",
+      "floor": 2
+    },
+    {
+      "part": "4buildingsrow_1_0_3",
+      "floor": 3
+    }
+  ]
+}

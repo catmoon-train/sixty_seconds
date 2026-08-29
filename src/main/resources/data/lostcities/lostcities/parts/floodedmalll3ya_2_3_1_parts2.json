@@ -1,0 +1,555 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͼ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϵ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ў",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "交",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϯ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ј",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "҄",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѵ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -14,
+          "x": -598,
+          "ForgeData": {},
+          "id": "doomsday_decoration:acrate",
+          "y": -48,
+          "Items": []
+        }
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӗ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Υ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Џ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "二",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "Ϩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "後",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϋ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ν",
+        "block": "minecraft:air",
+        "tag": {
+          "Size": 3,
+          "z": 22,
+          "x": -611,
+          "LastKnownPos": {
+            "X": -611,
+            "Y": -53,
+            "Z": 22
+          },
+          "Inventory": {
+            "Items": [],
+            "Size": 20
+          },
+          "StorageType": "CombinedInv",
+          "id": "createdeco:shipping_container_gray",
+          "y": -53,
+          "Length": 6
+        }
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "为",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Њ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "S",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ы",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҋ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϸ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӆ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѵ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "十",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "儿",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "情",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 21,
+          "x": -600,
+          "Backwards": "1b",
+          "id": "create:hand_crank",
+          "Speed": "0.0f",
+          "y": -52,
+          "InUse": 0
+        }
+      },
+      {
+        "char": "室",
+        "block": "minecraft:air",
+        "tag": {
+          "Casing": "NONE",
+          "Controller": {
+            "X": -599,
+            "Y": -52,
+            "Z": 21
+          },
+          "z": 21,
+          "x": -599,
+          "Covered": "0b",
+          "Inventory": {
+            "Items": [],
+            "PositiveOrder": "0b"
+          },
+          "y": -52,
+          "id": "create:belt",
+          "Speed": "0.0f",
+          "Index": 0,
+          "Length": 9,
+          "IsController": "1b"
+        }
+      },
+      {
+        "char": "И",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "学",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Қ",
+        "block": "minecraft:air",
+        "tag": {
+          "Casing": "NONE",
+          "Controller": {
+            "X": -599,
+            "Y": -52,
+            "Z": 21
+          },
+          "z": 21,
+          "x": -599,
+          "Covered": "0b",
+          "y": -51,
+          "id": "create:belt",
+          "Speed": "0.0f",
+          "Index": 1,
+          "Length": 9,
+          "IsController": "0b"
+        }
+      },
+      {
+        "char": "з",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "种",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "样",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ь",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Φ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ћ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "哈",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "而",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ο",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "会",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "е",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ы",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "н",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "脑",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ћ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "从",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "年",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "у",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "才",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "它",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "龙",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ω",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "έ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӌ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Π",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӷ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϕ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Τ",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "cccdcccccccjeeee",
+      "cccdcccccccneeee",
+      "njjnkliiniEdeeee",
+      "hAhhdggggeeeeeee",
+      "hh hmggggeeeeeee",
+      "hhh ϾϠϠggjjjjjee",
+      "   ϵϔЎgЎϠj  fjee",
+      "交交 oϔϠggϮj   jee",
+      "   oϔggϠϮj   jee",
+      "hhh ϔϮϮϮgj   jee",
+      "h  hϾϠЎϠЎjjjjjee",
+      "fјh mgggϠϮЎϮeeee",
+      "eeeeeeeeeeeeeeee",
+      "eeeeeeeeeeeeeeee",
+      "eeeeeeeeeeeeeeee",
+      "eeeeeeeeeeeeeeee"
+    ],
+    [
+      "      ҄  Ѵϓirfff",
+      "    ҼѴ   ӖӖqffΥf",
+      "nEiqkkЏ二ЏEikfhff",
+      "hB h Ϩr f後fhhΥff",
+      "    hϨϨ  AhfAhff",
+      "hv  ϵΫϨhoΫ  fΫΥf",
+      "ΝΝΝrhϵp      fAf",
+      "ΝΝΝ f         hf",
+      "ΝΝΝr  h  o    hf",
+      "h Ϝ ϵϵvfho    AΥ",
+      "ϵ  hϵΫϨϨ为Ϋh fΫAf",
+      "    hhϨϨhh hhAff",
+      "ffAhAhAhhAhAЊfff",
+      "ffhffAfhfffSSЫAA",
+      "AhhAhffAΥAҊЫSSϷf",
+      "ffAffΥfffffAЫЫAf"
+    ],
+    [
+      "          ӆd    ",
+      "          ѵqr Υ ",
+      "indiiiЏЏЏiki    ",
+      "p pp Ϩr   後十hΥ  ",
+      "     儿   B 十Bo  ",
+      "  v  Ϋo 情室   Ϋh ",
+      "ΝΝΝr          B ",
+      "ΝΝΝ             ",
+      "ΝΝΝ             ",
+      "  p    v       Υ",
+      "   o ΫϨϨ Ϋo  ΫB ",
+      "     hϨϨ h   B  ",
+      "  B B Bh B BЊ   ",
+      "     B     SSЫBB",
+      "B hB   BΥB ЫИS  ",
+      "  B  Υ     B  B "
+    ],
+    [
+      "           lr   ",
+      "           dr h ",
+      "dmmdjjЏЏЏjik    ",
+      "p p pϜ      ϡΥ  ",
+      "           学ϡ   ",
+      " vv  Ϋ   Қ   Ϋ  ",
+      "ΝΝΝ       ззз   ",
+      "ΝΝΝr      ззз   ",
+      "ΝΝΝ       ззз   ",
+      " pp       ззз  h",
+      "     Ϋ o Ϋ   Ϋ  ",
+      "     oo种        ",
+      "            Њ   ",
+      "           样SЬ  ",
+      "        Υ    S  ",
+      "     h          "
+    ],
+    [
+      "           d    ",
+      "           d  h ",
+      "ΦOdjjjЏЏЏddk    ",
+      "  p p     p  h  ",
+      "          学     ",
+      "     Ϋ   Қ   Ϋ  ",
+      "ooo       ћ哈而   ",
+      " o         ϨϨ   ",
+      "oo         ӆϨ   ",
+      "          ћ 而   ",
+      "     Ϋ   Ϋ   Ϋ  ",
+      "            G   ",
+      "          Ο会    ",
+      "            SЬ  ",
+      "        h    е  ",
+      "                "
+    ],
+    [
+      "ccclcccccccdc   ",
+      "cccjcccccccdc   ",
+      "jljjjdmddlddxhЊ ",
+      "ccccccccc   hын ",
+      "     ϪϪϪϪ学  hеh ",
+      "     脑ϪϪϪҚЋЋ从年  ",
+      "     ϪЋЋϪϪћ уϪ  ",
+      "     ϪЋЋЋϪ  ϨϪ  ",
+      "     才ЋЋЋϪ   Ϫ  ",
+      "     ϪЋЋЋϪћ уϪ  ",
+      "     它ЋЋЋ年ЋЋϪ龙  ",
+      "     ϪϪϪϪϪf GF  ",
+      "         ΩέSӋ Π ",
+      "          ΩӷSϕ  ",
+      "          ΠΟϕΟΠ ",
+      "              Τ "
+    ]
+  ]
+}

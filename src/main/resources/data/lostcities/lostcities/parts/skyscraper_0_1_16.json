@@ -1,0 +1,258 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:dark_oak_trapdoor[facing=east,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:dark_oak_trapdoor[facing=north,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Л",
+        "block": "minecraft:dark_oak_fence[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "Ќ",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "љ",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ҵ",
+        "block": "minecraft:water[level=0]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "Џ",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "Ь",
+        "block": "minecraft:cobblestone[weathering=true]"
+      },
+      {
+        "char": "ҝ",
+        "block": "minecraft:cobblestone_stairs[facing=south,half=top,shape=outer_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ѐ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ү",
+        "block": "minecraft:cobblestone_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "ӫ",
+        "block": "minecraft:mossy_cobblestone_stairs[facing=north,half=top,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "Ҽ",
+        "block": "minecraft:cobblestone_stairs[facing=east,half=top,shape=outer_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ҭ",
+        "block": "minecraft:cobblestone_stairs[facing=north,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ү",
+        "block": "minecraft:cobblestone_stairs[facing=west,half=top,shape=outer_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:red_carpet"
+      },
+      {
+        "char": "М",
+        "block": "minecraft:white_carpet"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:light_gray_carpet"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "Ӝ",
+        "block": "minecraft:redstone_wall_torch[facing=north,lit=true]"
+      },
+      {
+        "char": "了",
+        "block": "minecraft:birch_trapdoor[facing=north,half=top,open=true,powered=true,waterlogged=false]"
+      },
+      {
+        "char": "З",
+        "block": "minecraft:birch_trapdoor[facing=north,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ͼ",
+        "block": "minecraft:stone_bricks[weathering=true]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "       qO      R",
+      "       qO   Л  R",
+      "       qO      R",
+      "       aO      R",
+      "       qO      R",
+      "       qORO    R",
+      "       ЌrљO    R",
+      "       qҵqORRRRR",
+      "       erЏrrarrr",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "       daaababaa",
+      "       Ьaabbaabb",
+      "      ҝdЀabaabaa",
+      "      ҮCЀaababaa",
+      "      ӫdbaaabbbb",
+      "       dЀbbbbbba",
+      "       dbbbbabba",
+      "       dbaaabaab",
+      "       daaddCddd",
+      "           Ҽҭү  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        h  k М  ",
+      "        a  М    ",
+      "        e k jk М",
+      "        aМ    М ",
+      "        e jk М j",
+      "        d  М    ",
+      "        dMMMMMMM",
+      "       Hiaaeddea",
+      "        H       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "       Ge       ",
+      "        a       ",
+      "       Gd       ",
+      "       Gd       ",
+      "       Gd       ",
+      "        e       ",
+      "        dӜ      ",
+      "       Hdaedaede",
+      "        H  GGG G",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        a       ",
+      "        e       ",
+      "        d       ",
+      "       Gh       ",
+      "        a       ",
+      "        a了ЗЗЗЗЗЗ",
+      "        dMMMMMMM",
+      "       Hdedeaaee",
+      "        H  G G  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "         deO    ",
+      "         edO    ",
+      "         ahO    ",
+      "       G dϾO    ",
+      "         eaddddd",
+      "         ddedeae",
+      "         haeaeda",
+      "        C       ",
+      "           G G  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

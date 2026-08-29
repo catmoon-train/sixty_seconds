@@ -1,0 +1,290 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "bqnbcaacdaacbpyb",
+      "bkrbadmaaccabxpb",
+      "pkkbddcaaahdbknk",
+      "krkbcadaadccbxnp",
+      "hmaddhdcdcaahaca",
+      "hdmdaahahhaachcc",
+      "mhadhccddcccaaac",
+      "adcmuhddacdmcmah",
+      "accdcdddccmchccc",
+      "ddaahcdhaaaaacad",
+      "dmdachahddmacdca",
+      "acddhdhdaadcaddc",
+      "bbbbbbbbbbbbbbbb",
+      "bnkynbkkknkkpqnq",
+      "pAqbzqnAnqznurru",
+      "bbbbbbbbbbbbbbbb"
+    ],
+    [
+      "C  fii       i  ",
+      "feei  jG  j    f",
+      "eejw   j        ",
+      " e Oi    l      ",
+      "   l   Lee  jj  ",
+      "  j    eeee  i  ",
+      "  ji  v ev I i  ",
+      "      lve   lti ",
+      "   i  l l  K  e ",
+      "  ee j  l    eee",
+      " leee  l Et N el",
+      "  e  i        ij",
+      " ffwfifff ffwf f",
+      "f  tif  j  i  il",
+      "P   e  Js  lf ef",
+      "fff s esfj f jff"
+    ],
+    [
+      "   g            ",
+      "g          D   g",
+      "   o        o   ",
+      "           H    ",
+      "                ",
+      "        e       ",
+      "                ",
+      "                ",
+      "                ",
+      "              e ",
+      "   e            ",
+      "                ",
+      " ggog ggg ggog g",
+      "g    g          ",
+      "            g  g",
+      "ggg     g  g  gg"
+    ],
+    [
+      "                ",
+      "                ",
+      "   o        o   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   o        o   ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "   M        F   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   B        B   ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

@@ -1,0 +1,498 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ђ",
+        "block": "minecraft:air",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 359,
+          "x": 108,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 132,
+          "SpawnRange": "4s",
+          "Delay": "416s"
+        }
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "8",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "在",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "号",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӌ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "身",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "器",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "当",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "4",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "叫",
+        "block": "minecraft:air",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 333,
+          "x": 153,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 125,
+          "Items": []
+        }
+      },
+      {
+        "char": "问",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "千",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "2",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "原",
+        "block": "minecraft:air",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 324,
+          "x": 177,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 133,
+          "Items": []
+        }
+      },
+      {
+        "char": "远",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 321,
+          "x": 165,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 141
+        }
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "需",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "和",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "划",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӥ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "於",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "史",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "买",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ғ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 336,
+          "x": 144,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 135,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"MALL\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"CLOSED\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"DUE TO\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"OUTBREAK\"}],\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "最",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "居",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 358,
+          "x": 118,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:computer",
+          "y": 134,
+          "NodePos": "32435594485894L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "铭",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 359,
+          "x": 118,
+          "CurrentChannel": "refurbished_furniture:ocean_sunset",
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:television",
+          "y": 134,
+          "NodePos": "32435594489990L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "V",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "Ͳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "1",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӊ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 326,
+          "x": 175,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 144,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"1. Wcdouble\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"2. Quarter\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Pounder\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"3. Filet O' Fish\"}],\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "hpnnђCpnnppCnnnђ",
+      "nCppnnCpnpnnnCCn",
+      "ppCppnnnnnnnnCpp",
+      "pppnnCnnppnCppnn",
+      "hnpnnnpnnnpppppn",
+      "hpppppnnpnbbb8在在",
+      "hppnnpnpCpbbbfff",
+      "ђppnppnnnpbbffff",
+      "pnppnnnnCbffffff",
+      "nppnpnnpnbffffff",
+      "ppnCpnppbfffffff",
+      "ђCnnpnnbbfffffff",
+      "pnnnCbbfffffffff",
+      "bbbbbffffffbffff",
+      "ffffbfffffffffff",
+      "ffffffffffffffff"
+    ],
+    [
+      "D号kӋ身身kkqkk器k当44",
+      "D叫q问 zkqkqkӋzkk ",
+      "Dk     千qk千q问zk ",
+      "Dz   当 LLq22  原k",
+      "D远ktt需tttttttttt",
+      "Dk tӋ需Jkktuoyoyo",
+      "Dz t和kJ划ktohwOIӤ",
+      "Dzzt和qJ ktowUUqk",
+      "问4zt kJktoQkqqqq",
+      "q4kt kkktoQkqqqq",
+      "kӋkt44ӋtoӤqqqUqq",
+      "於史ktqttouOqqqqkz",
+      "tttttoyIOqkqqqqq",
+      "ooouuIIqqqqӓqqzU",
+      "IӤIQwkqqUqqqkqqq",
+      "qqUUqqqqqkkkkqqq"
+    ],
+    [
+      " 号              ",
+      "                ",
+      "        买  买    ",
+      "      Ғ最L 最2  ҒҒ",
+      "   ss mmvmsmmvpp",
+      "   m     mhhoyrr",
+      "   m  居  mhhw   ",
+      "   s  铭  sowVV  ",
+      "   m    pu    Ͳ1",
+      "   m    pr    1X",
+      "   m   Cr    VXͰ",
+      "ҒҒҒs JCr3 1X1Ͳ1X",
+      "npJmmor  1XͰX1Ͳ1",
+      "rrroy    XͰӓͰX V",
+      "    w   V1XͰX1  ",
+      "  VV      1X1   "
+    ],
+    [
+      "                ",
+      "                ",
+      "        买  买    ",
+      "       最L 最2 ҒҒҒ",
+      "   mvvmmmmmsmspn",
+      "   m     vhhourr",
+      "   v     vhhw   ",
+      "   v     myw    ",
+      "  Ӊs    py     1",
+      "   s    pr    1X",
+      "   s   Cr     XͰ",
+      "ҒҒҒm JCr3 1X1Ͳ1X",
+      "pnJvvor  1XͰX1Ͳ1",
+      "rrrou    XͰӓͰX  ",
+      "    w    1XͰX1  ",
+      "         Ͳ1X1Ͳ  "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "             ҒҒҒ",
+      "   mvmmsvsmsmspp",
+      "   s     mhhuorr",
+      "   m     vhhw   ",
+      "   m     muw    ",
+      "   s    po      ",
+      "   v    pr     X",
+      "   m   ir      Ͱ",
+      "   m JJr3       ",
+      "iiJmvyr   XͰX   ",
+      "rrroy     ͰӓͰ   ",
+      "    w      ͰX   ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   smmsvsmvvsvi ",
+      "   s     mhhyyrr",
+      "   s     shhw   ",
+      "   v     muw    ",
+      "   m    iu      ",
+      "   m    ir      ",
+      "   m   ir      X",
+      "   m JJr3       ",
+      " iimsor    X    ",
+      "rrroo     XͰX   ",
+      "    w      X    ",
+      "                "
+    ]
+  ]
+}

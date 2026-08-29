@@ -1,0 +1,192 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:iron_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "了",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:iron_trapdoor[facing=west,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ѥ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -276,
+          "x": -43,
+          "id": "refurbished_furniture:computer",
+          "y": -39,
+          "NodePos": "-11544873218087L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "p",
+        "block": "minecraft:iron_trapdoor[facing=north,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:iron_trapdoor[facing=west,half=top,open=false,powered=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "             gad",
+      "             iei",
+      "            adad",
+      "            abad",
+      "           acicc",
+      "           aagda",
+      "          ababdd",
+      "          adabed",
+      "           daedd",
+      "           eacca",
+      "          baeced",
+      "          baadaa",
+      "          aibdab",
+      "          eadedc",
+      "         gdiaccc",
+      "          baedca"
+    ],
+    [
+      "             a  ",
+      "              af",
+      "              f ",
+      "              f ",
+      "             f  ",
+      "             f  ",
+      "            f   ",
+      "          aca  c",
+      "            f Ob",
+      "            f  a",
+      "                ",
+      "           f   c",
+      "              Oc",
+      "           f   c",
+      "         acicacb",
+      "           f    "
+    ],
+    [
+      "             a s",
+      "              bf",
+      "             s  ",
+      "             了f ",
+      "            mf  ",
+      "            mf  ",
+      "           m    ",
+      "          acg   ",
+      "           m   Ѥ",
+      "           mf   ",
+      "          m     ",
+      "          mf    ",
+      "          m    Ѥ",
+      "          mf    ",
+      "         aagebbb",
+      "          m     "
+    ],
+    [
+      "             a p",
+      "              af",
+      "             qf ",
+      "             qf ",
+      "            q   ",
+      "            qf  ",
+      "           qf   ",
+      "          aci   ",
+      "           qf   ",
+      "           q    ",
+      "          q     ",
+      "          qf    ",
+      "          qf    ",
+      "          qf    ",
+      "         acaaedd",
+      "          q     "
+    ],
+    [
+      "             a  ",
+      "              cf",
+      "              f ",
+      "                ",
+      "             f  ",
+      "                ",
+      "            f   ",
+      "          aei   ",
+      "            f   ",
+      "            f   ",
+      "                ",
+      "           f    ",
+      "           f    ",
+      "           f    ",
+      "         aeadacb",
+      "                "
+    ],
+    [
+      "             a b",
+      "              eg",
+      "             aa ",
+      "             ea ",
+      "            ba  ",
+      "            ci  ",
+      "           aa   ",
+      "          aba   ",
+      "           ba   ",
+      "           ca   ",
+      "          ei    ",
+      "          ea    ",
+      "          ea    ",
+      "          eg    ",
+      "         aaabdca",
+      "          ea    "
+    ]
+  ]
+}

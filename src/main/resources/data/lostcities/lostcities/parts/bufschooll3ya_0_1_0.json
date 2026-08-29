@@ -1,0 +1,445 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "Υ",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "ͽ",
+        "block": "minecraft:stone_bricks[weathering=true]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "Ӫ",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "ϧ",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "的",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=inner_right,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "Ғ",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "学",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "清",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=bottom,shape=outer_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ʹ",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cut_sandstone"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӊ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ο",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҷ",
+        "block": "minecraft:stone_button[face=floor,facing=north,powered=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:dark_oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "6",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "自",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѽ",
+        "block": "minecraft:stone_button[face=floor,facing=east,powered=false]"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѱ",
+        "block": "minecraft:stone_button[face=floor,facing=west,powered=false]"
+      },
+      {
+        "char": "ҽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "а",
+        "block": "minecraft:stone_button[face=floor,facing=south,powered=false]"
+      },
+      {
+        "char": "ΐ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "点",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "还",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ί",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "à",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "υ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "得",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "然",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "事",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "小",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϟ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "天",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "用",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -194,
+          "x": -654,
+          "id": "doomsday_decoration:acrate",
+          "y": -59,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ϫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ς",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҧ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "时",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ε",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "章",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:sand"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:smooth_sandstone"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "只",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҁ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϸ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "文",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "法",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "á",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "了",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӧ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ђ",
+        "block": "minecraft:smooth_sandstone_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Ͽ",
+        "block": "minecraft:smooth_sandstone_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "э",
+        "block": "minecraft:smooth_sandstone_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "ҥ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "在",
+        "block": "minecraft:smooth_sandstone_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "好",
+        "block": "minecraft:smooth_sandstone_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "很",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "定",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӿ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӳ",
+        "block": "minecraft:mangrove_trapdoor[facing=east,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "8",
+        "block": "minecraft:smooth_sandstone_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "9",
+        "block": "minecraft:smooth_sandstone_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "г",
+        "block": "minecraft:brick_stairs[facing=west,half=top,shape=straight,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaaaΥwzzzzn",
+      "aaͽͽͽͽQaaΥnnnnzn",
+      "aaӪͽͽϧ的wwnnwnnnw",
+      "aaϧͽͽͽҒnnznzzwnz",
+      "aaͽQQͽϧnnnnwnnwn",
+      "aaQQ学Qͽwznnzznwn",
+      "aaͽͽϧҒQnwzwnwznn",
+      "aaϧӪͽQQaaΥnwnwww",
+      "aaͽQQͽQaaΥnwwwnw",
+      "aaQͽͽϧͽaaΥnwznnn",
+      "aaͽϧͽͽQaaΥnnnwzw",
+      "aaͽͽ清QQaaΥzwwnnz",
+      "aaͽϧҒͽQaaΥnwznnw",
+      "aaQͽϧͽʹkkΥnnwwzz",
+      "aaQTͽϧͽaaΥnwnznn",
+      "aaQQQͽͽaaΥwznnzw"
+    ],
+    [
+      "eccccccc  e e   ",
+      "hc ӉοӉҷcx      e",
+      "Dc   ҷ     6    ",
+      "hc 自   Ѽ    e ϓ ",
+      "ec  ѱ     6     ",
+      "hcҽѱ  ѱ       ϓ ",
+      "hcҽ   аа   ΐ    ",
+      "ecѱ  点 ce   ΐ   ",
+      "Dc还 ίà cx    ΐ  ",
+      "Dc υаѼ ce       ",
+      "Dc得а 然 ce  e    ",
+      "xc     c    ΐ   ",
+      "xc事а 小 ce       ",
+      "ec Ϟа  天        ",
+      "hc用  ѼϪce  ΐς  e",
+      "Dcӳҧ时ε章ce       "
+    ],
+    [
+      " cgddgdc        ",
+      "lg只   Ҁc        ",
+      " g     Ϸ        ",
+      "ld     Ϸ        ",
+      " d     文        ",
+      "ld     Ϸ        ",
+      "lg     Ϸ        ",
+      " d     c        ",
+      " d     d        ",
+      " d     d法       ",
+      " d     g        ",
+      " d     gá       ",
+      " g     c        ",
+      " g     了        ",
+      "lgӧ    c        ",
+      " g   ѩ d        "
+    ],
+    [
+      " cggdggc        ",
+      " g     c        ",
+      " Ђ     Ϸ        ",
+      " Ͽ     Ϸ        ",
+      " d     Ϸ        ",
+      " d     Ϸ        ",
+      " g     Ϸ        ",
+      " g     c        ",
+      " э    ҥd        ",
+      " d     在        ",
+      " g     好        ",
+      " d很    d        ",
+      " d定  ҥӾc        ",
+      " Ђ     Ӳ        ",
+      " Ͽ     c        ",
+      " g  ѩ  d        "
+    ],
+    [
+      "icd8g9gci       ",
+      "ig     ci       ",
+      "id     di       ",
+      "id     di       ",
+      "id     di       ",
+      "ig     di       ",
+      "id     di       ",
+      "id     ci       ",
+      "id     gi       ",
+      "id     di       ",
+      "id     gi       ",
+      "ig     di       ",
+      "id     ci       ",
+      "ig     di       ",
+      "ig     ci       ",
+      "ig     gi       "
+    ],
+    [
+      " focccof        ",
+      " foi ioff       ",
+      " foi iooг       ",
+      " foi ioc        ",
+      " foi ioc        ",
+      " foi ioc        ",
+      " foi iooг       ",
+      " foi ioff       ",
+      " foi iof        ",
+      " foi iof        ",
+      " foi iof        ",
+      " foi iof        ",
+      " foi iof        ",
+      " foi iof        ",
+      " foi iof        ",
+      " foi iof        "
+    ]
+  ]
+}

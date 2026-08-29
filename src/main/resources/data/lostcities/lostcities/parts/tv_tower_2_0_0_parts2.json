@@ -1,0 +1,302 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "资",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "У",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "没",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "动",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "谢",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "者",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "认",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "面",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -267,
+          "x": -45,
+          "id": "minecraft:lectern",
+          "y": -52
+        }
+      },
+      {
+        "char": "у",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "喜",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "作",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѻ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "Ѵ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϐ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -259,
+          "x": -34,
+          "id": "refurbished_furniture:computer",
+          "y": -21,
+          "NodePos": "-9070971985941L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "设",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "bbdayydaadybdddy",
+      "bayQydycdaydyQaQ",
+      "Qbbdcabdcydccddd",
+      "nnbnooJnncoKrJJC",
+      "JcKoCKKJKranrrJr",
+      "onJdc资rnyKnnnncr",
+      "cJCJCnocCboyKoJo",
+      "oTTKCTTJoTTorTTn",
+      "oTToKTTJrTTKrTTJ",
+      "roCnJrnnCnnonono",
+      "JoJCoCorrnnCoCJo",
+      "rTTJnTToCTTrnTTK",
+      "rTTrnTTCJTTnnTTC",
+      "KnnooJJnnKKrCKro",
+      "rCnnnrCnnnroJoJK",
+      "KTTKoTTnKTTCoTTn"
+    ],
+    [
+      "                ",
+      "   U         U U",
+      "U               ",
+      "                ",
+      "                ",
+      "     a   aa     ",
+      "     aeacgadУ没aУ",
+      "                ",
+      "                ",
+      "         动      ",
+      "        谢者      ",
+      "         认      ",
+      "                ",
+      " 面       ag     ",
+      "ууууу喜   gabcabd",
+      "ecccc作    e   Ѻ "
+    ],
+    [
+      "                ",
+      "   V         V V",
+      "V               ",
+      "                ",
+      "                ",
+      "     a   aa     ",
+      "     aѴ ѲaacNNcN",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "         ga     ",
+      "         ga   ϐ ",
+      "A E设A           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     g   aa     ",
+      "     gѴ  aaaѴ aN",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "         ga     ",
+      "         gg     ",
+      "    A           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     g   ia     ",
+      "     a ѲNgga ѲaN",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "         ga     ",
+      "         aa     ",
+      "E A E      AAEEE"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     i   aa     ",
+      "     iNѴ aadҝҝeҝ",
+      "          ѩ     ",
+      "          M     ",
+      "          ѩ     ",
+      "          ѩ     ",
+      "          M     ",
+      "          M     ",
+      "         ga     ",
+      "         ga     ",
+      "EAA E     MEXAEX"
+    ]
+  ]
+}

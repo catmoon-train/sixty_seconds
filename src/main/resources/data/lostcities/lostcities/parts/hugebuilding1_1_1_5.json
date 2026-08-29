@@ -1,0 +1,234 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:stone_brick_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "·",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:chiseled_stone_bricks[weathering=false]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:dark_oak_fence[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:dark_oak_fence[east=true,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:glass_pane[east=true,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "τ",
+        "block": "minecraft:cobblestone_slab[type=double,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:cobblestone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Μ",
+        "block": "minecraft:cobblestone_stairs[facing=north,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:gray_carpet"
+      },
+      {
+        "char": "η",
+        "block": "minecraft:white_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Ӎ",
+        "block": "minecraft:white_stained_glass_pane[east=true,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Ь",
+        "block": "minecraft:white_stained_glass_pane[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Ϲ",
+        "block": "minecraft:white_stained_glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "δ",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=top,shape=straight,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "  J  gf         ",
+      "Kaa ·df         ",
+      "     g          ",
+      "    ·d          ",
+      "     g          ",
+      "     e          ",
+      "ehehker         ",
+      "  l lscf        ",
+      "      l         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "bbbbcHf         ",
+      "bbbcckf         ",
+      "bbbccH          ",
+      "bcbcbk          ",
+      "  bbbH          ",
+      "  ccbd          ",
+      "ehaMkkr         ",
+      "  l lscf        ",
+      "      l         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "aqτEΜgf         ",
+      "qqEc df         ",
+      "oq ΜΜg          ",
+      "ηӍЬoEe          ",
+      "  ϹE g          ",
+      "  Ϲooa          ",
+      "khdhaar         ",
+      "  l lspf        ",
+      "      l         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "aτE  gf         ",
+      " q   ef         ",
+      "     g          ",
+      "     a          ",
+      "     g          ",
+      "     e          ",
+      "ehahddr         ",
+      "  l lspf        ",
+      "      l         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "a    gf         ",
+      " E   af         ",
+      "     g          ",
+      "     d          ",
+      "     g          ",
+      "     a          ",
+      "khdhekr         ",
+      "  l lscf        ",
+      "      l         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "a    gf         ",
+      "    ·kf         ",
+      "     g          ",
+      "    ·k          ",
+      "     g          ",
+      "δ δ  e          ",
+      "ehahekr         ",
+      "  l lspf        ",
+      "      l         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

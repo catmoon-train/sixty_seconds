@@ -1,0 +1,166 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:iron_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "救",
+        "block": "minecraft:iron_trapdoor[facing=west,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "包",
+        "block": "minecraft:birch_fence[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "瞧",
+        "block": "minecraft:birch_button[face=wall,facing=west,powered=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "    BBedcadcecce",
+      "   Bigaddedbbbbe",
+      "  Bcaeigacecdbed",
+      " 救eedeadigdaadac",
+      "救deceeacbdigabab",
+      "救igideeaeeecgiii",
+      "救eddecdeeeadcbbe",
+      "救igidebcbaaddadc",
+      "救dbdcddbcadcbbab",
+      "救igiceeaacdaddca",
+      "救becbecedcbedeea",
+      "救igibecbeaceedda",
+      "救dabadaecacbbbae",
+      "救igiacdigibdeigi",
+      "救deebbdbeedbcebc",
+      "救igiaabadaacaeac"
+    ],
+    [
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            d   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            c   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            a   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "           瞧g   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "            d   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "           瞧g   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "            d   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

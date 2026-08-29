@@ -1,0 +1,274 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "淆",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=0,south=side,west=none]"
+      },
+      {
+        "char": "梓",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=0,south=side,west=side]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=0,south=none,west=side]"
+      },
+      {
+        "char": "胧",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=side,west=side]"
+      },
+      {
+        "char": "捏",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=none,west=side]"
+      },
+      {
+        "char": "逛",
+        "block": "minecraft:repeater[delay=1,facing=east,locked=false,powered=false]"
+      },
+      {
+        "char": "膨",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=side,west=side]"
+      },
+      {
+        "char": "揭",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=none,west=none]"
+      },
+      {
+        "char": "怨",
+        "block": "minecraft:repeater[delay=1,facing=west,locked=false,powered=false]"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=side,west=none]"
+      },
+      {
+        "char": "醉",
+        "block": "minecraft:repeater[delay=1,facing=north,locked=false,powered=false]"
+      },
+      {
+        "char": "鳞",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=none,west=side]"
+      },
+      {
+        "char": "硫",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=side,west=none]"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:blue_terracotta"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:cobblestone_slab[type=double,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:light_blue_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:moss_block"
+      },
+      {
+        "char": "染",
+        "block": "minecraft:mossy_cobblestone_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:stone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "剖",
+        "block": "minecraft:glass_pane[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:smooth_stone_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:cobblestone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "辽",
+        "block": "minecraft:glass_pane[east=true,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "暗",
+        "block": "minecraft:glass_pane[east=false,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "涨",
+        "block": "minecraft:glass_pane[east=false,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "捕",
+        "block": "minecraft:glass_pane[east=false,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "拔",
+        "block": "minecraft:mossy_cobblestone_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "           xx 淆梓",
+      "            淆E胧捏",
+      "     x逛EEEEE膨 揭怨",
+      "            D   ",
+      "            D   ",
+      "            醉   ",
+      "           xx   ",
+      "            D   ",
+      "         淆梓E胧EE怨",
+      "     x逛EE鳞捏 醉   ",
+      "           xx   ",
+      "            D   ",
+      "            D   ",
+      "            D   ",
+      "x  x   x  x 硫EE怨",
+      "x逛Ex逛EEx逛Ex逛膨   "
+    ],
+    [
+      "PPPhfedggihGffei",
+      "OOPgicbiigGiggbi",
+      "POPbcbchfhhgGieh",
+      "OPPebbefiigiihdi",
+      "POOhgdcfighifiei",
+      "POPigedhiffghied",
+      "OOPhhecfhghgifed",
+      "PPOgfcdghfhfhBdi",
+      "ihhgiccgiBhhffdi",
+      "ifhgidehghfgggbg",
+      "hiifhedgigighfgf",
+      "Ggbcdebcdebceedc",
+      "i染bbebbccddcbebd",
+      "gBgihgfifgebgigh",
+      "hiifhgiihgedhfgg",
+      "hghfgB染BGBiGiiig"
+    ],
+    [
+      "kkkck 剖aekaakadk",
+      "rarbraaadaaraaba",
+      "aaaeraaacar剖krba",
+      "a剖rckakaerkaaada",
+      "aaaba辽暗kcaaakaer",
+      "akkcakaadkakkaba",
+      "akkebbebcaa剖akba",
+      "aaadaaakcaakkada",
+      "bbdcarkabaaaaabk",
+      "kacba剖 acdeeddek",
+      "kacaaaaaaaaakbka",
+      "rkeaaraa涨ka涨kba涨",
+      "aacaakaa捕aa捕aca捕",
+      "aabarakaakaaabka",
+      "akddbecceebbbdce",
+      "aadaa拔raaaakaaka"
+    ],
+    [
+      "     xx         ",
+      "           醉    ",
+      "           x    ",
+      "怨x    醉         ",
+      "     xx         ",
+      "           醉    ",
+      "           x    ",
+      "                ",
+      "      醉         ",
+      "     xx         ",
+      "                ",
+      "        x逛 x逛  x",
+      "        x  x   x",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "qfCCfCfgqhqififh",
+      "ifffggffhgCgqhhg",
+      "qgfCCqqqgigqhhfh",
+      "iqiiighqqghgqhqi",
+      "fhqqiqqhgfqfhihg",
+      "qiCggCihghqghhCf",
+      "qChhqgghhigfgiqi",
+      "fighqgqfiggCfCiq",
+      "qigihgigCfgfiqhh",
+      "igCfigiihgCffhgh",
+      "fhhhqfffhhhCifiq",
+      "iiigfCqgCgigggfq",
+      "gffhggfqfghgqfhi",
+      "qfgqhfhgihiqfgCq",
+      "hiiiCiffhfihiqgi",
+      "ifiqhhhihCiqfhfi"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

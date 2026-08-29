@@ -1,0 +1,538 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҷ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "再",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "少",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "来",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "宜",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ъ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "毒",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "可",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "伟",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "只",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "据",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "考",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "新",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӯ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӑ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Э",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "最",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ч",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "无",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "纸",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "周",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Р",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -350,
+          "x": -687,
+          "ForgeData": {},
+          "id": "refurbished_furniture:crate",
+          "y": -46,
+          "Items": []
+        }
+      },
+      {
+        "char": "í",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "预",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ш",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "点",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӆ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѻ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "很",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ә",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Һ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "造",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӟ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "已",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "态",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Я",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ь",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "感",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "硬",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "东",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "战",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "多",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "流",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "然",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "н",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ж",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѥ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "但",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "һ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ұ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѕ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "要",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "慢",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "又",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "始",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "љ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ї",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "皆",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "左",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "人",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "天",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "典",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "易",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѿ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "够",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "和",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "呼",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "男",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "哦",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ђ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "基",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "mmmmmmRfaaaaabab",
+      "mmmmmRBzbbafaҶaҶ",
+      "mmmmAAAAbffua再少a",
+      "abfaaufafffҶ再少少再",
+      "afabbfabaaa再bb再a",
+      "bbaaauabfbҶ少abaf",
+      "aaabfuffffbbaҶaa",
+      "auuaaufbauababaf",
+      "uuabbaufaafffbab",
+      "uabfffafbafabaff",
+      "aabbfabbfuabbbab",
+      "babaaafaaaaffaab",
+      "abfbabbaaabbbafa",
+      "aabaaafabafaabab",
+      "ffbafbafababaaaf",
+      "fuaffaufbffabfbb"
+    ],
+    [
+      "来ww Gw 宜ci ъӳ 毒可",
+      "hGwwwiӽ伟g只 Ӳi   ",
+      "hGGGӲ  据ge  ӽ  h",
+      "ejvj考vcgj可 i    ",
+      "g新 Ӯ Ѡӑ gЭ  hhp ",
+      "cъh可ohh最gӽч     ",
+      "v无hhъӳ纸  i ӳ 周  ",
+      "vӲРí预n шc ӳ     ",
+      "vРР可 hӽ点gӲ i Ӳiш",
+      "j新ъ ӳhhӳcч  可i Ӳ",
+      "gӽӅѻ ѽӳ很ciәѽчӅ Һ",
+      "eccj造vvcecgjjgcg",
+      "Ӟq ч   已ѻ ii i ш",
+      "Ӟ    i hnh hh 态 ",
+      "Ӟъ  чnhhhhhhhЯiш",
+      "Ӟ   Ьhhaahhhhh感 "
+    ],
+    [
+      "h   P   g       ",
+      "来P      j硬      ",
+      "hP      glp   ni",
+      "ecvj东cggc     h ",
+      "c  q  q cp  ohq ",
+      "ghhp  h g    q  ",
+      "chhi  q         ",
+      "vhh 战  ojp      ",
+      "vР多  Я  g       ",
+      "v   ohЭoc       ",
+      "cp n    gn  n   ",
+      "ljjg流ccgecjjccgj",
+      "Ӟ q  q   q q  qq",
+      "Ӟ      i   ii   ",
+      "Ӟ     ih   h    ",
+      "Ӟn    hhhЯhhhn  "
+    ],
+    [
+      "       ocq      ",
+      "        cn      ",
+      "n n   n ce    n ",
+      "ljcc然ccgc    hhp",
+      "c ӑq нhӮcp   i  ",
+      "jhhp ohhg       ",
+      "chж    Ѥ但       ",
+      "cЭi 战   j       ",
+      "cí      gp      ",
+      "j新   n 很jp      ",
+      "j һnohҺ cp nѽ һ ",
+      "egcgҰgcjeccggccc",
+      "Ӟ q             ",
+      "Ӟ               ",
+      "Ӟ     ni  n     ",
+      "Ӟ   nnh   hhѕnnn"
+    ],
+    [
+      "        g       ",
+      "        c       ",
+      "n   n  ovep     ",
+      "ecggjggcjp   ih ",
+      "g  qqh  c       ",
+      "jhp  qЬhcp      ",
+      "c要     oc       ",
+      "g   慢  og       ",
+      "gp     oc       ",
+      "c    n ojp      ",
+      "c n nhѕ vѕn     ",
+      "lccgcggglvjjjgcv",
+      "又  始 q  q   q   ",
+      "又               ",
+      "又               ",
+      "又 n     n h  n  "
+    ],
+    [
+      "        cp r  r ",
+      "        gr  r  n",
+      "  n    oclљ  rїh",
+      "egcccgcjg rr ohh",
+      "c皆左人q天Ҹ典gp  rohљ",
+      "j但r r  易g  r    ",
+      "v天 r rrѾg r  r r",
+      "cp r战   jrr r  r",
+      "gѾr   r人cp   r  ",
+      "c够 rr  和v rr r r",
+      "c呼Ұ人 天男哦vђ     r",
+      "lcggcjcgevcjggcc",
+      "  q基      q   q ",
+      "                ",
+      "                ",
+      "    n     n  n n"
+    ]
+  ]
+}

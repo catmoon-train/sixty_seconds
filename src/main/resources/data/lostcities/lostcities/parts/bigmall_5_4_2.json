@@ -1,0 +1,272 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:birch_planks"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:oak_planks"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:dirt"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:jungle_planks"
+      },
+      {
+        "char": "遇",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "功",
+        "block": "minecraft:quartz_stairs[facing=north,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:acacia_wood[axis=y]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "地",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҕ",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "兄",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "Ӥ",
+        "block": "minecraft:polished_diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "护",
+        "block": "minecraft:skeleton_skull[rotation=5]",
+        "tag": {
+          "z": 303,
+          "x": 137,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 133
+        }
+      },
+      {
+        "char": "O",
+        "block": "minecraft:smooth_quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "狂",
+        "block": "minecraft:skeleton_skull[rotation=13]",
+        "tag": {
+          "z": 333,
+          "x": 143,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 133
+        }
+      },
+      {
+        "char": "m",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:light_gray_carpet"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:smooth_quartz"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "hnpnbfffffffffff",
+      "npCpbbffffffffff",
+      "pnnpbfffffffffff",
+      "pnnpbfffffffffff",
+      "hpnnbfffffffffff",
+      "hnnpbfffffffffff",
+      "hpnCbfffffffffff",
+      "npnpbbffffffffff",
+      "nppbffffffffffff",
+      "nnpbffffffffffff",
+      "pnbfffffffffffff",
+      "pbbfffffffffffff",
+      "bfffffffffffffff",
+      "fffffff遇ffffffff",
+      "ffffffffffffffff",
+      "ffffffffffffffff"
+    ],
+    [
+      "Dk功toIkUz地zqkqqq",
+      "Dqҕtowqzqqkzkqk ",
+      "DkҕtoIqkqqkkkqzk",
+      "DkҕtuIqzqkqkqqkq",
+      "Dk兄toQqqzqzzzkzk",
+      "DkqtoQkqkzqkqq z",
+      "DkktyQk地zUqkqzkk",
+      "DkqtuwqqkUqkqkqk",
+      "  tyӤq护qkqqqzzqz",
+      "qztuOkqkzkqkqzqk",
+      "ktyIkkqzzqqqkqqq",
+      "tooIkqkkUqkqqzqk",
+      "oIӤqzq地kkqzkkqzk",
+      "Iqqqkkz kqkkqzkk",
+      "qUUqk地k地kqzkqqkq",
+      "kqqqkqqkk狂kqqkkk"
+    ],
+    [
+      "   my  V        ",
+      "   mow          ",
+      "   sy           ",
+      "   ir           ",
+      "   ir           ",
+      "   ir           ",
+      "   my    V      ",
+      "   suw   V      ",
+      "  iu            ",
+      "  ir            ",
+      " ir             ",
+      " r3     V       ",
+      "r               ",
+      "                ",
+      " VV             ",
+      "                "
+    ],
+    [
+      "   my           ",
+      "   sow          ",
+      "   my           ",
+      "    r           ",
+      "   ir           ",
+      "   ir           ",
+      "   mu           ",
+      "   sow          ",
+      "  iy            ",
+      "  ir            ",
+      " ir             ",
+      "ir3             ",
+      "r               ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "   so           ",
+      "   suw          ",
+      "   sy           ",
+      "   ir           ",
+      "   ir           ",
+      "    r           ",
+      "   su           ",
+      "   vuw          ",
+      "  iy            ",
+      "  ir            ",
+      " ir             ",
+      "ir3             ",
+      "r               ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "   mu           ",
+      "   sow          ",
+      "   mo           ",
+      "   ir           ",
+      "   ir           ",
+      "   ir           ",
+      "   vu           ",
+      "   muw          ",
+      "  iu            ",
+      "  ir            ",
+      " ir             ",
+      "ir3             ",
+      "r               ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

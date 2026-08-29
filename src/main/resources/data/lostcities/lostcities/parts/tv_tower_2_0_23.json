@@ -1,0 +1,186 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:red_concrete"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:red_terracotta"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:light_blue_terracotta"
+      },
+      {
+        "char": "ӟ",
+        "block": "minecraft:iron_bars[east=true,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:red_wool"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:iron_bars[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "S",
+        "block": "minecraft:orange_terracotta"
+      },
+      {
+        "char": "ӡ",
+        "block": "minecraft:orange_wool"
+      },
+      {
+        "char": "ϑ",
+        "block": "minecraft:orange_concrete"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  b a           ",
+      "                ",
+      "AEAAAA          ",
+      "FFFFFFEA  a     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  a a           ",
+      "                ",
+      "ӟXAXEA          ",
+      "FFFFFFAE  a     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  c a           ",
+      "                ",
+      "EXEEA提          ",
+      "FFFFFFAA  a     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  c b           ",
+      "                ",
+      "AEAEAA          ",
+      "FFFFFFEX  i     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  a b           ",
+      "                ",
+      "EAXAEA          ",
+      "FFFFFFXA  g     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  e d           ",
+      "                ",
+      "SSSӡS提          ",
+      "FFFFFFϑϑ  g     "
+    ]
+  ]
+}

@@ -1,0 +1,430 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "正",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "来",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "ӽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "交",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "九",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "S",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӈ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӑ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӣ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "想",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "可",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "仁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "免",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "暗",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Э",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "你",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "君",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "受",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "助",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "术",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "д",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ш",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ж",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "去",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "必",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "г",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "平",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "队",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Щ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "á",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "先",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "金",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѣ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "梅",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "市",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "士",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "美",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӯ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "һ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "怀",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҿ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "mmmmmmRfeaaaabab",
+      "mmmmmmzBbbafufuf",
+      "mmmmmzfBbffaafuu",
+      "mmmmmBBzffffbauf",
+      "mmmmAAAAaauabbfa",
+      "mmmmzRAzfbfbabaf",
+      "mmmmAfRfffbbafua",
+      "mmmmBAzRuaababaf",
+      "mmmmmfBAaafffbab",
+      "mmmmmzBBbafabaff",
+      "mmmmmmRffuabbbab",
+      "mmmmmmRBauuffaab",
+      "mmmmmBAAaufffbab",
+      "mmmmmfzBbafabaff",
+      "mmmmmAABfaabbbab",
+      "mmmmmmAAauuffaab"
+    ],
+    [
+      "hh正正hhhhecgcgcjg",
+      "hhGGGGhhgddddKdd",
+      "来GwwG  ӽcdKdO交dd",
+      "hGwww i九jOdddddL",
+      "hGww  ӳSgdKddMdd",
+      "来Gwwӽi ScdKddӇdd",
+      "hhwwi  ҲgMddKLdd",
+      "来hww  ӳ cdddӠddO",
+      "hGwww iocdOddMdd",
+      "hGwGw  ӳljgcjgcc",
+      "来GwwGw  jiӑ ӣ 想 ",
+      "来Gwwww ig  i可iih",
+      "hhGww ӳ ghӲi   ӳ",
+      "hGwwwi 仁chhh    ",
+      "来w免ww可 ӳghh  暗  ",
+      "hGwwGw ichЭi    "
+    ],
+    [
+      "h正h正h正hhlggcjgcj",
+      "你 P  P  chh h君h受",
+      "你   P  och助术h hд",
+      "来       chii Шж ",
+      "h      去必г 平i   ",
+      "你      去队i  г дi",
+      "你       jhiЩ    ",
+      "你      oghhá i  ",
+      "h       ghhhҽ Щn",
+      "来  P   oevjvcg先g",
+      "你P  P  oc       ",
+      "hP     og     oh",
+      "h P     ji     q",
+      "来P      c ii    ",
+      "你       chhp    ",
+      "你P  P   gЭ      "
+    ],
+    [
+      "        lcgggcjj",
+      "        ghph qhp",
+      "       ochp金i   ",
+      "        gѢ 梅    ",
+      "        市       ",
+      "        士       ",
+      "        ci      ",
+      "       ochЭ     ",
+      "       ojhnҽn  n",
+      "        ecgcvj美c",
+      "        cpӮһq oh",
+      "        g       ",
+      "        cp      ",
+      "        ghp     ",
+      "        jh      ",
+      "        gh      "
+    ],
+    [
+      "       olcjgccgg",
+      "        jhp   i ",
+      "        gq      ",
+      "       oc       ",
+      "        v       ",
+      "        怀       ",
+      "       ocp      ",
+      "        jS      ",
+      "        cSҽ     ",
+      "        ejcvjgҸv",
+      "        g       ",
+      "        gp      ",
+      "        g       ",
+      "       oc       ",
+      "       oghp     ",
+      "        cж      "
+    ],
+    [
+      "       oevcgccgg",
+      "       ogp qq q ",
+      "        g       ",
+      "        cp      ",
+      "       oc       ",
+      "        c       ",
+      "        g       ",
+      "        g Ҿ     ",
+      "        c  n  n ",
+      "        egcvvcjv",
+      "       og q q   ",
+      "        gp   rr ",
+      "        c rr    ",
+      "        ch     r",
+      "        cqr  r r",
+      "        vp r r  "
+    ]
+  ]
+}

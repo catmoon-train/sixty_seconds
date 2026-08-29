@@ -1,0 +1,202 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "问",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "运",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "版",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "林",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "没",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "跟",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "空",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "dkcddbkcrdakbbdc",
+      "abkcarababdbabcd",
+      "cbbcbkaabdbkkbbr",
+      "bkckckkcdcddkbkb",
+      "dakacadcbbdckrka",
+      "bckcdkckkkabbacb",
+      "kdkbdbaradakdakd",
+      "aadakccdaaakdbcb",
+      "ddbkrdbdkcbkcdkc",
+      "aaabrcccbdadcakr",
+      "cakkkkdabcbdkbde",
+      "sssssssssssbakea",
+      "ccadsdcrkddkkacd",
+      "bacbsabcdbaakbak",
+      "ddbdJcbaadbdcdab",
+      "sssssssssJsbdrcc"
+    ],
+    [
+      "        q       ",
+      "        q     问L",
+      "             问运问",
+      "            ҪL问L",
+      "             qLҪ",
+      "     q          ",
+      "                ",
+      "                ",
+      "    q           ",
+      "    q          q",
+      "                ",
+      "                ",
+      "       q        ",
+      "                ",
+      "      q         ",
+      "    N           "
+    ],
+    [
+      "                ",
+      "                ",
+      "              问L",
+      "             ҪL ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "    N           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "    N           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "    N           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   版 版          ",
+      "  林没跟没空         "
+    ]
+  ]
+}

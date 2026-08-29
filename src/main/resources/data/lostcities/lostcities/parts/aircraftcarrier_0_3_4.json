@@ -1,0 +1,178 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "救",
+        "block": "minecraft:iron_trapdoor[facing=west,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "暨",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:iron_trapdoor[facing=south,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "桑",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "包",
+        "block": "minecraft:birch_fence[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "挪",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "瞧",
+        "block": "minecraft:birch_button[face=wall,facing=west,powered=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "救beeeddeedddacdd",
+      "救igibebcadabedaa",
+      "救bcecceaaebaddcb",
+      "救igidceccdedaecb",
+      "救baeeaedadbbbcac",
+      "救igiaceceaccgiii",
+      "救aceeebbdaigaadd",
+      " 救bbcadbigbbbaaa",
+      "  暨debigdbbaabcd",
+      "   救igdcbcebcdcd",
+      "    救Adaeacdcdec",
+      "      AAccebdadb",
+      "        AAaaaabd",
+      "          A桑bbaa",
+      "            AAcb",
+      "              A救"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            a   ",
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            b   ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            c   ",
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            d   ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            d   ",
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            包   ",
+      "            包  挪",
+      "            包   ",
+      "            a   ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            a   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "            a   ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            a   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "           瞧g   ",
+      "            b   ",
+      "                ",
+      "                "
+    ]
+  ]
+}

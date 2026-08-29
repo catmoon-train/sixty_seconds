@@ -1,0 +1,240 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "筒",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "谜",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "赠",
+        "block": "minecraft:quartz_stairs[facing=north,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "霍",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:chiseled_quartz_block"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "遥",
+        "block": "minecraft:cartography_table"
+      },
+      {
+        "char": "须",
+        "block": "minecraft:smooth_quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "溺",
+        "block": "minecraft:smooth_quartz_stairs[facing=east,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "喃",
+        "block": "minecraft:white_bed[facing=east,occupied=false,part=foot]",
+        "tag": {
+          "z": 988,
+          "x": -449,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 129
+        }
+      },
+      {
+        "char": "稻",
+        "block": "minecraft:white_bed[facing=east,occupied=false,part=head]",
+        "tag": {
+          "z": 988,
+          "x": -448,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 129
+        }
+      },
+      {
+        "char": "楼",
+        "block": "minecraft:smooth_quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "dbbcab筒wwwww谜赠xx",
+      "eadceecacccb霍www",
+      "cbcbdbcaaabbcbba",
+      "dabeeeeaccbbeaae",
+      "lledddaeeadcdded",
+      "abllllllcddaecbd",
+      "baedeacelllldeeb",
+      "dceebbaaaedallll",
+      "aabecdabdcdcbeae",
+      "ecdeeaacddcdddec",
+      "bbabcaabddaeddcb",
+      "abbeeaccaeceeebe",
+      "cdeecedadddeadbd",
+      "edeabdcbdcbdaebb",
+      "acabbdiiiiiiiiii",
+      "bbdddi          "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "f               ",
+      "c               ",
+      " d              ",
+      "  bf            ",
+      "   d            ",
+      "   be           ",
+      " z be           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "f               ",
+      "c               ",
+      " c              ",
+      "  af            ",
+      "   e            ",
+      "    c           ",
+      "    b           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "f               ",
+      "a               ",
+      " a              ",
+      "  ef            ",
+      "   b            ",
+      "   gb           ",
+      "    e           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "f               ",
+      "e               ",
+      "La              ",
+      "Lecf            ",
+      "Lvba            ",
+      "vvvaa           ",
+      "vvvae           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "f               ",
+      "c               ",
+      "Me              ",
+      "kMbf            ",
+      " 遥Mc            ",
+      "须须溺ge           ",
+      "喃稻楼Me           "
+    ]
+  ]
+}

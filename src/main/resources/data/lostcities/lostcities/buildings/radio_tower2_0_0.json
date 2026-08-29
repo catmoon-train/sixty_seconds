@@ -1,0 +1,20 @@
+{
+  "filler": "#",
+  "rubble": "}",
+  "minfloors": 0,
+  "maxfloors": 0,
+  "maxcellars": 0,
+  "allowDoors": false,
+  "parts": [
+    {
+      "part": "radio_tower2_0_0_0",
+      "floor": 0
+    }
+  ],
+  "parts2": [
+    {
+      "part": "lostcities:radio_tower2_0_0_0_parts2",
+      "floor": 0
+    }
+  ]
+}

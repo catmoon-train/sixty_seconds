@@ -1,0 +1,662 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:andesite"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:bricks[weathering=true]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:bricks[weathering=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=true]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:spruce_planks"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:spruce_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:spruce_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Ӈ",
+        "block": "minecraft:spruce_stairs[facing=north,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:spruce_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Ӑ",
+        "block": "minecraft:spruce_stairs[facing=east,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:spruce_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ӈ",
+        "block": "minecraft:spruce_stairs[facing=north,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "Ә",
+        "block": "minecraft:spruce_stairs[facing=north,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "上",
+        "block": "minecraft:spruce_stairs[facing=west,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "Ӣ",
+        "block": "minecraft:spruce_stairs[facing=east,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "Ӌ",
+        "block": "minecraft:spruce_stairs[facing=west,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "ӂ",
+        "block": "minecraft:spruce_stairs[facing=south,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "交",
+        "block": "minecraft:spruce_stairs[facing=east,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "舞",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -438,
+          "x": -703,
+          "ForgeData": {},
+          "id": "refurbished_furniture:kitchen_drawer",
+          "y": -52,
+          "Items": []
+        }
+      },
+      {
+        "char": "h",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "餐",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -441,
+          "x": -701,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:bath",
+          "y": -52
+        }
+      },
+      {
+        "char": "贴",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -441,
+          "x": -700,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:bath",
+          "y": -52,
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          }
+        }
+      },
+      {
+        "char": "Ѣ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "例",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "宣",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "消",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -441,
+          "x": -691,
+          "ForgeData": {},
+          "id": "refurbished_furniture:kitchen_drawer",
+          "y": -52,
+          "Items": []
+        }
+      },
+      {
+        "char": "底",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -366,
+          "x": -693,
+          "ForgeData": {},
+          "Energy": 0,
+          "y": -53,
+          "id": "refurbished_furniture:freezer",
+          "Enabled": "0b",
+          "MaxProcessTime": 0,
+          "Powered": "0b",
+          "Items": [],
+          "NodePos": "-190215513100341L",
+          "Connections": [
+            "L"
+          ],
+          "ProcessTime": 0
+        }
+      },
+      {
+        "char": "垒",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -439,
+          "x": -703,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:kitchen_sink",
+          "y": -52,
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          }
+        }
+      },
+      {
+        "char": "Ш",
+        "block": "minecraft:spruce_button[face=floor,facing=north,powered=false]"
+      },
+      {
+        "char": "次",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "项",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "母",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -440,
+          "x": -692,
+          "ForgeData": {},
+          "id": "refurbished_furniture:kitchen_drawer",
+          "y": -52,
+          "Items": []
+        }
+      },
+      {
+        "char": "ж",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "纪",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -439,
+          "x": -700,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:toilet",
+          "y": -52,
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          }
+        }
+      },
+      {
+        "char": "Р",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -350,
+          "x": -687,
+          "ForgeData": {},
+          "id": "refurbished_furniture:crate",
+          "y": -46,
+          "Items": []
+        }
+      },
+      {
+        "char": "ѕ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "助",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "技",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "肉",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -439,
+          "x": -692,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:kitchen_sink",
+          "y": -52,
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          }
+        }
+      },
+      {
+        "char": "д",
+        "block": "minecraft:spruce_button[face=floor,facing=east,powered=false]"
+      },
+      {
+        "char": "Ь",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "台",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "传",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "击",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Я",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "计",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "条",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "停",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "具",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "已",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Э",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "є",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Щ",
+        "block": "minecraft:spruce_button[face=floor,facing=south,powered=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "飞",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӑ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "费",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "受",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "进",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "或",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѥ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "雄",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "除",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -441,
+          "x": -719,
+          "ForgeData": {},
+          "id": "refurbished_furniture:fridge",
+          "y": -51,
+          "Items": []
+        }
+      },
+      {
+        "char": "独",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "灯",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "金",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "梦",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "抓",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "卖",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "顺",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "间",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "确",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "效",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "份",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "实",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "了",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "理",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -441,
+          "x": -690,
+          "ForgeData": {},
+          "id": "refurbished_furniture:cabinet",
+          "y": -50,
+          "Items": []
+        }
+      },
+      {
+        "char": "脑",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "н",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "系",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "请",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "名",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "骑",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "至",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ї",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "办",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "љ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ђ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "享",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "座",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "赏",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "极",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "ffffffffffffffff",
+      "q  q  q         ",
+      "                ",
+      "                ",
+      "                ",
+      "n     n    nn   ",
+      "llleleleleeleeel",
+      "ejcjcgcgcjcggggc",
+      "lgccgcccgggccjgc",
+      "lgcccjggjcggcjgc",
+      "lgjgccccgccjcvjc",
+      "lggcgccggggcgccc",
+      "egjvcggccccjgcgg",
+      "egccgcgccgggcggc",
+      "eelelleeeeleeeee",
+      "evvvjcjcggjccgcj"
+    ],
+    [
+      "fabaauaabaaabbab",
+      "  qq q     q    ",
+      "                ",
+      "                ",
+      "                ",
+      "  n     n      n",
+      "ljgjgjgcjjcgcggc",
+      "jddddOddLdddӇdMd",
+      "gOMӐdOdӇdKddLddd",
+      "gddddӈӐLddddKLdd",
+      "gLKddKdӘ上dM上dKdd",
+      "gLddddddddddddӢO",
+      "cddddKLdddLddddd",
+      "jdddMddMddddddӋM",
+      "ldddddddLdOdӂddd",
+      "vddKddMMdddO交ӋMM"
+    ],
+    [
+      "fabbbaabaabaaaaa",
+      " q   q q     q  ",
+      "                ",
+      "                ",
+      "                ",
+      "      n     n  n",
+      "ecccggcjjcgcjggc",
+      "c舞h餐贴jѢ h例 c宣消底h",
+      "g垒hhШc次次hh项c母h h",
+      "c垒жi纪cРѕж助技v肉hШ ",
+      "j舞 дЬjРh 例 vhѢi台",
+      "gg传ccggc击jvj Яn ",
+      "c计iq条停具iдi已Ьhhhд",
+      "g计hЭnnЯєhЩhhhhhp",
+      "ecgcgcggggcccjc飞",
+      "v ӑhhh费 Ѡд受进或 q "
+    ],
+    [
+      "faababbabbabbaba",
+      "  q  q   q   q q",
+      "                ",
+      "                ",
+      "                ",
+      "    n   n    n  ",
+      "eccggcgcgcgjjccj",
+      "chhqѤc  жhhg雄 除h",
+      "g独жioc  i 灯ghhpж",
+      "c独   ghp  金jq   ",
+      "jЭ nєcРЯ  ncp   ",
+      "cg梦jcgcv抓jjc卖   ",
+      "chpq顺间确qnq效qnii ",
+      "gninn nohniohhn ",
+      "egggcjgcgggcgjc份",
+      "c qihi q qq q   "
+    ],
+    [
+      "fuabaaababbabbab",
+      "        q   q   ",
+      "                ",
+      "                ",
+      "                ",
+      " n          n   ",
+      "lgggjccgccggggcc",
+      "ch实q cp  了hj理理理 ",
+      "cѢ  og     ghp  ",
+      "c   og     cq   ",
+      "jnn ngЯ nnoj    ",
+      "gjcgjjjcgcgcp   ",
+      "ghpq  脑нqqqн    ",
+      "cpnnn n ohѕrhp n",
+      "ecgggcccccggccgg",
+      "c qhpqq qq    q "
+    ],
+    [
+      "faababbbabbabbbb",
+      " q  q q  q q    ",
+      "                ",
+      "                ",
+      "                ",
+      "    n      n nn ",
+      "l系ccggcgcgggjgcc",
+      "c请h实名c骑 qrrjh q至",
+      "g请实r grr  oc  rr",
+      "j请rrїc r办r jpr  ",
+      "v请 rojљ r  cp r办",
+      "ccccgccjgccg r  ",
+      "c请нr至qqh ђ享cђ  r",
+      "v座赏n r nnhhgh n ",
+      "e系jcjgjgcvccvcgg",
+      "c座极rrr qrн н qqн"
+    ]
+  ]
+}

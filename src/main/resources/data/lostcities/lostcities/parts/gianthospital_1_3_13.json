@@ -1,0 +1,178 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "喃",
+        "block": "minecraft:cobblestone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:moss_block"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:cobblestone_slab[type=double,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "               c",
+      "               e",
+      "               d",
+      "               b",
+      "               b",
+      "                ",
+      "                ",
+      "             cee",
+      "             dde",
+      "             bdb",
+      "             ecb",
+      "             ccd",
+      "             dde",
+      "             dec",
+      "             bbb",
+      "             dce"
+    ],
+    [
+      "               Q",
+      "               Q",
+      "               Q",
+      "               Q",
+      "               喃",
+      "                ",
+      "                ",
+      "             bbe",
+      "             cdc",
+      "             edc",
+      "             edb",
+      "             ceb",
+      "             cbe",
+      "             bbe",
+      "             cdc",
+      "             cdb"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "             eed",
+      "             ddd",
+      "             eee",
+      "             cbc",
+      "             cdd",
+      "             cbc",
+      "             edc",
+      "             cbb",
+      "             bdb"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "             ccb",
+      "             ciC",
+      "             dgq",
+      "             dhg",
+      "             bCh",
+      "             eiq",
+      "             egf",
+      "             bqf",
+      "             bhi"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "             ffg",
+      "             g  ",
+      "             g  ",
+      "             f  ",
+      "             B  ",
+      "             i  ",
+      "             f  ",
+      "             G  ",
+      "             G  "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

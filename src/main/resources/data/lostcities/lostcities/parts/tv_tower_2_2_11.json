@@ -1,0 +1,249 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:cauldron"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:polished_andesite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "Ӛ",
+        "block": "minecraft:dark_oak_door[facing=south,half=lower,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "ҟ",
+        "block": "minecraft:spruce_trapdoor[facing=south,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ӗ",
+        "block": "minecraft:tripwire_hook[attached=false,facing=north,powered=false]"
+      },
+      {
+        "char": "ә",
+        "block": "minecraft:dark_oak_door[facing=south,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "ѷ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҟ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ә",
+        "block": "minecraft:white_wall_banner[facing=north]",
+        "tag": {
+          "z": -268,
+          "Patterns": [
+            {
+              "Color": 8,
+              "Pattern": "dls"
+            },
+            {
+              "Color": 0,
+              "Pattern": "dls"
+            },
+            {
+              "Color": 3,
+              "Pattern": "gru"
+            },
+            {
+              "Color": 8,
+              "Pattern": "bo"
+            }
+          ],
+          "x": -29,
+          "id": "minecraft:banner",
+          "y": -14
+        }
+      },
+      {
+        "char": "С",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ҽ",
+        "block": "minecraft:birch_wall_sign[facing=south,waterlogged=false]",
+        "tag": {
+          "z": -283,
+          "x": -20,
+          "is_waxed": "0b",
+          "id": "minecraft:sign",
+          "y": -49,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"INFORMATION\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "slices": [
+    [
+      "ddcedbcdabdcedce",
+      "cddadedeebccdabd",
+      "cdebcaebbbedeacd",
+      "abeababadedcaddc",
+      "aeadbccebecdceed",
+      "dacbdbbaebdeedbe",
+      "eaaabcdaeaabdbbd",
+      "ceecbddaabedebce",
+      "abeedddaaddeddbd",
+      "debdaccdabacaaac",
+      "ddaaaeceaadecceb",
+      "aeaccbdbcacacbdc",
+      "cacadcceacbeadce",
+      "babdceebceecdbbd",
+      "baeedccadcdcadda",
+      "daadedaeddeebeaa"
+    ],
+    [
+      "dadabcbax       ",
+      " e xjjja        ",
+      " e     c     e  ",
+      " c     cx    c  ",
+      " c x   d     e  ",
+      "decdeӚecb   daca",
+      " e            x ",
+      "                ",
+      "                ",
+      "                ",
+      " e bca dde aec d",
+      "    H   H   H   ",
+      "                ",
+      "   ead ecd ada  ",
+      " e  H   H   H   ",
+      "               f"
+    ],
+    [
+      "cbecccbck       ",
+      " b ҟ   e        ",
+      " d     e     a  ",
+      " b     bk    a  ",
+      " d ӗ   b     c  ",
+      "eaabbәccd   babd",
+      " d            k ",
+      "                ",
+      "                ",
+      "                ",
+      " b  ѷҞ  ѷҞ  ѷҞ  ",
+      "                ",
+      "                ",
+      "    ѷҞ  ѷҞ  ѷҞ  ",
+      " a              ",
+      "               f"
+    ],
+    [
+      "ccbebacdk       ",
+      " c     b        ",
+      " d     d     a  ",
+      " e     dk    a  ",
+      " c Ә   a     d  ",
+      "deabaСacc   dada",
+      " a            k ",
+      "                ",
+      "                ",
+      "                ",
+      " e              ",
+      "                ",
+      "                ",
+      "                ",
+      " b              ",
+      "                "
+    ],
+    [
+      "bccbaeeb     j  ",
+      " a     b     j  ",
+      " d     b     d  ",
+      " c     c     b  ",
+      " a     b     c  ",
+      "ccdcdbaeejjjadba",
+      " c   Ҽ          ",
+      " j              ",
+      " j              ",
+      " j              ",
+      " d              ",
+      " j              ",
+      " j              ",
+      " j              ",
+      " d              ",
+      " j             f"
+    ],
+    [
+      "bceabaaa     d  ",
+      " d     e     a  ",
+      " d     c     d  ",
+      " c     c     a  ",
+      " c     c     e  ",
+      "cabaeabcbceddcac",
+      " a              ",
+      " e              ",
+      " e              ",
+      " c              ",
+      " d              ",
+      " e              ",
+      " b              ",
+      " b              ",
+      " b              ",
+      " e             a"
+    ]
+  ]
+}

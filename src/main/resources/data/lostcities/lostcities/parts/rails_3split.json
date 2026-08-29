@@ -1,0 +1,412 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:dirt"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Y",
+        "block": "minecraft:polished_andesite_stairs[facing=east,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:redstone_block"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:stone_brick_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "6",
+        "block": "minecraft:polished_andesite_stairs[facing=east,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=inner_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:polished_andesite_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:quartz_pillar[axis=z]"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:polished_andesite_stairs[facing=west,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "5",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=bottom,shape=outer_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "0",
+        "block": "minecraft:polished_andesite_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "1",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=outer_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "͵",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=inner_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=inner_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ͱ",
+        "block": "minecraft:polished_andesite_stairs[facing=south,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:polished_andesite_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=outer_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ʹ",
+        "block": "minecraft:polished_andesite_stairs[facing=north,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:quartz_pillar[axis=x]"
+      },
+      {
+        "char": "ͳ",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=outer_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:polished_andesite_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "W",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=outer_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "9",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=outer_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:polished_andesite_stairs[facing=west,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "2",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=bottom,shape=outer_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:polished_andesite_stairs[facing=south,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "Z",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=inner_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "8",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=inner_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "7",
+        "block": "minecraft:polished_andesite_stairs[facing=north,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "Ͳ",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=outer_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=bottom,shape=inner_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:rail[shape=north_south,waterlogged=false]"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:rail[shape=north_east,waterlogged=false]"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:rail[shape=south_west,waterlogged=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:rail[shape=east_west,waterlogged=false]"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:rail[shape=south_east,waterlogged=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:rail[shape=north_west,waterlogged=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=top,shape=inner_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=top,shape=inner_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=top,shape=outer_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:smooth_quartz_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:smooth_quartz_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=top,shape=inner_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "4",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=top,shape=outer_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:smooth_quartz_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=top,shape=outer_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:smooth_quartz_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=top,shape=outer_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=top,shape=inner_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:smooth_quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:stone_brick_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "S",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=top,shape=inner_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=top,shape=outer_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:white_stained_glass"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=top,shape=inner_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=top,shape=outer_right,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "ckYoskerc       ",
+      "ck6Lskerc       ",
+      "chpElV5phc ccc  ",
+      "ckerll0eehccaaa ",
+      "cah1͵l3Ͱepqhqhcc",
+      "qhkeEls3vRepehqq",
+      "epep1ʹdddVovRpee",
+      "vovReͳxqddsdVovv",
+      "ddsdddsdddslddss",
+      "xqxWe9voddsdPqxx",
+      "epep2ͱdddPqxWpee",
+      "ohkeElsZxWepehoo",
+      "cah28lZ7epohohcc",
+      "ckerll0eehccaaa ",
+      "chpElPͲphc ccc  ",
+      "ckYMskerc       "
+    ],
+    [
+      "b   w   b       ",
+      "b   w   b       ",
+      "k   w   qa aaa  ",
+      "a   IF  arbqaLa ",
+      "ak   w       rab",
+      "     IF         ",
+      "      IiF       ",
+      "        IiiF    ",
+      "iiiiiiiiiiiDiii ",
+      "        DiiH    ",
+      "      DiH       ",
+      "     DH         ",
+      "ak   w       rab",
+      "a   DH   rboaMa ",
+      "k   w   oa aaa  ",
+      "b   w   b       "
+    ],
+    [
+      "b       b       ",
+      "b       b       ",
+      "m       ga aaa  ",
+      "a       anbgaOa ",
+      "am           nab",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "am           nab",
+      "a        nbjaTa ",
+      "m       ja aaa  ",
+      "b       b       "
+    ],
+    [
+      "b       b       ",
+      "b       b       ",
+      "k       qa aaa  ",
+      "a       arbqaLa ",
+      "ak           rab",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "ak           rab",
+      "a        rboaMa ",
+      "k       oa aaa  ",
+      "b       b       "
+    ],
+    [
+      "b       b       ",
+      "b       b       ",
+      "m       ga aa   ",
+      "a       anbgaOa ",
+      "am       C ganab",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "am           nab",
+      "a        nbjaTa ",
+      "m       ja aa   ",
+      "b       b       "
+    ],
+    [
+      "bz     Ab       ",
+      "bz     Ab       ",
+      "am     naa aa   ",
+      "am     CJabaaa  ",
+      "aa      4gyggObb",
+      "gg     gggygg4yy",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "jj           XjB",
+      "aa      XjBjjTbb",
+      "am     GNabaaa  ",
+      "am     naa aa   ",
+      "bz     Ab       "
+    ],
+    [
+      "  dzuAd         ",
+      "  dzuAd         ",
+      "  amtna         ",
+      "  aSKnaaa       ",
+      "  hamCgJa       ",
+      "  haSKtnaalaa   ",
+      "aalffSKCggyJaaal",
+      "ggyfffffftuCgggy",
+      "ttufffffffufmttu",
+      "jjBfffffftuGjjjB",
+      "aalffUQGjjBNaaal",
+      "  haUQtnaalaa   ",
+      "  hamGjNa       ",
+      "  aUQnaaa       ",
+      "  amtna         ",
+      "  dzuAd         "
+    ]
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:gold_block"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "驻",
+        "block": "minecraft:furnace[facing=west,lit=false]",
+        "tag": {
+          "z": 953,
+          "x": -551,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 120,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "澡",
+        "block": "minecraft:furnace[facing=east,lit=false]",
+        "tag": {
+          "z": 971,
+          "x": -525,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 126,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "谜",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:quartz_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:quartz_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:black_stained_glass"
+      },
+      {
+        "char": "仿",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:quartz_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:quartz_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "              de",
+      "            cabb",
+      "          ddaeec",
+      "        baabceca",
+      "       ecbacbedb",
+      "      dccdcdcaca",
+      "     cbaabbebcad",
+      "    edbeaabaabba",
+      "    cdebeeaeabee",
+      "    dcdbdacdeadd",
+      "    ceabbebedeaa",
+      "    ceaadedbaacb",
+      "    dbdabbceaaeb",
+      "    cabbebaaadaa",
+      "    ccbccddcbbba"
+    ],
+    [
+      "             aae",
+      "           dddqq",
+      "         cadnnnn",
+      "       dba      ",
+      "      bd        ",
+      "     ea         ",
+      "    db          ",
+      "   ca           ",
+      "   a            ",
+      "   b      y     ",
+      "   a        y   ",
+      "   e      n   y ",
+      "   c            ",
+      "   a      yyyyyy",
+      "   e            ",
+      "   b      n   y "
+    ],
+    [
+      "          add qq",
+      "        eda n qq",
+      "      cbd       ",
+      "     be         ",
+      "    bd          ",
+      "   ce           ",
+      "  bc            ",
+      "  c             ",
+      "  a             ",
+      "  b      xs     ",
+      "  a       sss   ",
+      "  c       sssss ",
+      "  b       驻澡www谜",
+      "  a     JQQQQQQo",
+      "  e       驻澡xxx仿",
+      "  d       sssss "
+    ],
+    [
+      "       ecd  n qq",
+      "     acd      qq",
+      "    aa          ",
+      "   eb           ",
+      "  be            ",
+      " bb             ",
+      " b              ",
+      " a              ",
+      " c              ",
+      " b              ",
+      " d              ",
+      " c    H         ",
+      " a    y         ",
+      " a    yJQQ澡ss   ",
+      " a    y         ",
+      " c    ϓ         "
+    ],
+    [
+      "    edeg      qq",
+      "   dcg        qq",
+      "  bbg           ",
+      " eeg            ",
+      "ceg             ",
+      "a               ",
+      "c               ",
+      "e               ",
+      "d               ",
+      "d               ",
+      "e               ",
+      "c     w         ",
+      "c               ",
+      "b     ss        ",
+      "c               ",
+      "a     x         "
+    ],
+    [
+      "    bb          ",
+      "   a            ",
+      "  d             ",
+      " b              ",
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      "gg              ",
+      "gg              "
+    ]
+  ]
+}

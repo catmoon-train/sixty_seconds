@@ -1,0 +1,206 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:cobbled_deepslate_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:cobbled_deepslate_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "͵",
+        "block": "minecraft:spruce_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "Ή",
+        "block": "minecraft:spruce_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:polished_deepslate_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:polished_deepslate_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:polished_deepslate_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:oak_leaves[distance=4,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "4",
+        "block": "minecraft:oak_leaves[distance=3,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:cobbled_deepslate_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:red_terracotta"
+      },
+      {
+        "char": "Ϗ",
+        "block": "minecraft:dark_oak_leaves[distance=3,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": ";",
+        "block": "minecraft:dark_oak_leaves[distance=2,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:dark_oak_leaves[distance=7,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "ʹ",
+        "block": "minecraft:dark_oak_leaves[distance=4,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "ѭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҵ",
+        "block": "minecraft:flower_pot"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "    swggggggws͵Ή",
+      "    IUz hh zUI34",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  j tttj  ttj   ",
+      " IsIsIsIsIsIsI͵Ή",
+      " UHzHzHzHzHzHU͵Ή",
+      " zA   A     Az͵Ή",
+      "  A    A    A ͵Ή",
+      " zA    A    Az͵Ή"
+    ],
+    [
+      "      swggws   Ϗ",
+      "      IUhhUI   ;",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      jtt jt    ",
+      " IsIsIsIsIsIsI  ",
+      " UHzHzHzHzHzHU  ",
+      " IsIsIsIsIsIsI  "
+    ],
+    [
+      "        ss    C ",
+      "        hh     4",
+      "               ʹ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  t ttj  tj t   ",
+      "                "
+    ],
+    [
+      "                ",
+      "        ѭѭ     3",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "        ҵҵ      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "禹",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "训",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "稽",
+        "block": "minecraft:rail[shape=south_east,waterlogged=false]"
+      },
+      {
+        "char": "珈",
+        "block": "minecraft:rail[shape=south_west,waterlogged=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "鹃",
+        "block": "minecraft:rail[shape=north_east,waterlogged=false]"
+      },
+      {
+        "char": "峨",
+        "block": "minecraft:rail[shape=north_west,waterlogged=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "嶙",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "牒",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "芥",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "迫",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "腋",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:diorite"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "             禹  ",
+      "             训  ",
+      "             禹  ",
+      "             训  ",
+      "             禹  ",
+      "             训  ",
+      "             禹  ",
+      "             禹  ",
+      "       稽珈 稽珈 训  ",
+      "c      鹃峨 鹃峨 训  ",
+      "c            训  ",
+      "e嶙  牒芥迫迫芥迫迫迫迫腋  ",
+      "b               ",
+      "b               ",
+      "d               ",
+      "b               "
+    ],
+    [
+      "             禹  ",
+      "             禹  ",
+      "             禹  ",
+      "             训  ",
+      "             禹  ",
+      "             禹  ",
+      "             禹  ",
+      "             禹  ",
+      "             禹  ",
+      "e            训  ",
+      "b            训  ",
+      "b嶙  牒芥芥迫芥芥芥芥芥腋  ",
+      "b               ",
+      "e               ",
+      "e               ",
+      "b               "
+    ],
+    [
+      "             禹  ",
+      "             禹  ",
+      "             禹  ",
+      "             禹  ",
+      "             禹  ",
+      "             禹  ",
+      "             禹  ",
+      "             禹  ",
+      "             禹  ",
+      "d            禹  ",
+      "b            禹  ",
+      "d芥芥芥芥芥芥芥芥芥芥芥芥腋  ",
+      "c               ",
+      "d               ",
+      "b               ",
+      "b               "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "e               ",
+      "b               ",
+      "c               ",
+      "b               ",
+      "e               ",
+      "d               ",
+      "b               "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "e               ",
+      "d               ",
+      "b               ",
+      "d               ",
+      "d               ",
+      "b               ",
+      "e               "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

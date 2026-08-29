@@ -1,0 +1,246 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "4",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "о",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "қ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѕ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Β",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "所",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "в",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "之",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ά",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Σ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͼ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "҄",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "Ξ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ј",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͷ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϊ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӱ",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaa4BBBB4NN",
+      "aaaaaaaa4BBBNооқ",
+      "aaaaaaaa4NN4Nқ4о",
+      "aaaaaaaaNBBB4қоо",
+      "aaaaaaaa4BBBBN44",
+      "aaaaaaaaNBBBBBBB",
+      "aaaaaaaaNBBBBBBB",
+      "aaaaaaaaNBBBBN44",
+      "aaaaaaaa4BBBNBBB",
+      "aaaaaaaa4BBNBBNB",
+      "aaaaaaaa4BB4BNѕ4",
+      "aaaaaaaaNBBNBNѕN",
+      "aaaaaaaaN44NNNNN",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "PeeDeΒDC        ",
+      "PDhhD eC        ",
+      "PxΒDhhDC        ",
+      "PeheDDeCe      e",
+      "PDhDxehC     e  ",
+      "PeDΒhxDC        ",
+      "PhhDhDhC        ",
+      "PeDhDhDC        ",
+      "PhhDh所вC        ",
+      "PDhDeHH之        ",
+      "PDhΆxΣhC        ",
+      "PhDeΆeΒC        ",
+      "PDxhΆΆhC      Ͼ ",
+      "PhDΆeex҄UUUUUUUU",
+      "PeeΆΆeΆh heΆ hΆh",
+      "eAAeeΆeΆΆxΆΆ eeΆ"
+    ],
+    [
+      "P    D C        ",
+      "P ll   C        ",
+      "P Β ll C        ",
+      "P l D  C        ",
+      "P l   lC        ",
+      "P  Βl  C        ",
+      "P  Dl lC        ",
+      "P  l lDC        ",
+      "P l l ΞC        ",
+      "P  D HHC        ",
+      "P     lC        ",
+      "PlD    C        ",
+      "P  l  lC      Ͼ ",
+      "Pl     ҄UUUUUUUU",
+      "P      l l   l l",
+      " A              "
+    ],
+    [
+      "P    Β C        ",
+      "P      C        ",
+      "P D    C        ",
+      "P      C        ",
+      "P      C        ",
+      "P  Β   C        ",
+      "P      C        ",
+      "P      C        ",
+      "P      C        ",
+      "P    јHC        ",
+      "P      C        ",
+      "P      C        ",
+      "P      C      Ͼ ",
+      "P      ҄UUUUUUUU",
+      "P               ",
+      " A              "
+    ],
+    [
+      "    DDD         ",
+      "     D          ",
+      "                ",
+      "                ",
+      "                ",
+      "   D            ",
+      "                ",
+      "                ",
+      "                ",
+      "     ͶH         ",
+      "                ",
+      "                ",
+      "              Ͼ ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "    Dϊͳ         ",
+      "    DΣD         ",
+      "                ",
+      "                ",
+      "                ",
+      "   D            ",
+      "                ",
+      "                ",
+      "                ",
+      "      H         ",
+      "                ",
+      "                ",
+      "              ӱ ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

@@ -1,0 +1,228 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "驻",
+        "block": "minecraft:furnace[facing=west,lit=false]",
+        "tag": {
+          "z": 953,
+          "x": -551,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 120,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "澡",
+        "block": "minecraft:furnace[facing=east,lit=false]",
+        "tag": {
+          "z": 971,
+          "x": -525,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 126,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "谜",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:quartz_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:quartz_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:black_stained_glass"
+      },
+      {
+        "char": "仿",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=outer_right,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "ccebebdeadeebcbc",
+      "abdbabbdeeedacdd",
+      "decedcdaabeeadde",
+      "bddbceecabacadcb",
+      "eccceeacdabecaba",
+      "iiiiiiiiiiiiiiii",
+      "cceebabeaadaeaca",
+      "iiiiiiiiiiiiiiib",
+      "aecadadceceedeid",
+      "abcedcbcdacaebia",
+      "dddaecddbdccaaie",
+      "cbdaadeecbebcbic",
+      "ebceddcbdbdddeic",
+      "abdedcdaebcdaeib",
+      "ededcceecaacaaic",
+      "deeabcdcbddedcid"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   y            ",
+      "     y          ",
+      "   n   y        ",
+      "         y      ",
+      "   yyyyyyyn     ",
+      "         y      ",
+      "   n   y        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  xs            ",
+      "   sss          ",
+      "   sssss        ",
+      "   驻澡www谜s      ",
+      " JQQQQQQooss    ",
+      "   驻澡xxx仿s      ",
+      "   sssss        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "JQQ澡ss          ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "s               ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

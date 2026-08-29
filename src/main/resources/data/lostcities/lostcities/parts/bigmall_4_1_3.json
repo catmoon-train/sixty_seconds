@@ -1,0 +1,422 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:light_gray_carpet"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "能",
+        "block": "minecraft:orange_concrete"
+      },
+      {
+        "char": "色",
+        "block": "minecraft:birch_fence[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "又",
+        "block": "minecraft:blast_furnace[facing=east,lit=false]",
+        "tag": {
+          "z": 315,
+          "x": 164,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:blast_furnace",
+          "y": 138,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "魔",
+        "block": "minecraft:orange_wall_banner[facing=west]",
+        "tag": {
+          "z": 335,
+          "Patterns": [],
+          "x": 130,
+          "ForgeCaps": {},
+          "id": "minecraft:banner",
+          "y": 125,
+          "CustomName": "{\"text\":\"IGlassIt!\"}"
+        }
+      },
+      {
+        "char": "奏",
+        "block": "minecraft:blast_furnace[facing=south,lit=false]",
+        "tag": {
+          "z": 316,
+          "x": 164,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:blast_furnace",
+          "y": 138,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "ӌ",
+        "block": "minecraft:lime_concrete"
+      },
+      {
+        "char": "Ӧ",
+        "block": "minecraft:scaffolding[bottom=false,distance=0,waterlogged=false]"
+      },
+      {
+        "char": "统",
+        "block": "minecraft:scaffolding[bottom=true,distance=1,waterlogged=false]"
+      },
+      {
+        "char": "谁",
+        "block": "minecraft:scaffolding[bottom=true,distance=2,waterlogged=false]"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:smooth_quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:andesite"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:diorite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:smooth_stone"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:birch_planks"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:oak_planks"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:jungle_planks"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:smooth_quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "体",
+        "block": "minecraft:spruce_trapdoor[facing=south,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ӥ",
+        "block": "minecraft:polished_diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "工",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "叁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "谢",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "因",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӎ",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ӎ",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:acacia_wood[axis=y]"
+      },
+      {
+        "char": "落",
+        "block": "minecraft:composter[level=0]"
+      },
+      {
+        "char": "当",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=side,west=side]"
+      },
+      {
+        "char": "李",
+        "block": "minecraft:skeleton_skull[rotation=9]",
+        "tag": {
+          "z": 346,
+          "x": 127,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 133
+        }
+      },
+      {
+        "char": "成",
+        "block": "minecraft:smoker[facing=east,lit=false]",
+        "tag": {
+          "z": 340,
+          "x": 178,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:smoker",
+          "y": 141,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "Ӓ",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Ө",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ó",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Ϗ",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "补",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "续",
+        "block": "minecraft:furnace[facing=south,lit=false]",
+        "tag": {
+          "z": 315,
+          "x": 168,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 142,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "吧",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "        uorrruy ",
+      "      romviiismu",
+      "    3rii v     i",
+      "    ri   能  色   ",
+      "   ri    s      ",
+      "   yi    能      ",
+      " wuv又    m      ",
+      "  om又   魔能      ",
+      "  ri又    v      ",
+      "  ri又    能      ",
+      "  ri又    s      ",
+      "  os又    能v能m能  ",
+      " wym奏ӌӌӌӌmsvvmmm",
+      "  os     ӌ   sӦ统",
+      "  ri     ӌ   s统 ",
+      "  r      ӌ   s谁 "
+    ],
+    [
+      "      ͱGyyyyouoG",
+      "    GGuommvmmsvu",
+      "   Goymmlhhhllls",
+      "   Gomllhhhhhlll",
+      "  Gomhhllhllllhl",
+      "  Pomhhllhhlllll",
+      " wovlllllhhllllh",
+      " Gushlhhhhlllhlh",
+      " Gomlhhhhhllllll",
+      " ͱoshlhlhhhhhlhh",
+      " Gomhhllhlhlhlhh",
+      " Gomllhllhhhhlhl",
+      " wuvlhllhhlhllhh",
+      " Gumhlhlllhhlhlh",
+      " ͱomlhhllhhhlhhh",
+      " Gomlhlhlhllhllh"
+    ],
+    [
+      "        vssmvsm ",
+      "      msaBaBaBBm",
+      "    vmBaajBBBBBj",
+      "    vBBaaBaaBBBa",
+      "   mBjBaBaaBaBaa",
+      "   maBBBBajBBaBB",
+      " wsBBBBBBBBaaBaB",
+      "  vBBBBBBBaBBBBa",
+      "  vBBBaBaaBBjBBB",
+      "  sBBaBBaannpBBB",
+      "  vaBaBajnpnnpBB",
+      "  saaBBppnnnpnnp",
+      " wmnnnpnnCCpnnpn",
+      "  vnnppCpppnCnnp",
+      "  mnnpppppnnpnpn",
+      "  vnpnpnpnnnnppp"
+    ],
+    [
+      "      QIyooooooI",
+      "    OIooo体体体体体uy",
+      "   Ӥyyu   工工工   ",
+      "   Io  叁       叁",
+      "  Iyo 提谢因     提谢",
+      "  Qo 叁 工       工",
+      " wyu提谢因         ",
+      " Oy  工  wӍ   ӎw ",
+      " Io     oy   oy ",
+      " Ӥu   oyyu   ooy",
+      " Io ouyttt   ttt",
+      " Iuoott体体t    提谢",
+      " wott落 当李t     工",
+      " Iyt成    t      ",
+      " Iut成 当  t      ",
+      " Qot成    t    叁 "
+    ],
+    [
+      "        ӎӒӒӒӒӒӍ ",
+      "      ӎӒӨ     óӒ",
+      "    ӎӒӨ         ",
+      "    Ϗ           ",
+      "   ӎӨ           ",
+      "   Ϗ            ",
+      "  ӎӨ            ",
+      "  Ϗ     wӍ   ӎw ",
+      "  Ϗ     ru   or ",
+      "  Ϗ   rrry   orr",
+      "  Ϗ rrriis   mii",
+      "  补yri 续续       ",
+      " wymi           ",
+      "  om     吧      ",
+      "  r             ",
+      "  ri     吧      "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        wӍ   ӎw ",
+      "        ry   ur ",
+      "      rrro   orr",
+      "    rrriim   vi ",
+      "   orii         ",
+      " wosi           ",
+      "  uv            ",
+      "  ri            ",
+      "  ri            "
+    ]
+  ]
+}

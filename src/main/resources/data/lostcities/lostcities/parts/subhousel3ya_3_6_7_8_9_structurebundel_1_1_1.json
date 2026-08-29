@@ -1,0 +1,198 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "δ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:oak_wood[axis=y]"
+      },
+      {
+        "char": "Π",
+        "block": "minecraft:dark_oak_leaves[distance=5,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "ϙ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ζ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": ";",
+        "block": "minecraft:dark_oak_leaves[distance=2,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "4",
+        "block": "minecraft:oak_leaves[distance=3,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "ʹ",
+        "block": "minecraft:dark_oak_leaves[distance=4,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "Ϗ",
+        "block": "minecraft:dark_oak_leaves[distance=3,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:oak_leaves[distance=7,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ψ",
+        "block": "minecraft:oak_leaves[distance=2,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:oak_leaves[distance=4,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "μ",
+        "block": "minecraft:dark_oak_leaves[distance=1,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͷ",
+        "block": "minecraft:oak_leaves[distance=5,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:dark_oak_leaves[distance=7,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:oak_leaves[distance=6,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "Σ",
+        "block": "minecraft:dark_oak_leaves[distance=6,persistent=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      " δM   Π         ",
+      " ϙζ;4ʹ          ",
+      "Ϗ  4ʹ           ",
+      " y              ",
+      " y              ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "  J Ψ43         ",
+      "μM 4 ʹ          ",
+      "; e             ",
+      "4  y            ",
+      "ʹ               ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "   ʹ4 Π         ",
+      " Jͷʹʹͷ          ",
+      "                ",
+      "  Ce            ",
+      " C              ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "C ͱ  yΣ         ",
+      " y   Σ          ",
+      "ye              ",
+      "e               ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "  C   y         ",
+      " yy             ",
+      "C               ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

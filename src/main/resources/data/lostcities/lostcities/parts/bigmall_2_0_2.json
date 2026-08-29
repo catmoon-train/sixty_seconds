@@ -1,0 +1,209 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "0",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "Y",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "S",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "Z",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "太",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "郭",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "请",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "始",
+        "block": "minecraft:stone_brick_slab[type=double,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "下",
+        "block": "minecraft:stone_brick_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "护",
+        "block": "minecraft:skeleton_skull[rotation=5]",
+        "tag": {
+          "z": 303,
+          "x": 137,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 133
+        }
+      }
+    ]
+  },
+  "slices": [
+    [
+      "fffffffA0YSZYeoe",
+      "fffffffA0ffo太T太郭",
+      "fffffffAsYTYTfmS",
+      "fffffffAsooSSfmo",
+      "fffffffssofSfomo",
+      "fffffff00foeYoSf",
+      "fffffffA0YSZYeoe",
+      "fffffffA0ffo太T太请",
+      "fffffffAsYTYTfmS",
+      "fffffffAsooSSfmo",
+      "fffffffssofSfomY",
+      "fffffff00foeYoSf",
+      "fffffffA0YSZYeoe",
+      "fffffffA0ffo太T太请",
+      "fffffffAAfoZefZo",
+      "A00AA00sAemomfmf"
+    ],
+    [
+      "k qkqqkkk kz k k",
+      "kzkqz kz qq  kkk",
+      "z zqqkk k k kqkk",
+      "kqkkqkkkq kkkq  ",
+      "kzzqzkzk  q kzzk",
+      "kk kkqqkzkkqkqkk",
+      " qzzkqqkkqkz kqk",
+      "qzqkkqzz q   kkk",
+      "qqkqkkk k k kqkk",
+      "qqqkkzzkq kkkq  ",
+      "kqkk zkk  q kzzk",
+      "qkkzqqzkzkkqkqkk",
+      "kqqqqkqkkqkz kqk",
+      "qqzkzqqz qq  kkk",
+      "zkkkzqq始下q下kzkk下",
+      "  z kzk下 护kkqk k"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

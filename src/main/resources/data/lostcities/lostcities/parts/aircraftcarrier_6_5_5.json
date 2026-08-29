@@ -1,0 +1,392 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "叉",
+        "block": "minecraft:dark_oak_door[facing=north,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "琳",
+        "block": "minecraft:dark_oak_door[facing=north,half=upper,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "蓉",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "碟",
+        "block": "minecraft:chest[facing=west,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 957,
+          "x": -354,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "k",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "稀",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "效",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "底",
+        "block": "minecraft:chest[facing=north,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 975,
+          "x": -484,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "谁",
+        "block": "minecraft:chest[facing=north,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 977,
+          "x": -486,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "活",
+        "block": "minecraft:chest[facing=north,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 958,
+          "x": -361,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 111,
+          "Items": []
+        }
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:chiseled_quartz_block"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "寸",
+        "block": "minecraft:smooth_quartz_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "贯",
+        "block": "minecraft:smooth_quartz_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "珊",
+        "block": "minecraft:quartz_pillar[axis=x]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "栋",
+        "block": "minecraft:birch_trapdoor[facing=north,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "恕",
+        "block": "minecraft:smooth_quartz_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "苇",
+        "block": "minecraft:smooth_quartz_stairs[facing=south,half=top,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "斧",
+        "block": "minecraft:smooth_quartz_stairs[facing=west,half=top,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "须",
+        "block": "minecraft:smooth_quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "盘",
+        "block": "minecraft:smooth_quartz_stairs[facing=south,half=top,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "悸",
+        "block": "minecraft:smooth_quartz_stairs[facing=south,half=top,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "绣",
+        "block": "minecraft:smooth_quartz_stairs[facing=west,half=top,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:black_stained_glass"
+      },
+      {
+        "char": "磊",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 986,
+          "x": -477,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 139,
+          "NodePos": "-131116757573493L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "畏",
+        "block": "minecraft:lever[face=wall,facing=north,powered=true]"
+      },
+      {
+        "char": "Җ",
+        "block": "minecraft:observer[facing=west,powered=false]"
+      },
+      {
+        "char": "俊",
+        "block": "minecraft:observer[facing=north,powered=false]"
+      },
+      {
+        "char": "愚",
+        "block": "minecraft:sticky_piston[extended=false,facing=west]"
+      },
+      {
+        "char": "曝",
+        "block": "minecraft:birch_button[face=floor,facing=south,powered=false]"
+      },
+      {
+        "char": "瀑",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 996,
+          "x": -455,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:computer",
+          "y": 134,
+          "NodePos": "-125069443579770L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "陶",
+        "block": "minecraft:lever[face=floor,facing=south,powered=false]"
+      },
+      {
+        "char": "Ӯ",
+        "block": "minecraft:birch_wall_sign[facing=north,waterlogged=false]",
+        "tag": {
+          "z": 955,
+          "x": -442,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 108,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Exodus Squadron\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Quarters\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "手",
+        "block": "minecraft:observer[facing=down,powered=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "               M",
+      "                ",
+      "     Mv叉琳vvM    ",
+      "蓉    v    碟v叉琳kk",
+      "稀效蓉  v    底v谁活MM",
+      "  稀效gLLLLLLLLgbc",
+      "    deiiibiiid  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "               M",
+      "                ",
+      "     gv寸寸vvg    ",
+      "蓉    v    贯v  kk",
+      "稀效蓉  v    贯v寸寸MM",
+      "  稀效g珊珊珊gg珊珊珊gba",
+      "    deeeeeadeb  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "ccbdacadcdeebcab",
+      "baebdcdebedeaabb",
+      "dbbebbcdcddebede",
+      "daeacbcccdeaebde",
+      "gdceddebecdeacaa",
+      "begbbbbbdcecdbad",
+      "daecbcaaadbdbcbe",
+      "d  cdbcdbadbae  ",
+      "aaeggggggggggggb",
+      "caeddedcccdaebdb",
+      "  adccdceebdeaee",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "   栋   栋栋   栋   ",
+      "aea恕   苇斧   贯   ",
+      "  d恕 须 贯恕 须 贯   ",
+      "b g恕   贯恕   贯   ",
+      " ae盘寸寸寸悸绣寸寸寸悸 ce",
+      "   aaeccadadaaa ",
+      "                ",
+      "oo              ",
+      "  oooooooooooooo",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "  磊             ",
+      "                ",
+      "                ",
+      " 畏              ",
+      "Җ俊d             ",
+      "俊愚              ",
+      "cdd曝            ",
+      " bb 曝瀑陶  曝瀑陶  oo",
+      "   aooooooooooc ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      " Ӯ              ",
+      "手Җb             ",
+      "手 a             ",
+      "abd             ",
+      " bd           oo",
+      "   ebbebbacaaed ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

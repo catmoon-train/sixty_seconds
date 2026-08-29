@@ -1,0 +1,856 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "仇",
+        "block": "minecraft:smoker[facing=south,lit=false]",
+        "tag": {
+          "z": 945,
+          "x": -385,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:smoker",
+          "y": 112,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:gold_block"
+      },
+      {
+        "char": "梨",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "ϑ",
+        "block": "minecraft:birch_wall_sign[facing=south,waterlogged=false]",
+        "tag": {
+          "z": 953,
+          "x": -527,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 112,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Workshop\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "弥",
+        "block": "minecraft:lever[face=wall,facing=west,powered=true]"
+      },
+      {
+        "char": "Җ",
+        "block": "minecraft:observer[facing=west,powered=false]"
+      },
+      {
+        "char": "首",
+        "block": "minecraft:sticky_piston[extended=false,facing=north]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:observer[facing=east,powered=false]"
+      },
+      {
+        "char": "奉",
+        "block": "minecraft:lever[face=wall,facing=east,powered=true]"
+      },
+      {
+        "char": "Ӯ",
+        "block": "minecraft:birch_wall_sign[facing=north,waterlogged=false]",
+        "tag": {
+          "z": 955,
+          "x": -442,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 108,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Exodus Squadron\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Quarters\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "烤",
+        "block": "minecraft:blast_furnace[facing=south,lit=false]",
+        "tag": {
+          "z": 958,
+          "x": -506,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:blast_furnace",
+          "y": 105,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "绘",
+        "block": "minecraft:lever[face=wall,facing=east,powered=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:black_carpet"
+      },
+      {
+        "char": "赏",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "癢",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "鸣",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "墓",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:red_carpet"
+      },
+      {
+        "char": "ҕ",
+        "block": "minecraft:chest[facing=south,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 942,
+          "x": -502,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ѷ",
+        "block": "minecraft:chest[facing=south,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 940,
+          "x": -437,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "崩",
+        "block": "minecraft:jungle_log[axis=y]"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:quartz_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "凶",
+        "block": "minecraft:air",
+        "tag": {
+          "Recycled": 0,
+          "z": 947,
+          "x": -375,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "id": "refurbished_furniture:recycle_bin",
+          "ForgeCaps": {},
+          "Enabled": "0b",
+          "y": 115,
+          "Powered": "0b",
+          "Items": [],
+          "NodePos": "-103079211224973L",
+          "Connections": [
+            "L"
+          ],
+          "ProcessTime": 0
+        }
+      },
+      {
+        "char": "瑄",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 948,
+          "x": -385,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "Energy": 0,
+          "id": "refurbished_furniture:electricity_generator",
+          "ForgeCaps": {},
+          "Enabled": "0b",
+          "y": 115,
+          "Items": [],
+          "NodePos": "-105827990290317L",
+          "Overloaded": "0b",
+          "Connections": [
+            "L"
+          ],
+          "TotalEnergy": 0
+        }
+      },
+      {
+        "char": "迄",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 950,
+          "x": -410,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:kitchen_drawer",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "兜",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 948,
+          "x": -379,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:kitchen_drawer",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "渔",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "鼎",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 950,
+          "x": -380,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:crate",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "蝉",
+        "block": "minecraft:air",
+        "tag": {
+          "Processing": "0b",
+          "z": 950,
+          "x": -379,
+          "ProcessingTime": 0,
+          "TotalProcessingTime": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "id": "refurbished_furniture:stove",
+          "ForgeCaps": {},
+          "Enabled": "0b",
+          "y": 115,
+          "Items": [],
+          "NodePos": "-104178722840461L",
+          "CookingSpaces": [
+            {
+              "CookingTime": 0,
+              "Position": 0,
+              "TotalCookingTime": 0
+            },
+            {
+              "CookingTime": 0,
+              "Position": 1,
+              "TotalCookingTime": 0
+            },
+            {
+              "CookingTime": 0,
+              "Position": 2,
+              "TotalCookingTime": 0
+            }
+          ],
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "盲",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "檯",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 951,
+          "x": -381,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:kitchen_sink",
+          "y": 115,
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          }
+        }
+      },
+      {
+        "char": "蔚",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 951,
+          "x": -377,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:kitchen_drawer",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "溯",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "烁",
+        "block": "minecraft:dark_oak_leaves[distance=1,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "汽",
+        "block": "minecraft:chest[facing=east,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 964,
+          "x": -421,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "井",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 958,
+          "x": -325,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 117,
+          "NodePos": "-89335315832715L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "予",
+        "block": "minecraft:chest[facing=east,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 962,
+          "x": -466,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 111,
+          "Items": []
+        }
+      },
+      {
+        "char": "祯",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 948,
+          "x": -380,
+          "Heating": "0b",
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "Energy": 0,
+          "y": 116,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:toaster",
+          "MaxProcessTime": 0,
+          "Powered": "0b",
+          "Items": [],
+          "NodePos": "-104453600755596L",
+          "Connections": [
+            "L"
+          ],
+          "ProcessTime": 0
+        }
+      },
+      {
+        "char": "z",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "晰",
+        "block": "minecraft:air",
+        "tag": {
+          "Processing": "0b",
+          "z": 949,
+          "x": -385,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "Energy": 0,
+          "y": 116,
+          "id": "refurbished_furniture:microwave",
+          "ForgeCaps": {},
+          "Enabled": "0b",
+          "MaxProcessTime": 0,
+          "Powered": "0b",
+          "Items": [],
+          "NodePos": "-105827990286220L",
+          "Connections": [
+            "L"
+          ],
+          "ProcessTime": 0
+        }
+      },
+      {
+        "char": "掏",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 950,
+          "x": -379,
+          "Flipped": "0b",
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "NeedsFlipping": "0b",
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:frying_pan",
+          "y": 116,
+          "Rotation": 0,
+          "Items": []
+        }
+      },
+      {
+        "char": "崖",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 950,
+          "x": -385,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:storage_jar",
+          "y": 116,
+          "Items": []
+        }
+      },
+      {
+        "char": "油",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 966,
+          "x": -410,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 117,
+          "NodePos": "-112699937890187L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "妇",
+        "block": "minecraft:lever[face=wall,facing=west,powered=false]"
+      },
+      {
+        "char": "屏",
+        "block": "minecraft:lantern[hanging=true,waterlogged=false]"
+      },
+      {
+        "char": "未",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 948,
+          "x": -513,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 117,
+          "NodePos": "-141012362379147L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "鹏",
+        "block": "minecraft:dark_oak_leaves[distance=2,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "献",
+        "block": "minecraft:blast_furnace[facing=west,lit=false]",
+        "tag": {
+          "z": 961,
+          "x": -490,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:blast_furnace",
+          "y": 105,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "尚",
+        "block": "minecraft:birch_wall_sign[facing=east,waterlogged=false]",
+        "tag": {
+          "z": 945,
+          "x": -465,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 109,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Battery:\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Charlie\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "厨",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 949,
+          "x": -410,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:range_hood",
+          "y": 117,
+          "NodePos": "-112699937959819L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "涅",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 950,
+          "x": -379,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:range_hood",
+          "y": 117,
+          "NodePos": "-104178722840459L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "扭",
+        "block": "minecraft:blast_furnace[facing=north,lit=false]",
+        "tag": {
+          "z": 977,
+          "x": -450,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:blast_furnace",
+          "y": 109,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "顷",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 951,
+          "x": -382,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:cabinet",
+          "y": 117,
+          "Items": []
+        }
+      },
+      {
+        "char": "父",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 953,
+          "x": -457,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 117,
+          "NodePos": "-125619199569803L",
+          "Connections": [
+            "L"
+          ]
+        }
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "cca             ",
+      "仇仇ebeebcd       ",
+      "    f qqdbcceca ",
+      "    梨    qq qqac",
+      "    f       qq q",
+      "    f       qq q",
+      "    fqqqq   qq q",
+      "   gfqqqq       ",
+      "ffffffffffff  ff",
+      "        cfc   ϑ ",
+      "                ",
+      "       弥Җ首O奉  Ӯ ",
+      "ffffffffffff  ff"
+    ],
+    [
+      "                ",
+      "                ",
+      "cbdb            ",
+      "gggcdbbcbb      ",
+      "烤烤  f qqgdbbbcbe",
+      "    f    qq qqga",
+      "    f绘         q",
+      "    f          q",
+      "    f          q",
+      "    fqqqq      q",
+      "   gfqqqq      q",
+      "ffffffffffffffff",
+      "        bba     ",
+      "        adc     ",
+      "        aad     ",
+      "ffffffffffffffff"
+    ],
+    [
+      "                ",
+      "cbeac           ",
+      "eaeacacebaa     ",
+      "cdccbeedebeddacc",
+      "ddedacdcababaaeb",
+      "cababdaaaecdedee",
+      "adbeddbeebbdbcdc",
+      "ceaabbcbeebbaeae",
+      "ebedaabedcabbacb",
+      "cbcabbdedbddcaee",
+      "deccbbbaebbbaaee",
+      "bdebcadbccabeacd",
+      "cceebeecdaabcccc",
+      "aadbddddabdabccb",
+      "bebbdeceaabaaaed",
+      "bcceaabbdabcecbc"
+    ],
+    [
+      "cdceec          ",
+      "jjjj赏ecbeccb    ",
+      "癢鸣鸣鸣墓jjjjj赏bcbeb",
+      "jrjrjr癢鸣鸣鸣墓fҕѶ  ",
+      "rjrjrjrjrjr     ",
+      "jrjrjrjrjr崩fK   ",
+      "rjrjrjrjrj凶fK   ",
+      "瑄jjjj迄兜jjj渔fK  C",
+      "兜jjjj鼎蝉jjj渔fK   ",
+      "兜jjjj鼎蝉jjj渔fK  C",
+      "g盲盲盲檯盲盲蔚蔚盲溯f    ",
+      "adbeebbaadda  eb",
+      "        bfd     ",
+      "                ",
+      "        b首d     ",
+      "aaadceadceeb  ab"
+    ],
+    [
+      "bbdada          ",
+      "     gddddac    ",
+      "           eeacd",
+      "           f    ",
+      "                ",
+      "          烁f汽   ",
+      "          井f予   ",
+      "     祯     fz   ",
+      "晰     掏    f汽   ",
+      "崖     掏    f予   ",
+      "g油   油油   油f    ",
+      "ffffffffffff  ff",
+      "        efa   ϑ ",
+      "                ",
+      "       妇Җ首O奉  Ӯ ",
+      "ffffffffffff  ff"
+    ],
+    [
+      "cdaac屏cebcdec   ",
+      "    未gebcag屏ccbe",
+      "未   未     未f    ",
+      "           f    ",
+      "          井f    ",
+      "          鹏f    ",
+      "          gf    ",
+      "          献f尚   ",
+      "     厨涅   献f    ",
+      "油    厨涅   献f    ",
+      "g扭顷顷顷扭g扭扭扭gf    ",
+      "ffffffffffff  ff",
+      "父     未 cac  井  ",
+      "        deb     ",
+      "父     油 bac  井  ",
+      "ffffffffffffffgf"
+    ]
+  ]
+}

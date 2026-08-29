@@ -1,0 +1,178 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "国",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϑ",
+        "block": "minecraft:orange_concrete"
+      },
+      {
+        "char": "S",
+        "block": "minecraft:orange_terracotta"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "ӡ",
+        "block": "minecraft:orange_wool"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "ú",
+        "block": "minecraft:iron_bars[east=false,north=true,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:iron_bars[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ϖ",
+        "block": "minecraft:yellow_terracotta"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "a               ",
+      "                ",
+      "                ",
+      "国               ",
+      "ϑ               ",
+      "aS              ",
+      "bϑ              ",
+      "dS              ",
+      "bӡ              ",
+      "aS              ",
+      "cS              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "a               ",
+      "                ",
+      "                ",
+      "ӡ               ",
+      "S               ",
+      "aS              ",
+      "cS              ",
+      "bS              ",
+      "eú              ",
+      "aϑ              ",
+      "aϑ              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "g               ",
+      "                ",
+      "                ",
+      "ϑ               ",
+      "S               ",
+      "cϑ              ",
+      "cӡ              ",
+      "dӡ              ",
+      "bS              ",
+      "dS              ",
+      "dϑ              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "a               ",
+      "                ",
+      "                ",
+      "S               ",
+      "ú               ",
+      "eS              ",
+      "cS              ",
+      "cϑ              ",
+      "dӡ              ",
+      "eϑ              ",
+      "dϑ              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "a               ",
+      "                ",
+      "                ",
+      "R               ",
+      "R               ",
+      "bR              ",
+      "eR              ",
+      "dR              ",
+      "eR              ",
+      "bR              ",
+      "cR              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "a               ",
+      "                ",
+      "                ",
+      "提               ",
+      "R               ",
+      "cϖ              ",
+      "bú              ",
+      "dR              ",
+      "eR              ",
+      "eR              ",
+      "bR              "
+    ]
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:iron_trapdoor[facing=west,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:iron_trapdoor[facing=south,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:iron_trapdoor[facing=west,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:iron_trapdoor[facing=south,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "学",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "          bidbbe",
+      "          agbdbb",
+      "          aadadd",
+      "           agaab",
+      "           babde",
+      "          aaaace",
+      "          adadca",
+      "           acgce",
+      "           abiee",
+      "            adaa",
+      "            acgb",
+      "             aci",
+      "             gac",
+      "              ic",
+      "               g",
+      "                "
+    ],
+    [
+      "           f    ",
+      "           f    ",
+      "           f    ",
+      "            f   ",
+      "                ",
+      "          aegbbd",
+      "            f   ",
+      "                ",
+      "                ",
+      "              f ",
+      "              f ",
+      "              df",
+      "             i  ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "          m     ",
+      "          mf    ",
+      "          m     ",
+      "           mf   ",
+      "           mf   ",
+      "          abaeaa",
+      "           m    ",
+      "            mf  ",
+      "            mf  ",
+      "             mf ",
+      "             uf ",
+      "              af",
+      "             a u",
+      "               m",
+      "                ",
+      "                "
+    ],
+    [
+      "          qf    ",
+      "          qf    ",
+      "          q     ",
+      "           qf   ",
+      "           qf   ",
+      "          gbgdcb",
+      "           qf   ",
+      "            qf  ",
+      "            qf  ",
+      "             qf ",
+      "             qf ",
+      "              af",
+      "             a w",
+      "               学",
+      "                ",
+      "                "
+    ],
+    [
+      "           f    ",
+      "           f    ",
+      "           f    ",
+      "            f   ",
+      "                ",
+      "          iaaaab",
+      "            f   ",
+      "             f  ",
+      "             f  ",
+      "              f ",
+      "              f ",
+      "              ef",
+      "             a  ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "          aa    ",
+      "          ca    ",
+      "          ea    ",
+      "           eg   ",
+      "           da   ",
+      "          acaace",
+      "           eg   ",
+      "            ea  ",
+      "            dg  ",
+      "             da ",
+      "             aa ",
+      "              ca",
+      "             a a",
+      "               b",
+      "                ",
+      "                "
+    ]
+  ]
+}

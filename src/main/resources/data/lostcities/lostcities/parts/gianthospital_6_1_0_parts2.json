@@ -1,0 +1,190 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "锁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "烤",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "tdeffttggiigtgdb",
+      "btdqfffhthitiibb",
+      "bcdhgtqfhgqhfibb",
+      "bbbqohhqgfiiitcb",
+      "hithgqfgithttftb",
+      "qhgqqqhqqiqhqgbc",
+      "ifiifhgi锁fqffibb",
+      "ghqqgitiihghgibc",
+      "tqgqihthfi锁gqtde",
+      "hhhfhhi锁ffiigibe",
+      "qhitfg锁gqh锁gqqbb",
+      "gqqifftffhihqgbe",
+      "gthiggq锁qgghgqbt",
+      "gigghggtfqqfqhdb",
+      "hiqfhqgttgihtfbd",
+      "qfgiqfqqfitfhhdd"
+    ],
+    [
+      "ssw  ss s   s   ",
+      " s      s  s    ",
+      "     s     s    ",
+      " ws K    h   s  ",
+      "  s     ss ss s ",
+      "  ws            ",
+      " w    i    C    ",
+      "      s   锁     ",
+      "s   锁 s      s  ",
+      "              q ",
+      "   sq           ",
+      "s     s   s  锁  ",
+      " ss            s",
+      "    锁  s 锁      ",
+      "       ss  gs   ",
+      "烤w  s     s     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

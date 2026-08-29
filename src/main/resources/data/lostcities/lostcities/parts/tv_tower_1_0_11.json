@@ -1,0 +1,182 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:iron_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:iron_trapdoor[facing=west,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "很",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "天",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:iron_trapdoor[facing=north,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "说",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "学",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "         aa     ",
+      "       gaeceec  ",
+      "     aacdaaad   ",
+      "   ageaaiecdbadd",
+      "  aabaaadbeaeedb",
+      " abcacbdabcdddbd",
+      "adaacbccadbbadcd",
+      "bgcedbadeaaeebbc",
+      "aaebababbcbdebde"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "          b     ",
+      "         ccc    ",
+      "         aecb   ",
+      "   a   ffebaeeed",
+      "    eff bccabbbb",
+      "    f    eddcde ",
+      "  ff      accbe ",
+      " f        baedd ",
+      "     b    e     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "          e     ",
+      "       ss aa    ",
+      "   g ss  bebedac",
+      "    cff  cccacca",
+      "  ss      daaa  ",
+      " sff      a     ",
+      "mf        c很天   ",
+      "f         d     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "       pp       ",
+      "   a ppff       ",
+      "    bff   a     ",
+      "  说学f     e     ",
+      " pff      c     ",
+      "p         a     ",
+      "f         b     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   a   ff       ",
+      "    aff         ",
+      "    f     d     ",
+      "  ff      d     ",
+      " f        c     ",
+      "f         a     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "       d        ",
+      "   a ceaa       ",
+      "    dga         ",
+      "  eba     b     ",
+      " bga      e     ",
+      "ba        c     ",
+      "a         e     "
+    ]
+  ]
+}

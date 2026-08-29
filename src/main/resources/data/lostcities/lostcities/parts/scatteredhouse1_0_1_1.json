@@ -1,0 +1,320 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Η",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "W",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Τ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϋ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "΄",
+        "block": "minecraft:chain[axis=y,waterlogged=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:spruce_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:oak_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:spruce_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:oak_fence[east=true,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:oak_fence[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:oak_fence[east=true,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:oak_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:spruce_planks"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:oak_planks"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:spruce_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "Ω",
+        "block": "minecraft:chest[facing=south,type=single,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 538,
+          "x": 46,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 138,
+          "Items": []
+        }
+      },
+      {
+        "char": "α",
+        "block": "minecraft:light_gray_bed[facing=north,occupied=false,part=head]",
+        "tag": {
+          "z": 539,
+          "x": 46,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 138
+        }
+      },
+      {
+        "char": "8",
+        "block": "minecraft:oak_fence[east=false,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "σ",
+        "block": "minecraft:light_gray_bed[facing=north,occupied=false,part=foot]",
+        "tag": {
+          "z": 540,
+          "x": 46,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 138
+        }
+      },
+      {
+        "char": "j",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:oak_fence[east=true,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "ψ",
+        "block": "minecraft:oak_door[facing=north,half=lower,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=false,west=false]"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:spruce_trapdoor[facing=west,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "Π",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ύ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:spruce_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "Κ",
+        "block": "minecraft:oak_door[facing=north,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:oak_fence[east=true,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "7",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=true,west=false]"
+      },
+      {
+        "char": "ͷ",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:spruce_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:oak_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:spruce_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "9",
+        "block": "minecraft:oak_fence_gate[facing=east,in_wall=false,open=false,powered=false]"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:spruce_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:spruce_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:spruce_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:oak_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "       ΗW       ",
+      "        ZΤW     ",
+      "          Zϋ    ",
+      "             ΄n ",
+      "              s ",
+      "              s ",
+      "              s ",
+      "              s ",
+      "           zrHnF",
+      "           hcccc",
+      "           hfeΩe",
+      "           hfeαe",
+      "          8hfeσe",
+      "         jmcccψc",
+      "        t mc   X",
+      "         ymc   X"
+    ],
+    [
+      "                ",
+      "                ",
+      "           ΗW   ",
+      "            Πύ  ",
+      "                ",
+      "                ",
+      "                ",
+      "              R ",
+      "            zrrr",
+      "            hccc",
+      "            hLLL",
+      "          j h   ",
+      "         jFHh   ",
+      "          mcccΚc",
+      "        tjGc    ",
+      "         7 ͷ    "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              R ",
+      "             zrv",
+      "             hcK",
+      "             hcK",
+      "           jjhcK",
+      "          FrHhcc",
+      "          mccccc",
+      "         RmcTeee",
+      "         j9cT   "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              R ",
+      "              B ",
+      "              s ",
+      "              s ",
+      "              s ",
+      "          CCCCCC",
+      "          Vccccc",
+      "          Fcffff",
+      "         RmcfJJJ"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "          Cqqqqq",
+      "          Vc    ",
+      "          Fc    "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "          Cqqqqq",
+      "          Vc    "
+    ]
+  ]
+}

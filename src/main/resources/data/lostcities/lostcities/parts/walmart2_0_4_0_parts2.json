@@ -1,0 +1,437 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "动",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ұ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "连",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "之",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "那",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "伤",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "至",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "口",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "所",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "二",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "龙",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "规",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "写",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "座",
+        "block": "minecraft:air",
+        "loot": "walmart",
+        "tag": {
+          "z": 433,
+          "x": 21,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 134,
+          "Items": []
+        }
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "青",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "海",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "活",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "义",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "戏",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "指",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "给",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "功",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "合",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "怎",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "猫",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "院",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "元",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "图",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "族",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѕ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 471,
+          "x": 31,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Birch logs\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "句",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 436,
+          "x": 21,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 136
+        }
+      },
+      {
+        "char": "底",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "帮",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "试",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "目",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "老",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "rcdaarcckkIIIIII",
+      "dkbkcdbakddIrdrb",
+      "bckdadadkdkIcbbw",
+      "acdckkkkkbbIwbwb",
+      "bddcadbabkaIccac",
+      "ckdadacdbdaIccwb",
+      "cccabdddbdbIwwdc",
+      "kccakcbbkacIcddx",
+      "ckdakccdarIIacrx",
+      "ccaacbakaaaIcddx",
+      "bacbcbardbdIdbIx",
+      "kacrkcdccdbIccIx",
+      "rddakbdrcbkIwbax",
+      "rkckddbkabdIbdax",
+      "raadcadbradIbwcx",
+      "rrbcacbcdccIadax"
+    ],
+    [
+      "动    q   lzggggg",
+      "    提提提   Ұgqiq连",
+      "    之提之   lgj   ",
+      "    提提提   lgj   ",
+      "    提提提   lgj   ",
+      "    之提之   lgj   ",
+      "    提提提   lgj m ",
+      "          那gj   ",
+      "         qDg伤至口 ",
+      "          Ұg所所所二",
+      "       q  lg所所所j",
+      "   q      lg所所所j",
+      "q     qq  lg所所所j",
+      "动         lg所所所j",
+      "q       q lg所所所j",
+      "qq        那g所所所二"
+    ],
+    [
+      "龙    规   lEzeeyy",
+      "    写座写   Ұf iii",
+      "    写青写   lpj   ",
+      "    海海海   lej   ",
+      "   活海海海义  lej   ",
+      "    写写写   lej   ",
+      "    写写写   lfj m ",
+      "     戏    那oj   ",
+      "         lDe指 N ",
+      "          Ұf所所给 ",
+      "          ly所所 j",
+      "          lf所所 j",
+      "          le所所 j",
+      "龙         lo所所 j",
+      "          lo所所 j",
+      "          那p所所给 "
+    ],
+    [
+      "         lzDypfe",
+      "    功功功   Ұf iii",
+      "   合写写写怎  lej   ",
+      "    猫 猫   lpj   ",
+      "   合海提海怎  lej   ",
+      "    院元图   lej   ",
+      "     族    lfj m ",
+      "          那yj   ",
+      "         lzEKҨK ",
+      "          ҰpnnnЅ",
+      "          lennnj",
+      "          lonnnj",
+      "          lennnj",
+      "          lpnnnj",
+      "          lfnnnj",
+      "           ynnnЅ"
+    ],
+    [
+      "         lCCopyp",
+      "          Ұf iii",
+      "    功功功    fj   ",
+      "    功Ҭ功   lej   ",
+      "    功句功   lfj   ",
+      "    功功功   loj   ",
+      "          loj m ",
+      "          那fj gЅ",
+      "         lCz底 帮 ",
+      "          lp所所所二",
+      "          lp所所所j",
+      "          lf所所所j",
+      "          lo所所所j",
+      "          le所所所j",
+      "          lf所所所j",
+      "           f所所所二"
+    ],
+    [
+      "         lDDyopp",
+      "          Ұy iii",
+      "           ej   ",
+      "          lfj   ",
+      "          lej   ",
+      "          lej   ",
+      "          loj m ",
+      "          那fj gj",
+      "         lEC试 目 ",
+      "          ly老所给 ",
+      "          lo 所 j",
+      "          ly 所 j",
+      "          lf 所  ",
+      "          lf 所  ",
+      "          lf 所 j",
+      "           f老所给 "
+    ]
+  ]
+}

@@ -1,0 +1,328 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "开",
+        "block": "minecraft:air",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 387,
+          "x": 24,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 132,
+          "SpawnRange": "4s",
+          "Delay": "584s"
+        }
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "却",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "体",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "影",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "足",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ұ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "请",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "基",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "西",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "多",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "性",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "爱",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѕ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 471,
+          "x": 31,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Birch logs\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "O",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "yypfeefoepyyefee",
+      "eoeyeffeppffepof",
+      "efyfyfeefyfoyooy",
+      "yyeoyeepeffefyey",
+      "yyffeyepfeefeofe",
+      "opeofffefoyeyofp",
+      "fyeefoooeeoefyoe",
+      "eepyfypfo开oyepey",
+      "bbdxxxxxbafffepo",
+      "wcbxwddxwdofefye",
+      "brdxrcdxbafepfef",
+      "cdwxcw开xacffeyfe",
+      "bbdxbarxabfefyye",
+      "cwwx开bcxbcfeeopy",
+      "bccxdcwxrcoeefff",
+      "dacxacr开cIbyypep"
+    ],
+    [
+      "                ",
+      "     q       q  ",
+      "j               ",
+      "j m mmm mm      ",
+      "                ",
+      "                ",
+      " m       mm     ",
+      "mC      lCz j f ",
+      "gz却  体  影Czj    ",
+      "iiii体足体iҰg请  q  ",
+      " q  基o西 lg多 o   ",
+      "      多 lgj     ",
+      "      qylgf多 p  ",
+      "    多   lgj     ",
+      "y     e qg性     ",
+      "y      多lgCjm mm"
+    ],
+    [
+      "                ",
+      "                ",
+      "j               ",
+      "j m mmm mm      ",
+      "                ",
+      "                ",
+      " m       mm     ",
+      "mC      lCz j   ",
+      "ez却     影Hzj    ",
+      "iiiiiiiiҰf请     ",
+      "        loj     ",
+      "        l j     ",
+      "        loj     ",
+      "        lfj     ",
+      "        le性     ",
+      "        lfzjm mm"
+    ],
+    [
+      "                ",
+      "                ",
+      "j               ",
+      "j m mmm mm      ",
+      "                ",
+      "                ",
+      "         mm     ",
+      "mC      lDC j   ",
+      "pz却     影zzj    ",
+      "iiiiiiiiҰe请     ",
+      "        l j     ",
+      "        l j     ",
+      "        lej     ",
+      "        lfj     ",
+      "        lp性     ",
+      "        leEjm mm"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "j m mmm mm      ",
+      "                ",
+      "                ",
+      "         m      ",
+      " z      lHz j   ",
+      "yz爱爱爱爱爱爱爱HDj    ",
+      "iiiiiiiiҰf请     ",
+      "        l j     ",
+      "        l j     ",
+      "        lvj     ",
+      "        lfj     ",
+      "g       lp性     ",
+      "gЅ      lfCj  mm"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "  m mmm mm      ",
+      "gggggggggg      ",
+      "         gg     ",
+      "          gg    ",
+      " C      lzzgj   ",
+      "eEeefyoeyDzj    ",
+      " iiiiiiiҰe请     ",
+      "        l j     ",
+      "        l j     ",
+      "        lej     ",
+      "        lej     ",
+      "O       lem     ",
+      "        lezj  mm"
+    ]
+  ]
+}

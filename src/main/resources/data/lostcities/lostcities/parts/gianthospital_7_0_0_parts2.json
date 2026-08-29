@@ -1,0 +1,174 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "捻",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "窿",
+        "block": "minecraft:tall_grass[half=upper]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "bttttttttttfgiff",
+      "dttttttttttgigfh",
+      "bttttttttttgtfiq",
+      "cttttttttttiqiqi",
+      "tttttttttttqiqqi",
+      "etttttttttthgfhi",
+      "bttttttttttfqfht",
+      "btttttttttttitti",
+      "cttttttttttqhqfq",
+      "ttttttttttttgfqq",
+      "dttttttttttigqgh",
+      "bttttttttttfghtf",
+      "ctttttttttttgqqt",
+      "dtttttttttthgiiq",
+      "cttttttttttgghgq",
+      "btttttttttthiifg"
+    ],
+    [
+      " ssssssssss  s  ",
+      " ssssssssss     ",
+      " ssssssssss s   ",
+      " ssssssssss    s",
+      "sssssssssss     ",
+      " ssssssss捻s     ",
+      " ssssssssss    s",
+      " sssssssssss ss ",
+      " sssssssssss    ",
+      "ssssssssssss    ",
+      " ssssssssss     ",
+      " ssssssssss   s ",
+      " sssssssssss   s",
+      " ssssssssss     ",
+      " ssssssssss     ",
+      " ssssssssss     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "         窿      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

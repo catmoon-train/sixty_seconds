@@ -1,0 +1,360 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "0",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "老",
+        "block": "minecraft:dispenser[facing=down,triggered=false]",
+        "tag": {
+          "z": -273,
+          "x": -27,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "id": "minecraft:dispenser",
+          "y": 79,
+          "Items": []
+        }
+      },
+      {
+        "char": "A",
+        "block": "minecraft:red_concrete"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:iron_bars[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:red_terracotta"
+      },
+      {
+        "char": "ú",
+        "block": "minecraft:iron_bars[east=false,north=true,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Т",
+        "block": "minecraft:polished_andesite_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "请",
+        "block": "minecraft:polished_andesite_stairs[facing=north,half=top,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "国",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "真",
+        "block": "minecraft:polished_andesite_stairs[facing=east,half=top,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "ϒ",
+        "block": "minecraft:polished_andesite_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "种",
+        "block": "minecraft:polished_andesite_stairs[facing=north,half=top,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:red_wool"
+      },
+      {
+        "char": "连",
+        "block": "minecraft:polished_andesite_stairs[facing=east,half=top,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "常",
+        "block": "minecraft:chain_command_block[conditional=false,facing=north]",
+        "tag": {
+          "z": -276,
+          "powered": "0b",
+          "x": -31,
+          "auto": "1b",
+          "UpdateLastExecution": "1b",
+          "id": "minecraft:command_block",
+          "y": 82,
+          "conditionMet": "0b",
+          "Command": "",
+          "SuccessCount": 0,
+          "CustomName": "{\"text\":\"@\"}",
+          "TrackOutput": "1b"
+        }
+      },
+      {
+        "char": "活",
+        "block": "minecraft:command_block[conditional=false,facing=north]",
+        "tag": {
+          "z": -275,
+          "powered": "0b",
+          "x": -31,
+          "auto": "0b",
+          "UpdateLastExecution": "1b",
+          "id": "minecraft:command_block",
+          "y": 82,
+          "conditionMet": "0b",
+          "Command": "",
+          "SuccessCount": 0,
+          "CustomName": "{\"text\":\"@\"}",
+          "TrackOutput": "1b"
+        }
+      },
+      {
+        "char": "处",
+        "block": "minecraft:repeater[delay=1,facing=south,locked=false,powered=false]"
+      },
+      {
+        "char": "原",
+        "block": "minecraft:stone_brick_slab[type=double,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "管",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=side,west=none]"
+      },
+      {
+        "char": "但",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѥ",
+        "block": "minecraft:light_gray_wool"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "他",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "该",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "才",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "记",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "车",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "从",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "得",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "些",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "觉",
+        "block": "minecraft:stone_brick_slab[type=double,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "还",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:light_blue_terracotta"
+      },
+      {
+        "char": "完",
+        "block": "minecraft:dark_oak_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "现",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "感",
+        "block": "minecraft:dark_oak_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "湾",
+        "block": "minecraft:dark_oak_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "或",
+        "block": "minecraft:dark_oak_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "变",
+        "block": "minecraft:dark_oak_stairs[facing=west,half=top,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "重",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "及",
+        "block": "minecraft:cobblestone_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "把",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "理",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "买",
+        "block": "minecraft:lever[face=floor,facing=north,powered=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "      abca      ",
+      "        cacb    ",
+      "          cae0  ",
+      "            be  ",
+      "             bb ",
+      "             ec ",
+      "              ac",
+      "              eb",
+      "               b",
+      "               d",
+      "                ",
+      "eeccdeab        ",
+      "cadcbbabcecbdaac",
+      "dcbcaaaa        ",
+      "eaababee        ",
+      "a老aee老ec        "
+    ],
+    [
+      "      bcA提      ",
+      "        caEE    ",
+      "          ccA   ",
+      "            aE  ",
+      "             bE ",
+      "             aú ",
+      "              bE",
+      "              cE",
+      "               a",
+      "               a",
+      "                ",
+      "acdceced        ",
+      "bbebceebaadeeeab",
+      "ccdeceaa        ",
+      "cdabdede        ",
+      "acdaddeb        "
+    ],
+    [
+      "ТТТТТ请dcA国      ",
+      "     真Т请ebAA    ",
+      "       真Т请cbA   ",
+      "         真Т请aE  ",
+      "           真请bA ",
+      "            ϒbú ",
+      "            种请eE",
+      "             ϒcX",
+      "             种连e",
+      "              ϒb",
+      "              种请",
+      "eacbeddd       ϒ",
+      "bbcdbbebebaadbae",
+      "debabeca       ϒ",
+      "bedaecdb       ϒ",
+      "bededbdb       ϒ"
+    ],
+    [
+      "eebcacddEA      ",
+      "eacebcabbcAA    ",
+      "cbeddccddbdbA   ",
+      "eabbeaaddeadaA  ",
+      "bdeabaccebcbbbA ",
+      "ecbcaebbccdaceE ",
+      "eeccaecbcebccdc提",
+      "ceedeadbbcdcbccE",
+      "dbabbbbcbcdcdeea",
+      "eceedbcadccecaeb",
+      "eabcaabedbbdceed",
+      "d常baaadcdcdcdeed",
+      "d常acdebebecebcaa",
+      "c活aceccadaebeecd",
+      "b处cddedbbbadeada",
+      "原管但但aceacbcedbdc"
+    ],
+    [
+      "ѥTѥѥѥTdbAE      ",
+      "ѥѥѥѥѥѥѥTeaE提    ",
+      "ѥѥѥѥѥѥѥe他 ee国   ",
+      "ѥѥѥTѥѥѥa   ceA  ",
+      "ѥѥѥѥѥѥd      a提 ",
+      "ѥѥѥѥѥѥb      bE ",
+      "ѥѥѥѥac        cA",
+      "eadb          bE",
+      "               d",
+      "  该才       d   d",
+      " 记车从            ",
+      "dae             ",
+      "cbb得            ",
+      "ced些            ",
+      "觉还但些            ",
+      "觉但但些   d   b    "
+    ],
+    [
+      "      FFXE      ",
+      "        FFEE    ",
+      "          FFA   ",
+      " 完现        abE  ",
+      " 现 感湾        bA ",
+      "或或或变         bX ",
+      "              cA",
+      "              eA",
+      "               a",
+      "           d   e",
+      "                ",
+      "                ",
+      "重及把H            ",
+      " 理              ",
+      "                ",
+      " 买     a   e    "
+    ]
+  ]
+}

@@ -1,0 +1,319 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "手",
+        "block": "minecraft:observer[facing=down,powered=false]"
+      },
+      {
+        "char": "轿",
+        "block": "minecraft:command_block[conditional=false,facing=up]",
+        "tag": {
+          "z": 994,
+          "powered": "0b",
+          "x": -465,
+          "auto": "0b",
+          "UpdateLastExecution": "1b",
+          "ForgeCaps": {},
+          "id": "minecraft:command_block",
+          "y": 136,
+          "conditionMet": "1b",
+          "Command": "",
+          "SuccessCount": 0,
+          "CustomName": "{\"text\":\"@\"}",
+          "TrackOutput": "1b"
+        }
+      },
+      {
+        "char": "俊",
+        "block": "minecraft:observer[facing=north,powered=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "父",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 953,
+          "x": -457,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 117,
+          "NodePos": "-125619199569803L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "油",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 966,
+          "x": -410,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 117,
+          "NodePos": "-112699937890187L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:black_stained_glass"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "卿",
+        "block": "minecraft:chest[facing=east,type=single,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 963,
+          "x": -456,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 107,
+          "Items": []
+        }
+      },
+      {
+        "char": "凹",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "耸",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "骆",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "耿",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "璋",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 990,
+          "x": -475,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 139,
+          "NodePos": "-130567001743221L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "磊",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 986,
+          "x": -477,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 139,
+          "NodePos": "-131116757573493L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "酱",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 997,
+          "x": -462,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 139,
+          "NodePos": "-126993588924277L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "拯",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 998,
+          "x": -455,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:range_hood",
+          "y": 139,
+          "NodePos": "-125069443571573L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:observer[facing=south,powered=false]"
+      },
+      {
+        "char": "税",
+        "block": "minecraft:dark_oak_trapdoor[facing=north,half=top,open=false,powered=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "b手b             ",
+      "轿俊a             ",
+      "cgb             ",
+      " cc父   油油    油eo",
+      "   bedcecbebdaa ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "dbcddbdebdabecdd",
+      "acedeeaadbcceacd",
+      "dbacebdbdaeeeeca",
+      "bceedaecbdcceecd",
+      "edbddededecdbeec",
+      "d手caeeddbebcacca",
+      " bbbbbdcbebecaec",
+      "   ebcacedbaacdg",
+      "   aecedcabec   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "  bcaceecc卿     ",
+      "    凹耸骆         ",
+      "   w   w        ",
+      "                ",
+      "                ",
+      " 手              ",
+      "cb              ",
+      "  b x   x   x ec",
+      "  b   耿   耿  ba ",
+      "   cabaeaedaa   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "  bbacecad璋     ",
+      "         磊      ",
+      "                ",
+      "                ",
+      "                ",
+      "酱手              ",
+      "e璋              ",
+      "da              ",
+      " c 酱           f",
+      "  ee璋 拯   拯 油bef",
+      "   ccaacadcada  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "cadabebadeabebde",
+      "ddccaddcecccdaeb",
+      "daebebdccbbbedcd",
+      "cϔcecdedabcbadcb",
+      "cϔcebaadeeacdbce",
+      "b手ccedbddebacecb",
+      "eedaebaeecbadaba",
+      "  adaaaececbabbe",
+      "  aaeccbeaabbcd ",
+      "   addeacddeb   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "    abedcbcec   ",
+      "    ecabdabca   ",
+      "ab              ",
+      " 手a            c",
+      "  ea          d ",
+      "   bc税税税税税税税税c  ",
+      "oo  cbecbabab   ",
+      "  o            o",
+      "  o          oo ",
+      "   oooooooooo   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

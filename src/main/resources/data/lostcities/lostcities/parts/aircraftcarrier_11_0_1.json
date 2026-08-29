@@ -1,0 +1,158 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "җ",
+        "block": "minecraft:water[level=1]"
+      },
+      {
+        "char": "罩",
+        "block": "minecraft:water[level=2]"
+      },
+      {
+        "char": "佬",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=true]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:water[level=8]"
+      },
+      {
+        "char": "抉",
+        "block": "minecraft:quartz_stairs[facing=east,half=top,shape=straight,waterlogged=true]"
+      },
+      {
+        "char": "胡",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=true]"
+      },
+      {
+        "char": "卜",
+        "block": "minecraft:tall_seagrass[half=lower]"
+      },
+      {
+        "char": "啤",
+        "block": "minecraft:water[level=0]"
+      },
+      {
+        "char": "缔",
+        "block": "minecraft:tall_seagrass[half=upper]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "      җ   罩җ    ",
+      "     җ佬җ  җmҗ   ",
+      "     җ抉胡卜 m啤mҗ  ",
+      "     җ佬җ  җmҗ   ",
+      "      җ   罩җ    ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "           җ    ",
+      "        缔 җ啤җ   ",
+      "           җ    ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

@@ -1,0 +1,309 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:spruce_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "Y",
+        "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ͻ",
+        "block": "minecraft:spruce_trapdoor[facing=west,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:cobbled_deepslate_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "Ͷ",
+        "block": "minecraft:spruce_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:spruce_planks"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:spruce_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "ϩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:dark_oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "2",
+        "block": "minecraft:spruce_pressure_plate[powered=false]"
+      },
+      {
+        "char": "ѝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ύ",
+        "block": "minecraft:spruce_trapdoor[facing=west,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "г",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϛ",
+        "block": "minecraft:spruce_button[face=floor,facing=east,powered=false]"
+      },
+      {
+        "char": "ͽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "е",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "κ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Г",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "η",
+        "block": "minecraft:spruce_button[face=floor,facing=south,powered=false]"
+      },
+      {
+        "char": "Ј",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϸ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "д",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "x": -473,
+          "y": -54,
+          "Items": [],
+          "z": -59,
+          "id": "refurbished_furniture:drawer"
+        }
+      },
+      {
+        "char": "Ϣ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Я",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ρ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ξ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "С",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "0",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Μ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͼ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϭ",
+        "block": "minecraft:dark_oak_trapdoor[facing=south,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ϙ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "5",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ό",
+        "block": "minecraft:spruce_trapdoor[facing=south,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:polished_deepslate_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "ο",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "    bccY ͻccccbn",
+      "    bccͶccccccci",
+      "   vebͱͱͱͱͱccccc",
+      "    ϩbcccͱcccccc",
+      "    vbcccͱcccccc",
+      "     bcccͱccccci",
+      "   J ebbbbbbbbe ",
+      "     x   x   x  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "    b2    ѝ Ύ bA",
+      "   vbг   b ϛ 2ͽi",
+      "    ebbеbbY   Ύκ",
+      "     b Y bГ η ϛκ",
+      "    vbη Јbϸ2  2κ",
+      "     b2д b Ϣ Y i",
+      "     ebbbbbbbbe ",
+      "      x  x  x   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "    H         bA",
+      "   vb    b    ͽL",
+      "    ebbЯbb     ρ",
+      "    vb   bξ     ",
+      "    vb   bС     ",
+      "    vb   b    ͽL",
+      "     ebGbbbGGbe0",
+      "      x0x   0   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "   ΜH         bͼ",
+      "   vb    b    ͽL",
+      "    ebbϭbb     ρ",
+      "    ϩb   bξ     ",
+      "     b   bξ    Ϙ",
+      "    vb   b    ͽL",
+      "     ebGbbbGGbeA",
+      "     x  x  00 x ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "   ͻH    b    bͼ",
+      "    b    b    ͽ5",
+      "   vebbbbb     ρ",
+      "     b   b      ",
+      "     b   b     Ϙ",
+      "    vb   b    ͽ5",
+      "     ebGbbbGGbe0",
+      "     x Ό x ΌΌxx ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "    bccccbccccbq",
+      "    bccccbccccci",
+      "   qebbbbbcccccc",
+      "   qqbcccbcccccc",
+      "    qbcccbcccccc",
+      "    qbcccbccccci",
+      "    qebbbbbbbbeq",
+      "    qqο  x   οqq",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

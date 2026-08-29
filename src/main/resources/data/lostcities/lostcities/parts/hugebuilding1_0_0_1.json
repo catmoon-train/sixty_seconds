@@ -1,0 +1,329 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:oak_leaves[distance=1,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "Ξ",
+        "block": "minecraft:oak_log[axis=y]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:oak_leaves[distance=2,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=false,west=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:dark_oak_fence[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:dark_oak_fence[east=true,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:glass_pane[east=true,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:glass_pane[east=true,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:chiseled_stone_bricks[weathering=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:red_carpet"
+      },
+      {
+        "char": "γ",
+        "block": "minecraft:oak_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:gray_carpet"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "ΰ",
+        "block": "minecraft:oak_wall_sign[facing=north,waterlogged=false]",
+        "tag": {
+          "z": 591,
+          "x": 145,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 184,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "I",
+        "block": "minecraft:oak_planks"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:stone_brick_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ҷ",
+        "block": "minecraft:oak_door[facing=west,half=lower,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "ψ",
+        "block": "minecraft:dark_oak_trapdoor[facing=north,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "З",
+        "block": "minecraft:potted_dead_bush"
+      },
+      {
+        "char": "Ҍ",
+        "block": "minecraft:zombie_head[rotation=15]",
+        "tag": {
+          "z": 589,
+          "x": 141,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 140
+        }
+      },
+      {
+        "char": "ѷ",
+        "block": "minecraft:oak_door[facing=west,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "Y",
+        "block": "minecraft:stone_brick_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "χ",
+        "block": "minecraft:oak_wall_sign[facing=east,waterlogged=false]",
+        "tag": {
+          "z": 591,
+          "x": 143,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 141,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"M. Kolber\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"VSD\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "к",
+        "block": "minecraft:cobweb"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "       O        ",
+      "      OΞO    G  ",
+      "       O    GOG ",
+      "             G  ",
+      "                ",
+      "                ",
+      "        j       ",
+      "       icrj     ",
+      "        saaDeDeD",
+      "         ebcbcbc",
+      "         Bcbbbcc",
+      "        idccbcbc",
+      "         Bcccbbc",
+      "        ieccbcbc"
+    ],
+    [
+      "                ",
+      "                ",
+      "       G        ",
+      "      GOG       ",
+      "       G        ",
+      "                ",
+      "                ",
+      "                ",
+      "        j       ",
+      "       iprj     ",
+      "        saahkhah",
+      "         kqCγoa ",
+      "         g  ΰCe ",
+      "        iaoIIIJ ",
+      "         g  Coe ",
+      "        ieCo Cҷψ"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        j       ",
+      "       icrj     ",
+      "        seehahah",
+      "         eq   e ",
+      "         g    g ",
+      "        ie З Ҍg ",
+      "         g    a ",
+      "        ia    ѷ "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        j       ",
+      "       icrj     ",
+      "        sdehdhkh",
+      "         k    a ",
+      "         g    Y ",
+      "        id    a ",
+      "         g    J ",
+      "        ik    aχ"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        j       ",
+      "       icrj     ",
+      "        skdhdhdh",
+      "         eк   aJ",
+      "         g    aJ",
+      "        ik    aJ",
+      "         g  K dJ",
+      "        ie    dJ"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        j       ",
+      "       iprj     ",
+      "        skdDeDaD",
+      "         dbbcbcc",
+      "         Bbbbbcb",
+      "        iaccbbcb",
+      "         Bbccccb",
+      "        ikbcbcbb"
+    ]
+  ]
+}

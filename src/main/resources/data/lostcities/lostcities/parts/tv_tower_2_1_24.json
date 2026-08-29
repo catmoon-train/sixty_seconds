@@ -1,0 +1,278 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:light_blue_terracotta"
+      },
+      {
+        "char": "ϑ",
+        "block": "minecraft:orange_concrete"
+      },
+      {
+        "char": "S",
+        "block": "minecraft:orange_terracotta"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:polished_andesite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:white_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Ѵ",
+        "block": "minecraft:white_stained_glass_pane[east=false,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Ѳ",
+        "block": "minecraft:white_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "师",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "出",
+        "block": "minecraft:cobblestone_wall[east=none,north=low,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "就",
+        "block": "minecraft:stone_brick_wall[east=none,north=low,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "生",
+        "block": "minecraft:white_stained_glass_pane[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "ӟ",
+        "block": "minecraft:iron_bars[east=true,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:iron_bars[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ӡ",
+        "block": "minecraft:orange_wool"
+      },
+      {
+        "char": "ϗ",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "á",
+        "block": "minecraft:cobblestone_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "Ӥ",
+        "block": "minecraft:stone_brick_wall[east=none,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "都",
+        "block": "minecraft:cobblestone_wall[east=none,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "风",
+        "block": "minecraft:cobblestone_wall[east=none,north=tall,south=low,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "头",
+        "block": "minecraft:stone_brick_wall[east=none,north=tall,south=low,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "ѯ",
+        "block": "minecraft:stone_brick_wall[east=none,north=low,south=low,up=false,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "女",
+        "block": "minecraft:cobblestone_wall[east=low,north=low,south=low,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "过",
+        "block": "minecraft:cobblestone_wall[east=low,north=none,south=none,up=false,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "方",
+        "block": "minecraft:stone_brick_wall[east=low,north=low,south=low,up=false,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "Ӽ",
+        "block": "minecraft:stone_brick_wall[east=low,north=none,south=none,up=false,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "什",
+        "block": "minecraft:stone_brick_wall[east=none,north=low,south=low,up=true,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "台",
+        "block": "minecraft:cobblestone_wall[east=none,north=low,south=low,up=false,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "ϖ",
+        "block": "minecraft:yellow_terracotta"
+      },
+      {
+        "char": "月",
+        "block": "minecraft:cobblestone_wall[east=low,north=low,south=low,up=true,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "果",
+        "block": "minecraft:stone_brick_wall[east=low,north=low,south=low,up=true,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "Ҡ",
+        "block": "minecraft:yellow_wool"
+      },
+      {
+        "char": "意",
+        "block": "minecraft:stone_brick_wall[east=low,north=low,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "      FFϑS      ",
+      "        FFSS    ",
+      "          FFS   ",
+      "           acϑ  ",
+      "             eϑ ",
+      "             dϑ ",
+      "              dS",
+      "              cS",
+      "               a",
+      " j  j  j   d   a",
+      " j  j  j        ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "NNNѴ ѲNNNNNNѴ  c"
+    ],
+    [
+      "      FFSS      ",
+      "        FFϑϑ    ",
+      "          FFϑ   ",
+      "           ebS  ",
+      "             eϑ ",
+      "             cϑ ",
+      "              aϑ",
+      "              aϑ",
+      "               b",
+      " T师 T  T   e   e",
+      " 出  就  出        ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "ѲѴ 生  ѲNNNNNNNNc"
+    ],
+    [
+      "      FFӟS      ",
+      "        FFϑ提    ",
+      "          FFӡ   ",
+      "           ddS  ",
+      "             bϑ ",
+      "             dϑ ",
+      "              aӡ",
+      "              eS",
+      "               e",
+      "           e   b",
+      " ϗ  á  ϗ        ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "Ѵ ѲѴ ѲNNNNNNNNNd"
+    ],
+    [
+      "cdbbcadcSϑ      ",
+      "      acbeӡϑ    ",
+      "        eeecϑ   ",
+      " T  T     ceeS  ",
+      "           e eS ",
+      "           d bϑ ",
+      "           e  cϑ",
+      "           d  aϑ",
+      " T  T  T   c   c",
+      "eacabbaeedba   a",
+      " Ӥ  都  都        ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "abbccecadcaceecb"
+    ],
+    [
+      " 风  头 abӟR      ",
+      " ѯ  ѯ  女cdR提    ",
+      " ѯ  ѯ  ѯ  ecR   ",
+      "过方ӼӼ方Ӽ过方ӼӼ什 dR  ",
+      " ѯ  ѯ  ѯ  ѯ  cR ",
+      " 台  ѯ  ѯ  ѯ  dϖ ",
+      "过月Ӽ过果ӼӼ果过Ӽ什   eϖ",
+      " ѯ  ѯ  ѯ  ѯ   eҠ",
+      " ѯ  ѯ  台  ѯ    c",
+      " ѯ  ѯ  ѯ  意a   d",
+      " 就  出  就        ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "decbbecaeddeccea"
+    ],
+    [
+      " Ӥ  Ӥ deӟR      ",
+      "        baϖR    ",
+      "          ceϖ   ",
+      "            cR  ",
+      "             aR ",
+      "             aR ",
+      " ϗ  ϗ  ϗ      aϖ",
+      "              dR",
+      "               e",
+      "           c   b",
+      " ϗ  ϗ  ϗ        ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

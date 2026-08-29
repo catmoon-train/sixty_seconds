@@ -1,0 +1,195 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "你",
+        "block": "minecraft:spawner",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": -274,
+          "x": -42,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 1,
+          "SpawnRange": "4s",
+          "Delay": "731s"
+        }
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:iron_trapdoor[facing=west,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:iron_trapdoor[facing=south,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:iron_trapdoor[facing=west,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:iron_trapdoor[facing=south,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "学",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "          cabede",
+      "          bgedea",
+      "          eiebad",
+      "           egeed",
+      "           eaeab",
+      "          aba你bc",
+      "          abgaec",
+      "           geadb",
+      "           iaade",
+      "            icgb",
+      "            abaa",
+      "             aea",
+      "             aac",
+      "              ac",
+      "               g",
+      "                "
+    ],
+    [
+      "           f    ",
+      "                ",
+      "           f    ",
+      "            f   ",
+      "                ",
+      "          gagadd",
+      "            f   ",
+      "             f  ",
+      "                ",
+      "              f ",
+      "                ",
+      "              bf",
+      "             a  ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "          m     ",
+      "          mf    ",
+      "          m     ",
+      "           mf   ",
+      "           mf   ",
+      "          ieieca",
+      "           m    ",
+      "            mf  ",
+      "            mf  ",
+      "             mf ",
+      "             u  ",
+      "              af",
+      "             a u",
+      "               m",
+      "                ",
+      "                "
+    ],
+    [
+      "          qf    ",
+      "          qf    ",
+      "          qf    ",
+      "           qf   ",
+      "           qf   ",
+      "          adacad",
+      "           qf   ",
+      "            qf  ",
+      "            qf  ",
+      "             q  ",
+      "             qf ",
+      "              c ",
+      "             a w",
+      "               学",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "            f   ",
+      "            f   ",
+      "          adaddc",
+      "            f   ",
+      "             f  ",
+      "             f  ",
+      "              f ",
+      "              f ",
+      "              c ",
+      "             g  ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "          da    ",
+      "          ba    ",
+      "          ea    ",
+      "           ea   ",
+      "           ca   ",
+      "          adadce",
+      "           bg   ",
+      "            da  ",
+      "            aa  ",
+      "             ai ",
+      "             ca ",
+      "              ba",
+      "             a c",
+      "               a",
+      "                ",
+      "                "
+    ]
+  ]
+}

@@ -1,0 +1,224 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "Ӿ",
+        "block": "minecraft:cobblestone_wall[east=tall,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "Z",
+        "block": "minecraft:stone_brick_wall[east=tall,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:iron_bars[east=false,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "最",
+        "block": "minecraft:iron_bars[east=true,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "及",
+        "block": "minecraft:cobblestone_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "ѹ",
+        "block": "minecraft:iron_bars[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "又",
+        "block": "minecraft:stone_brick_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "法",
+        "block": "minecraft:iron_bars[east=false,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Y",
+        "block": "minecraft:iron_bars[east=false,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "ѳ",
+        "block": "minecraft:crafting_table"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:quartz_pillar[axis=x]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "龙",
+        "block": "minecraft:player_wall_head[facing=north]",
+        "tag": {
+          "z": -286,
+          "x": -26,
+          "id": "minecraft:skull",
+          "y": 75
+        }
+      },
+      {
+        "char": "ӿ",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "名",
+        "block": "minecraft:dark_oak_fence_gate[facing=north,in_wall=false,open=true,powered=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:chiseled_quartz_block"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "deaaebbded      ",
+      "bcbdbcdddead    ",
+      "adbeadcebcdca   ",
+      "bbbbcaeccabacb  ",
+      "cbadaaadaebeece ",
+      "ebcdcaaaeddcbbb ",
+      "baedaececccbaabc",
+      "ededdebceccbebdc",
+      "eecbdbcccebadbaa",
+      "caebbceabeebaaae",
+      "bbaccbeedeaadaad",
+      "bdebddbaedbdbada",
+      "ӾӾZeZZZcdbceeabe",
+      "   e   aabcbcada",
+      "   b   bacdeadda",
+      " G c G cecbadcde"
+    ],
+    [
+      "      bcae      ",
+      "        eb f    ",
+      "            f   ",
+      "                ",
+      "  最及ѹѹ又法        ",
+      "   Y  Y  ѳѳѳ  f ",
+      "         ѳѳѳ  eb",
+      "         ѳѳѳ  ad",
+      "               c",
+      "               d",
+      "                ",
+      "   b   d        ",
+      "vrvevnvca   ecde",
+      "   a   e    ѳѳ  ",
+      "   c   d    ѳѳ  ",
+      " G b G a        "
+    ],
+    [
+      "      eadd      ",
+      "        caff    ",
+      "   龙  龙     f   ",
+      "   ӿ  ӿ      f  ",
+      "  最ӿѹѹӿ法      f ",
+      "   名  名  ѳѳѳ  f ",
+      "         ѳѳѳ  ed",
+      "         ѳѳѳ  ac",
+      "               e",
+      "               c",
+      "                ",
+      "   c   c        ",
+      "vovbnvvee   dcdd",
+      "   e   a    ѳѳ  ",
+      "   c   a    ѳѳ  ",
+      " G e G d        "
+    ],
+    [
+      "      adeb      ",
+      "        edff    ",
+      "            f   ",
+      "             f  ",
+      "              f ",
+      "         ѳѳѳ    ",
+      "         ѳѳѳ  cc",
+      "         ѳѳѳ  ec",
+      "               b",
+      "               e",
+      "                ",
+      "   a   d        ",
+      "vvvcrvvbc   edce",
+      "   c   e        ",
+      "   b   b        ",
+      " G b G d        "
+    ],
+    [
+      "      ebdd      ",
+      "        edff    ",
+      "            f   ",
+      "             f  ",
+      "              f ",
+      "              f ",
+      "              dc",
+      "              ba",
+      "               e",
+      "               a",
+      "                ",
+      "   c   e        ",
+      "vvvervvce   bcdd",
+      "   b   a        ",
+      "   d   a        ",
+      " G e G e        "
+    ],
+    [
+      "      ebad      ",
+      "        ccea    ",
+      "          aacT  ",
+      "            cd  ",
+      "             bc ",
+      "             ac ",
+      "              cd",
+      "              be",
+      "               c",
+      "               c",
+      "                ",
+      "cacbecac        ",
+      "dddebaccacbbcbbd",
+      "   e   a        ",
+      "   d   b        ",
+      " G a G a        "
+    ]
+  ]
+}

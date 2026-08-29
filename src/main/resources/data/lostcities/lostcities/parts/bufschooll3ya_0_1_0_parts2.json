@@ -1,0 +1,445 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Υ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϧ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "的",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ғ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "学",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "清",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ʹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "Ӊ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ο",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҷ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "6",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "自",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "а",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ΐ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "点",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "还",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ί",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "à",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "υ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "得",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "然",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "事",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "小",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϟ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "天",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "用",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -194,
+          "x": -654,
+          "id": "doomsday_decoration:acrate",
+          "y": -59,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ϫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ς",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҧ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "时",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ε",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "章",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "只",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҁ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϸ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "文",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "法",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "á",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "了",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӧ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ђ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "э",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҥ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "在",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "好",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "很",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "定",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӿ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "8",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "9",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "г",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaaaΥwzzzzn",
+      "aaͽͽͽͽQaaΥnnnnzn",
+      "aaӪͽͽϧ的wwnnwnnnw",
+      "aaϧͽͽͽҒnnznzzwnz",
+      "aaͽQQͽϧnnnnwnnwn",
+      "aaQQ学Qͽwznnzznwn",
+      "aaͽͽϧҒQnwzwnwznn",
+      "aaϧӪͽQQaaΥnwnwww",
+      "aaͽQQͽQaaΥnwwwnw",
+      "aaQͽͽϧͽaaΥnwznnn",
+      "aaͽϧͽͽQaaΥnnnwzw",
+      "aaͽͽ清QQaaΥzwwnnz",
+      "aaͽϧҒͽQaaΥnwznnw",
+      "aaQͽϧͽʹkkΥnnwwzz",
+      "aaQTͽϧͽaaΥnwnznn",
+      "aaQQQͽͽaaΥwznnzw"
+    ],
+    [
+      "eccccccc  e e   ",
+      "hc ӉοӉҷcx      e",
+      "Dc   ҷ     6    ",
+      "hc 自   Ѽ    e ϓ ",
+      "ec  ѱ     6     ",
+      "hcҽѱ  ѱ       ϓ ",
+      "hcҽ   аа   ΐ    ",
+      "ecѱ  点 ce   ΐ   ",
+      "Dc还 ίà cx    ΐ  ",
+      "Dc υаѼ ce       ",
+      "Dc得а 然 ce  e    ",
+      "xc     c    ΐ   ",
+      "xc事а 小 ce       ",
+      "ec Ϟа  天        ",
+      "hc用  ѼϪce  ΐς  e",
+      "Dcӳҧ时ε章ce       "
+    ],
+    [
+      " cgddgdc        ",
+      "lg只   Ҁc        ",
+      " g     Ϸ        ",
+      "ld     Ϸ        ",
+      " d     文        ",
+      "ld     Ϸ        ",
+      "lg     Ϸ        ",
+      " d     c        ",
+      " d     d        ",
+      " d     d法       ",
+      " d     g        ",
+      " d     gá       ",
+      " g     c        ",
+      " g     了        ",
+      "lgӧ    c        ",
+      " g   ѩ d        "
+    ],
+    [
+      " cggdggc        ",
+      " g     c        ",
+      " Ђ     Ϸ        ",
+      " Ͽ     Ϸ        ",
+      " d     Ϸ        ",
+      " d     Ϸ        ",
+      " g     Ϸ        ",
+      " g     c        ",
+      " э    ҥd        ",
+      " d     在        ",
+      " g     好        ",
+      " d很    d        ",
+      " d定  ҥӾc        ",
+      " Ђ     Ӳ        ",
+      " Ͽ     c        ",
+      " g  ѩ  d        "
+    ],
+    [
+      "icd8g9gci       ",
+      "ig     ci       ",
+      "id     di       ",
+      "id     di       ",
+      "id     di       ",
+      "ig     di       ",
+      "id     di       ",
+      "id     ci       ",
+      "id     gi       ",
+      "id     di       ",
+      "id     gi       ",
+      "ig     di       ",
+      "id     ci       ",
+      "ig     di       ",
+      "ig     ci       ",
+      "ig     gi       "
+    ],
+    [
+      " focccof        ",
+      " foi ioff       ",
+      " foi iooг       ",
+      " foi ioc        ",
+      " foi ioc        ",
+      " foi ioc        ",
+      " foi iooг       ",
+      " foi ioff       ",
+      " foi iof        ",
+      " foi iof        ",
+      " foi iof        ",
+      " foi iof        ",
+      " foi iof        ",
+      " foi iof        ",
+      " foi iof        ",
+      " foi iof        "
+    ]
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "dimx": 2,
+  "dimz": 3,
+  "buildings": [
+    [
+      "policestation_0_0",
+      "policestation_0_1",
+      "policestation_0_2"
+    ],
+    [
+      "policestation_1_0",
+      "policestation_1_1",
+      "policestation_1_2"
+    ]
+  ]
+}

@@ -1,0 +1,395 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "΄",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϲ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϡ",
+        "block": "minecraft:air",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 601,
+          "x": 141,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 132,
+          "SpawnRange": "4s",
+          "Delay": "179s"
+        }
+      },
+      {
+        "char": "ϭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Р",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "л",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "А",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Э",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "҉",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҟ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϰ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "҃",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѯ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѵ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 601,
+          "x": 145,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 133
+        }
+      },
+      {
+        "char": "ђ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "О",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ν",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 592,
+          "x": 145,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 186,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"CEO\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Robert Knox\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Я",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "΅",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "κ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "α",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϸ",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aadddddQ΄Qtwmuuv",
+      "amadaAa΄΄Qwmuvtz",
+      "eaeeeAaQPmwvzvmu",
+      "AkameAeQPQzuttzu",
+      "avddeAdQQPuwuvut",
+      "kϲedeeeP΄΄vzwzmz",
+      "AAAAAAaQ΄Pvtmuvt",
+      "AAAAAAAPPQϠwAwmu",
+      "vtzuzvϭQQ΄mРwzuu",
+      "uwvmmzAPϠPzzuztv",
+      "wtuuwAtP΄PmtРtmz",
+      "zvzmvmtvmumuzzum",
+      "vumzuvwtuutvuutv",
+      "zvmttzmwwttwmwmz",
+      "mttutzmtvtumtttv",
+      "wuwmmzutuvzwwvwm"
+    ],
+    [
+      " onX ѱn  n  n   ",
+      " noo dл    n    ",
+      "X   XemА n    n ",
+      "de noaЭ         ",
+      "oҭon dn ҉ c     ",
+      "XFno d  c     n ",
+      "cϭbbcdr     n   ",
+      "cpcccpcҞpcE Р n ",
+      " ϰ ҃  lipѮn n n ",
+      "ϰѴ nn p ђ n     ",
+      " О n c    n   nn",
+      "   n n  n n   nn",
+      "  n  n n        ",
+      "n nn  n     n n ",
+      "n n   n    nn   ",
+      "n  nnn         n"
+    ],
+    [
+      "     Ҝf         ",
+      "     ef         ",
+      "    ΝgЯ         ",
+      "d    e          ",
+      "F   Νg          ",
+      "F    e  E       ",
+      "dhahaar         ",
+      "΅΅΅΅΅scf E      ",
+      "      l         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "     ef         ",
+      "     df         ",
+      "    Νg          ",
+      "     a          ",
+      "    Νg          ",
+      "     a          ",
+      "khahedr         ",
+      "  l lspf        ",
+      "      l         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      " κ   gf         ",
+      "     df         ",
+      "     g          ",
+      "     a          ",
+      "     g          ",
+      "     e          ",
+      "khdhakr         ",
+      "  l lscf        ",
+      "      l         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "     gf         ",
+      "    Uαf         ",
+      "     g          ",
+      "    Uk          ",
+      "     g          ",
+      "  ϸ ϸd          ",
+      "ahkhdar         ",
+      "  l lspf        ",
+      "      l         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

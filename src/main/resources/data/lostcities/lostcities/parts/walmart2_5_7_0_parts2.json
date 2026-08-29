@@ -1,0 +1,384 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "开",
+        "block": "minecraft:air",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 387,
+          "x": 24,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 132,
+          "SpawnRange": "4s",
+          "Delay": "584s"
+        }
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "实",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "哈",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "请",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "战",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "飞",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "之",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ү",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "五",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "唱",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "性",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ұ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "动",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "他",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "类",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҧ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 463,
+          "x": 74,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Aisle 6\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "害",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "年",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "料",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "那",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "龙",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "放",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "研",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "差",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "cbdawarIwaasssss",
+      "bbbacbabbccbaabd",
+      "cbcbdabccwdackck",
+      "baacadwaaabaaakd",
+      "acbdaadaIdkdkcba",
+      "bddacwcIdwkccdcb",
+      "bbabbcdIwaddba开b",
+      "dbcdaabaawbkcaaa",
+      "bcdcrwrddIksJssJ",
+      "abdcrackbcdkddra",
+      "dabwwcdaacdbrbdd",
+      "ccdwbrbkcdbbdkbb",
+      "rbwacwdbabcbkaka",
+      "adacbbadccckkkrd",
+      "dadbdcdadcwJssss",
+      "rIrrrrrrrIIdbaaa"
+    ],
+    [
+      "       实实gCj    ",
+      "哈      实实g请q    ",
+      "哈      实实gj战mm战q",
+      "q  战 飞战实实g 之  之ү",
+      "   之ss之实实g  үүүү",
+      "   sssJ实实g  үүүү",
+      "   之Js之实实g 之  之ү",
+      "   五q唱五实实g性五iq五i",
+      "    q q实实gDj   q",
+      "    q  实实g请   q ",
+      "       实实gj     ",
+      "     q 实实g      ",
+      "q      实实g      ",
+      "实实实实实实实实gg性   q ",
+      "ggggggggggzj  q ",
+      "ҰEqqqq动iqzD请i ii"
+    ],
+    [
+      "         CCj    ",
+      "         e请     ",
+      "        l j mmm ",
+      "        l 他ggggg",
+      "   sJ 类ҬҬҬ他gt   ",
+      "  ҧs 害年   他gt   ",
+      "   Js 料ҬҬҬ他ggggg",
+      "          性ii ii",
+      "         CHj    ",
+      "        lo请     ",
+      "         ij     ",
+      "                ",
+      "                ",
+      "  mmmmmm那p性     ",
+      "yDeeefopfDzj    ",
+      "iz请 ii龙iҰCz请i ii"
+    ],
+    [
+      "         CEj    ",
+      "         o请     ",
+      "        l j mmm ",
+      "        l jepeep",
+      "    放 N l j     ",
+      "   研      j     ",
+      "    放 N l jopfof",
+      "          性ii ii",
+      "         zzj    ",
+      "        le请     ",
+      "         ij     ",
+      "                ",
+      "                ",
+      "  mmmmmmlf性     ",
+      "ezeeffeyfDzj    ",
+      "iC请 ii iҰzD请i ii"
+    ],
+    [
+      "         zEj    ",
+      "         p请     ",
+      "        l j mm  ",
+      "        l jeffee",
+      "    ҬҬ类 l j     ",
+      "     Ҭ差   j     ",
+      "    ҬҬ料 l jpyepe",
+      "          性 i  i",
+      "         zzj    ",
+      "        lp请     ",
+      "          j     ",
+      "                ",
+      "                ",
+      "  mmmmm le性     ",
+      "fCppoyoyfzCj    ",
+      "iE请  i iizD请i ii"
+    ],
+    [
+      "         Czj    ",
+      "         y请     ",
+      "        l j mm  ",
+      "        l jeeeeo",
+      "      N l jeoopo",
+      "          jfoyff",
+      "      N l jeoppe",
+      "          性     ",
+      "         zHj    ",
+      "        le请     ",
+      "          j     ",
+      "                ",
+      "                ",
+      "   mmmm le性     ",
+      "fEfyfeyfpzCj    ",
+      "iC请  i iizz请i ii"
+    ]
+  ]
+}

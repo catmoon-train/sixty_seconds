@@ -1,0 +1,158 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ύ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "吗",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "将",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ә",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "     ii    ύ    ",
+      "     ii         ",
+      "     iii        ",
+      "       ii       ",
+      "       i        ",
+      "         i i  吗 ",
+      "         i iiiii",
+      "            iiii",
+      "              u ",
+      "                ",
+      "       V        ",
+      "        VV      ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "     ii    ύ    ",
+      "     ii         ",
+      "      ii        ",
+      "      iii       ",
+      "       iii    吗 ",
+      "        iiii  将 ",
+      "          iiii i",
+      "             iii",
+      "              o ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "     ii    ύ    ",
+      "      ii        ",
+      "      ii        ",
+      "       ii       ",
+      "        iii   吗 ",
+      "         iiii ii",
+      "           iii i",
+      "              u ",
+      "              y ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "       i   ύ    ",
+      "      i         ",
+      "       ii       ",
+      "       iii    吗 ",
+      "        iiii  Ә ",
+      "          iiiiii",
+      "            ii i",
+      "              u ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "      ii   ύ    ",
+      "       ii       ",
+      "        ii    吗 ",
+      "        ii    Ә ",
+      "          iiiiii",
+      "              ii",
+      "              o ",
+      "              y ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        i  ύ    ",
+      "        ii    吗 ",
+      "        iii   Ә ",
+      "         i    ii",
+      "           iii i",
+      "              y ",
+      "              u ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

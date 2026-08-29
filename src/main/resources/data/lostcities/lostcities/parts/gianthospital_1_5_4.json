@@ -1,0 +1,226 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "役",
+        "block": "minecraft:dead_fire_coral_block"
+      },
+      {
+        "char": "袱",
+        "block": "minecraft:quartz_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:clay"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "傥",
+        "block": "minecraft:quartz_stairs[facing=south,half=top,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "佯",
+        "block": "minecraft:diorite_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "猥",
+        "block": "minecraft:quartz_stairs[facing=north,half=top,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "桨",
+        "block": "minecraft:diorite_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "氨",
+        "block": "minecraft:diorite_stairs[facing=east,half=top,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "亥",
+        "block": "minecraft:quartz_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "竺",
+        "block": "minecraft:quartz_pillar[axis=z]"
+      },
+      {
+        "char": "浚",
+        "block": "minecraft:diorite_stairs[facing=north,half=top,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "儸",
+        "block": "minecraft:diorite_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "庇",
+        "block": "minecraft:diorite_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "袅",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "              N役",
+      "             袱de",
+      "              yz",
+      "              yg",
+      "             袱eb",
+      "              y役",
+      "              yz",
+      "            傥佯ed",
+      "            袱dcc",
+      "            猥桨ed",
+      "            氨亥bd",
+      "            袱竺ed",
+      "            浚桨de",
+      "            傥亥bc",
+      "            儸竺cd",
+      "            猥桨ed"
+    ],
+    [
+      "             dhi",
+      "            袱eif",
+      "             bfq",
+      "             bhh",
+      "            袱cif",
+      "             dgh",
+      "             eCf",
+      "            庇eiC",
+      "            袅dgC",
+      "            庇eqf",
+      "            庇dgh",
+      "            袅bqh",
+      "            袅cqg",
+      "            庇bhq",
+      "            袅ehh",
+      "            袅bhC"
+    ],
+    [
+      "             e  ",
+      "             c  ",
+      "             e  ",
+      "             c  ",
+      "             b  ",
+      "             e  ",
+      "             e  ",
+      "             b  ",
+      "             d  ",
+      "             b  ",
+      "             e  ",
+      "             d  ",
+      "             c  ",
+      "             d  ",
+      "             c  ",
+      "             c  "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "它",
+        "block": "minecraft:black_carpet"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:oak_planks"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:dark_oak_planks"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "6",
+        "block": "minecraft:dark_oak_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "人",
+        "block": "minecraft:redstone_lamp[lit=true]"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:stone_brick_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:birch_planks"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:polished_andesite"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "       它它 c     ",
+      "   它      e     ",
+      "jgeiiicjceep K K",
+      "              p ",
+      "                ",
+      "                ",
+      "                ",
+      "           c    ",
+      "gggecccecccgcdgg",
+      "jgeejdccdeecegdd",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "          d     ",
+      "          e     ",
+      "gjiiiiicddep   p",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "ceegcecjcccedecc",
+      "jdejcdegdedcejcd",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "66H66人66H6cF   F",
+      "6666666666eF   F",
+      "ddgeggeceecF   F",
+      "FFFFFFFFFFFF   F",
+      "               F",
+      "               F",
+      "               F",
+      "FFFFFFFFFFFFFFFF",
+      "eeedeedeedceccce",
+      "cgdgjecjdccedddj",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "deHgeHeeHcacdgde",
+      "djggdddddgadgced",
+      "aaaaaaaaaaadHHHc",
+      "gdeccgedggcdddde",
+      "dHjccHjddHjgjHcd",
+      "cHjgeHgdd人gecHcg",
+      "dHdecHdgcHdcdHcc",
+      "edjecdeededcdjgj",
+      "aaaaaaaaaaaaaa  ",
+      "aaaaaaaaaaaaaa  ",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "dgdccedcdcdjcddc",
+      "edgggcjedecegecd",
+      "egcdeeejgjdgdccd",
+      "gjjejeddcecddjee",
+      "cdcdgjjgegedegdd",
+      "aaaaaaaaaaaaaaa ",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaa ",
+      "aaaaaaaaaaaaaaa ",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaanahce",
+      "aaaaaaaaaaanahhh"
+    ]
+  ]
+}

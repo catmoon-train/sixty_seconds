@@ -1,0 +1,174 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "Ҡ",
+        "block": "minecraft:yellow_wool"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "ϖ",
+        "block": "minecraft:yellow_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "ú",
+        "block": "minecraft:iron_bars[east=false,north=true,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "ѫ",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:chiseled_quartz_block"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "a               ",
+      "                ",
+      "                ",
+      "Ҡ               ",
+      "Ҡ               ",
+      "dҠ              ",
+      "aR              ",
+      "aϖ              ",
+      "cҠ              ",
+      "dR              ",
+      "dϖ              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "a               ",
+      "                ",
+      "                ",
+      "R               ",
+      "ú               ",
+      "cR              ",
+      "cR              ",
+      "aҠ              ",
+      "bϖ              ",
+      "aϖ              ",
+      "dR              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "a               ",
+      "                ",
+      "                ",
+      "ϖ               ",
+      "R               ",
+      "dϖ              ",
+      "aϖ              ",
+      "eR              ",
+      "bR              ",
+      "dϖ              ",
+      "eú              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "a               ",
+      "                ",
+      "                ",
+      "a               ",
+      "b               ",
+      "ea              ",
+      "dc              ",
+      "aa              ",
+      "eb              ",
+      "ba              ",
+      "eb              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "g               ",
+      "ѫ               ",
+      "ѫ               ",
+      "eѫ              ",
+      "aѫ              ",
+      "aeѫ             ",
+      "ccѫ             ",
+      "edѫ             ",
+      "ceѫ             ",
+      "baѫ             ",
+      "ebѫ             "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "g               ",
+      "                ",
+      "                ",
+      "o               ",
+      "o               ",
+      " C              ",
+      " C              ",
+      " C              ",
+      " C              ",
+      " C              ",
+      " o              "
+    ]
+  ]
+}

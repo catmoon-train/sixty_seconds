@@ -1,0 +1,234 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "死",
+        "block": "minecraft:vine[east=true,north=false,south=true,up=false,west=true]"
+      },
+      {
+        "char": "黑",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=true,west=true]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:blue_concrete"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "Ұ",
+        "block": "minecraft:vine[east=true,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "ҭ",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "思",
+        "block": "minecraft:vine[east=true,north=true,south=false,up=false,west=true]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:dark_oak_fence[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "那",
+        "block": "minecraft:vine[east=true,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "请",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=true]"
+      },
+      {
+        "char": "油",
+        "block": "minecraft:vine[east=true,north=true,south=false,up=true,west=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "数",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=true,west=false]"
+      },
+      {
+        "char": "天",
+        "block": "minecraft:stone_slab[type=double,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "他",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=true,west=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      " mm m m mmm m mm",
+      "mp  e死 e   p黑死Hz",
+      "ggggggggggggggCz",
+      "gggggggggggggggo",
+      "gggggggggggggggp",
+      "gggggggggggggggo",
+      "gCgggggggHgggggp",
+      "fHfeeppfyzeeypof",
+      "Ұ   ҭҭ思ҭ      ii",
+      " i ii   ii  i   ",
+      "                ",
+      "                ",
+      "                ",
+      "          O     ",
+      "                "
+    ],
+    [
+      "                ",
+      " mm m m mmm m mm",
+      "mfepp死emo p那f死zC",
+      "ggggggggggggggEC",
+      "gggggggggggggggf",
+      "gggggggggggggggf",
+      "gggggggggggggggf",
+      "gzgggggggCgggggf",
+      "yCoeooeyfDpeyffo",
+      "Ұ  ҭ请iiiҭҭ    ii",
+      " i i    ii  i   ",
+      "                ",
+      "                ",
+      "                ",
+      "          O     ",
+      "                "
+    ],
+    [
+      "                ",
+      " m    m  m  m mm",
+      "mo  fmpm om那f那Ez",
+      "ggggggggggggggEC",
+      "gggggggggggggggy",
+      "ggggggggggggggge",
+      "gggggggggggggggo",
+      "gzgggggggzgggggf",
+      "oEfpfyepeHfyyypo",
+      "Ұ ҭ iiiii ҭҭ  ii",
+      " i          i   ",
+      "                ",
+      "                ",
+      "                ",
+      "          O     ",
+      "                "
+    ],
+    [
+      "                ",
+      "      m     m   ",
+      "mmopmmem m mf那zz",
+      "ggggggggggggggEC",
+      "gggggggggggggggp",
+      "gggggggggggggggo",
+      "gggggggggggggggo",
+      "gHgggggggEggggge",
+      "ozeefpyefzoefeyp",
+      "油ҭj iiii   油ҭ ii",
+      " i          i   ",
+      "                ",
+      "                ",
+      "                ",
+      "          O     ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "mm  mmmm m mm那zz",
+      "ggggggggggggggDD",
+      "gggggggggggggggo",
+      "gggggggggggggggf",
+      "gggggggggggggggf",
+      "gEgggggggEgggggy",
+      "ozoofoooyCeefyee",
+      "ҭ   ii     ҭ    ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "          O     ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "mm  数      mm那Ez",
+      "ggggggggggggggzE",
+      "gggggggggggggggf",
+      "gggggggggggggggf",
+      "gggggggggggggggy",
+      "gCgggggggEgggggp",
+      "pEepfepfyzfeofee",
+      " 天       他ҭ     ",
+      " t  vv   t  vv  ",
+      " t v v v t     v",
+      " t v  v  t      ",
+      " 他v  v   t v  vv",
+      " t v v   tO v   ",
+      " t       t      "
+    ]
+  ]
+}

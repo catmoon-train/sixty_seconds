@@ -1,0 +1,14 @@
+{
+  "filler": "#",
+  "rubble": "}",
+  "minfloors": 0,
+  "maxfloors": 0,
+  "maxcellars": 0,
+  "allowDoors": false,
+  "parts": [
+    {
+      "part": "aircraftcarrier2_10_0_0",
+      "floor": 0
+    }
+  ]
+}

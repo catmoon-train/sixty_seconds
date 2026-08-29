@@ -1,0 +1,290 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "5",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "查",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "里",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӥ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӧ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "原",
+        "block": "minecraft:air",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 324,
+          "x": 177,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 133,
+          "Items": []
+        }
+      },
+      {
+        "char": "地",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "极",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "保",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "і",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "在",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "暴",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "2",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "ӫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "进",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "CnnCbfffffffffff",
+      "nppnbfffffffffff",
+      "5查nnbbffffffffff",
+      "里ӥppbfffffffffff",
+      "pnpnbfffffffffff",
+      "nnpnbfffffffffff",
+      "nnnpbfffffffffff",
+      "nppCbfffffffffff",
+      "ssspbbffffffffff",
+      "sssnbfffffffffff",
+      "ssspbfffffffffff",
+      "sssnbfffffffffff",
+      "ssspbfffffffffff",
+      "sssnbfffffffffff",
+      "ssspbbffffffffff",
+      "ssspbfffffffffff"
+    ],
+    [
+      "zzktoQqkkzkzqqqz",
+      "HkktyOq kkkkzzkk",
+      " kӦtuwkkkqk qk k",
+      " kztuIkkkqq q kk",
+      " 原qtyQqqqqkkqkzq",
+      "k  tuI地k地qkqzqzz",
+      "q 极toQzkqkkkkqqk",
+      "保 ӦtoOqqqqqkkqkq",
+      "ttttywUUkkkqkkzq",
+      "іі在toIqUkqqqzqqq",
+      "qkqtoQq地zqkzqkqq",
+      "z暴2toQUzqkkkkkqk",
+      "  qtyIqkUkqqqkkq",
+      "zz在tyOqqqqkqqkzq",
+      "zzіtywkqkkqkqkzk",
+      "k 在toOkqkkkkqkzq"
+    ],
+    [
+      "    r           ",
+      "   su           ",
+      "  Ӧmyw          ",
+      "   vu           ",
+      "   ir           ",
+      "    r           ",
+      "   ir           ",
+      "保 Ӧmo           ",
+      "mvmmowVV        ",
+      "іі在ӫo  V        ",
+      "    r           ",
+      "  进 r V         ",
+      "   ir   V       ",
+      "  在ӫo           ",
+      "  іӫow          ",
+      "  在ӫo           "
+    ],
+    [
+      "    r           ",
+      "   mo           ",
+      "  Ӧsuw          ",
+      "   vo           ",
+      "    r           ",
+      "   ir           ",
+      "   ir           ",
+      "保 Ӧmy           ",
+      "mvmsuw          ",
+      "іі在ӫo           ",
+      "   ir           ",
+      "   ir           ",
+      "   ir           ",
+      "  在ӫy           ",
+      "  іӫyw          ",
+      "  在ӫu           "
+    ],
+    [
+      "    r           ",
+      "   vo           ",
+      "  Ӧmuw          ",
+      "   so           ",
+      "   ir           ",
+      "   ir           ",
+      "    r           ",
+      "  Ӧso           ",
+      "vsvmow          ",
+      "   ӫo           ",
+      "    r           ",
+      "    r           ",
+      "   ir           ",
+      "   ӫu           ",
+      "   ӫyw          ",
+      "   ӫy           "
+    ],
+    [
+      "   ir           ",
+      "   vo           ",
+      "  Ӧvow          ",
+      "   su           ",
+      "   ir           ",
+      "   ir           ",
+      "    r           ",
+      "  Ӧvu           ",
+      "mmvmyw          ",
+      "   ӫu           ",
+      "    r           ",
+      "   ir           ",
+      "   ir           ",
+      "   ӫy           ",
+      "   ӫow          ",
+      "   ӫu           "
+    ]
+  ]
+}

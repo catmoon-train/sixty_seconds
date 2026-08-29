@@ -1,0 +1,246 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "η",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cut_sandstone"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:spruce_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "έ",
+        "block": "minecraft:stone_brick_wall[east=tall,north=none,south=none,up=true,waterlogged=false,weathering=true,west=none]"
+      },
+      {
+        "char": "Ι",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "ζ",
+        "block": "minecraft:spruce_fence_gate[facing=east,in_wall=false,open=false,powered=false]"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ί",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Α",
+        "block": "minecraft:spruce_fence_gate[facing=east,in_wall=true,open=false,powered=false]"
+      },
+      {
+        "char": "Ϝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϴ",
+        "block": "minecraft:spruce_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ά",
+        "block": "minecraft:spruce_button[face=floor,facing=west,powered=false]"
+      },
+      {
+        "char": "Γ",
+        "block": "minecraft:spruce_button[face=floor,facing=south,powered=false]"
+      },
+      {
+        "char": "К",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "此",
+        "block": "minecraft:stone_brick_wall[east=tall,north=low,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:smooth_sandstone"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:sand"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "W",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "2",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "π",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "е",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ΰ",
+        "block": "minecraft:sandstone_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ν",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "Ϊ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Κ",
+        "block": "minecraft:cobblestone_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "            ηcbb",
+      "             cbb",
+      "            έcbb",
+      "             cbb",
+      "            ηcbb",
+      "             cbb",
+      "            Ιcbb",
+      "             cbb",
+      "            ηcbb",
+      "             cbb",
+      "            έccc",
+      "               Q",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "            ζcMί",
+      "            ΑcM ",
+      "            Ϝcϴ ",
+      "            ΑcMά",
+      "            ζcMί",
+      "            ΑcMΓ",
+      "            ϜcК ",
+      "            ΑcM ",
+      "            ζcMά",
+      "            ΑcM ",
+      "            此cdg",
+      "               Q",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "             X  ",
+      "            Ιc  ",
+      "             p  ",
+      "             p  ",
+      "             p  ",
+      "            έc  ",
+      "             W  ",
+      "                ",
+      "             X  ",
+      "            έcgd",
+      "               Q",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "             X  ",
+      "             p  ",
+      "            Ιc  ",
+      "             p  ",
+      "             p  ",
+      "             p  ",
+      "            έc  ",
+      "             p  ",
+      "             W  ",
+      "                ",
+      "            Ιcdd",
+      "               Q",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "            Rp2 ",
+      "            Rp2 ",
+      "            πc  ",
+      "            Rp2 ",
+      "            Rp2 ",
+      "            Rp2 ",
+      "            πc  ",
+      "            Rp2 ",
+      "            Rp2 ",
+      "            Rp2е",
+      "            πcΰΰ",
+      "               Q",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "           iνcbb",
+      "           iΪcbb",
+      "           yΚcbb",
+      "           yΪcbb",
+      "           iΪcbb",
+      "           yνcbb",
+      "           yΚcbb",
+      "           yΪcbb",
+      "           yνcbb",
+      "           yΪcbb",
+      "           yΚccc",
+      "           yyi Q",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

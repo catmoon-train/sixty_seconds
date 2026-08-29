@@ -1,0 +1,308 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "开",
+        "block": "minecraft:air",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 387,
+          "x": 24,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 132,
+          "SpawnRange": "4s",
+          "Delay": "584s"
+        }
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "除",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "神",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "怎",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "合",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "时",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 434,
+          "x": 58,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 133,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Loom\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\">>>\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "光",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "站",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "买",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "动",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "子",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "龙",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "adbsdskabrdefokc",
+      "accssskbaaakdddk",
+      "bakscscckdkdkbbd",
+      "addssJdaarrkcbba",
+      "dddsrsddcckcddac",
+      "rccJJsrbabbkckda",
+      "ddkJascakdkccccd",
+      "dccssJcbaddddaac",
+      "dkbsbskdkbkkcdab",
+      "ssssssssJssssbac",
+      "scbsdascbkscaskd",
+      "cJkcsbbsdcbscsak",
+      "kdskcscksaabsadr",
+      "开ssssJsJI开开ssssJ",
+      "pefeffopeffofeyo",
+      "oofeffooefefeefo"
+    ],
+    [
+      "         q      ",
+      "               q",
+      "             q  ",
+      "         除q     ",
+      "    q   q       ",
+      "qq    q   q    q",
+      "              q ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "神       神神神q  qq",
+      "r怎     合rrr怎  时 ",
+      "r怎m   m合rrr怎 光站买",
+      "r怎Dj lC合rrr怎 光站买"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "q       qqq   m ",
+      "q m   m q动q  子子子",
+      "q z  lC qqq  子子子"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              m ",
+      "  m   m  龙   子子子",
+      "  z  lE      子子子"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

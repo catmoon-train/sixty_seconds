@@ -1,0 +1,250 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "Ҷ",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=true,west=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:cobblestone_stairs[facing=north,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:red_carpet"
+      },
+      {
+        "char": "П",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "χ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=side,west=side]"
+      },
+      {
+        "char": "Ҙ",
+        "block": "minecraft:skeleton_skull[rotation=14]",
+        "tag": {
+          "z": 623,
+          "x": 74,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 170
+        }
+      },
+      {
+        "char": "ҫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ј",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Љ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ж",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:black_carpet"
+      },
+      {
+        "char": "ќ",
+        "block": "minecraft:furnace[facing=west,lit=false]",
+        "tag": {
+          "z": 625,
+          "x": 86,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 188,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "Ί",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Ѳ",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=true,west=true]"
+      },
+      {
+        "char": "Ҍ",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=true]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "cccccccc        ",
+      " iҶhghgh        ",
+      "       f        ",
+      "    aaah        ",
+      "    xxxf        ",
+      "       i        ",
+      "       f        ",
+      "       i        ",
+      "       f        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "cccccccc        ",
+      "dddddadd        ",
+      "bbaaaaad        ",
+      "babaxxxd        ",
+      "abaa   d        ",
+      "babb   d        ",
+      "bbab   a        ",
+      "aaaabbbd        ",
+      "babaabba        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "cccccccc        ",
+      "ghgigige        ",
+      " k kk  f        ",
+      "   П   e        ",
+      "kk Ͽ   f        ",
+      "   χ   h        ",
+      "  yχ   f        ",
+      " yҘҫЈЉЖi        ",
+      "L L   ќΊ        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "cccccccc        ",
+      "ghghѲi e        ",
+      "       f        ",
+      "       e        ",
+      "       f        ",
+      "       h        ",
+      "       f        ",
+      "       h        ",
+      "       f        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "cccccccc        ",
+      "daaaadaa        ",
+      "       d        ",
+      "       a        ",
+      "       d        ",
+      "       a        ",
+      "       a        ",
+      "       a        ",
+      "       d        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "cccccccc        ",
+      "gegeҌe e        ",
+      "       f        ",
+      "       h        ",
+      "       f        ",
+      "       h        ",
+      "       f        ",
+      "       h        ",
+      "       f        "
+    ]
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "dimx": 2,
+  "dimz": 2,
+  "buildings": [
+    [
+      "massivebuildingwithhelicopter_0_0",
+      "massivebuildingwithhelicopter_0_1"
+    ],
+    [
+      "massivebuildingwithhelicopter_1_0",
+      "massivebuildingwithhelicopter_1_1"
+    ]
+  ]
+}

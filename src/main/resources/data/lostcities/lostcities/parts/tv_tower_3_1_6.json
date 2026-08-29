@@ -1,0 +1,184 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:iron_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ӻ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -276,
+          "x": -15,
+          "id": "refurbished_furniture:computer",
+          "y": 27,
+          "NodePos": "-3848291827685L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "说",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:iron_trapdoor[facing=east,half=top,open=false,powered=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "ddibgi          ",
+      "beaaaa          ",
+      "eccdaca         ",
+      "ebbcaei         ",
+      "aabbbaea        ",
+      "dccdbaba        ",
+      "ceadabieg       ",
+      "accaebgca       ",
+      "aaaebaga        ",
+      "abdbbdge        ",
+      "aaeedadgc       ",
+      "bcababdac       ",
+      "ddecbcdae       ",
+      "eaaeebcaa       ",
+      "acdcaaaiba      ",
+      "ebbcadcib       "
+    ],
+    [
+      "babbda          ",
+      "cebfa           ",
+      "ϔ   f           ",
+      "    f           ",
+      "     f          ",
+      "     f          ",
+      "      f         ",
+      "bdeaaegdi       ",
+      "      f         ",
+      "      f         ",
+      " ecb   f        ",
+      " c     f        ",
+      " c ϔ            ",
+      " c     f        ",
+      "ecedcceaca      ",
+      "a      f        "
+    ],
+    [
+      "ccbbaa          ",
+      "   fe           ",
+      "    fl          ",
+      "    fl          ",
+      "      l         ",
+      "     fl         ",
+      "      fl        ",
+      "ececadada       ",
+      "       l        ",
+      "      fl        ",
+      "       fl       ",
+      "       fl       ",
+      " Ӻ     fl       ",
+      "       fl       ",
+      "eeabbbcacg      ",
+      "       fl       "
+    ],
+    [
+      "   说 a          ",
+      "   fd           ",
+      "    ft          ",
+      "    ft          ",
+      "     ft         ",
+      "      t         ",
+      "      ft        ",
+      "abcedeada       ",
+      "      ft        ",
+      "       t        ",
+      "       ft       ",
+      "       ft       ",
+      "       ft       ",
+      "       ft       ",
+      "dcdcebagai      ",
+      "       ft       "
+    ],
+    [
+      "  f  a          ",
+      "   fe           ",
+      "    f           ",
+      "    f           ",
+      "     f          ",
+      "     f          ",
+      "      f         ",
+      "dcdbdbidi       ",
+      "      f         ",
+      "      f         ",
+      "                ",
+      "       f        ",
+      "                ",
+      "                ",
+      "beadbadaea      ",
+      "       f        "
+    ],
+    [
+      "  ad a          ",
+      "   ia           ",
+      "    ac          ",
+      "    ie          ",
+      "     ab         ",
+      "     ad         ",
+      "      ad        ",
+      "cbcaddgbg       ",
+      "      ac        ",
+      "      ad        ",
+      "       ae       ",
+      "       ge       ",
+      "       ac       ",
+      "       ae       ",
+      "aaaeaaaacg      ",
+      "       ae       "
+    ]
+  ]
+}

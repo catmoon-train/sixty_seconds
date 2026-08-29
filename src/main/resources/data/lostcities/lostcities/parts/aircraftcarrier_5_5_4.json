@@ -1,0 +1,198 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "桑",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:iron_trapdoor[facing=south,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "介",
+        "block": "minecraft:iron_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:chiseled_quartz_block"
+      },
+      {
+        "char": "昂",
+        "block": "minecraft:hopper[enabled=true,facing=north]",
+        "tag": {
+          "z": 988,
+          "x": -472,
+          "TransferCooldown": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:hopper",
+          "y": 129,
+          "Items": []
+        }
+      },
+      {
+        "char": "鹤",
+        "block": "minecraft:piston_head[facing=south,short=false,type=sticky]"
+      },
+      {
+        "char": "推",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "效",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "    桑caaaedbbddd",
+      "     桑cacadebaac",
+      "      Aeccaedecc",
+      "       桑介桑AA桑add",
+      "             Aba",
+      "              AA",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "     e          ",
+      "      d         ",
+      "       cedeed   ",
+      "             c  ",
+      "              eb",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "     e          ",
+      "      a         ",
+      "       caadac   ",
+      "             e  ",
+      "              bb",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "     d          ",
+      "      a         ",
+      "       deabba   ",
+      "             ag ",
+      "              be",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "     bcdddcevvvv",
+      "      bbcdeeLLLL",
+      "       cadbcLLLL",
+      "            evLL",
+      "             dLL",
+      "              bd",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "     a  b昂b鹤推推推M",
+      "      c    M    ",
+      "       cbcc推    ",
+      "           c推v  ",
+      "            bev效",
+      "              b ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

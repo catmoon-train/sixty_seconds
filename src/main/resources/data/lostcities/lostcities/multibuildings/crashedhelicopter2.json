@@ -1,0 +1,16 @@
+{
+  "dimx": 2,
+  "dimz": 3,
+  "buildings": [
+    [
+      "crashedhelicopter2_0_0",
+      "crashedhelicopter2_0_1",
+      "crashedhelicopter2_0_2"
+    ],
+    [
+      "crashedhelicopter2_1_0",
+      "crashedhelicopter2_1_1",
+      "crashedhelicopter2_1_2"
+    ]
+  ]
+}

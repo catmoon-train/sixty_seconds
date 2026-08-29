@@ -1,0 +1,292 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=false,west=false]"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:dark_oak_fence[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:blue_concrete"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:cobblestone_slab[type=double,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:cobblestone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ҧ",
+        "block": "minecraft:oak_wall_sign[facing=west,waterlogged=false]",
+        "tag": {
+          "z": 463,
+          "x": 74,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Aisle 6\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "n",
+        "block": "minecraft:oak_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "目",
+        "block": "minecraft:cobblestone_wall[east=none,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "利",
+        "block": "minecraft:daylight_detector[inverted=false,power=8]",
+        "tag": {
+          "z": 447,
+          "x": 126,
+          "ForgeCaps": {},
+          "id": "minecraft:daylight_detector",
+          "y": 136
+        }
+      },
+      {
+        "char": "欢",
+        "block": "minecraft:daylight_detector[inverted=false,power=7]",
+        "tag": {
+          "z": 441,
+          "x": 126,
+          "ForgeCaps": {},
+          "id": "minecraft:daylight_detector",
+          "y": 133
+        }
+      },
+      {
+        "char": "z",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "安",
+        "block": "minecraft:cobblestone_wall[east=low,north=low,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "听",
+        "block": "minecraft:cobblestone_wall[east=low,north=none,south=none,up=false,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=true,west=false]"
+      },
+      {
+        "char": "受",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=true,west=false]"
+      },
+      {
+        "char": "把",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=true,west=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:white_stained_glass"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "天",
+        "block": "minecraft:stone_slab[type=double,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "他",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "        lDepefeo",
+      "          ii i  ",
+      "O       l       ",
+      "                ",
+      "                ",
+      "        l       ",
+      "                ",
+      "        l     g ",
+      "              KҨ",
+      "             ҧnn",
+      "        l     nn",
+      "        l    ҧnn",
+      "              nn",
+      "        l    ҧnn",
+      "        l     nn",
+      "             ҧnn"
+    ],
+    [
+      "        lEefofpf",
+      "          ii i  ",
+      "O       l       ",
+      "                ",
+      "                ",
+      "        l       ",
+      "                ",
+      "        l     g ",
+      "              目 ",
+      "              利欢",
+      "        l     利欢",
+      "        l     利利",
+      "                ",
+      "        l     利欢",
+      "        l     利欢",
+      "              利利"
+    ],
+    [
+      "        lzyfeffy",
+      "           i i  ",
+      "O       l       ",
+      "                ",
+      "                ",
+      "        l       ",
+      "                ",
+      "        l     g ",
+      "              安听",
+      "                ",
+      "        l       ",
+      "        l       ",
+      "                ",
+      "        l       ",
+      "        l       ",
+      "                "
+    ],
+    [
+      "        lDfoeyee",
+      "            v受  ",
+      "O       l       ",
+      "                ",
+      "                ",
+      "        lvvvv  v",
+      "         v      ",
+      "        lv      ",
+      "         v      ",
+      "                ",
+      "        l v     ",
+      "        l       ",
+      "           v    ",
+      "        l       ",
+      "        l  v    ",
+      "                "
+    ],
+    [
+      "        把CCCzHHD",
+      "         oofofoe",
+      "O       lfeoffff",
+      "         pehhhhe",
+      "         eehhhhp",
+      "        lepfeoee",
+      "         peeeeff",
+      "        lfphhhhf",
+      "         ffhhhhe",
+      "         peefffe",
+      "        lefffppe",
+      "        lofhhhhf",
+      "         efhhhhf",
+      "        lpeefoof",
+      "        lfofefpe",
+      "         ffhhhhp"
+    ],
+    [
+      "t天tttttttDj     ",
+      " t       C      ",
+      "O他v     把E      ",
+      " t       C      ",
+      " t vvvv  C      ",
+      " t  v  v D      ",
+      " t  v v  Dj     ",
+      " tv      H      ",
+      "他天他tttt他tDj     ",
+      " t     v Dj     ",
+      " t v     zj     ",
+      " t  v  v把D      ",
+      " t  v v  zj     ",
+      " t v v  把C      ",
+      " t  v   把Dj     ",
+      " t       Cj     "
+    ]
+  ]
+}

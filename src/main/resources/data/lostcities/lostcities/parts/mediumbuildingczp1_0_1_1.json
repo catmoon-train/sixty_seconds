@@ -1,0 +1,254 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=false,west=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "Ύ",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Β",
+        "block": "minecraft:cobblestone[weathering=true]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "ѣ",
+        "block": "minecraft:dark_oak_stairs[facing=west,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "п",
+        "block": "minecraft:dark_oak_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Ѣ",
+        "block": "minecraft:dark_oak_stairs[facing=east,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "Ё",
+        "block": "minecraft:glass_pane[east=true,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "з",
+        "block": "minecraft:oak_door[facing=north,half=lower,hinge=left,open=true,powered=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:gray_carpet"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:light_gray_carpet"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Щ",
+        "block": "minecraft:oak_door[facing=north,half=upper,hinge=left,open=true,powered=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϡ",
+        "block": "minecraft:oak_wall_sign[facing=south,waterlogged=false]",
+        "tag": {
+          "z": 628,
+          "x": 112,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 141,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Please Be\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Mindful of \"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Other Customers!\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "ξ",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "       fffeebeeb",
+      "       fbbbfbbbb",
+      "      jfebbbbebb",
+      "      jebbbbbbbf",
+      "      jebaafbfbe",
+      "      jbe     Ύb",
+      "       Βe     Ύb",
+      "       Βbbfbbebf",
+      "       bebbbebfb",
+      "        iii iiii",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "       Ύcw      ",
+      "        d       ",
+      "        h ѣппѢ  ",
+      "      j Ёaaaaaaз",
+      "      j hp  p n ",
+      "      j c       ",
+      "        c       ",
+      "        dcakkkcc",
+      "       ziii     ",
+      "        iii iiii",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        aw      ",
+      "        d       ",
+      "        h       ",
+      "      j ЁaaaaaaЩ",
+      "      j h       ",
+      "      j c       ",
+      "        c       ",
+      "        dcckkkcd",
+      "       yii      ",
+      "        iii iiii",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        d       ",
+      "        a       ",
+      "        h       ",
+      "      j Ёaaaaaaa",
+      "      j h      ϡ",
+      "      j d       ",
+      "        d       ",
+      "        acckkkcd",
+      "       z i      ",
+      "        iii iiii",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "       ξc       ",
+      "        a       ",
+      "        h       ",
+      "      j Ёaaaaaaa",
+      "      j h       ",
+      "      j c       ",
+      "        d       ",
+      "        daakkkda",
+      "       z        ",
+      "        iii iiii",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "       bbeabbbbe",
+      "       bfebbbbfb",
+      "       ebbbfbfbb",
+      "      jefbebefbb",
+      "      jbbbfbbfbf",
+      "      jfbfbbbbbb",
+      "       bbbbbeeeb",
+      "       bbfebbbbb",
+      "       ΒbeΒfefee",
+      "        iii iiii",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

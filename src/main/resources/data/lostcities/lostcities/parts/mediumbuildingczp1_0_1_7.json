@@ -1,0 +1,202 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "μ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ΰ",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=side,west=side]"
+      },
+      {
+        "char": "ϼ",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=side,west=none]"
+      },
+      {
+        "char": "ц",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "δ",
+        "block": "minecraft:oak_leaves[distance=2,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "Ў",
+        "block": "minecraft:dark_oak_leaves[distance=1,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "Ϡ",
+        "block": "minecraft:oak_leaves[distance=1,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "Ш",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "у",
+        "block": "minecraft:oak_log[axis=x]"
+      },
+      {
+        "char": "Ϣ",
+        "block": "minecraft:oak_log[axis=y]"
+      },
+      {
+        "char": "Ҏ",
+        "block": "minecraft:oak_log[axis=z]"
+      },
+      {
+        "char": "ҹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ή",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϟ",
+        "block": "minecraft:oak_leaves[distance=3,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "ҋ",
+        "block": "minecraft:rail[shape=south_east,waterlogged=false]"
+      },
+      {
+        "char": "ґ",
+        "block": "minecraft:rail[shape=south_west,waterlogged=false]"
+      },
+      {
+        "char": "Ӆ",
+        "block": "minecraft:rail[shape=north_east,waterlogged=false]"
+      },
+      {
+        "char": "һ",
+        "block": "minecraft:rail[shape=north_west,waterlogged=false]"
+      },
+      {
+        "char": "З",
+        "block": "minecraft:oak_leaves[distance=4,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "ҡ",
+        "block": "minecraft:oak_leaves[distance=5,persistent=true,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "       μ      ΰ ",
+      "       μ     ϼ  ",
+      "       μ   ΰ ϼ  ",
+      "       ц        ",
+      "                ",
+      "      δЎϠδ   ШШ ",
+      "     δϠуϢϠ   ШШ ",
+      "      δϠҎϠ      ",
+      "       δϠ   ҹήήή",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      δϠδϞ   ҋґ ",
+      "     δϠϢϠδϞ  Ӆһ ",
+      "     δϠуϢϠ      ",
+      "     ϞδϠϠδ      ",
+      "      Ϟ         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      ϞδϞ       ",
+      "     ϞδϠδϞ      ",
+      "     ϞδϠϠδ      ",
+      "     ЗϞδδ       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "       Ϟ        ",
+      "      Ϟδ        ",
+      "     ЗϞδ        ",
+      "      ЗϞϞ       ",
+      "        З       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      ЗϞ        ",
+      "       З        ",
+      "       ҡ        ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

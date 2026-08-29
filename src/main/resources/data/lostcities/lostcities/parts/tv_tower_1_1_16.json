@@ -1,0 +1,206 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "Р",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:iron_bars[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Y",
+        "block": "minecraft:iron_bars[east=false,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:cauldron"
+      },
+      {
+        "char": "У",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "С",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "如",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:iron_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:iron_trapdoor[facing=west,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:iron_trapdoor[facing=north,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:iron_trapdoor[facing=west,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "у",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:stone_slab[type=top,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "         abbaeac",
+      "       bdeadebae",
+      "      dbddaaebae",
+      "     bebdebcddec",
+      "    cccbcbdbccba",
+      "  a aabacdacdbbc",
+      "aagbebddbcaceacb",
+      "adceaeaabcbbadad",
+      "eccaddaedeeeadbd",
+      "abadbccecdbeacdd",
+      "ccdecedededbbeea",
+      "dcddacaccbaecbae",
+      "cebdeddbddbbРz a",
+      "badbacabbcce z d",
+      "cabeedeaeeac Y c",
+      "ddbebabdebce   a"
+    ],
+    [
+      "         b      ",
+      "         b      ",
+      "       ff       ",
+      "      f         ",
+      "     f          ",
+      "  a             ",
+      "   aa     x     ",
+      "bcbaaaaeaedb   c",
+      "  e  x  x       ",
+      "  c             ",
+      "  d             ",
+      "           a a b",
+      "           c zУa",
+      "  a        b zСa",
+      "ddc        d Y e",
+      "  a        d   d"
+    ],
+    [
+      "         c      ",
+      "       如sb      ",
+      "      m         ",
+      "     mf         ",
+      "    m           ",
+      "  g mf          ",
+      "   be     k     ",
+      "deeebcaeddad   e",
+      "  e  k  k       ",
+      "  a             ",
+      "  d             ",
+      "           a b a",
+      "           a z d",
+      "  b        d zУb",
+      "ddd        a YСc",
+      "  c        a   d"
+    ],
+    [
+      "         e      ",
+      "       ppc      ",
+      "      qff       ",
+      "     p          ",
+      "    qf          ",
+      "  a qf          ",
+      "   db     k     ",
+      "caadbcddbcbb   a",
+      "  b  k  k       ",
+      "  a             ",
+      "  e             ",
+      "           b d a",
+      "           c z d",
+      "  b        b z c",
+      "dbc        bуzУe",
+      "  b        bbece"
+    ],
+    [
+      "         e      ",
+      "         d      ",
+      "       ff       ",
+      "                ",
+      "     f          ",
+      "  a  f          ",
+      "   ad           ",
+      "bebceacbacadIIIc",
+      "  d             ",
+      "  e             ",
+      "  d             ",
+      "  I        adedd",
+      "  I        b z d",
+      "  b        eуz b",
+      "dcd        cРY d",
+      "  c        a   b"
+    ],
+    [
+      "         a      ",
+      "       da       ",
+      "      eac       ",
+      "     da         ",
+      "    bd          ",
+      "  a ca          ",
+      "   e            ",
+      "bccaaebcbeabadbd",
+      "  e             ",
+      "  a             ",
+      "  d             ",
+      "  e        edccb",
+      "  e        eуz a",
+      "  c        cРz e",
+      "bed        a Y a",
+      "  e        a   e"
+    ]
+  ]
+}

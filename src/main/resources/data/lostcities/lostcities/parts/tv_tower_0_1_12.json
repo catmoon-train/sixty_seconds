@@ -1,0 +1,186 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:iron_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:iron_trapdoor[facing=west,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ѫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "了",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "到",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:iron_trapdoor[facing=north,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:iron_trapdoor[facing=west,half=top,open=false,powered=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "             iid",
+      "             acg",
+      "            gbae",
+      "            gegc",
+      "           adiab",
+      "           adaab",
+      "          gaibdc",
+      "          abgcbe",
+      "           daeae",
+      "           daada",
+      "          aadbdb",
+      "          aadebd",
+      "          agbeec",
+      "          baebbc",
+      "         adacaec",
+      "          eaccad"
+    ],
+    [
+      "             g  ",
+      "              bf",
+      "                ",
+      "              f ",
+      "                ",
+      "             f  ",
+      "            f   ",
+      "          iai  e",
+      "            f Od",
+      "               e",
+      "                ",
+      "           f   a",
+      "           f  Ob",
+      "           f   a",
+      "         gaabcad",
+      "           f    "
+    ],
+    [
+      "             a s",
+      "              af",
+      "             sf ",
+      "             mf ",
+      "            mf  ",
+      "            mf  ",
+      "           mf   ",
+      "          gcg   ",
+      "           m   Ѫ",
+      "           m    ",
+      "          mf    ",
+      "          mf    ",
+      "          了    到",
+      "          mf    ",
+      "         aaacecd",
+      "          m     "
+    ],
+    [
+      "             a p",
+      "              cf",
+      "             qf ",
+      "             qf ",
+      "            qf  ",
+      "            qf  ",
+      "           qf   ",
+      "          iag   ",
+      "           qf   ",
+      "           qf   ",
+      "          q     ",
+      "          qf    ",
+      "          q     ",
+      "          qf    ",
+      "         aagadda",
+      "          qf    "
+    ],
+    [
+      "             a  ",
+      "              c ",
+      "              f ",
+      "              f ",
+      "             f  ",
+      "             f  ",
+      "                ",
+      "          abg   ",
+      "                ",
+      "            f   ",
+      "                ",
+      "           f    ",
+      "                ",
+      "           f    ",
+      "         acgddaa",
+      "           f    "
+    ],
+    [
+      "             a d",
+      "              ca",
+      "             aa ",
+      "             ca ",
+      "            dg  ",
+      "            da  ",
+      "           ba   ",
+      "          aba   ",
+      "           da   ",
+      "           da   ",
+      "          aa    ",
+      "          da    ",
+      "          ba    ",
+      "          aa    ",
+      "         idadecb",
+      "          cg    "
+    ]
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "filler": "#",
+  "rubble": "}",
+  "minfloors": 0,
+  "maxfloors": 0,
+  "maxcellars": 0,
+  "allowDoors": false,
+  "parts": [
+    {
+      "part": "watch_tower1_0_0_0",
+      "floor": 0
+    }
+  ]
+}

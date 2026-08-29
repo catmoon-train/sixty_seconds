@@ -1,0 +1,222 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ό",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "附",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "8",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "宣",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "游",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "杀",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӻ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "十",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "由",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "科",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "耶",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ө",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "政",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "式",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "όaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "όaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "cdecgceejccgcceg",
+      "djjjecdcjjjjejge",
+      "ddccecjceeeeccce",
+      "dccdccdcceegcgcc",
+      "ddgccgdgjgjcccjc",
+      "djcccjdeejeecgcg",
+      "ceejegjjecejgdcg",
+      "gcgegdccdjdecdeg",
+      "dccccggggjdccgcc",
+      "ejeeecjecjedcgjd",
+      "ddcgddcgjgcceeed",
+      "ddddjgcegddcgceg",
+      "ddceegcejdegedcc",
+      "dddcdcdgggdgccec",
+      "ddedgjdegeddjejj",
+      "dddeggccedejcddg"
+    ],
+    [
+      "cccejccgcjce附dcc",
+      "ejccggcegdgdeeee",
+      "cddgeeceggeececc",
+      "gdejeccdeecc附ccc",
+      "edcjeeeecjjggecc",
+      "cdececjejgccccce",
+      "dcdcjjdcjjgjecdg",
+      "cddjgggecdjccjdc",
+      "jddccgdcecececdc",
+      "jjcjccgeeceegeec",
+      "ddegceedccgedcgd",
+      "ddgddjcceedjegde",
+      "ddececddegceedjd",
+      "ddeedccecdjegdgj",
+      "dddgjdddcdejcjdg",
+      "ddggcdgddjcdgcdg"
+    ],
+    [
+      "eegegccjcjdcdMMe",
+      "cccegcgceccdegMe",
+      "dcgeeccggjjedcMe",
+      "gcjecggdjceejMMc",
+      "edceeceeeeegjcMg",
+      "cjjjcdeegcccjgMc",
+      "cjeccegcjjeceeMc",
+      "deeegdgjdfff8cMe",
+      "gececcdgcfff8jMM",
+      "jgedgeeeefff8gec",
+      "ggdcdgccdfff8dej",
+      "cegcjecdgfffg888",
+      "jdjecgedefffffff",
+      "gcegejgdefffffff",
+      "jgdjcdddeccegcdd",
+      "ccjjggdjcjgegcgj"
+    ],
+    [
+      "eeceg       宣   ",
+      "cdgegeecejcjj   ",
+      "cgjejgegjeggc   ",
+      "dccej       游   ",
+      "cccee杀m杀m   e   ",
+      "jcegeӺmӺmӺӺӺc   ",
+      "ggggjjecdejc8十  ",
+      "decgggjceqq由科   ",
+      "cdeecjjgcUUq科   ",
+      "dejggjeeeUUq科   ",
+      "ggjcccegdqq由科   ",
+      "dccccjcjc U耶8өөө",
+      "dgceeecdc 由U政式qq",
+      "ddeegcdcgqqqq qq",
+      "dgdjecdddccjejec",
+      "ejcjecjdcdgddedc"
+    ]
+  ]
+}

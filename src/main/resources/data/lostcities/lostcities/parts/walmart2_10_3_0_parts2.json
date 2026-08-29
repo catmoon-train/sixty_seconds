@@ -1,0 +1,298 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "之",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ү",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "反",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "他",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "查",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "例",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "圣",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "印",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "识",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "九",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "质",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "负",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "苦",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "爱",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "谈",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "英",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "硬",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "引",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "准",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "嘛",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "把",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "更",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "kdbkcaabackbcrrr",
+      "ddIadkddckdckrkd",
+      "dddkdcccabakdrcd",
+      "cakaabdcakcckaba",
+      "cbIkccdakcdbkkca",
+      "kaakdkbdccrcadca",
+      "ccbckkcbdkabkbrd",
+      "cdaddbddakdbakkd",
+      "kbdkbbakbbcabdra",
+      "kkabbracckbabdda",
+      "ardabdakbrbbcbca",
+      "cdcdccddaIrrIbcb",
+      "abccdcbcabakdcrk",
+      "cbbbckkbbkrbadar",
+      "kbcbdabbdbkdrkbc",
+      "acbdddcabbkabbac"
+    ],
+    [
+      "mm           qqq",
+      "  之j         q  ",
+      "үү              ",
+      "үү j  q         ",
+      "үү之j            ",
+      "үүүj            ",
+      "үүү           q ",
+      "үүүj      q     ",
+      "反反ү           q ",
+      "үүүj q          ",
+      "үүүj     提提提提   ",
+      "үү j     之提提之   ",
+      "үү        提提    ",
+      "үү j     提提提提  q",
+      " qNj      提提q   ",
+      "  i      提提提提   "
+    ],
+    [
+      "mm              ",
+      "gggj            ",
+      "t他g             ",
+      "jlgj            ",
+      "  gj            ",
+      " lgj            ",
+      " lg             ",
+      "j gj            ",
+      "j g             ",
+      "  gj      查查    ",
+      "  gj     aaaa   ",
+      "  gj    例aaaa圣  ",
+      "  g      a  a   ",
+      "  gj     印  识   ",
+      "gggj     a  a   ",
+      "  i      九  质   "
+    ],
+    [
+      "mm              ",
+      "j ej            ",
+      " lo             ",
+      "jlfj            ",
+      "  yj            ",
+      " lfj            ",
+      " lp             ",
+      "j ej            ",
+      "j f             ",
+      "  ej            ",
+      "  yj            ",
+      "  ej    负苦爱爱苦谈  ",
+      "  p      英  英   ",
+      "  yj     硬  引   ",
+      "efyj     a  a   ",
+      "  i      准  嘛   "
+    ],
+    [
+      "mm              ",
+      "  f             ",
+      " 把o             ",
+      "更把fj            ",
+      "  e             ",
+      " 把pj            ",
+      " 把p             ",
+      "  fj            ",
+      "更vy             ",
+      "  pj            ",
+      "  oj            ",
+      "  p      tttt   ",
+      "  e      tttt   ",
+      "  f      tttt   ",
+      "fyej     tttt   ",
+      "  i      tttt   "
+    ],
+    [
+      "mm              ",
+      "eof             ",
+      "eye             ",
+      "efej            ",
+      "eee             ",
+      "yefj            ",
+      "eop             ",
+      "eefj            ",
+      "epo             ",
+      "eoe             ",
+      "yfe             ",
+      "fee             ",
+      "eyo             ",
+      "fye             ",
+      "eeyj            ",
+      "  i             "
+    ]
+  ]
+}

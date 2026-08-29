@@ -1,0 +1,144 @@
+{
+  "filler": "#",
+  "rubble": "}",
+  "minfloors": 31,
+  "maxfloors": 31,
+  "maxcellars": 0,
+  "allowDoors": false,
+  "parts": [
+    {
+      "part": "tv_tower_3_0_0",
+      "floor": 0
+    },
+    {
+      "part": "tv_tower_3_0_1",
+      "floor": 1
+    },
+    {
+      "part": "tv_tower_3_0_2",
+      "floor": 2
+    },
+    {
+      "part": "tv_tower_3_0_3",
+      "floor": 3
+    },
+    {
+      "part": "tv_tower_3_0_4",
+      "floor": 4
+    },
+    {
+      "part": "tv_tower_3_0_5",
+      "floor": 5
+    },
+    {
+      "part": "tv_tower_3_0_6",
+      "floor": 6
+    },
+    {
+      "part": "tv_tower_3_0_7",
+      "floor": 7
+    },
+    {
+      "part": "tv_tower_3_0_8",
+      "floor": 8
+    },
+    {
+      "part": "tv_tower_3_0_9",
+      "floor": 9
+    },
+    {
+      "part": "tv_tower_3_0_10",
+      "floor": 10
+    },
+    {
+      "part": "tv_tower_3_0_11",
+      "floor": 11
+    },
+    {
+      "part": "tv_tower_3_0_12",
+      "floor": 12
+    },
+    {
+      "part": "tv_tower_3_0_13",
+      "floor": 13
+    },
+    {
+      "part": "tv_tower_3_0_14",
+      "floor": 14
+    },
+    {
+      "part": "tv_tower_3_0_15",
+      "floor": 15
+    },
+    {
+      "part": "tv_tower_3_0_16",
+      "floor": 16
+    },
+    {
+      "part": "tv_tower_3_0_17",
+      "floor": 17
+    },
+    {
+      "part": "tv_tower_3_0_18",
+      "floor": 18
+    },
+    {
+      "part": "tv_tower_3_0_19",
+      "floor": 19
+    },
+    {
+      "part": "tv_tower_3_0_20",
+      "floor": 20
+    },
+    {
+      "part": "tv_tower_3_0_21",
+      "floor": 21
+    },
+    {
+      "part": "tv_tower_3_0_22",
+      "floor": 22
+    },
+    {
+      "part": "tv_tower_3_0_23",
+      "floor": 23
+    },
+    {
+      "part": "tv_tower_3_0_24",
+      "floor": 24
+    },
+    {
+      "part": "tv_tower_3_0_25",
+      "floor": 25
+    },
+    {
+      "part": "tv_tower_3_0_26",
+      "floor": 26
+    },
+    {
+      "part": "tv_tower_3_0_27",
+      "floor": 27
+    },
+    {
+      "part": "tv_tower_3_0_28",
+      "floor": 28
+    },
+    {
+      "part": "tv_tower_3_0_29",
+      "floor": 29
+    },
+    {
+      "part": "tv_tower_3_0_30",
+      "floor": 30
+    },
+    {
+      "part": "tv_tower_3_0_31",
+      "floor": 31
+    }
+  ],
+  "parts2": [
+    {
+      "part": "lostcities:tv_tower_3_0_0_parts2",
+      "floor": 0
+    }
+  ]
+}

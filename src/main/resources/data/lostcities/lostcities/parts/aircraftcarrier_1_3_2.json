@@ -1,0 +1,442 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "ҕ",
+        "block": "minecraft:chest[facing=south,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 942,
+          "x": -502,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ѷ",
+        "block": "minecraft:chest[facing=south,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 940,
+          "x": -437,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "汽",
+        "block": "minecraft:chest[facing=east,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 964,
+          "x": -421,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "Ӯ",
+        "block": "minecraft:birch_wall_sign[facing=north,waterlogged=false]",
+        "tag": {
+          "z": 955,
+          "x": -442,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 108,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Exodus Squadron\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Quarters\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "予",
+        "block": "minecraft:chest[facing=east,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 962,
+          "x": -466,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 111,
+          "Items": []
+        }
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "谁",
+        "block": "minecraft:chest[facing=north,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 977,
+          "x": -486,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "活",
+        "block": "minecraft:chest[facing=north,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 958,
+          "x": -361,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 111,
+          "Items": []
+        }
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "分",
+        "block": "minecraft:light_blue_carpet"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "蝴",
+        "block": "minecraft:jungle_trapdoor[facing=west,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "枪",
+        "block": "minecraft:light_gray_bed[facing=east,occupied=false,part=foot]",
+        "tag": {
+          "z": 957,
+          "x": -364,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 108
+        }
+      },
+      {
+        "char": "蝎",
+        "block": "minecraft:light_gray_bed[facing=east,occupied=false,part=head]",
+        "tag": {
+          "z": 951,
+          "x": -369,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 107
+        }
+      },
+      {
+        "char": "恶",
+        "block": "minecraft:lever[face=wall,facing=south,powered=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:white_carpet"
+      },
+      {
+        "char": "卷",
+        "block": "minecraft:ladder[facing=west,waterlogged=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "页",
+        "block": "minecraft:jukebox[has_record=false]",
+        "tag": {
+          "RecordStartTick": "0L",
+          "IsPlaying": "0b",
+          "z": 951,
+          "x": -397,
+          "TickCount": "0L",
+          "ForgeCaps": {},
+          "id": "minecraft:jukebox",
+          "y": 115
+        }
+      },
+      {
+        "char": "k",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "遥",
+        "block": "minecraft:cartography_table"
+      },
+      {
+        "char": "徊",
+        "block": "minecraft:jungle_door[facing=south,half=lower,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "袱",
+        "block": "minecraft:jungle_door[facing=south,half=lower,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "汰",
+        "block": "minecraft:dark_oak_wall_sign[facing=south,waterlogged=false]",
+        "tag": {
+          "z": 960,
+          "x": -536,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 116,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"Flight Simulation:\"}",
+              "{\"color\":\"dark_red\",\"text\":\"[Offline]\"}",
+              "{\"text\":\"\"}",
+              "{\"extra\":[{\"color\":\"dark_green\",\"text\":\"[Start] \"},{\"color\":\"dark_red\",\"text\":\"[Stop]\"}],\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "绊",
+        "block": "minecraft:jungle_door[facing=south,half=upper,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "荫",
+        "block": "minecraft:jungle_door[facing=south,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "愈",
+        "block": "minecraft:birch_wall_sign[facing=west,waterlogged=false]",
+        "tag": {
+          "z": 979,
+          "x": -456,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 116,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Officer's bunks\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"^\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"|\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "slices": [
+    [
+      "            fgҕѶ",
+      "            f汽  ",
+      "ed Ӯ        f予  ",
+      " aaeaӮ      fg谁活",
+      "   bcabӮ    ffff",
+      "     beee       ",
+      "       aae  f   ",
+      "         acbf   ",
+      "           edb  ",
+      "             cce",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "            fg  ",
+      "            f   ",
+      "            f   ",
+      "ag          fg  ",
+      "cdcg        ffff",
+      "  ecag      f   ",
+      "    badg    f   ",
+      "      aabg  f   ",
+      "        deb f   ",
+      "          deeg  ",
+      "            edba",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "eaebbdccabbaaabb",
+      "bddaabccbdcedcea",
+      "dcadacebadaceadd",
+      "dabdeaccbbdedaed",
+      "edadbddbbdddcaab",
+      "edcaccdbdbccabeb",
+      " decbedbaababeaa",
+      "   cbcdbedacbcec",
+      "     eeebdeddbae",
+      "       bddbbdeed",
+      "         eeebcca",
+      "           edaad",
+      "               c",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "分nnnnnnnnnf汽蝴枪蝎f",
+      "分n恶n恶n恶n恶nf予u 卷f",
+      "分nwnwnwnwnf页蝴枪蝎f",
+      "分分分分分分分分分分fkuu页f",
+      "uu分分分分分分分分fkuukf",
+      "分分分uuuuu分分fkuuuf",
+      "e分分分uuuuu分fuuu遥f",
+      "eaa分分分分分分分f徊袱fff",
+      "  bac分分uu分      ",
+      "    dca分分分      ",
+      "      ccc分f     ",
+      "        cde     ",
+      "          dcadc ",
+      "              de",
+      "                ",
+      "                "
+    ],
+    [
+      " nnnnnnnnnf 蝴枪蝎f",
+      " n n n n nf   卷f",
+      " n n n n nf 蝴枪蝎f",
+      "   汰 汰 汰 汰f    f",
+      "          fk  kf",
+      "          f    f",
+      "a         f    f",
+      "bad       f绊荫fff",
+      "  eab           ",
+      "    cae         ",
+      "      dbc愈f     ",
+      "        cea     ",
+      "          bbccc ",
+      "              aa",
+      "                ",
+      "                "
+    ],
+    [
+      " nnnnnnnnnf 蝴枪蝎f",
+      " n n n n nf   卷f",
+      " n g n g nf 蝴枪蝎g",
+      "          f   gf",
+      "          fk  kf",
+      "          f   kf",
+      "          f   kf",
+      "g         fgggfg",
+      "abg       f     ",
+      " edbg     f     ",
+      "   bceg   f     ",
+      "     caa gf     ",
+      "       bddf     ",
+      "         beabeg ",
+      "             dce",
+      "                "
+    ]
+  ]
+}

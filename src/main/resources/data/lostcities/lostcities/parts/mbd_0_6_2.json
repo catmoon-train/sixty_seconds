@@ -1,0 +1,290 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "х",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѻ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "п",
+        "block": "minecraft:dark_oak_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "北",
+        "block": "minecraft:dark_oak_stairs[facing=east,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:smooth_stone_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:dark_oak_planks"
+      },
+      {
+        "char": "ќ",
+        "block": "minecraft:dark_oak_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:stone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:polished_andesite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "ѝ",
+        "block": "minecraft:dark_oak_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "五",
+        "block": "minecraft:dark_oak_stairs[facing=north,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "ф",
+        "block": "minecraft:polished_andesite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "马",
+        "block": "minecraft:dark_oak_stairs[facing=west,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "е",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "卫",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "未",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "供",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ы",
+        "block": "minecraft:smooth_stone"
+      },
+      {
+        "char": "各",
+        "block": "minecraft:dark_oak_stairs[facing=north,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "答",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "њ",
+        "block": "minecraft:dark_oak_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "称",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "它",
+        "block": "minecraft:dark_oak_stairs[facing=north,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "从",
+        "block": "minecraft:dark_oak_stairs[facing=east,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "在",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Я",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "Ь",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѥ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "台",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:bricks[weathering=true]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:bricks[weathering=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "          хѺeпп北",
+      "          Huexxќ",
+      "          Feexxx",
+      "          yѺexѝx",
+      "          хfex五x",
+      "          фѺex马п",
+      "          еѹe卫未п",
+      "          Fuexx供",
+      "          IЫexѝ ",
+      "          фfe各答x",
+      "          Neeњ称п",
+      "          хfe它xx",
+      "          yѹex从п",
+      "          Feeќxx",
+      "          Nѹexxx",
+      "          NЫe在在在"
+    ],
+    [
+      "            g   ",
+      "           Nj   ",
+      "           фj  Я",
+      "           ф   h",
+      "            gЬhh",
+      "            g Ѥh",
+      "            g台 q",
+      "           Nc   ",
+      "           еj   ",
+      "            j   ",
+      "            j   ",
+      "            v   ",
+      "           хc   ",
+      "           еg   ",
+      "            g   ",
+      "            gegg"
+    ],
+    [
+      "            g   ",
+      "                ",
+      "                ",
+      "               i",
+      "              ii",
+      "            c  i",
+      "            c台  ",
+      "            g   ",
+      "            c   ",
+      "            g   ",
+      "            c   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            jegc"
+    ],
+    [
+      "            c   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            g台  ",
+      "            j   ",
+      "            c   ",
+      "            g   ",
+      "            g   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            cejc"
+    ],
+    [
+      "            g   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            j   ",
+      "            c台  ",
+      "            j   ",
+      "            g   ",
+      "            j   ",
+      "            c   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            gejc"
+    ],
+    [
+      "            g   ",
+      "            c   ",
+      "            v   ",
+      "                ",
+      "            j   ",
+      "            v   ",
+      "            j台  ",
+      "            j   ",
+      "            c   ",
+      "            g   ",
+      "            c   ",
+      "            v   ",
+      "            v   ",
+      "            c   ",
+      "            g   ",
+      "            cecg"
+    ]
+  ]
+}

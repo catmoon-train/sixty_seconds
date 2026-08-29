@@ -1,0 +1,298 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "逛",
+        "block": "minecraft:repeater[delay=1,facing=east,locked=false,powered=false]"
+      },
+      {
+        "char": "震",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "丈",
+        "block": "minecraft:cobblestone_wall[east=tall,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "丑",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "贱",
+        "block": "minecraft:ladder[facing=west,waterlogged=false]"
+      },
+      {
+        "char": "龚",
+        "block": "minecraft:cobblestone_wall[east=low,north=low,south=low,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=0,south=none,west=side]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "沿",
+        "block": "minecraft:cobblestone_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "么",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "闹",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "剥",
+        "block": "minecraft:stripped_spruce_log[axis=y]"
+      },
+      {
+        "char": "崔",
+        "block": "minecraft:stripped_spruce_log[axis=z]"
+      },
+      {
+        "char": "垦",
+        "block": "minecraft:stripped_spruce_log[axis=x]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "嚎",
+        "block": "minecraft:ladder[facing=south,waterlogged=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:smooth_stone_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:stone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:moss_block"
+      },
+      {
+        "char": "蓦",
+        "block": "minecraft:ladder[facing=north,waterlogged=false]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:cobblestone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "剖",
+        "block": "minecraft:glass_pane[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "涨",
+        "block": "minecraft:glass_pane[east=false,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "捕",
+        "block": "minecraft:glass_pane[east=false,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "醉",
+        "block": "minecraft:repeater[delay=1,facing=north,locked=false,powered=false]"
+      },
+      {
+        "char": "泷",
+        "block": "minecraft:redstone_wall_torch[facing=west,lit=true]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:cobblestone_slab[type=double,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "贞",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "躁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "沚",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "榄",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "喙",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "簑",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "dbecdc    x逛    ",
+      "震震震Chg          ",
+      "   丈hf          ",
+      " 丑 贱hh          ",
+      "    hh          ",
+      "    龚h   x   x  ",
+      "    龚C   x逛  x逛E",
+      "    CC          ",
+      " 丑 贱Ci ecb      ",
+      "   沿fCe   e么么么b ",
+      "闹闹闹iifc   c震震震d "
+    ],
+    [
+      "debebfffhggfiiii",
+      "dccdbiiihgggiihg",
+      "ddbcbid剥剥崔剥剥剥剥fg",
+      "ebbdehd崔崔垦剥崔垦剥fg",
+      "cbddegd垦剥垦剥垦崔崔fi",
+      "bddedee垦剥崔剥垦崔剥bd",
+      "qffhfqb垦垦剥剥剥崔垦ed",
+      "嚎嚎嚎丈hqc崔剥剥剥垦崔垦if",
+      " 丑 贱Chhbdfhfhhhh",
+      "    iifgfggifihh",
+      "    ahecdeddeebe",
+      "    kgecdeccbbed",
+      "    CBgbdefccefg",
+      " 丑 贱Cgibdbhcdchh",
+      "蓦蓦蓦沿hhb   e震震震bi",
+      "qffhgfc   e   ef"
+    ],
+    [
+      "aaaaabaaakaaaaka",
+      "aaaakccdeeeeedea",
+      "rraaacdaaaaaaaca",
+      "arkaabcaarakrked",
+      "rrrarebaaa剖aaada",
+      "dcbdcbcaaaaakrea",
+      "ChqqCecakkaaaaea",
+      "   丈iecaaaaaaaba",
+      " 丑 贱fdbbbdebdeca",
+      "    gcakkaaaaaaa",
+      "    Qbar aa涨aa涨k",
+      "    Qcar剖aa捕ar捕a",
+      "    hcraaaaakaak",
+      " 丑 贱hdadbdc震震震ca",
+      "   沿fbe   e   ca",
+      "hCifqbd   e   de"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "          醉     ",
+      "          x     ",
+      "dccecc          ",
+      "震震震fqh          ",
+      "   丈ff          ",
+      " 丑 贱gh          ",
+      "    qg          ",
+      "    龚i  x逛 x逛 x逛",
+      "    龚i  x  x  x ",
+      "   泷gi    g震震震c ",
+      " 丑 贱fC cbee   e ",
+      "   沿hfc   c   e ",
+      "闹闹闹fhgc   d   e "
+    ],
+    [
+      "ighfghiqgifffgig",
+      "fgiqqqqCqqifCqhq",
+      "CqfhqfhCqhCgfggf",
+      "hfffhhCghghgfggf",
+      "igigihffqhhhifqh",
+      "giCgqqfhgfqfhggf",
+      "hhghqCfqfifiggqi",
+      "嚎嚎嚎丈qhfGgfiggBCh",
+      " 丑 贱qihiihhhBBqC",
+      "    fighigGGGfhC",
+      "    khGhfffffGhi",
+      "    afiBhhg震震震bC",
+      "    ighfgii   eC",
+      " 丑 贱qgBfhgf   dg",
+      "蓦蓦蓦沿ghb贞贞贞c   bq",
+      "qhhfhib   e   ef"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "震震震qgddcddccece ",
+      "   丈qb躁       c ",
+      " 丑 贱hc沚躁      e ",
+      "    榄e        b ",
+      "    b         c ",
+      "    p         e ",
+      "    榄b    喙   b ",
+      " 丑 贱ge   喙簑   d ",
+      "   沿qdc闹闹闹d   b ",
+      "闹闹闹fiee贞贞贞c   e "
+    ]
+  ]
+}

@@ -1,0 +1,393 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:red_terracotta"
+      },
+      {
+        "char": "垂",
+        "block": "minecraft:sticky_piston[extended=false,facing=up]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "肃",
+        "block": "minecraft:redstone_ore[lit=false]"
+      },
+      {
+        "char": "俊",
+        "block": "minecraft:observer[facing=north,powered=false]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:observer[facing=east,powered=false]"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:observer[facing=south,powered=false]"
+      },
+      {
+        "char": "ӯ",
+        "block": "minecraft:dark_oak_trapdoor[facing=south,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "页",
+        "block": "minecraft:jukebox[has_record=false]",
+        "tag": {
+          "RecordStartTick": "0L",
+          "IsPlaying": "0b",
+          "z": 951,
+          "x": -397,
+          "TickCount": "0L",
+          "ForgeCaps": {},
+          "id": "minecraft:jukebox",
+          "y": 115
+        }
+      },
+      {
+        "char": "愚",
+        "block": "minecraft:sticky_piston[extended=false,facing=west]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:red_carpet"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "穗",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:gray_carpet"
+      },
+      {
+        "char": "押",
+        "block": "minecraft:spruce_trapdoor[facing=north,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "吉",
+        "block": "minecraft:dark_oak_trapdoor[facing=west,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "手",
+        "block": "minecraft:observer[facing=down,powered=false]"
+      },
+      {
+        "char": "首",
+        "block": "minecraft:sticky_piston[extended=false,facing=north]"
+      },
+      {
+        "char": "趁",
+        "block": "minecraft:sticky_piston[extended=false,facing=south]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "秘",
+        "block": "minecraft:furnace[facing=south,lit=false]",
+        "tag": {
+          "z": 983,
+          "x": -458,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 130,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "陷",
+        "block": "minecraft:observer[facing=up,powered=false]"
+      },
+      {
+        "char": "鸦",
+        "block": "minecraft:spruce_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "仕",
+        "block": "minecraft:spruce_trapdoor[facing=south,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "弥",
+        "block": "minecraft:lever[face=wall,facing=west,powered=true]"
+      },
+      {
+        "char": "Җ",
+        "block": "minecraft:observer[facing=west,powered=false]"
+      },
+      {
+        "char": "肾",
+        "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "谁",
+        "block": "minecraft:chest[facing=north,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 977,
+          "x": -486,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "活",
+        "block": "minecraft:chest[facing=north,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 958,
+          "x": -361,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 111,
+          "Items": []
+        }
+      },
+      {
+        "char": "煽",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "呦",
+        "block": "minecraft:birch_pressure_plate[powered=false]"
+      },
+      {
+        "char": "获",
+        "block": "minecraft:redstone_wire[east=none,north=up,power=0,south=side,west=none]"
+      },
+      {
+        "char": "霖",
+        "block": "minecraft:redstone_block"
+      },
+      {
+        "char": "遣",
+        "block": "minecraft:piston[extended=false,facing=west]"
+      },
+      {
+        "char": "翰",
+        "block": "minecraft:redstone_lamp[lit=true]"
+      },
+      {
+        "char": "Ӯ",
+        "block": "minecraft:birch_wall_sign[facing=north,waterlogged=false]",
+        "tag": {
+          "z": 955,
+          "x": -442,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 108,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Exodus Squadron\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Quarters\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "朽",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "黎",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=side,west=none]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " hhhhhhhhhhhhhhh",
+      "垂h h   hh       ",
+      "hh h            ",
+      " h h            ",
+      "ghh             ",
+      " h h            ",
+      "hh h            "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "hhhhhhhhhhhhhhhh",
+      " h h   hh       ",
+      "hh h            ",
+      " h h            ",
+      "ghh             ",
+      " h h            ",
+      "hh h            "
+    ],
+    [
+      "   edccbdacebdae",
+      "ccaabdecbdddbedb",
+      "adecaedbkddddccc",
+      "cadaddbceeaadabc",
+      "acdaadeccaadddbb",
+      "cedaddcea肃eeeaae",
+      "dddedddbd俊cOOOOO",
+      "edaadebba俊c俊edeb",
+      "cadcbdedd俊 俊cace",
+      " hedbeeadb 俊aaee",
+      "hhhhhhhhhhh俊hhhh",
+      " h hh      俊hhhh",
+      "hh h        hhhh",
+      "hhh         hhhh",
+      "hh h        hhhh",
+      " h h         hϔh"
+    ],
+    [
+      "babӯӯӯ页k 愚crxxxx",
+      "rrrrrrr k errrrr",
+      "srrrrrr k errssr",
+      "rrCrrrr kecbceac",
+      "ww穗rrrrkdpppppp押",
+      "rrrrrrredppppppd",
+      "rrrrrrrgdppppppd",
+      "rrrrrrr吉egggggg ",
+      "rrrrrrr吉b手     首",
+      "aarrrrrCdedaaccc",
+      "acbeedbadbe eeca",
+      "hhhhhhhhhhh手hhhh",
+      "hh h        hg h",
+      "hhh         hOϔh",
+      "hh h        h手ϔh",
+      "hhhhhhhhhhhhh趁手h"
+    ],
+    [
+      "nn秘    k 愚a     ",
+      "        kϔc     ",
+      "        k陷b     ",
+      "        kcdcebba",
+      "       kb鸦仕仕仕   ",
+      "       ec鸦    弥Җ",
+      "       gd鸦肾    b",
+      "        cgggggg ",
+      "        d手ҖҖҖҖҖ首",
+      "谁活      煽呦      ",
+      "ebcabcecgbbbccge",
+      "h      e获 霖遣    ",
+      "hhhhhhhhhhhhh  h",
+      "hhh 翰      翰 手 h",
+      "hhhhhhhhhhhhh俊 h",
+      "h          ϔҖ趁  "
+    ],
+    [
+      "nng    ka俊c     ",
+      "        k俊e     ",
+      "        k俊b     ",
+      "        kceaedab",
+      "       ka       ",
+      "       ad      c",
+      "       gc      d",
+      "        bgggggga",
+      "        aaacaadd",
+      " Ӯ      朽       ",
+      "dadeaccd黎dddcagd",
+      "h      d b      ",
+      "h      c e      ",
+      "hhhhhhhhhhhhhhhh",
+      "h               ",
+      "h               "
+    ]
+  ]
+}

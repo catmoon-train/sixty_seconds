@@ -1,0 +1,370 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "最",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "4",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϛ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "υ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "W",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ί",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ό",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϑ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҏ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Р",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ў",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "生",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӿ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "ϕ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "9",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ό",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ь",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ќ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "0",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "2",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "І",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Э",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Љ",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "TTTTT最kkkkJajjjj",
+      "kkkkkkkJkJEjjjjj",
+      "kkkkkkkJKIkGjjjj",
+      "kkkkkkkILkKajjjj",
+      "kkkkkkkkkKJajjjj",
+      "kkkkkkkLLkIjGjjj",
+      "kkkkkkkkJkIjjGjj",
+      "aaaaaakEkELajjjj",
+      "N4444akkkVaajGjj",
+      "BNBBNakKLaFaaajj",
+      "B4BBNakIIaaFFajj",
+      "BNBB4akIKaaVadGj",
+      "NBBBNakKIaaaadjj",
+      "BBBBNakEEaaaVdjj",
+      "BBBBNakEkaaaFdjj",
+      "BBBBNakJkaaaFdjG"
+    ],
+    [
+      " e       sϛc υ  ",
+      "      e   sWί   ",
+      " e          s   ",
+      "         sscs   ",
+      " e        scΌ e ",
+      "      e        ϑ",
+      "       e  sX    ",
+      "UUҎ РЎ  ssϩc Ϩ  ",
+      "     C 生ӿhcc ϕs ",
+      "     Css emccc  ",
+      "  e  Cs exmhϛce ",
+      "     C   hehm9M ",
+      "e   eCe  hemm9M ",
+      "     C  sehmR9M ",
+      "  e  Cs seemͰc  ",
+      "     C s xh m9M "
+    ],
+    [
+      "          ϱd    ",
+      "           ό    ",
+      "                ",
+      "           d    ",
+      "           dΌ   ",
+      "                ",
+      "           ϭ    ",
+      "UUҎ РЎ    ϩt    ",
+      "     C   lcd ϕ  ",
+      "     C     ddc  ",
+      "     C     lϛc  ",
+      "     C   l l p  ",
+      "     C   l  mό  ",
+      "     C    l     ",
+      "     C      Ͱc  ",
+      "     C    l mp  "
+    ],
+    [
+      "          Ьc    ",
+      "           W    ",
+      "                ",
+      "           cΌ   ",
+      "           c    ",
+      "                ",
+      "           X    ",
+      "UUҎ РЎ    ϩc    ",
+      "     C    cc    ",
+      "     C     ccc  ",
+      "     C      ϛc  ",
+      "     C       W  ",
+      "     C          ",
+      "     C       X  ",
+      "     C      Ͱc  ",
+      "     C       W  "
+    ],
+    [
+      "          Ьg    ",
+      "           W    ",
+      "                ",
+      "           g    ",
+      "           d    ",
+      "                ",
+      "           X    ",
+      "          Ќg    ",
+      "          cd    ",
+      "           dgc  ",
+      "            ϱc  ",
+      "             p  ",
+      "             02 ",
+      "             p  ",
+      "            Ͱc  ",
+      "             p  "
+    ],
+    [
+      "          ϱc    ",
+      "           c    ",
+      "           c    ",
+      "          Іc    ",
+      "          Іc    ",
+      "           c    ",
+      "           c    ",
+      "          Эc    ",
+      "          cc    ",
+      "           ccc  ",
+      "            Ҹc  ",
+      "            ѫp2 ",
+      "            R02 ",
+      "            ϡp  ",
+      "            Ϝc  ",
+      "            Љp  "
+    ]
+  ]
+}

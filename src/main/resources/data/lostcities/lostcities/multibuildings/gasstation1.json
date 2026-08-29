@@ -1,0 +1,21 @@
+{
+  "dimx": 3,
+  "dimz": 3,
+  "buildings": [
+    [
+      "gasstation1_0_0",
+      "gasstation1_0_1",
+      "gasstation1_0_2"
+    ],
+    [
+      "gasstation1_1_0",
+      "gasstation1_1_1",
+      "gasstation1_1_2"
+    ],
+    [
+      "gasstation1_2_0",
+      "gasstation1_2_1",
+      "gasstation1_2_2"
+    ]
+  ]
+}

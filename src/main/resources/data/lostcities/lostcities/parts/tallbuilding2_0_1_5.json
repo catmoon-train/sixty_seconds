@@ -1,0 +1,221 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=false,west=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:stone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Β",
+        "block": "minecraft:barrel[facing=up,open=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 583,
+          "x": 236,
+          "ForgeCaps": {},
+          "id": "minecraft:barrel",
+          "y": 166,
+          "Items": []
+        }
+      },
+      {
+        "char": "Υ",
+        "block": "minecraft:barrel[facing=north,open=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 583,
+          "x": 234,
+          "ForgeCaps": {},
+          "id": "minecraft:barrel",
+          "y": 167,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ͻ",
+        "block": "minecraft:barrel[facing=east,open=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 582,
+          "x": 235,
+          "ForgeCaps": {},
+          "id": "minecraft:barrel",
+          "y": 167,
+          "Items": []
+        }
+      },
+      {
+        "char": "N",
+        "block": "minecraft:glass_pane[east=true,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Φ",
+        "block": "minecraft:glass_pane[east=true,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "       f        ",
+      "       fa       ",
+      "       f        ",
+      "       f        ",
+      "       f        ",
+      "       f        ",
+      "       f      ll",
+      "       fagbgjgcg",
+      "        eeeeeeee",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "         amcb   ",
+      "       f bciib  ",
+      "       fbcibby  ",
+      "       fbbimibbj",
+      "       f jjciaac",
+      "       f  cccjjb",
+      "       f  bcccja",
+      "       fmaaacbil",
+      "       fnaabnnba",
+      "        eeeeeeee",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "       f        ",
+      "       fb       ",
+      "       f  Β     ",
+      "       fn ΒΒΥ   ",
+      "       f  ΒΥΒΒ  ",
+      "       fa ΥΒΒϽ  ",
+      "       fNΒΥΒΒ   ",
+      "       fbΦaΦagag",
+      "        eeeeeeee",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "       f        ",
+      "       fj       ",
+      "       f        ",
+      "       fj       ",
+      "       f  Β     ",
+      "       fa  Ͻ   l",
+      "       fNΥΥΥΥ ll",
+      "       fcΦbΦagag",
+      "        eeeeeeee",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "       f        ",
+      "       fm       ",
+      "       fa       ",
+      "       fn       ",
+      "       fc       ",
+      "       fb    ll ",
+      "       fc    lll",
+      "       fnccmacac",
+      "        eeeeeeee",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        i       ",
+      "       fh       ",
+      "       fb       ",
+      "       fh       ",
+      "       fj       ",
+      "       fh       ",
+      "       fn   lll ",
+      "       fhllllll ",
+      "       fbgbgbgbg",
+      "        eeeeeeee",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

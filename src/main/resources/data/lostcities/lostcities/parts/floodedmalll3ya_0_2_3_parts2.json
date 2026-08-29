@@ -1,0 +1,182 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҿ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͼ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ά",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "є",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:tall_grass[half=upper]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "          Ҿd  f ",
+      "           ϔf A ",
+      "           ϔrff ",
+      "           ϔrAAf",
+      "          ѳd  A ",
+      "           Ͼf ff",
+      "           mЍάdf",
+      "              ϔ ",
+      "              ϔr",
+      "              ϔ ",
+      "              ϔ ",
+      "              ϔr",
+      "              ϔr",
+      "              Ͼr",
+      "             єj ",
+      "              ϔ "
+    ],
+    [
+      "           o    ",
+      "           o  B ",
+      "           o    ",
+      "           f BB ",
+      "           o  B ",
+      "           o    ",
+      "           fo   ",
+      "                ",
+      "              o ",
+      "              o ",
+      "              f ",
+      "              o ",
+      "                ",
+      "              o ",
+      "              o ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

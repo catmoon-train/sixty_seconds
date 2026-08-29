@@ -1,0 +1,442 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "1",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "΅",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "έ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "т",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "В",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Η",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͻ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ί",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "μ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ν",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Β",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ή",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "λ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѣ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ε",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ќ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "о",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "э",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "W",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ъ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϟ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "а",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "θ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Щ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϋ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Έ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϧ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ж",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "φ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "υ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "К",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ї",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϰ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ξ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѕ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "н",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "σ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ю",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѥ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "л",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ι",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ζ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Э",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ζ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaapmmmoota",
+      "aaaaaaaapoopmtpp",
+      "aaaaaaaaotlopltm",
+      "aaaaaaaamtmtompm",
+      "aaaaaaaapollmmpo",
+      "aaaaaaaamomtpata",
+      "aaaaaaaamlttplpt",
+      "aaaaaaaapaampltm",
+      "aaaaaaaaomotpopp",
+      "aaaaaaaapltlpolo",
+      "aaaaaaaalompoltp",
+      "iaaaiaaalotopmll",
+      "iiiaiaaatoompttp",
+      "CCEIMOEClommpaoa",
+      "1KD1K1KDolplltaa",
+      "K1΅DKK΅Dmopptllp"
+    ],
+    [
+      "uuuuuudd   y j j",
+      "rgrgggέd j  j   ",
+      "eeeeeegd  т  y В",
+      "wwwwwegdj       ",
+      "wwwΗwerg  j j   ",
+      "wwwwwegd  Ͻ  j j",
+      "wίwwwerd   y j  ",
+      "wwwwμegd jy X   ",
+      "wννwwerg  y     ",
+      "wwwwwegd Xj j  Β",
+      "eeeweegd      j ",
+      "Ήiiiλgrg   jj   ",
+      "ѣΕΕЌоddэ y      ",
+      "yj  yy    j Wjjj",
+      " R   Ͱjy     jjj",
+      "   y            "
+    ],
+    [
+      "uuuuuu          ",
+      "s sg gέ         ",
+      "fffffeέ         ",
+      "fЪ Ϟаfg         ",
+      "f θ Щfs         ",
+      "fΫΈϧЖfA         ",
+      "f Έ  fs         ",
+      "   Ϟ fA         ",
+      "    φfs         ",
+      "Ͽυϳ υfA         ",
+      "fffКfeg         ",
+      "їxϰ Ξxs         ",
+      "Ѕнσ Ю           ",
+      "                ",
+      "                ",
+      "D               "
+    ],
+    [
+      "                ",
+      "                ",
+      "fffffe          ",
+      "f   φfA         ",
+      "f    3          ",
+      "f    fA         ",
+      "f    3          ",
+      "     f          ",
+      "     3          ",
+      "  ѥ  fA         ",
+      "VffѪfe          ",
+      " xл xx          ",
+      "                ",
+      "                ",
+      "                ",
+      "D               "
+    ],
+    [
+      "                ",
+      "  ΙΙ            ",
+      "ffVVfeA         ",
+      "f    fA         ",
+      "f    3ζ         ",
+      "f    f          ",
+      "f    3ζ         ",
+      "     f          ",
+      "     3ζ         ",
+      "     fA         ",
+      "VffЭfe          ",
+      "Ζ  Ζx           ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "qqqqqqq         ",
+      "fffffeq         ",
+      "fccccfA         ",
+      "fccccfA         ",
+      "fccccf          ",
+      "fccccfA         ",
+      "cccccf          ",
+      "cccccf          ",
+      "cccccf          ",
+      "fffffeq         ",
+      "qqqqqqq         ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

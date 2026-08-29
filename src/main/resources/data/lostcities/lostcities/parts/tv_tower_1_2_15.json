@@ -1,0 +1,198 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "ϕ",
+        "block": "minecraft:quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:cauldron"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:chiseled_quartz_block"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:iron_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ӟ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:stone_slab[type=top,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "addcbbeddacabdee",
+      "bbedcbeccccedaab",
+      "becedbecceddedcb",
+      "deebbbdeeebbddac",
+      "adddedbabbdcbcce",
+      "ecadaacabaaebbca",
+      "bbbaacdaeccdbdba",
+      "eaecbecdbcbceeec",
+      "cdabebdcacedbcde",
+      "acbdeaeddacaeaac",
+      "dbdeeddebbbaeabe",
+      "ecdeeacadddbdccb",
+      "gbbceacecdaddc  ",
+      "iebaeabdabcea   ",
+      "aaabaaac        ",
+      " aaaeed         "
+    ],
+    [
+      "           ebcda",
+      "                ",
+      "  c             ",
+      "  e             ",
+      "  a   ϕ   ecd   ",
+      "aeb  Oϓϔ  d     ",
+      "   d  H   c     ",
+      "  a a     ax    ",
+      "    e     e     ",
+      "     a    b     ",
+      "      c   ax    ",
+      "       cd a     ",
+      "         cb     ",
+      "        i eed   ",
+      "o               ",
+      " C              "
+    ],
+    [
+      "           ceeee",
+      "                ",
+      "  d             ",
+      "  a             ",
+      "  b       dce   ",
+      "cda       d     ",
+      "   a      a     ",
+      "  a c     ck    ",
+      "    d     d     ",
+      "     a    b     ",
+      "      a   ak    ",
+      "       eb b     ",
+      "         ea     ",
+      "        a ceb   ",
+      "l               ",
+      " Ӟ              "
+    ],
+    [
+      "           acbba",
+      "                ",
+      "  e             ",
+      "  a             ",
+      "  c       dbc   ",
+      "bad       a     ",
+      "   d      a     ",
+      "  a d     ck    ",
+      "    a     b     ",
+      "     a    a     ",
+      "      b   ak    ",
+      "       ae d     ",
+      "         ea     ",
+      "        g aceb  ",
+      "                ",
+      "                "
+    ],
+    [
+      "  I        badba",
+      "  I             ",
+      "  c             ",
+      "  b             ",
+      "  a       cdbIII",
+      "dcc       b     ",
+      "   c      b     ",
+      "  a c     c     ",
+      "    a     e     ",
+      "     e    e     ",
+      "      d   e     ",
+      "       ad a     ",
+      "         ac     ",
+      "        a    dII",
+      "                ",
+      "                "
+    ],
+    [
+      "  a        caabb",
+      "  d             ",
+      "  a             ",
+      "  b             ",
+      "  a       dadaad",
+      "aea       d     ",
+      "   d      c     ",
+      "  a b     c     ",
+      "    a     b     ",
+      "     c    b     ",
+      "      c   a     ",
+      "       dc d     ",
+      "         ca     ",
+      "        g     bb",
+      "                ",
+      "                "
+    ]
+  ]
+}

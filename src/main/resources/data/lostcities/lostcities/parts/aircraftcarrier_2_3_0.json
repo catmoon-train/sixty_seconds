@@ -1,0 +1,234 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:red_terracotta"
+      },
+      {
+        "char": "陷",
+        "block": "minecraft:observer[facing=up,powered=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "蜀",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=up,west=up]"
+      },
+      {
+        "char": "捞",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=up,west=side]"
+      },
+      {
+        "char": "衫",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=none,west=side]"
+      },
+      {
+        "char": "苛",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=side,west=none]"
+      },
+      {
+        "char": "掰",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=0,south=side,west=side]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "范",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=none,west=none]"
+      },
+      {
+        "char": "瘾",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=none,west=side]"
+      },
+      {
+        "char": "呱",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=up,west=side]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "俊",
+        "block": "minecraft:observer[facing=north,powered=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:iron_block"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:green_stained_glass"
+      },
+      {
+        "char": "Җ",
+        "block": "minecraft:observer[facing=west,powered=false]"
+      },
+      {
+        "char": "蚂",
+        "block": "minecraft:sticky_piston[extended=false,facing=east]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:observer[facing=east,powered=false]"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "堪",
+        "block": "minecraft:lava[level=0]"
+      },
+      {
+        "char": "黯",
+        "block": "minecraft:lava[level=4]"
+      },
+      {
+        "char": "毙",
+        "block": "minecraft:lava[level=2]"
+      },
+      {
+        "char": "锵",
+        "block": "minecraft:lava[level=6]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "   hh陷hhhhhhhhg ",
+      "           hhhhh",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "   hh陷蜀捞捞捞捞衫hhg ",
+      "hhhhhhhhhhhhhhhh",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "hhhh苛掰      hhhh",
+      "ae  范瘾瘾瘾瘾瘾呱ebcca",
+      " ceacdabadabedcd",
+      "      ceadcdceba",
+      "       aceaaeecd",
+      "           cebaa",
+      "               a",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "  俊         cnnE",
+      "  俊        dgGGE",
+      "d 俊ҖҖҖ蚂O Җ衫dGGGE",
+      "ddcdcc     MGGEM",
+      "      c    eGGGE",
+      "      bdcaeagGGG",
+      "          eeecbG",
+      "              dd",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "            eG堪堪",
+      "           dg黯毙G",
+      "           dG锵GE",
+      "           MGGEM",
+      "dbbdbb     eG GE",
+      " abece     bg  G",
+      "     ccece  eGGG",
+      "         dbdbdbM",
+      "             bda",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "            bG毙堪",
+      "           ag  G",
+      "           cG GE",
+      "           MGGEM",
+      "aa         cG GE",
+      " aeebb     bg  G",
+      "     eccea  dGGG",
+      "         deeceeM",
+      "             abe",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

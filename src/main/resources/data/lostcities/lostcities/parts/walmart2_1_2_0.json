@@ -1,0 +1,190 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:yellow_terracotta"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "板",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "连",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "刚",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "bbbdkbrdbdbakcds",
+      "bcckabkrkdkbbabs",
+      "cbbdacdkbkbkbkbs",
+      "dkddbdrkkkcbcrdJ",
+      "akbcbbabkdabbkbJ",
+      "ddccbckbdaakrbdJ",
+      "rdkbdkdbbackakcs",
+      "cbdcacaadrbbkkks",
+      "kbabdadrdbkckkas",
+      "sssssssssssJsssJ",
+      "cscdskbskdsabsaa",
+      "dasddsdksabsbasc",
+      "sabsbcJkkscrsbkJ",
+      "asddscdJbksbbska",
+      "ssssssssssJssJss",
+      "fepffefpppoeeyyp"
+    ],
+    [
+      "      q         ",
+      "   板   q        ",
+      "  连刚            ",
+      "  连板连 q         ",
+      "                ",
+      "       q    q   ",
+      "q               ",
+      "q        q      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "           q    ",
+      "                ",
+      "                ",
+      "              q "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

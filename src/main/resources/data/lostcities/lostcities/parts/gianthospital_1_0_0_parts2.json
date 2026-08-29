@@ -1,0 +1,222 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "锁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "胡",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "躅",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "唆",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "恁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "劲",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "床",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "袅",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "伟",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "eddtbebccccebebb",
+      "dbecbddbcbbcbddc",
+      "dbedbddbcebctbec",
+      "ihgfqgh锁锁锁tgfiif",
+      "tiqghqq锁g锁gtihqt",
+      "qigqfq锁hfqgitggf",
+      "gtfqtiqtghqiittq",
+      "tqhihqftgqgfqttg",
+      "锁ifqgqihqqftfiig",
+      "hgqihttffggqtggh",
+      "gihfgiqgihhggiig",
+      "beecdbbbbdtbcdbd",
+      "dbdddbebbdcbeecb",
+      "bbebebbbdeddbbde",
+      "tttttttttttttooo",
+      "tttttttttttttooo"
+    ],
+    [
+      " s s    s       ",
+      "                ",
+      "            s  s",
+      "          s     ",
+      "s          s   s",
+      "            s  w",
+      " ss ss ss    ss ",
+      "s      s  s  ss ",
+      " s         s   w",
+      "     ss     s   ",
+      "                ",
+      "s   s     s     ",
+      "  s             ",
+      "       s       n",
+      "sssssssssssssdcp",
+      "ss胡胡sssssssssebp"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "               n",
+      "            jbee",
+      "            jcep"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "               n",
+      "             躅唆c",
+      "  恁劲床劲恁      袅pp"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "               n",
+      "               p",
+      "   劲床劲       伟pp"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "               n",
+      "               p",
+      "             nbp"
+    ]
+  ]
+}

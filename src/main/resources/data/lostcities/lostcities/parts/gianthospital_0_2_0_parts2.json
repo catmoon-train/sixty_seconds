@@ -1,0 +1,198 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "锁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "庖",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "痣",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "胡",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "恁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "劲",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "床",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "cbeiffffcedttttt",
+      "bbeqgiigcbdttttt",
+      "dbbftihtbbbttttt",
+      "edefqtgqbcdttttt",
+      "tqgtttgidbbttttt",
+      "tfg锁qiitccbttttt",
+      "hf锁iitfqcecttttt",
+      "g锁锁ggtttbbbttttt",
+      "igfhgittbbettttt",
+      "tbdfggftbbettttt",
+      "cteqhhqfdcbttttt",
+      "eechihhhdccttttt",
+      "eccfqigibddttttt",
+      "eechfggfbccttttt",
+      "dcdhifqgdbbtottt",
+      "bbbghiqtecbtottt"
+    ],
+    [
+      "    s      sssss",
+      "           sssss",
+      "    s  s   sssss",
+      "     s     sssss",
+      "s锁 sss  s  sssss",
+      "s    s s   sssss",
+      " s   s s   sssss",
+      "     sss   sssss",
+      "   锁  ss   sssss",
+      "s  s  ss   sssss",
+      " s         sssss",
+      " s         sssss",
+      "   s       sssss",
+      "       s   sssss",
+      "           s庖sss",
+      "   s   s   s痣s胡s"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "             恁劲床"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              劲床"
+    ]
+  ]
+}

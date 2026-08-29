@@ -1,0 +1,273 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "S",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "9",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 730,
+          "x": 189,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 133
+        }
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͱ",
+        "block": "minecraft:air",
+        "loot": "observatory",
+        "tag": {
+          "z": 734,
+          "x": 189,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 133,
+          "Items": []
+        }
+      },
+      {
+        "char": "3",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "8",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaabbg gggga",
+      "aaaaaaaab   goga",
+      "aaaaaaaaaS  ggga",
+      "aaaaaaaaaa s9gga",
+      "aaaaaaaaaagg gga",
+      "aaaaaaaaaagg gga",
+      "aaaaaaaaaaaadaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaddddddddddd"
+    ],
+    [
+      "aaaaagg c   c  g",
+      "aaaaaagg     scg",
+      "aaaaaaagg     lg",
+      "aaaaaaaagg  s  g",
+      "aaaaaaaaao c   g",
+      "aaaaaaaaagc    g",
+      "aaaaaaaaaggg abg",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaBaaaBa",
+      "aaaaaaaaaaBaaaBa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaab",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "bbbbbb          ",
+      "bbbbbbb      s  ",
+      "bbbbbbbbc     lc",
+      "bbbbbbbab   s   ",
+      "bbbbbabbbn     f",
+      "bbbbbbbbbn      ",
+      "bbbbbbbbb  fiicl",
+      "bbbbbabbbbaiiiab",
+      "bbbbbbbbbbiiiiib",
+      "bbbbbbbbbbiiiiib",
+      "bbbbbbbabaiiiiia",
+      "bbbbbbbaaiiiiiii",
+      "bbbbbbbaaiiiiiii",
+      "bbbbbbbaaiiiiiii",
+      "bbbbbbbabaiiiiic",
+      "bbbbbbbbbbaiiiab"
+    ],
+    [
+      "f fcc           ",
+      "ffccc c      s  ",
+      "ccfccc c      l ",
+      "cccc   gc   T   ",
+      "fcfccg f n eee  ",
+      "fccc  cc n eee  ",
+      "c fc   c  eCCCel",
+      "ccccfgcfc e   el",
+      "cccccf r f     l",
+      "ccc  Jc ct     c",
+      " fcc ccpcee  Uee",
+      "f ffcc peeH   Ie",
+      "ff ff cpeeH   Ie",
+      "fcccfcfpeeH   Ie",
+      "fcccc cpcee  Ͱee",
+      "cfffftccccee3eel"
+    ],
+    [
+      "            k   ",
+      "            kT  ",
+      "           eee8 ",
+      "           eee  ",
+      "         ne   e ",
+      "         ne   e ",
+      "          q   ql",
+      "          e   el",
+      "               l",
+      "                ",
+      "          e   e ",
+      "       eee     e",
+      "       eee     e",
+      "       eee     e",
+      "          eL  e ",
+      "         neeVeel"
+    ],
+    [
+      "            e   ",
+      "           eee  ",
+      "          eeeee ",
+      "          eeeee ",
+      "         neeeee ",
+      "         neeGee ",
+      "          eeeeel",
+      "          eeeeel",
+      "          eeeeel",
+      "          eeGee ",
+      "          eeeee ",
+      "       h  eeeee ",
+      "       h  eeeee ",
+      "       h  eeGee ",
+      "          eeeee ",
+      "         neeeeel"
+    ]
+  ]
+}

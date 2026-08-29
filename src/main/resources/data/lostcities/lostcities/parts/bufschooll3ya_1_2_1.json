@@ -1,0 +1,386 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѕ",
+        "block": "minecraft:chiseled_stone_bricks[weathering=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:smooth_sandstone"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:spruce_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "ύ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:sand"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϧ",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "Ӕ",
+        "block": "minecraft:stone_brick_wall[east=low,north=low,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cut_sandstone"
+      },
+      {
+        "char": "ч",
+        "block": "minecraft:stone_brick_wall[east=tall,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "η",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ι",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϛ",
+        "block": "minecraft:cobblestone_wall[east=tall,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "т",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "΅",
+        "block": "minecraft:spruce_button[face=floor,facing=north,powered=false]"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ў",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "к",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѥ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϭ",
+        "block": "minecraft:stone_brick_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ϴ",
+        "block": "minecraft:spruce_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "х",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Э",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ά",
+        "block": "minecraft:spruce_button[face=floor,facing=west,powered=false]"
+      },
+      {
+        "char": "ӆ",
+        "block": "minecraft:stone_brick_wall[east=tall,north=tall,south=low,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "Α",
+        "block": "minecraft:spruce_fence_gate[facing=east,in_wall=true,open=false,powered=false]"
+      },
+      {
+        "char": "ζ",
+        "block": "minecraft:spruce_fence_gate[facing=east,in_wall=false,open=false,powered=false]"
+      },
+      {
+        "char": "Ї",
+        "block": "minecraft:stone_brick_wall[east=tall,north=low,south=low,up=true,waterlogged=false,weathering=true,west=none]"
+      },
+      {
+        "char": "К",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Γ",
+        "block": "minecraft:spruce_button[face=floor,facing=south,powered=false]"
+      },
+      {
+        "char": "W",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "知",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѿ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӄ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "後",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ұ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ь",
+        "block": "minecraft:stone_brick_wall[east=tall,north=tall,south=none,up=true,waterlogged=false,weathering=true,west=none]"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "έ",
+        "block": "minecraft:stone_brick_wall[east=tall,north=none,south=none,up=true,waterlogged=false,weathering=true,west=none]"
+      },
+      {
+        "char": "Ќ",
+        "block": "minecraft:stone_brick_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,weathering=true,west=none]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ђ",
+        "block": "minecraft:smooth_sandstone_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "2",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͽ",
+        "block": "minecraft:smooth_sandstone_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ϲ",
+        "block": "minecraft:stone_brick_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "ӡ",
+        "block": "minecraft:brick_stairs[facing=south,half=top,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "ϸ",
+        "block": "minecraft:brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "Y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "你",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "π",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "І",
+        "block": "minecraft:spruce_button[face=wall,facing=west,powered=false]"
+      },
+      {
+        "char": "ӹ",
+        "block": "minecraft:brick_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Κ",
+        "block": "minecraft:cobblestone_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ϊ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ν",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=true]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "          Ѕdbbbb",
+      "          ύgbbbb",
+      "          Rdbbbb",
+      "           gbbbb",
+      "           gbbbb",
+      "          Rgbbbb",
+      "          Ϧgbbbb",
+      "          Ѕdbbbb",
+      "          Qgbbbb",
+      "          ӔQQcbb",
+      "            чcbb",
+      "             cbb",
+      "            ηcbb",
+      "             cbb",
+      "            Ιcbb",
+      "             cbb"
+    ],
+    [
+      "          ϛc т ΅",
+      "           cMўѠк",
+      "          ηcMѤѳк",
+      "          Ϭcϴ х ",
+      "          Ϭc т Ϩ",
+      "          ηcMўѠк",
+      "           cMѤѳ ",
+      "          Эc хх ",
+      "          cc   ά",
+      "           cccά ",
+      "            ӆc  ",
+      "            ΑcM ",
+      "            ζcM ",
+      "            ΑcM ",
+      "            ЇcКΓ",
+      "            ΑcM "
+    ],
+    [
+      "          чd    ",
+      "           W Ӭ知 ",
+      "              ѿ ",
+      "           g    ",
+      "           d    ",
+      "           p ӄ後 ",
+      "           p  Ұ ",
+      "          Эd    ",
+      "          cd    ",
+      "           ddc  ",
+      "            Ьc  ",
+      "             W  ",
+      "                ",
+      "             X  ",
+      "            έc  ",
+      "             W  "
+    ],
+    [
+      "          Ьc    ",
+      "           p    ",
+      "           p    ",
+      "           c    ",
+      "           c    ",
+      "           p    ",
+      "           p    ",
+      "          Ќc    ",
+      "          cc    ",
+      "           ccc  ",
+      "         i  ϱc  ",
+      "             W  ",
+      "                ",
+      "             X  ",
+      "            έc  ",
+      "                "
+    ],
+    [
+      "          ϱd    ",
+      "           Ђ2   ",
+      "           X2   ",
+      "           d    ",
+      "           d    ",
+      "           p2   ",
+      "           Ͽ2   ",
+      "          ϲg    ",
+      "         ӡcg    ",
+      "         ϸYodc  ",
+      "          fv你c  ",
+      "            Rp2 ",
+      "            RW2 ",
+      "            R 2 ",
+      "            πc  ",
+      "            Rp2 "
+    ],
+    [
+      "         Yoobbbb",
+      "          icbbbb",
+      "           cbbbb",
+      "          Іcbbbb",
+      "          Іcbbbb",
+      "           cbbbb",
+      "         iicbbbb",
+      "         ӹoobbbb",
+      "         vfYbbbb",
+      "           yccbb",
+      "           yΚcbb",
+      "           yΚcbb",
+      "           iΚcbb",
+      "           yΪcbb",
+      "           iΪcbb",
+      "           iνcbb"
+    ]
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:dirt"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "ђ",
+        "block": "minecraft:spawner",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 359,
+          "x": 108,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 132,
+          "SpawnRange": "4s",
+          "Delay": "416s"
+        }
+      },
+      {
+        "char": "f",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "2",
+        "block": "minecraft:red_concrete"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:oak_planks"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "5",
+        "block": "minecraft:water[level=0]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:smooth_quartz"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb"
+    ],
+    [
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb"
+    ],
+    [
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb"
+    ],
+    [
+      "gaaaaaaaaabbbbbb",
+      "caaaaaaaaabbbbbb",
+      "eaaaaaaaaabbbbbb",
+      "caaaaaaaaabbbbbb",
+      "caaaaaaaaabbbbbb",
+      "caaaaaaaaabbbbbb",
+      "caaaaaaaaabbbbbb",
+      "jaaaaaaaaabbbbbb",
+      "caaaaaaaaabbbbbb",
+      "ecceejgjccbbbbbb",
+      "cdecejecddbbbbbb",
+      "geddecђdgcbbbbbb",
+      "eaaaaaaaaabbbbbb",
+      "jaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb",
+      "aaaaaaaaaabbbbbb"
+    ],
+    [
+      "f2ppppppaabbbbbb",
+      "mjaajaaaaabbbbbb",
+      "52aaaaaaaabbbbbb",
+      "52aaaaaaaabbbbbb",
+      "f2aaaaaaaabbbbbb",
+      "f2aaaaaaaabbbbbb",
+      "mcaaaaaaaabbbbbb",
+      " eaaaaaaaabbbbbb",
+      " mvvvvvvvvbbbbbb",
+      "      e jjbbbbbb",
+      "       gjjbbbbbb",
+      "      jjjjbbbbbb",
+      " mvvvvvvvvbbbbbb",
+      "cjaaaaaaaabbbbbb",
+      "gaaaaaaaaabbbbbb",
+      "caaaaaaaaabbbbbb"
+    ]
+  ]
+}

@@ -1,0 +1,503 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҕ",
+        "block": "minecraft:chest[facing=south,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 942,
+          "x": -502,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ѷ",
+        "block": "minecraft:chest[facing=south,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 940,
+          "x": -437,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "碟",
+        "block": "minecraft:chest[facing=west,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 957,
+          "x": -354,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "底",
+        "block": "minecraft:chest[facing=north,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 975,
+          "x": -484,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "谁",
+        "block": "minecraft:chest[facing=north,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 977,
+          "x": -486,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "活",
+        "block": "minecraft:chest[facing=north,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 958,
+          "x": -361,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 111,
+          "Items": []
+        }
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "恐",
+        "block": "minecraft:light_gray_bed[facing=north,occupied=false,part=head]",
+        "tag": {
+          "z": 933,
+          "x": -445,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 116
+        }
+      },
+      {
+        "char": "烧",
+        "block": "minecraft:ladder[facing=south,waterlogged=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:black_carpet"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:white_carpet"
+      },
+      {
+        "char": "履",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "搞",
+        "block": "minecraft:light_gray_bed[facing=north,occupied=false,part=foot]",
+        "tag": {
+          "z": 947,
+          "x": -437,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 116
+        }
+      },
+      {
+        "char": "r",
+        "block": "minecraft:red_carpet"
+      },
+      {
+        "char": "犬",
+        "block": "minecraft:jungle_trapdoor[facing=south,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "遥",
+        "block": "minecraft:cartography_table"
+      },
+      {
+        "char": "潭",
+        "block": "minecraft:lectern[facing=south,has_book=false,powered=false]",
+        "tag": {
+          "z": 960,
+          "x": -458,
+          "ForgeCaps": {},
+          "id": "minecraft:lectern",
+          "y": 107
+        }
+      },
+      {
+        "char": "饶",
+        "block": "minecraft:birch_trapdoor[facing=west,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "页",
+        "block": "minecraft:jukebox[has_record=false]",
+        "tag": {
+          "RecordStartTick": "0L",
+          "IsPlaying": "0b",
+          "z": 951,
+          "x": -397,
+          "TickCount": "0L",
+          "ForgeCaps": {},
+          "id": "minecraft:jukebox",
+          "y": 115
+        }
+      },
+      {
+        "char": "氛",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "宛",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "钉",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "辜",
+        "block": "minecraft:birch_fence[east=false,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "哼",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "襄",
+        "block": "minecraft:birch_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "赏",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "刑",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "包",
+        "block": "minecraft:birch_fence[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "诈",
+        "block": "minecraft:jungle_door[facing=west,half=lower,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "匠",
+        "block": "minecraft:jungle_door[facing=west,half=lower,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "壹",
+        "block": "minecraft:birch_fence[east=false,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "癢",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "钩",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "栖",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "舜",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "廊",
+        "block": "minecraft:jungle_door[facing=west,half=upper,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "倡",
+        "block": "minecraft:jungle_door[facing=west,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "尚",
+        "block": "minecraft:birch_wall_sign[facing=east,waterlogged=false]",
+        "tag": {
+          "z": 945,
+          "x": -465,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 109,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Battery:\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Charlie\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "愈",
+        "block": "minecraft:birch_wall_sign[facing=west,waterlogged=false]",
+        "tag": {
+          "z": 979,
+          "x": -456,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 116,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Officer's bunks\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"^\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"|\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "未",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 948,
+          "x": -513,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 117,
+          "NodePos": "-141012362379147L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "父",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 953,
+          "x": -457,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 117,
+          "NodePos": "-125619199569803L",
+          "Connections": [
+            "L"
+          ]
+        }
+      }
+    ]
+  },
+  "slices": [
+    [
+      "  ҕѶҕѶgfg       ",
+      "      碟f        ",
+      "      底f        ",
+      "  谁活谁活gf        ",
+      "  ffffff        ",
+      "       f        ",
+      "       fffffff  ",
+      "                ",
+      "                ",
+      "ee     f        ",
+      " ecdae f        ",
+      "     ebaac      ",
+      "         ebeee  ",
+      "             aca",
+      "                ",
+      "                "
+    ],
+    [
+      "      gfg       ",
+      "       f        ",
+      "       f        ",
+      "      gf        ",
+      "ggffffff        ",
+      "       f        ",
+      "       fffffffgg",
+      "       f        ",
+      "       f        ",
+      "       f        ",
+      "bg     f        ",
+      "ecbdcg f        ",
+      "    bbbacg      ",
+      "        dcaedg  ",
+      "            dccd",
+      "                "
+    ],
+    [
+      "aadaadceededcbcd",
+      "bddddeeadbebedbb",
+      "cbacaaedacbdcade",
+      "aadcabecdbaeeeee",
+      "cabdbddbbadeebea",
+      "ccbcabcaacccbadb",
+      "ceccbcbcadcedbea",
+      "cbbeeecaeeeacebd",
+      "beaaedceaccdacee",
+      "edddcecedceeeeba",
+      "dcbdcbbabcaaeaae",
+      "eadbbaabccacbbbe",
+      "ebbeeabaacabbcde",
+      "   edceebceadaea",
+      "       eebcceaed",
+      "           baaac"
+    ],
+    [
+      "  f恐烧恐fkkkkkjuj履",
+      "  f搞u搞fkrrrkuju ",
+      "  f犬u遥fkr潭rkjuj饶",
+      "  fuuufkrrrkuju饶",
+      "  fuukfkjujujuj饶",
+      "  fuu页fjujujuju饶",
+      "  fuu碟f氛氛宛钉辜哼uj ",
+      "  fuu底f襄u赏刑包赏juj",
+      "  诈uukf襄j赏刑包赏uju",
+      "  匠uukf襄u赏刑壹赏juj",
+      "  fffffu癢钩栖u舜uju",
+      "       jujujujuj",
+      "       ujujujuju",
+      "bca   fjujujujuj",
+      "  adadeujujujuju",
+      "      dcbcejujuj"
+    ],
+    [
+      "  f恐烧恐fkkkkk    ",
+      "  f搞 搞fk   k    ",
+      "  f犬 犬fk   k    ",
+      "  f   fk   k    ",
+      "  f  kfk        ",
+      "  f   f         ",
+      "  f   f    j    ",
+      "  f   f    j    ",
+      "  廊   f    j    ",
+      "  倡  kf    j    ",
+      "  fffff尚   j    ",
+      "                ",
+      "                ",
+      "dea  愈f         ",
+      "  aabcd         ",
+      "      dccec     "
+    ],
+    [
+      "  f恐烧恐fkkkkk未  未",
+      "  f搞 搞fk   k    ",
+      "  f犬 犬fg 未 g    ",
+      "  f   fk   k    ",
+      "  g  kfk   未    ",
+      "  f   f未        ",
+      "  f   f         ",
+      "  g   f         ",
+      "  g   f         ",
+      "  g  kf         ",
+      "  gffff         ",
+      "      g         ",
+      "      g         ",
+      "      f         ",
+      "cbg  gf父        ",
+      " ebbeeffggf父    "
+    ]
+  ]
+}

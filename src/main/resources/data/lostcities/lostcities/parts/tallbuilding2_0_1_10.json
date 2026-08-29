@@ -1,0 +1,202 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=false,west=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:stone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "τ",
+        "block": "minecraft:stripped_spruce_log[axis=y]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:light_gray_carpet"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:spruce_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:glass_pane[east=true,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:spruce_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ϖ",
+        "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "        b       ",
+      "       fh       ",
+      "       fb       ",
+      "       fh       ",
+      "       fi       ",
+      "       fh       ",
+      "       fj       ",
+      "        h       ",
+      "        bgjga   ",
+      "        eee     ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        mmacb   ",
+      "       fimana   ",
+      "       fbmmiccy ",
+      "       fiimic i ",
+      "       faijimjib",
+      "       famaacica",
+      "       fajijmiii",
+      "        bbcjcjma",
+      "        accbc   ",
+      "        eee     ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        nτ  x   ",
+      "       fh       ",
+      "       fbτ x x  ",
+      "       fhCx x   ",
+      "       faC x    ",
+      "       fhCx   zx",
+      "       faτ  x   ",
+      "        h   τCCC",
+      "        agaga   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        bI      ",
+      "       fh       ",
+      "       fcI      ",
+      "       fNI      ",
+      "       faI      ",
+      "       fNI      ",
+      "       fcI      ",
+      "        h   IIII",
+      "        igmgi   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        jO      ",
+      "       fa       ",
+      "       fiO      ",
+      "       fbO      ",
+      "       fiO      ",
+      "       fcO      ",
+      "       fbO      ",
+      "        b   ϖϖϖϖ",
+      "        bmabcj  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        a       ",
+      "       fh       ",
+      "       fm       ",
+      "       fh       ",
+      "       fj       ",
+      "       fh       ",
+      "       fc       ",
+      "        h       ",
+      "        cgjgigj ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

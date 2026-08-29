@@ -1,0 +1,166 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "耻",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "膝",
+        "block": "minecraft:cobblestone_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "芩",
+        "block": "minecraft:cobblestone_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=true,west=none]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "hhhhhigiqCihhfgi",
+      "fiCggqiqghfgiqqh",
+      "iqgqffChffighhfh",
+      "gqhqiifhhhhqgqqh",
+      "gihhCgqChiiCigqg",
+      "qhfgfhfCqqifhhii",
+      "ghfhgCfqiqfihqCf",
+      "CiChhiqqqhiqgCfq",
+      "fqqhhifgqghigCCh",
+      "igihihhgfCqfhgih",
+      "CqiCCqiCfiCCfiqq",
+      "fgghgqgqfChhfqgq",
+      "hhgggiqhgqgfqhih",
+      "ggCgfhhiqfhhgfqg",
+      "qqffifffhhCffggi",
+      "fiihgfiqhfghgqhC"
+    ],
+    [
+      "                ",
+      "    耻  L      M ",
+      "                ",
+      "   膝    膝    膝  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   膝    膝    芩  ",
+      "                ",
+      "    M  L      M ",
+      "                ",
+      "              膝 ",
+      "                ",
+      "                ",
+      "              膝 "
+    ]
+  ]
+}

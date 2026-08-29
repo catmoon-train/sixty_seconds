@@ -1,0 +1,430 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:light_gray_carpet"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "2",
+        "block": "minecraft:red_concrete"
+      },
+      {
+        "char": "能",
+        "block": "minecraft:orange_concrete"
+      },
+      {
+        "char": "许",
+        "block": "minecraft:cyan_wall_banner[facing=south]",
+        "tag": {
+          "z": 323,
+          "Patterns": [
+            {
+              "Color": 1,
+              "Pattern": "rs"
+            },
+            {
+              "Color": 9,
+              "Pattern": "hhb"
+            },
+            {
+              "Color": 1,
+              "Pattern": "ts"
+            },
+            {
+              "Color": 1,
+              "Pattern": "ls"
+            },
+            {
+              "Color": 1,
+              "Pattern": "drs"
+            },
+            {
+              "Color": 9,
+              "Pattern": "bo"
+            }
+          ],
+          "x": 167,
+          "ForgeCaps": {},
+          "id": "minecraft:banner",
+          "y": 144
+        }
+      },
+      {
+        "char": "Ӊ",
+        "block": "minecraft:oak_wall_sign[facing=west,waterlogged=false]",
+        "tag": {
+          "z": 326,
+          "x": 175,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 144,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"1. Wcdouble\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"2. Quarter\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Pounder\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"3. Filet O' Fish\"}],\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "L",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "ӑ",
+        "block": "minecraft:cyan_concrete"
+      },
+      {
+        "char": "Ӑ",
+        "block": "minecraft:green_concrete"
+      },
+      {
+        "char": "6",
+        "block": "minecraft:dark_oak_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "联",
+        "block": "minecraft:blue_wall_banner[facing=south]",
+        "tag": {
+          "z": 335,
+          "Patterns": [
+            {
+              "Color": 14,
+              "Pattern": "hhb"
+            },
+            {
+              "Color": 0,
+              "Pattern": "ls"
+            },
+            {
+              "Color": 0,
+              "Pattern": "ms"
+            },
+            {
+              "Color": 0,
+              "Pattern": "rs"
+            },
+            {
+              "Color": 11,
+              "Pattern": "bo"
+            }
+          ],
+          "x": 175,
+          "ForgeCaps": {},
+          "id": "minecraft:banner",
+          "y": 145
+        }
+      },
+      {
+        "char": "又",
+        "block": "minecraft:blast_furnace[facing=east,lit=false]",
+        "tag": {
+          "z": 315,
+          "x": 164,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:blast_furnace",
+          "y": 138,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "老",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "关",
+        "block": "minecraft:stone_brick_wall[east=none,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "气",
+        "block": "minecraft:cyan_wall_banner[facing=east]",
+        "tag": {
+          "z": 330,
+          "Patterns": [
+            {
+              "Color": 1,
+              "Pattern": "ts"
+            },
+            {
+              "Color": 1,
+              "Pattern": "ms"
+            },
+            {
+              "Color": 1,
+              "Pattern": "bs"
+            },
+            {
+              "Color": 1,
+              "Pattern": "ls"
+            },
+            {
+              "Color": 9,
+              "Pattern": "bo"
+            }
+          ],
+          "x": 170,
+          "ForgeCaps": {},
+          "id": "minecraft:banner",
+          "y": 146
+        }
+      },
+      {
+        "char": "P",
+        "block": "minecraft:diorite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:andesite"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:smooth_quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "Ӫ",
+        "block": "minecraft:polished_diorite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "Ӡ",
+        "block": "minecraft:stone_brick_wall[east=none,north=low,south=low,up=false,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "ӡ",
+        "block": "minecraft:stone_brick_wall[east=low,north=none,south=none,up=false,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "术",
+        "block": "minecraft:stone_brick_wall[east=low,north=none,south=low,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "状",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "0",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "大",
+        "block": "minecraft:rail[shape=north_east,waterlogged=false]"
+      },
+      {
+        "char": "中",
+        "block": "minecraft:rail[shape=north_west,waterlogged=false]"
+      },
+      {
+        "char": "没",
+        "block": "minecraft:rail[shape=south_east,waterlogged=false]"
+      },
+      {
+        "char": "了",
+        "block": "minecraft:rail[shape=south_west,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      " xri            ",
+      "  yv            ",
+      " womsmsssv   2vv",
+      "  y能许许许许许许     Ӊ",
+      "  ri  L        Ӊ",
+      "  ri  L        Ӊ",
+      "  r   L        Ӊ",
+      "  u能  L      E Ӊ",
+      " wuӑ  L        Ӊ",
+      " xov  L      E  ",
+      "  ri  L         ",
+      "  ri  L         ",
+      "  ri            ",
+      "  om            ",
+      " wommssmsm   2mm",
+      "  oӐ 6666    s  "
+    ],
+    [
+      " xri            ",
+      "  us            ",
+      " wusssssss   2sm",
+      "  oӑ     ӑ     Ӊ",
+      "  ri  L  ӑ     Ӊ",
+      "  ri  L  ӑ      ",
+      "  ri  L  ӑ   E Ӊ",
+      "  oӑ  L  ӑ     Ӊ",
+      " woӑ  L  ӑ   E  ",
+      "  uӑ  L  ӑ     Ӊ",
+      "  ri  L  ӑ   E Ӊ",
+      "  ri  L  ӑ      ",
+      "  ri     ӑ      ",
+      "  yӑ     ӑ      ",
+      " womsssmmm   2sm",
+      "  oӐ 6666    m 联"
+    ],
+    [
+      "  ri又    m      ",
+      "  om又    m      ",
+      " wyvsmvsvm   2mv",
+      "  oӑ     ӑ      ",
+      "  ri  老  ӑ      ",
+      "  ri  关  ӑ      ",
+      "  ri     ӑ气  E  ",
+      "  uӑ  老  ӑ气     ",
+      " wuӑ  关  ӑ气  E  ",
+      "  oӑ     ӑ气     ",
+      "  ri  老  ӑ气  E  ",
+      "  r   关  ӑ气     ",
+      "  r      ӑ      ",
+      "  uӑ     ӑ      ",
+      " wovvmsvsm   2vm",
+      "  yӐ         m联 "
+    ],
+    [
+      " Pyslhlhllhhlhll",
+      " Povhhhlhlhhhlhl",
+      " woslhlllllhlllh",
+      " ͱoshhhhhhhhllhl",
+      " Pomhlllhhllhhhh",
+      " Pumlhlllhlhhlhh",
+      " Goslhllllhhlhlh",
+      " Ӫymhhhhhhlllhhl",
+      " woshhlllhhllhhh",
+      " Pomlhhlhhlhhlhh",
+      " Gomhhlllllhhhlh",
+      " Gomllhlhllllllh",
+      " Gomhlhlhhhhllll",
+      " Gushllllhhhhllh",
+      " womhllllhlhhhll",
+      " Pumlllhhllhhhhh"
+    ],
+    [
+      " vxD     yy yy  ",
+      " v D        Ӡ   ",
+      " A D     yyӡyy  ",
+      " v D     yy yy  ",
+      " A D        Ӡ   ",
+      " v D        Ӡ   ",
+      " v D        Ӡ   ",
+      " A D        Ӡ   ",
+      " A D        Ӡ   ",
+      " v D      3 关   ",
+      " v D            ",
+      " A D            ",
+      " A D            ",
+      " A D   术ӡӡ状 3   ",
+      " 0 D   Ӡ        ",
+      " v D   Ӡ        "
+    ],
+    [
+      "         大中 大中  ",
+      "                ",
+      "         没了 没了  ",
+      "         大中 大中  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "          yyy   ",
+      "          yyy   ",
+      "          yyy   ",
+      "          yyy   ",
+      "          yyy   ",
+      "                ",
+      "                "
+    ]
+  ]
+}

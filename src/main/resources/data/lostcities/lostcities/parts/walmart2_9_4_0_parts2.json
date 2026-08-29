@@ -1,0 +1,388 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "开",
+        "block": "minecraft:air",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 387,
+          "x": 24,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 132,
+          "SpawnRange": "4s",
+          "Delay": "584s"
+        }
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "面",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "立",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "望",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "认",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "型",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "佛",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ү",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "越",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "活",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "之",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "连",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "建",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "今",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "导",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "响",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "告",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "站",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "高",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "台",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "内",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҧ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 463,
+          "x": 74,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Aisle 6\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "放",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "古",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "及",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "土",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "深",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "常",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "权",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "表",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "耶",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "目",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "wawccakkadcababc",
+      "aabaawccbcbbcdcb",
+      "aaccaabaddcdcdbc",
+      "abaaa开dcccadabaa",
+      "aaaawacckkkbdkbb",
+      "aacadbbbbbbcdaaI",
+      "baabcabbaaacbkcI",
+      "cdaaaaadbacddadI",
+      "wacaawakcabbckaI",
+      "waddaabkkcadcccI",
+      "aaardaaadacacdaI",
+      "aadaaabbkkkkbkaI",
+      "dardbIddackbdcdd",
+      "caacaakcakbacrbd",
+      "rbaaaacabackaddb",
+      "daaaacckckccakka"
+    ],
+    [
+      "  面面面立j         ",
+      "  q面面立j         ",
+      "  面面面望          ",
+      "  认型佛zj         ",
+      "  ҮҮҮ越j         ",
+      "  qҮҮG        活之",
+      " qҮҮҮGj       ls",
+      "连    G     q  建J",
+      "     Gj       活之",
+      "  ҮҮҮ立j     q qҬ",
+      "   qҮG         Ҭ",
+      "   ҮҮ望        qҬ",
+      "  今导响zj         ",
+      "     G       q  ",
+      "q 告告告立j         ",
+      "  站站站立j         "
+    ],
+    [
+      "  面面面高j         ",
+      "    面Gj         ",
+      "   面面望          ",
+      "  N 台Cj         ",
+      "     Gj         ",
+      "     G        ls",
+      "   ҮҮGj       ls",
+      "     G          ",
+      "     Gj        今",
+      "    Ү高j         ",
+      "    ҮG          ",
+      "     高          ",
+      "  N 内zj         ",
+      "     高          ",
+      "     Gj         ",
+      "     Gj         "
+    ],
+    [
+      " ҧnnnGj         ",
+      "  nnn高j         ",
+      " ҧnnn高          ",
+      "  KҨKEj         ",
+      " ҧnnnGj         ",
+      "  nnnG          ",
+      " ҧnnn立j        放",
+      "  nnn高          ",
+      "  nnn高j        N",
+      " ҧnnnGj         ",
+      "  nnnG          ",
+      " ҧnnn高          ",
+      "  KҨKCj         ",
+      "     G          ",
+      "     高j         ",
+      "     Gj         "
+    ],
+    [
+      "  面面面高j         ",
+      "  面面面Gj         ",
+      "  面面面望          ",
+      "  古及土Ej         ",
+      "  ҮҮҮ望j         ",
+      "  ҮҮҮG          ",
+      "  ҮҮҮ高j        Ҭ",
+      "     高         Ҭ",
+      "     Gj        今",
+      "  ҮҮҮGj         ",
+      "  ҮҮҮG          ",
+      "  ҮҮҮ望          ",
+      "  深常权zj         ",
+      "     G          ",
+      "     Gj         ",
+      "     Gj         "
+    ],
+    [
+      "  面面面Gj         ",
+      "  面面面Gj         ",
+      "  面面面望          ",
+      "  表 耶Cj         ",
+      "  ҮҮҮ望j         ",
+      "  ҮҮҮG          ",
+      "  ҮҮҮ高j         ",
+      "     G          ",
+      "     Gj        N",
+      "  ҮҮҮ高j         ",
+      "  ҮҮҮ望          ",
+      "  ҮҮҮ望          ",
+      "  目 台Cj         ",
+      "     高          ",
+      "     Gj         ",
+      "     Gj         "
+    ]
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:red_terracotta"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:observer[facing=east,powered=false]"
+      },
+      {
+        "char": "Ѷ",
+        "block": "minecraft:chest[facing=south,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 940,
+          "x": -437,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "k",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "ҕ",
+        "block": "minecraft:chest[facing=south,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 942,
+          "x": -502,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "ϖ",
+        "block": "minecraft:cauldron"
+      },
+      {
+        "char": "嘲",
+        "block": "minecraft:dark_oak_door[facing=east,half=lower,hinge=right,open=true,powered=false]"
+      },
+      {
+        "char": "喂",
+        "block": "minecraft:dark_oak_door[facing=south,half=lower,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "抬",
+        "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "返",
+        "block": "minecraft:gray_bed[facing=south,occupied=false,part=foot]",
+        "tag": {
+          "z": 962,
+          "x": -415,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 105
+        }
+      },
+      {
+        "char": "侬",
+        "block": "minecraft:gray_bed[facing=south,occupied=false,part=head]",
+        "tag": {
+          "z": 963,
+          "x": -413,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 105
+        }
+      },
+      {
+        "char": "乡",
+        "block": "minecraft:ladder[facing=north,waterlogged=false]"
+      },
+      {
+        "char": "手",
+        "block": "minecraft:observer[facing=down,powered=false]"
+      },
+      {
+        "char": "奔",
+        "block": "minecraft:tripwire_hook[attached=false,facing=south,powered=false]"
+      },
+      {
+        "char": "柄",
+        "block": "minecraft:dark_oak_door[facing=east,half=upper,hinge=right,open=true,powered=false]"
+      },
+      {
+        "char": "滋",
+        "block": "minecraft:dark_oak_door[facing=south,half=upper,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:dark_oak_trapdoor[facing=north,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "饼",
+        "block": "minecraft:dark_oak_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "家",
+        "block": "minecraft:white_wall_banner[facing=south]",
+        "tag": {
+          "z": 939,
+          "Patterns": [
+            {
+              "Color": 8,
+              "Pattern": "dls"
+            },
+            {
+              "Color": 0,
+              "Pattern": "dls"
+            },
+            {
+              "Color": 3,
+              "Pattern": "gru"
+            },
+            {
+              "Color": 8,
+              "Pattern": "bo"
+            }
+          ],
+          "x": -499,
+          "ForgeCaps": {},
+          "id": "minecraft:banner",
+          "y": 117
+        }
+      },
+      {
+        "char": "恢",
+        "block": "minecraft:dark_oak_trapdoor[facing=west,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "胞",
+        "block": "minecraft:dark_oak_trapdoor[facing=north,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "燃",
+        "block": "minecraft:dark_oak_trapdoor[facing=south,half=top,open=true,powered=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "hh       hh     ",
+      "hhhhhhhhhhhhhhhh",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "hh       hh     ",
+      "hhhhhhhhhhhhhhhh",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "hhhhhhhhhhhhhhhh",
+      "ecbdaddbdbbcacce",
+      "cecdbcbaebeeddab",
+      "edbcadeedcdcaabc",
+      "ccdabeceaaeabdcb",
+      "beaabdcdcba     ",
+      "ecacabcee       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "ccebceeOOOOOOOOO",
+      "ѶkkҕѶkkaϖϖϖϖϖϖϖϖ",
+      "       嘲        ",
+      "       d   c喂b喂e",
+      "抬 抬 抬 抬d喂b喂eϖaϖb",
+      "返 返 返 返dϖdϖdeadb",
+      "侬乡侬乡侬乡侬aaee     ",
+      "cbabccb         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "acacdee手dabdaacc",
+      " kk  kka奔奔奔奔奔奔奔奔",
+      "       柄        ",
+      "       e   c滋b滋b",
+      "抬 抬 抬 抬d滋a滋bPdPe",
+      "返 返 返 返d饼c饼ddbdb",
+      "侬乡侬乡侬乡侬caedce   ",
+      "accbcecbc       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "OOOOOOO手eddaedca",
+      "gkkggkkc家家家家家家家家",
+      "      恢e   胞 胞 胞",
+      "      恢c 胞 b燃e燃d",
+      "抬 抬 抬 抬c燃d燃g g g",
+      "返 返 返 返e g gcdde",
+      "侬乡侬乡侬乡侬gdedba   ",
+      "bdagbd ce       ",
+      "cb              ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

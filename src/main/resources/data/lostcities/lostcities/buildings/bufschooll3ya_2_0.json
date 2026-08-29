@@ -1,0 +1,32 @@
+{
+  "filler": "#",
+  "rubble": "}",
+  "minfloors": 3,
+  "maxfloors": 3,
+  "maxcellars": 0,
+  "allowDoors": false,
+  "parts": [
+    {
+      "part": "bufschooll3ya_2_0_0",
+      "floor": 0
+    },
+    {
+      "part": "bufschooll3ya_2_0_1",
+      "floor": 1
+    },
+    {
+      "part": "bufschooll3ya_2_0_2",
+      "floor": 2
+    },
+    {
+      "part": "bufschooll3ya_2_0_3",
+      "floor": 3
+    }
+  ],
+  "parts2": [
+    {
+      "part": "lostcities:bufschooll3ya_2_0_0_parts2",
+      "floor": 0
+    }
+  ]
+}

@@ -1,0 +1,257 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "之",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "花",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "规",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "说",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "评",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 388,
+          "x": 115,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:barrel",
+          "y": 134,
+          "Items": []
+        }
+      },
+      {
+        "char": "雄",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "猫",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "院",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "元",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "图",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "便",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "卡",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "般",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "度",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "版",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "林",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "没",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "跟",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "adkdrdkcabkbbkcs",
+      "babbdkabackbddks",
+      "cdkbkaakaacckaks",
+      "sscdadkkassssJss",
+      "bcakkbadackcabas",
+      "dackaaaabdkdkkbs",
+      "dbabcddkckaccdcs",
+      "ssdckabkbsJsssss",
+      "abbkkckacaabkccJ",
+      "baaaddabakkkccrs",
+      "kabacddcbraadcds",
+      "ssdbcckckssssJsJ",
+      "cakcbkkkcdabakds",
+      "bdcdaddbkcrbdkbs",
+      "kaadakdbrbbaacbJ",
+      "ssdcapaakssssssJ"
+    ],
+    [
+      "    q           ",
+      "                ",
+      "              q ",
+      "        q       ",
+      "  提提提           ",
+      "  之 之           ",
+      "  提 提           ",
+      "  提 提           ",
+      "  之 之           ",
+      "  提提提           ",
+      "        qq      ",
+      "               N",
+      "                ",
+      "          花     ",
+      "  q     q       ",
+      "q               "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "   规            ",
+      "  说评说           ",
+      "  说说说           ",
+      "  说说说           ",
+      "  说说说           ",
+      "  说说说           ",
+      "  说说说           ",
+      "                ",
+      "               N",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   雄            ",
+      "  说h说           ",
+      "  猫 猫           ",
+      "  说 说           ",
+      "  院元图           ",
+      "   便            ",
+      "                ",
+      "               N",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  卡便便           ",
+      "  卡般便           ",
+      "  卡般便           ",
+      "  便卡便           ",
+      "                ",
+      "                ",
+      "               N",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "              度 ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              版 ",
+      "             林没跟",
+      "              度 ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

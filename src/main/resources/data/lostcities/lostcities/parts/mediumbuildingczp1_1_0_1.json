@@ -1,0 +1,241 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "Β",
+        "block": "minecraft:cobblestone[weathering=true]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "Э",
+        "block": "minecraft:stone[weathering=true]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "ϟ",
+        "block": "minecraft:glass_pane[east=true,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "ΰ",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=side,west=side]"
+      },
+      {
+        "char": "Ѹ",
+        "block": "minecraft:skeleton_skull[rotation=10]",
+        "tag": {
+          "z": 619,
+          "x": 118,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 139
+        }
+      },
+      {
+        "char": "h",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "η",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ж",
+        "block": "minecraft:spruce_log[axis=z]"
+      },
+      {
+        "char": "Ί",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "α",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϲ",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=true,west=true]"
+      },
+      {
+        "char": "Ͻ",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ц",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ћ",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ϥ",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ь",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=top,shape=straight,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     oooo       ",
+      "ebbbbbeΒΒg      ",
+      "fbbbeebbeg      ",
+      "efbfeebeЭ       ",
+      "bbbbbebbb       ",
+      "bfbebebeb       ",
+      "bbbebfbff       ",
+      "bfbebebbb       ",
+      "fbbbfbbeb       ",
+      "bbfbffbbb       "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      ooo       ",
+      "        yg      ",
+      "cc ϟkaaagg      ",
+      "w     wdg       ",
+      "    ΰ ΰd        ",
+      "     ΰѸh        ",
+      "η   ΰ ΰh        ",
+      "жΊ     h        ",
+      "жΊ     a        ",
+      "α     waΊ       "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      ooo       ",
+      "        zg      ",
+      "ca  ϟcddgg      ",
+      "w     wdg       ",
+      "       c        ",
+      "       h        ",
+      "       h        ",
+      "       h        ",
+      "       a        ",
+      "      wc        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      ooo       ",
+      "        yg      ",
+      "dckkkaca g      ",
+      "w     wdg       ",
+      "       d        ",
+      "       h        ",
+      "       h        ",
+      "       h        ",
+      "       d        ",
+      "      wa        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      ooo       ",
+      "        yg      ",
+      "dckkkacc g      ",
+      "       cϹ       ",
+      "       a        ",
+      "       h        ",
+      "Ͻ      h        ",
+      "Цћ     h        ",
+      "Цϥ     a        ",
+      "ь      aϥ       "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      ooo       ",
+      "bfebbbbeeg      ",
+      "ffefbbbebg      ",
+      "fbbffbfbe       ",
+      "ebbfebfbb       ",
+      "ebbbbfbbb       ",
+      "bebfbfbbb       ",
+      "aebbbbbfb       ",
+      "bfbbbbbbb       ",
+      "fbeebfbbb       "
+    ]
+  ]
+}

@@ -1,0 +1,454 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "光",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "站",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "买",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "设",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "後",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "留",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "时",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 434,
+          "x": 58,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 133,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Loom\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\">>>\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѕ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 471,
+          "x": 31,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Birch logs\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "球",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 424,
+          "x": 152,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 134,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Register 1\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "议",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "质",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "那",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "识",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "舞",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "做",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "品",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "虽",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "研",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "嘛",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "引",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "星",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "立",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "听",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "变",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "特",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "始",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "语",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "把",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "更",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "ofeoyofyfyepofoe",
+      "oeIcadadbcaracaa",
+      "ppbbcwcdcaaaabdw",
+      "efcbwabdbbcaccar",
+      "pfabadbwaaacaada",
+      "opdbcaaddaaadard",
+      "ffabddccaIaadaba",
+      "ofdbdaarwwdbaaab",
+      "pfbbbbwcdaaaacaa",
+      "pyrcacacbabdcaaa",
+      "yfacddadbcaaadda",
+      "efbbbdcaabaaabba",
+      "ffrbcwdbdaaaacac",
+      "eyrcdacbdaccdaaa",
+      "yewcwrarbcaaacaa",
+      "pfIdwcbcaaaacaaa"
+    ],
+    [
+      "  mmmm光站买光站买mm设设",
+      " lD後後後後後後留AAAAAA",
+      " lG 时iq时qp      ",
+      " lG 光站站买loqN   q",
+      " lG 光站站买qennЅ   ",
+      "  G 光站站买lonn  q ",
+      "  G 光站站买 fnnЅ l ",
+      "  Gq光站站买 eqN   g",
+      " lG 球j 球lpnnЅ l ",
+      "  G     lenn    ",
+      " lH  j   pnnЅ  q",
+      " lG  j  le N   N",
+      "  G  j  lf      ",
+      "  G     lfj     ",
+      " mG  q q议质议   l ",
+      "那Cz     议识议     "
+    ],
+    [
+      "  mmmmmm DDDmmm ",
+      " lCAA後後後A舞做做AAAA",
+      " lG  i i p      ",
+      " lG 品  虽le N    ",
+      " lG 品  虽 o研研    ",
+      "  G 品  虽lpj   l ",
+      "  G 品jj虽 f研   l ",
+      "  G 品  虽 e N    ",
+      " lG  j llp研研  l ",
+      "  G     lf      ",
+      " lz  j   f研研    ",
+      " lG  j  lf N   N",
+      "  G  j   f      ",
+      "  G     lfj     ",
+      " mG  j ll嘛    l ",
+      "那DE     l引j     "
+    ],
+    [
+      "  mmmmmm  那Dmmm ",
+      " lHAA後A後A星A做AAAA",
+      " lG  i i p      ",
+      " lG     loҨK    ",
+      " lG      ennЅ   ",
+      "  G    llpnn  l ",
+      "  G  jj  fnnЅ l ",
+      "  G    l eҨK    ",
+      " lG  j llfnnЅ l ",
+      "  G     lpnn    ",
+      " lE  j   fnnЅ   ",
+      " lG  j  lfҨK   N",
+      "  G  j   p      ",
+      "  G     lej     ",
+      " mG  j llf    l ",
+      "那zD     lej     "
+    ],
+    [
+      "  mmmmmm  m mmm ",
+      " lz後A後A後A星AAAAAA",
+      " l立v i i f      ",
+      " lG     lf听变    ",
+      " l立v     o研研    ",
+      "  G    lle    lv",
+      "  G  jj  f研研  lv",
+      "  G    l f听变    ",
+      " lG  j lle研研  l ",
+      "  G     lo     v",
+      " lE  j   e研研   v",
+      " lG  j   o听变   特",
+      "  G  j   f     v",
+      "  G     lfj    v",
+      " mG  j llf    l ",
+      "那CD     lpj    v"
+    ],
+    [
+      "  mmmmmm  m mmm ",
+      " lE留A後A後A星AAAAA星",
+      " l始o i ivo     e",
+      " l始e     e     o",
+      " l始f     f     f",
+      "  语o   l把f    把e",
+      "  语f jj  f    把o",
+      "  语e   l o     f",
+      " l始e j l f    把f",
+      "  语o     e     f",
+      " lDp j  vp     p",
+      " l始e j  ve     e",
+      "  语e j   e     e",
+      "  语e     o更    p",
+      "  语f j l把e    把e",
+      "那HDf     f     p"
+    ]
+  ]
+}

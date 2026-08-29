@@ -1,0 +1,264 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:dirt"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:stone_brick_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:polished_andesite_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:redstone_block"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:polished_andesite_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:quartz_pillar[axis=z]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:stone_brick_slab[type=bottom,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:rail[shape=north_south,waterlogged=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=false,west=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:smooth_quartz_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=true,west=false]"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:smooth_quartz_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:quartz_pillar[axis=x]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:smooth_quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:stone_brick_slab[type=top,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "cCkuBvkic       ",
+      "coniphnoc       ",
+      "cAkupvkyc       ",
+      "coniphnoc       ",
+      "chkuBvkyc       ",
+      "coniphnoc       ",
+      "cAkupvkic       ",
+      "coniphnDc       ",
+      "cAkuBvkyc       ",
+      "coniphnoc       ",
+      "chkupvkyc       ",
+      "coniphnoc       ",
+      "cAkuBvkic       ",
+      "coniphnoc       ",
+      "chkupvkyc       ",
+      "cCkuBvEyc       "
+    ],
+    [
+      "bf  l  db       ",
+      "h   l   i       ",
+      "jf  l  da       ",
+      "h   l   i       ",
+      "bf  l  db       ",
+      "A   l   i       ",
+      "af  l  dj       ",
+      "h   l   i       ",
+      "bf  l  db       ",
+      "h   l   i       ",
+      "jf  l  da       ",
+      "h   l   i       ",
+      "bf  l  db       ",
+      "h   l   i       ",
+      "h   l  dj       ",
+      "bf  l  db       "
+    ],
+    [
+      "bf     db       ",
+      "e       g       ",
+      "jf     dj       ",
+      "e       g       ",
+      "bf     db       ",
+      "e       g       ",
+      "jf      a       ",
+      "e       g       ",
+      "bf     db       ",
+      "e       g       ",
+      "jf     dj       ",
+      "e       g       ",
+      "bf     db       ",
+      "e       g       ",
+      "e      dj       ",
+      "bf     db       "
+    ],
+    [
+      "bf     db       ",
+      "h       i       ",
+      "a       a       ",
+      "h       i       ",
+      "bf     db       ",
+      "h       i       ",
+      "jf      a       ",
+      "h       i       ",
+      "bf     db       ",
+      "h       i       ",
+      "af     dj       ",
+      "h       i       ",
+      "bf     db       ",
+      "h       i       ",
+      "h      da       ",
+      "bf     db       "
+    ],
+    [
+      "bf     db       ",
+      "e       g       ",
+      "a       a       ",
+      "e       g       ",
+      "bf     db       ",
+      "e       g       ",
+      "a       a       ",
+      "e       g       ",
+      "bf     db       ",
+      "e       g       ",
+      "af     da       ",
+      "e       g       ",
+      "bf     db       ",
+      "e       g       ",
+      "e       a       ",
+      "bf     db       "
+    ],
+    [
+      "br    mtb       ",
+      "ae    mga       ",
+      "awm    xa       ",
+      "ae    mga       ",
+      "brm    tb       ",
+      "ae     ga       ",
+      "ae    mxa       ",
+      "awm    xa       ",
+      "br    mtb       ",
+      "awm    xa       ",
+      "aw    mxa       ",
+      "aem   mxa       ",
+      "br     tb       ",
+      "aw     ga       ",
+      "awm   mxa       ",
+      "br    mtb       "
+    ],
+    [
+      "  srzts         ",
+      "  aeqgj         ",
+      "  aeqga         ",
+      "  aeqga         ",
+      "  srzts         ",
+      "  aeqga         ",
+      "  jwqga         ",
+      "  jwqga         ",
+      "  srzts         ",
+      "  jeqga         ",
+      "  aeqgj         ",
+      "  jeqxa         ",
+      "  srzts         ",
+      "  aeqga         ",
+      "  jeqgj         ",
+      "  srzts         "
+    ]
+  ]
+}

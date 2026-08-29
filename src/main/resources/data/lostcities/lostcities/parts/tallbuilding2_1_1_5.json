@@ -1,0 +1,220 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:oak_fence[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Γ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:spruce_trapdoor[facing=west,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ͺ",
+        "block": "minecraft:chest[facing=south,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 578,
+          "x": 245,
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 166,
+          "Items": []
+        }
+      },
+      {
+        "char": "4",
+        "block": "minecraft:chest[facing=south,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 582,
+          "x": 246,
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 167,
+          "Items": []
+        }
+      },
+      {
+        "char": "F",
+        "block": "minecraft:spruce_trapdoor[facing=east,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ͻ",
+        "block": "minecraft:spruce_trapdoor[facing=south,half=bottom,open=false,powered=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "        b       ",
+      "      Q h       ",
+      "        c       ",
+      "        h       ",
+      "        c       ",
+      "        hd      ",
+      "        ad      ",
+      "l       hd      ",
+      "bgjgjgbgbd      ",
+      "ee     ee       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "    ibica       ",
+      "  zajiaba       ",
+      "Γ zbaimic       ",
+      "namiacacc       ",
+      "ajbaaicbc       ",
+      "jbmbccbacd      ",
+      "lacjicciad      ",
+      "lacbibjijd      ",
+      "manijiiabd      ",
+      "ee     ee       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "    Hͺ4Fc       ",
+      "        h       ",
+      "    Hͺ4Fa       ",
+      "        h       ",
+      "    Hͺ4Fi       ",
+      "        hd      ",
+      "ll  Hͺ4Fmd      ",
+      "ll      hd      ",
+      "agbgbgjgmd      ",
+      "ee     ee       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "    Hͺ4Fi       ",
+      "        h       ",
+      "    Hͺ4Fc       ",
+      "        h       ",
+      "    Hͺ4Fa       ",
+      "        hd      ",
+      " ll Hͺ4Fad      ",
+      "lll     hd      ",
+      "mgbgbgjgcd      ",
+      "ee     ee       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "     ͻͻ i       ",
+      "        c       ",
+      "     ͻͻ n       ",
+      "        a       ",
+      "     ͻͻ a       ",
+      "        ad      ",
+      "   l ͻͻ bd      ",
+      "l lll   bd      ",
+      "cbanbajjcd      ",
+      "ee     ee       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        j       ",
+      "        h       ",
+      "        c       ",
+      "        h       ",
+      "        m       ",
+      "        hd      ",
+      "    l   nd      ",
+      "  lllll hd      ",
+      "agjgbgbgad      ",
+      "ee     ee       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

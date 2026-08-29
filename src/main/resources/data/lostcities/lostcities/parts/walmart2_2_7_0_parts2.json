@@ -1,0 +1,362 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "哈",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "息",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "案",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "想",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "死",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "希",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "火",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "小",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "及",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "供",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "乎",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ұ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "後",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "动",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "复",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "举",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "内",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "校",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "办",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "龙",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "时",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 434,
+          "x": 58,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 133,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Loom\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\">>>\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "远",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "公",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "士",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "cdadwabrbbrccwdc",
+      "daawbdbdcdrwddcd",
+      "cadawwbcbdwwdbcc",
+      "awbbddabwbbddcba",
+      "cbwrabcdcbwddaba",
+      "wawbarcadadccabc",
+      "cbadcbdbrwbccaIa",
+      "bacbccadrcwbbdwr",
+      "IaIbawcbbcwabbIc",
+      "wabwabcbwabbbbbd",
+      "acabcwbabaddddca",
+      "cwbccbdcbwbbcdca",
+      "bdrrbwcdcwacbdbw",
+      "brdcddwcdcwdbcdc",
+      "abbaddabdbbbadbb",
+      "rrrrrrrrrrrrrrrr"
+    ],
+    [
+      " i  i        q  ",
+      "         哈哈     ",
+      "         息哈    q",
+      "        案哈    m ",
+      " m qmm想  m  w死w ",
+      "   希想q    想火ww  ",
+      "小 小及想想  q 想及wwwq",
+      "小小q供想想想 q想想乎wwwq",
+      "gggggggggggggggg",
+      "iҰDj  iiҰD  iiii",
+      "  i      i      ",
+      "                ",
+      " qqq            ",
+      " q            q ",
+      "A後AACAAAAA後AAz後A",
+      "iqqqqq动qqqqq动qqq"
+    ],
+    [
+      "复i复举i举          ",
+      "                ",
+      "                ",
+      "                ",
+      " m   m   m   m  ",
+      "   N       内w   ",
+      "            w w ",
+      "小小 校 想    想办www ",
+      "ffHyffooyDeeoeoo",
+      "iҰEj  iiҰz  iiii",
+      "  i      i      ",
+      "                ",
+      "                ",
+      "                ",
+      "AAAAzAAAAAAAAzAA",
+      "ii iii龙 i i 龙ii "
+    ],
+    [
+      " ii ii          ",
+      "                ",
+      "                ",
+      "                ",
+      "时m时 时m时 时m时 时m时 ",
+      "nnnKnnnnnnnKnnnn",
+      "nnnҨnnnnnnnҨnnnn",
+      "nnnKnnnnnnnKnnnn",
+      "yezpeyoffDpefoyp",
+      "iҰDj  iiҰz  iiii",
+      "  i      i      ",
+      "                ",
+      "                ",
+      "                ",
+      "AAAACAAAAAAAADAA",
+      "ii iiii i i iii "
+    ],
+    [
+      "    ii          ",
+      "                ",
+      "                ",
+      "                ",
+      "mmm mmm mmm  mm ",
+      "小小小远想想想l想想想远www ",
+      "小小小及想想想公想想想及www公",
+      "小小小乎想想想死想想想乎www死",
+      "eyDpoyfefDeoeepe",
+      "iҰHj  iiҰC  iiii",
+      "  i      i      ",
+      "                ",
+      "                ",
+      "                ",
+      "AAAAEAAAAAAAAzAA",
+      "ii iiii i i iii "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "mmm  mm mmm  m  ",
+      "小小小士想想想 想想想士www ",
+      "小小小 想想想公想想想 www公",
+      "小小小办想想想死想想想办www ",
+      "yeCyoyefozeeppoo",
+      "iҰEj  iiҰH  iiii",
+      "  i      i      ",
+      "                ",
+      "                ",
+      "                ",
+      "AAAAzAAAAAAAAzAA",
+      "ii iiii i i iii "
+    ]
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "dimx": 4,
+  "dimz": 4,
+  "buildings": [
+    [
+      "tv_tower_0_0",
+      "tv_tower_0_1",
+      "tv_tower_0_2",
+      "tv_tower_0_3"
+    ],
+    [
+      "tv_tower_1_0",
+      "tv_tower_1_1",
+      "tv_tower_1_2",
+      "tv_tower_1_3"
+    ],
+    [
+      "tv_tower_2_0",
+      "tv_tower_2_1",
+      "tv_tower_2_2",
+      "tv_tower_2_3"
+    ],
+    [
+      "tv_tower_3_0",
+      "tv_tower_3_1",
+      "tv_tower_3_2",
+      "tv_tower_3_3"
+    ]
+  ]
+}

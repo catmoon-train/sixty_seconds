@@ -1,0 +1,308 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "΅",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Α",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Φ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͼ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 544,
+          "x": 48,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 134,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "υ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 540,
+          "x": 48,
+          "BrewTime": "0s",
+          "Fuel": "0b",
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:brewing_stand",
+          "y": 135,
+          "Items": []
+        }
+      },
+      {
+        "char": "7",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:air",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 545,
+          "x": 48,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 136,
+          "Items": []
+        }
+      },
+      {
+        "char": "6",
+        "block": "minecraft:air",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 546,
+          "x": 48,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 136,
+          "Items": []
+        }
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaxaaaaaaaaaaaaa",
+      "aaaxaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "bbb  bbb bbbbbbb",
+      "  bbbbb  bbb bbb",
+      "b b bbb bbbb b b",
+      "eeLoooooooooH b ",
+      "dden bbbbbbbibbb",
+      "eeeb bb b bbib b",
+      "ddebb bbbbb ib b",
+      "ddeb  b  bbbib b",
+      "dde bb   bbbibbb",
+      "dde bbbbb bbibbb",
+      "ddejbbbbbb bibbb",
+      "dde b bb bb i bb",
+      "ddebbb   bbbibbb",
+      "ddebbbb  b  ibbb",
+      "ddebbbbbbbbbibbb",
+      "dde bbb bbbbi bb"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "oo΅             ",
+      "                ",
+      "YΑH             ",
+      "  i             ",
+      "  i             ",
+      "rrg             ",
+      "ccg             ",
+      "ecg             ",
+      "ecgj            ",
+      "ecg l           ",
+      "ecg l           ",
+      "Φcgyl           ",
+      "ͼcg l           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "  A             ",
+      "                ",
+      "A               ",
+      "                ",
+      "                ",
+      "rrH             ",
+      "ccg             ",
+      " cg             ",
+      " cg             ",
+      "υcgjl           ",
+      " cgjl           ",
+      " cg7l           ",
+      " cg l           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      " en             ",
+      " dn             ",
+      "Adn             ",
+      " dn             ",
+      " dn             ",
+      "den             ",
+      "ccH             ",
+      "fcg             ",
+      "3cg             ",
+      "6cg l           ",
+      "Jcg l           ",
+      "3cgjl           ",
+      "6cgjl           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "n               ",
+      "s               ",
+      "s               ",
+      "s               ",
+      "s               ",
+      "nFv             ",
+      "ccv             ",
+      "fkv             ",
+      "hkv             ",
+      "hkvjl           ",
+      " kvjl           ",
+      "hkvyl           ",
+      "hkv l           "
+    ]
+  ]
+}

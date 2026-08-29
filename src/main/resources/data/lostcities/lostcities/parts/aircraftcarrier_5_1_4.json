@@ -1,0 +1,298 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:gold_block"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "楼",
+        "block": "minecraft:smooth_quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "暴",
+        "block": "minecraft:smooth_quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "须",
+        "block": "minecraft:smooth_quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "闯",
+        "block": "minecraft:lever[face=ceiling,facing=west,powered=true]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "驻",
+        "block": "minecraft:furnace[facing=west,lit=false]",
+        "tag": {
+          "z": 953,
+          "x": -551,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 120,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "摊",
+        "block": "minecraft:dispenser[facing=south,triggered=false]",
+        "tag": {
+          "z": 939,
+          "x": -457,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:dispenser",
+          "y": 111,
+          "Items": []
+        }
+      },
+      {
+        "char": "J",
+        "block": "minecraft:quartz_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:quartz_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:black_stained_glass"
+      },
+      {
+        "char": "穴",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "扣",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "疋",
+        "block": "minecraft:quartz_stairs[facing=east,half=top,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:quartz_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "倩",
+        "block": "minecraft:quartz_stairs[facing=east,half=top,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:quartz_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "绑",
+        "block": "minecraft:smooth_quartz_stairs[facing=east,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "约",
+        "block": "minecraft:smooth_quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "渺",
+        "block": "minecraft:smooth_quartz_stairs[facing=south,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "蓄",
+        "block": "minecraft:smooth_quartz_stairs[facing=north,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "伺",
+        "block": "minecraft:smooth_quartz_stairs[facing=west,half=bottom,shape=outer_right,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "dcdcfd   afdbbaa",
+      "babafe e afdcdae",
+      "bcbefdqq cfbeaee",
+      "ecdddf   faceeae",
+      "eeadbefffdcdaabd",
+      "dbbddddaadbcadcc",
+      "edecffffffffffff",
+      "acafccdbiddbbbdc",
+      "decfdbacdibebead",
+      "beafdccddciiiiii",
+      "dcefdcbdgbcabacb",
+      "cebfbebaeeabddca",
+      "ebefaaiebdleelac",
+      "eadfadieddleeldb",
+      "ebefbeebaedadbda",
+      "ddcfdcadgbdeebbe"
+    ],
+    [
+      "    楼i ffi暴     ",
+      "    楼i  ci暴     ",
+      "    楼iqq i暴     ",
+      "     须iii暴      ",
+      "      须须须       ",
+      "                ",
+      "                ",
+      "  f             ",
+      "  l             ",
+      "  n        n    ",
+      "  l           y ",
+      "  n             ",
+      "  l            y",
+      "  n            y",
+      "  l             ",
+      "  n           y "
+    ],
+    [
+      "     i cci      ",
+      "     iqqMi   闯  ",
+      "     i   i      ",
+      "      iii       ",
+      "                ",
+      "                ",
+      "                ",
+      "  f             ",
+      "  n        xs   ",
+      "  l        ss   ",
+      "  n         sss ",
+      "  l        驻ssss",
+      "摊 n        JQwwo",
+      "  l        JQxxo",
+      "  n        驻ssss",
+      "  l         sss "
+    ],
+    [
+      "     楼bd 暴      ",
+      "     楼cd aeadc穴 ",
+      "     楼be 暴      ",
+      "      须须须       ",
+      "                ",
+      "                ",
+      "                ",
+      "  f             ",
+      "  l             ",
+      "  n             ",
+      "  l             ",
+      "  n             ",
+      "扣 l      疋Hz    ",
+      "  n      倩ϓz    ",
+      "  l             ",
+      "  n             "
+    ],
+    [
+      "      绑约渺       ",
+      "      楼i暴       ",
+      "      蓄须伺       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  f             ",
+      "  f             ",
+      "  f             ",
+      "  f     y       ",
+      "  f     Jz      ",
+      "  f     Jz      ",
+      "  f     y       ",
+      "  f             "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

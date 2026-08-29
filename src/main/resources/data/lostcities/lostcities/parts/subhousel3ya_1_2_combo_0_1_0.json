@@ -1,0 +1,690 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:dirt"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "W",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:dark_oak_planks"
+      },
+      {
+        "char": "7",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "μ",
+        "block": "minecraft:dirt_path"
+      },
+      {
+        "char": "4",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ώ",
+        "block": "minecraft:rooted_dirt"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:oak_wood[axis=y]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ё",
+        "block": "minecraft:coarse_dirt"
+      },
+      {
+        "char": "ϑ",
+        "block": "minecraft:dark_oak_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "σ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:polished_deepslate_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "Ϝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "0",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͼ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Η",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "у",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:spruce_planks"
+      },
+      {
+        "char": "й",
+        "block": "minecraft:spruce_stairs[facing=north,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "ϋ",
+        "block": "minecraft:spruce_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ѣ",
+        "block": "minecraft:spruce_stairs[facing=north,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blue_terracotta"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cobbled_deepslate_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "Ϗ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "҃",
+        "block": "minecraft:dark_oak_button[face=floor,facing=west,powered=false]"
+      },
+      {
+        "char": "Ѫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ε",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϸ",
+        "block": "minecraft:sweet_berry_bush[age=0]"
+      },
+      {
+        "char": "Ў",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "З",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ή",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "λ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ч",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѫ",
+        "block": "minecraft:air",
+        "tag": {
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          },
+          "x": -570,
+          "ForgeCaps": {},
+          "y": -58,
+          "z": 38,
+          "id": "refurbished_furniture:kitchen_sink"
+        }
+      },
+      {
+        "char": "њ",
+        "block": "minecraft:air",
+        "tag": {
+          "Connections": [
+            "L"
+          ],
+          "NodePos": "-156405528891450L",
+          "MaxProcessTime": 0,
+          "Energy": 0,
+          "ProcessTime": 0,
+          "x": -569,
+          "Enabled": "0b",
+          "y": -58,
+          "Items": [],
+          "z": 38,
+          "id": "refurbished_furniture:freezer",
+          "Powered": "0b"
+        }
+      },
+      {
+        "char": "љ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͼ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "γ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "φ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": ";",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:stripped_birch_wood[axis=y]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:green_terracotta"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:birch_planks"
+      },
+      {
+        "char": "В",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "x": -570,
+          "y": -58,
+          "Items": [],
+          "z": 46,
+          "id": "refurbished_furniture:kitchen_drawer"
+        }
+      },
+      {
+        "char": "ф",
+        "block": "minecraft:air",
+        "tag": {
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          },
+          "x": -572,
+          "ForgeCaps": {},
+          "y": -58,
+          "z": 46,
+          "id": "refurbished_furniture:basin"
+        }
+      },
+      {
+        "char": "Д",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "П",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ο",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "x": -573,
+          "y": -58,
+          "Items": [],
+          "z": 48,
+          "id": "refurbished_furniture:kitchen_drawer"
+        }
+      },
+      {
+        "char": "ћ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ά",
+        "block": "minecraft:spruce_button[face=floor,facing=west,powered=false]"
+      },
+      {
+        "char": "ы",
+        "block": "minecraft:spruce_button[face=floor,facing=east,powered=false]"
+      },
+      {
+        "char": "ѱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϙ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҋ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϗ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Н",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ι",
+        "block": "minecraft:spruce_fence[east=false,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "9",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "΅",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "5",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "п",
+        "block": "minecraft:spruce_fence[east=false,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "ј",
+        "block": "minecraft:air",
+        "tag": {
+          "x": -569,
+          "y": -57,
+          "Items": [],
+          "z": 38,
+          "id": "refurbished_furniture:fridge"
+        }
+      },
+      {
+        "char": "τ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ш",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҙ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҟ",
+        "block": "minecraft:air",
+        "tag": {
+          "CanExtract": "0b",
+          "x": -573,
+          "y": -57,
+          "Items": [],
+          "z": 47,
+          "PlacedByPlayer": "0b",
+          "id": "refurbished_furniture:cutting_board"
+        }
+      },
+      {
+        "char": "ѡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϯ",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "x": -571,
+          "y": -55,
+          "Items": [],
+          "z": 34,
+          "id": "refurbished_furniture:cabinet"
+        }
+      },
+      {
+        "char": "ϩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϥ",
+        "block": "minecraft:spruce_fence[east=true,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "δ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҋ",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "x": -571,
+          "y": -56,
+          "Items": [],
+          "z": 38,
+          "id": "refurbished_furniture:cabinet"
+        }
+      },
+      {
+        "char": "ϴ",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "x": -569,
+          "y": -56,
+          "Items": [],
+          "z": 38,
+          "id": "refurbished_furniture:cabinet"
+        }
+      },
+      {
+        "char": "Г",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ғ",
+        "block": "minecraft:air",
+        "tag": {
+          "Connections": [
+            "L"
+          ],
+          "NodePos": "-156955284672568L",
+          "x": -571,
+          "y": -56,
+          "z": 46,
+          "id": "refurbished_furniture:range_hood"
+        }
+      },
+      {
+        "char": "ҏ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Γ",
+        "block": "minecraft:dark_oak_trapdoor[facing=east,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ћ",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "x": -569,
+          "y": -55,
+          "Items": [],
+          "z": 34,
+          "id": "refurbished_furniture:cabinet"
+        }
+      },
+      {
+        "char": "ϝ",
+        "block": "minecraft:spruce_fence[east=false,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:dark_oak_leaves[distance=7,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "ґ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:oak_leaves[distance=1,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:cobbled_deepslate_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "Ϡ",
+        "block": "minecraft:cobbled_deepslate_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:polished_deepslate_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "ϱ",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "x": -572,
+          "y": -55,
+          "Items": [],
+          "z": 46,
+          "id": "refurbished_furniture:cabinet"
+        }
+      },
+      {
+        "char": "Φ",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "x": -570,
+          "y": -57,
+          "Items": [],
+          "z": 52,
+          "id": "refurbished_furniture:cabinet"
+        }
+      },
+      {
+        "char": "Ͷ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϳ",
+        "block": "minecraft:dark_oak_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aadddddddddddddd",
+      "aadddddddddddddd",
+      "aadddddddddddddd"
+    ],
+    [
+      "VjWwgmmmmmmmmmmm",
+      "7jpwgmmmmmmmmmμm",
+      "4jjEgmmmmmmmmΏz ",
+      "iuuigmmmmmmmΏzzΏ",
+      "VpjigmmmmmmΏzzzЁ",
+      "4uWwgmmmmmmzzzzμ",
+      "ijpigmmmmmmΏΏЁμϑ",
+      "VjWigggggggggggg",
+      "7σwiiiijiwiwiwti",
+      "Ϝ00ͱijͼͱjͼ000ͱjΗ",
+      " jj  jjwj j jjw ",
+      "jjjjjpjjjjjjipуi",
+      "jjpwiiipѳjwiiiij",
+      "jjgggggggggggggg",
+      "jwgkkkkkkkkkkkkk",
+      "jigkkkйkkkkϋkkϋѣ"
+    ],
+    [
+      "V  xb     beϏ҃p ",
+      "4  xbbbbbbbppu p",
+      "    bѪεεWp Neϸze",
+      "   Ўbѝp   pewzzϸ",
+      "    bЗΉpuλuWzzej",
+      "   xbЗNp λbezez ",
+      "   vbЧѫњљλbwW   ",
+      "    gbbbbbbbbbbb",
+      "V x  iJ  xϾx x E",
+      "Ϝ0ͱ             ",
+      "       x      x ",
+      "            p   ",
+      "   x uγφ;Gx; iu ",
+      " ϫHcccccccccccHP",
+      " xcВфεВc ДѼ П ѹ ",
+      "  cοћΆ   pы ѱϙҊϗ"
+    ],
+    [
+      "    b     b     ",
+      "    bbbbbbb     ",
+      "   vbN        p ",
+      "   vbН      xzΙ ",
+      "   9΅       zz  ",
+      "    5u   p  п z ",
+      "   vbp јNp x    ",
+      "    gbbbbbbbbbbb",
+      "    JJ  J J   J ",
+      "                ",
+      "                ",
+      "                ",
+      "  γ        φγp  ",
+      " τHcccccccccccHP",
+      " ϫc   Шc    ҙ   ",
+      "  5Ҟ            "
+    ],
+    [
+      "    b     b ѡ   ",
+      "    bbbbbbb     ",
+      "   vbϮϩϩ        ",
+      "   vb        z  ",
+      "            ϥzΙ ",
+      "   9δ           ",
+      "   vbҋϴϴ        ",
+      "   vgbbbbbbbbbbb",
+      "    JJ  J    JJJ",
+      "                ",
+      "                ",
+      "                ",
+      "             φγ ",
+      " ГHcccccccccccHP",
+      " τc  Ғ cҏ       ",
+      " 9΅    Γ        "
+    ],
+    [
+      "    b     b     ",
+      "    bbbbbbb     ",
+      "    bϮЋЋ        ",
+      "   vb        ϝ B",
+      "    ґ       ϥz  ",
+      "             X  ",
+      "    b          h",
+      "   vgbbbbbbtEEϠb",
+      "    J  JJ      n",
+      "                ",
+      "                ",
+      "                ",
+      "  ;          ;  ",
+      " vHcccccccccccHP",
+      " ГcϱϱΦΦc        ",
+      "  Ͷ    Ϳ        "
+    ]
+  ]
+}

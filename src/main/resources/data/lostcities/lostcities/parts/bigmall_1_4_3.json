@@ -1,0 +1,360 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:light_gray_carpet"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:andesite"
+      },
+      {
+        "char": "本",
+        "block": "minecraft:nether_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:diorite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:smooth_quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "Ӫ",
+        "block": "minecraft:polished_diorite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:oak_planks"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:birch_planks"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:jungle_planks"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:smooth_stone"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "父",
+        "block": "minecraft:spruce_fence[east=true,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "抓",
+        "block": "minecraft:spruce_fence[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ώ",
+        "block": "minecraft:gray_carpet"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:acacia_wood[axis=y]"
+      },
+      {
+        "char": "Ө",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "落",
+        "block": "minecraft:composter[level=0]"
+      },
+      {
+        "char": "然",
+        "block": "minecraft:dark_oak_trapdoor[facing=south,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "头",
+        "block": "minecraft:barrel[facing=up,open=false]",
+        "tag": {
+          "z": 357,
+          "x": 115,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:barrel",
+          "y": 141,
+          "Items": []
+        }
+      },
+      {
+        "char": "白",
+        "block": "minecraft:smoker[facing=west,lit=false]",
+        "tag": {
+          "z": 326,
+          "x": 178,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:smoker",
+          "y": 141,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "Ӎ",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "质",
+        "block": "minecraft:spruce_fence[east=false,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "任",
+        "block": "minecraft:dark_oak_trapdoor[facing=west,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "派",
+        "block": "minecraft:brown_wall_banner[facing=north]",
+        "tag": {
+          "z": 357,
+          "Patterns": [],
+          "x": 112,
+          "ForgeCaps": {},
+          "id": "minecraft:banner",
+          "y": 141,
+          "CustomName": "{\"text\":\"Mall Cafe\"}"
+        }
+      },
+      {
+        "char": "嗯",
+        "block": "minecraft:furnace[facing=north,lit=false]",
+        "tag": {
+          "z": 357,
+          "x": 114,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 141,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "牛",
+        "block": "minecraft:spruce_fence[east=true,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "管",
+        "block": "minecraft:spruce_fence[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "看",
+        "block": "minecraft:dark_oak_trapdoor[facing=north,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "球",
+        "block": "minecraft:acacia_wood[axis=z]"
+      },
+      {
+        "char": "点",
+        "block": "minecraft:dark_oak_pressure_plate[powered=false]"
+      },
+      {
+        "char": "є",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "至",
+        "block": "minecraft:detector_rail[powered=false,shape=north_south,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "               h",
+      "               h",
+      "               h",
+      "   mmvmmsmsmmvii",
+      "   m     shhuurr",
+      "   s     mhhw   ",
+      "   s     myw    ",
+      "   v    io      ",
+      "   m    ir      ",
+      "   m   ir       ",
+      "   s  ir3       ",
+      "i immor         ",
+      "rrrou           ",
+      "    w           ",
+      "                "
+    ],
+    [
+      "lhlhlhhlhlhlhhhl",
+      "hlllhllhhhhhlllh",
+      "llhhlllllhlllhh本",
+      "lhhhhhhlhhllllhh",
+      "hhlhllhhhvvvsmvs",
+      "llhlllhhlshhooyy",
+      "hhhlllhhlmhhwPGG",
+      "hllllllhlmow    ",
+      "llhhllhhvoͱ     ",
+      "lllhllhhmuG     ",
+      "hhhhhllmuӪ      ",
+      "lhhhlmmuyG      ",
+      "mmmsmouGG       ",
+      "uooyuPP         ",
+      "GGͱPw           ",
+      "                "
+    ],
+    [
+      "pnpnpnnnnpnCCnCv",
+      "ppppnnppnnCnnphh",
+      "pnnnnpCppnnpnn本 ",
+      "ppnppCnppnnppphh",
+      "pnppCpnnnBBaBBBB",
+      "nppnnnpnnBmvmvmm",
+      "nnnpnnpppamhw   ",
+      "nppCnnnCpjvw    ",
+      "pnnnpnnCjv      ",
+      "pnnpnnppBs      ",
+      "nnCpnnCas       ",
+      "nCpppBamv       ",
+      "BBBBBvs         ",
+      "mmvsv           ",
+      "    w           ",
+      "                "
+    ],
+    [
+      " 父抓    ώώώώώ  tt",
+      "tttt   ώώώώώ  hӨ",
+      "落然然头t           ",
+      "   白t抓        hӍ",
+      "   白t质  任ttttttt",
+      "派嗯嗯头t   任thhouyo",
+      "tttt    任thhwQII",
+      " 牛质     任tow    ",
+      "        tuI     ",
+      "        tuI     ",
+      "管 管 管  toI      ",
+      "看看看看看ttyoI      ",
+      "ttt球tuyII       ",
+      "ououyII         ",
+      "IQIQw           ",
+      "                "
+    ],
+    [
+      " 点点             ",
+      "є  є            ",
+      "    є           ",
+      "   至 点          ",
+      "   至 点   mmmms i",
+      "    є    mhhuyrr",
+      "є  є     shhw   ",
+      " 点点      vyw    ",
+      "        io      ",
+      "         r      ",
+      "点 点 点  ir       ",
+      "      ir3       ",
+      "iiimsur         ",
+      "rrroo           ",
+      "    w           ",
+      "                "
+    ],
+    [
+      "                ",
+      "є  є            ",
+      "    є           ",
+      "                ",
+      "         smmmsii",
+      "    є    shhoorr",
+      "є  є     mhhw   ",
+      "         mow    ",
+      "        iu      ",
+      "        ir      ",
+      "       ir       ",
+      "     iir3       ",
+      "i imsur         ",
+      "rrruo           ",
+      "    w           ",
+      "                "
+    ]
+  ]
+}

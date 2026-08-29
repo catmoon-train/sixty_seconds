@@ -1,0 +1,174 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:red_concrete"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:red_terracotta"
+      },
+      {
+        "char": "吧",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:red_wool"
+      },
+      {
+        "char": "ú",
+        "block": "minecraft:iron_bars[east=false,north=true,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Ӽ",
+        "block": "minecraft:stone_brick_wall[east=low,north=none,south=none,up=false,waterlogged=false,weathering=false,west=low]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "a               ",
+      "                ",
+      "                ",
+      "a               ",
+      "d               ",
+      "cd              ",
+      "ab              ",
+      "db d            ",
+      "aa              ",
+      "dd e            ",
+      "ca              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "i               ",
+      "                ",
+      "                ",
+      "A               ",
+      "A               ",
+      "dE              ",
+      "bA              ",
+      "eE b            ",
+      "cA              ",
+      "cE a            ",
+      "d吧              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "g               ",
+      "                ",
+      "                ",
+      "A               ",
+      "E               ",
+      "eX              ",
+      "dú              ",
+      "dE c            ",
+      "aX              ",
+      "bE e            ",
+      "cA              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "a               ",
+      "                ",
+      "                ",
+      "E               ",
+      "A               ",
+      "dA              ",
+      "bA              ",
+      "cE d            ",
+      "cE              ",
+      "dE d            ",
+      "bE              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "g               ",
+      "                ",
+      "                ",
+      "A               ",
+      "A               ",
+      "aA              ",
+      "aú              ",
+      "bEӼa            ",
+      "dX              ",
+      "dEӼc            ",
+      "eE              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "a               ",
+      "                ",
+      "                ",
+      "X               ",
+      "E               ",
+      "eE              ",
+      "eA              ",
+      "cA a            ",
+      "bX              ",
+      "dE e            ",
+      "bX              "
+    ]
+  ]
+}

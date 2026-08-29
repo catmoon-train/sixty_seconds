@@ -1,0 +1,170 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:iron_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "下",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:iron_trapdoor[facing=east,half=top,open=false,powered=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "   ega          ",
+      "cacidi          ",
+      "dbcbaaa         ",
+      "ecddaeg         ",
+      "aebbdgba        ",
+      "eebadiei        ",
+      "bcddecadg       ",
+      "acebdcgba       ",
+      "bceeaega        ",
+      "eaebdaga        ",
+      "adcaadbaa       ",
+      "ebcebdegc       ",
+      "beccaebab       ",
+      "decbaceic       ",
+      "dbbaaaeaca      ",
+      "ecccdecid       "
+    ],
+    [
+      "     g          ",
+      "   fa           ",
+      "ϔ   f           ",
+      "    f           ",
+      "     f          ",
+      "     f          ",
+      "      f         ",
+      "daebaeidg       ",
+      "                ",
+      "      f         ",
+      " ccc   f        ",
+      " a              ",
+      " a ϔ            ",
+      " a     f        ",
+      "dbdebebadg      ",
+      "e               "
+    ],
+    [
+      "     a          ",
+      "   fc           ",
+      "    fl          ",
+      "    fl          ",
+      "     fl         ",
+      "     fl         ",
+      "      fl        ",
+      "caedceaci       ",
+      "      fl        ",
+      "      fl        ",
+      "       fl       ",
+      "        l       ",
+      " 下     fl       ",
+      "       fl       ",
+      "dcebddeaaa      ",
+      "       fl       "
+    ],
+    [
+      "     g          ",
+      "    c           ",
+      "     t          ",
+      "    ft          ",
+      "     ft         ",
+      "     ft         ",
+      "      ft        ",
+      "badeeeaca       ",
+      "      ft        ",
+      "       t        ",
+      "        t       ",
+      "       ft       ",
+      "       ft       ",
+      "        t       ",
+      "ceacabdgea      ",
+      "        t       "
+    ],
+    [
+      "     i          ",
+      "   fe           ",
+      "    f           ",
+      "    f           ",
+      "     f          ",
+      "                ",
+      "      f         ",
+      "adcbdaaca       ",
+      "      f         ",
+      "                ",
+      "       f        ",
+      "       f        ",
+      "       f        ",
+      "       f        ",
+      "ecdcdbcaea      ",
+      "                "
+    ],
+    [
+      "     a          ",
+      "   ac           ",
+      "    gd          ",
+      "    aa          ",
+      "     aa         ",
+      "     aa         ",
+      "      ge        ",
+      "cccceaibg       ",
+      "      ac        ",
+      "      ad        ",
+      "       ae       ",
+      "       aa       ",
+      "       ga       ",
+      "       ae       ",
+      "acbeeecgdg      ",
+      "       ga       "
+    ]
+  ]
+}

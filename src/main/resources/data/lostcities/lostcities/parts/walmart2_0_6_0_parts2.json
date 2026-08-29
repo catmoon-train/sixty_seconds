@@ -1,0 +1,352 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "开",
+        "block": "minecraft:air",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 387,
+          "x": 24,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 132,
+          "SpawnRange": "4s",
+          "Delay": "584s"
+        }
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "往",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "及",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "几",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ұ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "电",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "二",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "那",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "都",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "试",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "老",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "给",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѕ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 471,
+          "x": 31,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Birch logs\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "参",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "持",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "际",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "格",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "abdcbacrdkIIdwbx",
+      "cabaaabdckbIacdx",
+      "aaakrcdkdakIbcdd",
+      "bdkkakbabkaIadda",
+      "bkbdakddbccIdcar",
+      "cakaddaakkdIca开w",
+      "akckabccdbkIwdax",
+      "bkdadddbabkIIbdx",
+      "kdrarababcIIbaax",
+      "cakkarcccdbIdcdx",
+      "accdddackdbIIdwx",
+      "dckkdabkabcIbIIx",
+      "aadcbbdbbdbIcdcx",
+      "caakbddcradIbdIx",
+      "adabckbdkcdIbIcx",
+      "bdcakbkbkdkIbcIx"
+    ],
+    [
+      "       q lHg往及几j",
+      "          Ұg电电电二",
+      "      q    g电电电j",
+      "          lg电电电j",
+      "        q lg电电电q",
+      "          lg电电电j",
+      "          lg电电电j",
+      "          那g电电电二",
+      "  q q    lHg往及几 ",
+      "     q    Ұg都都都二",
+      "          lg都都都j",
+      "          lg都都都j",
+      "          lg都都都j",
+      "        q lg都都都 ",
+      "          lg都都都j",
+      "          那g都都都二"
+    ],
+    [
+      "         lDE试 Nj",
+      "          Ұo老电给 ",
+      "           y 电 j",
+      "          le 电 j",
+      "          le 电 j",
+      "          ly 电 j",
+      "          lf 电 j",
+      "          那f老电给 ",
+      "         lCE试 N ",
+      "          Ұo老都给 ",
+      "          le 都 j",
+      "          ly 都 j",
+      "          ly 都 j",
+      "          lo 都  ",
+      "          ly 都 j",
+      "          那o老都给 "
+    ],
+    [
+      "         lzEKҨKj",
+      "          ҰennnЅ",
+      "           ynnnj",
+      "          lpnnnj",
+      "          lfnnnj",
+      "          lfnnnj",
+      "          lonnnj",
+      "          那onnnЅ",
+      "         lEDKҨK ",
+      "          ҰennnЅ",
+      "          lennnj",
+      "          lfnnnj",
+      "          lfnnnj",
+      "          lfnnn ",
+      "          lfnnnj",
+      "          那onnnЅ"
+    ],
+    [
+      "         lDC参 持j",
+      "          Ұe电电电二",
+      "           f电电电j",
+      "          ly电电电j",
+      "          ly电电电j",
+      "          lf电电电j",
+      "          lf电电电j",
+      "          那e电电电二",
+      "         lzz参i际 ",
+      "          Ұf都都都二",
+      "          lf都都都j",
+      "          lo都都都j",
+      "          lo都都都j",
+      "          lp都都都 ",
+      "           o都都都j",
+      "          那p都都都二"
+    ],
+    [
+      "         lCH试 Nj",
+      "          Ұf老电给 ",
+      "           e 电 j",
+      "          le 电 j",
+      "          lp 电 j",
+      "          lp 电 j",
+      "          lf 电 j",
+      "          那f老电给 ",
+      "         lDz格 N ",
+      "          Ұy老都给 ",
+      "          ly 都 j",
+      "          le 都 j",
+      "          le 都 j",
+      "          ly 都  ",
+      "           e 都 j",
+      "          那e老都给 "
+    ]
+  ]
+}

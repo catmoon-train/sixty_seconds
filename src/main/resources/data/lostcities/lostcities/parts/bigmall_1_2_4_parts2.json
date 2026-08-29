@@ -1,0 +1,369 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "七",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 329,
+          "x": 119,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:range_hood",
+          "y": 144,
+          "NodePos": "32710472274064L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "竟",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 329,
+          "x": 120,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:range_hood",
+          "y": 144,
+          "NodePos": "32985350181008L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "不",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 340,
+          "x": 170,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 141,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"BeanTown\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "说",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 310,
+          "x": 112,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 133,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Dee Luxe Winner's\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Trophy Case\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "鱼",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 327,
+          "Patterns": [],
+          "x": 176,
+          "ForgeCaps": {},
+          "id": "minecraft:banner",
+          "y": 141,
+          "CustomName": "{\"text\":\"WcMonalds\"}"
+        }
+      },
+      {
+        "char": "Ҕ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "努",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Е",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "0",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "4",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "中",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "大",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "了",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "没",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:tall_grass[half=lower]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "         ir     ",
+      "         mu     ",
+      "   mvmsvsmyw    ",
+      "   m     wu     ",
+      "   s     ir     ",
+      "   v     ir     ",
+      "   t      r     ",
+      "   t   七竟wo     ",
+      "不 说t   七竟Eow    ",
+      "   t   七竟wu     ",
+      "   t     ir     ",
+      "   v     ir     ",
+      "   m     ir     ",
+      "   m     wu     ",
+      "   vssmsvmyw    ",
+      "   s     mu     "
+    ],
+    [
+      "         ir     ",
+      "         mo     ",
+      "   mssmsvmuw    ",
+      "   s     wo     ",
+      "   m     ir     ",
+      "   v     ir     ",
+      "   t     ir     ",
+      "   i     wy     ",
+      "   i鱼    wow    ",
+      "   i     wo     ",
+      "   t     ir     ",
+      "   v     ir     ",
+      "   s     ir     ",
+      "   m     wy     ",
+      "   smmsvssow    ",
+      "   m     mu     "
+    ],
+    [
+      "         ir     ",
+      "         mo     ",
+      "   svsssmvow    ",
+      "   mҔҔҔҔҔwo     ",
+      "   mҔҔҔҔҔir     ",
+      "   mҔҔҔҔҔir     ",
+      "   tҔҔҔҔ努 r     ",
+      "   iҔҔҔҔҔwy     ",
+      "   iҔҔҔҔҔwow    ",
+      "   iҔҔҔҔҔwy     ",
+      "   tҔҔҔҔҔir     ",
+      "   vҔҔҔҔҔir     ",
+      "   vҔҔҔҔҔir     ",
+      "   mҔҔҔҔҔwy     ",
+      "   mmmvsmsuw    ",
+      "   s     so     "
+    ],
+    [
+      "llhhlhhllvuG    ",
+      "lhhhhhhlhsyG    ",
+      "hlhhllhllvow    ",
+      "hlhhllhlhsyG    ",
+      "lhhhhhhhhsoP    ",
+      "llhhhhlhlmoӪ    ",
+      "llllhhlhlsyG    ",
+      "lhhhhlhhlmoG    ",
+      "hhhlhhhhhmyw    ",
+      "hhlhhhlllmoͱ    ",
+      "lllhhlhlhmyͱ    ",
+      "hlhlhlhhhmoP    ",
+      "hhllhhhllsuP    ",
+      "hhhhhllhhvoG    ",
+      "hllhhlhhhmow    ",
+      "lllllhhhhsoP    "
+    ],
+    [
+      "y yy     D A    ",
+      "   Ӡ     D A    ",
+      "yӡyy     D v    ",
+      "y yy     D v    ",
+      "         D v    ",
+      "   3     D A    ",
+      "         D A    ",
+      "   3     DЕ0    ",
+      "         DЕv    ",
+      "         D A    ",
+      "         D A    ",
+      "  444    D v    ",
+      " 4   4   D v    ",
+      "4     4  D v    ",
+      "4     4  DxA    ",
+      "4     4  DxA    "
+    ],
+    [
+      "中 大中            ",
+      "                ",
+      "了 没了            ",
+      "中 大中            ",
+      "                ",
+      "yyyy            ",
+      "yyyy            ",
+      "yyyy      U     ",
+      "          U     ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "           x    "
+    ]
+  ]
+}

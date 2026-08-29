@@ -1,0 +1,214 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cut_sandstone"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:dark_oak_leaves[distance=7,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:oak_leaves[distance=7,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "ϊ",
+        "block": "minecraft:spruce_fence[east=true,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Φ",
+        "block": "minecraft:spruce_fence[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ή",
+        "block": "minecraft:spruce_fence[east=true,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "信",
+        "block": "minecraft:spruce_fence[east=true,north=true,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ψ",
+        "block": "minecraft:spruce_fence[east=false,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ͻ",
+        "block": "minecraft:oak_leaves[distance=3,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "ͷ",
+        "block": "minecraft:dark_oak_leaves[distance=3,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "Ψ",
+        "block": "minecraft:dark_oak_leaves[distance=5,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "Θ",
+        "block": "minecraft:oak_leaves[distance=6,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "Λ",
+        "block": "minecraft:oak_leaves[distance=5,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "΄",
+        "block": "minecraft:oak_leaves[distance=4,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "ι",
+        "block": "minecraft:dark_oak_leaves[distance=6,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "               v",
+      "            vvff",
+      "            Yooo",
+      "            iic ",
+      "            iic ",
+      "            Yoyo",
+      "            vffv",
+      "               f",
+      "               v",
+      "               v",
+      " e             f",
+      "  ruu          f",
+      "uϊΦ  u         f",
+      " ή信Φ ur        f",
+      "  ήψ rur       f",
+      "e ͻ ͷ          f"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "            fvvf",
+      "            fvfv",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " ru             ",
+      "rur r           ",
+      "r   r           ",
+      "   uuuur        ",
+      "u ΨΘuu          ",
+      " Λ΄  r          "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "rru u           ",
+      "e               ",
+      "r r             ",
+      "u ι h u         ",
+      " ι uurh         "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   u            ",
+      "  r             ",
+      "    r           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

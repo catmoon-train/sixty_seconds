@@ -1,0 +1,170 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "一",
+        "block": "minecraft:vine[east=true,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "ӻ",
+        "block": "minecraft:vine[east=true,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "ύ",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "7",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "主",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "他",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:light_gray_concrete"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "  V             ",
+      "   V            ",
+      "i               ",
+      "ii              ",
+      " iii            ",
+      "    ii     V    ",
+      "    iiix        ",
+      "     iii        ",
+      "一               ",
+      " ӻ              ",
+      "        i       ",
+      " ύ      i       ",
+      "7     主iio      ",
+      "                ",
+      "       i        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "iii             ",
+      "ii ii           ",
+      "   iii          ",
+      "    iii         ",
+      "     iix        ",
+      "一     i         ",
+      " ӻ     i        ",
+      "      ii        ",
+      " ύ     i        ",
+      "7    主他iio      ",
+      "       ii       ",
+      "      ii        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " i              ",
+      " iii            ",
+      "  i i           ",
+      "     i          ",
+      "     iix        ",
+      "一               ",
+      " ӻ    ii        ",
+      "                ",
+      " ύ    ii        ",
+      "7    主iiyy      ",
+      "      ii        ",
+      "       i        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "i               ",
+      "iii             ",
+      " i  i           ",
+      "   iii          ",
+      "    iix         ",
+      "一    i          ",
+      " ӻ   ii         ",
+      "      i         ",
+      " ύ    ii        ",
+      "7   主他i u       ",
+      "       i        ",
+      "      ii        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "ii i            ",
+      "  i i           ",
+      "   iii          ",
+      "一   iix         ",
+      " ӻ   ii         ",
+      "     ii         ",
+      "xύ   i          ",
+      "7  主他iiou       ",
+      "     ii         ",
+      "     ii         "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "ii              ",
+      "iiii            ",
+      "  iii           ",
+      "一  iixx         ",
+      " ӻ  i           ",
+      "x   ii          ",
+      "xύ  i           ",
+      "  主他iioo        ",
+      "    ii          ",
+      "    ii          "
+    ]
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:cobblestone_wall[east=tall,north=none,south=none,up=false,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:cobblestone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:mossy_cobblestone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "            bfsj",
+      "            kb a",
+      "            v ra",
+      "              ba",
+      "              ka",
+      "             bxa",
+      "            okoa",
+      "             bra",
+      "              ba",
+      "             fnl",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "             fnj",
+      "               a",
+      "               a",
+      "               a",
+      "               a",
+      "               a",
+      "               a",
+      "               a",
+      "               a",
+      "             fsl",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "             ftj",
+      "             e a",
+      "             hpa",
+      "             pea",
+      "              ha",
+      "             eha",
+      "             hea",
+      "             hea",
+      "             eea",
+      "             ful",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "             cgc",
+      "             idc",
+      "             idi",
+      "             gdg",
+      "             gdc",
+      "             mdc",
+      "             cdq",
+      "             mdy",
+      "             qdc",
+      "             gic",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "w               ",
+      "                ",
+      "                ",
+      "                ",
+      "              b ",
+      "              b ",
+      "              b ",
+      "              b ",
+      "              b ",
+      "              b ",
+      "              b ",
+      "              b ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

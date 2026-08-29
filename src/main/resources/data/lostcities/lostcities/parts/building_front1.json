@@ -1,0 +1,224 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:moss_block"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:mossy_cobblestone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:stone_slab[type=double,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:smooth_stone_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:cobblestone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "             c c",
+      "             sgd",
+      "            rDpa",
+      "             bta",
+      "            p ba",
+      "            bb a",
+      "             bba",
+      "            bwba",
+      "            b ta",
+      "             Cza",
+      "            idgd",
+      "             f f",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "             c c",
+      "             dgd",
+      "             f a",
+      "               a",
+      "               a",
+      "               a",
+      "               a",
+      "               a",
+      "               a",
+      "             c a",
+      "            ivgd",
+      "             f f",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "             c c",
+      "            Avgd",
+      "             B a",
+      "              la",
+      "              la",
+      "             lja",
+      "             jja",
+      "              la",
+      "              ja",
+      "             y a",
+      "            isgd",
+      "             f f",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "               c",
+      "             enx",
+      "             hnn",
+      "            iokh",
+      "             qke",
+      "             mkh",
+      "             hoh",
+      "             qem",
+      "             hee",
+      "             mku",
+      "            iuee",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "               b",
+      "                ",
+      "             b  ",
+      "                ",
+      "                ",
+      "              b ",
+      "                ",
+      "                ",
+      "               b",
+      "             r  ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

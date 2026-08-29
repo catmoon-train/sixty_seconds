@@ -1,0 +1,198 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:yellow_terracotta"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "动",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:cobblestone_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "龙",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "度",
+        "block": "minecraft:oak_trapdoor[facing=south,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "版",
+        "block": "minecraft:oak_trapdoor[facing=north,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "林",
+        "block": "minecraft:oak_trapdoor[facing=west,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "没",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "跟",
+        "block": "minecraft:cobblestone_wall[east=low,north=none,south=none,up=true,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "空",
+        "block": "minecraft:oak_trapdoor[facing=east,half=top,open=true,powered=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "akkdsdccrbracbca",
+      "akkdsdakdbdbddkd",
+      "bbadsccarrcbdkdb",
+      "sJsssssJssskkddc",
+      "bdacsdarrrrkdkaa",
+      "aabcsardcarcabbc",
+      "rcrdJddbkccckcdb",
+      "Jsssssssssskdbac",
+      "baabJdaakdccddbk",
+      "bbkcJccdcabkkckb",
+      "bdbksbakarcrkbcb",
+      "ssJssssssssddkad",
+      "kakaJbccdcaabrcd",
+      "bccbskbddcacccbb",
+      "adaksbadraccabkb",
+      "sssssssssJsrcbya"
+    ],
+    [
+      "        q q     ",
+      "                ",
+      "        动q      ",
+      "                ",
+      "       qq动q     ",
+      "      qq  q     ",
+      "q q             ",
+      "                ",
+      "                ",
+      "                ",
+      "         q q    ",
+      "    N           ",
+      "             q  ",
+      "                ",
+      "        q       ",
+      "          qq    "
+    ],
+    [
+      "                ",
+      "                ",
+      "        龙       ",
+      "                ",
+      "         龙      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "    N           ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "    N           ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "    N           ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "   度 度          ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   版 版          ",
+      "  林没跟没空         ",
+      "   度 度          ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

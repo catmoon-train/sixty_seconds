@@ -1,0 +1,202 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "П",
+        "block": "minecraft:barrel[facing=up,open=false]",
+        "tag": {
+          "z": -275,
+          "x": -15,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "id": "minecraft:barrel",
+          "y": 2,
+          "Items": []
+        }
+      },
+      {
+        "char": "s",
+        "block": "minecraft:iron_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:iron_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ӻ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -276,
+          "x": -15,
+          "id": "refurbished_furniture:computer",
+          "y": 27,
+          "NodePos": "-3848291827685L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "说",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:iron_trapdoor[facing=east,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "ddadga          ",
+      "caaad           ",
+      "addegc          ",
+      "dbabgb          ",
+      "baabaab         ",
+      "babcdac         ",
+      "accabbad        ",
+      "cdddaaaca       ",
+      "acdddbgb        ",
+      "dbabdbae        ",
+      "adabceega       ",
+      "ebdccadab       ",
+      "dccacbcac       ",
+      "bccabeead       ",
+      "dbbddbeaaa      ",
+      "abbdeacad       "
+    ],
+    [
+      "  f  g          ",
+      "    c           ",
+      "ϔ   f           ",
+      "    f           ",
+      "     f          ",
+      "     f          ",
+      "      f         ",
+      "edcabcada       ",
+      "                ",
+      "      f         ",
+      " Пed            ",
+      " b     f        ",
+      " e ϔ            ",
+      " b     f        ",
+      "aeceeceaca      ",
+      "b      f        "
+    ],
+    [
+      "  fs a          ",
+      "   fc           ",
+      "    fl          ",
+      "    fl          ",
+      "      l         ",
+      "     fl         ",
+      "      fl        ",
+      "cbbdbeada       ",
+      "      fl        ",
+      "       l        ",
+      "       fl       ",
+      "       fl       ",
+      " Ӻ     fl       ",
+      "       fl       ",
+      "bbdcbbbaeg      ",
+      "       fl       "
+    ],
+    [
+      "   说 a          ",
+      "    d           ",
+      "    ft          ",
+      "    ft          ",
+      "     ft         ",
+      "     ft         ",
+      "       t        ",
+      "caaedcaca       ",
+      "      ft        ",
+      "       t        ",
+      "        t       ",
+      "       ft       ",
+      "        t       ",
+      "       ft       ",
+      "abbcbcbgba      ",
+      "        t       "
+    ],
+    [
+      "  f  g          ",
+      "   fd           ",
+      "    f           ",
+      "                ",
+      "     f          ",
+      "     f          ",
+      "      f         ",
+      "ecaaedaai       ",
+      "      f         ",
+      "                ",
+      "       f        ",
+      "       f        ",
+      "       f        ",
+      "       f        ",
+      "ebbccbcgda      ",
+      "                "
+    ],
+    [
+      "  gb a          ",
+      "   ad           ",
+      "    ab          ",
+      "    ae          ",
+      "     ab         ",
+      "     ga         ",
+      "      ad        ",
+      "ddbdaegag       ",
+      "      aa        ",
+      "      ab        ",
+      "       ae       ",
+      "       ge       ",
+      "       ic       ",
+      "       ge       ",
+      "ceedaacabg      ",
+      "       gd       "
+    ]
+  ]
+}

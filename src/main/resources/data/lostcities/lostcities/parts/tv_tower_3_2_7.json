@@ -1,0 +1,212 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "П",
+        "block": "minecraft:barrel[facing=up,open=false]",
+        "tag": {
+          "z": -275,
+          "x": -15,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "id": "minecraft:barrel",
+          "y": 2,
+          "Items": []
+        }
+      },
+      {
+        "char": "x",
+        "block": "minecraft:cauldron"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "下",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:iron_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "ο",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:iron_trapdoor[facing=south,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:iron_trapdoor[facing=east,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "在",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:iron_trapdoor[facing=south,half=top,open=false,powered=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "ccccdeeid       ",
+      "bbcdaadga       ",
+      "cdecedcaa       ",
+      "baccaeib        ",
+      "edddedge        ",
+      "dceccbgea       ",
+      "deecbegea       ",
+      "bbccbabg        ",
+      "eeeceaca        ",
+      "bdebaea         ",
+      "aeediag         ",
+      "ebagba          ",
+      "eaadgg          ",
+      "eaaea           ",
+      "eaca            ",
+      "adi             "
+    ],
+    [
+      "b ϔ    f        ",
+      "e      f        ",
+      "aaП             ",
+      "      f         ",
+      "      f         ",
+      "eeeaacada       ",
+      "  x   f         ",
+      "     f          ",
+      "     f          ",
+      "    f           ",
+      "dc  f           ",
+      "H   e           ",
+      "  f  a          ",
+      "  f             ",
+      " f              ",
+      "                "
+    ],
+    [
+      "下      fl       ",
+      "       fl       ",
+      "       fl       ",
+      "      fl        ",
+      "      fl        ",
+      "bccceeaba       ",
+      "  k   fl        ",
+      "     fl         ",
+      "      l         ",
+      "     l          ",
+      "ο   fl          ",
+      "   fd           ",
+      "  fu a          ",
+      "  fl            ",
+      "  l             ",
+      "fl              "
+    ],
+    [
+      "        t       ",
+      "        t       ",
+      "       ft       ",
+      "       t        ",
+      "      ft        ",
+      "cdebcdabg       ",
+      "  k   ft        ",
+      "      t         ",
+      "     f在         ",
+      "    ft          ",
+      "    ft          ",
+      "   fa           ",
+      "  fw a          ",
+      "  ft            ",
+      " ft             ",
+      "fw              "
+    ],
+    [
+      "       f        ",
+      "                ",
+      "       f        ",
+      "      f         ",
+      "      f         ",
+      "ddaeddgba       ",
+      "      f         ",
+      "     f          ",
+      "     f          ",
+      "    f           ",
+      "    f           ",
+      "    b           ",
+      "  f  a          ",
+      "  f             ",
+      "                ",
+      "f               "
+    ],
+    [
+      "       ad       ",
+      "       ge       ",
+      "       gb       ",
+      "      ga        ",
+      "      ac        ",
+      "cddcebabi       ",
+      "      ac        ",
+      "     gb         ",
+      "     ic         ",
+      "    ab          ",
+      "    aa          ",
+      "   gb           ",
+      "  ac a          ",
+      "  aa            ",
+      " ic             ",
+      "ga              "
+    ]
+  ]
+}

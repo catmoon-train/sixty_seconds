@@ -1,0 +1,108 @@
+{
+  "filler": "#",
+  "rubble": "}",
+  "minfloors": 21,
+  "maxfloors": 21,
+  "maxcellars": 0,
+  "allowDoors": false,
+  "parts": [
+    {
+      "part": "skyscraper_1_0_0",
+      "floor": 0
+    },
+    {
+      "part": "skyscraper_1_0_1",
+      "floor": 1
+    },
+    {
+      "part": "skyscraper_1_0_2",
+      "floor": 2
+    },
+    {
+      "part": "skyscraper_1_0_3",
+      "floor": 3
+    },
+    {
+      "part": "skyscraper_1_0_4",
+      "floor": 4
+    },
+    {
+      "part": "skyscraper_1_0_5",
+      "floor": 5
+    },
+    {
+      "part": "skyscraper_1_0_6",
+      "floor": 6
+    },
+    {
+      "part": "skyscraper_1_0_7",
+      "floor": 7
+    },
+    {
+      "part": "skyscraper_1_0_8",
+      "floor": 8
+    },
+    {
+      "part": "skyscraper_1_0_9",
+      "floor": 9
+    },
+    {
+      "part": "skyscraper_1_0_10",
+      "floor": 10
+    },
+    {
+      "part": "skyscraper_1_0_11",
+      "floor": 11
+    },
+    {
+      "part": "skyscraper_1_0_12",
+      "floor": 12
+    },
+    {
+      "part": "skyscraper_1_0_13",
+      "floor": 13
+    },
+    {
+      "part": "skyscraper_1_0_14",
+      "floor": 14
+    },
+    {
+      "part": "skyscraper_1_0_15",
+      "floor": 15
+    },
+    {
+      "part": "skyscraper_1_0_16",
+      "floor": 16
+    },
+    {
+      "part": "skyscraper_1_0_17",
+      "floor": 17
+    },
+    {
+      "part": "skyscraper_1_0_18",
+      "floor": 18
+    },
+    {
+      "part": "skyscraper_1_0_19",
+      "floor": 19
+    },
+    {
+      "part": "skyscraper_1_0_20",
+      "floor": 20
+    },
+    {
+      "part": "skyscraper_1_0_21",
+      "floor": 21
+    }
+  ],
+  "parts2": [
+    {
+      "part": "lostcities:skyscraper_1_0_0_parts2",
+      "floor": 0
+    },
+    {
+      "part": "lostcities:skyscraper_1_0_15_parts2",
+      "floor": 15
+    }
+  ]
+}

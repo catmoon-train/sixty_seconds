@@ -1,0 +1,490 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "案",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "连",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "今",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "需",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "刚",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "板",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "希",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "吃",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "被",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "类",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "听",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "认",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "初",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "续",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "尽",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "下",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "掉",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "投",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "称",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "呀",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "公",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "几",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "论",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "制",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "料",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "特",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "东",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "转",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "校",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ұ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "台",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "取",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "内",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "时",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 434,
+          "x": 58,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 133,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Loom\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\">>>\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "位",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҧ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 463,
+          "x": 74,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Aisle 6\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "球",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 424,
+          "x": 152,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 134,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Register 1\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "远",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "整",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "目",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "服",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "趣",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "士",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "迎",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "dadbccbbwddwrxrc",
+      "bdbdcadabdawaxcw",
+      "aIbbabdabacarxwb",
+      "cacdcbcwcwbcwxbd",
+      "ddrrwbbddacawxdd",
+      "cccwrcbcracadxbb",
+      "daaarcabbbrddxwd",
+      "xxxxxxxxxxdcbxab",
+      "wdabracbdxddwxwc",
+      "wIbddadwrxaaaxca",
+      "cbbbabbabxbrwxdI",
+      "dddwcaadbxdwbxcc",
+      "bdbbbwwaaxcarxar",
+      "aabawbwdbxbwdxcI",
+      "xxxxxxxxxxdwbxbd",
+      "rwcddacdccbbcxaw"
+    ],
+    [
+      " eypoo 案连   q 今需",
+      " fi   连刚连       ",
+      "lpj  m 板l   q   ",
+      " yeeee          ",
+      " iqqqi          ",
+      "    q   q q     ",
+      "    qq  l q   m ",
+      " mmm   qm       ",
+      "希吃吃吃j  被类 j   今听",
+      "认初续吃j被被被尽i    下下",
+      "掉吃吃吃 被被被投  q l下下",
+      "称ppp ppp呀      下",
+      "认ppp公ppp几   q m论",
+      "制ppp公pp 料 jq  下下",
+      "  ii ii l    lq下",
+      "q             下下"
+    ],
+    [
+      "        l     N ",
+      "  i     l       ",
+      "l j  m  l       ",
+      "                ",
+      " i i i          ",
+      "        l       ",
+      "        l     m ",
+      "  m     m       ",
+      "N       特 j   N ",
+      " 东东      i    下下",
+      "转东东东 被被被校    lҰ下",
+      "台ppp ppp取      下",
+      " ppp公p p       i",
+      "内ppp公p  特 j     ",
+      "  ii ii l    l  ",
+      "               下"
+    ],
+    [
+      "        l     KҨ",
+      "  i     l       ",
+      "l j  m  l       ",
+      "                ",
+      " i i i          ",
+      "        l       ",
+      "        l     m ",
+      " 时m时 时 时m       ",
+      "Knnnnnnn位 j   KҨ",
+      "ҨnnnnnnnҨi   ҧnn",
+      "KnnnnnnnK    lnn",
+      "KnnnnnnnK    ҧnn",
+      "ҨnnnnnnnҨ     nn",
+      "Knnnnnnn位 j  ҧnn",
+      " 球i球 球i球l    lnn",
+      "             ҧnn"
+    ],
+    [
+      "ҧggggg  l     校 ",
+      " gi     l    ҧg ",
+      "lgj  m  l       ",
+      "ҧggggg          ",
+      " i球i球i          ",
+      "        l       ",
+      "        l     m ",
+      "  mm    m时   ҧg ",
+      "远东东东 被被被整gj   目 ",
+      "认东东东 被被被 i   l下下",
+      "掉服东东 被被被校    l下下",
+      "称ppplppp取     下下",
+      "认ppp公ppp      论论",
+      "趣pppjppp士gj  l下下",
+      " iii iiil球   l下下",
+      "              下下"
+    ],
+    [
+      " O   O  l     校 ",
+      "        l     g ",
+      "        l       ",
+      " O   O          ",
+      "                ",
+      "        l       ",
+      "        l     m ",
+      "  mm    m     g ",
+      "士东东东 被被被内gj   目 ",
+      " 东东东 被被被 i   l下下",
+      "转迎东东 被被被校    l下下",
+      "台ppplppp取     下下",
+      " ppp ppp      论论",
+      "士pppjppp士gj   下下",
+      "  ii ii li    下下",
+      "              下下"
+    ]
+  ]
+}

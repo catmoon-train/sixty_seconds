@@ -1,0 +1,254 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "央",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "果",
+        "block": "minecraft:stone_brick_wall[east=none,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "重",
+        "block": "minecraft:stone_brick_wall[east=tall,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "此",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "经",
+        "block": "minecraft:stone_brick_wall[east=tall,north=none,south=tall,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "光",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "复",
+        "block": "minecraft:cobblestone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "且",
+        "block": "minecraft:andesite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "吧",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "但",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "猫",
+        "block": "minecraft:cobblestone_stairs[facing=east,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "帝",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=bottom,shape=inner_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "甚",
+        "block": "minecraft:mossy_cobblestone_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "行",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "惜",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=inner_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "病",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "似",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "佳",
+        "block": "minecraft:cobblestone_stairs[facing=west,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "区",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "太",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "择",
+        "block": "minecraft:cobblestone_stairs[facing=south,half=bottom,shape=inner_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "注",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=east,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "请",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "下",
+        "block": "minecraft:stone_brick_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "步",
+        "block": "minecraft:cobblestone_stairs[facing=south,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "笔",
+        "block": "minecraft:cobblestone_stairs[facing=east,half=bottom,shape=outer_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ӛ",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:dirt"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaaaaaaa   ",
+      "aaaaaaaaaaaad   ",
+      "aaaaaaaaaaaaj   ",
+      "aaaaaaaaaaaaa 央 ",
+      "aaaaaaaaaaaaii i",
+      "aaaaaaaaaaaai果 重",
+      "aaaaaaaaaaaai   ",
+      "aaaaaaaaaaaai此 经",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "aaaaaaaad光复且吧但 猫",
+      "aaaaaaaad帝甚行惜病 似",
+      "aaaaaaaaadddd佳 猫",
+      "aaaaaaaaaadaa佳 似",
+      "aaaaaaaaaaaaiiii",
+      "aaaaaaaaaaaai果 重",
+      "aaaaaaaaaaaai   ",
+      "aaaaaaaaaaaai此 经",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "aaaaaaaad    区aa",
+      "aaaaaaaad    区aa",
+      "aaaaaaaaad行太行择aa",
+      "aaaaaaaaaag行行行aa",
+      "aaaaaaaaaaadiiii",
+      "aaaaaaaaaaaai果 重",
+      "aaaaaaaaaaaai   ",
+      "aaaaaaaaaaaai此 经",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "aaaaaaaad     吧a",
+      "aaaaaaaad     注请",
+      "aaaaaaaaad    下且",
+      "aaaaaaaaaad行甚步甚行",
+      "aaaaaaaaaaadiiii",
+      "aaaaaaaaaaaai果 重",
+      "aaaaaaaaaaaai   ",
+      "aaaaaaaaaaaai此 经",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "aaaaaaaad      笔",
+      "aaaaaaaad       ",
+      "aaaaaaaaad      ",
+      "aaaaaaaaaad  ӛӛӛ",
+      "aaaaaaaaaaadiiii",
+      "aaaaaaaaaaaai果 重",
+      "aaaaaaaaaaaai   ",
+      "aaaaaaaaaaaai此 经",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb"
+    ],
+    [
+      "aaaaaaaad       ",
+      "aaaaaaaad       ",
+      "aaaaaaaaad      ",
+      "aaaaaaaaaad  ӛӛӛ",
+      "aaaaaaaaaaadiiii",
+      "aaaaaaaaaaaai果 重",
+      "aaaaaaaaaaaai   ",
+      "aaaaaaaaaaaai此 经",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb"
+    ]
+  ]
+}

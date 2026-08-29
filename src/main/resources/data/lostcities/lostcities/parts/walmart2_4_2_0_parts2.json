@@ -1,0 +1,202 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "水",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "狂",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "问",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "比",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "kabkbkkdcdkadbbr",
+      "bkdabakdbbckbccc",
+      "bkbbbkdcaddfefdc",
+      "aacdbccbkcddcdcc",
+      "kddrbbcbcraopfdk",
+      "caddabbackkdcakb",
+      "bdbbcaaakccofpdb",
+      "ccddacdkadrbaccd",
+      "rcbkdbkcaabfooka",
+      "ssJsssssJsssssJs",
+      "dskasddscksacscb",
+      "acsdksbaJbdskksb",
+      "skdscbJkcJbksdas",
+      "dsdksdbsdcsbcJcc",
+      "JsssssssJsJJsJss",
+      "efefppeeeepffeoe"
+    ],
+    [
+      "           uuuqq",
+      "          水q 水水 ",
+      "                ",
+      "                ",
+      "   q            ",
+      " q             q",
+      "                ",
+      "          q     ",
+      "q 狂             ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "          ҪL问LҪ ",
+      "          比ҪLҪ比 ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "          ҪL问LҪ ",
+      "           ҪLҪ比 ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "           L问L  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "            L   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

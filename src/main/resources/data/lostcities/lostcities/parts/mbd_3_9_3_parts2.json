@@ -1,0 +1,242 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѿ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ь",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "л",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "с",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ц",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӊ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "全",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "务",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "fffea           ",
+      "bbbebp          ",
+      "aaaea           ",
+      "abbeap          ",
+      "abbeb           ",
+      "aaaebp          ",
+      "bbaea           ",
+      "aauebp          ",
+      "uaaeap          ",
+      "abaeap          ",
+      "bbbea           ",
+      "abaebp          ",
+      "abaebp          ",
+      "abbebp          ",
+      "aaaeap          ",
+      "baaeap          "
+    ],
+    [
+      "eeeeu           ",
+      "mmmeap          ",
+      "Ammeb           ",
+      "Amzeap          ",
+      "fzBea           ",
+      "Bffeap          ",
+      "zBzebp          ",
+      "BAzea           ",
+      "fAzeap          ",
+      "fAfeap          ",
+      "AAzeb           ",
+      "RRzeap          ",
+      "BAzea           ",
+      "fmfeap          ",
+      "Rmmeap          ",
+      "zmmeb           "
+    ],
+    [
+      "eeeea           ",
+      "wGGebp          ",
+      "QGweb           ",
+      "Qwoeb           ",
+      "Qѿ eap          ",
+      "E Ьebp          ",
+      "Eioebp          ",
+      " iieb           ",
+      "   ea           ",
+      "Q ieap          ",
+      "Q ieb           ",
+      "E oebp          ",
+      "лi ea           ",
+      "лwieap          ",
+      "Nwwebp          ",
+      "лwweb           "
+    ],
+    [
+      "i  ii           ",
+      "  Piс           ",
+      "ц   i           ",
+      "ц  iс           ",
+      "цh iсp          ",
+      "   ii           ",
+      "    с           ",
+      "    сp          ",
+      "    с           ",
+      "Ѳ   i           ",
+      "ѱ  iс           ",
+      "   ii           ",
+      "Ѳ   сp          ",
+      "ѱ   i           ",
+      "   ii           ",
+      "Ѳ  iс           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      " ӊ              ",
+      "h全h             ",
+      " 务ѿ             ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      " h              ",
+      "hhh             ",
+      " hh             ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

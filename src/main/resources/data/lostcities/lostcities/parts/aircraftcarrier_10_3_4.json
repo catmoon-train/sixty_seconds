@@ -1,0 +1,182 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "骤",
+        "block": "minecraft:lever[face=floor,facing=east,powered=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:gold_block"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:black_stained_glass"
+      },
+      {
+        "char": "约",
+        "block": "minecraft:smooth_quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "楼",
+        "block": "minecraft:smooth_quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "须",
+        "block": "minecraft:smooth_quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "介",
+        "block": "minecraft:iron_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:iron_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "dddcdedeaacdaccd",
+      "ebbcccdcbbdabaec",
+      "edbebcadacacebba",
+      "ddbcddadbaeadcbe",
+      "dbabceddebecbeea",
+      "iiiiiiiiiiiiiiii",
+      "ccaaaeebaadbeccb",
+      "    caedaeddabde",
+      "      bceebddedd",
+      "      abedacdbff",
+      "       eececefcc",
+      "      骤eadbbfa  ",
+      "       beabdfb d",
+      "       beeacfbqq",
+      "       abdebbf  ",
+      "      ebaaeaaaff"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "oooo            ",
+      "    oo          ",
+      "      o         ",
+      "      o       约约",
+      "       o     约ii",
+      "       o    楼i f",
+      "       o    楼i  ",
+      "       o    楼iqq",
+      "       o     须ii",
+      "      o       须须"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "oooo            ",
+      "oooooo          ",
+      "oooooo          ",
+      "ooooooo       ii",
+      "ooooooo      i c",
+      "ooooooo      iqq",
+      "ooooooo      i  ",
+      "ooooooo       ii",
+      "oooooo          "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              约约",
+      "             楼ca",
+      "             楼ee",
+      "             楼de",
+      "              须须",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              介介",
+      "              介介",
+      "              B介",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

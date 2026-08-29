@@ -1,0 +1,206 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:red_terracotta"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:light_blue_terracotta"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:red_concrete"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "ѱ",
+        "block": "minecraft:brown_carpet"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "用",
+        "block": "minecraft:iron_bars[east=true,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:red_wool"
+      },
+      {
+        "char": "ӟ",
+        "block": "minecraft:iron_bars[east=true,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "文",
+        "block": "minecraft:iron_bars[east=true,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "定",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:white_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "S",
+        "block": "minecraft:orange_terracotta"
+      },
+      {
+        "char": "ϑ",
+        "block": "minecraft:orange_concrete"
+      },
+      {
+        "char": "Ѵ",
+        "block": "minecraft:white_stained_glass_pane[east=false,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "生",
+        "block": "minecraft:white_stained_glass_pane[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Ѳ",
+        "block": "minecraft:white_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "         EEFF   ",
+      "       AAFF     ",
+      "      EFF       ",
+      "     Eaa        ",
+      "    Ea        ѱѱ",
+      "  g Ab         ѱ",
+      "   Ed           ",
+      "   Ae           ",
+      "  Ae            ",
+      "  Aa   a        ",
+      " Aa             ",
+      " Ec             ",
+      " Ac             ",
+      " 用d             ",
+      " Ee             ",
+      " Ad             "
+    ],
+    [
+      "         AEFF   ",
+      "       XAFF     ",
+      "      EFF       ",
+      "     Ecb        ",
+      "    Xb          ",
+      "  a 用a          ",
+      "   Ed           ",
+      "   Ad           ",
+      "  Ab            ",
+      "  Ac   a        ",
+      " Aa             ",
+      " Ab             ",
+      " Ad             ",
+      " Ad             ",
+      " Xa             ",
+      " 用a             "
+    ],
+    [
+      "         EAFF   ",
+      "       XEFF     ",
+      "      EFF       ",
+      "     Ebe        ",
+      "    Aa          ",
+      "  a Ea          ",
+      "   Ad           ",
+      "   Ac           ",
+      "  Ee            ",
+      "  Ec   d        ",
+      " Eb             ",
+      " Ea             ",
+      " Ea             ",
+      " Xe             ",
+      " Ee             ",
+      " Ab             "
+    ],
+    [
+      "         EӟFF   ",
+      "       文AFF     ",
+      "      EFF       ",
+      "     Xbd        ",
+      "    Ec          ",
+      "  a Ee          ",
+      "   Ae           ",
+      "   Ad           ",
+      "  Ed            ",
+      "  Ab   c        ",
+      " 定b             ",
+      " Ed             ",
+      " Aa             ",
+      " Xd             ",
+      " Ed             ",
+      " Edebadeabeadccb"
+    ],
+    [
+      "         EAFF   ",
+      "       AEFF     ",
+      "      XFF       ",
+      "     Xdd        ",
+      "    Eb          ",
+      "  a Ea          ",
+      "   Eb           ",
+      "   Ed           ",
+      "  Ae            ",
+      "  Aa   d        ",
+      " Eb             ",
+      " Ae             ",
+      " Ed             ",
+      " Ae             ",
+      " Ac             ",
+      " EbcNNNNNNNNNNNN"
+    ],
+    [
+      "         SSFF   ",
+      "       定SFF     ",
+      "      SFF       ",
+      "     Sbb        ",
+      "    ϑe          ",
+      "  a Sc          ",
+      "   ϑd           ",
+      "   ϑc           ",
+      "  Sc            ",
+      "  ϑb   d        ",
+      " Sd             ",
+      " ϑa             ",
+      " ϑa             ",
+      " Sd             ",
+      " Sc             ",
+      " ϑbaNNNNNѴ 生 ѲNѴ"
+    ]
+  ]
+}

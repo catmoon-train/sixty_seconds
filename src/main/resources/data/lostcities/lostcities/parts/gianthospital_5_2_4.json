@@ -1,0 +1,198 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "醉",
+        "block": "minecraft:repeater[delay=1,facing=north,locked=false,powered=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:clay"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "麒",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=true,west=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "役",
+        "block": "minecraft:dead_fire_coral_block"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "x        fy     ",
+      "     醉   be l   ",
+      "     x   zN l   ",
+      "x        zy l   ",
+      "         bb     ",
+      "         zy     ",
+      "         zy     ",
+      "x        dd     ",
+      "         hy     ",
+      "         zy麒    ",
+      "     醉   cc麒    ",
+      "     x   iy麒    ",
+      "x        役y     ",
+      "         ce     ",
+      "         iy     ",
+      "         zN     "
+    ],
+    [
+      "iihihiffgige    ",
+      "hgghfqhhhqhel   ",
+      "qqggqffgqCfel   ",
+      "fgqhhfhghhfbl   ",
+      "CiqfghgChhqc    ",
+      "ghqCggghqiqb    ",
+      "CqhqiCgfhqfd    ",
+      "qfiggfCfiqhe    ",
+      "qfigCgqhqiic    ",
+      "iCghqgffqqfd    ",
+      "igifCfiffgie    ",
+      "hihqiiqqigge    ",
+      "hqhhfffhqffe    ",
+      "qqfghqqihhid    ",
+      "qigqCfCqffgd    ",
+      "fqfqffgggiie    "
+    ],
+    [
+      "           e    ",
+      "           dl   ",
+      "           bl   ",
+      "           el   ",
+      "           e    ",
+      "           b    ",
+      "           b    ",
+      "           d    ",
+      "           b    ",
+      "           c    ",
+      "           b    ",
+      "           c    ",
+      "           d    ",
+      "n          c    ",
+      "           d    ",
+      " l         e    "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "n               ",
+      "                ",
+      " l              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "n               ",
+      "                ",
+      " l              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "n               ",
+      "                ",
+      " l              "
+    ]
+  ]
+}

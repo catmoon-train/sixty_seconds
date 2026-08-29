@@ -1,0 +1,266 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:stone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:smooth_stone_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:cobblestone_slab[type=double,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "綵",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:cobblestone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "锁",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "喃",
+        "block": "minecraft:cobblestone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "钞",
+        "block": "minecraft:oak_wall_sign[facing=north,waterlogged=false]",
+        "tag": {
+          "z": 479,
+          "x": -90,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 153,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "于",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "耻",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "噹",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:red_concrete"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:red_terracotta"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "琉",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "谦",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "      bdbedbkaki",
+      "      ebebdck   ",
+      "      ededbek   ",
+      "      eddbccG   ",
+      "      ebeccb    ",
+      "      cbcece    ",
+      "      deebeb    ",
+      "      ddebec    ",
+      "      eceece    ",
+      "      ececbddd綵e",
+      "      b         ",
+      "      c         ",
+      "      e  i h g  ",
+      "      b  a a a  ",
+      "      b  r k k  ",
+      "      c  a a k  "
+    ],
+    [
+      "      bdeeee   锁",
+      "      cedcee    ",
+      "      dbebde    ",
+      "      ecdbeb喃   ",
+      "      dbdceb    ",
+      "      dbddec    ",
+      "      bceeee    ",
+      "      dbebcb    ",
+      "      ececee  钞 ",
+      "      dcbbdcbcbe",
+      "      c         ",
+      "      e         ",
+      "      b  锁 Q Q  ",
+      "      e         ",
+      "      e         ",
+      "      e         "
+    ],
+    [
+      "ddecccddcdedbecb",
+      "edcbeebcbcdeceee",
+      "eebcdedeeeddcdcb",
+      "bbbbdddcedcecceb",
+      "ebcbdbececcbbcdb",
+      "becccbbcededbddc",
+      "deddccedbbbccbbc",
+      "eebeedeebcbcddec",
+      "dedcdebbeebcbcbc",
+      "bebbebdcbceeddbe",
+      "ddbeeeedeebbeeec",
+      "dddbbccbebdcedee",
+      "bbeecebdbbcbdeec",
+      "ebbedbbbbcdcddce",
+      "bbecccdcebeebcdb",
+      "edecdebcbbddcdec"
+    ],
+    [
+      "fifqiifihghgfhig",
+      "hihiifqgiiihihCi",
+      "qfffChffgifCChqi",
+      "qCghfCqifiqhfCif",
+      "giigfCCfiCqiihif",
+      "iqfqfigfCqihqifq",
+      "hqghifCfhqiqfhff",
+      "ggfhqghiCgfqfgCq",
+      "fqgihfggqqgfiCCC",
+      "fghfggChfihqhgff",
+      "fhhiihqfihhgiqCh",
+      "fghggqqCgfgghgfq",
+      "ffgqiihfCifiigqf",
+      "fhhfqiggggCfghih",
+      "gfgiqgqhiihgqigi",
+      "ggChffghghfiiiiq"
+    ],
+    [
+      "ddcececdceece   ",
+      "dbbcceeebddce   ",
+      "deccbebbccbbb   ",
+      "cedbebceebedc   ",
+      "bececbbcbbede   ",
+      "ccebdcdbdbebc   ",
+      "ebdcbeeedcddd   ",
+      "cbeeebbbdcceb   ",
+      "bbbeeeebeeeeb   ",
+      "cebbddecbdcde   ",
+      "bcbeeddbbdccc   ",
+      "cceebccbbedee   ",
+      "dcdcbbbccdeed   ",
+      "ddcddeebcbece   ",
+      "dbccbedccbbdd   ",
+      "                "
+    ],
+    [
+      "bbcccbeddeceb于  ",
+      "ifhiqqCqfhige于  ",
+      "ii耻噹耻耻耻耻噹hfgd于  ",
+      "fMhhhfihh耻igc于  ",
+      "耻gffuvuiiC耻qd于  ",
+      "耻ggguuvhhi耻ie于  ",
+      "耻qvvvvuvvi耻qb于  ",
+      "耻qvvvvuuvi噹gb于  ",
+      "耻ivvvuuuuiLhd于  ",
+      "耻qfiuuuqfq噹qc于  ",
+      "MiqiuvvifhMgb于  ",
+      "C耻igqiqii耻hfe于  ",
+      "gh耻耻耻耻耻耻Mfifd于  ",
+      "Cghqfggiqfqhc于  ",
+      "bdeebecbddedd于  ",
+      "琉琉琉琉琉琉琉琉琉琉琉琉琉谦  "
+    ]
+  ]
+}

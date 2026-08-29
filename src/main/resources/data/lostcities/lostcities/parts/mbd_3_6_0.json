@@ -1,0 +1,398 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "в",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:dark_oak_planks"
+      },
+      {
+        "char": "Ы",
+        "block": "minecraft:smooth_stone"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=true]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "ў",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "ӷ",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "好",
+        "block": "minecraft:calcite"
+      },
+      {
+        "char": "根",
+        "block": "minecraft:diorite_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "死",
+        "block": "minecraft:diorite_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "片",
+        "block": "minecraft:diorite_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "种",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ю",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "假",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:bricks[weathering=true]"
+      },
+      {
+        "char": "继",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "援",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Т",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӊ",
+        "block": "minecraft:brick_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "城",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "义",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Я",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "闻",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "级",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ъ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ћ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӂ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ч",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "协",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ж",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "о",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "碟",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Э",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "抱",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "幕",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "离",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "两",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "卖",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:bricks[weathering=false]"
+      },
+      {
+        "char": "ӆ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "У",
+        "block": "minecraft:brick_slab[type=bottom,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "呆",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "但",
+        "block": "minecraft:brick_stairs[facing=west,half=top,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "Ҹ",
+        "block": "minecraft:brick_stairs[facing=north,half=top,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ұ",
+        "block": "minecraft:brick_stairs[facing=south,half=top,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "诸",
+        "block": "minecraft:brick_stairs[facing=west,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "没",
+        "block": "minecraft:brick_stairs[facing=north,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ѿ",
+        "block": "minecraft:brick_slab[type=top,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "会",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "中",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "我",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҷ",
+        "block": "minecraft:brick_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "室",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "ffffuuвtkktstsst",
+      "xЫЫЫuuвktkstksst",
+      "xЫЫЫffвkkskttkst",
+      "xЫЫЫabўstkstssks",
+      "xЫЫЫbaўkskkkkttt",
+      "xЫЫЫfuўtssskkksk",
+      "xЫЫЫbaвsssssskkk",
+      "xЫЫЫfuвkkttstksk",
+      "xЫЫЫbfвӷk好s根t好ks",
+      "xЫЫЫfuв好kӷsӷt死st",
+      "xЫЫЫbfв死k死k好t片ss",
+      "xЫЫЫabў好s片tӷtӷtk",
+      "xЫЫЫfaўsstsstttk",
+      "xЫЫЫbfвssttstkst",
+      "xЫЫЫfuвktsktssst",
+      "fЫЫЫufвtktstkssk"
+    ],
+    [
+      "jgg种     i    Ю ",
+      "假ciii种          ",
+      "继  援i    Т  Тѩi ",
+      "Ӊ城ii 种          ",
+      "义jЯ闻种          i",
+      "ojc    Ю  Т  Т  ",
+      " q级ъ      ћ     ",
+      "  Ӂ ъ       ћ   ",
+      "  Ӂ       i    i",
+      "  级ч    i       ",
+      "gcg协         iЮ ",
+      "жji             ",
+      "оj碟i            ",
+      "ggЭ碟抱  iТ iТ    ",
+      "cc幕        iiТ  ",
+      "cggp     ћ      "
+    ],
+    [
+      "cc离             ",
+      " 两              ",
+      "                ",
+      "                ",
+      " 城n             ",
+      "ocg卖            ",
+      " qӁ             ",
+      "  Ӂ             ",
+      "  Ӂ             ",
+      "  Ӂ             ",
+      "cvcp            ",
+      "qӆq             ",
+      " 两              ",
+      "У碟              ",
+      "v呆              ",
+      "cjӝ             "
+    ],
+    [
+      "ccg             ",
+      " 两              ",
+      "                ",
+      " 城              ",
+      " ӆn             ",
+      "ocjp            ",
+      " qӁ             ",
+      "  Ӂ             ",
+      "  Ӂ             ",
+      "  Ӂ             ",
+      " cvp            ",
+      " qq             ",
+      "                ",
+      "                ",
+      " 城n             ",
+      "cccp            "
+    ],
+    [
+      "ccg但            ",
+      " ӆҸ             ",
+      " ӆr             ",
+      " ӆr             ",
+      " ӆҰ             ",
+      "ogg但            ",
+      " ҸӁ             ",
+      "  Ӂ             ",
+      "  Ӂ             ",
+      " ҰӁ             ",
+      " gc诸            ",
+      " 两没             ",
+      " r              ",
+      " 城              ",
+      " ӆҰ             ",
+      "ccj但            "
+    ],
+    [
+      "ggcvr           ",
+      "cjgj            ",
+      "jcgѾr           ",
+      "cccӝ            ",
+      "cgcc            ",
+      "gcj会 r          ",
+      "gccc r          ",
+      "jgc中            ",
+      "我jcҷ            ",
+      "hggcr           ",
+      " gccr           ",
+      "室ccg r          ",
+      "cgg会            ",
+      "cgjg            ",
+      "cgj会 r          ",
+      "jgvg            "
+    ]
+  ]
+}

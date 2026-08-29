@@ -1,0 +1,265 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϕ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϻ",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "΄",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϵ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "г",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 585,
+          "x": 238,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 135
+        }
+      },
+      {
+        "char": "Є",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "о",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "В",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "β",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Θ",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "uqtrooooaamLLcim",
+      "tqrsooooboabbjLb",
+      "ttsqoowowmambLci",
+      "ssqroooowibbiiia",
+      "rsqtoooowjiibimb",
+      "rqqqoooowabaacai",
+      "ttquwooowajcaaja",
+      "rqttoooowcbjacaj",
+      "uqrsoooowwwwwwww",
+      "rutsoooooooooooo",
+      "rqtsoooooooooooo",
+      "stsssursrtsquqqt",
+      "qtrtttuqrrrusqrt",
+      "rrqtrtsrqrruuuqu",
+      "qqssqtuqrstqussu",
+      "tsrrussqruqsusrq"
+    ],
+    [
+      "     ppp  Kbaacb",
+      "    pppfm  caajb",
+      "    ppϕfb  imaji",
+      "     pϺfb   mimj",
+      "    pppMcDD   im",
+      "    pppMc   D ΄a",
+      "    ϵppMc a    D",
+      "      pMb       ",
+      "    pppMjaaabcnb",
+      "     pp pepeepгЄ",
+      "    ppp p p оpЄ ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "            ajbi",
+      "       f    bcam",
+      "       f    maja",
+      "      Вfβ    ΄am",
+      "       fc      i",
+      "       fh       ",
+      "       fb       ",
+      "       fh       ",
+      "       fagbgbgbg",
+      "        eeeeeeee",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "             jjc",
+      "       f    z Θa",
+      "       fc      D",
+      "       fh      a",
+      "       fn       ",
+      "       fh       ",
+      "       fc       ",
+      "       fh       ",
+      "       fagcgcgjg",
+      "        eeeeeeee",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "             K  ",
+      "       f        ",
+      "       fa       ",
+      "       fb       ",
+      "       fb       ",
+      "       fc       ",
+      "       fc       ",
+      "       fn       ",
+      "       fbbnaaibb",
+      "        eeeeeeee",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        a       ",
+      "       f        ",
+      "       fa       ",
+      "       fh       ",
+      "       fj       ",
+      "       fh       ",
+      "       fb       ",
+      "       fh       ",
+      "       figbgigng",
+      "        eeeeeeee",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

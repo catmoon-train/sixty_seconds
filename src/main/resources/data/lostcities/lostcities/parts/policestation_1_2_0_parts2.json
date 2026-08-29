@@ -1,0 +1,272 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ά",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": ";",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ή",
+        "block": "minecraft:air",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 349,
+          "x": 54,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 136,
+          "SpawnRange": "4s",
+          "Delay": "181s"
+        }
+      },
+      {
+        "char": "ΐ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Β",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "Р",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ύ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ν",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϐ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ы",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "κ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ћ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ο",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Π",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Τ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ε",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "ddddddddddddd fd",
+      "dddddddddddddeed",
+      "dddddddddddddcgd",
+      "mmmmmmmmmmmddegd",
+      "mmmmmmmmmmmmdefd",
+      "dddmmmdmmddddged",
+      "mmmmmdmdddmmdeed",
+      "dddddddddddddbcd",
+      "dddddddddddddged",
+      "dddddddddddddecc",
+      "ΆΆmΆmy;yyyήy;;yΆ",
+      "ΆΆΆy;;Ά;yy;ΆyyyΆ",
+      "yyΆy;yyy;y;;Ά;;y",
+      "fefffmfmbfbgccmf",
+      "mgfebggggggcgcff",
+      "gebcemfgggfbcbfb"
+    ],
+    [
+      "gbdfcbfgbedcfΐ a",
+      "fbceccccegbbcΒ a",
+      "fccdffgbceecbΒ a",
+      "sssРs s  s  h  a",
+      " s     ss   i  a",
+      "     s  s   a  a",
+      "sss s s     h  a",
+      "eebcfbbgegc h  a",
+      "cbbfggfcbcbcm  a",
+      "wxxwwwwwkxxww   ",
+      "ύ sνsνΐϐ  ΐ     ",
+      " Ы  ΐνkκ        ",
+      "     ΐ          ",
+      "       s        ",
+      "s               ",
+      "     s          "
+    ],
+    [
+      "dbbcedebbdffb  a",
+      "ccbeeeggfgffgЋ a",
+      "egedegdedbbebЋ a",
+      "            i  a",
+      "            a  a",
+      "eebcebddcgbca  a",
+      "bfceffemgfecg  a",
+      "xwxxxwwwwxwxw  a",
+      "               a",
+      "                ",
+      "                ",
+      "     ν          ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "cdfbgcdgfcecb  a",
+      "befgccbffedeg  a",
+      "fedbdbbefegce  a",
+      "cgegbebbbedgc  a",
+      "efgffgbcfecgg  a",
+      "xxxxxwxwwxwxw  a",
+      "       s       a",
+      "               a",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "mfbbgbefcbfcb  a",
+      "gfbcggfeegeme  a",
+      "ffggfcfgbfecf  a",
+      "xxwxxxwwxxxwx  a",
+      "               a",
+      "               a",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "s         fe   v",
+      "     ppp   s   v",
+      " ΟΠΤ ΟΠΤ ΟΠΤ   v",
+      "               v",
+      "               Ε",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

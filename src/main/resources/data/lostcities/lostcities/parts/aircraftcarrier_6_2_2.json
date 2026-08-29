@@ -1,0 +1,615 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "吉",
+        "block": "minecraft:dark_oak_trapdoor[facing=west,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "尿",
+        "block": "minecraft:repeater[delay=1,facing=east,locked=false,powered=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "绳",
+        "block": "minecraft:note_block[instrument=bass,note=4,powered=false]"
+      },
+      {
+        "char": "瑶",
+        "block": "minecraft:note_block[instrument=bass,note=5,powered=false]"
+      },
+      {
+        "char": "沸",
+        "block": "minecraft:note_block[instrument=bass,note=0,powered=false]"
+      },
+      {
+        "char": "仑",
+        "block": "minecraft:note_block[instrument=bass,note=9,powered=false]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:iron_block"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "梨",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "帖",
+        "block": "minecraft:iron_door[facing=west,half=upper,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "孽",
+        "block": "minecraft:iron_bars[east=true,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "襟",
+        "block": "minecraft:iron_bars[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "靖",
+        "block": "minecraft:iron_door[facing=west,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "揭",
+        "block": "minecraft:iron_bars[east=true,north=true,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "霖",
+        "block": "minecraft:redstone_block"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "弥",
+        "block": "minecraft:lever[face=wall,facing=west,powered=true]"
+      },
+      {
+        "char": "Җ",
+        "block": "minecraft:observer[facing=west,powered=false]"
+      },
+      {
+        "char": "首",
+        "block": "minecraft:sticky_piston[extended=false,facing=north]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:observer[facing=east,powered=false]"
+      },
+      {
+        "char": "奉",
+        "block": "minecraft:lever[face=wall,facing=east,powered=true]"
+      },
+      {
+        "char": "魉",
+        "block": "minecraft:note_block[instrument=bass,note=1,powered=false]"
+      },
+      {
+        "char": "窟",
+        "block": "minecraft:iron_bars[east=false,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "冈",
+        "block": "minecraft:birch_stairs[facing=east,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "霜",
+        "block": "minecraft:birch_fence[east=true,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "翩",
+        "block": "minecraft:birch_fence[east=false,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "迎",
+        "block": "minecraft:birch_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "遥",
+        "block": "minecraft:cartography_table"
+      },
+      {
+        "char": "胎",
+        "block": "minecraft:chest[facing=north,type=single,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 945,
+          "x": -480,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "厕",
+        "block": "minecraft:lectern[facing=north,has_book=false,powered=false]",
+        "tag": {
+          "z": 976,
+          "x": -438,
+          "ForgeCaps": {},
+          "id": "minecraft:lectern",
+          "y": 107
+        }
+      },
+      {
+        "char": "页",
+        "block": "minecraft:jukebox[has_record=false]",
+        "tag": {
+          "RecordStartTick": "0L",
+          "IsPlaying": "0b",
+          "z": 951,
+          "x": -397,
+          "TickCount": "0L",
+          "ForgeCaps": {},
+          "id": "minecraft:jukebox",
+          "y": 115
+        }
+      },
+      {
+        "char": "k",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "潘",
+        "block": "minecraft:birch_fence[east=false,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "冲",
+        "block": "minecraft:birch_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "涂",
+        "block": "minecraft:birch_stairs[facing=east,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "澳",
+        "block": "minecraft:birch_door[facing=south,half=lower,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "炼",
+        "block": "minecraft:birch_stairs[facing=north,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "斑",
+        "block": "minecraft:birch_door[facing=north,half=lower,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "谷",
+        "block": "minecraft:birch_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "巴",
+        "block": "minecraft:birch_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "辜",
+        "block": "minecraft:birch_fence[east=false,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "潭",
+        "block": "minecraft:lectern[facing=south,has_book=false,powered=false]",
+        "tag": {
+          "z": 960,
+          "x": -458,
+          "ForgeCaps": {},
+          "id": "minecraft:lectern",
+          "y": 107
+        }
+      },
+      {
+        "char": "ҕ",
+        "block": "minecraft:chest[facing=south,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 942,
+          "x": -502,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ѷ",
+        "block": "minecraft:chest[facing=south,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 940,
+          "x": -437,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "包",
+        "block": "minecraft:birch_fence[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "埋",
+        "block": "minecraft:birch_trapdoor[facing=east,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "碟",
+        "block": "minecraft:chest[facing=west,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 957,
+          "x": -354,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "开",
+        "block": "minecraft:light_gray_bed[facing=west,occupied=false,part=head]",
+        "tag": {
+          "z": 951,
+          "x": -534,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 116
+        }
+      },
+      {
+        "char": "教",
+        "block": "minecraft:light_gray_bed[facing=west,occupied=false,part=foot]",
+        "tag": {
+          "z": 949,
+          "x": -458,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 115
+        }
+      },
+      {
+        "char": "底",
+        "block": "minecraft:chest[facing=north,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 975,
+          "x": -484,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "栋",
+        "block": "minecraft:birch_trapdoor[facing=north,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "壹",
+        "block": "minecraft:birch_fence[east=false,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "助",
+        "block": "minecraft:ladder[facing=east,waterlogged=false]"
+      },
+      {
+        "char": "栏",
+        "block": "minecraft:light_gray_bed[facing=south,occupied=false,part=foot]",
+        "tag": {
+          "z": 960,
+          "x": -393,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 107
+        }
+      },
+      {
+        "char": "酸",
+        "block": "minecraft:light_gray_bed[facing=south,occupied=false,part=head]",
+        "tag": {
+          "z": 963,
+          "x": -405,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 107
+        }
+      },
+      {
+        "char": "乡",
+        "block": "minecraft:ladder[facing=north,waterlogged=false]"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:dark_oak_pressure_plate[powered=false]"
+      },
+      {
+        "char": "斌",
+        "block": "minecraft:birch_door[facing=south,half=upper,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "ϑ",
+        "block": "minecraft:birch_wall_sign[facing=south,waterlogged=false]",
+        "tag": {
+          "z": 953,
+          "x": -527,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 112,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Workshop\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "Ӯ",
+        "block": "minecraft:birch_wall_sign[facing=north,waterlogged=false]",
+        "tag": {
+          "z": 955,
+          "x": -442,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 108,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Exodus Squadron\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Quarters\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "遨",
+        "block": "minecraft:birch_door[facing=north,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "妇",
+        "block": "minecraft:lever[face=wall,facing=west,powered=false]"
+      },
+      {
+        "char": "油",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 966,
+          "x": -410,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 117,
+          "NodePos": "-112699937890187L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "父",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 953,
+          "x": -457,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 117,
+          "NodePos": "-125619199569803L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "未",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 948,
+          "x": -513,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 117,
+          "NodePos": "-141012362379147L",
+          "Connections": [
+            "L"
+          ]
+        }
+      }
+    ]
+  },
+  "slices": [
+    [
+      "    吉f尿         ",
+      "     n          ",
+      "     n          ",
+      "     n       绳  ",
+      "     n      瑶沸仑 ",
+      "    吉f       绳  ",
+      "     fE         ",
+      "    gf          ",
+      "     f          ",
+      "     fE   梨帖帖孽襟 ",
+      "    gfg   靖靖靖揭揭霖",
+      "ffffcfefffffffff",
+      "    dfc         ",
+      "                ",
+      "   弥Җ首O奉        ",
+      "ffffdfefffffffff"
+    ],
+    [
+      "    吉f          ",
+      "     n          ",
+      "     n          ",
+      "     n          ",
+      "     n       魉  ",
+      "    吉f          ",
+      "     f          ",
+      "    gf          ",
+      "     f          ",
+      "     f          ",
+      "    gfg      窟 霖",
+      "ffffbfcfffffffff",
+      "    dea         ",
+      "    deb         ",
+      "    ddc         ",
+      "ffffafefffffffff"
+    ],
+    [
+      "cbbbcdbbdadeeeca",
+      "cbdeacaabbdabded",
+      "aeebbdbceedecbde",
+      "aecaaebadaaacabc",
+      "bebaddedeabagggc",
+      "gdeadcbeebeecbae",
+      "cbdedaaaebdbdcad",
+      "ecedbbcdedababee",
+      "dccdccbcbceacaae",
+      "cdaddbbecbcaedab",
+      "abccadbcceaebcab",
+      "eedeebebaeccdebb",
+      "aacdebbdedadedbd",
+      "bddebbeccbcecedb",
+      "cdebbabacccedded",
+      "dacbcaeddabbaabb"
+    ],
+    [
+      "冈 霜翩迎f遥胎厕页 fkkkk",
+      "潘 冲冲涂fffff澳fffff",
+      "冲               ",
+      "                ",
+      "    炼fffff斑fffff",
+      "谷 巴辜迎fk潭k页 fkҕѶ页",
+      "潘 巴包迎fk    f遥埋  ",
+      "冲 巴包迎fk   碟fk   ",
+      "谷 巴包迎f开教埋 底f栋   ",
+      "潘 巴壹迎f助   页f栏   ",
+      "冲   迎f开教埋 遥f酸乡k厕",
+      "deddddeccbeaddae",
+      "    bfa         ",
+      "                ",
+      "    d首d         ",
+      "adacaa cbbdeaeec"
+    ],
+    [
+      "  RR f     fk  k",
+      "R    fffff斌fffff",
+      "           ϑ    ",
+      "         Ӯ     Ӯ",
+      "     fffff遨fffff",
+      "   R fk k  fk   ",
+      "R  R f     f    ",
+      "   R f     fk   ",
+      "   R f开教埋  f栋   ",
+      "R  R f助    f栏   ",
+      "     f开教埋  f酸乡k ",
+      "ffffbfcfffffffff",
+      "    efe         ",
+      "                ",
+      "   妇Җ首O奉        ",
+      "ffffdfbfffffffff"
+    ],
+    [
+      "fffgff     fk  k",
+      "ffffffffffgfffff",
+      "ffffff          ",
+      "     f          ",
+      "     fffffgfffff",
+      "     fk k  fk   ",
+      " 油   f     f   父",
+      "     f     fk   ",
+      "     f开教埋  f栋   ",
+      "     f助    f栏   ",
+      "     f开教埋  f酸乡k油",
+      "ffffdfefffffffff",
+      "  未 aec 父     父 ",
+      "    aea         ",
+      "  油 ecb 父     父 ",
+      "ffffcfafffffffff"
+    ]
+  ]
+}

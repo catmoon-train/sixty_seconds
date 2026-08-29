@@ -1,0 +1,323 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "负",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 357,
+          "x": 169,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 144,
+          "NodePos": "46454367735952L",
+          "Connections": [
+            "L",
+            "47279001456784L",
+            "46454367731856L",
+            "47553879351437L"
+          ]
+        }
+      },
+      {
+        "char": "弄",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 354,
+          "x": 172,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 144,
+          "NodePos": "47279001444496L",
+          "Connections": [
+            "L",
+            "46454367723664L",
+            "47279001456784L"
+          ]
+        }
+      },
+      {
+        "char": "博",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 356,
+          "x": 169,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:range_hood",
+          "y": 144,
+          "NodePos": "46454367731856L",
+          "Connections": [
+            "L",
+            "46454367735952L",
+            "46454367727760L"
+          ]
+        }
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "享",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 357,
+          "x": 172,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 144,
+          "NodePos": "47279001456784L",
+          "Connections": [
+            "L",
+            "47279001444496L",
+            "46454367735952L"
+          ]
+        }
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӥ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "理",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӡ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "布",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "众",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Е",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "0",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "没",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "了",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "大",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "中",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:tall_grass[half=lower]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "         tpnt   ",
+      "        t负  弄t  ",
+      "        n博   n  ",
+      "vsss    n博   n  ",
+      "uhhs    t负  享t  ",
+      "whhm     tnpt   ",
+      " wys            ",
+      "   oi           ",
+      "   r            ",
+      "    r           ",
+      "    3ri        i",
+      "      romsiiisso",
+      "        yorrroy ",
+      "        w     w ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "         ӥӥӥӥ   ",
+      "         ӥ理理ӥ   ",
+      "smms     ӥ理理ӥ   ",
+      "ohhs     ӥӥӥӥ   ",
+      "whhm            ",
+      " wom            ",
+      "   ui           ",
+      "   r            ",
+      "    ri          ",
+      "    3rii       i",
+      "      rymm iimsu",
+      "        oorrruo ",
+      "        w     w ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "mvmm            ",
+      "uhhv            ",
+      "whhs            ",
+      " wym            ",
+      "   yi           ",
+      "   ri           ",
+      "    r           ",
+      "    3rii       i",
+      "      romviiimso",
+      "        uorrryu ",
+      "        w     w ",
+      "                "
+    ],
+    [
+      "hllhhhhhhhlhhlhl",
+      "hhlllhlhllhlhhlh",
+      "hhlhhllhlllhhhhh",
+      "llhhlllhlhlhlhhl",
+      "shlhhllhlhhlhhhh",
+      "ummhlllhhllllllh",
+      "womlllllhhllllll",
+      " woslhllhhlllhhl",
+      "  ͱushhlllllhhll",
+      "  Pumlllhllllhll",
+      "   Gymhlllhhhhhl",
+      "   Guusmlllhhhls",
+      "    ͱGoovmvmmmvo",
+      "      GͱyyouuouG",
+      "        wͱGGGPw ",
+      "                "
+    ],
+    [
+      "        Ӡ       ",
+      "   yyӡӡӡ布       ",
+      "   yy   Ӡ    yy ",
+      "        众ӡӡӡӡyy ",
+      "D               ",
+      " DD             ",
+      "A D             ",
+      " A D            ",
+      "  v D           ",
+      "  v D           ",
+      "   A D          ",
+      "   vЕ DD       D",
+      "    Av  DDDDDDD ",
+      "      vA       v",
+      "        A0v0AAv ",
+      "                "
+    ],
+    [
+      "                ",
+      "   没了           ",
+      "   大中        没了 ",
+      "             大中 ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "    U           ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

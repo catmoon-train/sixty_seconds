@@ -1,0 +1,198 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=false,west=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "W",
+        "block": "minecraft:orange_carpet"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:gray_carpet"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:red_carpet"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:chiseled_stone_bricks[weathering=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "λ",
+        "block": "minecraft:glass_pane[east=false,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ϴ",
+        "block": "minecraft:glass_pane[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:cobblestone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:blue_carpet"
+      },
+      {
+        "char": "ύ",
+        "block": "minecraft:cyan_carpet"
+      },
+      {
+        "char": "Ϸ",
+        "block": "minecraft:glass_pane[east=false,north=false,south=true,waterlogged=false,west=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     jj         ",
+      "j j j  f        ",
+      " f              ",
+      "                ",
+      "     j          ",
+      "    idf         ",
+      "   Wo f         ",
+      "   CWkf         "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     jj         ",
+      "j j j  f        ",
+      "ef              ",
+      "                ",
+      "     j          ",
+      "    ikf         ",
+      "     gf         ",
+      "     af         "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     jj         ",
+      "j j j  f        ",
+      "eλ              ",
+      "                ",
+      "     j          ",
+      "    ief         ",
+      "     gf         ",
+      "     af         "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     jj         ",
+      "j j j  f        ",
+      "eλ              ",
+      "                ",
+      "                ",
+      "      f         ",
+      "      f         ",
+      "     ef         "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     jj         ",
+      "  j j  f        ",
+      "kϴ              ",
+      " b              ",
+      "Ecb             ",
+      "Eccb  f         ",
+      " cbccϴf         ",
+      "  ccbef         "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     jj         ",
+      "  j j  f        ",
+      "dλ              ",
+      " L              ",
+      " ύL             ",
+      " LoL  f         ",
+      " LLLLϷf         ",
+      "  LoLkf         "
+    ]
+  ]
+}

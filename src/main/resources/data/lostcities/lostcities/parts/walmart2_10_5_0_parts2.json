@@ -1,0 +1,198 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "活",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "之",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "义",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "备",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "动",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "社",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "龙",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "Ү",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "bbaackkaabbcdrdb",
+      "bddkkbcackkbrrca",
+      "rccddackcIckIrkb",
+      "akcbkcckdccaarca",
+      "bcaraccabkbdcdrd",
+      "ckadkcdkbIckIdra",
+      "bkkbkaabdkkarcbr",
+      "dakkbdadcdcbrbbr",
+      "cbdkkakabcrarbrk",
+      "cdabbbadkbrrrarc",
+      "kbdkabacbakrccra",
+      "bkdbcakbkkbraabd",
+      "ccbcaaarbkrradcr",
+      "cdkbcrdbbbrackar",
+      "ddddbbdadbraddrd",
+      "crrdddrkcbrkcdcb"
+    ],
+    [
+      "         ҨnnҨq  ",
+      "         ҨnnҨq  ",
+      "q       活之nn之义  ",
+      "         ҨnnҨ备  ",
+      "       q ҨnnҨ q ",
+      " q      活之ҨҨ之 q ",
+      "            q  q",
+      "            q  q",
+      "          q q q ",
+      "  q       q q   ",
+      "           q  q ",
+      "           q    ",
+      "           q   q",
+      "     q    q    q",
+      "          q   q ",
+      " q动   q   q     "
+    ],
+    [
+      "          社社社   ",
+      "                ",
+      "         Ҭ  Ҭ   ",
+      "                ",
+      "                ",
+      "         Ҭ  Ҭ   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  龙             "
+    ],
+    [
+      "          ҮҮҮ   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "          ҮҮҮ   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

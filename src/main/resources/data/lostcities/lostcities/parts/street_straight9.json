@@ -1,0 +1,264 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:moss_block"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:cobblestone_stairs[facing=south,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:mossy_cobblestone_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:spruce_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:structure_void"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaaaaaaaaaa",
+      "gllljtzjjBgjgljj",
+      "zjgjllglyulgtazu",
+      "aaaabdbebhceaaaa",
+      "bebdecdedchchcdd",
+      "dbdbbdebedbbbdbh",
+      "hdcchbbcbbcbbddc",
+      "dhccddeecbbccdbe",
+      "tdhbcccbdhbcbchd",
+      "ecbcbbdcbhcebdeb",
+      "becbededbeechebe",
+      "edccbctbeccbcthb",
+      "aaaacchbbhbeaaaa",
+      "jjljygjaBAuygggg",
+      "jgggltAlggjuljlu",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "           k  nn",
+      "  sm rop   m kos",
+      "ikfs  s fns w pL",
+      "i rp q  q  v    ",
+      " n k   i    iv f",
+      "    NxkJo  Fr If",
+      "   f    kkp piqv",
+      "ko  f  kn   fpr ",
+      "ifE    f o      ",
+      "o ir knk pi Mi  ",
+      "    f i fvfkq  w",
+      "nqH   qffq    or",
+      "  w    w i      ",
+      "   vxkqp   i  n ",
+      "   mnsf  o mr nr",
+      "f f  xiix n i   "
+    ],
+    [
+      "                ",
+      "   m       m    ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "       G K      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   m       m    ",
+      "                "
+    ],
+    [
+      "                ",
+      "   m       m    ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   m       m    ",
+      "                "
+    ],
+    [
+      "                ",
+      "   C       C    ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   D       D    ",
+      "                "
+    ]
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "任",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "报",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "之",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "极",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "说",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "脑",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "介",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "元",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "段",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "专",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "形",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "般",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "边",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "度",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "版",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "跟",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "没",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "空",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "skddcbkdbbkckbdc",
+      "sdckddkdcbkrkkdd",
+      "sbkkdarccdbadcdb",
+      "sssssssdbcarbabs",
+      "Jaadddaabadrdabc",
+      "sddbcdbccddcckkc",
+      "Jcacddcbbaakbrrc",
+      "Jsssssskkrkabcks",
+      "scaaaabackdrkbbd",
+      "scbbaddkbrcaabab",
+      "sacdbbcckcbaadda",
+      "sJsssssdacabcdks",
+      "Jkbackdkakaabccc",
+      "sbarbadkabaddrba",
+      "sbcaakcbccdaccab",
+      "ssssssskbafkkaks"
+    ],
+    [
+      "                ",
+      "                ",
+      "      q       q ",
+      "        q  q    ",
+      "           q    ",
+      "                ",
+      "             qq ",
+      "         q      ",
+      "           q    ",
+      "         任      ",
+      "                ",
+      "N               ",
+      "                ",
+      "   q      提提提q  ",
+      "         报之 之   ",
+      "q       报极提 提   "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "N               ",
+      "                ",
+      "          说说说   ",
+      "          说说说   ",
+      "          说说说   "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "N               ",
+      "                ",
+      "           脑    ",
+      "          介元段   ",
+      "          说 说   "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "N               ",
+      "                ",
+      "                ",
+      "          专形形   ",
+      "          专般边   "
+    ],
+    [
+      " 度              ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " 版              ",
+      "跟没空             ",
+      " 度              ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

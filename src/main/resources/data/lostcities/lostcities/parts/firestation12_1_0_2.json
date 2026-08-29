@@ -1,0 +1,351 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=true,west=false]"
+      },
+      {
+        "char": "θ",
+        "block": "minecraft:cobweb"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=true,west=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=true,west=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=true]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=true,west=true]"
+      },
+      {
+        "char": "г",
+        "block": "minecraft:spruce_stairs[facing=north,half=top,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "ί",
+        "block": "minecraft:spruce_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "б",
+        "block": "minecraft:smoker[facing=south,lit=false]",
+        "tag": {
+          "z": 565,
+          "x": 274,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:smoker",
+          "y": 148,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "Σ",
+        "block": "minecraft:chest[facing=south,type=single,waterlogged=false]",
+        "loot": "firestation",
+        "tag": {
+          "z": 565,
+          "x": 260,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 134,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ϋ",
+        "block": "minecraft:spruce_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "1",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѣ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Μ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:light_gray_bed[facing=west,occupied=false,part=head]",
+        "tag": {
+          "z": 574,
+          "x": 272,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 148
+        }
+      },
+      {
+        "char": "ϥ",
+        "block": "minecraft:light_gray_bed[facing=west,occupied=false,part=foot]",
+        "tag": {
+          "z": 574,
+          "x": 273,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 148
+        }
+      },
+      {
+        "char": "Ϊ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "5",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Я",
+        "block": "minecraft:dark_oak_door[facing=north,half=lower,hinge=right,open=true,powered=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "ώ",
+        "block": "minecraft:spruce_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=false,west=false]"
+      },
+      {
+        "char": "ω",
+        "block": "minecraft:spruce_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "џ",
+        "block": "minecraft:dark_oak_door[facing=south,half=lower,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:vine[east=true,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:gray_stained_glass"
+      },
+      {
+        "char": "ϲ",
+        "block": "minecraft:zombie_head[rotation=6]",
+        "tag": {
+          "z": 565,
+          "x": 273,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 149
+        }
+      },
+      {
+        "char": "P",
+        "block": "minecraft:vine[east=true,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "К",
+        "block": "minecraft:dark_oak_door[facing=north,half=upper,hinge=right,open=true,powered=false]"
+      },
+      {
+        "char": "ѐ",
+        "block": "minecraft:dark_oak_door[facing=south,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "Ѥ",
+        "block": "minecraft:zombie_head[rotation=3]",
+        "tag": {
+          "z": 575,
+          "x": 272,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 149
+        }
+      },
+      {
+        "char": "ϫ",
+        "block": "minecraft:vine[east=true,north=false,south=true,up=true,west=false]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=true,west=false]"
+      },
+      {
+        "char": "2",
+        "block": "minecraft:polished_andesite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "    eg          ",
+      "aaaaeg          ",
+      "KK θag          ",
+      "s   a           ",
+      " s Hag          ",
+      "ss HiG          ",
+      "  sHigg         ",
+      " s  i           ",
+      "ss Ha           ",
+      "  sHi           ",
+      "sss ay          ",
+      "ss  ag          ",
+      " s  nn          "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "    eg          ",
+      "iaaing          ",
+      "aaaaa           ",
+      "aaaaa           ",
+      "aaaaig          ",
+      "aaaaiG          ",
+      "aaaaagg         ",
+      "aaaaa           ",
+      "aaaai           ",
+      "aaaaay          ",
+      "aaaaay          ",
+      "aaaaaM          ",
+      "aaaaa           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "    e           ",
+      "aaaan           ",
+      "гίбΣa           ",
+      "Ϋ1ѢΜi           ",
+      "ϔϥΪ5ag          ",
+      "aaaЯiG          ",
+      "cώchigg         ",
+      "   ha           ",
+      "   hay          ",
+      "ωddhi           ",
+      "aaaџx           ",
+      "ϔϥcBxy          ",
+      "Ϋ 5hi           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "    e           ",
+      "avvan           ",
+      "ϲϲ ha           ",
+      "g  hi           ",
+      "g dPag          ",
+      "aaaКxG          ",
+      "ccchigg         ",
+      "    iy          ",
+      "   ha           ",
+      "dddhi           ",
+      "aaaѐi           ",
+      " ccBi           ",
+      "Ѥ   ay          "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "    e           ",
+      "iiaae           ",
+      "M ssa           ",
+      "sss i           ",
+      "M sϫag          ",
+      "aaaaiG          ",
+      " KKHaMg         ",
+      "    ay          ",
+      "   Ha           ",
+      "E EHx           ",
+      "aaaaa           ",
+      " K Ka           ",
+      "M   a           "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "eeeee           ",
+      "nne2n           ",
+      "xaiaR           ",
+      "aaaae           ",
+      "iaax2           ",
+      "xaaaeG          ",
+      "aaaaeyg         ",
+      "aaian           ",
+      "aaaie           ",
+      "iaxie           ",
+      "aaaae           ",
+      "axaaR           ",
+      "aaiae           "
+    ]
+  ]
+}

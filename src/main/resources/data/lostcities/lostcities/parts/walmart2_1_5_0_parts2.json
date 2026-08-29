@@ -1,0 +1,482 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "希",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "至",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "火",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "伤",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "治",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "建",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "机",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "花",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "板",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "程",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "连",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "练",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "西",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "体",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "报",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "斯",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "认",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "及",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "显",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "馆",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "红",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "还",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "论",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "战",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "之",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "内",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "指",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "表",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "老",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "性",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "共",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "校",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "类",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҧ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 463,
+          "x": 74,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Aisle 6\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "城",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "害",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "年",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "料",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѕ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 471,
+          "x": 31,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Birch logs\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "放",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "研",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "帮",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "令",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "换",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "持",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "职",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "差",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "目",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "给",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "wrwwxaawdbbxabwb",
+      "cbwdxwabbabxbwrc",
+      "wbbbxIadcIcxrwrw",
+      "acabxwddaaIxbdba",
+      "awcdxccbcraxabcb",
+      "baddxbcdwdaxabca",
+      "rwbrxaIcbwbxwcaw",
+      "cbrdxwabwIdxdraa",
+      "babbxbrwbccxcwaa",
+      "adcdxcIddbcxdccw",
+      "ccrdxddbaaIxabbd",
+      "abdcxdadcdaxdbac",
+      "acacxccddbdxdcdr",
+      "brcbxbcdccbxddda",
+      "bwacxacbbIbxacaa",
+      "cawaxdwacdIxIIdc"
+    ],
+    [
+      " q   希至火伤至治     ",
+      " q  建机机机PPP   q ",
+      "    l机机机PPPj花 q ",
+      "板q  l机机机P程P     ",
+      "连练连 l机机机 qq     ",
+      "q连  l机机机程j    西体",
+      "q  ql机机机P程程j 报斯西",
+      "  q 建机机机P程程  q报 ",
+      "     认及显馆及红   q ",
+      "    建还还还EEz     ",
+      "    l还还还ECCj    ",
+      "    l还还还ECz     ",
+      "    l还还还论m  战  战",
+      " q  l还还还Dzjj之JJ之",
+      "     还还还ECzjJJJJ",
+      "    建还还还zzEj之JJ之"
+    ],
+    [
+      "     N 内指 表     ",
+      "     老机 PPP     ",
+      "    l 机 P程 j    ",
+      "     l机 程j      ",
+      "    l 机j        ",
+      "    l 机         ",
+      "    l 机 P性 j    ",
+      "     老机 PPj     ",
+      "     N 内共 校     ",
+      "     老还 EDz     ",
+      "    ll还 E ij    ",
+      "    ll还 Dzj     ",
+      "    ll还j论m  m   ",
+      "    l 还jzDjjJJ 类",
+      "      还 zzmҧJ城害年",
+      "     老还 CzzjJJ 料"
+    ],
+    [
+      "     KҨKKҨK     ",
+      "    ҧnnnnnnЅ    ",
+      "    lnnnnnnj    ",
+      "     nnnnnnЅ    ",
+      "    lnnnnnn     ",
+      "    lnnnnnnЅ    ",
+      "    lnnnnnnj    ",
+      "    ҧnnnnnnЅ    ",
+      "     KҨKKҨK     ",
+      "    ҧnnnnnnЅ    ",
+      "    lnnnnnnj    ",
+      "    lnnnnnnЅ    ",
+      "    lnnnnnn     ",
+      "    lnnnnnnj 放 N",
+      "     nnnnnn 研   ",
+      "    ҧnnnnnnj 放 N"
+    ],
+    [
+      "     帮 令指 换     ",
+      "    建机机机PP程j    ",
+      "    l机机机P程程j    ",
+      "     机机机PP程j    ",
+      "    l机机机性mm     ",
+      "    l机机机程P程     ",
+      "    l机机机PPPj    ",
+      "    建机机机PPP     ",
+      "     持 职共 表     ",
+      "    建还还还zzzj    ",
+      "    l还还还zCDj    ",
+      "    l还还还Czzj    ",
+      "    l还还还 i论     ",
+      "    l还还还DzDj ҬҬK",
+      "     还还还Dzz   Ҭ差",
+      "    建还还还Czzj ҬҬK"
+    ],
+    [
+      "     目 内指 表     ",
+      "     老机 PP程     ",
+      "    l 机 P程程j    ",
+      "      机 PPPj    ",
+      "    l 机   m     ",
+      "      机 PPP     ",
+      "      机 PPPj    ",
+      "     老机 PPP     ",
+      "     N 内共 表     ",
+      "     老还给zzzj    ",
+      "    l 还 zDzj    ",
+      "    ll还 Hzzj    ",
+      "     l还  im     ",
+      "    l 还 Czzj   N",
+      "      还 HzH     ",
+      "     老还给Ezzj   N"
+    ]
+  ]
+}

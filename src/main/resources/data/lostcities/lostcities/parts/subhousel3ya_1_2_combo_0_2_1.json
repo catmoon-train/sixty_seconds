@@ -1,0 +1,218 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:polished_deepslate_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:green_terracotta"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:spruce_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:spruce_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:stripped_birch_wood[axis=y]"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:birch_planks"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:cobbled_deepslate_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Χ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϊ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "·",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ψ",
+        "block": "minecraft:polished_deepslate_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cobbled_deepslate_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:cobbled_deepslate_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "1",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:cobbled_deepslate_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:polished_deepslate_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "η",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:polished_deepslate_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "΄",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ά",
+        "block": "minecraft:cobbled_deepslate_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      " ncllllcllQ illl",
+      " ncllllclll  Qll",
+      " ncllllcllllllll",
+      " nccccccccccccHP",
+      " ncllllcllllllcn",
+      " ncllllQ  llllch",
+      " ncllllQQ Glllch",
+      " ncccccccQccccch",
+      " ncllllcllllllch",
+      " ncllllcllllllch",
+      " ncllllcllllllch",
+      " ncllllcllllllch",
+      " ncllllcllllllch",
+      " nHcccccccccccHn",
+      " nnΧ  Ϊ·     ΧnΨ",
+      "                "
+    ],
+    [
+      "  efhi  i i   i1",
+      "  efh       i  c",
+      "  efh      ihhhc",
+      "  efh  ii iihfRR",
+      "  efh  pppiihft ",
+      "  efh i  vi hfe ",
+      "  efh e   ηihfe ",
+      "  efh iQp i hfe ",
+      "  efh    pi hfe ",
+      "  efhi et i hfe ",
+      "  efh  e   ihfe ",
+      "  efhii i iihfe ",
+      "  efh   iii hfe ",
+      "  efcccccccccfe ",
+      "  tAn  ΄·Ϊ  nAt ",
+      "   ΄         ΄  "
+    ],
+    [
+      "    efh        1",
+      "    efh   hάάάάc",
+      "    efh   hfRRRR",
+      "    efh   hfe   ",
+      "    efh   hfe   ",
+      "    efh   hfe   ",
+      "    ef    hfe   ",
+      "    efp  hhfe   ",
+      "    efe   hfe   ",
+      "    efhi  hfe   ",
+      "    efh n hfe   ",
+      "    efh   hfe   ",
+      "    efh  ihfe   ",
+      "    efcc1ccfe   ",
+      "    tAnΧ ΧnAt   ",
+      "                "
+    ],
+    [
+      "      efhfffffff",
+      "      efhfRRRRRR",
+      "      efhfe     ",
+      "      efAfe     ",
+      "      eeAfe     ",
+      "        tfe     ",
+      "         ee     ",
+      "          e     ",
+      "          e     ",
+      "          e     ",
+      "      ee ee     ",
+      "      eenfe     ",
+      "      efhfe     ",
+      "      efcfe     ",
+      "      tAnAt     ",
+      "                "
+    ],
+    [
+      "        tttttttt",
+      "        t       ",
+      "        t       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        t       ",
+      "        t       ",
+      "        t       ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

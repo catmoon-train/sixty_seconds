@@ -1,0 +1,347 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=side,west=none]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:clay"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "醉",
+        "block": "minecraft:repeater[delay=1,facing=north,locked=false,powered=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=0,south=none,west=side]"
+      },
+      {
+        "char": "贷",
+        "block": "minecraft:redstone_wire[east=none,north=none,power=0,south=side,west=side]"
+      },
+      {
+        "char": "役",
+        "block": "minecraft:dead_fire_coral_block"
+      },
+      {
+        "char": "逛",
+        "block": "minecraft:repeater[delay=1,facing=east,locked=false,powered=false]"
+      },
+      {
+        "char": "捏",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=none,west=side]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:diorite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:moss_block"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:polished_blackstone"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:cobblestone_slab[type=double,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "染",
+        "block": "minecraft:mossy_cobblestone_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "蜀",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "杏",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "滥",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "吓",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "芙",
+        "block": "minecraft:light_gray_bed[facing=south,occupied=false,part=foot]",
+        "tag": {
+          "z": 476,
+          "x": -20,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 152
+        }
+      },
+      {
+        "char": "蚕",
+        "block": "minecraft:light_gray_bed[facing=south,occupied=false,part=head]",
+        "tag": {
+          "z": 477,
+          "x": -20,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 146
+        }
+      },
+      {
+        "char": "P",
+        "block": "minecraft:blue_terracotta"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:light_blue_terracotta"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "柚",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "羁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "晒",
+        "block": "minecraft:potted_cactus"
+      },
+      {
+        "char": "捕",
+        "block": "minecraft:glass_pane[east=false,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "楷",
+        "block": "minecraft:mossy_cobblestone_wall[east=none,north=none,south=none,up=true,waterlogged=false,west=tall]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "佩",
+        "block": "minecraft:cobblestone_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "谱",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 465,
+          "x": -59,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 136,
+          "NodePos": "-16217794604920L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "k",
+        "block": "minecraft:stone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:smooth_stone_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:cobblestone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:smooth_stone_slab[type=double,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "xx qy  l        ",
+      "D  zN  l        ",
+      "D  ddl          ",
+      "醉  gy           ",
+      "xx zy           ",
+      "D  cbl          ",
+      "D  gN           ",
+      "醉  zy           ",
+      "xx bcl          ",
+      "E贷 役y  l        ",
+      " D 役N  l        ",
+      "逛捏 cd  l        ",
+      "   zN  l        ",
+      "   zy  l        ",
+      "   ecl          ",
+      "   zN           "
+    ],
+    [
+      "igfIK  l        ",
+      "iigIw  l        ",
+      "fBicdl          ",
+      "hfiJw           ",
+      "iiiJw           ",
+      "ccdbcl          ",
+      "hifJw           ",
+      "Gggqw           ",
+      "ffhbcl          ",
+      "GihJw  l        ",
+      "ggiqK  l        ",
+      "ceccd  l        ",
+      "i染gqK  l        ",
+      "gB染Jw  l        ",
+      "fh染bdl          ",
+      "hhGqw           "
+    ],
+    [
+      "蜀杏 Jy  l        ",
+      "   Iy  l        ",
+      "滥吓 ecl          ",
+      "L芙 qN           ",
+      "L蚕 Jy           ",
+      "POOeel          ",
+      "蜀杏 qy           ",
+      "   Iy           ",
+      "滥吓 cel          ",
+      "M芙 Jy  l        ",
+      "L蚕 Jy  l        ",
+      "PPOee  l        ",
+      "  柚JN  l        ",
+      "  羁Iy  l        ",
+      "   cbl          ",
+      "   IN           "
+    ],
+    [
+      " 晒 捕   l        ",
+      "       l        ",
+      "滥吓 c楷l          ",
+      "L  H            ",
+      "M  H            ",
+      "bbce楷l          ",
+      "   H            ",
+      "   H            ",
+      "滥吓 d佩l          ",
+      "L  H   l        ",
+      "L  H   l        ",
+      "bdee佩  l        ",
+      "  晒捕   l        ",
+      "       l        ",
+      "   c楷l          ",
+      "   H            "
+    ],
+    [
+      "   H   l        ",
+      "   H   l        ",
+      "谱  b佩l          ",
+      "   捕            ",
+      "                ",
+      "bece楷l          ",
+      "   H            ",
+      "   H            ",
+      "谱  d楷l          ",
+      "       l        ",
+      "       l        ",
+      "beec佩  l        ",
+      "   H   l        ",
+      "   H   l        ",
+      "谱  b楷l          ",
+      "   捕            "
+    ],
+    [
+      "kaazw  l        ",
+      "krazw  l        ",
+      "Aaaecl          ",
+      "arrzw           ",
+      "kkr役w           ",
+      "eedbcl          ",
+      "ara役w           ",
+      "kaazw           ",
+      "Aaaedl          ",
+      "akazw  l        ",
+      "aaazK  l        ",
+      "dccdd  l        ",
+      "arazw  l        ",
+      "aakzK  l        ",
+      "Akkebl          ",
+      "aarqw           "
+    ]
+  ]
+}

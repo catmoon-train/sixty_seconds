@@ -1,0 +1,234 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "邻",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:black_stained_glass"
+      },
+      {
+        "char": "泛",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:quartz_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "振",
+        "block": "minecraft:smooth_quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "秘",
+        "block": "minecraft:furnace[facing=south,lit=false]",
+        "tag": {
+          "z": 983,
+          "x": -458,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 130,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:quartz_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "淘",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 938,
+          "x": -369,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:computer",
+          "y": 122,
+          "NodePos": "-101429943820166L",
+          "Connections": [
+            "L"
+          ]
+        }
+      }
+    ]
+  },
+  "slices": [
+    [
+      "edbeeaaadadbcbdd",
+      "bbbdeabbaaeacaea",
+      "beeaececebaaecdd",
+      "cbaeccebeebdcbad",
+      "abbcaabeeabddbcc",
+      "adbbadbcedccaeab",
+      "aaebbcccdddeedbd",
+      "geceeabedabedaea",
+      "eacccaaaacdeabae",
+      "bbebbadeae      ",
+      "ecdb            ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "               n",
+      "        n      y",
+      "        y      y",
+      "        y     y ",
+      "       y y      ",
+      "                ",
+      "              n ",
+      "f      n n      ",
+      "df        ceecce",
+      "def eeacbaa     ",
+      "dedbe           ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "               s",
+      "        s      s",
+      "        s     邻o",
+      "       邻o泛    Co",
+      "       Coz   ssQ",
+      "      ssQss zs振Q",
+      "     zs振Q振sC   Q",
+      "        Q     C秘",
+      "f      C秘z      ",
+      "ef              ",
+      "z f        abeee",
+      "acf  decedeb    ",
+      "cbaaae          ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "               w",
+      "        w     yϓ",
+      "f      yϓy      ",
+      "淘f              ",
+      "  f             ",
+      "edf         baac",
+      "  f   cbedeed   ",
+      "edcbedc         ",
+      "c               ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "f               ",
+      " f              ",
+      "  f             ",
+      "  f             ",
+      "  f         geaa",
+      " f    gcdccabc  ",
+      "fcaaceec        ",
+      "ce              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "f               ",
+      " f              ",
+      "  f             ",
+      "  f             ",
+      "  f           ac",
+      " f      baabca  ",
+      "f bcacbe        ",
+      "ac              "
+    ]
+  ]
+}

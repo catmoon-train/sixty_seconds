@@ -1,0 +1,302 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:dirt"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:smooth_stone"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:stone[weathering=true]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:cobblestone[weathering=true]"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "ҙ",
+        "block": "minecraft:stripped_spruce_wood[axis=x]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:water[level=0]"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:seagrass"
+      },
+      {
+        "char": "意",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ё",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:kelp_plant"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:dark_oak_leaves[distance=7,persistent=true,waterlogged=true]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:stone_bricks[weathering=true]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:cracked_deepslate_bricks"
+      },
+      {
+        "char": "϶",
+        "block": "minecraft:stone_brick_slab[type=bottom,waterlogged=true,weathering=true]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:polished_basalt[axis=y]"
+      },
+      {
+        "char": "Ѣ",
+        "block": "minecraft:spruce_stairs[facing=south,half=top,shape=straight,waterlogged=true]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:deepslate_bricks[weathering=false]"
+      },
+      {
+        "char": "Ђ",
+        "block": "minecraft:spruce_planks"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=true]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "ϩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "又",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "打",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:deepslate_bricks[weathering=true]"
+      },
+      {
+        "char": "子",
+        "block": "minecraft:kelp[age=8]"
+      },
+      {
+        "char": "您",
+        "block": "minecraft:kelp[age=1]"
+      },
+      {
+        "char": "呵",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "希",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "І",
+        "block": "minecraft:spruce_trapdoor[facing=south,half=bottom,open=true,powered=false,waterlogged=true]"
+      },
+      {
+        "char": "已",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "资",
+        "block": "minecraft:kelp[age=20]"
+      },
+      {
+        "char": "天",
+        "block": "minecraft:kelp[age=24]"
+      },
+      {
+        "char": "à",
+        "block": "minecraft:kelp[age=13]"
+      },
+      {
+        "char": "Ѳ",
+        "block": "minecraft:kelp[age=10]"
+      },
+      {
+        "char": "ӓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "对",
+        "block": "minecraft:kelp[age=0]"
+      },
+      {
+        "char": "А",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "清",
+        "block": "minecraft:kelp[age=17]"
+      },
+      {
+        "char": "ѱ",
+        "block": "minecraft:spruce_trapdoor[facing=south,half=top,open=true,powered=false,waterlogged=true]"
+      },
+      {
+        "char": "以",
+        "block": "minecraft:kelp[age=18]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "tgtwgtgywwggaaaa",
+      "tyyDtwgggywtaaaa",
+      "igtgygwyywttaaaa",
+      "wywtggwgtyyDaaaa",
+      "wgwgyygwgywgaaaa",
+      "wggCҙҙҙҙҙҙwCaaaa",
+      "wwDtDggCgggCaaaa",
+      "gyDtCtDtDggDaaaa",
+      "gywDCCggttgDaaaa",
+      "CgtCDtCgtwCgaaaa",
+      "gytgwywggggDaaaa",
+      "tgyDgttgtyggaaaa",
+      "gggggwttgwggaaaa",
+      "ywttgwyyytwgaaaa",
+      "gytDgygggtytaaaa",
+      "gggtygggggwgaaaa"
+    ],
+    [
+      "bMb意MbёёёINdaaaa",
+      "NMbkNMNbMNNdaaaa",
+      "dMM϶Iёёёbёbiaaaa",
+      "bIN϶NbbbIMNiaaaa",
+      "NbN϶INbbNNInaaaa",
+      "INNdѢѢѢѢѢѢNEaaaa",
+      "϶϶nEЂЂЂЂЂЂInaaaa",
+      "QhhjЂЂЂЂЂЂϩEaaaa",
+      "bQbnЂЂЂЂЂЂbnaaaa",
+      "又打QniEindbiEaaaa",
+      "bbbibbbbbbbiaaaa",
+      "打又Iibbbbbbbdaaaa",
+      "bbQkbbbbbbbnaaaa",
+      "MMQnbbbbbbbqaaaa",
+      "ibikbbbbbbbkaaaa",
+      "bbbbbbbbbbbnaaaa"
+    ],
+    [
+      "bbbbbbbbbINkaaaa",
+      "bbbibbbbbbbdaaaa",
+      "kbbbIbbbbbbnaaaa",
+      "b子bbbbbb您bbEaaaa",
+      "bbbbIbbbbbInaaaa",
+      "IbNiNM呵bM希biaaaa",
+      "bbEdNbMNbNIkaaaa",
+      "bQbdϩIϩϩNNϩiaaaa",
+      "bbbiІbІІІІbnaaaa",
+      "已bbinnniEbEEaaaa",
+      "bbbdbbbbbbbiaaaa",
+      "已bIkbbbbbbbiaaaa",
+      "bbbqbbbbbbbnaaaa",
+      "bbQdbbbbbbbdaaaa",
+      "dbiqbbbbbbbkaaaa",
+      "bbbbbbbbbbbqaaaa"
+    ],
+    [
+      "bbbbbbbbbIbiaaaa",
+      "bbbkbbbbbbbnaaaa",
+      "kbbb资bbbbbbkaaaa",
+      "bbbbbbbbbbbiaaaa",
+      "bbbbIbbbbb天Eaaaa",
+      "àbbdNbbbbbbnaaaa",
+      "bbndbbbbbbInaaaa",
+      "bbbnϩѲϩϩNϩϩiaaaa",
+      "bbbdІbІІІІbEaaaa",
+      "bbbndiinnbiEaaaa",
+      "bbbdbbbbbbbdaaaa",
+      "bbIkbbbbbbbdaaaa",
+      "bbbqbbbbbbbdaaaa",
+      "bbbqbbbbbbbEaaaa",
+      "nbdEbbbbbbbiaaaa",
+      "bbbbbbbbbbbiaaaa"
+    ],
+    [
+      "bbbӓbbbbb对bdaaaa",
+      "bbbnbbbbbbbkaaaa",
+      "kbbbbААbААbqaaaa",
+      "bbbbbbbbbbbqaaaa",
+      "bbbbàbbbbbbiaaaa",
+      "bbbkbААbААbiaaaa",
+      "bbkqbbbbbb清daaaa",
+      "bbbiϩϩϩϩϩϩϩiaaaa",
+      "bbbkѱѱѱѱѱѱѱdaaaa",
+      "bbbkqknqnnqiaaaa",
+      "bbbnbbbbbbbdaaaa",
+      "bb以nbbbbbbbkaaaa",
+      "bbbkbbbbbbbiaaaa",
+      "bbbqbbbbbbbiaaaa",
+      "dkiqbbbbbbbnaaaa",
+      "bbbbbbbbbbbEaaaa"
+    ]
+  ]
+}

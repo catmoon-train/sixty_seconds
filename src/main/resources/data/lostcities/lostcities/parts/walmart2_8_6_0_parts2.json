@@ -1,0 +1,418 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "时",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 434,
+          "x": 58,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 133,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Loom\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\">>>\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "今",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "听",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "变",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "社",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѕ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 471,
+          "x": 31,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Birch logs\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "球",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 424,
+          "x": 152,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 134,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Register 1\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "式",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "底",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "麽",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "节",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "几",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "尽",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "红",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "投",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "喔",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "後",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "平",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "读",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "试",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "特",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "份",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "校",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "费",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "位",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "值",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "指",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaacacaacbcbca",
+      "aabaraaaddacaaab",
+      "waabadaaaabadaaw",
+      "dcaaacaaaacraabd",
+      "daaraacaacdaabac",
+      "aaacacaaaaaaaaac",
+      "aacbaaarwcaddraa",
+      "dcaIaccbawabIawa",
+      "aakdkcccakrkbckc",
+      "acdkkbkdkkakdbda",
+      "kbdbcdrakkbkdrbk",
+      "kcbdkcbabbccrcak",
+      "dkcadaakdbbdbcca",
+      "cbabccccdcdckccc",
+      "abcarbabarakccca",
+      "acdbakkabbacbdkk"
+    ],
+    [
+      "时今听变       社社社  ",
+      "nЅ  q           ",
+      "nЅ              ",
+      "球mm        qq   ",
+      "式式式底 麽麽 q 麽麽节j  ",
+      "式式式几麽麽   麽麽麽尽q  ",
+      "式式式红麽麽麽q 麽麽麽投qq ",
+      "喔喔喔D後A後AAAAAzA後A",
+      "iiiii i i   i ii",
+      "                ",
+      "      q      q  ",
+      "                ",
+      "          q     ",
+      "                ",
+      "    q    q q    ",
+      "                "
+    ],
+    [
+      " N N       ҩҩҩ  ",
+      "平               ",
+      "读               ",
+      "mmm             ",
+      "式式式试        特j  ",
+      "份份份       麽     ",
+      "份份份校麽麽    麽 费j  ",
+      "後後後E後後AAAAAAzAAA",
+      "iiiii i i   i ii",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      " KҨK            ",
+      "                ",
+      "                ",
+      "时m时  时    时     ",
+      "nnnKnnnnnnnn位j  ",
+      "nnnҨnnnnnnnnҨ   ",
+      "nnnKnnnnnnnn位j  ",
+      "後後後E後A後A後AAADAAA",
+      "iiiii i i   i ii",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      " 今听变            ",
+      "                ",
+      "                ",
+      "mmm             ",
+      "式式式底麽麽麽  麽麽麽特j  ",
+      "式式式几麽麽麽  麽麽麽    ",
+      "式式式值麽麽麽   麽麽校j  ",
+      "喔喔喔C後A後AAAAAzAAA",
+      "iiiii i i   i ii",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      " N N            ",
+      "                ",
+      "                ",
+      "mmm             ",
+      "式式式试麽麽麽  麽麽麽特j  ",
+      "式式式 麽麽麽  麽麽麽    ",
+      "式式式指麽麽麽   麽麽校j  ",
+      "喔喔喔E後A後AAAAAHAAA",
+      "iiiii i i   i ii",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

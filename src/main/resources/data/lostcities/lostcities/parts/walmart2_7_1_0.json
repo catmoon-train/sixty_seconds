@@ -1,0 +1,279 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:yellow_terracotta"
+      },
+      {
+        "char": "开",
+        "block": "minecraft:spawner",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 387,
+          "x": 24,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 132,
+          "SpawnRange": "4s",
+          "Delay": "584s"
+        }
+      },
+      {
+        "char": "f",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:smooth_stone_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "之",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "测",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=side,west=side]"
+      },
+      {
+        "char": "除",
+        "block": "minecraft:cornflower"
+      },
+      {
+        "char": "动",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "说",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "病",
+        "block": "minecraft:barrel[facing=east,open=false]",
+        "tag": {
+          "z": 393,
+          "x": 133,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:barrel",
+          "y": 134,
+          "Items": []
+        }
+      },
+      {
+        "char": "医",
+        "block": "minecraft:spruce_trapdoor[facing=east,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "龙",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "介",
+        "block": "minecraft:white_stained_glass_pane[east=true,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "元",
+        "block": "minecraft:white_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "阿",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "猫",
+        "block": "minecraft:white_stained_glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:white_stained_glass"
+      },
+      {
+        "char": "便",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "院",
+        "block": "minecraft:white_stained_glass_pane[east=true,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "般",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "度",
+        "block": "minecraft:oak_trapdoor[facing=south,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "版",
+        "block": "minecraft:oak_trapdoor[facing=north,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "没",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "空",
+        "block": "minecraft:oak_trapdoor[facing=east,half=top,open=true,powered=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "dbddcacdkcdbadbc",
+      "abdackdddrkcdbbk",
+      "dbkbcrbcddkkkaad",
+      "sssssscacbddkrsJ",
+      "ccrcbkabkcddddda",
+      "adbkccbdakcakcbk",
+      "kbacbrbbdcbkacca",
+      "sssssJdcdcbadaJs",
+      "bacb开kadbakcaakk",
+      "kbbkdkadcaabbadk",
+      "dabdabbdkdbackab",
+      "sssssskdkadbdrss",
+      "cdbbkbbkckcakbca",
+      "rcbcdrdaarcbrbaa",
+      "bbaakbrcbbabddbc",
+      "sssssJrabfkdbaJs"
+    ],
+    [
+      "                ",
+      "         q      ",
+      "     q          ",
+      "             q  ",
+      "                ",
+      "                ",
+      "     q          ",
+      "                ",
+      "提之提提之提          ",
+      "提    提          ",
+      "提之提提之提          ",
+      "q 测   q      q  ",
+      "                ",
+      "q    q   q  除   ",
+      "      动         ",
+      "      q         "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "说说说说说说          ",
+      "说说说说说病医         ",
+      "说说说说说说          ",
+      "                ",
+      "                ",
+      "                ",
+      "      龙         ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " 介说元说           ",
+      "阿猫  h便          ",
+      " 院说元说           ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " 阿阿阿阿           ",
+      " 阿般般便           ",
+      " 阿便便便           ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "度               ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "版               ",
+      "没空              ",
+      "度               ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

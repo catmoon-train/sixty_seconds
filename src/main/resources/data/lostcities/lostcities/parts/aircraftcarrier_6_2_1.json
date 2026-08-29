@@ -1,0 +1,556 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "峻",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=9,south=side,west=none]"
+      },
+      {
+        "char": "柠",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=12,south=side,west=none]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "疆",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=10,south=side,west=none]"
+      },
+      {
+        "char": "挚",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=11,south=none,west=side]"
+      },
+      {
+        "char": "蜡",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=12,south=none,west=side]"
+      },
+      {
+        "char": "裙",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=13,south=none,west=side]"
+      },
+      {
+        "char": "瑟",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=14,south=none,west=side]"
+      },
+      {
+        "char": "孰",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=15,south=side,west=side]"
+      },
+      {
+        "char": "渣",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=13,south=side,west=side]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "俺",
+        "block": "minecraft:repeater[delay=2,facing=north,locked=false,powered=true]"
+      },
+      {
+        "char": "霖",
+        "block": "minecraft:redstone_block"
+      },
+      {
+        "char": "炫",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=15,south=none,west=none]"
+      },
+      {
+        "char": "樵",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=15,south=none,west=side]"
+      },
+      {
+        "char": "首",
+        "block": "minecraft:sticky_piston[extended=false,facing=north]"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:observer[facing=south,powered=false]"
+      },
+      {
+        "char": "手",
+        "block": "minecraft:observer[facing=down,powered=false]"
+      },
+      {
+        "char": "Җ",
+        "block": "minecraft:observer[facing=west,powered=false]"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:quartz_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:gray_carpet"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "赠",
+        "block": "minecraft:quartz_stairs[facing=north,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:quartz_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "缠",
+        "block": "minecraft:dark_oak_door[facing=north,half=lower,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "渴",
+        "block": "minecraft:dark_oak_door[facing=north,half=lower,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "职",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "颓",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "浆",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=true,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "绵",
+        "block": "minecraft:chest[facing=west,type=single,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 961,
+          "x": -445,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 107,
+          "Items": []
+        }
+      },
+      {
+        "char": "稀",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "效",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "詗",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "刮",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "尚",
+        "block": "minecraft:birch_wall_sign[facing=east,waterlogged=false]",
+        "tag": {
+          "z": 945,
+          "x": -465,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 109,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Battery:\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Charlie\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "叉",
+        "block": "minecraft:dark_oak_door[facing=north,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "琳",
+        "block": "minecraft:dark_oak_door[facing=north,half=upper,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "ϑ",
+        "block": "minecraft:birch_wall_sign[facing=south,waterlogged=false]",
+        "tag": {
+          "z": 953,
+          "x": -527,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 112,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Workshop\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "弥",
+        "block": "minecraft:lever[face=wall,facing=west,powered=true]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:observer[facing=east,powered=false]"
+      },
+      {
+        "char": "绘",
+        "block": "minecraft:lever[face=wall,facing=east,powered=false]"
+      },
+      {
+        "char": "愈",
+        "block": "minecraft:birch_wall_sign[facing=west,waterlogged=false]",
+        "tag": {
+          "z": 979,
+          "x": -456,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 116,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Officer's bunks\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"^\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"|\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "z",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "驻",
+        "block": "minecraft:furnace[facing=west,lit=false]",
+        "tag": {
+          "z": 953,
+          "x": -551,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 120,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "熄",
+        "block": "minecraft:dispenser[facing=east,triggered=false]",
+        "tag": {
+          "z": 939,
+          "x": -459,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:dispenser",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "钗",
+        "block": "minecraft:dropper[facing=up,triggered=false]",
+        "tag": {
+          "z": 939,
+          "x": -456,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:dropper",
+          "y": 111,
+          "Items": []
+        }
+      },
+      {
+        "char": "尿",
+        "block": "minecraft:repeater[delay=1,facing=east,locked=false,powered=false]"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:quartz_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "窃",
+        "block": "minecraft:dropper[facing=east,triggered=false]",
+        "tag": {
+          "z": 942,
+          "x": -459,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:dropper",
+          "y": 111,
+          "Items": []
+        }
+      },
+      {
+        "char": "诊",
+        "block": "minecraft:stonecutter[facing=east]"
+      },
+      {
+        "char": "溶",
+        "block": "minecraft:note_block[instrument=basedrum,note=0,powered=false]"
+      },
+      {
+        "char": "腕",
+        "block": "minecraft:note_block[instrument=basedrum,note=16,powered=false]"
+      },
+      {
+        "char": "焕",
+        "block": "minecraft:note_block[instrument=basedrum,note=2,powered=false]"
+      },
+      {
+        "char": "馒",
+        "block": "minecraft:note_block[instrument=harp,note=1,powered=false]"
+      },
+      {
+        "char": "跷",
+        "block": "minecraft:note_block[instrument=harp,note=0,powered=false]"
+      },
+      {
+        "char": "襟",
+        "block": "minecraft:iron_bars[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "吠",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:iron_block"
+      },
+      {
+        "char": "窟",
+        "block": "minecraft:iron_bars[east=false,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "只",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "勃",
+        "block": "minecraft:iron_door[facing=west,half=lower,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "揭",
+        "block": "minecraft:iron_bars[east=true,north=true,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "擦",
+        "block": "minecraft:iron_door[facing=west,half=lower,hinge=left,open=false,powered=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "bcebb  峻      柠a",
+      "beebe  疆挚蜡裙瑟孰瑟渣d",
+      "cceecd 俺e ad霖c俺d",
+      "eadddc 炫  ae  樵c",
+      "ddbcdeeabbdc首dbc",
+      "aabdcdddddaaϔaea",
+      "abebec手ҖҖҖҖҖҖbbb",
+      "caeacdcbeedcdecc",
+      "cbcabcbaddecaabe",
+      "ecacecbdcdecdade",
+      "acbebbddceeceebd",
+      "aaeaacaaaebcceba",
+      "cabdcedbcbddedde",
+      "aeccedcccbaeeada",
+      "eaeeaaecabaaadae",
+      "ccbedeedddbbbabd"
+    ],
+    [
+      "KppppCaccdadceae",
+      "Kpppp赠baedbabdad",
+      "KpCpppddbbeadecd",
+      "Kpppppecdbecedba",
+      "Kppppppppppppppp",
+      "KpCppppppppppppp",
+      "Kppppppppppppppp",
+      "Kppppppppppppppp",
+      "KpCppppppppppxpp",
+      "Kppppppppppppppp",
+      "gppppppppppppHHH",
+      "daeaeaebe缠渴edaee",
+      "     cfa        ",
+      "                ",
+      "     e首c        ",
+      "ebecebdadcecbaae"
+    ],
+    [
+      "         x     职",
+      "      颓       e浆",
+      "      职  H   绵e浆",
+      "      稀效效詗效效效效詗刮",
+      "尚               ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "g               ",
+      "fffffbfef叉琳fffff",
+      "     dfa   ϑ    ",
+      "                ",
+      "    弥Җ首O绘       ",
+      "fffffcfbffffffff"
+    ],
+    [
+      "                ",
+      "                ",
+      "         x   愈z ",
+      "                ",
+      "尚               ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "g               ",
+      "fffffbfaffffffff",
+      "     ceb        ",
+      "     bab        ",
+      "     dde        ",
+      "fffffdfbffffffff"
+    ],
+    [
+      "aecedcdeecbbedae",
+      "bceacbaebeabccae",
+      "eaebeccbaabedbab",
+      "cbabdacabbcaedce",
+      "eccgggbddcbggged",
+      "ebbceebbededadab",
+      "edaabdabaeabdcec",
+      "bedcdaedccbbaece",
+      "aabccebebcdbceee",
+      "baedbbaeedbacdcd",
+      "bacabdbccaedeccd",
+      "bbacacbdcabbeccc",
+      "bceedaaeeeebbbad",
+      "egggbecgggadbggg",
+      "aceaedbcbdecaabd",
+      "aaebcddadbdadaca"
+    ],
+    [
+      " z  驻f熄钗尿       ",
+      " z  Jf窃         ",
+      " z  Jf诊       溶 ",
+      " z  Jf诊诊    腕焕溶溶",
+      " z  Jf诊诊诊   馒跷溶 ",
+      " z  驻f诊     焕溶  ",
+      " z   f襟         ",
+      " z  gf吠         ",
+      "    JfE      窟  ",
+      "    JfEEE 只勃勃揭霖霖",
+      "HHHHgfgEEE擦擦擦揭揭霖",
+      "bdaccacaaedaeada",
+      "    dfe         ",
+      "                ",
+      "    c首e         ",
+      "ebadaedacedccadc"
+    ]
+  ]
+}

@@ -1,0 +1,322 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "动",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "哈",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "息",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "传",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "西",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "联",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "体",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "竟",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ұ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "请",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "那",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "实",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "後",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "龙",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "久",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 483,
+          "x": 81,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 134,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"DO NOT ENTER\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"EMPLOYEE ONLY\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "数",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "abaacabwbadabrab",
+      "bbaddwcrccccdcca",
+      "awrbrwwbaabwcwwc",
+      "cbbcdbdbcaacarrc",
+      "ddcccdbwcadbdddc",
+      "abadraccdcwwwdwa",
+      "dadrbddbdddrawwr",
+      "baacbcrdbacccbwc",
+      "adIdcwbdIbdrwrcc",
+      "wccwrcaabccwacra",
+      "drdbwcrdacdbwdwd",
+      "ddbrcwcadrdddabb",
+      "ccdabcdbcbwddbrc",
+      "rbcwwdbdddcaIabI",
+      "bcbwdwabdbccbcdc",
+      "cqqqcc动wqzwwqrrr"
+    ],
+    [
+      "ly       q  ҬqҬ ",
+      "lf     q       哈",
+      "lfq q          息",
+      " 传q          q西哈",
+      " 联              ",
+      " 联  q           ",
+      " 传 qq体     q   q",
+      "mymmm竟体m m      ",
+      "gggggggggg q q  ",
+      "Ұz请iqii   jq  q ",
+      " i    q l       ",
+      "  qq    lq    q ",
+      "         m    q ",
+      "qq      那gjm实实实实",
+      "後後AAAAAAzggggggg",
+      "ii   i龙  ziiiiiq"
+    ],
+    [
+      "le              ",
+      "le              ",
+      "lf              ",
+      " 久              ",
+      "                ",
+      "                ",
+      " m              ",
+      "memmm  m m      ",
+      "eEyfepoyff      ",
+      "ҰE请i ii   j     ",
+      " i      l       ",
+      "        l       ",
+      "                ",
+      "        那o m mmm",
+      "AAAAAAAAEzopfpff",
+      "ii   i   ziiiiii"
+    ],
+    [
+      "ly              ",
+      " y              ",
+      "lf              ",
+      "                ",
+      "                ",
+      "                ",
+      " m              ",
+      "memmm  m m      ",
+      "pzffppeeoe      ",
+      "Ұz请i ii   j     ",
+      " i      l       ",
+      "        l       ",
+      "                ",
+      "        那f m mmm",
+      "AAAAAAAAzHffpfof",
+      "ii   i   ziiiiii"
+    ],
+    [
+      " f              ",
+      " f              ",
+      "lf              ",
+      "                ",
+      "                ",
+      "                ",
+      " m              ",
+      "mymmm  m m      ",
+      "oEyppeepfy      ",
+      "ҰD请i ii   j     ",
+      " i      l       ",
+      "        l       ",
+      "                ",
+      "        那p m mmm",
+      "AAAAAAAACEopfppp",
+      "ii   i   Eiiiiii"
+    ],
+    [
+      " e              ",
+      " o              ",
+      "le              ",
+      " v              ",
+      "                ",
+      " v              ",
+      " 数              ",
+      "mfm m  m m      ",
+      "fDfyppyefp      ",
+      "ҰD请i ii   j     ",
+      " i      l       ",
+      "        l       ",
+      "                ",
+      "        那o m mmm",
+      "AAAAAAAAzCeeyyoe",
+      "ii   i   Diiiiii"
+    ]
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "就",
+        "block": "minecraft:stone_brick_wall[east=none,north=low,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѳ",
+        "block": "minecraft:crafting_table"
+      },
+      {
+        "char": "ѹ",
+        "block": "minecraft:iron_bars[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Ѹ",
+        "block": "minecraft:iron_bars[east=true,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Ѷ",
+        "block": "minecraft:spruce_planks"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "样",
+        "block": "minecraft:jungle_planks"
+      },
+      {
+        "char": "题",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=low,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "告",
+        "block": "minecraft:cobblestone_wall[east=low,north=none,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "场",
+        "block": "minecraft:cobblestone_wall[east=none,north=low,south=none,up=true,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "ϗ",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "情",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "应",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aedcdbdabeceadda",
+      "cbbbdcbcedddebcd",
+      "bbdedcdbebadeaba",
+      "eedccbbcbcbceddd",
+      "bcedddcaeecccbcd",
+      "dbcaedddbdebcbca",
+      "aiibbacbecedebce",
+      "  a ecaadbdcbacb",
+      "    abcdbdeebabe",
+      "     acecebbad  ",
+      "      aaa  bb   ",
+      "       d    就   ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      " bcccce   cbdcec",
+      " aa         ϓ  ϓ",
+      " ac             ",
+      "  be            ",
+      "  ea           ѳ",
+      "ѹѹѸcd    ѶѶ    ѳ",
+      "   cc    ѶѶ     ",
+      "  g f  样        ",
+      "    f  样        ",
+      "     f          ",
+      "      f      题  ",
+      "            告场  ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      " abeaad   ddcdbd",
+      " cc         ϓ  ϓ",
+      " cd             ",
+      "  ec            ",
+      "  aa           ѳ",
+      "   ab    ѶѶ    ѳ",
+      "   ae    ѶѶ     ",
+      "  a f  样        ",
+      "       样        ",
+      "                ",
+      "      f      ϗ  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      " dcdcde   dbaaee",
+      " bb         ϓ  ϓ",
+      " cb             ",
+      "  bc            ",
+      "  ca            ",
+      "   cd           ",
+      "   ca           ",
+      "  g             ",
+      "    f           ",
+      "     f       题  ",
+      "      f      就  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      " cecddd   ecbeba",
+      " ab         情ӽӽ应",
+      " da             ",
+      "  ad            ",
+      "  bc            ",
+      "   cc           ",
+      "   eb           ",
+      "  a             ",
+      "    f           ",
+      "     f          ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      " ebabebdacdbdbea",
+      " ec             ",
+      " ab             ",
+      "  ba            ",
+      "  ec            ",
+      "   da           ",
+      "   db           ",
+      "  a cd          ",
+      "    cb          ",
+      "     ca         ",
+      "     Tba        ",
+      "       e        ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

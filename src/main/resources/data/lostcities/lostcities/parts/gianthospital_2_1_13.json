@@ -1,0 +1,174 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "稽",
+        "block": "minecraft:rail[shape=south_east,waterlogged=false]"
+      },
+      {
+        "char": "峨",
+        "block": "minecraft:rail[shape=north_west,waterlogged=false]"
+      },
+      {
+        "char": "耻",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "噹",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "锁",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "喃",
+        "block": "minecraft:cobblestone_slab[type=bottom,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "       becddbc  ",
+      "       c 稽   c  ",
+      "       e     d  ",
+      "       e   峨 d  ",
+      "       beedbcc  ",
+      "        耻 耻     ",
+      "        噹 耻     ",
+      "       dceMb    ",
+      "       c   Q    ",
+      "       e   锁    ",
+      "       ccbdd    ",
+      "        M 耻     ",
+      "        L M     ",
+      "        L 耻     ",
+      "        耻 耻     ",
+      "       ddcMc    "
+    ],
+    [
+      "       喃喃QQQ喃Q  ",
+      "       QQ锁QQQQ  ",
+      "       QQQQQ喃Q  ",
+      "       喃QQQ锁QQ  ",
+      "       QQ锁QQ锁锁  ",
+      "                ",
+      "                ",
+      "       dcebb    ",
+      "       e   Q    ",
+      "       b   Q    ",
+      "       cdcdc    ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "       cedce    "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "       QQ喃QQ    ",
+      "       QQQQ锁    ",
+      "       Q锁Q喃Q    ",
+      "       锁QQQQ    ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "       Q锁Q喃Q    "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

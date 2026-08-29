@@ -1,0 +1,282 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ф",
+        "block": "minecraft:polished_andesite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:bricks[weathering=true]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:polished_andesite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:andesite"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ы",
+        "block": "minecraft:smooth_stone"
+      },
+      {
+        "char": "х",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѻ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "е",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:smooth_stone_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=true]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:dead_bubble_coral_block"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:dead_brain_coral_block"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "情",
+        "block": "minecraft:cobblestone[weathering=true]"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:dead_fire_coral_block"
+      },
+      {
+        "char": "Ҷ",
+        "block": "minecraft:stone[weathering=true]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "з",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "р",
+        "block": "minecraft:spruce_fence[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "и",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "Ѱ",
+        "block": "minecraft:rail[shape=south_east,waterlogged=false]"
+      },
+      {
+        "char": "Ѯ",
+        "block": "minecraft:rail[shape=north_east,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "          фfejgg",
+      "          Cfecgg",
+      "          yulccj",
+      "          Iuljgc",
+      "          CЫljgg",
+      "          фЫegjc",
+      "          хѺljcc",
+      "          NЫecgc",
+      "          еѹeccc",
+      "          хfegcg",
+      "          HЫegcc",
+      "          ybeccc",
+      "          yblgjg",
+      "          Eaeccg",
+      "          Nbeccj",
+      "          Eaeell"
+    ],
+    [
+      "            cmzm",
+      "           фgmzm",
+      "           еgmBm",
+      "          iNjffm",
+      "          iEgzfR",
+      "           ocz情f",
+      "           icmfz",
+      "            lmfm",
+      "           igmBm",
+      "            cmAA",
+      "          iхgAzB",
+      "          iфcBRR",
+      "           фcABA",
+      "           icmҶB",
+      "            gmmm",
+      "            eggg"
+    ],
+    [
+      "            iwEG",
+      "            зwNG",
+      "           oзwEw",
+      "           oзiEw",
+      "            з Eр",
+      "           oзрEi",
+      "            iwN ",
+      "            lGNw",
+      "            зGEw",
+      "           oзwE ",
+      "            i Ei",
+      "           oз E ",
+      "            i NQ",
+      "            зwNQ",
+      "           oзGww",
+      "           oeииi"
+    ],
+    [
+      "               P",
+      "                ",
+      "                ",
+      "                ",
+      "               h",
+      "             h  ",
+      "                ",
+      "            i   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "               Ѱ",
+      "               Ѯ",
+      "             P  ",
+      "            i   "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "               h",
+      "             h  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "               h",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:black_wool"
+      },
+      {
+        "char": "5",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѧ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ч",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ѷ",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=inner_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ѥ",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=outer_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "W",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ґ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:smooth_stone_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:smooth_stone_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:green_wool"
+      },
+      {
+        "char": "ϫ",
+        "block": "minecraft:ladder[facing=south,waterlogged=false]"
+      },
+      {
+        "char": "Н",
+        "block": "minecraft:chest[facing=west,type=single,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 657,
+          "x": 196,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 189,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ѥ",
+        "block": "minecraft:furnace[facing=east,lit=false]",
+        "tag": {
+          "z": 658,
+          "x": 195,
+          "CookTimeTotal": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "CookTime": 0,
+          "ForgeCaps": {
+            "polymorph:block_entity_recipe_data": {}
+          },
+          "id": "minecraft:furnace",
+          "y": 190,
+          "Items": [],
+          "BurnTime": 0,
+          "RecipesUsed": {}
+        }
+      },
+      {
+        "char": "ѵ",
+        "block": "minecraft:dispenser[facing=east,triggered=false]",
+        "tag": {
+          "z": 658,
+          "x": 196,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:dispenser",
+          "y": 190,
+          "Items": []
+        }
+      }
+    ]
+  },
+  "slices": [
+    [
+      "oooooooo  5     ",
+      "oooooooo  ѧ     ",
+      "oooooooo  ѧ     ",
+      "oooooooo  5     ",
+      "oooooooo  5     ",
+      "oooooooo  5     ",
+      "oooooooч  5     ",
+      "ooooooѶѥ  5     ",
+      "oooooѶѥ   5     ",
+      "          5     ",
+      "          5     ",
+      "WWWWWWWWWWґ     ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "  e             ",
+      "  e             ",
+      "  e             ",
+      "FFvF            ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "DDDDD           ",
+      "DDDDDDD         ",
+      "DDDDD           ",
+      "ϫ               ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "  DDDD  D       ",
+      "  НDНDDDDDDD    ",
+      "  DDDD  D e   e ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "  DѤѵF          ",
+      "   DDD     DD   ",
+      "  DѤѵF     v v  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "FFFFF           ",
+      "DDDDDF      D   ",
+      "FFFFF       v   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

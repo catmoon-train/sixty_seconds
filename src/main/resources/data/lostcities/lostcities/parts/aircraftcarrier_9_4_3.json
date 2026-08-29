@@ -1,0 +1,178 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "竭",
+        "block": "minecraft:quartz_stairs[facing=north,half=top,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "桦",
+        "block": "minecraft:quartz_stairs[facing=north,half=top,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:quartz_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "伐",
+        "block": "minecraft:redstone_wall_torch[facing=north,lit=true]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "babdcadbaddebdeb",
+      "dddaabddcec     ",
+      "dbacddca        ",
+      "dccebe          ",
+      "bcde            ",
+      "ce              ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "           aecdb",
+      "        eebb    ",
+      "      bec       ",
+      "    ded         ",
+      "  ead           ",
+      "cab             ",
+      "c               ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "            n   ",
+      "            eebe",
+      "         babe   ",
+      "       cad      ",
+      "     ecb        ",
+      "   eac          ",
+      " bec            ",
+      "ba              ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "    竭桦          ",
+      "            n   ",
+      "                ",
+      "            gbab",
+      "          dbdd  ",
+      "        cca     ",
+      "      caa       ",
+      "    cbe         ",
+      "  adb           ",
+      "ebe             ",
+      "a               ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "    ww       fff",
+      "   yϓϓy     n  f",
+      "                ",
+      "                ",
+      "              ab",
+      "          gbecb ",
+      "        gced    ",
+      "      gbda      ",
+      "    gedb        ",
+      "  gcbb          ",
+      "geba            ",
+      "ba              ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "            fga伐",
+      "            nffe",
+      "               f",
+      "                ",
+      "              ae",
+      "            ebb ",
+      "          dd    ",
+      "        dc      ",
+      "      dc        ",
+      "    ec          ",
+      "  bc            ",
+      "de              ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "έ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=false,west=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "Μ",
+        "block": "minecraft:glass_pane[east=false,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:jungle_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "΄",
+        "block": "minecraft:green_carpet"
+      },
+      {
+        "char": "ϳ",
+        "block": "minecraft:glass_pane[east=true,north=true,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ϑ",
+        "block": "minecraft:glass_pane[east=true,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "Ї",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ε",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=true,west=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:smooth_stone_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "ϲ",
+        "block": "minecraft:chest[facing=south,type=single,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 586,
+          "x": 52,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 178,
+          "Items": []
+        }
+      },
+      {
+        "char": "H",
+        "block": "minecraft:oak_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:oak_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:oak_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:flower_pot"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        i       ",
+      "έ      gzh      ",
+      "babcbaba        ",
+      "       b        ",
+      "    Μ  c        ",
+      "jT  K  b        ",
+      "΄   K  c        ",
+      "΄   K  b h      ",
+      "j  jϳϑϑd        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        i       ",
+      "έ      gzh      ",
+      "bcbcbcbc        ",
+      "       b        ",
+      "       c        ",
+      "jT     b        ",
+      "       d        ",
+      "       b h      ",
+      "j  j   c        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        i       ",
+      "Ї      Εzh      ",
+      "babdbcbc        ",
+      "       b        ",
+      "       c        ",
+      " T     b        ",
+      "       c        ",
+      "       b h      ",
+      "       c        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        i       ",
+      "eeeeeeeeeh      ",
+      "aaaaaaaae       ",
+      "aacccccae       ",
+      "caaadaaae       ",
+      "aacadacae       ",
+      "caaadccae       ",
+      "daadacaaeh      ",
+      "daacdcaae       "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        i       ",
+      "έ      gyh      ",
+      "babcbdbc        ",
+      "    ϲjjb        ",
+      "HH   kkd        ",
+      "kkG  kkb        ",
+      "kkG  kkd        ",
+      "EE   CCb h      ",
+      "       d        "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        i       ",
+      "       gkh      ",
+      "b  abdbd        ",
+      "     jjb        ",
+      "     kkc        ",
+      " U   kkb        ",
+      "U    CCc        ",
+      "       b h      ",
+      "       c        "
+    ]
+  ]
+}

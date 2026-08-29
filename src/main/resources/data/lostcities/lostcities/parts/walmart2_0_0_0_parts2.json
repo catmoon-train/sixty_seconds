@@ -1,0 +1,258 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "与",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "误",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "识",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "爱",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "且",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѕ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 471,
+          "x": 31,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Birch logs\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "智",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "引",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "把",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "讯",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "线",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "视",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "而",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "bcackbadrbkkaadk",
+      "abbbkraarkaccarb",
+      "cccarbaarbcrrdkk",
+      "ccabcdabdckcakbd",
+      "dkkbdadcdcbacccr",
+      "kdkccbacccbdkrkc",
+      "kbkdbkkbdcdakkca",
+      "addcrbkccckbbbra",
+      "bkbccdbbdbaadbdb",
+      "kbakcbbdadcccdkk",
+      "bakkcadcbbkaddcd",
+      "acabbckbcbkkckac",
+      "kkdcIrbdabakckkd",
+      "aakbckacIkcrkddb",
+      "ckradcdacdbbkbdc",
+      "ckbccbdbkaakdkdc"
+    ],
+    [
+      "        q       ",
+      "     q  q     q ",
+      "    q   q  qq   ",
+      "                ",
+      "               q",
+      "             q  ",
+      "                ",
+      "    q         q ",
+      "                ",
+      "                ",
+      "     m          ",
+      "    与ҫҫҫ与       ",
+      "   lҫq  ҫ       ",
+      "   lҫ   ҫ  q    ",
+      "  qlҫ   ҫj      ",
+      "    误   识j      "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     m          ",
+      "    与ҫ爱ҫ与       ",
+      "    ҫ   ҫ       ",
+      "   l且   且       ",
+      "   lҫ   ҫЅ      ",
+      "    智   引j      "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     m          ",
+      "    与ҫҫҫ与       ",
+      "    ҫ   ҫ       ",
+      "   把ҫ   ҫ       ",
+      "    ҫ   ҫj      ",
+      "    ҫ   ҫj      "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   讯线   视而      ",
+      "   讯HҫҫҫH而      ",
+      "   讯H   H而      ",
+      "   讯H   H而      ",
+      "   讯H   H而      ",
+      "   讯H   H而      "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "    讯线 视而       ",
+      "    讯HҫH而       ",
+      "    讯H H而       ",
+      "    讯H H而       ",
+      "    讯H H而       ",
+      "    讯H H而       "
+    ]
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:tall_grass[half=upper]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aaaaaaaddddddddd",
+      "aaaaaaaddddddddd",
+      "adddaaaddddddddd",
+      "adddaaddddddaaad",
+      "adddaadddaaaaddd",
+      "aaaaaadddaaaaddd",
+      "aaaaaaaaaaaaaddd",
+      "aaaaaaaaaadddaaa",
+      "aaaaaaaaaadddaaa",
+      "aaaaaaaaaadddaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaadddaa",
+      "aaaaaaaaaaadddaa",
+      "aaaaaaaaaaadddaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaadd"
+    ],
+    [
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ],
+    [
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbabbbbbbbbbbbbb",
+      "bbbbbbabbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "bbbbbbbbbbbbbbbb",
+      "baaabbbbbbbbbbbb"
+    ],
+    [
+      " c cc c c c   c ",
+      "c    ccccc c cc ",
+      " cccc ccfc  cccc",
+      "   c cccccc c fc",
+      "cccfccc c  c c c",
+      "ccccf  c ccc ccc",
+      "cfcc cc cccccccc",
+      "ccrcc cc  cccfcc",
+      "cccccc c c ff cc",
+      "Jcccc cccc ccfc ",
+      "c ccc ccccc cccc",
+      " cg c cccccc  cc",
+      "   c cgccfccf c ",
+      " c   ccccf cfc c",
+      "ccL  ccccc cffc ",
+      "fmemcccccccfcfc "
+    ],
+    [
+      "                ",
+      "                ",
+      "        j       ",
+      "              j ",
+      "   j            ",
+      "    j           ",
+      "                ",
+      "             j  ",
+      "           jj   ",
+      "             j  ",
+      "                ",
+      "                ",
+      "      c     j   ",
+      "            j   ",
+      "            jj  ",
+      "  m        j j  "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "体",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "西",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "光",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "飞",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "气",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "城",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "offepefpeeepopef",
+      "pfyppypeefoyefff",
+      "yeefoofyeffoeyee",
+      "ffyopoyfyfefefyf",
+      "ffoyoffeyyfyyofe",
+      "feofeffyfyepffea",
+      "kbccbbbakdbdbkkb",
+      "baabasdcdbbbbbaa",
+      "dakcbrsbkcabkdcc",
+      "absssJssdkkckbrk",
+      "bkbacbsrdbkkcaac",
+      "rkdkbJdcaakbbakb",
+      "crcbabbkcbbdaaca",
+      "fefeffyyfpeoopyp",
+      "eeefyfyoyoeefypo",
+      "ffeffofopeoyffoy"
+    ],
+    [
+      "   m            ",
+      "ҬҬҬҬҬҬҬҬҬҬҬҬҬҬ  ",
+      "           lzҬҬ ",
+      "ҬҬҬҬҬҬҬҬҬҬҬҬҬҬ  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     q        mm",
+      "       体      q ",
+      "      体西体       ",
+      "q      体体       ",
+      " q              ",
+      "              E光",
+      "               光",
+      "mm     mmmm mmm光"
+    ],
+    [
+      "   m            ",
+      "            m   ",
+      "           lDj  ",
+      "            i   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              mm",
+      "                ",
+      "                ",
+      "                ",
+      "               飞",
+      "              E气",
+      "               气",
+      "mm     mmmm mmm气"
+    ],
+    [
+      "   m            ",
+      "            m   ",
+      "            Ej  ",
+      "            i   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              mm",
+      "                ",
+      "                ",
+      "                ",
+      "               飞",
+      "              D气",
+      "               气",
+      "mm     mmmm mmm气"
+    ],
+    [
+      "   m            ",
+      "            m   ",
+      "            zj  ",
+      "            i   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              mm",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              E城",
+      "               城",
+      "mm     mmmm mm 城"
+    ],
+    [
+      "   m            ",
+      "            m   ",
+      "            Cj  ",
+      "            i   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              mm",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              uu",
+      "              uu",
+      "mm     mmmm   uu"
+    ]
+  ]
+}

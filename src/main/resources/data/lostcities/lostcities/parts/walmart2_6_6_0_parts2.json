@@ -1,0 +1,398 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "今",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "听",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "看",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "收",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "双",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "及",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "倒",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "乎",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "左",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "请",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "报",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "基",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "试",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "特",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "办",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "指",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "时",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 434,
+          "x": 58,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 133,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Loom\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\">>>\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "位",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "校",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҧ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 463,
+          "x": 74,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Aisle 6\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "士",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "公",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "甲",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "室",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "ddbbacwaacdcbxbb",
+      "brbaarwcaabdbxcd",
+      "dacraccrddwawxda",
+      "cbdwawrcarwdaxdr",
+      "xxxxxxxxxxxxxxcc",
+      "ccdcdbdrbdwdbcaa",
+      "IacwcadIadwrbdcd",
+      "wbbdccaabawdbwaw",
+      "ackkcbIdIcdakbck",
+      "rkcdcdkbcbacdaac",
+      "cbbbaaadcakdddck",
+      "dakcadcbbakbcadc",
+      "acaadckadbbbkkkk",
+      "akbckkdbkkcdbkdc",
+      "ackadcrakkddbaka",
+      "adakkbbcbracckkb"
+    ],
+    [
+      "        q     今听",
+      " q   q  l       ",
+      "   q   ql      q",
+      "      qql      q",
+      "   mq  mqm      ",
+      "看收ffj  qf双qj    ",
+      "看及fff  ff倒iq    ",
+      "看乎fff fff左mmmmm ",
+      "gggggggggggggggg",
+      "qC请iiiiiiz请i iii",
+      " iq     qi      ",
+      "                ",
+      "      q报qj      ",
+      "       报基报      ",
+      "      q 报j  q   ",
+      "        mq      "
+    ],
+    [
+      "              N ",
+      "        l       ",
+      "        l       ",
+      "        l       ",
+      "   m   m m      ",
+      "看试       特 j    ",
+      "看         i     ",
+      "看办fff fff指mmmmm ",
+      "yDfeyeoffHyepopf",
+      " C请iiiiiiD请i iii",
+      " i       i      ",
+      "                ",
+      "         j      ",
+      "         j      ",
+      "         j      ",
+      "        mj      "
+    ],
+    [
+      "              KҨ",
+      "        l       ",
+      "        l       ",
+      "        l       ",
+      "时 时m时 时m时m      ",
+      "nKnnnnnnn位 j    ",
+      "nҨnnnnnnnҨi     ",
+      "nKnnnnnnn位mm mm ",
+      "fDpefoyepEeoopee",
+      " D请iiiiiiD请i iii",
+      " i       i      ",
+      "                ",
+      "         j      ",
+      "         j      ",
+      "         j      ",
+      "        mj      "
+    ],
+    [
+      "              校 ",
+      "        l    ҧg ",
+      "        l       ",
+      "        l       ",
+      "  mm  mmmm时     ",
+      "看士fffjfff士gj    ",
+      "看 fff公fff i     ",
+      "看办fffmfff指mm mm ",
+      "pzfffefpeCofffey",
+      " z请iii iiEii iii",
+      " i       i      ",
+      "                ",
+      "         j      ",
+      "         j      ",
+      "         j      ",
+      "        mj      "
+    ],
+    [
+      "              校 ",
+      "        l     g ",
+      "        l       ",
+      "        l       ",
+      "  mm  mmmmm     ",
+      "看士fffjfff甲gj    ",
+      "看 fffjfff i     ",
+      "看办fff fff室mm mm ",
+      "fCefeeooezeefffe",
+      " E请iii iiCii iii",
+      " i       i      ",
+      "                ",
+      "         j      ",
+      "         j      ",
+      "         j      ",
+      "        mj      "
+    ]
+  ]
+}

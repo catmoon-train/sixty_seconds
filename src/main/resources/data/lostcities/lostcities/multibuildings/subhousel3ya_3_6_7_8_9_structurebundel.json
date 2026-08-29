@@ -1,0 +1,30 @@
+{
+  "dimx": 4,
+  "dimz": 4,
+  "buildings": [
+    [
+      "subhousel3ya_3_6_7_8_9_structurebundel_0_0",
+      "subhousel3ya_3_6_7_8_9_structurebundel_0_1",
+      "subhousel3ya_3_6_7_8_9_structurebundel_0_2",
+      "subhousel3ya_3_6_7_8_9_structurebundel_0_3"
+    ],
+    [
+      "subhousel3ya_3_6_7_8_9_structurebundel_1_0",
+      "subhousel3ya_3_6_7_8_9_structurebundel_1_1",
+      "subhousel3ya_3_6_7_8_9_structurebundel_1_2",
+      "subhousel3ya_3_6_7_8_9_structurebundel_1_3"
+    ],
+    [
+      "subhousel3ya_3_6_7_8_9_structurebundel_2_0",
+      "subhousel3ya_3_6_7_8_9_structurebundel_2_1",
+      "subhousel3ya_3_6_7_8_9_structurebundel_2_2",
+      "subhousel3ya_3_6_7_8_9_structurebundel_2_3"
+    ],
+    [
+      "subhousel3ya_3_6_7_8_9_structurebundel_3_0",
+      "subhousel3ya_3_6_7_8_9_structurebundel_3_1",
+      "subhousel3ya_3_6_7_8_9_structurebundel_3_2",
+      "subhousel3ya_3_6_7_8_9_structurebundel_3_3"
+    ]
+  ]
+}

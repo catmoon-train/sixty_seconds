@@ -1,0 +1,258 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:light_gray_carpet"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:diorite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:andesite"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:smooth_quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:birch_planks"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:oak_planks"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:smooth_stone"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:jungle_planks"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:acacia_wood[axis=y]"
+      },
+      {
+        "char": "叶",
+        "block": "minecraft:dark_oak_stairs[facing=south,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "ώ",
+        "block": "minecraft:gray_carpet"
+      },
+      {
+        "char": "那",
+        "block": "minecraft:dark_oak_trapdoor[facing=east,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "管",
+        "block": "minecraft:spruce_fence[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:smooth_quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "然",
+        "block": "minecraft:dark_oak_trapdoor[facing=south,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "看",
+        "block": "minecraft:dark_oak_trapdoor[facing=north,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "Ӥ",
+        "block": "minecraft:polished_diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "点",
+        "block": "minecraft:dark_oak_pressure_plate[powered=false]"
+      },
+      {
+        "char": "є",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "        ys      ",
+      "       wum      ",
+      "        ov      ",
+      "        ri      ",
+      "        ri      ",
+      "        r       ",
+      "        um      ",
+      "       wom      ",
+      "         o      ",
+      "         ri     ",
+      "          ri    ",
+      "          3rii  ",
+      "            ryvm",
+      "              yy",
+      "              w ",
+      "                "
+    ],
+    [
+      "       Puvhlhhlh",
+      "       womhhhllh",
+      "       ͱoslhhlll",
+      "       Gumllhhhh",
+      "       ͱovhhhlhl",
+      "       Gyvhhlhll",
+      "       ͱushhllhh",
+      "       woshhlllh",
+      "        Gyshhlll",
+      "        Povlllhl",
+      "         Gomhlll",
+      "         Poyvmll",
+      "          Gͱyomv",
+      "            GPoo",
+      "              wG",
+      "                "
+    ],
+    [
+      "        mannnnpn",
+      "       wsBnnnppn",
+      "        vBnpppnp",
+      "        mBnnnnnn",
+      "        mBpnnppp",
+      "        sjpnnpnn",
+      "        mannpnnp",
+      "       wsjnpnnnp",
+      "         mBnCnnp",
+      "         mBppppn",
+      "          maCppp",
+      "          vvBann",
+      "            ssBa",
+      "              vs",
+      "              w ",
+      "                "
+    ],
+    [
+      "       Iut叶ώώώ  ",
+      "       wut那管    ",
+      "       Iut那    t",
+      "       Oot那管   然",
+      "       Iot那    看",
+      "       Qyt那管   t",
+      "       Out那     ",
+      "       wut看管    ",
+      "        Out     ",
+      "        Ӥut     ",
+      "         Iut  管 ",
+      "         Qoott看看",
+      "          IIoytt",
+      "            QIuu",
+      "              wI",
+      "                "
+    ],
+    [
+      "        um      ",
+      "       wum 点    ",
+      "        us     є",
+      "        ri 点    ",
+      "        ri      ",
+      "        ri 点   є",
+      "        um      ",
+      "       wom 点    ",
+      "         oi     ",
+      "         ri     ",
+      "          r   点 ",
+      "          3rii  ",
+      "            rosv",
+      "              yu",
+      "              w ",
+      "                "
+    ],
+    [
+      "        ym      ",
+      "       wos      ",
+      "        os     є",
+      "        ri      ",
+      "        ri      ",
+      "        ri     є",
+      "        us      ",
+      "       wys      ",
+      "         ui     ",
+      "         ri     ",
+      "          ri    ",
+      "          3ri   ",
+      "            ruvs",
+      "              oo",
+      "              w ",
+      "                "
+    ]
+  ]
+}

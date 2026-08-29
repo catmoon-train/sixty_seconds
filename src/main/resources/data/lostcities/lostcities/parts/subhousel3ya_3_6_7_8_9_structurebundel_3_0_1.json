@@ -1,0 +1,339 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "д",
+        "block": "minecraft:oak_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ϐ",
+        "block": "minecraft:oak_fence[east=false,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѡ",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "x": -400,
+          "y": -55,
+          "Items": [],
+          "z": -189,
+          "id": "refurbished_furniture:drawer"
+        }
+      },
+      {
+        "char": "c",
+        "block": "minecraft:light_blue_terracotta"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:stripped_oak_wood[axis=y]"
+      },
+      {
+        "char": "К",
+        "block": "minecraft:spruce_trapdoor[facing=south,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ͻ",
+        "block": "minecraft:spruce_button[face=floor,facing=north,powered=false]"
+      },
+      {
+        "char": "ώ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Щ",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "x": -402,
+          "y": -59,
+          "Items": [],
+          "z": -157,
+          "id": "refurbished_furniture:drawer"
+        }
+      },
+      {
+        "char": "Ͳ",
+        "block": "minecraft:gray_carpet"
+      },
+      {
+        "char": "к",
+        "block": "minecraft:air",
+        "loot": "suburbanloot",
+        "tag": {
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "x": -400,
+          "y": -55,
+          "Items": [],
+          "z": -185,
+          "id": "refurbished_furniture:drawer"
+        }
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:spruce_trapdoor[facing=south,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ͺ",
+        "block": "minecraft:spruce_button[face=floor,facing=west,powered=false]"
+      },
+      {
+        "char": "1",
+        "block": "minecraft:spruce_trapdoor[facing=west,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ҍ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ά",
+        "block": "minecraft:spruce_button[face=floor,facing=south,powered=false]"
+      },
+      {
+        "char": "ҙ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "们",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ή",
+        "block": "minecraft:spruce_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ϒ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "θ",
+        "block": "minecraft:spruce_button[face=floor,facing=east,powered=false]"
+      },
+      {
+        "char": "З",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϟ",
+        "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ϋ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϡ",
+        "block": "minecraft:oak_fence[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "И",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "9",
+        "block": "minecraft:oak_trapdoor[facing=east,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "交",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӈ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ύ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ґ",
+        "block": "minecraft:dark_oak_trapdoor[facing=south,half=top,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ϡ",
+        "block": "minecraft:oak_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ϛ",
+        "block": "minecraft:oak_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ά",
+        "block": "minecraft:oak_trapdoor[facing=north,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:brick_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:spruce_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "ΐ",
+        "block": "minecraft:oak_trapdoor[facing=east,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:brick_slab[type=double,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:brick_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ө",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "дϐ  E           ",
+      "ѠccccB          ",
+      "  Кbbc          ",
+      "Xͻ  ώcG         ",
+      "ЩͲͲ bcG         ",
+      "кͲͲͲώc          ",
+      "QͺͲͲώc          ",
+      "bb ͻ1cG         ",
+      "cccҌcB          ",
+      "   Άc           ",
+      "ҙ们ΆώcG          ",
+      "Ήϒθ c           ",
+      "b ЗώcG          ",
+      "bϟ ΆcG          "
+    ],
+    [
+      "                ",
+      "                ",
+      "ϋϠE E           ",
+      "ИccccB          ",
+      "    bc9         ",
+      "     K          ",
+      "交    cG         ",
+      "И    K          ",
+      "     K          ",
+      "     c9         ",
+      "cccӈcBG         ",
+      "    c9          ",
+      "    K           ",
+      "    c           ",
+      "    K           ",
+      "    c9          "
+    ],
+    [
+      "                ",
+      "                ",
+      "ΎϠ              ",
+      " ccccB          ",
+      "     c9         ",
+      "     K          ",
+      "     cG         ",
+      "     K          ",
+      "     K          ",
+      "     c9         ",
+      "cccҐcBG         ",
+      "    c9          ",
+      "    K           ",
+      "    c           ",
+      "    K           ",
+      "    c9          "
+    ],
+    [
+      "                ",
+      "ϡ               ",
+      "ϛάάάqqq         ",
+      "cccccBq         ",
+      "dddddcΐ         ",
+      "dddddcΐ         ",
+      "dddddc9         ",
+      "dddddcΐ         ",
+      "dddddcΐ         ",
+      "dddddcΐ         ",
+      "cccccBq         ",
+      "ddddcqq         ",
+      "ddddcq          ",
+      "ddddcq          ",
+      "ddddcq          ",
+      "ddddcq          "
+    ],
+    [
+      "                ",
+      "                ",
+      "ϡEqup           ",
+      "cccuppp         ",
+      "  quuuu         ",
+      "  qupcq         ",
+      "  quucG         ",
+      "  qupcө         ",
+      "  quucq         ",
+      "  quuuu         ",
+      "  quppp         ",
+      "  qupt          ",
+      "  qppt          ",
+      "  qpp           ",
+      "  qppt          ",
+      "  qup           "
+    ],
+    [
+      "                ",
+      "                ",
+      "qup             ",
+      "cup             ",
+      "qupt            ",
+      "quppppp         ",
+      "quuuuuu         ",
+      "quuuuuu         ",
+      "quppppp         ",
+      "qup  t          ",
+      "qupt            ",
+      "qup             ",
+      "qup             ",
+      "qu              ",
+      "qpt             ",
+      "qpt             "
+    ]
+  ]
+}

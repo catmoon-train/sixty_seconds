@@ -1,0 +1,214 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:tall_grass[half=upper]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "bfcdcbecbeebbdgc",
+      "bfcdcbecdfbddfcg",
+      "cfddggbefbecfbcc",
+      "dfbfgededebcbdcc",
+      "edbfebbcffdegccb",
+      "cbbdcebcbcddegcc",
+      "cecfcffdfddbbdfe",
+      "cbcebbddebbcbece",
+      "ccbbbcbbdcbbbcbb",
+      "cbeebbdbcbeebbdb",
+      "bdfbddfccdfbddfc",
+      "bfgecfbccfbecfbc",
+      "cdebcbdggdebcbdc",
+      "dffdecccbffdeccc",
+      "ebcddecccbcgdecc",
+      "dfddbbdfefddbbdf"
+    ],
+    [
+      " aro    paa   n ",
+      "aaaa  v aaaaaa l",
+      "aaa nl  aaaaaa  ",
+      " aj l    aaaa   ",
+      "    ij h aaal   ",
+      "       u  aa l j",
+      "aaa h i hi  j   ",
+      "aaaah h j i     ",
+      "haaa   q ht  s  ",
+      " iaa i  j ih    ",
+      "   h        j   ",
+      " jl          hh ",
+      "aaa i  wl   aa i",
+      "aaaa  aaa   aaa ",
+      " aa  aaaa  l aaa",
+      "      aa   j   a"
+    ],
+    [
+      "              m ",
+      " a       aa    k",
+      " a  mk   aaa    ",
+      "    k    aaa    ",
+      "          a k   ",
+      "             k  ",
+      "                ",
+      "  a             ",
+      "  a             ",
+      "                ",
+      "                ",
+      "  k             ",
+      "        k       ",
+      " aa          a  ",
+      "      aa   k  a ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "          a     ",
+      "          a     ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:red_concrete"
+      },
+      {
+        "char": "拭",
+        "block": "minecraft:cobblestone_wall[east=low,north=none,south=none,up=false,waterlogged=false,weathering=false,west=low]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:red_terracotta"
+      },
+      {
+        "char": "吒",
+        "block": "minecraft:mossy_cobblestone_wall[east=low,north=none,south=none,up=false,waterlogged=false,west=low]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=false,west=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "          u拭ec  ",
+      "            bc  ",
+      "          v吒eb  ",
+      "          ujcd  ",
+      "         ju拭ec  ",
+      "          mjcc  ",
+      "          u eb  ",
+      "          v拭ce  ",
+      "            ed  ",
+      "          v拭cb  ",
+      "            cc  ",
+      "            dc  ",
+      "            de  ",
+      "          v拭ce  ",
+      "            ed  ",
+      "            dc  "
+    ],
+    [
+      "          v cd  ",
+      "            ee  ",
+      "          v cd  ",
+      "           jce  ",
+      "         ju bc  ",
+      "          mjde  ",
+      "            bd  ",
+      "          v ee  ",
+      "            dc  ",
+      "          v cc  ",
+      "          v dc  ",
+      "          v拭bd  ",
+      "            ec  ",
+      "          v ec  ",
+      "            cb  ",
+      "            bb  "
+    ],
+    [
+      "          u cd  ",
+      "            cb  ",
+      "          v ec  ",
+      "           jdc  ",
+      "         jv eb  ",
+      "           jcb  ",
+      "          v dc  ",
+      "            cd  ",
+      "            dc  ",
+      "          u cb  ",
+      "            dc  ",
+      "          u ce  ",
+      "            de  ",
+      "          v dd  ",
+      "            ed  ",
+      "            ee  "
+    ],
+    [
+      "          v拭ed  ",
+      "            de  ",
+      "          v吒ed  ",
+      "          ujdb  ",
+      "         jv吒cc  ",
+      "           jec  ",
+      "          u吒ed  ",
+      "          u bb  ",
+      "            cd  ",
+      "          u拭ec  ",
+      "          u be  ",
+      "          u拭ed  ",
+      "            ee  ",
+      "          v拭cc  ",
+      "            db  ",
+      "          u拭ed  "
+    ],
+    [
+      "            ddgh",
+      "            cdfg",
+      "            ddgq",
+      "           jecqi",
+      "           jcefh",
+      "           jcdig",
+      "            ddiC",
+      "            ebhg",
+      "            cehh",
+      "            dcfq",
+      "            bdgh",
+      "            ebfh",
+      "            ccfg",
+      "            cbfi",
+      "            cbCf",
+      "            dcqC"
+    ],
+    [
+      "            ed c",
+      "            be c",
+      "            bc d",
+      "           jec d",
+      "           jec e",
+      "           jee  ",
+      "            cb  ",
+      "            cccc",
+      "            bbdb",
+      "            dece",
+      "            eedd",
+      "            cecd",
+      "            edcd",
+      "            ecbd",
+      "            dbee",
+      "            dcde"
+    ]
+  ]
+}

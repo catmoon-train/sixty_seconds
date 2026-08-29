@@ -1,0 +1,210 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "Υ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϊ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Л",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "城",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "ҋ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "҉",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ғ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "҈",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ъ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "п",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Њ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "И",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ь",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "е",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      " o              ",
+      "  o       oo    ",
+      "oo  o o  of f   ",
+      "  f fAffof   f A",
+      "   f f o    f ff",
+      "         A    f ",
+      "      fA  ΥAffff",
+      " Af ΪxxΪf xxΪxxx",
+      "fѹѹ xAΥΪ  Ϊff  f",
+      " ѹЛ xfAΪf xf ff ",
+      "fA城fΪΥ x  Ϊf    ",
+      "AЛЛ xf x fx     ",
+      " ϭЛfx fΪf x     ",
+      "fxAfx  xf x     ",
+      "fЛЛAΪ  xffxf    ",
+      " ѹϭ城xf xxxxf f  "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "     B         B",
+      "                ",
+      "         B      ",
+      "       B  ΥB    ",
+      " B              ",
+      " ҋ҉  BΥ         ",
+      " Ғ҈   B         ",
+      "     h          ",
+      " ҋ҉             ",
+      " Ғ҈             ",
+      "                ",
+      " ҋ҉             ",
+      " Ғ҈             "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "          Υ     ",
+      "                ",
+      "      h         ",
+      "                ",
+      "     h          ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "          h     ",
+      "      h         ",
+      "     Ъпh        ",
+      "      h         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      Њh        ",
+      "     hИЬ        ",
+      "      hе        ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      h         ",
+      "     hΥh        ",
+      "      h         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

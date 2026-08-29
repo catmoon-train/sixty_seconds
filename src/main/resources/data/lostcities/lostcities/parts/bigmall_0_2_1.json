@@ -1,0 +1,271 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "陆",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "督",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "嘛",
+        "block": "minecraft:birch_door[facing=south,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "项",
+        "block": "minecraft:oak_trapdoor[facing=north,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "斯",
+        "block": "minecraft:tripwire_hook[attached=false,facing=north,powered=false]"
+      },
+      {
+        "char": "8",
+        "block": "minecraft:chiseled_stone_bricks[weathering=false]"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "元",
+        "block": "minecraft:mossy_cobblestone_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "Е",
+        "block": "minecraft:coarse_dirt"
+      },
+      {
+        "char": "В",
+        "block": "minecraft:oak_wall_sign[facing=east,waterlogged=false]",
+        "tag": {
+          "z": 332,
+          "x": 143,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 126,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"16th Century\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Loom\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"$530.99\"}],\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "游",
+        "block": "minecraft:light_gray_wall_banner[facing=north]",
+        "tag": {
+          "z": 325,
+          "Patterns": [
+            {
+              "Color": 0,
+              "Pattern": "dls"
+            },
+            {
+              "Color": 3,
+              "Pattern": "gru"
+            },
+            {
+              "Color": 15,
+              "Pattern": "bo"
+            }
+          ],
+          "x": 106,
+          "ForgeCaps": {},
+          "id": "minecraft:banner",
+          "y": 127
+        }
+      },
+      {
+        "char": "请",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:smooth_stone"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:stone_brick_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "但",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "人",
+        "block": "minecraft:redstone_lamp[lit=true]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone[weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "jcgej       陆   ",
+      "gcggjcjcjeggc   ",
+      "jdcjccejejjec   ",
+      "ecccg       督   ",
+      "deece嘛m嘛m   c   ",
+      "ceege项m项m斯斯斯c   ",
+      "edcjcjcecdej8   ",
+      "jdgeegdcc       ",
+      "eceeejgceVV     ",
+      "cdecjgeecVV     ",
+      "ddedgegje       ",
+      "ejcgecdde V 8   ",
+      "g元geegjcc  V    ",
+      "元Еejgcgdc       ",
+      "dcceecddjjjecgcc",
+      "cdcecddcddejdedc"
+    ],
+    [
+      "dejje       cВ  ",
+      "djcdgccegcecc   ",
+      "jceejccgceggc   ",
+      "jjeec       dВ  ",
+      "jdgcg       g   ",
+      "cgjce    游游游c   ",
+      "jgggjceegece8   ",
+      "ejgedjggc       ",
+      "ЕЕcegccec       ",
+      "ЕЕЕjjdcjc       ",
+      "ЕЕЕdcdgge       ",
+      "ЕЕ请jedgdc   8   ",
+      "gjjggdeec       ",
+      "gjjcjccdc       ",
+      "cgcjgdccececcded",
+      "ddeccccdcgecgddg"
+    ],
+    [
+      "BccecccjegeecF  ",
+      "BccgcjceejcgdF  ",
+      "BggjgcgdccgeeF  ",
+      "BgececccgcjdcF  ",
+      "BgedcedcgHcegF  ",
+      "BdceedcedgejcF  ",
+      "Bdeecjccjdcc8但  ",
+      "Еgecgcedc       ",
+      "ЕЕccceecc       ",
+      "ЕjЕccedcc       ",
+      "jjЕjecdeg       ",
+      "jjЕjgegee   8   ",
+      "jjjjedcjj       ",
+      "jjjjcgcdd       ",
+      "Еcjjcdgdjdcdccde",
+      "gdegegededgcjjgd"
+    ],
+    [
+      "BBccegdeggcddcHH",
+      "BBgddjdcdcddeccd",
+      "BBjcjjdcgjdddjeg",
+      "BBjgejejcdejcgHH",
+      "BBcggcdgedegcjdd",
+      "BBeecddecddjgcdd",
+      "BBcceccedejcecHH",
+      "BBjgegecjgjdjegc",
+      "BЕcggceceggcecje",
+      "jjЕgcccddedejedd",
+      "jjЕjjjjeddcdeedd",
+      "jjjjcdgegdd人eccc",
+      "jjjdcejdddcdHede",
+      "jjjjcgdgdcgcddcc",
+      "jЕgecededgdcdccc",
+      "jcdgcccjdeggcccc"
+    ],
+    [
+      "jBaaaaaaaaaaaaaa",
+      "jBaaaaaaaaaaaaaa",
+      "jBaaaaaaaaaaaaaa",
+      "jBaaaaaaaaaaaaaa",
+      "jBaaaaaaaaaaaaaa",
+      "jBaaaaaaaaaaaaaa",
+      "jBaaaaaaaaaaaaaa",
+      "jBaaaaaaaaaaaaaa",
+      "jBaaaaaaaaaaaaaa",
+      "jjaaaaaaaaaaaaaa",
+      "gjaaaaaaaaaaaaaa",
+      "gЕgaaaaaaaaaaaaa",
+      "ggЕaaaaaaaaaaaaa",
+      "eegaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "jaaaaaaaaaaaaaaa"
+    ],
+    [
+      "Baaaaaaaaaaaaaaa",
+      "Baaaaaaaaaaaaaaa",
+      "Baaaaaaaaaaaaaaa",
+      "Baaaaaaaaaaaaaaa",
+      "Baaaaaaaaaaaaaaa",
+      "Baaaaaaaaaaaaaaa",
+      "Baaaaaaaaaaaaaaa",
+      "Baaaaaaaaaaaaaaa",
+      "jЕaaaaaaaaaaaaaa",
+      "jaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa",
+      "aaaaaaaaaaaaaaaa"
+    ]
+  ]
+}

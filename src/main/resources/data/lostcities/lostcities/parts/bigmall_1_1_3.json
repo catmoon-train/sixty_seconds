@@ -1,0 +1,356 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:light_gray_carpet"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "期",
+        "block": "minecraft:mossy_cobblestone_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "密",
+        "block": "minecraft:yellow_wall_banner[facing=north]",
+        "tag": {
+          "z": 315,
+          "Patterns": [],
+          "x": 113,
+          "ForgeCaps": {},
+          "id": "minecraft:banner",
+          "y": 138,
+          "CustomName": "{\"text\":\"Dee Luxe\"}"
+        }
+      },
+      {
+        "char": "E",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:acacia_wood[axis=y]"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:gray_concrete_powder"
+      },
+      {
+        "char": "区",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "社",
+        "block": "minecraft:black_wall_banner[facing=east]",
+        "tag": {
+          "z": 325,
+          "Patterns": [
+            {
+              "Color": 14,
+              "Pattern": "rs"
+            },
+            {
+              "Color": 15,
+              "Pattern": "hh"
+            },
+            {
+              "Color": 14,
+              "Pattern": "bs"
+            },
+            {
+              "Color": 14,
+              "Pattern": "ls"
+            },
+            {
+              "Color": 14,
+              "Pattern": "ts"
+            },
+            {
+              "Color": 15,
+              "Pattern": "bo"
+            }
+          ],
+          "x": 112,
+          "ForgeCaps": {},
+          "id": "minecraft:banner",
+          "y": 138
+        }
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:smooth_quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:diorite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:andesite"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:smooth_stone"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:oak_planks"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:birch_planks"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:jungle_planks"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "Ӥ",
+        "block": "minecraft:polished_diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "然",
+        "block": "minecraft:dark_oak_trapdoor[facing=south,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "工",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "叁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "谢",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "因",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:smooth_quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "海",
+        "block": "minecraft:ladder[facing=north,waterlogged=false]"
+      },
+      {
+        "char": "ӎ",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "良",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "坐",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӓ",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Ӎ",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ó",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Ϗ",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "司",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=true,south=true,waterlogged=false,west=true]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "rrroo           ",
+      "iiivmur         ",
+      "      ir3       ",
+      "        r       ",
+      "        ir      ",
+      "        iy     期",
+      "         muw    ",
+      "         so     ",
+      "         ir     ",
+      "         ir     ",
+      "          r     ",
+      " 密    EE vu     ",
+      " iitsmmmmmow    ",
+      "   sNNNNNNy    区",
+      "   sN    irx    ",
+      "社  mN    ir     "
+    ],
+    [
+      "yuuyoͱP         ",
+      "mmmvsooPG       ",
+      "hhlllmsooG      ",
+      "hhhlllhmoG      ",
+      "llllhlllmuP     ",
+      "hlllllhhsoG     ",
+      "hllllhhhhsow    ",
+      "lllhlhhlhmoP    ",
+      "llllllhhlmoG    ",
+      "hhhlhhhhhmoG    ",
+      "hlhlhhllhmuG    ",
+      "hhhlhlhllvoP    ",
+      "lhllhhhhlsuw    ",
+      "hhlhlhhhlmuP    ",
+      "hhlhhhhlhmoP    ",
+      "llhllhhlhmuGx   "
+    ],
+    [
+      "mmmvm           ",
+      "BBjBBvm         ",
+      "aBaBBjavs       ",
+      "aBBBjjBBm       ",
+      "BaBBaBBBBm      ",
+      "aBBaBBBajv      ",
+      "aBjBaBBBjavw    ",
+      "jBBjaBBBaBm     ",
+      "aBjaaBBBBBm     ",
+      "ppnaBBaBBam     ",
+      "pnCnaBBBjBv     ",
+      "nppCnpaaBBs     ",
+      "npnpnpnnnnsw    ",
+      "ppnnpCnpnpm     ",
+      "ppnnpnppnnm     ",
+      "nnnnpnCCnCs     "
+    ],
+    [
+      "uyoooIӤ         ",
+      "然然然然uouII       ",
+      "工 工  叁oyyI      ",
+      "    提谢因 oO      ",
+      "     工 叁uoI     ",
+      "      提谢因yQ     ",
+      "    海  工 oow    ",
+      "   ӎw     oQ    ",
+      "   yo     oQ    ",
+      "   tuyo   oI    ",
+      "   tttyou uI    ",
+      "      ttooyI    ",
+      "        ttuw    ",
+      "       叁 toQ    ",
+      "   叁  提良因tuI    ",
+      "因 提谢因  坐 toӤ    "
+    ],
+    [
+      "ӒӒӒӒӍ           ",
+      "    óӒӍ         ",
+      "      óӒӍ       ",
+      "        Ϗ       ",
+      "        óӍ      ",
+      "         Ϗ      ",
+      "         óӍ     ",
+      "   ӎw     Ϗ     ",
+      "   yr     Ϗ     ",
+      "   urrr   Ϗ     ",
+      "   miirrr Ϗ     ",
+      "      i ru司     ",
+      "        imyw    ",
+      "         so     ",
+      "         ir     ",
+      "         ir     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   ӎw           ",
+      "   ur           ",
+      "   orrr         ",
+      "   viirrr       ",
+      "      iiro      ",
+      "        isyw    ",
+      "         my     ",
+      "         ir     ",
+      "         ir     "
+    ]
+  ]
+}

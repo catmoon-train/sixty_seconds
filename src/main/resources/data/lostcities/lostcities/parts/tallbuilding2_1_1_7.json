@@ -1,0 +1,264 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:stone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:spruce_trapdoor[facing=west,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:farmland[moisture=7]"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:spruce_trapdoor[facing=east,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ϴ",
+        "block": "minecraft:water[level=0]"
+      },
+      {
+        "char": "Ў",
+        "block": "minecraft:chest[facing=north,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 583,
+          "x": 241,
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 178,
+          "Items": []
+        }
+      },
+      {
+        "char": "Њ",
+        "block": "minecraft:chest[facing=north,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 583,
+          "x": 242,
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 178,
+          "Items": []
+        }
+      },
+      {
+        "char": "ν",
+        "block": "minecraft:spruce_trapdoor[facing=south,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:oak_sapling[stage=0]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "Ϙ",
+        "block": "minecraft:oak_fence[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Е",
+        "block": "minecraft:lever[face=wall,facing=west,powered=false]"
+      },
+      {
+        "char": "А",
+        "block": "minecraft:smooth_stone_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=side,west=none]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:oak_fence[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Ѕ",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=side,west=none]"
+      },
+      {
+        "char": "Ѐ",
+        "block": "minecraft:redstone_wire[east=side,north=none,power=0,south=none,west=side]"
+      },
+      {
+        "char": "Ї",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=side,west=side]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "   llll m       ",
+      "     lllh       ",
+      "       li       ",
+      "       lh       ",
+      "       li       ",
+      "      llhd      ",
+      "      llnd      ",
+      "        hd      ",
+      "igigigjgjd      ",
+      "ee     ee       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "   limcaa       ",
+      "   bbnbii       ",
+      "y zjjbaaj       ",
+      "bimbjniac       ",
+      "bnjbabibj       ",
+      "bbiaaciabd      ",
+      "naaacacaid      ",
+      "babbnijaid      ",
+      "nbmbciaicd      ",
+      "ee     ee       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "  lHBBBFm       ",
+      "   HBBBFh       ",
+      "   HBBBFm       ",
+      "   HBϴBFh       ",
+      "   HBBBFi       ",
+      "   HBBBFhd      ",
+      "   HBBBFbd      ",
+      " ЎЊ ννν hd      ",
+      "igmgcgigcd      ",
+      "ee     ee       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "  l G G a       ",
+      "    G G h       ",
+      "    G G a       ",
+      "    G G h       ",
+      "    G G j       ",
+      "    G G hd      ",
+      "    G G id      ",
+      "        hd      ",
+      "agagjgagmd      ",
+      "ee     ee       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "    E E b       ",
+      "    EϘE a       ",
+      "    E E a       ",
+      "   ЕEАE a       ",
+      "    E E c       ",
+      "    EϘE cd      ",
+      "    E E jd      ",
+      "        cd      ",
+      "ambmbamacd      ",
+      "ee     ee       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        a       ",
+      "    PQP h       ",
+      "    P P a       ",
+      "    ЅЀЇ h       ",
+      "    P P j       ",
+      "    PQP hd      ",
+      "        bd      ",
+      "        hd      ",
+      "bgbgbgbgbd      ",
+      "ee     ee       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

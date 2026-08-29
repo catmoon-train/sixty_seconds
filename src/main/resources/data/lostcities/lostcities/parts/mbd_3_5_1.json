@@ -1,0 +1,426 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:bricks[weathering=true]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "ѹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "е",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѻ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:smooth_stone_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ы",
+        "block": "minecraft:smooth_stone"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:polished_andesite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:andesite"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:stone_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:stone_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:bricks[weathering=false]"
+      },
+      {
+        "char": "х",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=true]"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:spruce_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Ӗ",
+        "block": "minecraft:spruce_stairs[facing=south,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:spruce_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:spruce_planks"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӏ",
+        "block": "minecraft:spruce_stairs[facing=south,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:spruce_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Ӈ",
+        "block": "minecraft:spruce_stairs[facing=north,half=bottom,shape=inner_right,waterlogged=false]"
+      },
+      {
+        "char": "ѳ",
+        "block": "minecraft:brick_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:spruce_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ф",
+        "block": "minecraft:polished_andesite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "度",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Щ",
+        "block": "minecraft:spruce_button[face=floor,facing=south,powered=false]"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Э",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "г",
+        "block": "minecraft:spruce_button[face=floor,facing=west,powered=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ш",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ь",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "青",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѷ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "徵",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "д",
+        "block": "minecraft:spruce_button[face=floor,facing=east,powered=false]"
+      },
+      {
+        "char": "显",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "即",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ш",
+        "block": "minecraft:spruce_button[face=floor,facing=north,powered=false]"
+      },
+      {
+        "char": "ч",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "广",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "兰",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "形",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -409,
+          "x": -723,
+          "ForgeData": {},
+          "Energy": 0,
+          "id": "refurbished_furniture:electricity_generator",
+          "Enabled": "0b",
+          "y": -52,
+          "Items": [],
+          "NodePos": "-198461850484788L",
+          "Overloaded": "0b",
+          "Connections": [
+            "L"
+          ],
+          "TotalEnergy": 0
+        }
+      },
+      {
+        "char": "复",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "举",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "练",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "系",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѿ",
+        "block": "minecraft:brick_slab[type=top,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "Ұ",
+        "block": "minecraft:brick_stairs[facing=south,half=top,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "则",
+        "block": "minecraft:brick_wall[east=none,north=tall,south=tall,up=true,waterlogged=false,weathering=false,west=tall]"
+      },
+      {
+        "char": "Ҹ",
+        "block": "minecraft:brick_stairs[facing=north,half=top,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "н",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "љ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҷ",
+        "block": "minecraft:brick_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "ђ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "缘",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "语",
+        "block": "minecraft:brick_wall[east=none,north=tall,south=none,up=true,waterlogged=false,weathering=false,west=tall]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "cggeѹе          ",
+      "gcgeѺH          ",
+      "cjceЫy          ",
+      "jcglfC          ",
+      "jcjluF          ",
+      "cggeѺе          ",
+      "ccceѹN          ",
+      "eeeeeE          ",
+      "cvveѺх          ",
+      "gjclaе          ",
+      "ggceѺI          ",
+      "ggjebI          ",
+      "gcceaH          ",
+      "gjgleх          ",
+      "cvcluе          ",
+      "eellѹх          "
+    ],
+    [
+      "MMӖg            ",
+      "Lddcеi          ",
+      "dddcNi          ",
+      "ddMgE           ",
+      "dLdcе           ",
+      "Ӏddc            ",
+      "KdӇci           ",
+      "ddLeѳ           ",
+      "Oddv            ",
+      "dddji           ",
+      "ddOcе           ",
+      "MMdgфi          ",
+      "dddgеi          ",
+      "dOdcp           ",
+      "dddc            ",
+      "ggceѳ           "
+    ],
+    [
+      "  度j            ",
+      " iЩJ            ",
+      "Э iD            ",
+      "ЭгoDp           ",
+      "  шJ            ",
+      "  Ьcp           ",
+      "n青 g            ",
+      "cgglѳ           ",
+      "qѷ徵v            ",
+      " hhJ            ",
+      "д显hDp           ",
+      " 即ШDp           ",
+      "чioD            ",
+      "i ЩJ            ",
+      "广兰形v            ",
+      "gcjeѳ           "
+    ],
+    [
+      "   j            ",
+      "   J            ",
+      "   D            ",
+      "  oD            ",
+      "   J            ",
+      "   g            ",
+      "n  c            ",
+      "ggclѳ           ",
+      " 复hcp           ",
+      "   J            ",
+      "   D            ",
+      " 举 D            ",
+      "   D            ",
+      "   J            ",
+      "练系oc            ",
+      "cgclѳ           "
+    ],
+    [
+      "  oc            ",
+      "   J            ",
+      "  oD            ",
+      "   D            ",
+      "   J            ",
+      "  ocp           ",
+      "  nv            ",
+      "cgclѳ           ",
+      " ohj            ",
+      "  qJ            ",
+      "   D            ",
+      "  oD            ",
+      "   D            ",
+      "   J            ",
+      "n  gp           ",
+      "ggceѳ           "
+    ],
+    [
+      "r rgѾ           ",
+      "   c            ",
+      "   j            ",
+      "r  j            ",
+      " rrj            ",
+      "   gѾr          ",
+      " rocҰr          ",
+      "jcce则           ",
+      " hovҸ           ",
+      "rн vѾ           ",
+      " r c            ",
+      "r ogr           ",
+      " r jљ           ",
+      "r  jҷr          ",
+      " ђ缘cҰ           ",
+      "ccgl语           "
+    ]
+  ]
+}

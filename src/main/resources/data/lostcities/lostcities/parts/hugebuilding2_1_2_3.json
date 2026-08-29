@@ -1,0 +1,190 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:oak_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:oak_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:flower_pot"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:smooth_stone_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:oak_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:oak_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "       b h      ",
+      "       d        ",
+      "       b        ",
+      "       a        ",
+      "H HH  jb        ",
+      "k kk  jc        ",
+      "E EEjjjb        ",
+      "bababcbc h      ",
+      "        yh      ",
+      "ffff ffff       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "       b h      ",
+      "       c        ",
+      "       b        ",
+      "       a        ",
+      "       b        ",
+      "   U   c        ",
+      "      jb        ",
+      "bcbcbcba h      ",
+      "        zh      ",
+      "ffff ffff       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "       b h      ",
+      "       d        ",
+      "       b        ",
+      "       d        ",
+      "       b        ",
+      "       d        ",
+      "       b        ",
+      "bcbdbdba h      ",
+      "        yh      ",
+      "ffff ffff       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "aacdaaaaeh      ",
+      "aaccadaae       ",
+      "aadcaacae       ",
+      "accccaaae       ",
+      "adaadaaae       ",
+      "acaadcdae       ",
+      "dddddccae       ",
+      "aaaaaaaaeh      ",
+      "eeeeeeeeeh      ",
+      "ffff ffff       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "      jb h      ",
+      " HH    a        ",
+      "QkkG   b        ",
+      "QkkG   c        ",
+      " EE    b        ",
+      "       c        ",
+      "      Fb        ",
+      "babcbdbc h      ",
+      "        yh      ",
+      "ffff ffff       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "       b h      ",
+      "       c        ",
+      "  U    b        ",
+      " U     c        ",
+      "       b        ",
+      "       a        ",
+      "      Fb        ",
+      "bcbdbdbd h      ",
+      "        kh      ",
+      "ffff ffff       ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

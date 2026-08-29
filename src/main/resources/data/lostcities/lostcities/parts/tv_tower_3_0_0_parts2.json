@@ -1,0 +1,278 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "回",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "资",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "加",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "У",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӣ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӛ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѻ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "他",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "同",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "Ѵ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "章",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "较",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "还",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "aQccyaaybaybyycb",
+      "baybdayybabbdcby",
+      "baQbdaddQbbbbcba",
+      "bdonKrrJJKaQabyQ",
+      "noQnbJyoooodayyc",
+      "yronnC回yCnCyQydy",
+      "资cb资ya加aybCyddby",
+      "oCrnonoorynbbbcy",
+      "onKonnCJnbdybQaQ",
+      "roJoJnrrrycybydc",
+      "nrrrCnJnobnbQQba",
+      "KJrrCnooK资KyQccb",
+      "nJCCnnnJrdryyQby",
+      "JnorrJCKJbcQyyad",
+      "oKnnoJnKoyKcyaab",
+      "nnnJrooJraJyacda"
+    ],
+    [
+      " U              ",
+      "                ",
+      "  U     U       ",
+      "           U   U",
+      "  U             ",
+      "      aa    U   ",
+      "УУbУУdaabc      ",
+      "x  ӝ     e      ",
+      "  Ӣϓӛ  x ga  U U",
+      "   Ѻ     ig     ",
+      "         c  UU  ",
+      "       ӝ 他  U   ",
+      "      Ӣϓӛ他   U  ",
+      "       Ѻ d U    ",
+      "c        同      ",
+      "ed      x同      "
+    ],
+    [
+      " V              ",
+      "                ",
+      "  V     V       ",
+      "           V   V",
+      "  V             ",
+      "      aa    V   ",
+      "Ѵ eѴ aagdb      ",
+      "k        e      ",
+      "       k ig  V V",
+      "         ia     ",
+      "         d  VV  ",
+      "         Ѩ  V   ",
+      "         Ѩ   V  ",
+      "         b V    ",
+      "         Ѩ      ",
+      "         Ѩ      "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      aa        ",
+      "NNeNNagacc      ",
+      "k        a      ",
+      "       k aa     ",
+      "         ia     ",
+      "         d      ",
+      "         Ѩ      ",
+      "         Ѩ      ",
+      "         a      ",
+      "         Ѩ      ",
+      "         Ѩ      "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      aa        ",
+      "Ѵ eNNbgace      ",
+      "         d      ",
+      "         aa     ",
+      "         aa     ",
+      "         d      ",
+      "         Ѩ      ",
+      "         Ѩ      ",
+      "         e      ",
+      "         章      ",
+      "A               "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      ai        ",
+      "ҝҝb较ҝdgacc      ",
+      "         d      ",
+      "         ga     ",
+      "         aa     ",
+      "         a      ",
+      "         还      ",
+      "         ҝ      ",
+      "         e      ",
+      "         ҝ      ",
+      "E        还      "
+    ]
+  ]
+}

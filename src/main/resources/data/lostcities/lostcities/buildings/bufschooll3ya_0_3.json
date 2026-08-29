@@ -1,0 +1,40 @@
+{
+  "filler": "#",
+  "rubble": "}",
+  "minfloors": 3,
+  "maxfloors": 3,
+  "maxcellars": 0,
+  "allowDoors": false,
+  "parts": [
+    {
+      "part": "bufschooll3ya_0_3_0",
+      "floor": 0
+    },
+    {
+      "part": "bufschooll3ya_0_3_1",
+      "floor": 1
+    },
+    {
+      "part": "bufschooll3ya_0_3_2",
+      "floor": 2
+    },
+    {
+      "part": "bufschooll3ya_0_3_3",
+      "floor": 3
+    }
+  ],
+  "parts2": [
+    {
+      "part": "lostcities:bufschooll3ya_0_3_0_parts2",
+      "floor": 0
+    },
+    {
+      "part": "lostcities:bufschooll3ya_0_3_1_parts2",
+      "floor": 1
+    },
+    {
+      "part": "lostcities:bufschooll3ya_0_3_2_parts2",
+      "floor": 2
+    }
+  ]
+}

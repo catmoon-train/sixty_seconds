@@ -1,0 +1,386 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѐ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "2",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Н",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "З",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Δ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Έ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͷ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ε",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "·",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͷ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "δ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ό",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ι",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ρ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "χ",
+        "block": "minecraft:air",
+        "loot": "shoploot",
+        "tag": {
+          "z": 526,
+          "x": 107,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 133,
+          "Items": []
+        }
+      },
+      {
+        "char": "7",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ο",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 537,
+          "x": 99,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 134,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Register Closed\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "Β",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Η",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ψ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϴ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "5",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ώ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "9",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ή",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "dccggkmkmEkjmjii",
+      "gggcggccccdcddgc",
+      "ccccdgdddcddddcd",
+      "gfcccdcddcgccccc",
+      "dgcgEcgdcgddcggg",
+      "dgcgcdddgccdgddc",
+      "gdcgcdcgcgcgcddd",
+      "gdgdcdcdgdddgccg",
+      "gccdccgcgcgccgdg",
+      "dgcdgdgcggdccgdd",
+      "cgccggddcddcccdc",
+      "dcddggddcccccgcd",
+      "ggdggdcddgdcggdg",
+      "gdddgggdccgcddcg",
+      "cdgdggggdgddcgdc",
+      "dgddgcgdccdcgcdd"
+    ],
+    [
+      "ϓЀ zqh222Н222h22",
+      "Зϓ  Δtt  ttt   t",
+      "ϓ    o          ",
+      " n uΈo   ͳpppppp",
+      "u zAqo   Ͷrrrrrr",
+      "Ε ·qAo          ",
+      "ttttt           ",
+      "o               ",
+      "o  u u   ͳpppppp",
+      "o  ͷͷδ   Ͷrrrrrr",
+      "o  ΌΌt          ",
+      "  zͱͱͱo         ",
+      "o   ιͱo         ",
+      "o  uuΌ   ͳpppppp",
+      "o zΡͷͷ   Ͷrχrrrr",
+      "o  Όtt          "
+    ],
+    [
+      "   zhqΕ ·7777q7Ε",
+      "    Δtt   tt   t",
+      "     o          ",
+      "    Έo   ͳpppppp",
+      "u zAqo   Ͷrrrrrr",
+      "Ε ·wAo          ",
+      "ttttt           ",
+      "o               ",
+      "o    u   ͳpppppp",
+      "o  Ρͷͷ   Ͷrrrrrr",
+      "o  οtt          ",
+      "   rΒΒ          ",
+      "o   zKo         ",
+      "o  uut   ͳpppppp",
+      "o  Ρδͷ   Ͷrrrrrr",
+      "o  οt           "
+    ],
+    [
+      "    qJ ·77Ε ·q77",
+      "    Δ t   tt   t",
+      "     o          ",
+      "    Έo   ͳpppppp",
+      "u zAho   Ͷrrrrrr",
+      "Ε ·hAo          ",
+      "ttttt           ",
+      "o               ",
+      "o        ͳpppppp",
+      "o  ΗΨΨ   Ͷrrrrrr",
+      "o               ",
+      "     u          ",
+      "o   zͰo         ",
+      "o    t   ͳpppppp",
+      "o  ΨΨΨ   Ͷrrrrrr",
+      "o               "
+    ],
+    [
+      "    hJϴϴ555ϴ5w55",
+      "    q t   tt   t",
+      "    wo          ",
+      "    wo          ",
+      "ώ  Aho          ",
+      "hhwhAo          ",
+      "ttt t           ",
+      "o               ",
+      "o               ",
+      "o               ",
+      "o               ",
+      "     u          ",
+      "o   z9o         ",
+      "o    t          ",
+      "o               ",
+      "o               "
+    ],
+    [
+      "NNNNqNNNHHPPPHNN",
+      "bbbNh      t   t",
+      "bbbNJo          ",
+      "bbbNJo          ",
+      "PPPHh           ",
+      "qhwqAo          ",
+      " tt             ",
+      "o               ",
+      "o               ",
+      "o               ",
+      "                ",
+      "                ",
+      "o    Ή          ",
+      "o               ",
+      "                ",
+      "o               "
+    ]
+  ]
+}

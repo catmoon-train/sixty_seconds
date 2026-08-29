@@ -1,0 +1,286 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "ͱ",
+        "block": "minecraft:smooth_quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:diorite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "性",
+        "block": "minecraft:quartz_pillar[axis=x]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:light_gray_carpet"
+      },
+      {
+        "char": "ӗ",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=true]"
+      },
+      {
+        "char": "7",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "Ө",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "本",
+        "block": "minecraft:nether_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "什",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ύ",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "ӣ",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=true]"
+      },
+      {
+        "char": "ѓ",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=false,west=false]"
+      },
+      {
+        "char": "Ӫ",
+        "block": "minecraft:polished_diorite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:andesite"
+      },
+      {
+        "char": "水",
+        "block": "minecraft:polished_andesite_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Ӎ",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:birch_planks"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:oak_planks"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:jungle_planks"
+      },
+      {
+        "char": "着",
+        "block": "minecraft:smooth_quartz_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "先",
+        "block": "minecraft:tripwire[attached=false,disarmed=false,east=false,north=false,powered=false,south=false,west=false]"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:smooth_quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:acacia_wood[axis=y]"
+      },
+      {
+        "char": "Ӥ",
+        "block": "minecraft:polished_diorite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "ӎ",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Ӓ",
+        "block": "minecraft:black_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "Ϗ",
+        "block": "minecraft:black_stained_glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:glass"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "            w   ",
+      "          Gͱu   ",
+      "       PPGmvo性性性",
+      "     PPsvm  o   ",
+      "  x Gmms        ",
+      " xwPvs          ",
+      "room            ",
+      " vv      ӗ7     ",
+      "hhӨ     7       ",
+      "本              7",
+      "hh什            ύ",
+      "               ӣ",
+      "            ѓ   ",
+      "                ",
+      "           ѓ    ",
+      "          ӗ     "
+    ],
+    [
+      "            wGPP",
+      "       ӪͱGGGouyo",
+      "     GGooyuuo性性性",
+      "    Goymmvsmohhh",
+      " xxͱosvlhhhhhlhl",
+      "ӪӪwomhhlhhllhlhh",
+      "ouomhhhlhyyoyuou",
+      "svvhllhhoӗ7     ",
+      "hӨ 水llhu7       ",
+      "   水llo        7",
+      "hӍ 水lu         ύ",
+      "lhhlho         ӣ",
+      "lllllo      ѓ   ",
+      "llhhhu          ",
+      "hhhlho     ѓ    ",
+      "hhlhho    ӗ     "
+    ],
+    [
+      "            w   ",
+      "          smsyoy",
+      "       vvsnpApnC",
+      "   x mmAnnnnnnpp",
+      "   xmnnpCnppCnnn",
+      "x wmnpnCCpppnnCp",
+      "smmpnnnppuuoyyoy",
+      "msspCnnpuӗ7     ",
+      "Ө 着pnpnu7       ",
+      "  着Cnnu        7",
+      "Ӎ 着npo         ύ",
+      "vvvnno       先 ӣ",
+      "ppnnCo      ѓ   ",
+      "pnnnnu          ",
+      "nppnnu     ѓ    ",
+      "nCnnpu    ӗ     "
+    ],
+    [
+      "          IIwQIQ",
+      "       QIIuuuyoo",
+      "    xOOyoottottt",
+      "   xIyottt  o   ",
+      "   Qutt         ",
+      "OӤwot           ",
+      "uoyt    ӎӒӒӒӒӒӒӒ",
+      "ttt    ӎӨ       ",
+      "  t   ӎӨ7       ",
+      "  t  ӎӨ        7",
+      "  t  Ϗ         ύ",
+      "ttt  Ϗ       ѓ ӣ",
+      "     Ϗ      ѓ   ",
+      "     Ϗ          ",
+      "     Ϗ     ѓ    ",
+      "     Ϗ    ӗ     "
+    ],
+    [
+      "            w   ",
+      "          rrorrr",
+      "    xx rrr  uiii",
+      "     rrii   u   ",
+      "    ri          ",
+      "  wri           ",
+      "rou      7      ",
+      " mv             ",
+      "        7       ",
+      "               7",
+      "               ύ",
+      "             ѓ ӣ",
+      "            ѓ   ",
+      "                ",
+      "           ѓ    ",
+      "          ӗ     "
+    ],
+    [
+      "            w   ",
+      "            y   ",
+      "          iiui i",
+      "     xxii   u   ",
+      "     ii         ",
+      "  w i           ",
+      "roy      7      ",
+      "iss             ",
+      "        7       ",
+      "               7",
+      "              先ύ",
+      "             ѓ ӣ",
+      "            ѓ   ",
+      "                ",
+      "           ѓ    ",
+      "          ӗ     "
+    ]
+  ]
+}

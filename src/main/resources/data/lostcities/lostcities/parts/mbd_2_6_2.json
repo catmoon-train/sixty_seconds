@@ -1,0 +1,318 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:polished_andesite"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:bricks[weathering=true]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:dark_oak_planks"
+      },
+      {
+        "char": "ќ",
+        "block": "minecraft:dark_oak_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ѝ",
+        "block": "minecraft:dark_oak_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "њ",
+        "block": "minecraft:dark_oak_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "从",
+        "block": "minecraft:dark_oak_stairs[facing=east,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "п",
+        "block": "minecraft:dark_oak_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "里",
+        "block": "minecraft:dark_oak_stairs[facing=south,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "大",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "测",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "陆",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "S",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "倒",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "答",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "各",
+        "block": "minecraft:dark_oak_stairs[facing=north,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "春",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "经",
+        "block": "minecraft:dark_oak_stairs[facing=west,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "罗",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "华",
+        "block": "minecraft:dark_oak_stairs[facing=east,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "北",
+        "block": "minecraft:dark_oak_stairs[facing=east,half=bottom,shape=inner_left,waterlogged=false]"
+      },
+      {
+        "char": "五",
+        "block": "minecraft:dark_oak_stairs[facing=north,half=bottom,shape=outer_right,waterlogged=false]"
+      },
+      {
+        "char": "在",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "є",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "想",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "去",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "能",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ь",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѣ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ж",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:bricks[weathering=false]"
+      },
+      {
+        "char": "造",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "玩",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "流",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ұ",
+        "block": "minecraft:brick_stairs[facing=south,half=top,shape=straight,waterlogged=false,weathering=true]"
+      },
+      {
+        "char": "期",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "反",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "同",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "心",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѕ",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "ecjjcxxxexќxxѝxx",
+      "e qqjњ从пeпxпx里xќ",
+      "e  ojxxxexxxпxњx",
+      "ep ocxњxeќѝxxќxx",
+      "e   cѝxxexњxxxѝx",
+      "e  大gxxxe测xx陆xѝx",
+      "eSSSjќxќex倒ohxx从",
+      "eSSScxxпeѝx 答xxx",
+      "eccgcп从各eѝќ春пxѝ倒",
+      "exxxxx里经exxќxњxx",
+      "exѝxпxxxexxxxњ罗 ",
+      "eњxѝxпќxexxxѝxќ答",
+      "e华ќ经ќxxxeњxxњxпx",
+      "exxxxxx各exп北xxxx",
+      "eќxќxпxњexx五xxѝѝ",
+      "eeeeeeeee在在在在在在在"
+    ],
+    [
+      "cgggc           ",
+      "c   g           ",
+      "c  og           ",
+      "c  oj          Ӽ",
+      "c   j         єh",
+      "c想  c        Ӽhh",
+      "j去能 c       ЬhhѢ",
+      "j去  g        жi ",
+      "vj造cg           ",
+      "c               ",
+      "c               ",
+      "c               ",
+      "v               ",
+      "j               ",
+      "v               ",
+      "egjccjjveggggjcg"
+    ],
+    [
+      "cjccj           ",
+      "g  qj           ",
+      "cp oc           ",
+      "gp  v           ",
+      "j想  c          i",
+      "c  og         ii",
+      "c  oc        ii ",
+      "g玩 nc           ",
+      "cc流gc           ",
+      "g               ",
+      "c               ",
+      "g               ",
+      "c               ",
+      "c               ",
+      "j               ",
+      "ejvvcggcejccgcgg"
+    ],
+    [
+      "cjgcj           ",
+      "gSSSc           ",
+      "cSSSg           ",
+      "c想  c           ",
+      "c  og           ",
+      "g   c           ",
+      "j   g           ",
+      "c   j           ",
+      "cgҰjc           ",
+      "c               ",
+      "j               ",
+      "c               ",
+      "c               ",
+      "g               ",
+      "c               ",
+      "egjcjcgcecccgjcc"
+    ],
+    [
+      "jcgcc           ",
+      "c期能反g           ",
+      "c去同心j           ",
+      "c  大j           ",
+      "vp  c           ",
+      "cp  c           ",
+      "g   c           ",
+      "jnnєv           ",
+      "cgccj           ",
+      "g               ",
+      "g               ",
+      "g               ",
+      "c               ",
+      "c               ",
+      "c               ",
+      "eggccgcjejcgcccc"
+    ],
+    [
+      "jjcjc           ",
+      "v q c           ",
+      "v   g           ",
+      "v  oc           ",
+      "cp 大c           ",
+      "g  og           ",
+      "c   g           ",
+      "cѕ єc           ",
+      "ggggc           ",
+      "g               ",
+      "c               ",
+      "c               ",
+      "g               ",
+      "c               ",
+      "v               ",
+      "ecccjcjjejvccgcc"
+    ]
+  ]
+}

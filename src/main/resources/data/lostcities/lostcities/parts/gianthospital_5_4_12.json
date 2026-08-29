@@ -1,0 +1,142 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "瘩",
+        "block": "minecraft:redstone_lamp[lit=true]"
+      },
+      {
+        "char": "狡",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=true,west=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "xl              ",
+      "m               ",
+      "瘩               ",
+      "瘩               ",
+      "瘩l              ",
+      "m               ",
+      "xl              ",
+      "m               ",
+      "xl              ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      " l              ",
+      "                ",
+      "x               ",
+      "                ",
+      "xl              ",
+      "m               ",
+      "x               ",
+      "狡               ",
+      "xl              ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "xl              ",
+      "                ",
+      "x               ",
+      "                ",
+      "xl              ",
+      "m               ",
+      "瘩               ",
+      "瘩               ",
+      "瘩l              ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "x               ",
+      "                ",
+      "瘩               ",
+      "瘩               ",
+      "瘩l              ",
+      "m               ",
+      "x               ",
+      "                ",
+      "x               ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

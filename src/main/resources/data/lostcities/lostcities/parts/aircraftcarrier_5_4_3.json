@@ -1,0 +1,162 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "lacndeceibddaacd",
+      "lccnedeadeiiiiii",
+      "ladnbbcbdieeeadd",
+      "lccndebbibdbdecb",
+      "laeannnnnnnnnnnn",
+      "lecbebeadbcdbeca",
+      "ldbeaaeebebadeba",
+      "lcadbdaabbbbdacb",
+      "caedadaaddddaeab",
+      "   dacabddcbdddb",
+      "          bbdcde",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   n            ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "add             ",
+      "  baabcace      ",
+      "         abedcae",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   n            ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "bc              ",
+      " aebcacda       ",
+      "        ccdbbbcb",
+      "              ae",
+      "              ca",
+      "              be"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   n            ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "d               ",
+      "cbceecac        ",
+      "       bbacccca ",
+      "              de",
+      "             b  "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   n            ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "g               ",
+      "aebcdacg        ",
+      "      ccecccebg ",
+      "             ddb"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  gn            ",
+      "  yg            ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "aaadad          ",
+      "      dcebcce   ",
+      "             eeb"
+    ]
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "filler": "#",
+  "rubble": "}",
+  "minfloors": 2,
+  "maxfloors": 2,
+  "maxcellars": 0,
+  "allowDoors": false,
+  "parts": [
+    {
+      "part": "subhousel3ya_1_2_combo_1_1_0",
+      "floor": 0
+    },
+    {
+      "part": "subhousel3ya_1_2_combo_1_1_1",
+      "floor": 1
+    },
+    {
+      "part": "subhousel3ya_1_2_combo_1_1_2",
+      "floor": 2
+    }
+  ],
+  "parts2": [
+    {
+      "part": "lostcities:subhousel3ya_1_2_combo_1_1_0_parts2",
+      "floor": 0
+    }
+  ]
+}

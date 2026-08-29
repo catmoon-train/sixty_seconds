@@ -1,0 +1,251 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "资",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "明",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -256,
+          "x": -49,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:basin",
+          "y": -52,
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          }
+        }
+      },
+      {
+        "char": "事",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "时",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "心",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "路",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "ҟ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "经",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "工",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "自",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "对",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "yyQbadbcbcrrrJCn",
+      "ybbdcQbacaCoonnn",
+      "cabaabcadaonoKro",
+      "ybdQcdacb资JrJJnJ",
+      "QacyydcaydCorJoJ",
+      "Qdcaddycy资roKoKo",
+      "cbQcaaaayycaccb资",
+      "bQydddcyccbbadyb",
+      "cydbayaybcQQaayd",
+      "cbcadadQbaaaaycy",
+      "ddabydaycaQcdcbb",
+      "yQadQddbccdbydcd",
+      "dbQbycadcddycacc",
+      "QbccbaaayaaQadcy",
+      "acydcbddbbbbyddc",
+      "abydddbcayydddaa"
+    ],
+    [
+      "  U     bcxexa 明",
+      "     U   b事c事b  ",
+      "         d      ",
+      "   U    ga      ",
+      "时       ia心b心c心b",
+      "时       路cxcxbxe",
+      "  U      acaadac",
+      " U         aa   ",
+      "          UU    ",
+      "       U        ",
+      "          U     ",
+      " U  U           ",
+      "  U             ",
+      "时          U    ",
+      "                ",
+      "                "
+    ],
+    [
+      "  V      eҟdҟd  ",
+      "     V   a经c经d  ",
+      "         a      ",
+      "   V    aa      ",
+      "        ag工c工b工d",
+      "        路e自a自e自e",
+      "  V      edaacbe",
+      " V         ai   ",
+      "          VV    ",
+      "       V        ",
+      "          V     ",
+      " V  V           ",
+      "  V             ",
+      "           V    ",
+      "                ",
+      "                "
+    ],
+    [
+      "         a b d  ",
+      "         a a e  ",
+      "         c      ",
+      "        aa      ",
+      "        ga a d b",
+      "        路d d e a",
+      "         deaidcc",
+      "           ia   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "         e      ",
+      "         a      ",
+      "         e      ",
+      "        aa      ",
+      "        gg      ",
+      "        对a      ",
+      "         cdgacda",
+      "           aa   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "         b      ",
+      "         e      ",
+      "         d      ",
+      "        aa      ",
+      "        aa      ",
+      "         d      ",
+      "         ebaadad",
+      "           aa   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

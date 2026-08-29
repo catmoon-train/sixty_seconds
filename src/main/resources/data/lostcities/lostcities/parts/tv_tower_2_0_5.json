@@ -1,0 +1,200 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "ϕ",
+        "block": "minecraft:quartz_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:iron_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:iron_trapdoor[facing=east,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ҝ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -292,
+          "x": -29,
+          "id": "refurbished_furniture:computer",
+          "y": 63,
+          "NodePos": "-7696582590401L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "p",
+        "block": "minecraft:iron_trapdoor[facing=north,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "说",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " i              ",
+      "cbabbc  ga      ",
+      "aaiaiabeaeia    ",
+      "bebbceagageegg  ",
+      "eaeccabaabaabeaa",
+      "deebdeedbbaeiiea",
+      "bdacdcccdacaddab",
+      "caaacdbeadacbaca",
+      "eedeaaceacdcdecc",
+      "aebebcccdaaeebdc"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " a              ",
+      " a      a       ",
+      "faf  f  a       ",
+      " b     fa       ",
+      " b      c ff   g",
+      " a      b    fd ",
+      " a a ϕ  e     f ",
+      " a a    a      f",
+      " d ecabbc  ϕ    ",
+      " a      b Oϓϔ   "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " a              ",
+      "sassss  a       ",
+      "fgf f ssds      ",
+      " c      a ss    ",
+      " c      a f ss a",
+      " d      b   ffa ",
+      " e      a     fl",
+      " c      c       ",
+      " b  Ҝ Ҝ c       ",
+      " e      e       "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " a              ",
+      "pepppp  i       ",
+      " a ff ppcp      ",
+      " e    ffaf说p    ",
+      " e      c  fpp a",
+      " e      d   ffd ",
+      " b      b     fp",
+      " b      e      f",
+      " a      d       ",
+      " b      c       "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " i              ",
+      " c      g       ",
+      "faffff  d       ",
+      " d    f af      ",
+      " d      e  f   a",
+      " b      a    fc ",
+      " a      e     f ",
+      " d      d      f",
+      " c      b       ",
+      " d      e       "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " a              ",
+      "eeeddb  a       ",
+      "aaaaigcdaa      ",
+      " b    igiace    ",
+      " e      c aadb a",
+      " b      e   aad ",
+      " d      a     aa",
+      " c      a      a",
+      " c      c       ",
+      " d      c       "
+    ]
+  ]
+}

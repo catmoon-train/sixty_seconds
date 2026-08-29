@@ -1,0 +1,298 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:chiseled_quartz_block"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "资",
+        "block": "minecraft:dirt"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "明",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -256,
+          "x": -49,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:basin",
+          "y": -52,
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          }
+        }
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "心",
+        "block": "minecraft:spruce_door[facing=south,half=lower,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:cauldron"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "ӻ",
+        "block": "minecraft:white_stained_glass_pane[east=true,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "子",
+        "block": "minecraft:white_stained_glass_pane[east=false,north=false,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "地",
+        "block": "minecraft:white_stained_glass_pane[east=true,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Ѹ",
+        "block": "minecraft:iron_bars[east=true,north=true,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "ѹ",
+        "block": "minecraft:iron_bars[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "工",
+        "block": "minecraft:spruce_door[facing=south,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "自",
+        "block": "minecraft:spruce_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "少",
+        "block": "minecraft:birch_wall_sign[facing=east,waterlogged=false]",
+        "tag": {
+          "z": -261,
+          "x": -39,
+          "is_waxed": "0b",
+          "id": "minecraft:sign",
+          "y": -50,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"MEN\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "性",
+        "block": "minecraft:polished_andesite_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "生",
+        "block": "minecraft:white_stained_glass_pane[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Ѳ",
+        "block": "minecraft:white_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:white_stained_glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "W",
+        "block": "minecraft:polished_andesite_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "roorrnJnCnoroCJJ",
+      "rooCJonronJJrnCr",
+      "nKCroCKrKnnoonCn",
+      "onKonJJrrorooCrn",
+      "rnooKoKrooonrnrK",
+      "rJCJoroooJnoCCoK",
+      "ad资ononnyboJCorr",
+      "aycybcad CorrKao",
+      "acacbyadayadcbba",
+      "dbdaQybQddacaQcd",
+      "cbyyybbbayayaccQ",
+      "ycbQcybyybbQbdab",
+      "dcaadbadbyaybyQb",
+      "dabccyabQccQdyba",
+      "cdbbdcdQcdydyyyd",
+      "yadyyQybdbyacbcd"
+    ],
+    [
+      " 明 明    e       ",
+      "        b       ",
+      "     d  b       ",
+      "     e          ",
+      "心b心a心c          ",
+      "xaxcxc  d       ",
+      "cadcedacia      ",
+      " cc     aaӻ子 地b子",
+      " cb      cѸѸѹѸcѸ",
+      "    U  U     U  ",
+      "               U",
+      "   U       U    ",
+      "              U ",
+      "        U  U    ",
+      "       U        ",
+      "     U          "
+    ],
+    [
+      "        d       ",
+      "        d       ",
+      "     c  b       ",
+      "     a          ",
+      "工b工e工c          ",
+      "自d自c自c  d       ",
+      "baabcedagg      ",
+      " da     ai子   cӻ",
+      " db      cѸѹѹѹcѸ",
+      "    V  V     V  ",
+      "               V",
+      "   V       V    ",
+      "              V ",
+      "        V  V    ",
+      "       V        ",
+      "     V          "
+    ],
+    [
+      "        e       ",
+      "        d       ",
+      "     c  a少      ",
+      "     e          ",
+      " e c c          ",
+      " d e a  e       ",
+      "bebcacbeaa      ",
+      " ab     aaӻӻӻӻc子",
+      " db      cѸѸѸѸaѸ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        c       ",
+      "        d       ",
+      "     b  c       ",
+      "     e  b       ",
+      "     e  b       ",
+      "     d  a       ",
+      "adddbaeagg      ",
+      " ce     ag 地子 cӻ",
+      " ac      dѹѸѸѹdѸ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "        d       ",
+      "        b       ",
+      "     d  c       ",
+      "     c  d       ",
+      "     d  d       ",
+      "     b  e       ",
+      "dbaeebaeaa      ",
+      " 性e     aa 生 ѲbN",
+      " 性d      aWWWWeW",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

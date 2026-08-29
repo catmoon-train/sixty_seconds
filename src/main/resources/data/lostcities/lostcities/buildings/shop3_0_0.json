@@ -1,0 +1,24 @@
+{
+  "filler": "#",
+  "rubble": "}",
+  "minfloors": 1,
+  "maxfloors": 1,
+  "maxcellars": 0,
+  "allowDoors": false,
+  "parts": [
+    {
+      "part": "shop3_0_0_0",
+      "floor": 0
+    },
+    {
+      "part": "shop3_0_0_1",
+      "floor": 1
+    }
+  ],
+  "parts2": [
+    {
+      "part": "lostcities:shop3_0_0_0_parts2",
+      "floor": 0
+    }
+  ]
+}

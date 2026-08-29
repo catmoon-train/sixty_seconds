@@ -1,0 +1,250 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "同",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "他",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ѧ",
+        "block": "minecraft:quartz_bricks"
+      },
+      {
+        "char": "那",
+        "block": "minecraft:white_terracotta"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:chiseled_quartz_block"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "ӛ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӣ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "先",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=top,shape=inner_right,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ѻ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:cauldron"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:smooth_quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "Ѯ",
+        "block": "minecraft:diorite_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "麽",
+        "block": "minecraft:white_stained_glass_pane[east=false,north=false,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Ѩ",
+        "block": "minecraft:white_stained_glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "章",
+        "block": "minecraft:white_stained_glass_pane[east=false,north=true,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "生",
+        "block": "minecraft:white_stained_glass_pane[east=false,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "ҝ",
+        "block": "minecraft:stone_brick_slab[type=top,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "M",
+        "block": "minecraft:smooth_quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:andesite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "ϒ",
+        "block": "minecraft:polished_andesite_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "bebeacace同      ",
+      "adbdebdcdc      ",
+      "eaeadadeb他      ",
+      "bbdbdbcee同      ",
+      "cbdabeaeac      ",
+      "eaaѦ那oѦѦnig     ",
+      "dga      ig     ",
+      "bѦ       c      ",
+      "eѦ       d      ",
+      "bѦ       b      ",
+      "eѦ       gi     ",
+      "en       a      ",
+      "eC       c      ",
+      "cѦ       e      ",
+      "eѦ       d      ",
+      "dK       c      "
+    ],
+    [
+      "ӛ Ӣϓӛ Ӣϓӛ先      ",
+      "   Ѻ   Ѻ c      ",
+      "         d      ",
+      "         a      ",
+      "    x  x c      ",
+      " aiPPPѮѮPag     ",
+      " aa      ga     ",
+      " P              ",
+      " P       麽      ",
+      " Ѯ       Ѩ      ",
+      " Ѯ       ia     ",
+      " P              ",
+      "xѮ       麽      ",
+      " P       章      ",
+      " P              ",
+      " P       生      "
+    ],
+    [
+      "         d      ",
+      "         d      ",
+      "         c      ",
+      "         a      ",
+      "    k  k e      ",
+      " ga      ga     ",
+      " ia      ag     ",
+      "         ҝ      ",
+      "         ҝ      ",
+      "         ҝ      ",
+      "         gg     ",
+      "         ҝ      ",
+      "k        ҝ      ",
+      "         ҝ      ",
+      "         ҝ      ",
+      "         ҝ      "
+    ],
+    [
+      "         bP     ",
+      "         cP     ",
+      "         eP     ",
+      "         dP     ",
+      "    k  k aP     ",
+      " ai      ai     ",
+      " aa      aa     ",
+      "         aP     ",
+      "         eP     ",
+      "         aP     ",
+      "         bP     ",
+      "         dP     ",
+      "k        eP     ",
+      "         aP     ",
+      "         bP     ",
+      "         bP     "
+    ],
+    [
+      "         bM     ",
+      "         eM     ",
+      "         cM     ",
+      "         dM     ",
+      "         cM     ",
+      " aa      gg     ",
+      " ia      aa     ",
+      "         dM     ",
+      "         cM     ",
+      "         eM     ",
+      "         dM     ",
+      "         aM     ",
+      "         cM     ",
+      "         bM     ",
+      "         eM     ",
+      "         dM     "
+    ],
+    [
+      "hhhhhhhhϒd      ",
+      "hhhhhhhhϒb      ",
+      "hhhhhhhhϒa      ",
+      "hhhhhhhhϒb      ",
+      "hhhhhhhhϒd      ",
+      "haghhhhhϒag     ",
+      "highhhhhϒba     ",
+      "hhhhhhhhϒc      ",
+      "hhhhhhhhϒb      ",
+      "hhhhhhhhϒa      ",
+      "hhhhhhhhϒd      ",
+      "hhhhhhhhϒa      ",
+      "hhhhhhhhϒd      ",
+      "hhhhhhhhϒd      ",
+      "hhhhhhhhϒa      ",
+      "hhhhhhhhϒa      "
+    ]
+  ]
+}

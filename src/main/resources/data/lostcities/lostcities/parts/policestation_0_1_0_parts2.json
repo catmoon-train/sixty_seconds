@@ -1,0 +1,373 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ή",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "δ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 335,
+          "x": 64,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 137,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϳ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Β",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ο",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "В",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "͵",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ή",
+        "block": "minecraft:air",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 349,
+          "x": 54,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 136,
+          "SpawnRange": "4s",
+          "Delay": "181s"
+        }
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ʹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ρ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Σ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ͺ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "І",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 339,
+          "x": 57,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:drawer",
+          "y": 137,
+          "Items": []
+        }
+      },
+      {
+        "char": "κ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Έ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѐ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 341,
+          "x": 57,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:drawer",
+          "y": 137,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ϧ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Љ",
+        "block": "minecraft:air",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 350,
+          "x": 57,
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 146,
+          "Items": []
+        }
+      },
+      {
+        "char": "К",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ξ",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "defdaC  C  CaΉ  ",
+      "dbfdaC ΉC  Ca   ",
+      "dfedaC  C  Ca   ",
+      "dggdaC  C  Ca   ",
+      "dcbdiC     Ca   ",
+      "dggdiCΉ    Ca   ",
+      "dmgdaC    ΉCaΉ Ή",
+      "dbediaaaaaaaaaaa",
+      "eccdi   δ       ",
+      "dfgda           ",
+      "decda           ",
+      "dee aaaaaiaaaaaa",
+      "dgcddddddddddddd",
+      "dfbddddddddddddd",
+      "dbeddddddddddddd",
+      "deeddddddddddddd"
+    ],
+    [
+      "aArdfjjjͿjjjjjjj",
+      "a recjjjjjjjjjjj",
+      "a rffjjjjjjjjjͿj",
+      "a rfdjjjjjjjjjͿj",
+      "a Βbgjjjjjjjjjjj",
+      "a ΒcbjjjͿjjjjjjj",
+      "a  cgjjjjjjjjjjj",
+      "a  fcjjjjjjjjjjj",
+      "a  eejjjjjjjjjjj",
+      "a  gbjͿjjjjjjjjj",
+      "a  gbjjjjjjjjjjj",
+      "a  edgebggeffecf",
+      "a  febfcegfgfbcg",
+      "a Afdcgfgbbbdcgb",
+      "a  gbcdccbbfbdeg",
+      "a  cggfbefcbffbf"
+    ],
+    [
+      "h rebbcfcccfcbde",
+      "a rggcfbdfefcfgg",
+      "h rcgfgebgcccbgb",
+      "a  gefbdggfcgcfb",
+      "a οgbgcВccfdcdcf",
+      "a οccggebdddgcfe",
+      "a  ffgedeedcdgee",
+      "a  gcecfggedcebg",
+      "a  eeceffdgbeffg",
+      "a  cffffbdebgfcg",
+      "a  cbgbdefbcbdfc",
+      "a  cecggbffecgce",
+      "a  fdebgeffbebge",
+      "a Adbbgbgcccdegg",
+      "a  fcecfbbceedff",
+      "a  gecffgcgfdfce"
+    ],
+    [
+      "hArbeececbfbbfeb",
+      "aArfcfecbbbbbefc",
+      "a rbgfgfbfbfgbfg",
+      "a  gdefcfbgcgbgc",
+      "a  fddffceffggff",
+      "a  ffggcggggcdfg",
+      "a  gbdcbgcggbfgb",
+      "a  gcccdgdgcccde",
+      "a  ecfgfggbgbbcg",
+      "a  gfgfefbfbecbf",
+      "a  ebfcdbfbbfdfe",
+      "a  gecdecfcfbccb",
+      "a Abccgecefgbcfd",
+      "a  eegecgffgegfe",
+      "a Acfffgbbcfcbcd",
+      "a  bgdgbbdgdbbgf"
+    ],
+    [
+      "a rbcmbc͵cbeccef",
+      "h rfdeef͵f͵mg͵bb",
+      "hAre͵cgecgffeccf",
+      "h  fbfceecbffebf",
+      "a  bgebcebeggbed",
+      "a  egb͵em͵ffmbfc",
+      "a  fbggcbcdcbc͵b",
+      "a  bgfb͵cbbcb͵ce",
+      "a  gcbbf͵bgefmf͵",
+      "a  fe͵gm͵ecbfgme",
+      "a  eefeffebmfcmc",
+      "a  fceffgeeffgce",
+      "a  eebffeecdgcbb",
+      "a  bffήecfffcbcf",
+      "a  ecbcebfcgefcg",
+      "a Acebebfbfgbbfe"
+    ],
+    [
+      "v raͽs zzzz uuuu",
+      "v rhʹ  z   suΡΣu",
+      "v  iͽ  ͺ ϓͺ uuuk",
+      "vA aʹ  ͺ Іͺ  Ρkκ",
+      "v  i        uΈ n",
+      "v  i   zsЀͺ uΡΣ ",
+      "v  a   z Ϧz uuu ",
+      "a  a   z    uΡΣu",
+      "v  i   ͺͺzz uuu ",
+      "v  i   s    u uu",
+      "v  ho      suusu",
+      "v  hΈll    Љʹʹuu",
+      "v  hihhihiahihhК",
+      "v   ceu   ΞΞΞ h ",
+      "v  fiab         ",
+      "v  chie         "
+    ]
+  ]
+}

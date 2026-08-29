@@ -1,0 +1,428 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "开",
+        "block": "minecraft:air",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 387,
+          "x": 24,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 132,
+          "SpawnRange": "4s",
+          "Delay": "584s"
+        }
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "们",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "小",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "收",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "奇",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "传",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "认",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "克",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "乎",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "影",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "请",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "後",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "动",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "设",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "试",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "指",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "办",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "龙",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "时",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 434,
+          "x": 58,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 133,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Loom\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\">>>\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҧ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 463,
+          "x": 74,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Aisle 6\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "远",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "公",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "及",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "掉",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "死",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "士",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "转",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "那",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "爱",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "acdcaddbcrcddwca",
+      "dcabarbabadacrwd",
+      "arcbawcbwbcdwcad",
+      "bdbrcbacabwbbrbw",
+      "bdcdabbwbcacaaca",
+      "ccccaadrdbbbcdd开",
+      "babcbdbbdbwbaIbd",
+      "baarcaaaraaaawIc",
+      "wrddcbccawdcwIdd",
+      "drcdadcbbcwawacb",
+      "cbwdabdaabbbabdr",
+      "wcaaacbacrbacdca",
+      "dbbcdddwccrddrbd",
+      "radcddrcacdbaacc",
+      "wdaaccbrbcdaacbd",
+      "rrrrrrrrrrrrrrrr"
+    ],
+    [
+      "         q j  i ",
+      "  q  q   q      ",
+      " q              ",
+      "   q            ",
+      "     们   m们  小小 ",
+      "  s收们  q 们们收小  奇",
+      "  传认们 们 们们q认小小  ",
+      "mms克们们们 q们们乎小q小q",
+      " 影gggggggggggggg",
+      "iiiD请iiiii C iiq",
+      "      q        q",
+      "     q   q      ",
+      "          q  q  ",
+      "q     q   q   q ",
+      "後ACAAA後AAA後zAA後A",
+      "qqqq动qqqqqqqqqqq"
+    ],
+    [
+      "           j 设i设",
+      "                ",
+      "                ",
+      "                ",
+      "     m   m   m  ",
+      "  s试      们试    ",
+      "  传 们           ",
+      "mms指 们们  们们办小 小 ",
+      " 影yHyoeyopeCoyfe",
+      "iiiD请iiiii D ii ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "AACAAAAAAAACAAAA",
+      "i i 龙  iii i  i "
+    ],
+    [
+      "           j iii",
+      "                ",
+      "                ",
+      "                ",
+      "    时m时 时m时 时m时 ",
+      "   KnnnnnnnKnnnn",
+      "   ҨnnnnnnnҨnnnn",
+      "mmmKnnnnnnnKnnnn",
+      " 影fzeoyfpeozfefe",
+      "iiiD请iiiii E ii ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "AADAAAAAAAACAAAA",
+      "i i    iii i  i "
+    ],
+    [
+      "    ҧg    gj  ii",
+      "                ",
+      "                ",
+      "                ",
+      "  时  m   m   m  ",
+      "  g远们们们公们们们远小小小公",
+      "   认们们们公们们们及小小小公",
+      "mmm掉们们们死们们们乎小小小 ",
+      " 影ezefyepooDeeee",
+      "iiiC请 iiii D ii ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "AADAAAAAAAAzAAAA",
+      "i i    iii i  i "
+    ],
+    [
+      "     g    gj    ",
+      "                ",
+      "                ",
+      "                ",
+      "  m  m   m   m  ",
+      "  g士们们们公们们们士小小小 ",
+      "    们们们公们们们 小小小公",
+      "mmm转们们们那们们们办小小小 ",
+      "爱爱eCopeffeyDeoff",
+      "iiiDi iiii D ii ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "AAzAAAAAAAACAAAA",
+      "i i    iii i  i "
+    ]
+  ]
+}

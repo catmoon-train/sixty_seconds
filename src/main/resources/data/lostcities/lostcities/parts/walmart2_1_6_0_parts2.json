@@ -1,0 +1,502 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "安",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "常",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "待",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "局",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "及",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "兄",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "五",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "唱",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "改",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "报",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "基",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "适",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "希",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "至",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "火",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "收",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "变",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѕ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 471,
+          "x": 31,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Birch logs\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "体",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "西",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "建",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "对",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "得",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "故",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "必",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "假",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "究",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "内",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "康",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "目",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "球",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 424,
+          "x": 152,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 134,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Register 1\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "试",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "老",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "给",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "元",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҩ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "位",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҧ",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 463,
+          "x": 74,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 138,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Aisle 6\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "投",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "制",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "取",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "表",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "帮",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "令",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "室",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "论",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "校",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "指",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "araaxwddbacxrawb",
+      "xxxxxxxxxxxxxxxx",
+      "wcaddbrbcaababrc",
+      "cbwcrbcaadbbdaaa",
+      "ddwwbrdcabdcdcca",
+      "cadbcbaccdddbcbc",
+      "wwccxxxxxxxxdrda",
+      "adwaxwcaacdxabcr",
+      "arwrxbabcbbxabrb",
+      "dcawxcdwcwdxcaac",
+      "dcccxcbdbadxrwbc",
+      "dadcxcaabdbxdccc",
+      "bddcxcbdcaaxbdrb",
+      "drcaxbdddccxcada",
+      "caawxdacdbbxwdad",
+      "xxxxxawbccdxbbba"
+    ],
+    [
+      " q   安常待局及兄q五m唱五",
+      "      j iJ改改改s改改",
+      "     i    i   q ",
+      "    q报基         ",
+      "    基适      q   ",
+      "    报报    m     ",
+      "      j m  j q  ",
+      "   q 希至火收至变Ѕ  体西",
+      " q q建对对对得得    体故",
+      "   q 对对对得  j   西",
+      "     对对对得得      ",
+      "     对对对必       ",
+      "     对对对得得jj  q ",
+      " q   对对对得得qj    ",
+      "    建对对对得得得j mmm",
+      "     安常待假常究qlpoe"
+    ],
+    [
+      "     N 内康 目  m  ",
+      "      j is改改改s改改",
+      "     i   球i  球  ",
+      "                ",
+      "                ",
+      "     m    m     ",
+      "      j m  j    ",
+      "     N 内试 NЅ    ",
+      "     老对给        ",
+      "      对    j    ",
+      "      对 得j      ",
+      "      对ji       ",
+      "      对    j    ",
+      "      对j   j    ",
+      "     老对给   j mmm",
+      "     N 内试 N lf元e"
+    ],
+    [
+      "     KҨK位ҨK     ",
+      "      j il      ",
+      "     i    i     ",
+      "                ",
+      "                ",
+      "     m    m     ",
+      "      j m  j    ",
+      "     KҨK位ҨK     ",
+      "    ҧnnnnnnЅ    ",
+      "     nnnnnnj    ",
+      "     nnnnnnЅ    ",
+      "     nnnnnn     ",
+      "     nnnnnnj    ",
+      "     nnnnnnj    ",
+      "    ҧnnnnnnj mmm",
+      "     KҨKKҨK lpoe"
+    ],
+    [
+      "     投 制取 表     ",
+      "    ҧgj ilgЅ    ",
+      "     i    i     ",
+      "                ",
+      "                ",
+      "     m    m     ",
+      "    ҧgj m gj    ",
+      "     帮 令室 表     ",
+      "    建对对对得得得j    ",
+      "     对对对得得得j    ",
+      "     对对对得得得j    ",
+      "     对对对论论m     ",
+      "     对对对得得得j    ",
+      "     对对对得得得j    ",
+      "    建对对对得得得j mmm",
+      "     投 制取 表 lfyf"
+    ],
+    [
+      "     校 内取 表     ",
+      "    lgj ilgj    ",
+      "     i    i     ",
+      "                ",
+      "                ",
+      "     m    m     ",
+      "    lgj m gj    ",
+      "     目 内指 表     ",
+      "     老对给得得得j    ",
+      "      对 得得得j    ",
+      "      对 得得得     ",
+      "      对 论 m     ",
+      "      对 得得得j    ",
+      "      对 得得得j    ",
+      "     老对给得得得j    ",
+      "     校 内取 表     "
+    ]
+  ]
+}

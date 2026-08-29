@@ -1,0 +1,154 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "好",
+        "block": "minecraft:calcite"
+      },
+      {
+        "char": "下",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "Ҁ",
+        "block": "minecraft:spruce_fence[east=true,north=false,south=false,waterlogged=false,west=false]"
+      },
+      {
+        "char": "ѿ",
+        "block": "minecraft:spruce_fence[east=false,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "开",
+        "block": "minecraft:smooth_quartz"
+      },
+      {
+        "char": "ӷ",
+        "block": "minecraft:diorite"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "    好           ",
+      "                ",
+      "                ",
+      "                ",
+      "    下           ",
+      "                ",
+      "    下           ",
+      "                ",
+      "                ",
+      "    下           ",
+      " h              ",
+      "Ҁѿh             ",
+      " h              ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "    提           ",
+      "    开           ",
+      "    下           ",
+      "                ",
+      "                ",
+      "                ",
+      "    ӷ           ",
+      "    提           ",
+      "    ӷ           ",
+      "                ",
+      " h              ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

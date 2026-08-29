@@ -1,0 +1,186 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "ү",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "码",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "自",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "调",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "断",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "sssskdacbabddcba",
+      "cdssakbbckacabbd",
+      "aksJbdrdbkckbabd",
+      "ddsJrbckakcadcbd",
+      "bbssbcakdkcbdaad",
+      "ddssacabaraadakb",
+      "daJJdbdddcadcccc",
+      "absJrccbacbrbbbb",
+      "sJJsdcccbbacacda",
+      "dbssabbdacaababr",
+      "dkssacrcbabcdkak",
+      "aaJsckbcadadbbca",
+      "cdssbkbdrcadback",
+      "adJsaabbaabaabbc",
+      "sssskcdbddkdakdc",
+      "rkcdkdkbradadbck"
+    ],
+    [
+      "    q           ",
+      "             q  ",
+      "      qq        ",
+      "    q           ",
+      "ү               ",
+      "ү    q   q      ",
+      " q     q   q    ",
+      "    q q    q    ",
+      "    q           ",
+      "               码",
+      "      q        q",
+      "      q      q  ",
+      "        q       ",
+      "       q        ",
+      "   q            ",
+      "q       q       "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "自               ",
+      "自调              ",
+      "自调              ",
+      "自               ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "m               "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "自断              ",
+      "自断              ",
+      "i               ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "m               "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "m               "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "m               "
+    ]
+  ]
+}

@@ -1,0 +1,258 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϛ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϧ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Σ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ρ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "S",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "п",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "έ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ο",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ё",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϥ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "ϖ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϊ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Л",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Τ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Π",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ω",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "ҋ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "҉",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ғ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "҈",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ψ",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      " f GfF          ",
+      "G GF FFF        ",
+      " f f FGϛF       ",
+      " FGF Gϛ Ϧ       ",
+      " f F  G ΣϦF     ",
+      " GFG G ΣΡ       ",
+      " FF  fF   F     ",
+      "  Gf GG SпG F   ",
+      " sG     έΟ      ",
+      "ЁϤϤdϤϤϤϤЁϤϤjr   ",
+      "  ppp f ffAϖ    ",
+      "f  fff  AAAϖ    ",
+      "ΪxxxxΪxЛϭffϖ    ",
+      "f ffffAϭϭAfϖ    ",
+      " f f  fxAffϖ    "
+    ],
+    [
+      "                ",
+      "  F F           ",
+      "  G  f          ",
+      "   G FF         ",
+      " FGG            ",
+      "F F G G  F      ",
+      " f  G  Τ FG     ",
+      " FFG G Π  F     ",
+      "  FF   Ωέ       ",
+      "   f    Ω F     ",
+      "ooo F     Fo    ",
+      "    p FG  B     ",
+      "        BB      ",
+      "       ҋ҉  o    ",
+      "      BҒ҈B      ",
+      "           o    "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "   GF  f        ",
+      " GfFG F         ",
+      "  F FF          ",
+      "    fG Σ        ",
+      "   F ϛΣΡ  f     ",
+      "   fG     F     ",
+      "   F  GF        ",
+      "          f     ",
+      "       GfF      ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "     f          ",
+      "    fG          ",
+      "  GF            ",
+      "     G          ",
+      "       ΨϦ       ",
+      "   G G ϛ FG     ",
+      "    G  G G      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     f          ",
+      "                ",
+      "    FG          ",
+      "     f          ",
+      "     G          ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

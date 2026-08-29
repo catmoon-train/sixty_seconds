@@ -1,0 +1,295 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "开",
+        "block": "minecraft:air",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 387,
+          "x": 24,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 132,
+          "SpawnRange": "4s",
+          "Delay": "584s"
+        }
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "提",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "之",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "动",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "说",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "嗯",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "某",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 385,
+          "x": 162,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:barrel",
+          "y": 134,
+          "Items": []
+        }
+      },
+      {
+        "char": "调",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "龙",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "元",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "段",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "系",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "猫",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "图",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "阿",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "雄",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "便",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "卡",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "度",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "版",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "林",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "没",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "跟",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "空",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "rddbdabcsackbaab",
+      "drkbkddbskbcdccc",
+      "dak开ad开rJdbddccc",
+      "aasssssssssssssc",
+      "bbbcdkkksbckbcca",
+      "ccbckdddsdkkdbdc",
+      "adkdkrbasabdddar",
+      "dcsJsJsJJJsJJssb",
+      "kcbdarbksbbkdcak",
+      "adbabrcbsdcbcaka",
+      "dckdbbabskkkaakk",
+      "cdsssssssssssssc",
+      "cckadbdcJbbdkacd",
+      "kddrkcccsbckbbac",
+      "dbdkbbdbskcddcca",
+      "ddJssJJsJssJsssb"
+    ],
+    [
+      "  提之提提之提        ",
+      " q提    提        ",
+      "  提之提提之提        ",
+      "                ",
+      "                ",
+      "                ",
+      "     q         q",
+      "                ",
+      "     动          ",
+      "     q          ",
+      "                ",
+      "        N       ",
+      "                ",
+      "   q            ",
+      "              q ",
+      "  q             "
+    ],
+    [
+      "  说说说说说说        ",
+      " 嗯某说说说说说调       ",
+      "  说说说说说说        ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     龙          ",
+      "                ",
+      "                ",
+      "        N       ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "  说说元说段         ",
+      "  系h  猫         ",
+      "  说说元说图         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        N       ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "   阿雄雄便         ",
+      "   卡ҬҬ便         ",
+      "   雄卡卡卡         ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        N       ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "       度 度      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "       版 版      ",
+      "      林没跟没空     ",
+      "       度 度      ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

@@ -1,0 +1,414 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:stone_brick_slab[type=bottom,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:smooth_stone_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:polished_andesite_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:quartz_pillar[axis=x]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:polished_andesite_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:structure_void"
+      },
+      {
+        "char": "D",
+        "block": "minecraft:mossy_stone_brick_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:rail[shape=east_west,waterlogged=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:rail[shape=ascending_east,waterlogged=false]"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:vine[east=false,north=true,south=true,up=false,west=true]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:white_stained_glass"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:quartz_pillar[axis=z]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=true,west=false]"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:redstone_block"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=true,west=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:stone_brick_stairs[facing=south,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=true,west=false]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=true,west=true]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:smooth_quartz_stairs[facing=north,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:smooth_quartz_stairs[facing=south,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:smooth_quartz_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:smooth_quartz_slab[type=bottom,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "cb              ",
+      "cc              ",
+      "cc              ",
+      "cb              ",
+      "bb              ",
+      "bb              ",
+      "bb              ",
+      "bb              ",
+      "bb              ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "ccc             ",
+      "pGc             ",
+      "kmc             ",
+      "Bnc             ",
+      "qqb             ",
+      "wob             ",
+      "kmb             ",
+      "vuc             ",
+      "bbc             ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "obcc            ",
+      "hhpc            ",
+      "aaDc            ",
+      "aaBb            ",
+      "sHqb            ",
+      "aawb            ",
+      "aakb            ",
+      "aKvc            ",
+      "nbbb            ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "dbpzb           ",
+      "hrhGc           ",
+      "aaamc           ",
+      "aaanc           ",
+      "aaHJb           ",
+      "aaaob           ",
+      "aaemb           ",
+      "axgub           ",
+      "dcnzb           ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "dbdfcb          ",
+      "rarhpc          ",
+      "aaaaDc          ",
+      "aaaaBb          ",
+      "aaaHqc          ",
+      "aaaawc          ",
+      "aaeeDc          ",
+      "aaggvc          ",
+      "dbdfbb          ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "jbdfpbcbccbbbbcb",
+      "aaahhucbbcbbbbcb",
+      "aaaaemccbbbbcccb",
+      "aaaaanbcbbbbcbbb",
+      "aaaaHqccbbbbcccb",
+      "aaaaapbbbbbbbbbb",
+      "aaeeembbbbbbcbbb",
+      "aaxggGcbbbbbcbbb",
+      "ibdfvccbbbbbcccb",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "bbjfdcczbcbzbccz",
+      "CCahhhpGpGoGouou",
+      "alaaeeDmkmkmkmkm",
+      "aaaaaaBnBnBnBnBn",
+      "llaaeHqJqqqJqqqJ",
+      "aaaaaawowowowowo",
+      "laeeeeDmDmkmDmkm",
+      "Eiaxggvuvunuvunu",
+      "bbifdcbzbbbzbbcz",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  bfdcpfpcpfpbof",
+      "ccChrhhhhhhhhhhh",
+      "ddaaeeeaaaaaaaaa",
+      "jjaaaaaaaaaaaaaa",
+      "ddaaeessssssssss",
+      "iiaaaaaaaaaaaaaa",
+      "ddteeeeaaaaaaaaa",
+      "bbiaxgggggggaggg",
+      "  bfdcvfvbvfncnf",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "   fjbdfdcdfdbdf",
+      "  cyarrhhrhhhhhh",
+      "  daeeeaaaaaaaaa",
+      "bbjaaaaaaaaaaaaa",
+      "bbdaeeeaaaaaaaaa",
+      "bbiaaaaaaaaaaaaa",
+      "  dteeeaaaaaaaaa",
+      "  bAagggggggaggg",
+      "   ficdfdbdfdcdf",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "    bbdfdbdfdcdf",
+      "   bCaahrarhrhrh",
+      "   dteeaaaaaaaaa",
+      "  byaaaaaaaaaaaa",
+      "  bdteeaaaaaaaaa",
+      "  bAaaaaaaaaaaaa",
+      "   dteeaaaaaaaaa",
+      "   bEgxgxgxgagxg",
+      "    bcdfdbdfdcdf",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     bjfjbjfjcjf",
+      "    cCahaaahahah",
+      "    dteaaaaaaaaa",
+      "   bjaaaaaaaaaaa",
+      "   bdteaaaaaaaaa",
+      "   biaaaaaaaaaaa",
+      "    dteaaaaaaaaa",
+      "    cEagagagagag",
+      "     bifibificif",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      cfbbcfbbbf",
+      "     bCyjjCyjjjy",
+      "     dtalallllll",
+      "    bjaaaaaaaaaa",
+      "    bdtlaallllll",
+      "    biaaaaaaaaaa",
+      "     dtallaaalll",
+      "     bEAiEiAiEiA",
+      "      cfbcbfbbbf",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      cFbbbFbbcF",
+      "      dddddddddd",
+      "     bjyjjjyjjjy",
+      "     bdddddddddd",
+      "     biAiiiAiiiA",
+      "      dddddddddd",
+      "      bFbbbFbbbF",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "      kIkkkIkkkI",
+      "                ",
+      "      kkkkkIkkkI",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

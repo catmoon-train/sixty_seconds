@@ -1,0 +1,350 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϋ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "7",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "6",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "4",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϻ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "9",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ї",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "S",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ή",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϟ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ю",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϣ",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ͽ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "к",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϋ",
+        "block": "minecraft:air",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 652,
+          "x": 190,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 179,
+          "Items": []
+        }
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϴ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϝ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "з",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ђ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ё",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ӆ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ј",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѓ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ϊ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "҃",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "8",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "и",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "л",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Р",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ф",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "҈",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "hhhhhhhhhhhhuuuZ",
+      "hhhhhhhhhhuuΫuu7",
+      "hhhhhhhhhhuu6uu7",
+      "hhhhhhhhhhuu6uu4",
+      "hhhhhhhhhhuu6uu7",
+      "hhhhhhhhhhuuϻuu7",
+      "hhhhhhhhhhuuϻ9uP",
+      "hhhhhhhhhh9u6uuP",
+      "hhhhhhhhhh9u69uP",
+      "hhhhhhhhhhuuΫ9ϻZ",
+      "hhhhhhhhhhuuЇϻ9P",
+      "hhhhhhhhhh9u6u9P",
+      "hhhhhhhhhhuuΫuuZ",
+      "acbcaacccbau6uuP",
+      "SSS77ZPZZPP7Z4Z4",
+      "PPPP4SSSPPSSZP7Z"
+    ],
+    [
+      "ήtήptϟppptdf    ",
+      "tttptpppptdf  Ѫ ",
+      "tttptpppptdf    ",
+      "ttptppppptaf Ю  ",
+      "tptpppppptff    ",
+      "ptppppppptffϣa  ",
+      "tpppppppptdfϣ   ",
+      "ppppppppptbf  a ",
+      "ppppppppptdf    ",
+      "ppppppppptdf    ",
+      "ttttttttttdf ϣ  ",
+      "ddddaaaadbbb    ",
+      "cffuufcfcfaab   ",
+      "         a c    ",
+      "                ",
+      "                "
+    ],
+    [
+      "y Ѝp     Ͽbd    ",
+      "   p    yϿd     ",
+      "  кp     ѓb     ",
+      " ϋqϴ    x b     ",
+      " qѪ     y a     ",
+      "pϝ    з  ђa     ",
+      "     Ё  aϿd     ",
+      "  з     Ӆѓf     ",
+      "      a   d     ",
+      "y  Ёyз Юxq      ",
+      "qq   qq Ё       ",
+      "dammmaac   j    ",
+      "          icl   ",
+      "           g    ",
+      "                ",
+      "                "
+    ],
+    [
+      "  ЈЃ     Ϊda    ",
+      "         Ϊc     ",
+      "   ҃      a     ",
+      "  8       d     ",
+      " 8        d     ",
+      "p         a     ",
+      "         иb     ",
+      "          d     ",
+      "          d     ",
+      "                ",
+      "qq              ",
+      "dammmd a   j    ",
+      "          ial   ",
+      "           g    ",
+      "                ",
+      "                "
+    ],
+    [
+      "          dd    ",
+      "          a     ",
+      "          d     ",
+      "  8       f     ",
+      " 8        c     ",
+      "p         a     ",
+      "          a     ",
+      "          c     ",
+      "                ",
+      "          a     ",
+      "qq              ",
+      "abmmmab b  л    ",
+      "          Рbl   ",
+      "           g    ",
+      "                ",
+      "                "
+    ],
+    [
+      "         wff    ",
+      "         wdf    ",
+      "         wff    ",
+      "  8      wdf    ",
+      " 8       wff    ",
+      "8        wff    ",
+      "         wff    ",
+      "         wdf    ",
+      "         wdf    ",
+      "фф       wdf    ",
+      "ϟϟ҈       df    ",
+      "acddcdccac f    ",
+      "ffffffffffffl   ",
+      "           g    ",
+      "                ",
+      "                "
+    ]
+  ]
+}

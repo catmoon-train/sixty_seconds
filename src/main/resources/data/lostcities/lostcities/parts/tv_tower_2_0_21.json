@@ -1,0 +1,194 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:quartz_pillar[axis=y]"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:chiseled_quartz_block"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:iron_bars[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "後",
+        "block": "minecraft:stone_pressure_plate[powered=false]"
+      },
+      {
+        "char": "非",
+        "block": "minecraft:iron_door[facing=north,half=lower,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "ú",
+        "block": "minecraft:iron_bars[east=false,north=true,south=true,waterlogged=false,west=true]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:iron_trapdoor[facing=south,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "许",
+        "block": "minecraft:iron_door[facing=north,half=upper,hinge=right,open=false,powered=false]"
+      },
+      {
+        "char": "程",
+        "block": "minecraft:stone_stairs[facing=south,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "С",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=top,shape=straight,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " a              ",
+      "cacabd  a       ",
+      "gaaaaiceaa      ",
+      "baacdbaaaa      ",
+      "adcecdebea      ",
+      "abedeaaaag      ",
+      "deebaccaai      ",
+      "bdacbcadbg      ",
+      "cadccdbcaa      ",
+      "eeaaebcdcaa     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " a              ",
+      "CaoCCC  i       ",
+      " a    rCag      ",
+      "        i       ",
+      "        z       ",
+      "        z       ",
+      "  e a   z       ",
+      "後       z       ",
+      "非aeaea  z       ",
+      "後ceecaadú g     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " g              ",
+      "uauuuu  a       ",
+      " a    uua       ",
+      "        a       ",
+      "                ",
+      "                ",
+      "  e c           ",
+      "                ",
+      "许babbd          ",
+      " ecdbaeb  a     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      " a              ",
+      " a      a       ",
+      "        g       ",
+      "                ",
+      "                ",
+      "                ",
+      "  d d           ",
+      "                ",
+      "程dadea          ",
+      "Сccadbbc  a     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  e b           ",
+      "                ",
+      "dcdebd          ",
+      "bbecddeb  a     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "  c a           ",
+      "                ",
+      "ddeebb          ",
+      "bcecddab  a     "
+    ]
+  ]
+}

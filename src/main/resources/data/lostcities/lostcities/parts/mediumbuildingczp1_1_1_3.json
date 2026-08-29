@@ -1,0 +1,270 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "ы",
+        "block": "minecraft:potted_dead_bush"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:glass_pane[east=true,north=false,south=false,waterlogged=false,west=true]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "Е",
+        "block": "minecraft:stone_bricks[weathering=true]"
+      },
+      {
+        "char": "ћ",
+        "block": "minecraft:mossy_stone_brick_stairs[facing=west,half=top,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Ϲ",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=true,west=true]"
+      },
+      {
+        "char": "ϩ",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=true,west=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "Β",
+        "block": "minecraft:cobblestone[weathering=true]"
+      },
+      {
+        "char": "ι",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:gray_carpet"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:light_gray_carpet"
+      },
+      {
+        "char": "҂",
+        "block": "minecraft:oak_door[facing=south,half=lower,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "Ϧ",
+        "block": "minecraft:oak_stairs[facing=north,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "Њ",
+        "block": "minecraft:oak_wall_sign[facing=east,waterlogged=false]",
+        "tag": {
+          "z": 627,
+          "x": 113,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 154,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "ϣ",
+        "block": "minecraft:smooth_quartz_slab[type=double,waterlogged=false]"
+      },
+      {
+        "char": "Ϯ",
+        "block": "minecraft:smooth_quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "Ч",
+        "block": "minecraft:cauldron"
+      },
+      {
+        "char": "ј",
+        "block": "minecraft:oak_door[facing=south,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "ҭ",
+        "block": "minecraft:birch_trapdoor[facing=north,half=bottom,open=true,powered=false,waterlogged=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "       h g      ",
+      "       a g      ",
+      "       h g      ",
+      "       h g      ",
+      "       a        ",
+      "       h g      ",
+      "      ыh g      ",
+      "kdkkakkagg      ",
+      " i    iizg      ",
+      "ii              ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "       h g      ",
+      "       a g      ",
+      "       h g      ",
+      "       h g      ",
+      "       a        ",
+      "       h g      ",
+      "       h g      ",
+      "kckkakkcgg      ",
+      " i    iizg      ",
+      "ii              ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "       Ећg      ",
+      "       c g      ",
+      "       a g      ",
+      "       a g      ",
+      "       a        ",
+      "       d g      ",
+      "       a g      ",
+      "dcaaacacϹg      ",
+      " ϩ    ϩ yg      ",
+      "ii              ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "ebbbbefΒΒg      ",
+      "feefbbeeιg      ",
+      "efbbbbffΒg      ",
+      "fbbbeabbΒg      ",
+      "bbebbeaee       ",
+      "fbbbbbbbeg      ",
+      "ebbbbebbbg      ",
+      "efbebebeιg      ",
+      "bbbbfbbΒιg      ",
+      "ii              ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      " p p nph g      ",
+      "pnn  p h g      ",
+      "  aa҂aaa g      ",
+      "ϦЊa  ϣϮa g      ",
+      "  a  ϣϮa        ",
+      "  a  ϣϮa g      ",
+      "  aЧ ϣϮd g      ",
+      "kkaaaaac g      ",
+      "      iizg      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "       h g      ",
+      "       h g      ",
+      "  aaјaaa g      ",
+      "  a    a g      ",
+      "  a    a        ",
+      "  a    a g      ",
+      "  aҭ   d g      ",
+      "kkaaaacc g      ",
+      "      iizg      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

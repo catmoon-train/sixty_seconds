@@ -1,0 +1,322 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "t",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "躁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "扪",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "歛",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "帜",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "怯",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "歉",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "烤",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "狡",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "栈",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "绁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "妲",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "榄",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "峙",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "叽",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 483,
+          "x": -40,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 150,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"QUARANTINE\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"ZONE\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "杠",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "廖",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "酷",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "拔",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "oooooooooooottto",
+      "ooooooooooottttt",
+      "oooooooooootttot",
+      "ooooooooooottttt",
+      "ooooooooooottttt",
+      "ooooooooooootttt",
+      "ooooooooooootttt",
+      "ooooooooooootttt",
+      "ttttttttooottttt",
+      "tttttttttttttttt",
+      "tttttttttttttttt",
+      "gigqgfhgiqqgihff",
+      "qtqhiqfiqtqihifi",
+      "thiqggqigqgthtff",
+      "ihgggiqgggihfhqg",
+      "gtihgffffgiiittg"
+    ],
+    [
+      "edcbddceebepTsse",
+      "dbbbdbeebcdTss躁m",
+      "bcbdbbbecbels扪e歛",
+      "eee帜bcedbdclsss怯",
+      "cbd帜dcdcbbb歉ssss",
+      "cdd帜deeddbcclsss",
+      "edfeccbebdddlsss",
+      "dbdbeccdbedpssss",
+      "s烤狡mmmmjpedsssss",
+      "mssmssmmmmssssss",
+      "ssssssssssssssss",
+      "                ",
+      " s       s      ",
+      "s    s s   s s  ",
+      "                ",
+      "ss          sss "
+    ],
+    [
+      "jvdb    beep    ",
+      " uce     ddT   m",
+      " uuvce   del    ",
+      "栈绁妲榄帜    eel    ",
+      " 峙 榄帜    ed歉    ",
+      "nn 榄帜   ccddl   ",
+      "vvuudebebcbbl   ",
+      "dbbbedddbcdp    ",
+      " 烤烤mmmmjpdp     ",
+      "mmmm mmmmm      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "jcec    cedp    ",
+      " cce     eeT   m",
+      "叽ecccd   edl    ",
+      " mmT榄帜   cel    ",
+      "   l榄帜   ce歉    ",
+      "nn 歉榄帜  ebcpl   ",
+      "bccdcecededel   ",
+      "dccedccdccbb    ",
+      "烤烤狡mmmmjpcd     ",
+      "mmmm mmmmm      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "jbec 杠gghdeb    ",
+      " ecb 杠higebT   m",
+      " dbdedhghebl    ",
+      " mmTm榄gghdel    ",
+      "   l 榄Gghed歉    ",
+      "nn 歉 榄ighccpl   ",
+      "bcbdbbecbccel   ",
+      "becbbecddddp    ",
+      " 烤烤mmm jebp     ",
+      "mmmm mmmmm      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "rdbb杠廖  jedp    ",
+      "adeb杠廖  jcel   m",
+      "abeeebl jcdl    ",
+      "aa酷Tmm  jeel    ",
+      "aral    jcd歉    ",
+      "酷拔k歉 n nneepl   ",
+      "cbdedebbbbdbl   ",
+      "ebcddbbcccep    ",
+      "  烤狡mm jbdp     ",
+      "mmmm mmmmm      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

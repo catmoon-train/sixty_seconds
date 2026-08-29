@@ -1,0 +1,218 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "ӛ",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=false]"
+      },
+      {
+        "char": "将",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѓ",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=false,west=false]"
+      },
+      {
+        "char": "7",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=false]"
+      },
+      {
+        "char": "ύ",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=false,west=true]"
+      },
+      {
+        "char": "ӣ",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=false,west=true]"
+      },
+      {
+        "char": "给",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "є",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ӗ",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=false,west=true]"
+      },
+      {
+        "char": "数",
+        "block": "minecraft:vine[east=true,north=false,south=false,up=true,west=false]"
+      },
+      {
+        "char": "Ә",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "系",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=true,west=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "他",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "猜",
+        "block": "minecraft:vine[east=false,north=false,south=false,up=true,west=true]"
+      },
+      {
+        "char": "门",
+        "block": "minecraft:vine[east=false,north=true,south=false,up=true,west=false]"
+      },
+      {
+        "char": "吗",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "排",
+        "block": "minecraft:vine[east=false,north=false,south=true,up=true,west=false]"
+      },
+      {
+        "char": "主",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "3",
+        "block": "minecraft:stone_brick_wall[east=none,north=none,south=none,up=true,waterlogged=false,weathering=false,west=none]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "              o ",
+      "            iiii",
+      "         iiiiiii",
+      "        ӛiii  将 ",
+      "       ѓ 7      ",
+      "         ύ      ",
+      "     iiӛ7       ",
+      "     ii        7",
+      "     ii        ύ",
+      "    ii         ӣ",
+      "    ii       ӛ ӛ",
+      "   oii给      xє ",
+      "          7ѓ xx7",
+      "    ii    ӗ   7 "
+    ],
+    [
+      "                ",
+      "                ",
+      "              o ",
+      "              ii",
+      "          iiiiii",
+      "        ӛ数ii  Ә ",
+      "       ѓ 系    将 ",
+      "        系ύ      ",
+      "       ӛ7       ",
+      "      i        7",
+      "     i         ύ",
+      "     i         ӣ",
+      "    ii         ӛ",
+      "   uii他给      є ",
+      "    ii    7ѓ  x7",
+      "     ii   ӗ     "
+    ],
+    [
+      "                ",
+      "                ",
+      "              y ",
+      "              u ",
+      "           iii i",
+      "        ӛiiiiiii",
+      "       ѓiii   将 ",
+      "        i猜      ",
+      "       ӛ门       ",
+      "      ii       7",
+      "     ii        ύ",
+      "      i        ӣ",
+      "      i        ӛ",
+      "   ooi є      єx",
+      "     ii   7ѓ  x7",
+      "     ii   ӗ     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "              o ",
+      "            iiii",
+      "          iii   ",
+      "        iii   吗 ",
+      "       iii    将 ",
+      "        i       ",
+      "       i       7",
+      "       i       ύ",
+      "     ii        ӣ",
+      "     i         排",
+      "    yii他给     єx",
+      "      i   7ѓ    ",
+      "     ii   ӗ     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "              u ",
+      "              u ",
+      "           iiiii",
+      "         iiiiii ",
+      "        iii   Ә ",
+      "        ii    将 ",
+      "       i       7",
+      "      ii       ύ",
+      "      ii       ӣ",
+      "       i       x",
+      "    uoi 主给    єx",
+      "      ii  7ѓ    ",
+      "      i   ӗ     "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              u ",
+      "              u ",
+      "           i i i",
+      "          iiiiii",
+      "        iii   Ә ",
+      "        ii    将7",
+      "        i      ύ",
+      "       i       ӣ",
+      "       ii       ",
+      "     ou i他给   3 ",
+      "        i 7ѓ    ",
+      "       ii ӗ     "
+    ]
+  ]
+}

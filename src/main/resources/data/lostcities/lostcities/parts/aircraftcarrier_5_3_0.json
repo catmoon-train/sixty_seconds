@@ -1,0 +1,226 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:red_terracotta"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:gold_block"
+      },
+      {
+        "char": "誉",
+        "block": "minecraft:emerald_block"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:black_carpet"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "尸",
+        "block": "minecraft:nether_brick_stairs[facing=south,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:iron_block"
+      },
+      {
+        "char": "翰",
+        "block": "minecraft:redstone_lamp[lit=true]"
+      },
+      {
+        "char": "垄",
+        "block": "minecraft:redstone_wire[east=none,north=up,power=12,south=side,west=none]"
+      },
+      {
+        "char": "谭",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=13,south=side,west=none]"
+      },
+      {
+        "char": "瀚",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=14,south=side,west=none]"
+      },
+      {
+        "char": "炫",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=15,south=none,west=none]"
+      },
+      {
+        "char": "逮",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=2,south=none,west=none]"
+      },
+      {
+        "char": "弧",
+        "block": "minecraft:redstone_wire[east=none,north=none,power=3,south=side,west=side]"
+      },
+      {
+        "char": "琨",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=4,south=side,west=none]"
+      },
+      {
+        "char": "凸",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=5,south=side,west=none]"
+      },
+      {
+        "char": "嫖",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=6,south=up,west=none]"
+      },
+      {
+        "char": "茹",
+        "block": "minecraft:redstone_wire[east=none,north=up,power=9,south=side,west=none]"
+      },
+      {
+        "char": "丰",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=10,south=side,west=none]"
+      },
+      {
+        "char": "禽",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=11,south=side,west=none]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      " hh       hh    ",
+      "hhhhhhhhhhhhhhhh",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      " hh       hh    ",
+      "hhhhhhhhhhhhhhhh",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "hhhhhhhhhhhhhhhh",
+      "aeadadcecbeecqad",
+      "adccdbdceccebdeb",
+      "aaddbaeaaabaeedd",
+      "cbbbebaaccee誉c誉b",
+      "abbaba誉aeeebadad",
+      "eaacedbbaa誉cebda",
+      "ddbeebac誉cdebacd",
+      "dbbeeabdebade誉cc",
+      "cadcaaabcddebcad",
+      "bbadbadaeacdbeba",
+      "abdbceeaabdecaec",
+      "              ba",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "nndbebdbaadddcce",
+      "jjgg  qq誉qqqq誉gc",
+      "jje  q誉q 誉qq qde",
+      "jjd qqqq      bb",
+      "尸尸bqqqq         ",
+      "jjdq誉    q      ",
+      "尸尸e q         ac",
+      "jjaqq         dd",
+      "尸尸bqqq   誉    db",
+      "jjeqq E EE 誉EEdd",
+      "尸尸egEEEEEEEEEgbb",
+      "jja  EEEEE E  ab",
+      "eaceeeeecededeca",
+      "       dbbacbbba",
+      "              da",
+      "                "
+    ],
+    [
+      "nneeddccaebceacb",
+      "  gg q  誉q 誉q 翰d",
+      "  e誉誉q q      ca",
+      "  c q         ee",
+      "  aq            ",
+      "  c             ",
+      "  aq          cb",
+      "  d           be",
+      "  cq          ee",
+      "  eq        q d垄",
+      "  dgEq 誉 EqE誉gd谭",
+      "  b EEEEEEEE  e瀚",
+      "尸尸dabdeccadeecb炫",
+      "deaacdacd     c ",
+      "      aaeeabcae ",
+      "             dda"
+    ],
+    [
+      "nnedccdddbcbca逮弧",
+      "  ggggggqgggqgg琨",
+      "  b誉          a凸",
+      "  b q         e嫖",
+      "  bg          ge",
+      "  cg          翰a",
+      "  cg          b茹",
+      "  cg          e丰",
+      "  bg          b禽",
+      "  a誉          c ",
+      "  agq      E ge ",
+      "  d EEgEgEgE誉 a ",
+      "  accbccccebeca ",
+      "gge           d ",
+      "cbdacag       a ",
+      "     accddaaagb "
+    ]
+  ]
+}

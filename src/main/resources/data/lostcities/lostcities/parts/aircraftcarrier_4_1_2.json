@@ -1,0 +1,394 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      },
+      {
+        "char": "ҕ",
+        "block": "minecraft:chest[facing=south,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 942,
+          "x": -502,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "Ѷ",
+        "block": "minecraft:chest[facing=south,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 940,
+          "x": -437,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "开",
+        "block": "minecraft:light_gray_bed[facing=west,occupied=false,part=head]",
+        "tag": {
+          "z": 951,
+          "x": -534,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 116
+        }
+      },
+      {
+        "char": "助",
+        "block": "minecraft:ladder[facing=east,waterlogged=false]"
+      },
+      {
+        "char": "碟",
+        "block": "minecraft:chest[facing=west,type=right,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 957,
+          "x": -354,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 112,
+          "Items": []
+        }
+      },
+      {
+        "char": "教",
+        "block": "minecraft:light_gray_bed[facing=west,occupied=false,part=foot]",
+        "tag": {
+          "z": 949,
+          "x": -458,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 115
+        }
+      },
+      {
+        "char": "ϒ",
+        "block": "minecraft:dark_oak_trapdoor[facing=east,half=bottom,open=true,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "底",
+        "block": "minecraft:chest[facing=north,type=left,waterlogged=false]",
+        "loot": "bigbuildingsloot",
+        "tag": {
+          "z": 975,
+          "x": -484,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:chest",
+          "y": 115,
+          "Items": []
+        }
+      },
+      {
+        "char": "k",
+        "block": "minecraft:bookshelf"
+      },
+      {
+        "char": "页",
+        "block": "minecraft:jukebox[has_record=false]",
+        "tag": {
+          "RecordStartTick": "0L",
+          "IsPlaying": "0b",
+          "z": 951,
+          "x": -397,
+          "TickCount": "0L",
+          "ForgeCaps": {},
+          "id": "minecraft:jukebox",
+          "y": 115
+        }
+      },
+      {
+        "char": "滨",
+        "block": "minecraft:dark_oak_door[facing=west,half=lower,hinge=right,open=true,powered=false]"
+      },
+      {
+        "char": "蕃",
+        "block": "minecraft:dark_oak_door[facing=west,half=upper,hinge=right,open=true,powered=false]"
+      },
+      {
+        "char": "ϑ",
+        "block": "minecraft:birch_wall_sign[facing=south,waterlogged=false]",
+        "tag": {
+          "z": 953,
+          "x": -527,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 112,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Workshop\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "尚",
+        "block": "minecraft:birch_wall_sign[facing=east,waterlogged=false]",
+        "tag": {
+          "z": 945,
+          "x": -465,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 109,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Battery:\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Charlie\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "奕",
+        "block": "minecraft:blue_bed[facing=west,occupied=false,part=head]",
+        "tag": {
+          "z": 930,
+          "x": -489,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 117
+        }
+      },
+      {
+        "char": "苟",
+        "block": "minecraft:blue_bed[facing=west,occupied=false,part=foot]",
+        "tag": {
+          "z": 930,
+          "x": -488,
+          "ForgeCaps": {},
+          "id": "minecraft:bed",
+          "y": 117
+        }
+      },
+      {
+        "char": "父",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 953,
+          "x": -457,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 117,
+          "NodePos": "-125619199569803L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "井",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 958,
+          "x": -325,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 117,
+          "NodePos": "-89335315832715L",
+          "Connections": [
+            "L"
+          ]
+        }
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "          aeaeaa",
+      "   cceabdccfffff",
+      "aaec            ",
+      "                ",
+      "            gfff",
+      "            fҕѶҕ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "         cacccaa",
+      "  dedebecag     ",
+      "cdcg       fffff",
+      "                ",
+      "                ",
+      "            gfff",
+      "            f   ",
+      "            f   ",
+      "            f   "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "               a",
+      "        edbaabad",
+      " beaacaebacccdeb",
+      "eddabaaabdcdcdde",
+      "adaeddaecaedbdec",
+      "ceaabedbaeeabddb",
+      "dbbdaacaaebeebba",
+      "dbceeaeebaacdaeb",
+      "ceccdbeedeaddede",
+      "eeddabdebaedaeeb",
+      "adbbbcddeacbcbec"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              cd",
+      "       ddadeeef开",
+      "bceebdac助    碟f助",
+      "f开教ϒ  碟f开教ϒ  底f开",
+      "f助    底f助    kfk",
+      "f开教ϒ页 kf开教ϒ页 kfk",
+      "fffff滨ffffff滨fff",
+      "                ",
+      "                ",
+      "ffffffffff  ffff",
+      "f开教ϒ 页ҕѶkf  fkҕѶ",
+      "f助       f  f   "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "              ee",
+      "       edbeeaef开",
+      "aeaeceaa助     f助",
+      "f开教ϒ   f开教ϒ   f开",
+      "f助     f助    kfk",
+      "f开教ϒ  kf开教ϒ  kfk",
+      "fffff蕃ffffff蕃fff",
+      "      ϑ      ϑ  ",
+      "                ",
+      "ffffffffff  ffff",
+      "f开教ϒ    kf  fk  ",
+      "f助       f尚 f   "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "             dde",
+      "      ccdbebdafg",
+      "babadee 奕苟ϒkggf开",
+      "fggggggf助     f助",
+      "f开教ϒ   f开教ϒ   f开",
+      "f助     f助    kfk",
+      "f开教ϒ  kf开教ϒ  kfk",
+      "fffffgffffffgfff",
+      "                ",
+      "                ",
+      "ffffffffff  ffff",
+      "f开教ϒ    kf  fk  ",
+      "f助   父  gf  f  井"
+    ]
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:stone[weathering=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=true]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:polished_andesite"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "ffffffffffffffff",
+      "ffuffbbabbafabba",
+      "ffffbafafbffbbfb",
+      "fabaffbabfbbabab",
+      "fbfababfafabbfab",
+      "fbbbabaafuffbbbf",
+      "faaaaabafaabbafb",
+      "ffbabffabfbfubfa",
+      "fuabffabfeauuaff",
+      "fabffbaaaaaffuuf",
+      "fbffbbbfbbafffff",
+      "fabbbafafbfuffaa",
+      "fuffaufafbbafbba",
+      "faaffafbabffbabb",
+      "faabubbaafbaabbf",
+      "fbbafbabffaaufbb"
+    ],
+    [
+      "faaabaabbbbbbbaa",
+      "a               ",
+      "a               ",
+      "b               ",
+      "b               ",
+      "b               ",
+      "a               ",
+      "b               ",
+      "a               ",
+      "b               ",
+      "a               ",
+      "b               ",
+      "b               ",
+      "a               ",
+      "a               ",
+      "a               "
+    ],
+    [
+      "fbabbaabbbbaabaa",
+      "b               ",
+      "b               ",
+      "a               ",
+      "b               ",
+      "a               ",
+      "a               ",
+      "a               ",
+      "b               ",
+      "b               ",
+      "b               ",
+      "a               ",
+      "b               ",
+      "b               ",
+      "a               ",
+      "b               "
+    ],
+    [
+      "fbabbababbabbaab",
+      "a               ",
+      "a               ",
+      "a               ",
+      "a               ",
+      "b               ",
+      "a               ",
+      "b               ",
+      "a               ",
+      "a               ",
+      "a               ",
+      "a               ",
+      "b               ",
+      "a               ",
+      "b               ",
+      "a               "
+    ],
+    [
+      "fbabbabababababa",
+      "a               ",
+      "b               ",
+      "a               ",
+      "u               ",
+      "a               ",
+      "b               ",
+      "b               ",
+      "a               ",
+      "b               ",
+      "a               ",
+      "b               ",
+      "a               ",
+      "b               ",
+      "a               ",
+      "a               "
+    ],
+    [
+      "fbabaabababaaaab",
+      "b               ",
+      "b               ",
+      "a               ",
+      "a               ",
+      "b               ",
+      "b               ",
+      "a               ",
+      "b               ",
+      "a               ",
+      "a               ",
+      "b               ",
+      "a               ",
+      "b               ",
+      "b               ",
+      "a               "
+    ]
+  ]
+}

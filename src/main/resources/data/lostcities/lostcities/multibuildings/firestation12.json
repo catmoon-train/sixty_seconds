@@ -1,0 +1,18 @@
+{
+  "dimx": 3,
+  "dimz": 2,
+  "buildings": [
+    [
+      "firestation12_0_0",
+      "firestation12_0_1"
+    ],
+    [
+      "firestation12_1_0",
+      "firestation12_1_1"
+    ],
+    [
+      "firestation12_2_0",
+      "firestation12_2_1"
+    ]
+  ]
+}

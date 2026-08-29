@@ -1,0 +1,646 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "畴",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "串",
+        "block": "minecraft:air",
+        "tag": {
+          "SpawnData": {
+            "entity": {}
+          },
+          "MaxNearbyEntities": "6s",
+          "MinSpawnDelay": "200s",
+          "z": 451,
+          "x": -63,
+          "MaxSpawnDelay": "800s",
+          "RequiredPlayerRange": "16s",
+          "SpawnCount": "4s",
+          "ForgeCaps": {},
+          "id": "minecraft:mob_spawner",
+          "SpawnPotentials": [],
+          "y": 139,
+          "SpawnRange": "4s",
+          "Delay": "20s"
+        }
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "嚎",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "丈",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "郭",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "贱",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "穿",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "蓦",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "沿",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "贞",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "岩",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "怯",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "喇",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "箝",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "峙",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "伸",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "俨",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "栗",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "铿",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "孜",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "饷",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "呎",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 427,
+          "x": -67,
+          "TransferCooldown": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "ForgeCaps": {},
+          "id": "minecraft:hopper",
+          "y": 158,
+          "Items": []
+        }
+      },
+      {
+        "char": "喙",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "震",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "慵",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "壑",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "辟",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "雱",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "调",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "榄",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "糠",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "躁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "惕",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "歉",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "谪",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "闹",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "栓",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "簷",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "绮",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "T",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "翌",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "叽",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 483,
+          "x": -40,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 150,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"QUARANTINE\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"ZONE\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "飒",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "啜",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "钞",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 479,
+          "x": -90,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 153,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "法",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 483,
+          "x": -73,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 160,
+          "NodePos": "-20066085228384L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "蚯",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "瓜",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "杠",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "糟",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "畜",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 473,
+          "x": -89,
+          "is_waxed": "0b",
+          "ForgeCaps": {
+            "supplementaries:antique_ink": {
+              "ink": "0b"
+            }
+          },
+          "id": "minecraft:sign",
+          "y": 147,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"extra\":[{\"text\":\"Lab\"}],\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"Room\"}],\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"extra\":[{\"text\":\"4A\"}],\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      },
+      {
+        "char": "谱",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 465,
+          "x": -59,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:ceiling_light",
+          "y": 136,
+          "NodePos": "-16217794604920L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "酷",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "拔",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "瀑",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "佩",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "锁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "栱",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "鲶",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "饨",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "觊",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "繁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "霁",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "么",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "bcpddepdepeJoooo",
+      "ppbdbpcpcppqoooo",
+      "ppppdpppcepqoooo",
+      "peebdeppdppJoooo",
+      "cpcpppbppppqqIJI",
+      "ppdppebppppqo畴畴畴",
+      "ppcbddpppppIo畴畴畴",
+      "ppepepepcdpqo畴畴畴",
+      "epdpepepddbqo畴畴畴",
+      "epppeeppppbqo畴畴畴",
+      "ppppppdbpppIJJIq",
+      "ppppcpppbeppo畴畴畴",
+      "pppdeebcppppo畴畴畴",
+      "pppdppcpppcqJIqJ",
+      "ecpppppppdpIo畴畴畴",
+      "pbedppppepbJo畴畴畴"
+    ],
+    [
+      "bbbbbedddebbdbcd",
+      "bbbbbfedcdddbdcb",
+      "bbbbbgbddcbceedb",
+      "bbbbbfdbcecc串cde",
+      "bbbbbfcbeececbee",
+      "ccdbehccddcbeded",
+      "fqqgiqcbdeddebdd",
+      "嚎嚎嚎丈fhedbdcbedcb",
+      " 郭s贱hibededcbebe",
+      "bbb qgcbdcdcddce",
+      "bbbckevuvuvuuuuu",
+      "bbbpadvuvuuuvvvu",
+      "bbb gidceedecdcc",
+      " 穿s贱ggddddedcdbe",
+      "蓦蓦蓦沿fhe贞贞贞dedbdd",
+      "fggqggdbdeddbbeb"
+    ],
+    [
+      " 岩怯 jul jueul   ",
+      "    jvl jvev喇   ",
+      "箝d箝b箝u 峙 udu伸 俨栗",
+      " p pjul铿岩vev孜  饷",
+      "呎d呎p呎u岩 岩vdv喇  喙",
+      "dbddcv  judv伸   ",
+      "震震震iCul jubv慵   ",
+      "   丈ivl jvuv壑辟  ",
+      "cde贱iu   mmme   ",
+      "雱m调p榄vl         ",
+      "糠峙   m          ",
+      "躁  n n          ",
+      "lnje榄u      惕   ",
+      "dcc贱fv歉    俨谪栗n ",
+      "   沿gev闹闹闹vvvvvn",
+      "闹闹闹iidc贞贞贞c   vc"
+    ],
+    [
+      "    jcl jcbbl   ",
+      "    jcl jded    ",
+      "栓b栓p栓e   cbbl   ",
+      " p cjel jdebl   ",
+      "簷p簷p簷cl jcbe    ",
+      "eecbbb  jccbl   ",
+      "gffggel jdcb    ",
+      "   丈gcl jeccl   ",
+      "bee贱qe   mmm绮   ",
+      "Tm p翌cl         ",
+      "     m          ",
+      "   n n          ",
+      "ln叽p飒c啜         ",
+      "dee贱qd歉   钞nnnn ",
+      "   沿hdbT 调ebecd ",
+      "qhffhce闹闹闹e   d "
+    ],
+    [
+      "    jc   eddl   ",
+      "     cl jebb    ",
+      "    je 法 eecl   ",
+      "    jbl  cbb    ",
+      "n n  b  jcbb    ",
+      "dbbeed   bcdl  法",
+      "震蚯蚯hicl法 bce    ",
+      "   丈Ccl jbcbl   ",
+      "eeb贱fb   mm 瓜   ",
+      "yyNd杠cl         ",
+      "糟NNy y畜  法   谱  ",
+      "yNNN N畜  法   谱  ",
+      "NNyd杠c          ",
+      "beb贱fd歉   n nnn ",
+      "   沿gedT 调eccee ",
+      "闹闹闹gfdcl jc   by"
+    ],
+    [
+      "aAak酷baaacddkkaa",
+      "akaaabakadbcaaaA",
+      "akaa酷daAabdbarra",
+      "akaaaeakacbcaaaa",
+      "拔kaakbakaecbkraa",
+      "eeeeceakkcdbaaaA",
+      "ggCggeaAacecaaaa",
+      "   丈fbaaaeccaaaa",
+      "瀑B佩贱qeaakraaaaaa",
+      "锁栱Q鲶ib拔akarakkka",
+      "饨Q栱鲶QdakkAkkaAaa",
+      "栱Q栱觊QdraaAakaAak",
+      "锁栱Q鲶qbakaakkarka",
+      "繁G佩贱icaaaa酷a拔k酷a",
+      "   霁CbcT 调cdddea",
+      "iiqqfcbl jb么么么da"
+    ]
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:iron_trapdoor[facing=north,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "了",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:iron_trapdoor[facing=west,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "到",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ѫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:iron_trapdoor[facing=north,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:iron_trapdoor[facing=west,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "学",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "             aab",
+      "             adg",
+      "            acae",
+      "            aaic",
+      "           acaee",
+      "           abide",
+      "          aagcbe",
+      "          abaaee",
+      "           dacad",
+      "           cicdb",
+      "          aabaae",
+      "          bgebde",
+      "          caacee",
+      "          dgcbed",
+      "         aageacc",
+      "          bacaba"
+    ],
+    [
+      "             g  ",
+      "              c ",
+      "                ",
+      "              f ",
+      "             f  ",
+      "             f  ",
+      "            f   ",
+      "          aaa  b",
+      "            f Oa",
+      "            f  b",
+      "           f    ",
+      "           f   b",
+      "           f  Od",
+      "           f   c",
+      "         gdacbed",
+      "           f    "
+    ],
+    [
+      "             a s",
+      "              ef",
+      "             sf ",
+      "             了f ",
+      "            mf  ",
+      "            mf  ",
+      "           mf   ",
+      "          ada   ",
+      "           m   到",
+      "           m    ",
+      "          mf    ",
+      "          mf    ",
+      "          mf   Ѫ",
+      "          mf    ",
+      "         adaccea",
+      "          mf    "
+    ],
+    [
+      "             a p",
+      "              e ",
+      "             qf ",
+      "             qf ",
+      "            qf  ",
+      "            q   ",
+      "           qf   ",
+      "          aba   ",
+      "           qf   ",
+      "           学f   ",
+      "          q     ",
+      "          qf    ",
+      "          qf    ",
+      "          qf    ",
+      "         aegaacc",
+      "          q     "
+    ],
+    [
+      "             g  ",
+      "              ef",
+      "              f ",
+      "              f ",
+      "             f  ",
+      "             f  ",
+      "            f   ",
+      "          aba   ",
+      "            f   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "           f    ",
+      "         aaibebd",
+      "           f    "
+    ],
+    [
+      "             a c",
+      "              eg",
+      "             ei ",
+      "             da ",
+      "            ca  ",
+      "            eg  ",
+      "           ca   ",
+      "          aba   ",
+      "           aa   ",
+      "           aa   ",
+      "          ba    ",
+      "          ba    ",
+      "          aa    ",
+      "          eg    ",
+      "         aagaaac",
+      "          ea    "
+    ]
+  ]
+}

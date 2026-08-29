@@ -1,0 +1,197 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ғ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Х",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ή",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ћ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:mossy_stone_bricks"
+      },
+      {
+        "char": "҅",
+        "block": "minecraft:skeleton_skull[rotation=6]",
+        "tag": {
+          "z": 616,
+          "x": 108,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 174
+        }
+      },
+      {
+        "char": "ϼ",
+        "block": "minecraft:redstone_wire[east=none,north=side,power=0,south=side,west=none]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "ΰ",
+        "block": "minecraft:redstone_wire[east=side,north=side,power=0,south=side,west=side]"
+      },
+      {
+        "char": "з",
+        "block": "minecraft:oak_door[facing=north,half=lower,hinge=left,open=true,powered=false]"
+      },
+      {
+        "char": "Н",
+        "block": "minecraft:oak_door[facing=north,half=lower,hinge=right,open=true,powered=false]"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:glass_pane[east=false,north=true,south=true,waterlogged=false,west=false]"
+      },
+      {
+        "char": "Щ",
+        "block": "minecraft:oak_door[facing=north,half=upper,hinge=left,open=true,powered=false]"
+      },
+      {
+        "char": "О",
+        "block": "minecraft:oak_door[facing=north,half=upper,hinge=right,open=true,powered=false]"
+      },
+      {
+        "char": "Ύ",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ί",
+        "block": "minecraft:stone_brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "       ғХХХХήήήή",
+      "       Ћddcc҅ϼ  ",
+      "       Ћa  a ϼ  ",
+      "       Ћd  c  ΰ ",
+      "       Ћc  a    ",
+      "       Ћa  aΰ   ",
+      "       Ћa  d ΰ  ",
+      "       Ћc  a    ",
+      "       ЋaзНa ΰ  "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        ddac    ",
+      "        d  c    ",
+      "        a  a    ",
+      "        d  a    ",
+      "        h  h    ",
+      "        c  a    ",
+      "        c  c    ",
+      "        aЩОc    "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        ΎacΊ    ",
+      "        ΎacΊ    ",
+      "        ΎadΊ    ",
+      "        ΎcaΊ    ",
+      "        ΎdaΊ    ",
+      "        ΎacΊ    ",
+      "        ΎdaΊ    ",
+      "        ΎcaΊ    "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

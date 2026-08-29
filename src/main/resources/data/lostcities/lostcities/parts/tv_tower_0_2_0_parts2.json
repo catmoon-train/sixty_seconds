@@ -1,0 +1,316 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "科",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "L",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "K",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "话",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -264,
+          "x": -45,
+          "TransferCooldown": 0,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "id": "minecraft:hopper",
+          "y": -53,
+          "Items": []
+        }
+      },
+      {
+        "char": "J",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "资",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϔ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "U",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "面",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -267,
+          "x": -45,
+          "id": "minecraft:lectern",
+          "y": -52
+        }
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѵ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "第",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "事",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "心",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "时",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "前",
+        "block": "minecraft:air",
+        "tag": {
+          "z": -268,
+          "x": -29,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:basin",
+          "y": -40,
+          "FluidTank": {
+            "FluidTank": {
+              "Amount": 0,
+              "FluidName": "minecraft:empty"
+            }
+          }
+        }
+      },
+      {
+        "char": "ӿ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "V",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҟ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "此",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "经",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "工",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "自",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѱ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "想",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "系",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "yyyadaba科dLLXLLL",
+      "bydQabycbaLLXLLL",
+      "dabQdbcybbLLXLLL",
+      "aybcaQdcdyLLXLLL",
+      "aQacbacbddLLXXXX",
+      "cQycabadccLLLLLL",
+      "ybbaybdcccLLLLLL",
+      "ydyybcby科brKooor",
+      "cdaycddbacnCorC话",
+      "ccdQyydyQcCrorrC",
+      "baaQadyyacJKnCCC",
+      "ybQybbdbbenornCr",
+      "aQddyycccaJrrKrn",
+      "QbyccQacycrKrrJK",
+      "dccyaQdcy资rnoJno",
+      "QcbacdbybcCCrJJK"
+    ],
+    [
+      "        ad    ϔ ",
+      "   U     c      ",
+      "   U     eo     ",
+      "     U   ar     ",
+      " U       d      ",
+      " U       a    面 ",
+      "        ai ѵѵѵѵ ",
+      "        gicaaeda",
+      "         dxcxa第 ",
+      "   U    Ua事b事a  ",
+      "   U     a      ",
+      "  U      e      ",
+      " U       c心c心d  ",
+      "时    U   bxaxa 前",
+      "     U   dcdadcd",
+      "时        bbdbdac"
+    ],
+    [
+      "        bӿ      ",
+      "   V     d      ",
+      "   V     do     ",
+      "     V   cr     ",
+      " V       e      ",
+      " V       a      ",
+      "        ig  fff ",
+      "        agddedea",
+      "         bҟeҟc此 ",
+      "   V    Va经a经e  ",
+      "   V     d      ",
+      "  V      c      ",
+      " V       e工d工d  ",
+      "     V   d自d自d  ",
+      "     V   aabddab",
+      "         aaccade"
+    ],
+    [
+      "        eӿ      ",
+      "         a      ",
+      "         aJ     ",
+      "         dn     ",
+      "         c      ",
+      "         c      ",
+      "        gg  ѱѱѱ ",
+      "        agaaeaea",
+      "         c c a  ",
+      "         a c d  ",
+      "         d      ",
+      "         e      ",
+      "         a c e  ",
+      "         c c a  ",
+      "         caeeeaa",
+      "         aaeddca"
+    ],
+    [
+      "        想ӿ      ",
+      "         b      ",
+      "         e      ",
+      "         d      ",
+      "         e      ",
+      "         a      ",
+      "        aa      ",
+      "        aacabdee",
+      "         c      ",
+      "         a      ",
+      "         c      ",
+      "         e      ",
+      "        系a      ",
+      "         d      ",
+      "         cecabdc",
+      "         cdcaecd"
+    ],
+    [
+      "         d      ",
+      "         e      ",
+      "         a      ",
+      "         e      ",
+      "         e      ",
+      "         b      ",
+      "        aa      ",
+      "        aabdebce",
+      "         d      ",
+      "         a      ",
+      "         c      ",
+      "         c      ",
+      "         c      ",
+      "         a      ",
+      "         ccebade",
+      "         ebbeade"
+    ]
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:cut_sandstone"
+      },
+      {
+        "char": "Ҥ",
+        "block": "minecraft:brick_stairs[facing=north,half=bottom,shape=inner_left,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ρ",
+        "block": "minecraft:brick_stairs[facing=west,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:dark_oak_leaves[distance=7,persistent=false,waterlogged=false]"
+      },
+      {
+        "char": "Π",
+        "block": "minecraft:brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "没",
+        "block": "minecraft:brick_stairs[facing=south,half=bottom,shape=inner_left,waterlogged=false,weathering=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "       iifv     ",
+      "       iyvffvv  ",
+      "       iyioooY  ",
+      "           cii  ",
+      "           cii  ",
+      "       iyyoyoY  ",
+      "       yyvvffv  ",
+      "       iyvf     ",
+      "       iifv     ",
+      "       iyfv     ",
+      "       iiff     ",
+      "o      iҤff     ",
+      "i      iΡff    r",
+      "i     oiiff     ",
+      "i     oiiff     ",
+      "i     oiΡff     "
+    ],
+    [
+      "ffoiiff         ",
+      "ffoiiff         ",
+      "vfoiivv         ",
+      "vvoyyvfffffvvf  ",
+      "ffyyivfvffvfvf  ",
+      "fvoiyfv         ",
+      "vfyiiff         ",
+      "ffoiifv         ",
+      "ffoiiff         ",
+      "ffΠiiff         ",
+      "fffiiff         ",
+      " ffiiff         ",
+      " fΠiiff         ",
+      " f没iif          ",
+      " foiΡf          ",
+      " foiΡf          "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

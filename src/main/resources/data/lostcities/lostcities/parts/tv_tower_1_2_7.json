@@ -1,0 +1,287 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:basalt[axis=y]"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:gray_concrete"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "x",
+        "block": "minecraft:cauldron"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:polished_andesite_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "Ӛ",
+        "block": "minecraft:dark_oak_door[facing=south,half=lower,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "П",
+        "block": "minecraft:barrel[facing=up,open=false]",
+        "tag": {
+          "z": -275,
+          "x": -15,
+          "ForgeData": {
+            "LockFlag": "1b"
+          },
+          "id": "minecraft:barrel",
+          "y": 2,
+          "Items": []
+        }
+      },
+      {
+        "char": "H",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:glass"
+      },
+      {
+        "char": "Ѫ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:oak_leaves[distance=7,persistent=true,waterlogged=false]"
+      },
+      {
+        "char": "ҟ",
+        "block": "minecraft:spruce_trapdoor[facing=south,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "ӗ",
+        "block": "minecraft:tripwire_hook[attached=false,facing=north,powered=false]"
+      },
+      {
+        "char": "ә",
+        "block": "minecraft:dark_oak_door[facing=south,half=upper,hinge=left,open=false,powered=false]"
+      },
+      {
+        "char": "ο",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѷ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:iron_trapdoor[facing=west,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "u",
+        "block": "minecraft:iron_trapdoor[facing=south,half=bottom,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ә",
+        "block": "minecraft:white_wall_banner[facing=north]",
+        "tag": {
+          "z": -268,
+          "Patterns": [
+            {
+              "Color": 8,
+              "Pattern": "dls"
+            },
+            {
+              "Color": 0,
+              "Pattern": "dls"
+            },
+            {
+              "Color": 3,
+              "Pattern": "gru"
+            },
+            {
+              "Color": 8,
+              "Pattern": "bo"
+            }
+          ],
+          "x": -29,
+          "id": "minecraft:banner",
+          "y": -14
+        }
+      },
+      {
+        "char": "С",
+        "block": "minecraft:stone_brick_stairs[facing=north,half=top,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:iron_trapdoor[facing=south,half=top,open=false,powered=false,waterlogged=false]"
+      },
+      {
+        "char": "Ҽ",
+        "block": "minecraft:birch_wall_sign[facing=south,waterlogged=false]",
+        "tag": {
+          "z": -283,
+          "x": -20,
+          "is_waxed": "0b",
+          "id": "minecraft:sign",
+          "y": -49,
+          "front_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"INFORMATION\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          },
+          "back_text": {
+            "color": "black",
+            "has_glowing_text": "0b",
+            "messages": [
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}",
+              "{\"text\":\"\"}"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "slices": [
+    [
+      "caeaeeecebeadcaa",
+      "edccacdceeeacabe",
+      "caaedaddedbeaece",
+      "bebcccedbcababdd",
+      "ecdaccedbddeeeae",
+      "aceabebdbbcdcace",
+      "bcdadecaaaceddce",
+      "bbadececaaddbbcc",
+      "eaeabbdcdbebbeba",
+      "cdaaaabcaddabdbe",
+      "dbcddcbbeceeeeda",
+      "bbbdccbbdeacabbd",
+      "aeaddbdabbdbbdcd",
+      "gaaabeaadccbdeab",
+      "cacbdaecacbbbcdb",
+      "gbaaedcdceacbadb"
+    ],
+    [
+      "O d       xebaca",
+      "  d        ajjjx",
+      "dab  e     c    ",
+      "     d    xa    ",
+      "     a     d   x",
+      "bbdcecb   aabӚcc",
+      "x   x           ",
+      "                ",
+      "                ",
+      "                ",
+      " eec eaП adc ded",
+      "  H   H   H   H ",
+      "f               ",
+      "f    dcd dea aeП",
+      " f    H   H   H ",
+      "  f             "
+    ],
+    [
+      "  Ѫ       kabdcd",
+      "           b   ҟ",
+      "     c     a    ",
+      "     c    ke    ",
+      "     d     d   ӗ",
+      "babccba   cddәba",
+      "k   k           ",
+      "                ",
+      "                ",
+      "                ",
+      "  ο   ѷ   ѷ   ο ",
+      "                ",
+      "f               ",
+      "f     ο   ο   ο ",
+      "mf              ",
+      " u f            "
+    ],
+    [
+      "          kecdec",
+      "           d    ",
+      "     b     b    ",
+      "     b    kd    ",
+      "     a     e   Ә",
+      "babdbec   abeСdb",
+      "k   k           ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "f               ",
+      "f               ",
+      "w               ",
+      " wf             "
+    ],
+    [
+      "     j     aebbe",
+      "     j     b    ",
+      "     c     a    ",
+      "     a     b    ",
+      "     e     d    ",
+      "cdcadeajjjebebec",
+      "             Ҽ  ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "f               ",
+      " f              ",
+      "  ff            "
+    ],
+    [
+      "     e     cddba",
+      "     a     a    ",
+      "     b     c    ",
+      "     c     a    ",
+      "     c     a    ",
+      "eaadddebdbbbceba",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "a               ",
+      "a               ",
+      "ea              ",
+      " daa            "
+    ]
+  ]
+}

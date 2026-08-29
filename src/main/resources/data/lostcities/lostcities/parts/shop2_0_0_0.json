@@ -1,0 +1,236 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:grass_block[snowy=false]"
+      },
+      {
+        "char": "H",
+        "block": "minecraft:white_concrete"
+      },
+      {
+        "char": "0",
+        "block": "minecraft:mossy_cobblestone"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:polished_diorite"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:quartz_block"
+      },
+      {
+        "char": "F",
+        "block": "minecraft:stone_bricks[weathering=false]"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:diorite"
+      },
+      {
+        "char": "O",
+        "block": "minecraft:cobblestone[weathering=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:gray_concrete_powder"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ϻ",
+        "block": "minecraft:oxeye_daisy"
+      },
+      {
+        "char": "ͼ",
+        "block": "minecraft:stone_brick_stairs[facing=east,half=bottom,shape=straight,waterlogged=false,weathering=false]"
+      },
+      {
+        "char": "Ϧ",
+        "block": "minecraft:skeleton_skull[rotation=6]",
+        "tag": {
+          "z": 539,
+          "x": 74,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 133
+        }
+      },
+      {
+        "char": "Y",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "О",
+        "block": "minecraft:skeleton_skull[rotation=5]",
+        "tag": {
+          "z": 511,
+          "x": 78,
+          "ForgeCaps": {},
+          "id": "minecraft:skull",
+          "y": 133
+        }
+      },
+      {
+        "char": "Ώ",
+        "block": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "char": "ʹ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "X",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "W",
+        "block": "minecraft:mossy_cobblestone_wall[east=none,north=none,south=none,up=true,waterlogged=false,west=none]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "jlillkmijlfjflji",
+      "mmjklmljmklmkjkk",
+      "ilkikfjkmjmlikll",
+      "klflllijmjiffjjm",
+      "klHmHfH0HkdgFlmm",
+      "kiHjHmHjHidgFljf",
+      "jlHlHfHlHjcdFkml",
+      "ijkkmmmkjmijkfij",
+      "jllmmlfjlfcdjfmm",
+      "mlkjfilmljfmmfkk",
+      "mfjifjkfffgcjimk",
+      "mjmkilikfjjOmjm0",
+      "kkkiilkklfgcFmfl",
+      "jjmkikllfkgdFgjO",
+      "imklkiikmkdcFcyy",
+      "lmilmk0jmiccFgBi"
+    ],
+    [
+      "          n n   ",
+      "                ",
+      "    nn          ",
+      "  n        ϻn   ",
+      "  n  n      F   ",
+      "    n       ͼϦ n",
+      "     n      F   ",
+      "             n  ",
+      "   n  n  n   n  ",
+      "    n     n  n  ",
+      " n  n  nnY      ",
+      "        Y       ",
+      "  n      n n0   ",
+      "        n   ͼ   ",
+      "            F   ",
+      "            ͼ О "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            Ώ   ",
+      "            ʹ   ",
+      "            0   ",
+      "                ",
+      "                ",
+      "                ",
+      "         X      ",
+      "        X       ",
+      "            Ώ   ",
+      "            ʹ   ",
+      "            Ώ   ",
+      "            ʹ   "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            W   ",
+      "                ",
+      "            W   ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "            W   ",
+      "                ",
+      "            W   ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

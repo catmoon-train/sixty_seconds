@@ -1,0 +1,213 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:yellow_concrete"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:basalt[axis=x]"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:blackstone"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:cyan_terracotta"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:deepslate[axis=y]"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:cobbled_deepslate"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:light_gray_concrete"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:gold_block"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:quartz_stairs[facing=west,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "y",
+        "block": "minecraft:quartz_slab[type=top,waterlogged=false]"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:black_concrete"
+      },
+      {
+        "char": "邻",
+        "block": "minecraft:quartz_stairs[facing=south,half=bottom,shape=outer_left,waterlogged=false]"
+      },
+      {
+        "char": "C",
+        "block": "minecraft:quartz_stairs[facing=east,half=bottom,shape=straight,waterlogged=false]"
+      },
+      {
+        "char": "敞",
+        "block": "minecraft:iron_door[facing=east,half=lower,hinge=left,open=true,powered=true]"
+      },
+      {
+        "char": "s",
+        "block": "minecraft:quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "振",
+        "block": "minecraft:smooth_quartz_slab[type=bottom,waterlogged=false]"
+      },
+      {
+        "char": "弥",
+        "block": "minecraft:lever[face=wall,facing=west,powered=true]"
+      },
+      {
+        "char": "赎",
+        "block": "minecraft:air",
+        "tag": {
+          "z": 969,
+          "x": -541,
+          "ForgeCaps": {},
+          "id": "refurbished_furniture:computer",
+          "y": 121,
+          "NodePos": "-148708943687559L",
+          "Connections": [
+            "L"
+          ]
+        }
+      },
+      {
+        "char": "蚀",
+        "block": "minecraft:iron_door[facing=east,half=upper,hinge=left,open=true,powered=true]"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:redstone_lamp[lit=false]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "lbaaeeebacebeaea",
+      "ddebbaceaabcccca",
+      "addacbdbacbdecaa",
+      "lcbcebadecaeaceb",
+      "lbbbecddbebdabcd",
+      "dbbdedceaeaebeca",
+      "bebadcacccdcecad",
+      "lccabeebcbcbcall",
+      "labebadddebeable",
+      "ccbceadaaabcable",
+      "aebedbdaeebeabld",
+      "  eaeedbdabdcala",
+      "    bebdaaabebla",
+      "      dbbbdddeld",
+      "        bdebcele",
+      "            aala"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     fff        ",
+      "    fbddf       ",
+      "    a qqaf      ",
+      "ea fcbbedf      ",
+      " acbabccbfz    y",
+      "   bbdaaff      ",
+      "     cbbf       ",
+      "       cacbe   n"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     fff        ",
+      "    f   f       ",
+      "      qq f     邻",
+      "   feec  f     C",
+      "a  fd C  敞    ss",
+      "acdff   ff   zs振",
+      "  dcafff        ",
+      "    cbb        C"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     fff        ",
+      "    f   f       ",
+      "      qq f      ",
+      "   fdec 弥f      ",
+      "   f赎    蚀      ",
+      "    f   ff      ",
+      "be   fff        ",
+      " abb           y"
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     fff        ",
+      "    f   f       ",
+      "      qq f      ",
+      "   fbdc  f      ",
+      "   f     f      ",
+      "    f   f       ",
+      "     fff        ",
+      "bg              "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "     fff        ",
+      "    f   f       ",
+      "      qq f      ",
+      "   fcac  f      ",
+      "   f     f      ",
+      "    f   f       ",
+      "     fff        ",
+      "                "
+    ]
+  ]
+}

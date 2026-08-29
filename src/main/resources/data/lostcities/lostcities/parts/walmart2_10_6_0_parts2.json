@@ -1,0 +1,174 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "a",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "b",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "r",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "k",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "I",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "d",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "动",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "任",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ҭ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "哪",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "龙",
+        "block": "minecraft:tall_grass[half=upper]"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "abcrbbkkkrrbIckk",
+      "akaccdkbcrrdbcbr",
+      "daaadbcbkrrrbrca",
+      "cbaradckckrrrkkb",
+      "bbaakbkdcbrrddkk",
+      "cbbkabbdkbrrcdcd",
+      "bbkbdakarbbraacr",
+      "bckdakkaddcrdakr",
+      "rkcddaakkkardcab",
+      "kkdkakckabrrbkcr",
+      "kbcbkackbarrrada",
+      "kkcakbacbdarrdab",
+      "ckcbcbcbdkaarrra",
+      "bcaaddaadkcrrrdb",
+      "abkdbcdrabbdcrkc",
+      "kbaadccaddkkkrad"
+    ],
+    [
+      "  qq     qq q   ",
+      "         动q    q",
+      "         qqqqq  ",
+      "   qq     qqq   ",
+      "          qq    ",
+      "          q动    ",
+      "      q q  q   q",
+      "           q   q",
+      "任          q    ",
+      " q        qq   q",
+      "          qq动   ",
+      "ҭ          qq   ",
+      "ҭq          qqq ",
+      " ҭ         qqq  ",
+      "qҭ     q     q  ",
+      "哪ҭ           q  "
+    ],
+    [
+      "                ",
+      "         龙      ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}

@@ -1,0 +1,274 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "palette": {
+    "palette": [
+      {
+        "char": " ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "o",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "e",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "l",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "g",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "c",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "v",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "j",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҿ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "m",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "R",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "f",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "A",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "z",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "B",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҷ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "S",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "я",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "i",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "з",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "G",
+        "block": "minecraft:tall_grass[half=lower]"
+      },
+      {
+        "char": "w",
+        "block": "minecraft:grass"
+      },
+      {
+        "char": "E",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "N",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "n",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "p",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "搞",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "q",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "р",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "P",
+        "block": "minecraft:tall_grass[half=upper]"
+      },
+      {
+        "char": "Ӛ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "h",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "С",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "У",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "о",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "Ҁ",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "行",
+        "block": "minecraft:air"
+      },
+      {
+        "char": "ѿ",
+        "block": "minecraft:air"
+      }
+    ]
+  },
+  "slices": [
+    [
+      "       oeeeeelel",
+      "       oeggcvccg",
+      "        ecjjcccg",
+      "       olgcccgcc",
+      "       olgggcjvv",
+      "        lcjjjjcv",
+      "        lgcccjjc",
+      "        l Ҿ  gcc",
+      "        e    cvv",
+      "        eellleee",
+      "        evvvccgc",
+      "       olcvcggcg",
+      "        egjcggcc",
+      "        eccjcccg",
+      "        ejcgcjcc",
+      "        evcccvcg"
+    ],
+    [
+      "        ljgggcvv",
+      "        cmmmmmmm",
+      "       ogRfAzAAB",
+      "        cBmfmAmB",
+      "        gzRffRAz",
+      "        jmmmmmmm",
+      "        cffҶAzmA",
+      "        c  ҾSffz",
+      "        g   SBBB",
+      "        czfAffmf",
+      "       ojmRmmmmm",
+      "        gmBfmmmz",
+      "        cABzffff",
+      "        gffmBzzA",
+      "        gAmmmBAm",
+      "        gRmmmmAm"
+    ],
+    [
+      "        eяiяяяяi",
+      "        зGwGwwGG",
+      "        iENQNQEQ",
+      "        зEwQwQwQ",
+      "        зEEQEQNQ",
+      "        зwwwnwww",
+      "        gccgjcwi",
+      "        g    gp ",
+      "       oc     搞i",
+      "        gjjcggw ",
+      "        зw qGGGw",
+      "        зwр www ",
+      "        зi     i",
+      "        i  w i  ",
+      "        iiwGw iw",
+      "        i wGGw w"
+    ],
+    [
+      "        i       ",
+      "         P P  P ",
+      "           Ӛ Ӛ Ӛ",
+      "           Ӛ Ӛ Ӛ",
+      "           Ӛ Ӛ Ӛ",
+      "         n n    ",
+      "        ggjccgp ",
+      "        c    cp ",
+      "        g       ",
+      "        ccgccc  ",
+      "         qqqP   ",
+      "          h     ",
+      "                ",
+      "                ",
+      "           P    ",
+      "           PP   "
+    ],
+    [
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        n n  n  ",
+      "        cggjcc  ",
+      "        c    c  ",
+      "        g    g  ",
+      "        cgjcgcp ",
+      "        q   q   ",
+      "          hh    ",
+      "          р     ",
+      "                ",
+      "                ",
+      "                "
+    ],
+    [
+      "              q ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "                ",
+      "        СУССУоС ",
+      "        УоССУСУ ",
+      "        СУСУСУо ",
+      "        УСоСУУС ",
+      "          h     ",
+      "         Ҁ行ѿ    ",
+      "          h     ",
+      "                ",
+      "                ",
+      "                "
+    ]
+  ]
+}
