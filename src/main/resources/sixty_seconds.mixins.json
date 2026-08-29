@@ -16,6 +16,7 @@
     "LostCityChunkFixerMixin",
     "LostCityDamageAreaMixin",
     "LostCityProfileMixin",
+    "LostCityMultiChunkMixin",
     "GlobalTodoMixin",
     "LevelChunkSpawnerWarningMixin",
     "AbstractContainerMenuMixin"
