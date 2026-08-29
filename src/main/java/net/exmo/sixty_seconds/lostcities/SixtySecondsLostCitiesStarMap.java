@@ -161,7 +161,7 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("lce:scatteredhouse2", 1),
             Map.entry("lce:scatteredhouse1", 1),
             // 2 星
-            Map.entry("lce:mbd", 2),
+            Map.entry("lce:mbd", 5),
             Map.entry("lce:subhousel3ya_3_bend_street", 2),
             Map.entry("lce:subhousel3ya_4_and_5_combo", 2),
             Map.entry("lce:subhousel3ya_3_6_7_8_9_structurebundel", 2),
@@ -197,9 +197,11 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("lce:wd1imp", 5),
             Map.entry("lce:gianthospital", 5),
             // ---- pomkotsworld 迁移建筑（命名空间 lce2）：按城市风格划分星级 ----
-            // 军事基地（base + offshore）= 5 星
-            Map.entry("lce2:base/base_aircraft_ground", 5),
-            Map.entry("lce2:base/base_aircraft_ground_heri", 5),
+            // 军事基地（base + offshore）= 5 星；下列机场设施按需求单独下调：
+            //   机场地面基地         = 3 星（尚可利用）
+            //   机场地面基地（废墟） = 2 星（残骸，价值低）
+            Map.entry("lce2:base/base_aircraft_ground", 3),
+            Map.entry("lce2:base/base_aircraft_ground_heri", 2),
             Map.entry("lce2:base/base_aircraft_hanger", 5),
             Map.entry("lce2:base/base_building_body", 5),
             Map.entry("lce2:base/base_building_medium", 5),
@@ -231,10 +233,10 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("lce2:factory/factory_tank_medium", 4),
             Map.entry("lce2:factory/factory_tank_sphere", 4),
             Map.entry("lce2:factory/factory_tank_water", 4),
-            // 港口（port + ships）= 3 星
-            Map.entry("lce2:port/port_tanker", 3),
-            Map.entry("lce2:port/port_tanker_small", 3),
-            Map.entry("lce2:ships/ships_warship", 3),
+            // 港口（port + ships）= 5 星
+            Map.entry("lce2:port/port_tanker", 5),
+            Map.entry("lce2:port/port_tanker_small", 5),
+            Map.entry("lce2:ships/ships_warship", 5),
             // 采石场（quarry）= 4 星
             Map.entry("lce2:quarry/quarry_dump_e", 4),
             Map.entry("lce2:quarry/quarry_dump_n", 4),
@@ -917,7 +919,37 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("lcmt:townhall/town00", "lcmt_town_00"),
             Map.entry("lcmt:townhall/town01", "lcmt_town_01"),
             Map.entry("lcmt:townhall/town10", "lcmt_town_10"),
-            Map.entry("lcmt:townhall/town11", "lcmt_town_11")
+            Map.entry("lcmt:townhall/town11", "lcmt_town_11"),
+
+            // ---- 多区块建筑（multibuilding）的父 id ----
+            // 星图对整栋多区块建筑是「按父 id 出图」的（见 buildingStarRegions 里的 regionKeyOf），
+            // 显示名也必须登记在这里，否则 buildingDisplayKey 查不到、星图上会直接显示
+            // 诸如 lostcities:multi2 这种未翻译的原始 id。
+            // 注意：这里必须放完整的父 id（含命名空间）；下面那些裸名条目（building1 等）
+            // 靠 buildingDisplayKey 剥离命名空间的兜底才会命中，父 id 无法享受该兜底
+            // （剥离后 multi2 仍不在表里），所以必须显式登记。
+            Map.entry("lostcities:multi1", "multi1"),
+            Map.entry("lostcities:multi2", "multi2"),
+            Map.entry("lostcities:multi3", "multi3"),
+            Map.entry("lostcities:multi4", "multi4"),
+            Map.entry("lostcities:multi5", "multi5"),
+            Map.entry("lostcities:huge1", "huge1"),
+            Map.entry("lostcities:huge2", "huge2"),
+            Map.entry("lostcities:center", "downtown"),
+            Map.entry("lostcities:library", "library"),
+            Map.entry("lostcities:shopping", "shopping_mall"),
+            Map.entry("lostcities:shopping_open", "open_market"),
+            Map.entry("lostcities:townhall", "townhall"),
+            Map.entry("lostcities:oilrig", "oil_rig"),
+            Map.entry("lostcities:highway_restaurant", "highway_restaurant"),
+            // lcmt 的多区块建筑与 lostcities 同名同用途，沿用同一套显示名
+            Map.entry("lcmt:multi1", "multi1"),
+            Map.entry("lcmt:multi2", "multi2"),
+            Map.entry("lcmt:multi3", "multi3"),
+            Map.entry("lcmt:multi4", "multi4"),
+            Map.entry("lcmt:multi5", "multi5"),
+            Map.entry("lcmt:huge1", "huge1"),
+            Map.entry("lcmt:huge2", "huge2")
     );
 
     /** 建筑 id（LostCities 资源文件名，含命名空间）→ 翻译键；未知 id 原样返回（兜底）。 */

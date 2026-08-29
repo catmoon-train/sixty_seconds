@@ -2423,6 +2423,15 @@
   "building.sixty_seconds.sixty_seconds.lcmt_town_01": "聯排樓 01",
   "building.sixty_seconds.sixty_seconds.lcmt_town_10": "聯排樓 10",
   "building.sixty_seconds.sixty_seconds.lcmt_town_11": "聯排樓 11",
+  "building.sixty_seconds.sixty_seconds.multi1": "綜合樓 1 號",
+  "building.sixty_seconds.sixty_seconds.multi2": "綜合樓 2 號",
+  "building.sixty_seconds.sixty_seconds.multi3": "綜合樓 3 號",
+  "building.sixty_seconds.sixty_seconds.multi4": "綜合樓 4 號",
+  "building.sixty_seconds.sixty_seconds.multi5": "綜合樓 5 號",
+  "building.sixty_seconds.sixty_seconds.huge1": "巨型建築 1 號",
+  "building.sixty_seconds.sixty_seconds.huge2": "巨型建築 2 號",
+  "building.sixty_seconds.sixty_seconds.downtown": "市中心大廈",
+  "building.sixty_seconds.sixty_seconds.townhall": "市政廳",
   "building.sixty_seconds.sixty_seconds.danger": "%1$s 危險度 %2$s",
   "building.sixty_seconds.sixty_seconds.unknown": "未知區域"
 }
