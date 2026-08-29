@@ -101,6 +101,18 @@
         }
       },
       {
+        "name": "scatteredhouse1",
+        "weight": 10,
+        "maxheightdiff": 3,
+        "biomes": {
+          "excluding": [
+            "#minecraft:is_ocean",
+            "#minecraft:is_river",
+            "#minecraft:is_beach"
+          ]
+        }
+      },
+      {
         "name": "radio_tower1",
         "weight": 10,
         "maxheightdiff": 6,
@@ -164,6 +176,16 @@
         "name": "aircraftcarrier2",
         "weight": 2,
         "maxheightdiff": 50,
+        "biomes": {
+          "if_any": [
+            "#minecraft:is_ocean"
+          ]
+        }
+      },
+      {
+        "name": "aircraftcarrier",
+        "weight": 2,
+        "maxheightdiff": 10,
         "biomes": {
           "if_any": [
             "#minecraft:is_ocean"
