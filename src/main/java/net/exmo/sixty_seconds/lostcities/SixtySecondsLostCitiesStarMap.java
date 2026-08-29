@@ -14,6 +14,8 @@ import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
@@ -273,6 +275,80 @@ public final class SixtySecondsLostCitiesStarMap {
     private static final Map<ServerLevel, Long> NULL_RETRY_AT = new WeakHashMap<>();
 
     /**
+     * 每维度、按区块坐标缓存 {@code getChunkInfo} 结果（有界 LRU）。
+     * LostCities 的 {@code getChunkInfo} 是<b>同步且较重</b>的生成方法：在<b>未加载</b>区块上调用会触发区块生成并等待
+     * （spark 中表现为 {@code managedBlock}/{@code waitingForTask}，即主线程/服务端线程卡死）。
+     * {@code LostCityTodoTreeGuard}（查询前先 {@code hasChunk} 守卫，不触发未加载区块的生成
+     * 与 {@code FeatureCache}/{@code LostCitiesCacheBridge}（按区块缓存 {@code getChunkInfo} 结果，避免重复重算），
+     * 这里统一收口为 {@link #safeChunkInfo}：① 未加载区块直接返回 null，绝不调用 {@code getChunkInfo}；
+     * ② 已加载区块的结果缓存复用。LostCities 城市数据由种子确定性生成，同坐标缓存不会失真。
+     */
+    private static final int CHUNK_INFO_CAPACITY = 4096;
+    /**
+     * 外层用 {@link WeakHashMap} 弱键（维度卸载后即可被 GC，避免强引用 ServerLevel 造成内存泄漏），
+     * 与文件内 {@code INFO_CACHE}/{@code NULL_RETRY_AT}/{@code EVAC_CENTERS} 及 LC2H 的缓存生命周期策略一致。
+     * 内层为每维度的有界 LRU（见 {@link #safeChunkInfo}）。
+     */
+    private static final Map<ServerLevel, Map<Long, ILostChunkInfo>> CHUNK_INFO_CACHE =
+            Collections.synchronizedMap(new WeakHashMap<ServerLevel, Map<Long, ILostChunkInfo>>());
+
+    private static long chunkInfoKey(int cx, int cz) {
+        return ((long) cx << 32) | (cz & 0xffffffffL);
+    }
+
+    /**
+     * 安全的 {@code getChunkInfo} 收口：未加载区块不调用（防卡死），已加载区块结果缓存（防重算）。
+     * 仅用于服务端已加载世界；调用方应已持有 {@code ILostCityInformation}（见 {@link #cityInfo}）。
+     */
+    @Nullable
+    public static ILostChunkInfo safeChunkInfo(Level level, ILostCityInformation info, int cx, int cz) {
+        if (info == null || !level.hasChunk(cx, cz)) {
+            return null; // ① 防卡死核心：未加载区块跳过，绝不触发 getChunkInfo 引发区块生成/等待
+        }
+        if (!(level instanceof ServerLevel)) {
+            return null;
+        }
+        ServerLevel sl = (ServerLevel) level;
+        long key = chunkInfoKey(cx, cz);
+        // ② 已加载区块：先查缓存，命中直接返回（外层弱键 Map 的 check-then-act 需外部同步）
+        Map<Long, ILostChunkInfo> cache;
+        synchronized (CHUNK_INFO_CACHE) {
+            cache = CHUNK_INFO_CACHE.get(sl);
+            if (cache == null) {
+                cache = Collections.synchronizedMap(new LruCache(CHUNK_INFO_CAPACITY));
+                CHUNK_INFO_CACHE.put(sl, cache);
+            }
+        }
+        ILostChunkInfo hit = cache.get(key);
+        if (hit != null) {
+            return hit;
+        }
+        ILostChunkInfo chunk;
+        try {
+            chunk = info.getChunkInfo(cx, cz);
+        } catch (Throwable t) {
+            return null; // LostCities 异常：降级为无数据，不把异常抛给调用方线程
+        }
+        if (chunk != null) {
+            cache.put(key, chunk);
+        }
+        return chunk;
+    }
+
+    /** 有界 LRU：超过容量时淘汰最久未访问项；线程安全由外层 {@link Collections#synchronizedMap} 保证。 */
+    private static final class LruCache extends LinkedHashMap<Long, ILostChunkInfo> {
+        private final int cap;
+        LruCache(int cap) {
+            super(cap + 1, 0.75f, true);
+            this.cap = cap;
+        }
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<Long, ILostChunkInfo> e) {
+            return size() > cap;
+        }
+    }
+
+    /**
      * 撤离点建筑中心坐标缓存（按维度）。世界生成阶段（{@code PostGenCityChunkEvent}）由
      * {@link #registerEvacuationPoint} 登记；撤离点指南针 / 直升机撤离系统直接读取本表，
      * <b>避免在物品使用（主线程 {@code ServerboundUseItemPacket.handle}）时全图扫描 {@code getChunkInfo}</b>——
@@ -343,7 +419,7 @@ public final class SixtySecondsLostCitiesStarMap {
         if (info == null) {
             return NO_STAR;
         }
-        ILostChunkInfo chunk = info.getChunkInfo(pos.getX() >> 4, pos.getZ() >> 4);
+        ILostChunkInfo chunk = safeChunkInfo(level, info, pos.getX() >> 4, pos.getZ() >> 4);
         if (chunk == null || !chunk.isCity()) {
             return NO_STAR;
         }
@@ -454,7 +530,7 @@ public final class SixtySecondsLostCitiesStarMap {
         if (info == null) {
             return false;
         }
-        ILostChunkInfo chunk = info.getChunkInfo(pos.getX() >> 4, pos.getZ() >> 4);
+        ILostChunkInfo chunk = safeChunkInfo(level, info, pos.getX() >> 4, pos.getZ() >> 4);
         if (chunk == null || !chunk.isCity() || chunk.getBuildingId() == null) {
             return false;
         }
@@ -649,7 +725,7 @@ public final class SixtySecondsLostCitiesStarMap {
                 if (!level.hasChunk(cx, cz)) {
                     continue; // 未加载：不强制生成，留待玩家探索后重开星图时再纳入
                 }
-                ILostChunkInfo c = info.getChunkInfo(cx, cz);
+                ILostChunkInfo c = safeChunkInfo(level, info, cx, cz);
                 if (c == null || !c.isCity() || c.getBuildingId() == null) {
                     continue;
                 }
@@ -679,7 +755,7 @@ public final class SixtySecondsLostCitiesStarMap {
                         if (!level.hasChunk(nx, nz)) {
                             continue;
                         }
-                        ILostChunkInfo nc = info.getChunkInfo(nx, nz);
+                        ILostChunkInfo nc = safeChunkInfo(level, info, nx, nz);
                         if (nc == null || !nc.isCity() || nc.getBuildingId() == null) {
                             continue;
                         }

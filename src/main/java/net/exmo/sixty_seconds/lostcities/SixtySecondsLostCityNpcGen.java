@@ -140,7 +140,7 @@ public final class SixtySecondsLostCityNpcGen {
         if (info == null) {
             return null;
         }
-        ILostChunkInfo chunk = info.getChunkInfo(cp.x, cp.z);
+        ILostChunkInfo chunk = SixtySecondsLostCitiesStarMap.safeChunkInfo(level, info, cp.x, cp.z);
         if (chunk == null || !chunk.isCity() || chunk.getBuildingId() == null) {
             return null;
         }

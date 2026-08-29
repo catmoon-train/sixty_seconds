@@ -121,7 +121,7 @@ public class EvacCompassItem extends Item {
                 if (!level.hasChunk(cx, cz)) {
                     continue; // 仅扫描已加载区块，避免触发区块生成阻塞主线程
                 }
-                ILostChunkInfo chunk = info.getChunkInfo(cx, cz);
+                ILostChunkInfo chunk = SixtySecondsLostCitiesStarMap.safeChunkInfo(level, info, cx, cz);
                 if (chunk == null || !chunk.isCity() || chunk.getBuildingId() == null) continue;
                 if (!chunk.getBuildingId().getPath().toLowerCase(Locale.ROOT).contains("evac")) continue;
                 BlockPos c = new BlockPos(cx * 16 + 8, playerPos.getY(), cz * 16 + 8);
