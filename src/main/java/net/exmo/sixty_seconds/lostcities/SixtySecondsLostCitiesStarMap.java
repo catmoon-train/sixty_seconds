@@ -102,10 +102,16 @@ public final class SixtySecondsLostCitiesStarMap {
     private static final Set<String> EVAC_BUILDINGS = Set.of("evacuationpoint");
 
     /**
-     * 城市建筑「精确名称 → 星级」映射表。键为 LostCities 资源目录
-     * {@code data/lostcities/lostcities/buildings/} 下的 JSON 文件名（不含命名空间）。
-     * 仅当建筑名与本表键<b>完全一致</b>时才匹配，不使用任何前缀（startsWith）匹配，
-     * 以避免新增大楼栋被错误归类。未出现在本表的城市建筑名返回 {@link #UNGRADED}（真正无级别）。
+     * 城市建筑「精确名称 → 星级」映射表。
+     * <ul>
+     *   <li>原版 LostCities / 60秒 自带城区建筑（building1-8、town*、center*、cabin、library*、oilrig*、
+     *       shopping*、highway_*、radiotower、safezone、evacuationpoint）：键为<b>不含命名空间</b>的文件名；
+     *       这些建筑注册在 {@code lostcities} 命名空间，{@link #starForBuildingName} 在剥离命名空间后按裸名匹配。</li>
+     *       即 {@code data/lce/lostcities/...}。故这里的键使用<b>含命名空间的全名</b>（如 {@code lce:aircraftcarrier}），
+     *       由 {@link #starForBuildingName} 先按全名匹配，避免与原版同名建筑（若将来引入）混淆。
+     * </ul>
+     * 仅当建筑名与本表键<b>完全一致</b>时才匹配，不使用任何前缀（startsWith）匹配，以避免新增大楼栋被错误归类。
+     * 未出现在本表的城市建筑名返回 {@link #UNGRADED}（真正无级别）。
      */
     // 约一半楼栋划为 2 星（蓝）：building1-8 / town00-11 / 高速加油站·餐厅·停车场 / 广播铁塔 / 露天集市
     private static final Map<String, Integer> BUILDING_STARS = Map.ofEntries(
@@ -146,48 +152,49 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("town01", 3),
             Map.entry("town10", 3),
             Map.entry("town11", 2),
-            // ---- 第三方自定义建筑（l3ya / czp / wd1imp 等，按 JSON 文件名精确登记）----
+            // ---- 第三方自定义建筑：已迁移到 LostCities-extend 数据包（命名空间 lce）----
+            // 键统一使用含命名空间全名（lce:<建筑名>），与原版 lostcities 命名空间拆开。
             // 1 星
-            Map.entry("subhousel3ya_1_2_combo", 1),
-            Map.entry("crashedhelicopter2", 1),
-            Map.entry("scatteredhouse2", 1),
-            Map.entry("scatteredhouse1", 1),
+            Map.entry("lce:subhousel3ya_1_2_combo", 1),
+            Map.entry("lce:crashedhelicopter2", 1),
+            Map.entry("lce:scatteredhouse2", 1),
+            Map.entry("lce:scatteredhouse1", 1),
             // 2 星
-            Map.entry("mbd", 2),
-            Map.entry("subhousel3ya_3_bend_street", 2),
-            Map.entry("subhousel3ya_4_and_5_combo", 2),
-            Map.entry("subhousel3ya_3_6_7_8_9_structurebundel", 2),
-            Map.entry("floodedmalll3ya", 2),
-            Map.entry("radio_tower1", 2),
-            Map.entry("watch_tower1", 2),
-            Map.entry("radio_tower2", 2),
+            Map.entry("lce:mbd", 2),
+            Map.entry("lce:subhousel3ya_3_bend_street", 2),
+            Map.entry("lce:subhousel3ya_4_and_5_combo", 2),
+            Map.entry("lce:subhousel3ya_3_6_7_8_9_structurebundel", 2),
+            Map.entry("lce:floodedmalll3ya", 2),
+            Map.entry("lce:radio_tower1", 2),
+            Map.entry("lce:watch_tower1", 2),
+            Map.entry("lce:radio_tower2", 2),
             // 3 星
-            Map.entry("smallshop", 3),
-            Map.entry("4buildingsrow", 3),
-            Map.entry("gasstation1", 3),
-            Map.entry("walmart2", 3),
-            Map.entry("shop2", 3),
-            Map.entry("l3ya_spruceforest_cabin_1", 3),
+            Map.entry("lce:smallshop", 3),
+            Map.entry("lce:4buildingsrow", 3),
+            Map.entry("lce:gasstation1", 3),
+            Map.entry("lce:walmart2", 3),
+            Map.entry("lce:shop2", 3),
+            Map.entry("lce:l3ya_spruceforest_cabin_1", 3),
             // 4 星
-            Map.entry("firestation12", 4),
-            Map.entry("observatory", 4),
-            Map.entry("shop3", 4),
-            Map.entry("bigmall", 4),
-            Map.entry("policestation", 4),
-            Map.entry("bufschooll3ya", 4),
-            Map.entry("aircraftcarrier2", 4),
-            Map.entry("aircraftcarrier", 4),
+            Map.entry("lce:firestation12", 4),
+            Map.entry("lce:observatory", 4),
+            Map.entry("lce:shop3", 4),
+            Map.entry("lce:bigmall", 4),
+            Map.entry("lce:policestation", 4),
+            Map.entry("lce:bufschooll3ya", 4),
+            Map.entry("lce:aircraftcarrier2", 4),
+            Map.entry("lce:aircraftcarrier", 4),
             // 5 星
-            Map.entry("tallbuilding2", 5),
-            Map.entry("massivebuildingwithhelicopter", 5),
-            Map.entry("mediumbuildingczp1", 5),
-            Map.entry("skyscraper", 5),
-            Map.entry("skyscraper1", 5),
-            Map.entry("hugebuilding1", 5),
-            Map.entry("hugebuilding2", 5),
-            Map.entry("tv_tower", 5),
-            Map.entry("wd1imp", 5),
-            Map.entry("gianthospital", 5)
+            Map.entry("lce:tallbuilding2", 5),
+            Map.entry("lce:massivebuildingwithhelicopter", 5),
+            Map.entry("lce:mediumbuildingczp1", 5),
+            Map.entry("lce:skyscraper", 5),
+            Map.entry("lce:skyscraper1", 5),
+            Map.entry("lce:hugebuilding1", 5),
+            Map.entry("lce:hugebuilding2", 5),
+            Map.entry("lce:tv_tower", 5),
+            Map.entry("lce:wd1imp", 5),
+            Map.entry("lce:gianthospital", 5)
     );
 
     /**
@@ -459,6 +466,13 @@ public final class SixtySecondsLostCitiesStarMap {
         if (lcmtStar != null) {
             return lcmtStar;
         }
+        // 按完整 id（含命名空间）匹配 LostCities-extend（lce）自定义建筑：
+        // 这些建筑已从 lostcities 命名空间迁移到 lce 命名空间（见 BUILDING_STARS 注释），
+        // 键为全名（如 lce:aircraftcarrier），必须保留命名空间才能正确评级。
+        Integer lceStar = BUILDING_STARS.get(name);
+        if (lceStar != null) {
+            return lceStar;
+        }
         // 防御：调用方可能误传入带命名空间的全名（如 lostcities:building1），统一取路径部分。
         int sep = name.indexOf(':');
         if (sep >= 0) {
@@ -628,56 +642,63 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("town11", "townhouse"),
             Map.entry("safezone", "safe_zone"),
             Map.entry("evacuationpoint", "evacuation"),
-            // ---- 第三方自定义建筑显示名（翻译键后缀即建筑 id）----
-            Map.entry("subhousel3ya_1_2_combo", "subhousel3ya_1_2_combo"),
-            Map.entry("crashedhelicopter2", "crashedhelicopter2"),
-            Map.entry("scatteredhouse2", "scatteredhouse2"),
-            Map.entry("scatteredhouse1", "scatteredhouse1"),
-            Map.entry("mbd", "mbd"),
-            Map.entry("subhousel3ya_3_bend_street", "subhousel3ya_3_bend_street"),
-            Map.entry("subhousel3ya_4_and_5_combo", "subhousel3ya_4_and_5_combo"),
-            Map.entry("subhousel3ya_3_6_7_8_9_structurebundel", "subhousel3ya_3_6_7_8_9_structurebundel"),
-            Map.entry("floodedmalll3ya", "floodedmalll3ya"),
-            Map.entry("radio_tower1", "radio_tower1"),
-            Map.entry("watch_tower1", "watch_tower1"),
-            Map.entry("radio_tower2", "radio_tower2"),
-            Map.entry("smallshop", "smallshop"),
-            Map.entry("4buildingsrow", "4buildingsrow"),
-            Map.entry("gasstation1", "gasstation1"),
-            Map.entry("walmart2", "walmart2"),
-            Map.entry("shop2", "shop2"),
-            Map.entry("l3ya_spruceforest_cabin_1", "l3ya_spruceforest_cabin_1"),
-            Map.entry("firestation12", "firestation12"),
-            Map.entry("observatory", "observatory"),
-            Map.entry("shop3", "shop3"),
-            Map.entry("bigmall", "bigmall"),
-            Map.entry("policestation", "policestation"),
-            Map.entry("bufschooll3ya", "bufschooll3ya"),
-            Map.entry("aircraftcarrier2", "aircraftcarrier2"),
-            Map.entry("aircraftcarrier", "aircraftcarrier"),
-            Map.entry("tallbuilding2", "tallbuilding2"),
-            Map.entry("massivebuildingwithhelicopter", "massivebuildingwithhelicopter"),
-            Map.entry("mediumbuildingczp1", "mediumbuildingczp1"),
-            Map.entry("skyscraper", "skyscraper"),
-            Map.entry("skyscraper1", "skyscraper1"),
-            Map.entry("hugebuilding1", "hugebuilding1"),
-            Map.entry("hugebuilding2", "hugebuilding2"),
-            Map.entry("tv_tower", "tv_tower"),
-            Map.entry("wd1imp", "wd1imp"),
-            Map.entry("gianthospital", "gianthospital")
+            // ---- 第三方自定义建筑显示名：已迁移到 LostCities-extend 数据包（命名空间 lce）----
+            // 键用含命名空间全名（lce:<建筑名>）；翻译键后缀保持原建筑名不变（building.sixty_seconds.sixty_seconds.<名>）。
+            Map.entry("lce:subhousel3ya_1_2_combo", "subhousel3ya_1_2_combo"),
+            Map.entry("lce:crashedhelicopter2", "crashedhelicopter2"),
+            Map.entry("lce:scatteredhouse2", "scatteredhouse2"),
+            Map.entry("lce:scatteredhouse1", "scatteredhouse1"),
+            Map.entry("lce:mbd", "mbd"),
+            Map.entry("lce:subhousel3ya_3_bend_street", "subhousel3ya_3_bend_street"),
+            Map.entry("lce:subhousel3ya_4_and_5_combo", "subhousel3ya_4_and_5_combo"),
+            Map.entry("lce:subhousel3ya_3_6_7_8_9_structurebundel", "subhousel3ya_3_6_7_8_9_structurebundel"),
+            Map.entry("lce:floodedmalll3ya", "floodedmalll3ya"),
+            Map.entry("lce:radio_tower1", "radio_tower1"),
+            Map.entry("lce:watch_tower1", "watch_tower1"),
+            Map.entry("lce:radio_tower2", "radio_tower2"),
+            Map.entry("lce:smallshop", "smallshop"),
+            Map.entry("lce:4buildingsrow", "4buildingsrow"),
+            Map.entry("lce:gasstation1", "gasstation1"),
+            Map.entry("lce:walmart2", "walmart2"),
+            Map.entry("lce:shop2", "shop2"),
+            Map.entry("lce:l3ya_spruceforest_cabin_1", "l3ya_spruceforest_cabin_1"),
+            Map.entry("lce:firestation12", "firestation12"),
+            Map.entry("lce:observatory", "observatory"),
+            Map.entry("lce:shop3", "shop3"),
+            Map.entry("lce:bigmall", "bigmall"),
+            Map.entry("lce:policestation", "policestation"),
+            Map.entry("lce:bufschooll3ya", "bufschooll3ya"),
+            Map.entry("lce:aircraftcarrier2", "aircraftcarrier2"),
+            Map.entry("lce:aircraftcarrier", "aircraftcarrier"),
+            Map.entry("lce:tallbuilding2", "tallbuilding2"),
+            Map.entry("lce:massivebuildingwithhelicopter", "massivebuildingwithhelicopter"),
+            Map.entry("lce:mediumbuildingczp1", "mediumbuildingczp1"),
+            Map.entry("lce:skyscraper", "skyscraper"),
+            Map.entry("lce:skyscraper1", "skyscraper1"),
+            Map.entry("lce:hugebuilding1", "hugebuilding1"),
+            Map.entry("lce:hugebuilding2", "hugebuilding2"),
+            Map.entry("lce:tv_tower", "tv_tower"),
+            Map.entry("lce:wd1imp", "wd1imp"),
+            Map.entry("lce:gianthospital", "gianthospital")
     );
 
-    /** 建筑 id（LostCities 资源文件名）→ 翻译键；未知 id 原样返回（兜底）。 */
+    /** 建筑 id（LostCities 资源文件名，含命名空间）→ 翻译键；未知 id 原样返回（兜底）。 */
     public static String buildingDisplayKey(String id) {
         if (id == null) {
             return "?";
         }
         String key = id.toLowerCase(Locale.ROOT);
+        // 先按完整 id（含命名空间，如 lce:aircraftcarrier）匹配 LostCities-extend 自定义建筑。
+        String suffix = BUILDING_DISPLAY.get(key);
+        if (suffix != null) {
+            return BUILDING_LANG + suffix;
+        }
+        // 防御：剥离命名空间后按裸名匹配原版 / 安全区 / 撤离点建筑。
         int sep = key.indexOf(':');
         if (sep >= 0) {
             key = key.substring(sep + 1);
         }
-        String suffix = BUILDING_DISPLAY.get(key);
+        suffix = BUILDING_DISPLAY.get(key);
         return suffix != null ? BUILDING_LANG + suffix : key;
     }
 
