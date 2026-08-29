@@ -9,6 +9,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 /**
  * 强制把 LostCities 的破坏/废墟/植被相关参数调高
  * 这些字段在 LostCityProfile 构造时被各种 init 方法赋默认值，这里在构造末尾覆盖。
+ *
+ * <p>只覆盖「废墟/爆炸/瓦砾/植被」这类纯表现参数，<b>不覆盖楼层数</b>。
+ * 楼层数交给世界配置里的 profile JSON 决定，见下面 {@code sixtySecondsForceApocalypticProfile} 的注释。
  */
 @Mixin(LostCityProfile.class)
 public abstract class LostCityProfileMixin {
@@ -33,26 +36,6 @@ public abstract class LostCityProfileMixin {
     private static final int FORCED_DEBRIS_FACTOR = 100;
     /** 爆炸坑最大高度（默认 90）。 */
     private static final int FORCED_EXPLOSION_MAXHEIGHT = 90;
-
-    // ===== 建筑楼层数 =====
-    /**
-     * 建筑最少楼层（默认 0）。改为 6，使所有楼至少 6 层。
-     */
-    private static final int FORCED_MIN_FLOORS = 6;
-    /**
-     * 楼层随机下限偏移（默认 4）。设为 0 使绝对最小值正好等于 FORCED_MIN_FLOORS，
-     * 即最低楼层 = FORCED_MIN_FLOORS + 0 = 6。
-     */
-    private static final int FORCED_MIN_FLOORS_CHANCE = 0;
-    /**
-     * 楼层随机上限偏移（默认 6）。(cityFactor+0.1) * 此值 决定随机部分的最大跨度，
-     * 配合 FORCED_MAX_FLOORS 让最高可达 30 层。
-     */
-    private static final int FORCED_MAX_FLOORS_CHANCE = 23;
-    /**
-     * 建筑最多楼层（默认 8）。改为 30，硬上限。
-     */
-    private static final int FORCED_MAX_FLOORS = 30;
 
     // ===== 瓦砾 / 植被覆盖 =====
     /** 泥土覆盖层尺度（默认 3.0，越小层越厚）。 */
@@ -88,9 +71,16 @@ public abstract class LostCityProfileMixin {
         profile.CHANCE_OF_RANDOM_LEAFBLOCKS = FORCED_RANDOM_LEAF_BLOCK_CHANCE;
         profile.THICKNESS_OF_RANDOM_LEAFBLOCKS = FORCED_RANDOM_LEAF_BLOCK_THICKNESS;
 
-        profile.BUILDING_MINFLOORS = FORCED_MIN_FLOORS;
-        profile.BUILDING_MINFLOORS_CHANCE = FORCED_MIN_FLOORS_CHANCE;
-        profile.BUILDING_MAXFLOORS_CHANCE = FORCED_MAX_FLOORS_CHANCE;
-        profile.BUILDING_MAXFLOORS = FORCED_MAX_FLOORS;
+        // 注意：不要在这里覆盖 BUILDING_MINFLOORS / BUILDING_MAXFLOORS /
+        // BUILDING_MINFLOORS_CHANCE / BUILDING_MAXFLOORS_CHANCE。
+        // BuildingInfo 计算楼层时，minfloors 是在 f 被 clamp 到 maxfloors 之后才应用的
+        // （BuildingInfo#<init>: 先 if (f > maxfloors) f = maxfloors; 再 if (f < minfloors) f = minfloors）。
+        // 而 getMinfloors() 对「没有显式写 minfloors 的建筑」一律返回 profile.BUILDING_MINFLOORS + 1，
+        // 且该分支不看 overrideFloors。所以一旦把 BUILDING_MINFLOORS 抬到 6，
+        // 所有只声明了 "maxfloors": N（N < 7）的建筑都会被硬顶成 7 层，
+        // 导致第 N+1..7 层找不到 part，BuildingInfo 抛出
+        // "Misconfiguration! Floor were generated for a building where no part condition matches!"
+        // 并让整个区块生成失败。要让楼更高，请改世界配置里的 lostcities profile JSON，
+        // 或在具体建筑上同时写 "minfloors" + "maxfloors" + "overrideFloors"。
     }
 }

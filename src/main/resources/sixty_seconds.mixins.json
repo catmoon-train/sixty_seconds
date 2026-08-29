@@ -17,6 +17,7 @@
     "LostCityDamageAreaMixin",
     "LostCityProfileMixin",
     "LostCityMultiChunkMixin",
+    "LostCityBuildingPartFallbackMixin",
     "LostCityStuffDebugMixin",
     "GlobalTodoMixin",
     "LevelChunkSpawnerWarningMixin",
