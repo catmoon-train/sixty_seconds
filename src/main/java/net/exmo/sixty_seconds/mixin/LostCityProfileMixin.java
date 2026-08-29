@@ -34,6 +34,26 @@ public abstract class LostCityProfileMixin {
     /** 爆炸坑最大高度（默认 90）。 */
     private static final int FORCED_EXPLOSION_MAXHEIGHT = 90;
 
+    // ===== 建筑楼层数 =====
+    /**
+     * 建筑最少楼层（默认 0）。改为 6，使所有楼至少 6 层。
+     */
+    private static final int FORCED_MIN_FLOORS = 6;
+    /**
+     * 楼层随机下限偏移（默认 4）。设为 0 使绝对最小值正好等于 FORCED_MIN_FLOORS，
+     * 即最低楼层 = FORCED_MIN_FLOORS + 0 = 6。
+     */
+    private static final int FORCED_MIN_FLOORS_CHANCE = 0;
+    /**
+     * 楼层随机上限偏移（默认 6）。(cityFactor+0.1) * 此值 决定随机部分的最大跨度，
+     * 配合 FORCED_MAX_FLOORS 让最高可达 30 层。
+     */
+    private static final int FORCED_MAX_FLOORS_CHANCE = 23;
+    /**
+     * 建筑最多楼层（默认 8）。改为 30，硬上限。
+     */
+    private static final int FORCED_MAX_FLOORS = 30;
+
     // ===== 瓦砾 / 植被覆盖 =====
     /** 泥土覆盖层尺度（默认 3.0，越小层越厚）。 */
     private static final float FORCED_RUBBLE_DIRT_SCALE = 1.0f;
@@ -67,5 +87,10 @@ public abstract class LostCityProfileMixin {
         profile.VINE_CHANCE = FORCED_VINE_CHANCE;
         profile.CHANCE_OF_RANDOM_LEAFBLOCKS = FORCED_RANDOM_LEAF_BLOCK_CHANCE;
         profile.THICKNESS_OF_RANDOM_LEAFBLOCKS = FORCED_RANDOM_LEAF_BLOCK_THICKNESS;
+
+        profile.BUILDING_MINFLOORS = FORCED_MIN_FLOORS;
+        profile.BUILDING_MINFLOORS_CHANCE = FORCED_MIN_FLOORS_CHANCE;
+        profile.BUILDING_MAXFLOORS_CHANCE = FORCED_MAX_FLOORS_CHANCE;
+        profile.BUILDING_MAXFLOORS = FORCED_MAX_FLOORS;
     }
 }
