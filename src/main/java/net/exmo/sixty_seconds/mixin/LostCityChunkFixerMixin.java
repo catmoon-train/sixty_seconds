@@ -64,7 +64,7 @@ public class LostCityChunkFixerMixin {
         if (id == null) {
             return; // 街道/空地：无建筑
         }
-        String name = id.getPath();
+        String name = id.toString();
         // 撤离点建筑（evacuationpoint）在生成时登记其中心，供指南针/直升机撤离系统直接读取，
         // 避免在物品使用（主线程）时全图扫描 getChunkInfo 造成卡顿。
         if (name.toLowerCase().contains("evac")) {

@@ -78,6 +78,16 @@ versionRange = "[1.21-8.4.1,)"
 ordering = "AFTER"
 side = "BOTH"
 
+# lostcities-modern-tweaks（modId = lcmt）：可选依赖。
+# 声明 AFTER 以确保本 mod 在 lcmt 之后加载，从而用本 mod 的 data 资源
+# （如 data/lcmt/loot_table/chests/*.json 的空战利品表）覆盖 lcmt 的同名资源。
+[[dependencies."${mod_id}"]]
+modId = "lcmt"
+type = "optional"
+versionRange = "[0,)"
+ordering = "AFTER"
+side = "BOTH"
+
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't
 # stop your mod loading on the server for example.

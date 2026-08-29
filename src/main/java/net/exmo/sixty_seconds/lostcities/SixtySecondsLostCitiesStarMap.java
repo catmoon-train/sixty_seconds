@@ -147,6 +147,80 @@ public final class SixtySecondsLostCitiesStarMap {
     );
 
     /**
+     * lostcities-modern-tweaks（命名空间 {@code lcmt}）建筑的独立星级映射表。
+     *
+     * <p>评级规则（与 {@code citystyle_common.json} 的生成权重 factor 对应）：</p>
+     * <ul>
+     *   <li>住宅楼 {@code building1}~{@code building8}：factor &lt; 0.3 → 3 星，factor &gt;= 0.3 → 2 星；</li>
+     *   <li>{@code cabin} 小屋 → 1 星；</li>
+     *   <li>{@code center/…}（数据中心）、{@code factory/…}（工厂）→ 5 星；</li>
+     *   <li>{@code library/…}、{@code shopping/…}、{@code shopping/shopping_open…}、{@code townhall/…} → 4 星。</li>
+     * </ul>
+     */
+    private static final Map<String, Integer> LCMT_BUILDING_STARS = Map.ofEntries(
+            // 住宅楼：factor 0.3/0.4 → 2 星，0.2 → 3 星
+            Map.entry("lcmt:building1", 2),
+            Map.entry("lcmt:building2", 2),
+            Map.entry("lcmt:building3", 3),
+            Map.entry("lcmt:building4", 3),
+            Map.entry("lcmt:building5", 2),
+            Map.entry("lcmt:building6", 3),
+            Map.entry("lcmt:building7", 3),
+            Map.entry("lcmt:building8", 2),
+            // 小屋
+            Map.entry("lcmt:cabin", 1),
+            // 数据中心：5 星
+            Map.entry("lcmt:center/center00", 5),
+            Map.entry("lcmt:center/center01", 5),
+            Map.entry("lcmt:center/center10", 5),
+            Map.entry("lcmt:center/center11", 5),
+            // 工厂：5 星
+            Map.entry("lcmt:factory/factory_00", 5),
+            Map.entry("lcmt:factory/factory_01", 5),
+            Map.entry("lcmt:factory/factory_02", 5),
+            Map.entry("lcmt:factory/factory_10", 5),
+            Map.entry("lcmt:factory/factory_11", 5),
+            Map.entry("lcmt:factory/factory_12", 5),
+            // 图书馆：4 星
+            Map.entry("lcmt:library/library00", 4),
+            Map.entry("lcmt:library/library01", 4),
+            Map.entry("lcmt:library/library10", 4),
+            Map.entry("lcmt:library/library11", 4),
+            // 购物中心：4 星
+            Map.entry("lcmt:shopping/shopping00", 4),
+            Map.entry("lcmt:shopping/shopping01", 4),
+            Map.entry("lcmt:shopping/shopping10", 4),
+            Map.entry("lcmt:shopping/shopping11", 4),
+            // 露天市场：4 星
+            Map.entry("lcmt:shopping/shopping_open00", 4),
+            Map.entry("lcmt:shopping/shopping_open01", 4),
+            Map.entry("lcmt:shopping/shopping_open10", 4),
+            Map.entry("lcmt:shopping/shopping_open11", 4),
+            // 市政厅：4 星
+            Map.entry("lcmt:townhall/town00", 4),
+            Map.entry("lcmt:townhall/town01", 4),
+            Map.entry("lcmt:townhall/town10", 4),
+            Map.entry("lcmt:townhall/town11", 4)
+    );
+
+    /**
+     * lostcities-modern-tweaks（lcmt）的<b>多区块建筑（multibuilding）</b>星级映射表。
+     *
+     * <p>lcmt 的功能型建筑（数据中心/工厂/图书馆/购物中心/露天市场/市政厅）在实际生成时都是通过
+     * multibuilding 组合的（见 {@code citystyle_common.json} 的 {@code multibuildings} 段），
+     * 此时 {@code ILostChunkInfo#getMultiBuildingInfo()} 非空，需要按 multibuilding 类型
+     * （{@code buildingType()}）区分，否则会全部落到默认的 5 星。</p>
+     */
+    private static final Map<String, Integer> LCMT_MULTI_BUILDING_STARS = Map.ofEntries(
+            Map.entry("lcmt:center", 5),
+            Map.entry("lcmt:factory", 5),
+            Map.entry("lcmt:library", 4),
+            Map.entry("lcmt:shopping", 4),
+            Map.entry("lcmt:shopping_open", 4),
+            Map.entry("lcmt:townhall", 4)
+    );
+
+    /**
      * {@code ILostCityInformation} 按维度缓存：它在单个 {@code ServerLevel} 生命周期内是稳定的，
      * 而 {@code levelAt}/{@code isSafeZone} 是高频运行时查询（PvP 每次攻击、每次刷怪、每次领箱都走一遍），
      * 避免每次都经 {@code api().getLostInfo(level)} + try/catch 重新取。
@@ -231,8 +305,14 @@ public final class SixtySecondsLostCitiesStarMap {
         if (chunk == null || !chunk.isCity()) {
             return NO_STAR;
         }
-        // 多区块建筑优先判定 5 星（无论其内部 chunk 归属哪个 building part）
-        if (chunk.getMultiBuildingInfo() != null) {
+        // 多区块建筑优先判定 5 星（无论其内部 chunk 归属哪个 building part）；
+        // 但 lcmt 的功能型 multibuilding 需按类型细分（library/shopping/townhall 为 4 星）。
+        ILostChunkInfo.MultiBuildingInfo multiBuilding = chunk.getMultiBuildingInfo();
+        if (multiBuilding != null) {
+            Integer lcmtMultiStar = LCMT_MULTI_BUILDING_STARS.get(multiBuilding.buildingType().toString());
+            if (lcmtMultiStar != null) {
+                return lcmtMultiStar;
+            }
             return MULTI_BUILDING_STAR;
         }
         // 普通建筑：按名称映射
@@ -240,19 +320,28 @@ public final class SixtySecondsLostCitiesStarMap {
         if (id == null) {
             return NO_STAR;
         }
-        return starForBuildingName(id.getPath());
+        return starForBuildingName(id.toString());
     }
 
     /**
-     * 根据建筑名称（{@code data/lostcities/lostcities/buildings/} 下的 JSON 文件名，不含命名空间）
-     * 返回对应星级（1..5）；未知名称返回 {@link #UNGRADED}（城市建筑内但未登记，真正无级别）。
+     * 根据建筑名称返回对应星级（1..5）；未知名称返回 {@link #UNGRADED}（城市建筑内但未登记，真正无级别）。
+     *
+     * <p>优先按完整 id（含命名空间，如 {@code lcmt:building1}）匹配 lostcities-modern-tweaks 建筑；
+     * 匹配不到时再剥离命名空间，按原版 lostcities 建筑名（不含命名空间，如 {@code building1}）匹配。</p>
      */
     public static int starForBuildingName(String buildingName) {
         if (buildingName == null) {
             return NO_STAR;
         }
-        // 防御：调用方可能误传入带命名空间的全名（如 lostcities:building1），统一取路径部分。
         String name = buildingName.toLowerCase(Locale.ROOT);
+        // 先按完整 id（含命名空间）匹配 lostcities-modern-tweaks（lcmt）建筑：
+        // 其建筑名与原版 lostcities 同名（building1~8、cabin）或位于子目录（center/…、factory/…），
+        // 必须保留命名空间才能与原版（lostcities:…）拆开评级。
+        Integer lcmtStar = LCMT_BUILDING_STARS.get(name);
+        if (lcmtStar != null) {
+            return lcmtStar;
+        }
+        // 防御：调用方可能误传入带命名空间的全名（如 lostcities:building1），统一取路径部分。
         int sep = name.indexOf(':');
         if (sep >= 0) {
             name = name.substring(sep + 1);
@@ -428,8 +517,13 @@ public final class SixtySecondsLostCitiesStarMap {
         if (id == null) {
             return "?";
         }
-        String suffix = BUILDING_DISPLAY.get(id.toLowerCase(Locale.ROOT));
-        return suffix != null ? BUILDING_LANG + suffix : id;
+        String key = id.toLowerCase(Locale.ROOT);
+        int sep = key.indexOf(':');
+        if (sep >= 0) {
+            key = key.substring(sep + 1);
+        }
+        String suffix = BUILDING_DISPLAY.get(key);
+        return suffix != null ? BUILDING_LANG + suffix : key;
     }
 
     /** 一个建筑连通区域的几何与星级信息，供星图下发。 */
@@ -480,7 +574,7 @@ public final class SixtySecondsLostCitiesStarMap {
                 if (c == null || !c.isCity() || c.getBuildingId() == null) {
                     continue;
                 }
-                String id = c.getBuildingId().getPath();
+                String id = c.getBuildingId().toString();
                 int star = starForBuildingName(id);
                 if (star < 1 || star > 5) {
                     continue; // 仅危险度 1~5 的建筑上图（安全区/撤离点等不含星级）
@@ -510,7 +604,7 @@ public final class SixtySecondsLostCitiesStarMap {
                         if (nc == null || !nc.isCity() || nc.getBuildingId() == null) {
                             continue;
                         }
-                        if (!nc.getBuildingId().getPath().equals(id)) {
+                        if (!nc.getBuildingId().toString().equals(id)) {
                             continue;
                         }
                         stack.push(new long[]{nx, nz});
