@@ -19,6 +19,8 @@
     "LostCityMultiChunkMixin",
     "LostCityBuildingPartFallbackMixin",
     "LostCityLootConditionGuardMixin",
+    "LostCityConcurrentCharacteristicsMixin",
+    "LostCityStructureStartGuardMixin",
     "GlobalTodoMixin",
     "LevelChunkSpawnerWarningMixin",
     "AbstractContainerMenuMixin"
