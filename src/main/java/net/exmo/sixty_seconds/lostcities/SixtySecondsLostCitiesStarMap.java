@@ -143,7 +143,49 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("town00", 2),
             Map.entry("town01", 3),
             Map.entry("town10", 3),
-            Map.entry("town11", 2)
+            Map.entry("town11", 2),
+            // ---- 第三方自定义建筑（l3ya / czp / wd1imp 等，按 JSON 文件名精确登记）----
+            // 1 星
+            Map.entry("subhousel3ya_1_2_combo", 1),
+            Map.entry("crashedhelicopter2", 1),
+            Map.entry("scatteredhouse2", 1),
+            Map.entry("scatteredhouse1", 1),
+            // 2 星
+            Map.entry("mbd", 2),
+            Map.entry("subhousel3ya_3_bend_street", 2),
+            Map.entry("subhousel3ya_4_and_5_combo", 2),
+            Map.entry("subhousel3ya_3_6_7_8_9_structurebundel", 2),
+            Map.entry("floodedmalll3ya", 2),
+            Map.entry("radio_tower1", 2),
+            Map.entry("watch_tower1", 2),
+            Map.entry("radio_tower2", 2),
+            // 3 星
+            Map.entry("smallshop", 3),
+            Map.entry("4buildingsrow", 3),
+            Map.entry("gasstation1", 3),
+            Map.entry("walmart2", 3),
+            Map.entry("shop2", 3),
+            Map.entry("l3ya_spruceforest_cabin_1", 3),
+            // 4 星
+            Map.entry("firestation12", 4),
+            Map.entry("observatory", 4),
+            Map.entry("shop3", 4),
+            Map.entry("bigmall", 4),
+            Map.entry("policestation", 4),
+            Map.entry("bufschooll3ya", 4),
+            Map.entry("aircraftcarrier2", 4),
+            Map.entry("aircraftcarrier", 4),
+            // 5 星
+            Map.entry("tallbuilding2", 5),
+            Map.entry("massivebuildingwithhelicopter", 5),
+            Map.entry("mediumbuildingczp1", 5),
+            Map.entry("skyscraper", 5),
+            Map.entry("skyscraper1", 5),
+            Map.entry("hugebuilding1", 5),
+            Map.entry("hugebuilding2", 5),
+            Map.entry("tv_tower", 5),
+            Map.entry("wd1imp", 5),
+            Map.entry("gianthospital", 5)
     );
 
     /**
@@ -509,7 +551,44 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("town10", "townhouse"),
             Map.entry("town11", "townhouse"),
             Map.entry("safezone", "safe_zone"),
-            Map.entry("evacuationpoint", "evacuation")
+            Map.entry("evacuationpoint", "evacuation"),
+            // ---- 第三方自定义建筑显示名（翻译键后缀即建筑 id）----
+            Map.entry("subhousel3ya_1_2_combo", "subhousel3ya_1_2_combo"),
+            Map.entry("crashedhelicopter2", "crashedhelicopter2"),
+            Map.entry("scatteredhouse2", "scatteredhouse2"),
+            Map.entry("scatteredhouse1", "scatteredhouse1"),
+            Map.entry("mbd", "mbd"),
+            Map.entry("subhousel3ya_3_bend_street", "subhousel3ya_3_bend_street"),
+            Map.entry("subhousel3ya_4_and_5_combo", "subhousel3ya_4_and_5_combo"),
+            Map.entry("subhousel3ya_3_6_7_8_9_structurebundel", "subhousel3ya_3_6_7_8_9_structurebundel"),
+            Map.entry("floodedmalll3ya", "floodedmalll3ya"),
+            Map.entry("radio_tower1", "radio_tower1"),
+            Map.entry("watch_tower1", "watch_tower1"),
+            Map.entry("radio_tower2", "radio_tower2"),
+            Map.entry("smallshop", "smallshop"),
+            Map.entry("4buildingsrow", "4buildingsrow"),
+            Map.entry("gasstation1", "gasstation1"),
+            Map.entry("walmart2", "walmart2"),
+            Map.entry("shop2", "shop2"),
+            Map.entry("l3ya_spruceforest_cabin_1", "l3ya_spruceforest_cabin_1"),
+            Map.entry("firestation12", "firestation12"),
+            Map.entry("observatory", "observatory"),
+            Map.entry("shop3", "shop3"),
+            Map.entry("bigmall", "bigmall"),
+            Map.entry("policestation", "policestation"),
+            Map.entry("bufschooll3ya", "bufschooll3ya"),
+            Map.entry("aircraftcarrier2", "aircraftcarrier2"),
+            Map.entry("aircraftcarrier", "aircraftcarrier"),
+            Map.entry("tallbuilding2", "tallbuilding2"),
+            Map.entry("massivebuildingwithhelicopter", "massivebuildingwithhelicopter"),
+            Map.entry("mediumbuildingczp1", "mediumbuildingczp1"),
+            Map.entry("skyscraper", "skyscraper"),
+            Map.entry("skyscraper1", "skyscraper1"),
+            Map.entry("hugebuilding1", "hugebuilding1"),
+            Map.entry("hugebuilding2", "hugebuilding2"),
+            Map.entry("tv_tower", "tv_tower"),
+            Map.entry("wd1imp", "wd1imp"),
+            Map.entry("gianthospital", "gianthospital")
     );
 
     /** 建筑 id（LostCities 资源文件名）→ 翻译键；未知 id 原样返回（兜底）。 */
