@@ -382,7 +382,7 @@ public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
         PartDefinition torso = part.addOrReplaceChild("torso",
                 CubeListBuilder.create().texOffs(0, 28)
                         .addBox(-8.0F, -7.0F, 0.0F, 16.0F, 14.0F, 20.0F),
-                PartPose.offset(0.0F, 14.0F, -6.0F));
+                PartPose.offset(0.0F, 14.0F, -8.0F));
 
         torso.addOrReplaceChild("spine_plate",
                 CubeListBuilder.create().texOffs(74, 28)
