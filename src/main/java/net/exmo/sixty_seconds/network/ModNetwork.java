@@ -104,6 +104,7 @@ public final class ModNetwork {
         registrar.playToServer(VisitChatSendC2SPacket.ID, adapt(VisitChatSendC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(VisitRequestC2SPacket.ID, adapt(VisitRequestC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(VisitResponseC2SPacket.ID, adapt(VisitResponseC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
+        registrar.playToServer(SubmarineControlC2SPacket.ID, adapt(SubmarineControlC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToClient(AdvancedCameraPayload.TYPE, adapt(AdvancedCameraPayload.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(ShootMuzzleS2CPayload.TYPE, adapt(ShootMuzzleS2CPayload.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(TriggerScreenEdgeEffectPayload.TYPE, adapt(TriggerScreenEdgeEffectPayload.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
@@ -148,6 +149,7 @@ public final class ModNetwork {
             if (payload instanceof VisitChatSendC2SPacket p) { VisitChatSendC2SPacket.handle(p, fabric); return; }
             if (payload instanceof VisitRequestC2SPacket p) { VisitRequestC2SPacket.handle(p, fabric); return; }
             if (payload instanceof VisitResponseC2SPacket p) { VisitResponseC2SPacket.handle(p, fabric); return; }
+            if (payload instanceof SubmarineControlC2SPacket p) { SubmarineControlC2SPacket.handle(p, fabric); return; }
         });
     }
 

@@ -45,6 +45,16 @@ public class SixtySecondsSubmarineEntity extends Mob {
     private static final double LIFT = 0.09D;
     private static final float TURN_RATE = 3.0F;
 
+    /**
+     * 服务端持有的上浮 / 下潜输入态。
+     *
+     * <p>{@code SynchedEntityData} 是服务端权威：客户端 set 不会同步到服务端，
+     * 因此按键必须经 {@link net.exmo.sixty_seconds.network.SubmarineControlC2SPacket}
+     * 送到服务端并写入这里，服务端 {@link #tick()} 才能据此驱动升降。
+     */
+    private boolean serverAscend = false;
+    private boolean serverDescend = false;
+
     public SixtySecondsSubmarineEntity(EntityType<? extends SixtySecondsSubmarineEntity> type, Level level) {
         super(type, level);
         this.blocksBuilding = true;
@@ -79,31 +89,49 @@ public class SixtySecondsSubmarineEntity extends Mob {
         return this.entityData.get(DATA_PITCH);
     }
 
+    /**
+     * 由服务端网络处理器调用，写入驾驶员的上浮 / 下潜意图。
+     * 与 {@link #setAscending} 的区别：后者只是客户端本地数据，服务端读不到。
+     */
+    public void setServerInput(boolean ascend, boolean descend) {
+        this.serverAscend = ascend;
+        this.serverDescend = descend;
+    }
+
     @Override
     public void tick() {
         Entity rider = this.getFirstPassenger();
         if (rider instanceof Player) {
             float forward = ((Player) rider).zza;   // W = +1 前进, S = -1 后退（沿艇艏方向）
             float steer = ((Player) rider).xxa;      // A = +1, D = -1
-            boolean ascend = this.entityData.get(DATA_ASCEND);
-            boolean descend = this.entityData.get(DATA_DESCEND);
+            // 服务端：读网络包写入的输入态（客户端 set 的 entityData 服务端读不到）
+            // 客户端：读同步下来的俯仰角，保持渲染姿态一致
+            boolean ascend = this.level().isClientSide
+                    ? this.entityData.get(DATA_ASCEND) : this.serverAscend;
+            boolean descend = this.level().isClientSide
+                    ? this.entityData.get(DATA_DESCEND) : this.serverDescend;
 
             float target = 0.0F;
             if (ascend) target -= 1.0F;
             if (descend) target += 1.0F;
             this.pitch += (target * MAX_PITCH - this.pitch) * 0.15F;
             this.pitch = Mth.clamp(this.pitch, -MAX_PITCH, MAX_PITCH);
-            this.entityData.set(DATA_PITCH, this.pitch);
+            // 仅服务端写 DATA_PITCH：它会同步到所有客户端（含其他旁观玩家），
+            // 客户端自身不写，避免与服务端权威值打架。
+            if (!this.level().isClientSide) {
+                this.entityData.set(DATA_PITCH, this.pitch);
+            }
             this.setXRot(this.pitch * (180.0F / (float) Math.PI));
             this.setYHeadRot(this.getYRot());
 
             this.setYRot(this.getYRot() - steer * TURN_RATE);
 
             Vec3 dir = Vec3.directionFromRotation(this.getXRot(), this.getYRot());
-            // 渲染以 (180 - yaw) 摆放模型，dir 实际指向艇艉，故水平分量取反得到艇艏前进方向；
-            // 竖直分量保持 dir.y，使俯仰与上下潜一致（按空格/左 Ctrl 前进即斜向上/下）。
+            // 渲染以 (180 - yaw) 摆放模型，dir 实际指向艇艉，故水平分量取反得到艇艏前进方向。
             double vx = -dir.x * forward * SPEED;
             double vz = -dir.z * forward * SPEED;
+            // 竖直速度：升降按键独立生效（不依赖是否按 W），
+            // 再叠加俯仰角带来的斜向分量（按 W 前进时即斜向上/下航行）。
             double vy = dir.y * forward * SPEED;
             if (ascend) vy += LIFT;
             if (descend) vy -= LIFT;

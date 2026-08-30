@@ -194,6 +194,12 @@ public final class SixtySecondsClient {
                     InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_CONTROL,
                     "key.categories.sixty_seconds"));
 
+    /** 上一次已上报服务端的潜水艇升降状态，用于只在状态变化时才发包。 */
+    private static boolean lastSubAscend = false;
+    private static boolean lastSubDescend = false;
+    /** 潜水艇控制包心跳计数（定期强制上报，防止状态失步）。 */
+    private static int subHeartbeat = 0;
+
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
@@ -359,10 +365,25 @@ public final class SixtySecondsClient {
             SixtySecGameWorldComponent.KEY.get(client.level).clientTick();
         }
         WeatherParticleSpawner.tick(client);
-        // 潜水艇：把空格(上浮)/左 Ctrl(下潜) 写入实体数据，由服务端驱动
+        // 潜水艇：把空格(上浮)/左 Ctrl(下潜) 通过网络包发给服务端。
+        // 注意：不能直接 sub.setAscending(...) —— entityData 由服务端权威持有，
+        // 客户端写入不会同步，服务端永远读到 false，升降就会失效。
         if (client.player != null && client.player.getVehicle() instanceof SixtySecondsSubmarineEntity sub) {
-            sub.setAscending(client.options.keyJump.isDown());
-            sub.setDescending(SUBMARINE_DESCEND.isDown());
+            boolean ascend = client.options.keyJump.isDown();
+            boolean descend = SUBMARINE_DESCEND.isDown();
+            // 本地同步一份，供客户端渲染平滑（真正驱动移动的是服务端那份）
+            sub.setAscending(ascend);
+            sub.setDescending(descend);
+            // 状态变化时才发包，避免每 tick 刷屏；另加 20 tick 心跳防止边缘情况失步
+            if (ascend != lastSubAscend || descend != lastSubDescend || subHeartbeat++ % 20 == 0) {
+                lastSubAscend = ascend;
+                lastSubDescend = descend;
+                net.exmo.sixty_seconds.bridge.fabric.ClientPlayNetworking.send(
+                        new net.exmo.sixty_seconds.network.SubmarineControlC2SPacket(ascend, descend));
+            }
+        } else {
+            lastSubAscend = false;
+            lastSubDescend = false;
         }
         for (ClientTickEvents.EndTick listener : ClientTickEvents.END_CLIENT_TICK.invokers()) {
             listener.onEndTick(client);
