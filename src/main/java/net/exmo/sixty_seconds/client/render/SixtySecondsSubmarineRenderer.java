@@ -41,7 +41,8 @@ public class SixtySecondsSubmarineRenderer extends EntityRenderer<SixtySecondsSu
 
         poseStack.scale(MODEL_SCALE, MODEL_SCALE, MODEL_SCALE);
         poseStack.scale(-1.0F, -1.0F, 1.0F);
-        poseStack.translate(0.0F, -1.501F, 0.0F);
+        // translate 在 scale(3.0) 之后执行，会被放大 3 倍，故除以 3 以保持原世界偏移
+        poseStack.translate(0.0F, -0.5F, 0.0F);
 
         VertexConsumer consumer = buffer.getBuffer(RenderType.entityCutout(texture));
         model.renderToBuffer(poseStack, consumer, packedLight, OverlayTexture.NO_OVERLAY, -1);
