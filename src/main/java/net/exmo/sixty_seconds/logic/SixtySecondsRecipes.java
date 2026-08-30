@@ -463,6 +463,9 @@ public final class SixtySecondsRecipes {
                 net.exmo.sixty_seconds.registry.ModBlocks.SIXTY_SECONDS_DISMANTLER.asItem(), 1);
         add(list, "gunpowder_pack", Station.WORKBENCH, "materials_3", true,
                 List.of(in(chem, 2), in(charcoal, 1)), ModItems.SIXTY_SECONDS_GUNPOWDER_PACK, 1);
+        // 火药包（原版火药）：原版火药×4，通电
+        add(list, "gunpowder_pack_vanilla", Station.WORKBENCH, "materials_3", true,
+                List.of(in(Items.GUNPOWDER, 4)), ModItems.SIXTY_SECONDS_GUNPOWDER_PACK, 1);
 
         // ── 工具-I ───────────────────────────────────────────────────
         add(list, "umbrella", Station.WORKBENCH, "tools_1", false,

@@ -219,7 +219,7 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("lce2:offshore/offshore_mega_platform", 5),
             // 工厂（factory）= 4 星
             Map.entry("lce2:factory/factory_black_building", 4),
-            Map.entry("lce2:factory/factory_building_main_huge", 4),
+            Map.entry("lce2:factory/factory_building_main_huge", 5),
             Map.entry("lce2:factory/factory_building_main_large", 4),
             Map.entry("lce2:factory/factory_building_main_medium", 4),
             Map.entry("lce2:factory/factory_building_sub", 4),
