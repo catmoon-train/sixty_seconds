@@ -25,6 +25,7 @@ import net.exmo.sixty_seconds.client.render.OceanSeaMonsterRenderer;
 import net.exmo.sixty_seconds.client.render.OceanSharkRenderer;
 import net.exmo.sixty_seconds.client.render.OceanFloorMonsterRenderer;
 import net.exmo.sixty_seconds.client.render.OceanFaunaRenderer;
+import net.exmo.sixty_seconds.client.render.SixtySecondsBossRenderer;
 import net.exmo.sixty_seconds.client.render.OceanTitanRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsSubmarineRenderer;
 import net.exmo.sixty_seconds.entity.OceanFloorMonsterEntity;
@@ -321,7 +322,7 @@ public final class SixtySecondsClient {
         event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_AIRPLANE,
                 ctx -> new SixtySecondsFlyingVehicleRenderer(ctx, SixtySecondsFlyingVehicleEntity.Kind.AIRPLANE));
         event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_MONSTER, SixtySecondsMonsterRenderer::new);
-        event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_BOSS, SixtySecondsMonsterRenderer::new);
+        event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_BOSS, SixtySecondsBossRenderer::new);
         event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_ACID_SPIT, ThrownItemRenderer::new);
         event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_ARROW, SixtySecondsArrowRenderer::new);
         event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_NPC, SixtySecondsNpcRenderer::new);
