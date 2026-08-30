@@ -6,6 +6,7 @@ import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -53,7 +54,13 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         /** 海蛇：远程水炮 + 毒息 + 尾部击飞 */
         SERPENT(1, 1200.0, 0.14, 50, 15.0F, "ocean_serpent"),
         /** 利维坦：全技能 + 咆哮 + 召唤鱼群 + 终焉漩涡 */
-        LEVIATHAN(2, 2500.0, 0.12, 70, 20.0F, "ocean_leviathan");
+        LEVIATHAN(2, 2500.0, 0.12, 70, 20.0F, "ocean_leviathan"),
+        /** 深渊克拉肯（海底 Boss）：复用克拉肯技能组，生命更高、伤害更高（沉在海底深渊） */
+        ABYSS_KRAKEN(3, 900.0, 0.16, 45, 11.0F, "ocean_abyss_kraken"),
+        /** 海沟巨蛇（海底 Boss）：复用海蛇技能组 */
+        TRENCH_SERPENT(4, 1600.0, 0.14, 60, 16.0F, "ocean_trench_serpent"),
+        /** 沉没利维坦（海底 Boss）：复用利维坦技能组，沉船深渊的终极霸主 */
+        SUNKEN_LEVIATHAN(5, 3000.0, 0.12, 85, 21.0F, "ocean_sunken_leviathan");
 
         public final int id;
         public final double health;
@@ -200,21 +207,56 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         return enraged ? (long) (baseTicks * ENRAGE_CD_MULT) : baseTicks;
     }
 
+    private int seafloorGoneTicks = 0;
+
     private double auraRadius() {
         return switch (getVariant()) {
             case KRAKEN -> AURA_R_KRAKEN;
             case SERPENT -> AURA_R_SERPENT;
             case LEVIATHAN -> AURA_R_LEVIATHAN;
+            case ABYSS_KRAKEN -> 9.0;
+            case TRENCH_SERPENT -> 10.0;
+            case SUNKEN_LEVIATHAN -> 12.0;
         };
+    }
+
+    /** 顶级 Boss（更高受伤封顶）：利维坦 + 沉没利维坦。 */
+    private boolean isTopBoss() {
+        Variant v = getVariant();
+        return v == Variant.LEVIATHAN || v == Variant.SUNKEN_LEVIATHAN;
+    }
+
+    /** 海底 Boss（仅玩家贴近海底时保留，远离即消失）。 */
+    private boolean isSeafloorBoss() {
+        Variant v = getVariant();
+        return v == Variant.ABYSS_KRAKEN || v == Variant.TRENCH_SERPENT || v == Variant.SUNKEN_LEVIATHAN;
+    }
+
+    /** 是否有玩家位于海底附近（其 XZ 列上距最近实心方块 ≤ 18 格）。 */
+    private boolean anyPlayerNearSeafloor() {
+        Level level = level();
+        int min = level.getMinBuildHeight();
+        for (Player p : level.players()) {
+            BlockPos pp = p.blockPosition();
+            int floor = min;
+            for (int y = pp.getY(); y > min; y--) {
+                if (level.getBlockState(new BlockPos(pp.getX(), y, pp.getZ())).isSolid()) {
+                    floor = y;
+                    break;
+                }
+            }
+            if (Math.abs(pp.getY() - floor) <= 18) return true;
+        }
+        return false;
     }
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
         // 海怪受伤封顶保护
-        float capped = Math.min(amount, getVariant() == Variant.LEVIATHAN ? 120.0F : 80.0F);
+        float capped = Math.min(amount, isTopBoss() ? 120.0F : 80.0F);
         boolean result = super.hurt(source, capped);
         // 狂暴反击：受到重击（≥封顶一半）时立刻爆发一圈击退（防连触，2s 一次）
-        if (result && enraged && capped >= (getVariant() == Variant.LEVIATHAN ? 60.0F : 40.0F)
+        if (result && enraged && capped >= (isTopBoss() ? 60.0F : 40.0F)
                 && level() instanceof ServerLevel sl && sl.getGameTime() >= nextRetaliateTick) {
             nextRetaliateTick = sl.getGameTime() + 40;
             enrageRetaliate(sl);
@@ -270,6 +312,12 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             }
         }
 
+        // 海底 Boss：玩家远离海底超过 30 秒则潜回深渊消失
+        if (isSeafloorBoss()) {
+            if (anyPlayerNearSeafloor()) seafloorGoneTicks = 0;
+            else if (++seafloorGoneTicks > 600) { discard(); return; }
+        }
+
         bossEvent.setProgress(getHealth() / getMaxHealth());
 
         long now = serverLevel.getGameTime();
@@ -305,6 +353,9 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             case KRAKEN -> tickKraken(serverLevel, target, now, distSqr);
             case SERPENT -> tickSerpent(serverLevel, target, now, distSqr);
             case LEVIATHAN -> tickLeviathan(serverLevel, target, now, distSqr);
+            case ABYSS_KRAKEN -> tickAbyssKraken(serverLevel, target, now, distSqr);
+            case TRENCH_SERPENT -> tickTrenchSerpent(serverLevel, target, now, distSqr);
+            case SUNKEN_LEVIATHAN -> tickSunkenLeviathan(serverLevel, target, now, distSqr);
         }
     }
 
@@ -350,6 +401,9 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             case KRAKEN -> 1;
             case SERPENT -> 1;
             case LEVIATHAN -> 2;
+            case ABYSS_KRAKEN -> 2;
+            case TRENCH_SERPENT -> 1;
+            case SUNKEN_LEVIATHAN -> 3;
         };
         boolean anyHit = false;
         for (ServerPlayer player : sl.players()) {
@@ -439,6 +493,22 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
                 startMaelstrom(sl, now);
                 return true;
             }
+            case ABYSS_KRAKEN -> {
+                if (distSqr <= 24 * 24) {
+                    startAbyssMaw(sl, now);
+                    return true;
+                }
+            }
+            case TRENCH_SERPENT -> {
+                if (distSqr <= 30 * 30) {
+                    startTrenchMaw(sl, now);
+                    return true;
+                }
+            }
+            case SUNKEN_LEVIATHAN -> {
+                startSunkenMaelstrom(sl, now);
+                return true;
+            }
         }
         return false;
     }
@@ -449,6 +519,9 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             case 1 -> tentacleFieldTelegraph(sl);
             case 2 -> constrictTick(sl, now);
             case 3 -> maelstromTick(sl, now);
+            case 4 -> abyssMawTelegraph(sl);
+            case 5 -> trenchMawTick(sl, now);
+            case 6 -> sunkenMaelstromTick(sl, now);
             default -> { }
         }
         if (now >= channelEndTick) {
@@ -461,6 +534,9 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             case 1 -> tentacleFieldErupt(sl);
             case 2 -> { /* 缠绕自然松开，无额外收尾 */ }
             case 3 -> maelstromDetonate(sl);
+            case 4 -> abyssMawErupt(sl);
+            case 5 -> { /* 绞杀漩涡自然收尾 */ }
+            case 6 -> sunkenMaelstromDetonate(sl);
             default -> { }
         }
         channel = 0;
@@ -599,6 +675,278 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             player.hurtMarked = true;
             SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
             stats.sanity = Math.max(0, stats.sanity - 8);
+            stats.sync();
+        }
+    }
+
+    // ═══════════ 海底专属 Boss 独立技能组（不复用克拉肯/海蛇/利维坦）═══════════
+    private void oceanWarn(ServerLevel sl, double r, String key, ChatFormatting style) {
+        for (ServerPlayer player : sl.players()) {
+            if (isValidOceanPrey(player) && distanceToSqr(player) <= r * r) {
+                player.displayClientMessage(Component.translatable("message.sixty_seconds.ocean." + key).withStyle(style), true);
+            }
+        }
+    }
+
+    // ── 深渊巨怪 ABYSS_KRAKEN ──
+    private void tickAbyssKraken(ServerLevel sl, LivingEntity target, long now, double distSqr) {
+        if (now >= nextSlamTick && distSqr <= 9 * 9) abyssSlam(sl, now);
+        else if (now >= nextPullTick && distSqr > 4 * 4 && distSqr <= 18 * 18) abyssVortex(sl, now);
+        else if (now >= nextInkTick && distSqr <= 13 * 13) abyssBlind(sl, now);
+    }
+    private void abyssSlam(ServerLevel sl, long now) {
+        nextSlamTick = now + cd(20 * 9);
+        swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
+        double r = 9.0;
+        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(), 14, r * 0.4, 0.8, r * 0.4, 0);
+        playSound(SoundEvents.ELDER_GUARDIAN_HURT, 0.9F, 0.5F);
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            SixtySecondsHealthSystem.applyInjury(player, null, injuryNow(getVariant().injury));
+            Vec3 away = player.position().subtract(position()).normalize();
+            player.setDeltaMovement(away.x * 0.7, 0.4, away.z * 0.7);
+            player.hurtMarked = true;
+            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 2));
+            player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 20 * 3, 1));
+        }
+        oceanWarn(sl, r, "abyss_slam", ChatFormatting.DARK_PURPLE);
+    }
+    private void abyssVortex(ServerLevel sl, long now) {
+        nextPullTick = now + cd(20 * 14);
+        playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.6F, 0.8F);
+        double r = 16.0;
+        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 8, r * 0.3, 1.0, r * 0.3, 0.01);
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            Vec3 toward = position().subtract(player.position()).normalize();
+            player.setDeltaMovement(player.getDeltaMovement().add(toward.x * 0.18, toward.y * 0.1, toward.z * 0.18));
+            player.hurtMarked = true;
+        }
+        oceanWarn(sl, r, "abyss_vortex", ChatFormatting.DARK_PURPLE);
+    }
+    private void abyssBlind(ServerLevel sl, long now) {
+        nextInkTick = now + cd(20 * 18);
+        playSound(SoundEvents.SQUID_SQUIRT, 0.7F, 0.6F);
+        double r = 12.0;
+        sl.sendParticles(ParticleTypes.SMOKE, getX(), getY(), getZ(), 30, r * 0.4, 1.5, r * 0.4, 0.05);
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 4, 0));
+            player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 20 * 4, 0));
+        }
+        oceanWarn(sl, r, "abyss_blind", ChatFormatting.DARK_PURPLE);
+    }
+    private void startAbyssMaw(ServerLevel sl, long now) {
+        channel = 4;
+        channelEndTick = now + 40;
+        nextUltTick = now + cd(20 * 26);
+        fieldMarks.clear();
+        for (ServerPlayer player : sl.players()) {
+            if (isValidOceanPrey(player) && distanceToSqr(player) <= 26 * 26) {
+                fieldMarks.add(player.position());
+                player.displayClientMessage(Component.translatable("message.sixty_seconds.ocean.abyss_maw").withStyle(ChatFormatting.DARK_PURPLE), true);
+            }
+        }
+        playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.0F, 0.7F);
+    }
+    private void abyssMawTelegraph(ServerLevel sl) {
+        for (Vec3 mark : fieldMarks) {
+            sl.sendParticles(ParticleTypes.SMOKE, mark.x, mark.y, mark.z, 5, 0.4, 1.0, 0.4, 0.03);
+        }
+        if (sl.getGameTime() % 10 == 0) playSound(SoundEvents.ELDER_GUARDIAN_AMBIENT, 0.5F, 1.2F);
+    }
+    private void abyssMawErupt(ServerLevel sl) {
+        playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.6F, 0.6F);
+        double hitR = 4.5;
+        for (Vec3 mark : fieldMarks) {
+            sl.sendParticles(ParticleTypes.EXPLOSION, mark.x, mark.y + 0.5, mark.z, 4, 0.8, 0.5, 0.8, 0);
+            sl.sendParticles(ParticleTypes.SMOKE, mark.x, mark.y, mark.z, 20, 0.6, 2.0, 0.6, 0.05);
+            for (ServerPlayer player : sl.players()) {
+                if (!isValidOceanPrey(player)) continue;
+                if (player.position().distanceToSqr(mark) <= hitR * hitR) {
+                    SixtySecondsHealthSystem.applyInjury(player, null, injuryNow(getVariant().injury + 16));
+                    Vec3 toward = position().subtract(player.position()).normalize();
+                    player.setDeltaMovement(toward.x * 1.0, 0.6, toward.z * 1.0);
+                    player.hurtMarked = true;
+                    player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 20 * 5, 0));
+                }
+            }
+        }
+    }
+
+    // ── 海沟巨蟒 TRENCH_SERPENT ──
+    private void tickTrenchSerpent(ServerLevel sl, LivingEntity target, long now, double distSqr) {
+        if (now >= nextSlamTick && distSqr <= 10 * 10) trenchCoil(sl, now);
+        else if (now >= nextInkTick && distSqr <= 10 * 10) trenchFume(sl, now);
+        else if (now >= nextRoarTick && distSqr <= 22 * 22) trenchRoar(sl, now);
+    }
+    private void trenchCoil(ServerLevel sl, long now) {
+        nextSlamTick = now + cd(20 * 10);
+        playSound(SoundEvents.PHANTOM_SWOOP, 0.8F, 1.4F);
+        double r = 10.0;
+        sl.sendParticles(ParticleTypes.ITEM_SLIME, getX(), getY() + 0.5, getZ(), 10, r * 0.35, 0.4, r * 0.35, 0.01);
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            SixtySecondsHealthSystem.applyInjury(player, null, injuryNow(getVariant().injury - 6));
+            Vec3 away = player.position().subtract(position()).normalize();
+            player.setDeltaMovement(away.x * 1.0, 0.8, away.z * 1.0);
+            player.hurtMarked = true;
+            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 1));
+        }
+        oceanWarn(sl, r, "trench_coil", ChatFormatting.DARK_GREEN);
+    }
+    private void trenchFume(ServerLevel sl, long now) {
+        nextInkTick = now + cd(20 * 16);
+        playSound(SoundEvents.SQUID_SQUIRT, 0.5F, 0.8F);
+        double r = 10.0;
+        sl.sendParticles(ParticleTypes.SNEEZE, getX(), getY(), getZ(), 20, r * 0.4, 1.2, r * 0.4, 0.05);
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 5, 1));
+        }
+        oceanWarn(sl, r, "trench_fume", ChatFormatting.DARK_GREEN);
+    }
+    private void trenchRoar(ServerLevel sl, long now) {
+        nextRoarTick = now + cd(20 * 14);
+        playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.0F, 0.6F);
+        double r = 22.0;
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 5, 1));
+            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 0));
+            SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
+            stats.sanity = Math.max(0, stats.sanity - 6);
+            stats.sync();
+        }
+        oceanWarn(sl, r, "trench_roar", ChatFormatting.DARK_GREEN);
+    }
+    private void startTrenchMaw(ServerLevel sl, long now) {
+        channel = 5;
+        channelEndTick = now + 70;
+        nextUltTick = now + cd(20 * 24);
+        double r = 28.0;
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 5, 1));
+            player.displayClientMessage(Component.translatable("message.sixty_seconds.ocean.trench_constrict").withStyle(ChatFormatting.DARK_GREEN), true);
+        }
+        playSound(SoundEvents.PHANTOM_BITE, 1.2F, 0.6F);
+    }
+    private void trenchMawTick(ServerLevel sl, long now) {
+        double r = 28.0;
+        sl.sendParticles(ParticleTypes.ITEM_SLIME, getX(), getY(), getZ(), 10, 2.0, 1.5, 2.0, 0.05);
+        if (now % 16 == 0) playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 0.7F, 0.4F);
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            Vec3 toward = position().subtract(player.position()).normalize();
+            player.setDeltaMovement(player.getDeltaMovement().scale(0.6).add(toward.x * 0.3, toward.y * 0.1, toward.z * 0.3));
+            player.hurtMarked = true;
+            if (now % 20 == 0) {
+                SixtySecondsHealthSystem.applyInjury(player, null, injuryNow((int) (getVariant().injury * 0.7)));
+                SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
+                stats.pollution = Math.min(100, stats.pollution + 5);
+                stats.sync();
+            }
+        }
+    }
+
+    // ── 沉没利维坦 SUNKEN_LEVIATHAN ──
+    private void tickSunkenLeviathan(ServerLevel sl, LivingEntity target, long now, double distSqr) {
+        if (now >= nextSlamTick && distSqr <= 11 * 11) sunkenSlam(sl, now);
+        else if (now >= nextBoltTick && distSqr <= 13 * 13) sunkenBreath(sl, now);
+        else if (now >= nextRoarTick && distSqr <= 20 * 20) sunkenRoar(sl, now);
+        else if (now >= nextPullTick && distSqr > 4 * 4 && distSqr <= 22 * 22) sunkenPull(sl, now);
+    }
+    private void sunkenSlam(ServerLevel sl, long now) {
+        nextSlamTick = now + cd(20 * 9);
+        swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
+        double r = 11.0;
+        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(), 16, r * 0.4, 0.8, r * 0.4, 0);
+        playSound(SoundEvents.ELDER_GUARDIAN_HURT, 0.9F, 0.5F);
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            SixtySecondsHealthSystem.applyInjury(player, null, injuryNow(getVariant().injury));
+            Vec3 away = player.position().subtract(position()).normalize();
+            player.setDeltaMovement(away.x * 0.8, 0.5, away.z * 0.8);
+            player.hurtMarked = true;
+            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 2));
+        }
+        oceanWarn(sl, r, "sunken_slam", ChatFormatting.DARK_RED);
+    }
+    private void sunkenBreath(ServerLevel sl, long now) {
+        nextBoltTick = now + cd(20 * 12);
+        playSound(SoundEvents.ELDER_GUARDIAN_CURSE, 1.0F, 0.5F);
+        double r = 13.0;
+        sl.sendParticles(ParticleTypes.REVERSE_PORTAL, getX(), getY(), getZ(), 24, r * 0.4, 1.5, r * 0.4, 0.05);
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            player.addEffect(new MobEffectInstance(MobEffects.WITHER, 20 * 4, 1));
+        }
+        oceanWarn(sl, r, "sunken_breath", ChatFormatting.DARK_RED);
+    }
+    private void sunkenRoar(ServerLevel sl, long now) {
+        nextRoarTick = now + cd(20 * 13);
+        playSound(SoundEvents.ELDER_GUARDIAN_CURSE, 1.4F, 0.4F);
+        double r = 20.0;
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 5, 1));
+            player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 20 * 4, 0));
+            SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
+            stats.sanity = Math.max(0, stats.sanity - 8);
+            stats.sync();
+        }
+        oceanWarn(sl, r, "sunken_roar", ChatFormatting.DARK_RED);
+    }
+    private void sunkenPull(ServerLevel sl, long now) {
+        nextPullTick = now + cd(20 * 14);
+        playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.6F, 0.8F);
+        double r = 20.0;
+        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 8, r * 0.3, 1.0, r * 0.3, 0.01);
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            Vec3 toward = position().subtract(player.position()).normalize();
+            player.setDeltaMovement(player.getDeltaMovement().add(toward.x * 0.2, toward.y * 0.12, toward.z * 0.2));
+            player.hurtMarked = true;
+        }
+        oceanWarn(sl, r, "sunken_pull", ChatFormatting.DARK_RED);
+    }
+    private void startSunkenMaelstrom(ServerLevel sl, long now) {
+        channel = 6;
+        channelEndTick = now + 90;
+        nextUltTick = now + cd(20 * 32);
+        double r = 32.0;
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 20 * 6, 0));
+            player.displayClientMessage(Component.translatable("message.sixty_seconds.ocean.sunken_maelstrom").withStyle(ChatFormatting.DARK_RED), true);
+        }
+        playSound(SoundEvents.ELDER_GUARDIAN_CURSE, 1.6F, 0.4F);
+    }
+    private void sunkenMaelstromTick(ServerLevel sl, long now) {
+        double r = 32.0;
+        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 12, 2.4, 1.6, 2.4, 0.05);
+        if (now % 16 == 0) playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 0.8F, 0.4F);
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            Vec3 toward = position().subtract(player.position()).normalize();
+            player.setDeltaMovement(player.getDeltaMovement().scale(0.6).add(toward.x * 0.4, toward.y * 0.14, toward.z * 0.4));
+            player.hurtMarked = true;
+            if (now % 20 == 0) SixtySecondsHealthSystem.applyInjury(player, null, injuryNow(getVariant().injury / 2));
+        }
+    }
+    private void sunkenMaelstromDetonate(ServerLevel sl) {
+        playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.6F, 0.7F);
+        sl.sendParticles(ParticleTypes.EXPLOSION_EMITTER, getX(), getY() + 1.0, getZ(), 4, 2.4, 1.0, 2.4, 0);
+        double r = 16.0;
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            SixtySecondsHealthSystem.applyInjury(player, null, injuryNow(getVariant().injury + 24));
+            Vec3 away = player.position().subtract(position()).normalize();
+            player.setDeltaMovement(away.x * 1.7, 1.1, away.z * 1.7);
+            player.hurtMarked = true;
+            SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
+            stats.sanity = Math.max(0, stats.sanity - 10);
             stats.sync();
         }
     }
@@ -771,11 +1119,17 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             case KRAKEN -> 15;
             case SERPENT -> 25;
             case LEVIATHAN -> 40;
+            case ABYSS_KRAKEN -> 22;
+            case TRENCH_SERPENT -> 32;
+            case SUNKEN_LEVIATHAN -> 50;
         };
         int extraRolls = switch (v) {
             case KRAKEN -> 10;
             case SERPENT -> 18;
             case LEVIATHAN -> 28;
+            case ABYSS_KRAKEN -> 14;
+            case TRENCH_SERPENT -> 22;
+            case SUNKEN_LEVIATHAN -> 36;
         };
         // 废料
         spawnAtLocation(new net.minecraft.world.item.ItemStack(

@@ -23,6 +23,9 @@ import net.exmo.sixty_seconds.client.SeaChartReturnHud;
 import net.exmo.sixty_seconds.client.render.CanyuesaHorseRenderer;
 import net.exmo.sixty_seconds.client.render.OceanSeaMonsterRenderer;
 import net.exmo.sixty_seconds.client.render.OceanSharkRenderer;
+import net.exmo.sixty_seconds.client.render.OceanFloorMonsterRenderer;
+import net.exmo.sixty_seconds.client.render.SixtySecondsSubmarineRenderer;
+import net.exmo.sixty_seconds.entity.OceanFloorMonsterEntity;
 import net.exmo.sixty_seconds.client.render.RainbowHorseRenderer;
 import net.exmo.sixty_seconds.client.render.SuperPigHorseRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsArrowRenderer;
@@ -166,6 +169,13 @@ import net.exmo.sixty_seconds.weather.ClientWeatherState;
 import net.exmo.sixty_seconds.weather.WeatherVisualConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.KeyMapping;
+import net.neoforged.neoforge.client.settings.KeyConflictContext;
+import net.neoforged.neoforge.client.settings.KeyModifier;
+import com.mojang.blaze3d.platform.InputConstants;
+import org.lwjgl.glfw.GLFW;
+import net.exmo.sixty_seconds.bridge.fabric.KeyBindingHelper;
+import net.exmo.sixty_seconds.content.entity.SixtySecondsSubmarineEntity;
 
 import java.util.List;
 
@@ -173,6 +183,13 @@ import java.util.List;
 public final class SixtySecondsClient {
     private SixtySecondsClient() {
     }
+
+    /** 潜水艇下潜键（左 Ctrl）：抬头/低头控制见 SixtySecondsSubmarineEntity。 */
+    public static final KeyMapping SUBMARINE_DESCEND = KeyBindingHelper.registerKeyBinding(
+            new KeyMapping("key.sixty_seconds.submarine_descend",
+                    KeyConflictContext.IN_GAME, KeyModifier.CONTROL,
+                    InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_CONTROL,
+                    "key.categories.sixty_seconds"));
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
@@ -308,6 +325,8 @@ public final class SixtySecondsClient {
         event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_NPC, SixtySecondsNpcRenderer::new);
         event.registerEntityRenderer(ModEntities.OCEAN_SHARK, OceanSharkRenderer::new);
         event.registerEntityRenderer(ModEntities.OCEAN_SEA_MONSTER, OceanSeaMonsterRenderer::new);
+        event.registerEntityRenderer(ModEntities.OCEAN_FLOOR_MONSTER, OceanFloorMonsterRenderer::new);
+        event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_SUBMARINE, SixtySecondsSubmarineRenderer::new);
         event.registerEntityRenderer(ModEntities.SUPER_PIG_HORSE, SuperPigHorseRenderer::new);
         event.registerEntityRenderer(ModEntities.RAINBOW_HORSE, RainbowHorseRenderer::new);
         event.registerEntityRenderer(ModEntities.CANYUESA_HORSE, CanyuesaHorseRenderer::new);
@@ -335,6 +354,11 @@ public final class SixtySecondsClient {
             SixtySecGameWorldComponent.KEY.get(client.level).clientTick();
         }
         WeatherParticleSpawner.tick(client);
+        // 潜水艇：把空格(上浮)/左 Ctrl(下潜) 写入实体数据，由服务端驱动
+        if (client.player != null && client.player.getVehicle() instanceof SixtySecondsSubmarineEntity sub) {
+            sub.setAscending(client.options.keyJump.isDown());
+            sub.setDescending(SUBMARINE_DESCEND.isDown());
+        }
         for (ClientTickEvents.EndTick listener : ClientTickEvents.END_CLIENT_TICK.invokers()) {
             listener.onEndTick(client);
         }

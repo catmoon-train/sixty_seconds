@@ -55,7 +55,17 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         /** 疫病者：毒疫大师，中程酸液+毒息+腐化光环 */
         PLAGUEBEARER(3, 1.05, 0.82, "sixty_seconds_boss_plaguebearer"),
         /** 鬼魅：刺客型，高速度低血量，瞬移+暗影打击 */
-        SPECTER(4, 0.7, 1.25, "sixty_seconds_boss_specter");
+        SPECTER(4, 0.7, 1.25, "sixty_seconds_boss_specter"),
+        /** 熔渊暴君：火系重装，熔岩震地+烈焰冲撞+火山喷发 */
+        INFERNO(5, 1.4, 0.8, "sixty_seconds_boss_inferno"),
+        /** 霜噬守望：冰控法师，冰锥+霜息+暴雪新星 */
+        FROSTBITE(6, 1.1, 0.9, "sixty_seconds_boss_frostbite"),
+        /** 虫潮之主：召唤流，虫群+酸液弹幕+腐蚀新星 */
+        SWARMKEEPER(7, 0.9, 1.0, "sixty_seconds_boss_swarmkeeper"),
+        /** 雷霆传令：机动刺客，瞬电冲撞+雷瞬击+雷暴弹幕 */
+        STORMHERALD(8, 0.85, 1.3, "sixty_seconds_boss_stormherald"),
+        /** 虚空织者：暗影法师，生命汲取+暗影突袭+虚空新星 */
+        VOIDWEAVER(9, 0.95, 1.05, "sixty_seconds_boss_voidweaver");
 
         public final int id;
         public final double healthMult;
@@ -231,13 +241,13 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
 
     @Override
     public ResourceLocation textureLocation() {
-        // 所有变体统一使用基础纹理（变体专用纹理待后续美术产出后替换）
         if (isApex()) {
             return ResourceLocation.fromNamespaceAndPath("sixty_seconds",
                     "textures/entity/sixty_seconds_boss_apex.png");
         }
+        // 每个变体使用独立纹理（贴图由美术后续产出，当前为占位图）
         return ResourceLocation.fromNamespaceAndPath("sixty_seconds",
-                "textures/entity/sixty_seconds_boss.png");
+                "textures/entity/" + getVariant().textureName + ".png");
     }
 
     // ── Boss 血条 ─────────────────────────────────────────────────────
@@ -301,6 +311,96 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
             case NECROMANCER -> tickNecromancer(serverLevel, target, now, lvl, apex, distSqr);
             case PLAGUEBEARER -> tickPlaguebearer(serverLevel, target, now, lvl, apex, distSqr);
             case SPECTER -> tickSpecter(serverLevel, target, now, lvl, apex, distSqr);
+            case INFERNO -> tickInferno(serverLevel, target, now, lvl, apex, distSqr);
+            case FROSTBITE -> tickFrostbite(serverLevel, target, now, lvl, apex, distSqr);
+            case SWARMKEEPER -> tickSwarmkeeper(serverLevel, target, now, lvl, apex, distSqr);
+            case STORMHERALD -> tickStormherald(serverLevel, target, now, lvl, apex, distSqr);
+            case VOIDWEAVER -> tickVoidweaver(serverLevel, target, now, lvl, apex, distSqr);
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════
+    //  熔渊暴君 INFERNO（火系重装）
+    // ══════════════════════════════════════════════════════════════════
+    private void tickInferno(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
+        if (now >= nextSlamTick && distSqr <= 5 * 5) {
+            slam(serverLevel, now, lvl, 6.0, true);            // 熔岩震地（更大范围、更高伤害）
+        } else if (now >= nextChargeTick && distSqr >= 7 * 7 && distSqr <= 22 * 22) {
+            charge(serverLevel, now, target, 1.7);            // 烈焰冲撞
+        } else if (lvl >= 2 && now >= nextBarrageTick && distSqr >= 6 * 6 && distSqr <= 28 * 28 && hasLineOfSight(target)) {
+            acidBarrage(serverLevel, now, target, lvl);        // 火球弹幕
+        } else if (lvl >= 3 && now >= nextSummonTick) {
+            summon(serverLevel, now, lvl, false);             // 火山喷发（召唤火元素）
+        } else if (lvl >= 4 && now >= nextRoarTick && distSqr <= 12 * 12) {
+            roar(serverLevel, now, lvl, true);
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════
+    //  霜噬守望 FROSTBITE（冰控法师）
+    // ══════════════════════════════════════════════════════════════════
+    private void tickFrostbite(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
+        if (now >= nextSpearTick && distSqr >= 4 * 4 && distSqr <= 22 * 22 && hasLineOfSight(target)) {
+            boneSpear(serverLevel, now, target, lvl);         // 冰锥
+        } else if (now >= nextBreathTick && distSqr <= 10 * 10) {
+            toxicBreath(serverLevel, now, target, lvl);      // 霜息
+        } else if (lvl >= 2 && now >= nextRoarTick && distSqr <= 14 * 14) {
+            roar(serverLevel, now, lvl, false);               // 寒霜咆哮（减速）
+        } else if (lvl >= 3 && now >= nextNovaTick) {
+            toxicNova(serverLevel, now, lvl);                 // 暴雪新星
+        } else if (apex && now >= nextBarrageTick && distSqr >= 6 * 6 && distSqr <= 26 * 26 && hasLineOfSight(target)) {
+            acidBarrage(serverLevel, now, target, lvl);
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════
+    //  虫潮之主 SWARMKEEPER（召唤流）
+    // ══════════════════════════════════════════════════════════════════
+    private void tickSwarmkeeper(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
+        if (now >= nextSummonTick) {
+            summon(serverLevel, now, lvl, false);             // 虫群
+        } else if (lvl >= 2 && now >= nextBarrageTick && distSqr >= 6 * 6 && distSqr <= 30 * 30 && hasLineOfSight(target)) {
+            acidBarrage(serverLevel, now, target, lvl);       // 酸液弹幕
+        } else if (lvl >= 3 && now >= nextNovaTick) {
+            toxicNova(serverLevel, now, lvl);                 // 腐蚀新星
+        } else if (apex && distSqr <= 12 * 12 && now >= nextSlamTick) {
+            slam(serverLevel, now, lvl, 5.5, false);
+        } else if (lvl >= 5 && now >= nextRoarTick) {
+            roar(serverLevel, now, lvl, true);                // 终焉：万虫咆哮
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════
+    //  雷霆传令 STORMHERALD（机动刺客）
+    // ══════════════════════════════════════════════════════════════════
+    private void tickStormherald(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
+        if (now >= nextChargeTick && distSqr >= 6 * 6 && distSqr <= 28 * 28) {
+            charge(serverLevel, now, target, 2.0);            // 瞬电冲撞
+        } else if (lvl >= 2 && now >= nextShadowTick && distSqr <= 64) {
+            shadowStrike(serverLevel, now, target, lvl, apex);      // 雷瞬击
+        } else if (now >= nextBarrageTick && distSqr >= 6 * 6 && distSqr <= 30 * 30 && hasLineOfSight(target)) {
+            acidBarrage(serverLevel, now, target, lvl);       // 雷暴弹幕
+        } else if (lvl >= 4 && apex && now >= nextRoarTick && distSqr <= 12 * 12) {
+            roar(serverLevel, now, lvl, true);
+        } else if (distSqr <= 5 * 5 && now >= nextSlamTick) {
+            slam(serverLevel, now, lvl, 5.0, false);
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════
+    //  虚空织者 VOIDWEAVER（暗影法师）
+    // ══════════════════════════════════════════════════════════════════
+    private void tickVoidweaver(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
+        if (now >= nextDrainTick && distSqr <= 8 * 8) {
+            lifeDrain(serverLevel, now, target, lvl);        // 生命汲取（自愈）
+        } else if (lvl >= 2 && now >= nextShadowTick && distSqr <= 64) {
+            shadowStrike(serverLevel, now, target, lvl, apex);      // 暗影突袭
+        } else if (lvl >= 3 && now >= nextNovaTick) {
+            toxicNova(serverLevel, now, lvl);                 // 虚空新星
+        } else if (apex && now >= nextRoarTick && distSqr <= 12 * 12) {
+            roar(serverLevel, now, lvl, true);
+        } else if (distSqr <= 6 * 6 && now >= nextSlamTick) {
+            slam(serverLevel, now, lvl, 5.0, false);
         }
     }
 

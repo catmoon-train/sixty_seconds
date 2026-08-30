@@ -134,6 +134,11 @@ public final class SixtySecondsWeapons {
             map.put(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_STEEL_CHESTPLATE, 0.18);
             map.put(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_STEEL_LEGGINGS, 0.15);
             map.put(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_STEEL_BOOTS, 0.12);
+            // 潜水服（防护能力与钢套相当）；全套水下呼吸在 NeoForgeEvents 处理
+            map.put(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_DIVING_HELMET, 0.18);
+            map.put(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_DIVING_CHESTPLATE, 0.18);
+            map.put(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_DIVING_LEGGINGS, 0.15);
+            map.put(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_DIVING_BOOTS, 0.12);
             map.put(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_BALLISTIC_VEST, 0.25);
             // 塑料护甲套（废料与铁之间）
             map.put(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_PLASTIC_HELMET, 0.11);

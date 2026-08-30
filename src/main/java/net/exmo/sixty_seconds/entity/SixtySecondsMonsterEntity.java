@@ -62,7 +62,28 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
         /** 爆裂怪：慢速，死亡时自爆造成范围健康伤害+击飞（见 {@link #explodeOnDeath}）。 */
         BLOATER(6, 30.0, 0.16, 6, 3, "sixty_seconds_bloater"),
         /** 装甲重锤：极高血、单次受击封顶（枪械也无法一枪即死），破门最强。 */
-        JUGGERNAUT(7, 120.0, 0.15, 34, 9, "sixty_seconds_juggernaut");
+        JUGGERNAUT(7, 120.0, 0.15, 34, 9, "sixty_seconds_juggernaut"),
+        // ── 第二批扩充（10 种常规小怪，勿插队/重排）────────────────────
+        /** 余烬爬行者：快、血薄，远程吐焰（复用吐酸行为）。 */
+        CINDERLING(8, 16.0, 0.26, 12, 2, "sixty_seconds_cinderling"),
+        /** 寒霜爬行者：中速，远程吐霜（复用吐酸行为）。 */
+        FROSTLING(9, 20.0, 0.24, 10, 2, "sixty_seconds_frostling"),
+        /** 枯壳重锤：慢速高血，破门好手。 */
+        HUSKBRUTE(10, 75.0, 0.16, 28, 6, "sixty_seconds_huskbrute"),
+        /** 掠影：极快、血薄，潜行贴近（复用潜袭行为）。 */
+        RAVENOR(11, 22.0, 0.32, 14, 2, "sixty_seconds_ravenor"),
+        /** 哀嚎者：定期嚎叫加速光环（复用嚎叫行为），本体近战弱。 */
+        WAILER(12, 34.0, 0.21, 9, 3, "sixty_seconds_wailer"),
+        /** 爆碎者：慢速，近战爆发型，血薄伤害中。 */
+        BURSTER(13, 26.0, 0.17, 6, 3, "sixty_seconds_burster"),
+        /** 嗜血猎犬：快速近战 Bruiser，破门中坚。 */
+        GOREHOUND(14, 40.0, 0.28, 18, 4, "sixty_seconds_gorehound"),
+        /** 暗默：极快、血薄，潜行突袭（复用潜袭行为）。 */
+        SHADOWMUTE(15, 18.0, 0.30, 12, 2, "sixty_seconds_shadowmute"),
+        /** 白骨领主：极高血、破门最强，移速极慢。 */
+        BONELORD(16, 90.0, 0.14, 26, 8, "sixty_seconds_bonelord"),
+        /** 棘行体：中速高伤，均衡型。 */
+        SPINEWALKER(17, 36.0, 0.20, 16, 4, "sixty_seconds_spinewalker");
 
         public final int id;
         public final double health;
@@ -267,9 +288,11 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
             spitCooldown--;
         }
         switch (getVariant()) {
-            case SPITTER -> tickSpit(serverLevel);
-            case STALKER -> tickStalker(serverLevel);
-            case HOWLER -> tickHowler(serverLevel);
+            case SPITTER, CINDERLING, FROSTLING -> tickSpit(serverLevel);
+            case STALKER, RAVENOR, SHADOWMUTE -> tickStalker(serverLevel);
+            case HOWLER, WAILER -> tickHowler(serverLevel);
+            case BLOATER -> {
+            }
             default -> {
             }
         }

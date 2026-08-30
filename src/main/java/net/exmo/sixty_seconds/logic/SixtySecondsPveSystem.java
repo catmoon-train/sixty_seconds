@@ -271,10 +271,27 @@ public final class SixtySecondsPveSystem {
         return false;
     }
 
+    /** 第二批扩充的 10 种常规小怪池（ambient 刷怪按天数比例混入）。 */
+    private static final SixtySecondsMonsterEntity.Variant[] NEW_MONSTER_VARIANTS = {
+            SixtySecondsMonsterEntity.Variant.CINDERLING, SixtySecondsMonsterEntity.Variant.FROSTLING,
+            SixtySecondsMonsterEntity.Variant.HUSKBRUTE, SixtySecondsMonsterEntity.Variant.RAVENOR,
+            SixtySecondsMonsterEntity.Variant.WAILER, SixtySecondsMonsterEntity.Variant.BURSTER,
+            SixtySecondsMonsterEntity.Variant.GOREHOUND, SixtySecondsMonsterEntity.Variant.SHADOWMUTE,
+            SixtySecondsMonsterEntity.Variant.BONELORD, SixtySecondsMonsterEntity.Variant.SPINEWALKER
+    };
+
     /** 游荡怪变体权重：天数/区域等级越高，精英变体（装甲重锤/潜袭者/嚎叫者/爆裂怪）占比越大。 */
     private static Variant rollAmbientVariant(ServerLevel level, int day, int areaLevel) {
         float danger = (day + areaLevel) / 12.0F; // 0.16(第1天1级) → 1.0(第7天5级)
         float r = level.random.nextFloat();
+        // 第二批小怪（第 2 天起按天数比例混入，越往后越多）
+        if (day >= 2) {
+            float newChance = Math.min(0.42F, 0.16F + 0.05F * day);
+            if (r < newChance) {
+                return NEW_MONSTER_VARIANTS[level.random.nextInt(NEW_MONSTER_VARIANTS.length)];
+            }
+            r = level.random.nextFloat();
+        }
         // 高危精英怪（越往后越常见）
         if (danger > 0.45F && r < danger * 0.12F) {
             return Variant.JUGGERNAUT;
@@ -420,10 +437,21 @@ public final class SixtySecondsPveSystem {
         double necW = SixtySecondsBalance.BOSS_VARIANT_NECROMANCER_WEIGHT * (1.0 + dayBonus);
         double plaW = SixtySecondsBalance.BOSS_VARIANT_PLAGUEBEARER_WEIGHT * (1.0 + dayBonus);
         double speW = SixtySecondsBalance.BOSS_VARIANT_SPECTER_WEIGHT * (1.0 + dayBonus);
-        if (r < speW) return SixtySecondsBossEntity.BossVariant.SPECTER;
-        if (r < speW + plaW) return SixtySecondsBossEntity.BossVariant.PLAGUEBEARER;
-        if (r < speW + plaW + necW) return SixtySecondsBossEntity.BossVariant.NECROMANCER;
-        if (r < speW + plaW + necW + colW) return SixtySecondsBossEntity.BossVariant.COLOSSUS;
+        double infW = dayNumber >= 4 ? SixtySecondsBalance.BOSS_VARIANT_INFERNO_WEIGHT * (1.0 + dayBonus) : 0;
+        double frzW = dayNumber >= 4 ? SixtySecondsBalance.BOSS_VARIANT_FROSTBITE_WEIGHT * (1.0 + dayBonus) : 0;
+        double swmW = dayNumber >= 5 ? SixtySecondsBalance.BOSS_VARIANT_SWARMKEEPER_WEIGHT * (1.0 + dayBonus) : 0;
+        double stmW = dayNumber >= 5 ? SixtySecondsBalance.BOSS_VARIANT_STORMHERALD_WEIGHT * (1.0 + dayBonus) : 0;
+        double vodW = dayNumber >= 6 ? SixtySecondsBalance.BOSS_VARIANT_VOIDWEAVER_WEIGHT * (1.0 + dayBonus) : 0;
+        double acc = speW;
+        if (r < acc) return SixtySecondsBossEntity.BossVariant.SPECTER;
+        acc += plaW; if (r < acc) return SixtySecondsBossEntity.BossVariant.PLAGUEBEARER;
+        acc += necW; if (r < acc) return SixtySecondsBossEntity.BossVariant.NECROMANCER;
+        acc += colW; if (r < acc) return SixtySecondsBossEntity.BossVariant.COLOSSUS;
+        acc += infW; if (r < acc) return SixtySecondsBossEntity.BossVariant.INFERNO;
+        acc += frzW; if (r < acc) return SixtySecondsBossEntity.BossVariant.FROSTBITE;
+        acc += swmW; if (r < acc) return SixtySecondsBossEntity.BossVariant.SWARMKEEPER;
+        acc += stmW; if (r < acc) return SixtySecondsBossEntity.BossVariant.STORMHERALD;
+        acc += vodW; if (r < acc) return SixtySecondsBossEntity.BossVariant.VOIDWEAVER;
         return SixtySecondsBossEntity.BossVariant.RAVAGER;
     }
 

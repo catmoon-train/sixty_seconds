@@ -88,7 +88,23 @@ public final class NeoForgeEvents {
             for (ServerTickEvents.EndWorldTick listener : ServerTickEvents.END_WORLD_TICK.invokers()) {
                 listener.onEndTick(level);
             }
+            // 潜水服套装效果：穿戴全套时获得水下呼吸
+            for (net.minecraft.world.entity.player.Player player : level.players()) {
+                if (isFullDivingSuit(player)) {
+                    player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                            net.minecraft.world.effect.MobEffects.WATER_BREATHING, 240, 0, false, false));
+                }
+            }
         }
+    }
+
+    /** 玩家是否穿戴整套潜水服（头盔/胸甲/护腿/靴）。 */
+    private static boolean isFullDivingSuit(net.minecraft.world.entity.player.Player player) {
+        var armor = player.getInventory().armor;
+        return !armor.get(3).isEmpty() && armor.get(3).getItem() == net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_DIVING_HELMET
+                && !armor.get(2).isEmpty() && armor.get(2).getItem() == net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_DIVING_CHESTPLATE
+                && !armor.get(1).isEmpty() && armor.get(1).getItem() == net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_DIVING_LEGGINGS
+                && !armor.get(0).isEmpty() && armor.get(0).getItem() == net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_DIVING_BOOTS;
     }
 
     @SubscribeEvent

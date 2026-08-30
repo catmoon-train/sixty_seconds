@@ -328,6 +328,16 @@ public final class SixtySecondsBalance {
     public static final double BOSS_VARIANT_SPECTER_WEIGHT = 0.10;
     /** 变体权重随天数递增倍率（第 N 天权重 × (1+递增×天数)）；0 代表不变。 */
     public static final double BOSS_VARIANT_DAY_BONUS = 0.04;
+    /** 熔渊暴君权重（第 4 天起出现） */
+    public static final double BOSS_VARIANT_INFERNO_WEIGHT = 0.09;
+    /** 霜噬守望权重（第 4 天起出现） */
+    public static final double BOSS_VARIANT_FROSTBITE_WEIGHT = 0.09;
+    /** 虫潮之主权重（第 5 天起出现） */
+    public static final double BOSS_VARIANT_SWARMKEEPER_WEIGHT = 0.08;
+    /** 雷霆传令权重（第 5 天起出现） */
+    public static final double BOSS_VARIANT_STORMHERALD_WEIGHT = 0.08;
+    /** 虚空织者权重（第 6 天起出现） */
+    public static final double BOSS_VARIANT_VOIDWEAVER_WEIGHT = 0.07;
     // ── 新技能数值 ────────────────────────────────────────────────────
     /** 铁壁冷却（巨像） */
     public static final int BOSS_IRON_SKIN_COOLDOWN_TICKS = 20 * 35;

@@ -141,6 +141,8 @@ public final class SixtySecondsTechTree {
         // ── 军械装备（需「更好的工作环境-III」）─────────────────────────
         chain(list, "military", "work_env_3", "armor_1", "armor_2", "armor_3", "armor_4");
         chain(list, "military", "work_env_3", "func_armor_1", "func_armor_2");
+        // 功能性防具-III（前置：功能性防具-II）：潜水服全套触发水下呼吸
+        chain(list, "military", "func_armor_2", "func_armor_3");
         chain(list, "military", "work_env_3", "melee_1", "melee_2", "melee_3");
         chain(list, "military", "melee_2", "mace_1", "mace_2", "mace_3");
         chain(list, "military", "work_env_3", "throwables_1", "throwables_2", "throwables_3");
@@ -177,6 +179,8 @@ public final class SixtySecondsTechTree {
         chain(list, "transport", "work_env_4", "vehicle_repair", "vehicle_repair_2", "vehicle_repair_3");
         // 海上载具：木筏 → 汽艇 → 渔船，与陆上载具同为车床产物（需「更好的工作环境-IV」）
         chain(list, "transport", "work_env_4", "boat_1", "boat_2", "boat_3");
+        // 潜水载具：潜艇（前置渔船-III，车床通电产物）
+        chain(list, "transport", "boat_3", "submarine_1");
         // 飞行载具：飞行器 → 直升机 → 飞机（交通大类 70% 解锁门控，见 gateSatisfied）
         chain(list, "transport", null, "aircraft_1", "aircraft_2", "aircraft_3");
         // ── 房车装修（车床，需「更好的工作环境-IV」）─────────────────────

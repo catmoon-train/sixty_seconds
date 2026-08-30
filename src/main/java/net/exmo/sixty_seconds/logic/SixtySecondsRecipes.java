@@ -466,6 +466,10 @@ public final class SixtySecondsRecipes {
         // 火药包（原版火药）：原版火药×4，通电
         add(list, "gunpowder_pack_vanilla", Station.WORKBENCH, "materials_3", true,
                 List.of(in(Items.GUNPOWDER, 4)), ModItems.SIXTY_SECONDS_GUNPOWDER_PACK, 1);
+        // 潜水载具（车床，通电）：钢锭*10 + 玻璃板*8 + 碎铜*10 + 工业麻*8 + 胶带*4
+        add(list, "submarine", Station.LATHE, "submarine_1", true,
+                List.of(in(steel, 10), in(glassPlate, 8), in(copper, 10), in(hemp, 8), in(tape, 4)),
+                ModItems.SIXTY_SECONDS_SUBMARINE, 1);
 
         // ── 工具-I ───────────────────────────────────────────────────
         add(list, "umbrella", Station.WORKBENCH, "tools_1", false,
@@ -1037,6 +1041,14 @@ public final class SixtySecondsRecipes {
                 List.of(in(steel, 5)), List.of(in(steel, 8)), List.of(in(steel, 6)), List.of(in(steel, 5)),
                 ModItems.SIXTY_SECONDS_STEEL_HELMET, ModItems.SIXTY_SECONDS_STEEL_CHESTPLATE,
                 ModItems.SIXTY_SECONDS_STEEL_LEGGINGS, ModItems.SIXTY_SECONDS_STEEL_BOOTS);
+        // 潜水服（功能性防具-III）：钢锭 + 玻璃板
+        armorSet(list, "diving", "func_armor_3", true,
+                List.of(in(steel, 4), in(glassPlate, 3)),
+                List.of(in(steel, 8), in(glassPlate, 5)),
+                List.of(in(steel, 7), in(glassPlate, 4)),
+                List.of(in(steel, 4), in(glassPlate, 3)),
+                ModItems.SIXTY_SECONDS_DIVING_HELMET, ModItems.SIXTY_SECONDS_DIVING_CHESTPLATE,
+                ModItems.SIXTY_SECONDS_DIVING_LEGGINGS, ModItems.SIXTY_SECONDS_DIVING_BOOTS);
         armorSet(list, "alloy", "armor_4", true,
                 List.of(in(alloy, 3)), List.of(in(alloy, 6)), List.of(in(alloy, 4)), List.of(in(alloy, 3)),
                 ModItems.SIXTY_SECONDS_ALLOY_HELMET, ModItems.SIXTY_SECONDS_ALLOY_CHESTPLATE,

@@ -6,7 +6,9 @@ import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
 import net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity;
 import net.exmo.sixty_seconds.entity.OceanSharkEntity;
+import net.exmo.sixty_seconds.entity.OceanFloorMonsterEntity;
 import net.exmo.sixty_seconds.init.ModOceanEntities;
+import net.exmo.sixty_seconds.registry.ModEntities;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -19,6 +21,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.exmo.sixty_seconds.registry.ModEffects;
 import org.jetbrains.annotations.Nullable;
@@ -65,6 +68,7 @@ public final class OceanCreatureSpawner {
     private static final int MAX_NEARBY_MONSTERS = 2;
     private static final double NEARBY_RADIUS = 64.0;
     private static final double MONSTER_FOG_RADIUS = 32.0; // 海怪浓雾作用半径
+    private static final int FLOOR_MONSTER_AREA_CAP = 4;  // 海底小怪局部上限
 
     private static final int SPAWN_MIN_DIST = 14;
     private static final int SPAWN_MAX_DIST = 36;
@@ -147,6 +151,36 @@ public final class OceanCreatureSpawner {
                 if (spot != null) {
                     spawnShark(level, spot, random, dayRatio);
                 }
+            }
+        }
+
+        // ── 海底 Boss 刷新（仅贴近海底的玩家触发；远离海底由实体自行消失）──
+        for (ServerPlayer player : level.players()) {
+            if (player.isSpectator() || player.isCreative()
+                    || !net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {
+                continue;
+            }
+            if (!isNearSeafloor(level, player.blockPosition())) continue;
+            if (oceanBossCount(level) < seafloorBossCap(dayNumber)
+                    && random.nextDouble() < 0.012 * dayRatio * earlyDayMult) {
+                OceanSeaMonsterEntity boss = spawnSeafloorBoss(level, player.blockPosition(), random);
+                if (boss != null) announceSeaMonster(level, boss, player);
+            }
+        }
+
+        // ── 海底小怪刷新（仅贴近海底的玩家附近触发，远离海底由实体自行消失）──
+        for (ServerPlayer player : level.players()) {
+            if (player.isSpectator() || player.isCreative()
+                    || !net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {
+                continue;
+            }
+            if (!isNearSeafloor(level, player.blockPosition())) continue;
+            int nearbyFloor = countNearby(level, player, OceanFloorMonsterEntity.class, NEARBY_RADIUS);
+            if (nearbyFloor < FLOOR_MONSTER_AREA_CAP
+                    && random.nextDouble() < 0.06 * dayRatio * earlyDayMult) {
+                BlockPos spot = findSeafloorSpot(level, player.blockPosition(),
+                        SPAWN_MIN_DIST, SPAWN_MAX_DIST, random);
+                if (spot != null) spawnFloorMonster(level, spot, random);
             }
         }
     }
@@ -338,6 +372,87 @@ public final class OceanCreatureSpawner {
     // ══════════════════════════════════════════════════════════════
     //  水域检测工具
     // ══════════════════════════════════════════════════════════════
+
+    // ── 海底 Boss 相关工具 ──────────────────────────────────────────────
+
+    /** 玩家是否贴近海底（其 XZ 列上距最近实心方块 ≤ 18 格）。 */
+    private static boolean isNearSeafloor(ServerLevel level, BlockPos center) {
+        int min = level.getMinBuildHeight();
+        int floor = min;
+        for (int y = center.getY(); y > min; y--) {
+            if (level.getBlockState(new BlockPos(center.getX(), y, center.getZ())).isSolid()) { floor = y; break; }
+        }
+        return Math.abs(center.getY() - floor) <= 18;
+    }
+
+    /** 海底 Boss 同时存活上限：随天数升高（1→3）。 */
+    private static int seafloorBossCap(int dayNumber) {
+        return Math.min(3, 1 + dayNumber / 5);
+    }
+
+    /** 当前维度存活的海洋 Boss（含海底 Boss）总数。 */
+    private static int oceanBossCount(ServerLevel level) {
+        int n = 0;
+        for (Entity e : level.getEntities().getAll()) {
+            if (e instanceof OceanSeaMonsterEntity) n++;
+        }
+        return n;
+    }
+
+    /** 在玩家脚下的海底附近生成一只随机海底 Boss。 */
+    @Nullable
+    private static OceanSeaMonsterEntity spawnSeafloorBoss(ServerLevel level, BlockPos anchor, RandomSource random) {
+        int min = level.getMinBuildHeight();
+        int floor = min;
+        for (int y = anchor.getY(); y > min; y--) {
+            if (level.getBlockState(new BlockPos(anchor.getX(), y, anchor.getZ())).isSolid()) { floor = y; break; }
+        }
+        BlockPos spawn = new BlockPos(anchor.getX(), floor + 3, anchor.getZ());
+        OceanSeaMonsterEntity monster = ModOceanEntities.OCEAN_SEA_MONSTER.create(level);
+        if (monster == null) return null;
+        OceanSeaMonsterEntity.Variant[] seafloor = {
+                OceanSeaMonsterEntity.Variant.ABYSS_KRAKEN,
+                OceanSeaMonsterEntity.Variant.TRENCH_SERPENT,
+                OceanSeaMonsterEntity.Variant.SUNKEN_LEVIATHAN };
+        monster.applyVariant(seafloor[random.nextInt(seafloor.length)]);
+        monster.moveTo(spawn.getX() + 0.5, spawn.getY(), spawn.getZ() + 0.5,
+                random.nextFloat() * 360.0F, 0.0F);
+        monster.finalizeSpawn(level, level.getCurrentDifficultyAt(spawn), MobSpawnType.EVENT, null);
+        level.addFreshEntity(monster);
+        return monster;
+    }
+
+    /** 在玩家脚下的海底附近生成一只随机海底小怪。 */
+    @Nullable
+    public static OceanFloorMonsterEntity spawnFloorMonster(ServerLevel level, BlockPos waterPos, RandomSource random) {
+        OceanFloorMonsterEntity monster = ModEntities.OCEAN_FLOOR_MONSTER.create(level);
+        if (monster == null) return null;
+        OceanFloorMonsterEntity.Variant[] variants = OceanFloorMonsterEntity.Variant.values();
+        monster.applyVariant(variants[random.nextInt(variants.length)]);
+        monster.moveTo(waterPos.getX() + 0.5, waterPos.getY(), waterPos.getZ() + 0.5,
+                random.nextFloat() * 360.0F, 0.0F);
+        monster.finalizeSpawn(level, level.getCurrentDifficultyAt(waterPos), MobSpawnType.NATURAL, null);
+        level.addFreshEntity(monster);
+        return monster;
+    }
+
+    /** 在玩家 XZ 附近找一块贴近海底的水方块位置。 */
+    @Nullable
+    private static BlockPos findSeafloorSpot(ServerLevel level, BlockPos anchor,
+            int minDist, int maxDist, RandomSource random) {
+        double angle = random.nextDouble() * Math.PI * 2;
+        double dist = minDist + random.nextDouble() * (maxDist - minDist);
+        int x = anchor.getX() + (int) (Math.cos(angle) * dist);
+        int z = anchor.getZ() + (int) (Math.sin(angle) * dist);
+        int min = level.getMinBuildHeight();
+        int floor = min;
+        for (int y = anchor.getY(); y > min; y--) {
+            if (level.getBlockState(new BlockPos(x, y, z)).isSolid()) { floor = y; break; }
+        }
+        BlockPos pos = new BlockPos(x, floor + 2, z);
+        if (!level.getFluidState(pos).is(FluidTags.WATER)) return null;
+        return pos;
+    }
 
     private static boolean isNearOpenWater(ServerLevel level, BlockPos center) {
         for (int dx = -4; dx <= 4; dx += 2) {

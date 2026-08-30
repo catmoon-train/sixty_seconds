@@ -1322,6 +1322,31 @@ public final class ModItems {
         return SIXTY_SECONDS_STEEL_BOOTS;
     });
 
+    // 潜水服（穿戴材质继承原版钻石装备，防护能力与钢套相当；全套触发水下呼吸，见 NeoForgeEvents）
+    public static Item SIXTY_SECONDS_DIVING_HELMET;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_DIVING_HELMET = ITEMS.register("sixty_seconds_diving_helmet", () -> {
+        SIXTY_SECONDS_DIVING_HELMET = new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET, new Item.Properties().stacksTo(1).fireResistant());
+        return SIXTY_SECONDS_DIVING_HELMET;
+    });
+
+    public static Item SIXTY_SECONDS_DIVING_CHESTPLATE;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_DIVING_CHESTPLATE = ITEMS.register("sixty_seconds_diving_chestplate", () -> {
+        SIXTY_SECONDS_DIVING_CHESTPLATE = new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.CHESTPLATE, new Item.Properties().stacksTo(1).fireResistant());
+        return SIXTY_SECONDS_DIVING_CHESTPLATE;
+    });
+
+    public static Item SIXTY_SECONDS_DIVING_LEGGINGS;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_DIVING_LEGGINGS = ITEMS.register("sixty_seconds_diving_leggings", () -> {
+        SIXTY_SECONDS_DIVING_LEGGINGS = new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.LEGGINGS, new Item.Properties().stacksTo(1).fireResistant());
+        return SIXTY_SECONDS_DIVING_LEGGINGS;
+    });
+
+    public static Item SIXTY_SECONDS_DIVING_BOOTS;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_DIVING_BOOTS = ITEMS.register("sixty_seconds_diving_boots", () -> {
+        SIXTY_SECONDS_DIVING_BOOTS = new ArmorItem(ArmorMaterials.DIAMOND, ArmorItem.Type.BOOTS, new Item.Properties().stacksTo(1).fireResistant());
+        return SIXTY_SECONDS_DIVING_BOOTS;
+    });
+
     public static Item SIXTY_SECONDS_BALLISTIC_VEST;
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_BALLISTIC_VEST = ITEMS.register("sixty_seconds_ballistic_vest", () -> {
         SIXTY_SECONDS_BALLISTIC_VEST = new ArmorItem(ArmorMaterials.IRON, ArmorItem.Type.CHESTPLATE, new Item.Properties().stacksTo(1));
@@ -2003,6 +2028,14 @@ public final class ModItems {
                     new Item.Properties().stacksTo(1),
                     () -> net.exmo.sixty_seconds.registry.ModEntities.SIXTY_SECONDS_FISHING_BOAT);
         return SIXTY_SECONDS_FISHING_BOAT;
+    });
+
+    public static Item SIXTY_SECONDS_SUBMARINE;
+    public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_SUBMARINE = ITEMS.register("sixty_seconds_submarine", () -> {
+        SIXTY_SECONDS_SUBMARINE = new net.exmo.sixty_seconds.content.item.SixtySecondsSubmarineItem(
+                    new Item.Properties().stacksTo(1).rarity(net.minecraft.world.item.Rarity.UNCOMMON),
+                    () -> net.exmo.sixty_seconds.registry.ModEntities.SIXTY_SECONDS_SUBMARINE);
+        return SIXTY_SECONDS_SUBMARINE;
     });
 
     public static Item SIXTY_SECONDS_FLYER;
