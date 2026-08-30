@@ -87,8 +87,10 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
         long worldSeed = serverLevel.getSeed();
         try (BulkSectionAccess bsa = new BulkSectionAccess(level)) {
             int x0 = cx, z0 = cz, x1 = cx + 15, z1 = cz + 15;
-            // 1) 海床骨架
-            writeSeafloor(bsa, x0, z0, x1, z1, seaY);
+            // 1) 海床骨架（含 20 种水下地形）
+            writeSeafloor(bsa, x0, z0, x1, z1, seaY, worldSeed);
+            // 1b) 海床废墟城市（20 种建筑，物资箱多于海岛）
+            writeSeabedCities(bsa, x0, z0, x1, z1, worldSeed, seaY);
             // 2) 岛屿骨架 + 装饰 + 废墟 + 物资箱
             writeIslands(bsa, serverLevel, config, x0, z0, x1, z1, worldSeed);
         }
@@ -130,28 +132,27 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
         }
     }
 
-    /** 写海床 primer（不触发更新）。 */
-    private static void writeSeafloor(BulkSectionAccess bsa, int x0, int z0, int x1, int z1, int seaY) {
-        BlockState bedrock = Blocks.BEDROCK.defaultBlockState();
-        BlockState sand = Blocks.SAND.defaultBlockState();
-        BlockState water = Blocks.WATER.defaultBlockState();
-        BlockState air = Blocks.AIR.defaultBlockState();
-        int topY = Math.max(seaY, SAND_TOP);
-        for (int x = x0; x <= x1; x++) {
-            for (int z = z0; z <= z1; z++) {
-                for (int y = 0; y <= topY; y++) {
-                    BlockState state;
-                    if (y < BEDROCK_Y) {
-                        state = air;
-                    } else if (y == BEDROCK_Y) {
-                        state = bedrock;
-                    } else if (y <= SAND_TOP) {
-                        state = sand;
-                    } else {
-                        state = water;
-                    }
-                    setPrimer(bsa, x, y, z, state);
-                }
+    /** 写海床 primer（含 20 种水下地形，不触发更新）。 */
+    private static void writeSeafloor(BulkSectionAccess bsa, int x0, int z0, int x1, int z1, int seaY, long worldSeed) {
+        OceanSeabedTerrain.applyChunk(bsa, x0, z0, x1, z1, seaY, worldSeed);
+    }
+
+    /** 在海床上确定性散布废墟城市建筑（每座 2~4 个物资箱）。 */
+    private static void writeSeabedCities(BulkSectionAccess bsa, int x0, int z0, int x1, int z1,
+            long worldSeed, int seaY) {
+        int gMinX = Math.floorDiv(x0, OceanSeabedRuins.SPACING) - 1;
+        int gMaxX = Math.floorDiv(x1, OceanSeabedRuins.SPACING) + 1;
+        int gMinZ = Math.floorDiv(z0, OceanSeabedRuins.SPACING) - 1;
+        int gMaxZ = Math.floorDiv(z1, OceanSeabedRuins.SPACING) + 1;
+        SixtySecondsIslandGenerator.PrimerPlacer placer = new SixtySecondsIslandGenerator.PrimerPlacer(bsa, x0, z0);
+        for (int gx = gMinX; gx <= gMaxX; gx++) {
+            for (int gz = gMinZ; gz <= gMaxZ; gz++) {
+                OceanSeabedRuins.Placement b = OceanSeabedRuins.plan(gx, gz, worldSeed);
+                if (b == null) continue;
+                int half = 12;
+                if (x1 < b.centerX - half || x0 > b.centerX + half) continue;
+                if (z1 < b.centerZ - half || z0 > b.centerZ + half) continue;
+                OceanSeabedRuins.placeAll(placer, b, seaY);
             }
         }
     }
