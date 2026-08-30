@@ -48,6 +48,10 @@ public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
     private static final int ABYSS_TENTACLES = 6;
     private static final int ABYSS_SEGMENTS = 4;
     private static final int SERPENT_SEGMENTS = 8;
+    /** 克拉肯腕足数量（独立建模）。 */
+    private static final int KRAKEN_ARMS = 8;
+    /** 海蛇躯干节数（独立建模）。 */
+    private static final int SS_SEGMENTS = 7;
 
     private final ModelPart root;
 
@@ -74,6 +78,21 @@ public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
     private final ModelPart serpentTailFin;
     private final ModelPart serpentPectL;
     private final ModelPart serpentPectR;
+
+    // ── kraken（克拉肯，独立建模，不再复用 classic 章鱼几何）──────────
+    private final ModelPart kraken;
+    private final ModelPart krakenHead;
+    private final ModelPart krakenMantle;
+    private final ModelPart[] krakenArms = new ModelPart[KRAKEN_ARMS];
+
+    // ── sea_serpent（海蛇，独立建模，不再复用 classic 章鱼几何）────────
+    private final ModelPart seaSerpent;
+    private final ModelPart ssHead;
+    private final ModelPart ssJaw;
+    private final ModelPart[] ssSegs = new ModelPart[SS_SEGMENTS];
+    private final ModelPart ssFin;
+    private final ModelPart ssPectL;
+    private final ModelPart ssPectR;
 
     // ── sunken_leviathan ────────────────────────────────────────────
     private final ModelPart leviathan;
@@ -126,6 +145,30 @@ public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
         this.serpentPectL = serpent.getChild("pect_l");
         this.serpentPectR = serpent.getChild("pect_r");
 
+        // ── kraken（克拉肯，独立几何）──
+        this.kraken = root.getChild("kraken");
+        this.krakenHead = kraken.getChild("head");
+        this.krakenMantle = kraken.getChild("mantle");
+        for (int i = 0; i < KRAKEN_ARMS; i++) {
+            krakenArms[i] = kraken.getChild("arm_" + i);
+        }
+
+        // ── sea_serpent（海蛇，独立几何）──
+        this.seaSerpent = root.getChild("sea_serpent");
+        this.ssHead = seaSerpent.getChild("head");
+        this.ssJaw = ssHead.getChild("jaw");
+        ModelPart ssSeg = seaSerpent;
+        for (int k = 0; k < SS_SEGMENTS; k++) {
+            ssSeg = ssSeg.getChild("seg_" + k);
+            ssSegs[k] = ssSeg;
+            if (k > 0) {
+                ssSeg.xScale = ssSeg.yScale = ssSeg.zScale = 0.94F;
+            }
+        }
+        this.ssFin = ssSegs[SS_SEGMENTS - 1].getChild("fin");
+        this.ssPectL = seaSerpent.getChild("pect_l");
+        this.ssPectR = seaSerpent.getChild("pect_r");
+
         this.leviathan = root.getChild("sunken_leviathan");
         this.leviHead = leviathan.getChild("head");
         this.leviMaw = leviHead.getChild("maw");
@@ -144,12 +187,137 @@ public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
         buildAbyssKraken(part.addOrReplaceChild("abyss_kraken", CubeListBuilder.create(), PartPose.ZERO));
         buildTrenchSerpent(part.addOrReplaceChild("trench_serpent", CubeListBuilder.create(), PartPose.ZERO));
         buildSunkenLeviathan(part.addOrReplaceChild("sunken_leviathan", CubeListBuilder.create(), PartPose.ZERO));
+        // 独立建模：克拉肯 / 海蛇（不再复用 classic 章鱼几何）
+        buildKraken(part.addOrReplaceChild("kraken", CubeListBuilder.create(), PartPose.ZERO));
+        buildSeaSerpent(part.addOrReplaceChild("sea_serpent", CubeListBuilder.create(), PartPose.ZERO));
 
         return LayerDefinition.create(mesh, TEX_W, TEX_H);
     }
 
     // ════════════════════════════════════════════════════════════════
+    // KRAKEN 克拉肯（独立建模）：锥形外套膜 + 巨眼头 + 8 条渐细腕足 + 背鳍
+    // 贴图：ocean_kraken.png
+    // ════════════════════════════════════════════════════════════════
+    private static void buildKraken(PartDefinition part) {
+        part.addOrReplaceChild("mantle",
+                CubeListBuilder.create().texOffs(0, 0)
+                        .addBox(-6.0F, -14.0F, -6.0F, 12.0F, 14.0F, 12.0F),
+                PartPose.offset(0.0F, 24.0F, 0.0F));
+        part.addOrReplaceChild("head",
+                CubeListBuilder.create().texOffs(0, 28)
+                        .addBox(-5.0F, -4.0F, -5.0F, 10.0F, 8.0F, 10.0F),
+                PartPose.offset(0.0F, 12.0F, -2.0F));
+        part.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(0, 48)
+                        .addBox(-1.5F, -1.5F, -1.5F, 3.0F, 3.0F, 3.0F),
+                PartPose.offset(4.0F, 11.0F, -5.0F));
+        part.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(14, 48)
+                        .addBox(-1.5F, -1.5F, -1.5F, 3.0F, 3.0F, 3.0F),
+                PartPose.offset(-4.0F, 11.0F, -5.0F));
+        part.addOrReplaceChild("fin_l",
+                CubeListBuilder.create().texOffs(0, 56)
+                        .addBox(-5.0F, 0.0F, -2.0F, 5.0F, 1.0F, 4.0F),
+                PartPose.offsetAndRotation(-5.0F, 8.0F, 0.0F, 0.0F, 0.0F, 0.35F));
+        part.addOrReplaceChild("fin_r",
+                CubeListBuilder.create().texOffs(0, 62)
+                        .addBox(0.0F, 0.0F, -2.0F, 5.0F, 1.0F, 4.0F),
+                PartPose.offsetAndRotation(5.0F, 8.0F, 0.0F, 0.0F, 0.0F, -0.35F));
+        // 8 条腕足：texOffs 必须是字面量（贴图脚本正则解析），故逐条展开，按 45° 分布
+        part.addOrReplaceChild("arm_0",
+                CubeListBuilder.create().texOffs(32, 48).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
+                PartPose.offsetAndRotation(3.5F, 16.0F, 3.5F, 0.0F, 0.0F, 0.0F));
+        part.addOrReplaceChild("arm_1",
+                CubeListBuilder.create().texOffs(46, 48).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
+                PartPose.offsetAndRotation(0.0F, 16.0F, 5.0F, 0.0F, 0.7854F, 0.0F));
+        part.addOrReplaceChild("arm_2",
+                CubeListBuilder.create().texOffs(60, 48).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
+                PartPose.offsetAndRotation(-3.5F, 16.0F, 3.5F, 0.0F, 1.5708F, 0.0F));
+        part.addOrReplaceChild("arm_3",
+                CubeListBuilder.create().texOffs(74, 48).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
+                PartPose.offsetAndRotation(-5.0F, 16.0F, 0.0F, 0.0F, 2.3562F, 0.0F));
+        part.addOrReplaceChild("arm_4",
+                CubeListBuilder.create().texOffs(88, 48).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
+                PartPose.offsetAndRotation(-3.5F, 16.0F, -3.5F, 0.0F, 3.1416F, 0.0F));
+        part.addOrReplaceChild("arm_5",
+                CubeListBuilder.create().texOffs(102, 48).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
+                PartPose.offsetAndRotation(0.0F, 16.0F, -5.0F, 0.0F, 3.9270F, 0.0F));
+        part.addOrReplaceChild("arm_6",
+                CubeListBuilder.create().texOffs(32, 64).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
+                PartPose.offsetAndRotation(3.5F, 16.0F, -3.5F, 0.0F, 4.7124F, 0.0F));
+        part.addOrReplaceChild("arm_7",
+                CubeListBuilder.create().texOffs(46, 64).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
+                PartPose.offsetAndRotation(5.0F, 16.0F, 0.0F, 0.0F, 5.4978F, 0.0F));
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // SEA_SERPENT 海蛇（独立建模）：7 节渐细蛇躯 + 长头利颌 + 背鳍带 + 尾鳍
+    // 贴图：ocean_serpent.png
+    // ════════════════════════════════════════════════════════════════
+    private static void buildSeaSerpent(PartDefinition part) {
+        part.addOrReplaceChild("head",
+                CubeListBuilder.create().texOffs(0, 0)
+                        .addBox(-3.5F, -3.5F, -8.0F, 7.0F, 7.0F, 8.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        part.getChild("head").addOrReplaceChild("jaw",
+                CubeListBuilder.create().texOffs(0, 16)
+                        .addBox(-3.0F, 0.0F, -7.0F, 6.0F, 2.5F, 7.0F),
+                PartPose.offset(0.0F, 3.5F, 0.0F));
+        part.getChild("head").addOrReplaceChild("horn_l",
+                CubeListBuilder.create().texOffs(0, 26)
+                        .addBox(0.0F, -4.0F, -1.0F, 1.5F, 4.0F, 1.5F),
+                PartPose.offsetAndRotation(2.0F, -3.0F, -4.0F, 0.0F, 0.0F, -0.30F));
+        part.getChild("head").addOrReplaceChild("horn_r",
+                CubeListBuilder.create().texOffs(10, 26)
+                        .addBox(-1.5F, -4.0F, -1.0F, 1.5F, 4.0F, 1.5F),
+                PartPose.offsetAndRotation(-2.0F, -3.0F, -4.0F, 0.0F, 0.0F, 0.30F));
+        // 7 节躯干：父子链逐节嵌套（逐节缩小由构造器 scale 完成）
+        // texOffs / addBox 必须为字面量（贴图脚本正则解析），故逐节展开书写
+        PartDefinition s0 = part.addOrReplaceChild("seg_0",
+                CubeListBuilder.create().texOffs(24, 34)
+                        .addBox(-5.0F, -2.5F, 0.0F, 10.0F, 5.0F, 8.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        PartDefinition s1 = s0.addOrReplaceChild("seg_1",
+                CubeListBuilder.create().texOffs(24, 48)
+                        .addBox(-4.65F, -4.65F, -4.65F, 9.3F, 9.3F, 7.6F),
+                PartPose.offset(0.0F, 0.0F, 7.0F));
+        PartDefinition s2 = s1.addOrReplaceChild("seg_2",
+                CubeListBuilder.create().texOffs(24, 66)
+                        .addBox(-4.3F, -4.3F, -4.3F, 8.6F, 8.6F, 7.2F),
+                PartPose.offset(0.0F, 0.0F, 7.0F));
+        PartDefinition s3 = s2.addOrReplaceChild("seg_3",
+                CubeListBuilder.create().texOffs(24, 84)
+                        .addBox(-3.95F, -3.95F, -3.95F, 7.9F, 7.9F, 6.8F),
+                PartPose.offset(0.0F, 0.0F, 7.0F));
+        PartDefinition s4 = s3.addOrReplaceChild("seg_4",
+                CubeListBuilder.create().texOffs(24, 100)
+                        .addBox(-3.6F, -3.6F, -3.6F, 7.2F, 7.2F, 6.4F),
+                PartPose.offset(0.0F, 0.0F, 7.0F));
+        PartDefinition s5 = s4.addOrReplaceChild("seg_5",
+                CubeListBuilder.create().texOffs(24, 114)
+                        .addBox(-3.25F, -3.25F, -3.25F, 6.5F, 6.5F, 6.0F),
+                PartPose.offset(0.0F, 0.0F, 7.0F));
+        PartDefinition s6 = s5.addOrReplaceChild("seg_6",
+                CubeListBuilder.create().texOffs(64, 66)
+                        .addBox(-2.9F, -2.9F, -2.9F, 5.8F, 5.8F, 5.6F),
+                PartPose.offset(0.0F, 0.0F, 7.0F));
+        s6.addOrReplaceChild("fin",
+                CubeListBuilder.create().texOffs(64, 80)
+                        .addBox(-0.5F, -4.0F, 0.0F, 1.0F, 8.0F, 6.0F),
+                PartPose.offset(0.0F, 0.0F, 5.0F));
+        part.addOrReplaceChild("pect_l",
+                CubeListBuilder.create().texOffs(24, 26)
+                        .addBox(-5.0F, -1.0F, -2.0F, 5.0F, 1.5F, 4.0F),
+                PartPose.offsetAndRotation(-3.0F, 17.0F, -2.0F, 0.0F, 0.0F, 0.35F));
+        part.addOrReplaceChild("pect_r",
+                CubeListBuilder.create().texOffs(24, 34)
+                        .addBox(0.0F, -1.0F, -2.0F, 5.0F, 1.5F, 4.0F),
+                PartPose.offsetAndRotation(3.0F, 17.0F, -2.0F, 0.0F, 0.0F, -0.35F));
+    }
+
+    // ════════════════════════════════════════════════════════════════
     // classic（保持原几何，勿改 UV：ocean_kraken/serpent/leviathan 贴图依赖它）
+    // 现在仅 LEVIATHAN 利维坦继续使用此章鱼几何
     // ════════════════════════════════════════════════════════════════
     private static void buildClassic(PartDefinition part) {
         PartDefinition bodyDef = part.addOrReplaceChild("body",
@@ -429,8 +597,18 @@ public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
         abyss.visible = false;
         serpent.visible = false;
         leviathan.visible = false;
+        kraken.visible = false;
+        seaSerpent.visible = false;
 
         switch (entity.getVariant()) {
+            case KRAKEN -> {
+                kraken.visible = true;
+                animKraken(ageInTicks, netHeadYaw, headPitch);
+            }
+            case SERPENT -> {
+                seaSerpent.visible = true;
+                animSeaSerpent(ageInTicks, limbSwingAmount, netHeadYaw, headPitch);
+            }
             case ABYSS_KRAKEN -> {
                 abyss.visible = true;
                 animAbyss(ageInTicks, netHeadYaw, headPitch);
@@ -458,6 +636,33 @@ public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
             root.xRot = 0.0F;
             root.zRot = 0.0F;
         }
+    }
+
+    /** 克拉肯：外套膜呼吸 + 8 腕足波浪摆动 + 头部朝向。 */
+    private void animKraken(float ageInTicks, float netHeadYaw, float headPitch) {
+        float t = ageInTicks * 0.12F;
+        krakenMantle.xScale = 1.0F + Mth.sin(t * 1.1F) * 0.06F;
+        krakenMantle.zScale = 1.0F + Mth.sin(t * 1.1F) * 0.06F;
+        for (int i = 0; i < KRAKEN_ARMS; i++) {
+            krakenArms[i].xRot = Mth.sin(t * 1.3F + i * 0.8F) * 0.32F;
+            krakenArms[i].zRot = Mth.cos(t * 1.1F + i * 0.6F) * 0.24F;
+        }
+        krakenHead.yRot = netHeadYaw * Mth.DEG_TO_RAD;
+        krakenHead.xRot = headPitch * Mth.DEG_TO_RAD;
+    }
+
+    /** 海蛇：7 节正弦波动 + 张颌 + 胸鳍扇动。 */
+    private void animSeaSerpent(float ageInTicks, float limbSwingAmount, float netHeadYaw, float headPitch) {
+        float t = ageInTicks * 0.14F;
+        for (int k = 0; k < SS_SEGMENTS; k++) {
+            ssSegs[k].yRot = Mth.sin(t * 1.5F - k * 0.65F) * (0.22F + limbSwingAmount * 0.15F);
+        }
+        ssHead.yRot = netHeadYaw * Mth.DEG_TO_RAD;
+        ssHead.xRot = headPitch * Mth.DEG_TO_RAD;
+        ssJaw.xRot = 0.12F + Mth.sin(t * 0.8F) * 0.10F;
+        ssPectL.zRot = 0.35F + Mth.sin(t * 1.6F) * 0.16F;
+        ssPectR.zRot = -0.35F - Mth.sin(t * 1.6F) * 0.16F;
+        if (ssFin != null) ssFin.yRot = Mth.sin(t * 1.5F) * 0.20F;
     }
 
     private void animClassic(float ageInTicks) {
