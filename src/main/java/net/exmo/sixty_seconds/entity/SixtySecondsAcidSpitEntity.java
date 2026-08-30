@@ -54,9 +54,13 @@ public class SixtySecondsAcidSpitEntity extends ThrowableItemProjectile {
             return;
         }
         if (result.getEntity() instanceof ServerPlayer player && SixtySecondsMonsterEntity.isValidPrey(player)) {
-            SixtySecondsHealthSystem.applyInjury(player, null, SixtySecondsBalance.PVE_SPIT_INJURY);
+            SixtySecondsHealthSystem.applyInjury(player, null,
+                    net.exmo.sixty_seconds.logic.SixtySecondsDifficulty.scaleInjury(this,
+                            SixtySecondsBalance.PVE_SPIT_INJURY));
             SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
-            stats.pollution = Math.min(100, stats.pollution + SixtySecondsBalance.PVE_SPIT_POLLUTION);
+            stats.pollution = Math.min(100, stats.pollution
+                    + net.exmo.sixty_seconds.logic.SixtySecondsDifficulty.scalePollutionGain(serverLevel,
+                            SixtySecondsBalance.PVE_SPIT_POLLUTION));
             stats.sync();
         }
     }

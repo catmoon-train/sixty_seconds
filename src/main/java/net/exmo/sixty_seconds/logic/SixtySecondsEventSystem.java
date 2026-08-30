@@ -249,7 +249,7 @@ public final class SixtySecondsEventSystem {
                     }
                     // 无伞淋污雨：每 10 秒结算一次（增速较旧版 2/秒 已降 65%）
                     if (now % (20 * 10) == 0) {
-                        addPollution(stats, SixtySecondsBalance.POLLUTION_RAIN_GAIN_PER_10S);
+                        addPollution(level, stats, SixtySecondsBalance.POLLUTION_RAIN_GAIN_PER_10S);
                     }
                 }
                 case SMOG -> {
@@ -262,7 +262,7 @@ public final class SixtySecondsEventSystem {
                     }
                     // 每 2 秒结算一次（增速较旧版 1/秒 已降 50%）
                     if (now % (20 * 2) == 0) {
-                        addPollution(stats, SixtySecondsBalance.SMOG_POLLUTION_PER_2S);
+                        addPollution(level, stats, SixtySecondsBalance.SMOG_POLLUTION_PER_2S);
                     }
                 }
                 case COLD_SNAP -> {
@@ -280,7 +280,7 @@ public final class SixtySecondsEventSystem {
                     // 酸雾：每10秒掉1点健康 + 1点污染
                     if (!inHome && now % (20 * 10) == 0) {
                         player.hurt(player.damageSources().magic(), 1.0F);
-                        addPollution(stats, 1);
+                        addPollution(level, stats, 1);
                     }
                 }
                 case ELECTROMAGNETIC_STORM -> {
@@ -378,7 +378,7 @@ public final class SixtySecondsEventSystem {
                         if (inHome && pollutionGain == 0 && level.getRandom().nextBoolean()) {
                             pollutionGain = 1; // 屋内每20秒有50%概率+1污染
                         }
-                        addPollution(stats, pollutionGain);
+                        addPollution(level, stats, pollutionGain);
                     }
                 }
                 case DENSE_FOG -> {
@@ -490,7 +490,9 @@ public final class SixtySecondsEventSystem {
         }
     }
 
-    private static void addPollution(SixtySecondsStatsComponent stats, int amount) {
+    private static void addPollution(ServerLevel level, SixtySecondsStatsComponent stats, int amount) {
+        // 难度加成：所有污染来源统一按难度放大（难度 8 起封顶 ×2.5）
+        amount = SixtySecondsDifficulty.scalePollutionGain(level, amount);
         int before = stats.pollution;
         stats.pollution = Math.min(SixtySecondsStatsComponent.MAX, stats.pollution + amount);
         if (stats.pollution != before) {

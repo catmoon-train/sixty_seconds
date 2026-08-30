@@ -8,6 +8,7 @@ import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity;
 import net.exmo.sixty_seconds.arena.SixtySecondsSearchZones;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
+import net.exmo.sixty_seconds.logic.SixtySecondsDifficulty;
 import net.exmo.sixty_seconds.logic.SixtySecondsPveSystem;
 import net.exmo.sixty_seconds.network.SixtySecondsSeaChartArrivalS2CPacket;
 import net.exmo.sixty_seconds.network.SixtySecondsSeaChartPositionsS2CPacket;
@@ -843,11 +844,13 @@ public final class SixtySecondsIslands {
         SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
         stats.hunger = Math.max(0, stats.hunger - hunger);
         stats.thirst = Math.max(0, stats.thirst - thirst);
-        stats.pollution = Math.min(100, stats.pollution + SixtySecondsBalance.ISLAND_TRIP_POLLUTION);
+        int tripPollution = SixtySecondsDifficulty.scalePollutionGain(player.level(),
+                SixtySecondsBalance.ISLAND_TRIP_POLLUTION);
+        stats.pollution = Math.min(100, stats.pollution + tripPollution);
         stats.sync();
 
         player.displayClientMessage(Component.translatable(LANG + "trip_cost",
-                (int) distance, hunger, thirst, SixtySecondsBalance.ISLAND_TRIP_POLLUTION)
+                (int) distance, hunger, thirst, tripPollution)
                 .withStyle(ChatFormatting.GRAY), false);
     }
 

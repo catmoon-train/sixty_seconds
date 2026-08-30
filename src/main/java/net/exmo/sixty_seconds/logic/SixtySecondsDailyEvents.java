@@ -3292,6 +3292,8 @@ public final class SixtySecondsDailyEvents {
     }
 
     private static void addPollution(ServerPlayer player, int delta) {
+        // 难度加成：正向污染增量按难度放大（难度 8 起封顶 ×2.5）；负向（净化/治疗）不放大
+        delta = SixtySecondsDifficulty.scalePollutionGain(player.level(), delta);
         SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
         int before = stats.pollution;
         stats.pollution = Mth.clamp(stats.pollution + delta, 0, SixtySecondsStatsComponent.MAX);

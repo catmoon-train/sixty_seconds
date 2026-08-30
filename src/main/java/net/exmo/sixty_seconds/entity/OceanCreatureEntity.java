@@ -86,6 +86,8 @@ public abstract class OceanCreatureEntity extends PathfinderMob {
         setHealth((float) health);
         setCustomName(net.minecraft.network.chat.Component.translatable(nameKey));
         setCustomNameVisible(true);
+        // 难度：变体装配会重设 base 属性，故以新 base 为基准重新施加难度缩放
+        net.exmo.sixty_seconds.logic.SixtySecondsDifficulty.reapply(this);
     }
 
     public int getVariantId() {

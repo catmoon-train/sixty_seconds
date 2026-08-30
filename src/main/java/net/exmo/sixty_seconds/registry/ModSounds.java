@@ -32,6 +32,12 @@ public final class ModSounds {
         return BROKEN_ALARM;
     });
 
+    public static SoundEvent COUGH;
+    public static final DeferredHolder<SoundEvent, SoundEvent> HOLD_COUGH = SOUNDS.register("cough", () -> {
+        COUGH = SoundEvent.createVariableRangeEvent(SixtySeconds.id("cough"));
+        return COUGH;
+    });
+
     private ModSounds() {}
     public static void register(IEventBus bus) { SOUNDS.register(bus); }
 }

@@ -1,6 +1,7 @@
 package net.exmo.sixty_seconds.entity;
 
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
+import net.exmo.sixty_seconds.logic.SixtySecondsDifficulty;
 import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -147,11 +148,12 @@ public class OceanSharkEntity extends OceanCreatureEntity {
         }
         player.invulnerableTime = 10;
         playSound(SoundEvents.COD_HURT, 0.4F, 0.5F);
-        int injury = getVariant().injury;
+        int injury = SixtySecondsDifficulty.scaleInjury(this, getVariant().injury);
         // 大白鲨/巨齿鲨额外流血
         if (getVariant() == Variant.GREAT_WHITE || getVariant() == Variant.MEGALODON) {
             SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
-            stats.pollution = Math.min(100, stats.pollution + 3);
+            stats.pollution = Math.min(100, stats.pollution
+                    + SixtySecondsDifficulty.scalePollutionGain(serverLevel, 3));
             stats.sync();
         }
         SixtySecondsHealthSystem.applyInjury(player, null, injury);

@@ -630,9 +630,10 @@ public final class SixtySecondsHealthSystem {
                     stats.sync();
                 }
             }
-            // 原版中毒效果：每 3 秒提升 1 点污染值
+            // 原版中毒效果：每 3 秒提升 1 点污染值（受难度加成）
             if (level.getGameTime() % (20 * 3) == 0 && player.hasEffect(MobEffects.POISON)) {
-                stats.pollution = Math.min(100, stats.pollution + 1);
+                stats.pollution = Math.min(100, stats.pollution
+                        + SixtySecondsDifficulty.scalePollutionGain(level, 1));
                 stats.sync();
             }
             // 健康值完全替代原版生命值：每秒把原版血/饥饿钉满——伤害已被 ALLOW_DAMAGE 全量拦截转为健康伤害，

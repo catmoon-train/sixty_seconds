@@ -4,6 +4,7 @@ import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
+import net.exmo.sixty_seconds.logic.SixtySecondsDifficulty;
 import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -153,6 +154,8 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
         setHealth((float) health);
         setCustomName(net.minecraft.network.chat.Component.translatable(variant.nameKey()));
         setPersistenceRequired();
+        // 难度：变体装配会重设 base 属性，故以新 base 为基准重新施加难度缩放
+        SixtySecondsDifficulty.reapply(this);
     }
 
     public Variant getVariant() {
@@ -209,7 +212,8 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
             swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
             player.invulnerableTime = 10;
             playSound(SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, 0.3F, 1.4F);
-            SixtySecondsHealthSystem.applyInjury(player, null, meleeInjury());
+            SixtySecondsHealthSystem.applyInjury(player, null,
+                    SixtySecondsDifficulty.scaleInjury(this, meleeInjury()));
             return true;
         }
         return super.doHurtTarget(target);
@@ -383,7 +387,8 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
             if (!isValidPrey(player) || distanceToSqr(player) > BLOATER_RADIUS * BLOATER_RADIUS) {
                 continue;
             }
-            SixtySecondsHealthSystem.applyInjury(player, null, BLOATER_INJURY);
+            SixtySecondsHealthSystem.applyInjury(player, null,
+                    SixtySecondsDifficulty.scaleInjury(this, BLOATER_INJURY));
             net.minecraft.world.phys.Vec3 away = player.position().subtract(position()).normalize();
             player.setDeltaMovement(away.x * 0.8, 0.5, away.z * 0.8);
             player.hurtMarked = true;

@@ -135,7 +135,7 @@ public class OceanFaunaEntity extends OceanCreatureEntity {
             return false;
         }
         player.invulnerableTime = 10;
-        int injury = getVariant().injury;
+        int injury = net.exmo.sixty_seconds.logic.SixtySecondsDifficulty.scaleInjury(this, getVariant().injury);
         switch (getVariant()) {
             case JELLYFISH -> player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 4, 0));
             case LIONFISH -> player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 8, 1));
@@ -154,7 +154,8 @@ public class OceanFaunaEntity extends OceanCreatureEntity {
         }
         // 所有海洋生物攻击附带少量污染
         SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
-        stats.pollution = Math.min(100, stats.pollution + 3);
+        stats.pollution = Math.min(100, stats.pollution
+                + net.exmo.sixty_seconds.logic.SixtySecondsDifficulty.scalePollutionGain(serverLevel, 3));
         stats.sync();
         SixtySecondsHealthSystem.applyInjury(player, null, injury);
         playSound(net.minecraft.sounds.SoundEvents.COD_HURT, 0.4F, 0.5F);

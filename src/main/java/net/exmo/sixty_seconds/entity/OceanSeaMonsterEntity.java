@@ -3,6 +3,7 @@ package net.exmo.sixty_seconds.entity;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
+import net.exmo.sixty_seconds.logic.SixtySecondsDifficulty;
 import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.ChatFormatting;
@@ -197,9 +198,10 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         bossEvent.removePlayer(player);
     }
 
-    /** 本次技能应扣的健康值（狂暴时 ×{@link #ENRAGE_INJURY_MULT}）。 */
+    /** 本次技能应扣的健康值（狂暴时 ×{@link #ENRAGE_INJURY_MULT}，再叠加难度加成）。 */
     private int injuryNow(int base) {
-        return enraged ? (int) Math.round(base * ENRAGE_INJURY_MULT) : base;
+        int value = enraged ? (int) Math.round(base * ENRAGE_INJURY_MULT) : base;
+        return SixtySecondsDifficulty.scaleInjury(this, value);
     }
 
     /** 冷却按狂暴缩短。 */
@@ -291,9 +293,14 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         SixtySecondsHealthSystem.applyInjury(player, null, injuryNow(getVariant().injury));
         // 海怪攻击附加污染
         SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
-        stats.pollution = Math.min(100, stats.pollution + 5);
+        stats.pollution = Math.min(100, stats.pollution + scalePollution(5));
         stats.sync();
         return true;
+    }
+
+    /** 本实体造成的污染增量（叠加难度加成）。 */
+    private int scalePollution(int amount) {
+        return SixtySecondsDifficulty.scalePollutionGain(level(), amount);
     }
 
     @Override
@@ -621,7 +628,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             double ramp = 0.3 + 0.3 * constrictSeconds;
             SixtySecondsHealthSystem.applyInjury(p, null, injuryNow((int) (getVariant().injury * ramp)));
             SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(p);
-            stats.pollution = Math.min(100, stats.pollution + 4);
+            stats.pollution = Math.min(100, stats.pollution + scalePollution(4));
             stats.sync();
             playSound(SoundEvents.PHANTOM_BITE, 0.6F, 0.5F);
         }
@@ -844,7 +851,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             if (now % 20 == 0) {
                 SixtySecondsHealthSystem.applyInjury(player, null, injuryNow((int) (getVariant().injury * 0.7)));
                 SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
-                stats.pollution = Math.min(100, stats.pollution + 5);
+                stats.pollution = Math.min(100, stats.pollution + scalePollution(5));
                 stats.sync();
             }
         }
@@ -1043,7 +1050,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             int injury = injuryNow(getVariant().injury - 15);
             SixtySecondsHealthSystem.applyInjury(player, null, Math.max(10, injury));
             SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
-            stats.pollution = Math.min(100, stats.pollution + 8);
+            stats.pollution = Math.min(100, stats.pollution + scalePollution(8));
             stats.sync();
             player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 5, 1));
         }

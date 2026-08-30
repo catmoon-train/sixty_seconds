@@ -124,13 +124,14 @@ public class OceanFloorMonsterEntity extends OceanCreatureEntity {
             return false;
         }
         player.invulnerableTime = 10;
-        int injury = getVariant().injury;
+        int injury = net.exmo.sixty_seconds.logic.SixtySecondsDifficulty.scaleInjury(this, getVariant().injury);
         switch (getVariant()) {
             case URCHIN -> player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 3, 0));
             case EEL -> player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 3, 0));
             case WRAITH -> {
                 SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
-                stats.pollution = Math.min(100, stats.pollution + 4);
+                stats.pollution = Math.min(100, stats.pollution
+                        + net.exmo.sixty_seconds.logic.SixtySecondsDifficulty.scalePollutionGain(serverLevel, 4));
                 stats.sync();
             }
             default -> { }

@@ -357,8 +357,9 @@ public final class SixtySecondsHotlineSystem {
         for (int i = 1; i <= 3; i++) {
             int targetDay = data.dayNumber + i;
             if (SixtySecondsEventSystem.getScheduledForDay(level, targetDay) == null) {
-                // 50%概率安排一个天气事件，50%概率晴朗
-                if (rand.nextDouble() < 0.5) {
+                // 晴朗概率受难度影响：难度 0 = 50%，难度 10 降至 20%
+                if (rand.nextDouble() < SixtySecondsDifficulty.clearWeatherChance(
+                        SixtySecondsDifficulty.get(level))) {
                     SixtySecondsEventSystem.EventType[] pool =
                             SixtySecondsEventSystem.FORECASTABLE_TYPES;
                     SixtySecondsEventSystem.EventType type =

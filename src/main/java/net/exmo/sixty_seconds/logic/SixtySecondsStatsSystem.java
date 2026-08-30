@@ -74,6 +74,8 @@ public final class SixtySecondsStatsSystem {
                         ? SixtySecondsBalance.DRAIN_MULT_EARLY_DAYS
                         : SixtySecondsBalance.DRAIN_MULT_LATE_DAYS;
                 double finalMult = mult * SixtySecondsBalance.DRAIN_MULT_GLOBAL * dayMult;
+                // 难度加成：饥饿/口渴/理智下降随难度加快（难度 6 起封顶 ×2.0）
+                finalMult *= SixtySecondsDifficulty.drainMultiplier(SixtySecondsDifficulty.get(level));
                 // 每日事件日级修正：各属性分别 × 事件修正倍率
                 double hungerMod = 1.0, thirstMod = 1.0, sanityMod = 1.0, polluteMod = 1.0;
                 if (team != null) {
@@ -103,6 +105,8 @@ public final class SixtySecondsStatsSystem {
                         .is(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_HAZMAT_SUIT)) {
                     pollutionMult *= 0.5;
                 }
+                // 难度加成：污染累积随难度加快（难度 8 起封顶 ×2.5）
+                pollutionMult *= SixtySecondsDifficulty.pollutionMultiplier(SixtySecondsDifficulty.get(level));
                 stats.pollution = clampUp(stats.pollution,
                         scaleChance(level, SixtySecondsBalance.POLLUTION_GAIN_PER_MIN, pollutionMult * polluteMod));
                 changed = true;
@@ -136,7 +140,8 @@ public final class SixtySecondsStatsSystem {
             if (stats.pollution >= MAX) {
                 player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0, false, false, false));
                 if (now % SixtySecondsBalance.POLLUTION_SICK_ROLL_INTERVAL == 0
-                        && level.getRandom().nextDouble() < SixtySecondsBalance.POLLUTION_SICK_CHANCE) {
+                        && level.getRandom().nextDouble() < SixtySecondsBalance.POLLUTION_SICK_CHANCE
+                                + SixtySecondsDifficulty.sickChanceBonus(SixtySecondsDifficulty.get(level))) {
                     SixtySecondsSicknessSystem.makeSick(player);
                 }
             }

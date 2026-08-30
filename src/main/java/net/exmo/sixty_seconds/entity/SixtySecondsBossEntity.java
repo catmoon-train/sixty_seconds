@@ -3,6 +3,7 @@ package net.exmo.sixty_seconds.entity;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
+import net.exmo.sixty_seconds.logic.SixtySecondsDifficulty;
 import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
@@ -194,6 +195,8 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         bossEvent.setColor(apex ? BossEvent.BossBarColor.PURPLE : BossEvent.BossBarColor.RED);
         setPersistenceRequired();
         setBattleMob(true);
+        // 难度：定级会重设 base 属性，故以新 base 为基准重新施加难度缩放
+        SixtySecondsDifficulty.reapply(this);
     }
 
     public boolean isApex() {
@@ -511,6 +514,11 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
     //  原有技能
     // ══════════════════════════════════════════════════════════════════
 
+    /** 技能伤害：叠加难度加成（近战见 {@link #meleeInjury()}，在基类 doHurtTarget 处统一加成）。 */
+    private int skillInjury(int base) {
+        return SixtySecondsDifficulty.scaleInjury(this, base);
+    }
+
     /** 震地猛击：AoE 健康伤害 + 击飞。colossusStun 为巨像强化版（附带短暂减速）。 */
     private void slam(ServerLevel serverLevel, long now, int lvl, double radius, boolean colossusStun) {
         nextSlamTick = now + SixtySecondsBalance.BOSS_SLAM_COOLDOWN_TICKS;
@@ -519,8 +527,8 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         serverLevel.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 0.2, getZ(),
                 6, r * 0.27, 0.3, r * 0.27, 0);
         playSound(SoundEvents.GENERIC_EXPLODE.value(), 0.8F, 0.7F);
-        int injury = (SixtySecondsBalance.BOSS_SLAM_INJURY + 4 * (lvl - 1))
-                * (colossusStun ? 2 : 1) * (frenzied ? 2 : 1);
+        int injury = skillInjury((SixtySecondsBalance.BOSS_SLAM_INJURY + 4 * (lvl - 1))
+                * (colossusStun ? 2 : 1) * (frenzied ? 2 : 1));
         for (ServerPlayer player : serverLevel.players()) {
             if (!isValidPrey(player) || distanceToSqr(player) > r * r) {
                 continue;
@@ -553,7 +561,8 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
             if (toxic) {
                 // 毒化版：污染 + 中毒
                 SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
-                stats.pollution = Math.min(100, stats.pollution + 8 + lvl * 2);
+                stats.pollution = Math.min(100, stats.pollution
+                        + SixtySecondsDifficulty.scalePollutionGain(serverLevel, 8 + lvl * 2));
                 stats.sync();
                 player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 3, 0));
             } else {
@@ -657,7 +666,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         }
         // 伤害目标 + 治疗自身
         if (target instanceof ServerPlayer player && isValidPrey(player)) {
-            int drain = 8 + lvl * 2;
+            int drain = skillInjury(8 + lvl * 2);
             SixtySecondsHealthSystem.applyInjury(player, null, drain);
             heal(drain * 0.8F);
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
@@ -699,10 +708,10 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
             Vec3 toPlayer = player.position().subtract(position());
             double dist = toPlayer.length();
             if (dist > 7 || toPlayer.normalize().dot(facing) < 0.35) continue;
-            int injury = 6 + lvl * 2;
-            SixtySecondsHealthSystem.applyInjury(player, null, injury);
+            SixtySecondsHealthSystem.applyInjury(player, null, skillInjury(6 + lvl * 2));
             SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
-            stats.pollution = Math.min(100, stats.pollution + 6 + lvl);
+            stats.pollution = Math.min(100, stats.pollution
+                    + SixtySecondsDifficulty.scalePollutionGain(serverLevel, 6 + lvl));
             stats.sync();
             player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 4, lvl > 2 ? 1 : 0));
         }
@@ -716,7 +725,8 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         for (ServerPlayer player : serverLevel.players()) {
             if (!isValidPrey(player) || distanceToSqr(player) > radius * radius) continue;
             SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
-            stats.pollution = Math.min(100, stats.pollution + 1);
+            stats.pollution = Math.min(100, stats.pollution
+                    + SixtySecondsDifficulty.scalePollutionGain(serverLevel, 1));
             stats.sync();
         }
     }
@@ -749,6 +759,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         if (target instanceof ServerPlayer player && isValidPrey(player)) {
             int backstab = 14 + lvl * 4;
             if (apex) backstab *= 2;
+            backstab = skillInjury(backstab);
             SixtySecondsHealthSystem.applyInjury(player, null, backstab);
             player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 + 10, 0));
         }
@@ -762,7 +773,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
                 3, 1.5, 0.3, 1.5, 0);
         for (ServerPlayer player : serverLevel.players()) {
             if (!isValidPrey(player) || distanceToSqr(player) > 4 * 4) continue;
-            int injury = 4 + lvl;
+            int injury = skillInjury(4 + lvl);
             // 多段伤害模拟
             for (int i = 0; i < 3; i++) {
                 SixtySecondsHealthSystem.applyInjury(player, null, injury);
@@ -798,7 +809,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
                         Vec3 behind = target.position().add(target.getLookAngle().scale(-2.0));
                         teleportTo(behind.x, behind.y, behind.z);
                         if (target instanceof ServerPlayer p && isValidPrey(p)) {
-                            SixtySecondsHealthSystem.applyInjury(p, null, 10 + lvl * 3);
+                            SixtySecondsHealthSystem.applyInjury(p, null, skillInjury(10 + lvl * 3));
                         }
                         serverLevel.sendParticles(ParticleTypes.PORTAL, getX(), getY() + 1.0, getZ(),
                                 8, 0.2, 0.4, 0.2, 0.05);
@@ -822,7 +833,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
                 if (!isValidPrey(player)) continue;
                 if (player.distanceToSqr(new Vec3(x, player.getY(), z)) < 2 * 2) {
                     SixtySecondsHealthSystem.applyInjury(player, null,
-                            SixtySecondsBalance.BOSS_SLAM_INJURY + lvl * 3);
+                            skillInjury(SixtySecondsBalance.BOSS_SLAM_INJURY + lvl * 3));
                     player.setDeltaMovement(dir.x * 0.6, 0.4, dir.z * 0.6);
                     player.hurtMarked = true;
                 }

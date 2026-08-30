@@ -281,7 +281,7 @@ public class OceanTitanEntity extends OceanCreatureEntity {
                         pl.hurt(damageSources().mobAttack(this), 12.0F);
                     }
                 }
-                playSound(SoundEvents.TRIDENT_THROW, 1.2F, 0.7F);
+                playSound(SoundEvents.TRIDENT_THROW.value(), 1.2F, 0.7F);
             }
         }
     }
@@ -308,13 +308,14 @@ public class OceanTitanEntity extends OceanCreatureEntity {
 
     @Override
     public boolean doHurtTarget(net.minecraft.world.entity.Entity target) {
-        if (!(level() instanceof ServerLevel) || !(target instanceof ServerPlayer player)) {
+        if (!(level() instanceof ServerLevel serverLevel) || !(target instanceof ServerPlayer player)) {
             return super.doHurtTarget(target);
         }
-        int injury = getVariant().injury;
+        int injury = net.exmo.sixty_seconds.logic.SixtySecondsDifficulty.scaleInjury(this, getVariant().injury);
         net.exmo.sixty_seconds.component.SixtySecondsStatsComponent stats =
                 net.exmo.sixty_seconds.component.SixtySecondsStatsComponent.KEY.get(player);
-        stats.pollution = Math.min(100, stats.pollution + 8);
+        stats.pollution = Math.min(100, stats.pollution
+                + net.exmo.sixty_seconds.logic.SixtySecondsDifficulty.scalePollutionGain(serverLevel, 8));
         stats.sync();
         net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem.applyInjury(player, null, injury);
         return true;
@@ -335,7 +336,8 @@ public class OceanTitanEntity extends OceanCreatureEntity {
     }
 
     @Override
-    protected net.minecraft.core.Holder<SoundEvent> getHurtSound(DamageSource source) {
-        return SoundEvents.GUARDIAN_HURT;
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.GUARDIAN_HURT.value();
     }
 }

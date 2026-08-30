@@ -8,10 +8,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.exmo.sixty_seconds.registry.ModSounds;
-import net.exmo.sixty_seconds.bridge.stubs.NRSounds;
 
 /**
- * 生病/感染系统：发烧持续掉健康直至死亡（须吃药治愈），伴 {@code NRSounds.INFECTED_COUGH} 咳嗽与字幕，
+ * 生病/感染系统：发烧持续掉健康直至死亡（须吃药治愈），伴咳嗽音效与字幕，
  * 每分钟 2% 概率感染身边人。救起后未用医疗包者（{@code recovering}）每 2 分钟 15% 概率生病。
  * <p>
  * 治愈入口 {@link #cure}：接到“吃药/医疗包”物品使用时调用（物品接线为 TODO）。
@@ -24,6 +23,10 @@ public final class SixtySecondsSicknessSystem {
     public static final int SPREAD_INTERVAL = 20 * 60;  // 每分钟一次传播判定
     public static final double SPREAD_CHANCE = 0.02;    // 从 3% 降至 2%
     private static final double SPREAD_RANGE_SQR = 6.0 * 6.0;
+    /** 咳嗽判定间隔（每 5 秒掷一次）。 */
+    public static final int COUGH_ROLL_INTERVAL = 20 * 5;
+    /** 每次判定的咳嗽概率（≈平均每 20 秒咳一次）。 */
+    public static final double COUGH_CHANCE = 0.25;
 
     private SixtySecondsSicknessSystem() {
     }
@@ -75,10 +78,11 @@ public final class SixtySecondsSicknessSystem {
             if (!stats.sick || stats.downed) {
                 continue;
             }
-            // 咳嗽（18% / 20tick）
-            if ((now % 20 == 0 && player.getRandom().nextInt(100) < 18)) {
+            // 时不时的咳嗽（每 5 秒掷一次，命中则播放 cough.ogg）
+            if ((now + phase) % COUGH_ROLL_INTERVAL == 0
+                    && level.getRandom().nextDouble() < COUGH_CHANCE) {
                 player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
-                        NRSounds.INFECTED_COUGH, SoundSource.PLAYERS, 1.3F,
+                        ModSounds.COUGH, SoundSource.PLAYERS, 1.3F,
                         1F + (player.getRandom().nextInt(5) - 2) * 0.1F);
                 player.displayClientMessage(Component.translatable("message.sixty_seconds.sixty_seconds.coughing")
                         .withStyle(ChatFormatting.GRAY), true);

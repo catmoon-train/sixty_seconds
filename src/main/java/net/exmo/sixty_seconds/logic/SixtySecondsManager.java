@@ -602,7 +602,9 @@ public final class SixtySecondsManager {
         SixtySecondsHotlineSystem.generateDailyHotlines(level);
         // 预先安排今日天气事件：让末日日报的「天气预报」与实际触发的事件保持一致
         if (SixtySecondsEventSystem.getScheduledForDay(level, data.dayNumber) == null) {
-            if (level.getRandom().nextDouble() < 0.5) {
+            // 晴朗概率受难度影响：难度 0 = 50%，难度 10 降至 20%
+            if (level.getRandom().nextDouble() < SixtySecondsDifficulty.clearWeatherChance(
+                    SixtySecondsDifficulty.get(level))) {
                 var pool = SixtySecondsEventSystem.FORECASTABLE_TYPES;
                 SixtySecondsEventSystem.scheduleForDay(level, data.dayNumber,
                         pool[level.getRandom().nextInt(pool.length)]);

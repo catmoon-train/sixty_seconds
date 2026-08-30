@@ -163,6 +163,10 @@ public final class NeoForgeEvents {
     @SubscribeEvent
     public static void onEntityJoin(EntityJoinLevelEvent event) {
         if (event.getLevel() instanceof ServerLevel level) {
+            // 难度：怪物加入世界时按当前难度缩放攻击/血量（幂等）
+            if (event.getEntity() instanceof LivingEntity mob) {
+                net.exmo.sixty_seconds.logic.SixtySecondsDifficulty.applyToMob(mob);
+            }
             if (event.getEntity() instanceof OceanSharkEntity) {
                 net.exmo.sixty_seconds.logic.OceanCreatureSpawner.onSharkJoined(level);
             }
