@@ -220,7 +220,7 @@ public final class ModEntities {
             ENTITY_TYPES.register("sixty_seconds_submarine", () -> {
                 SIXTY_SECONDS_SUBMARINE = EntityType.Builder.<SixtySecondsSubmarineEntity>of(
                         SixtySecondsSubmarineEntity::new, MobCategory.MISC)
-                        .sized(1.6F, 1.4F).clientTrackingRange(10).build("sixty_seconds_submarine");
+                        .sized(4.8F, 4.2F).clientTrackingRange(10).build("sixty_seconds_submarine");
                 return SIXTY_SECONDS_SUBMARINE;
             });
 

@@ -41,6 +41,9 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
     /** 所有 60s 自研怪共用 tag（枪械/手雷/清场兜底按它识别；实体自身逻辑用 instanceof）。 */
     public static final String PVE_TAG = "sixty_seconds_pve_monster";
 
+    /** 由 `60s spawn` 指令召唤的实体专用 tag：永不被任何自动清理逻辑移除（只能被打死）。 */
+    public static final String ADMIN_SPAWN_TAG = "sixty_seconds_admin_spawn";
+
     private static final EntityDataAccessor<Integer> VARIANT =
             SynchedEntityData.defineId(SixtySecondsMonsterEntity.class, EntityDataSerializers.INT);
 
@@ -263,7 +266,7 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
             return;
         }
         // 模式已结束：全部自毁（免游戏外残留；reset 的按 tag 清扫是二重兜底）
-        if (!SixtySecondsMod.isActive(serverLevel)) {
+        if (!SixtySecondsMod.isActive(serverLevel) && !this.getTags().contains(ADMIN_SPAWN_TAG)) {
             discard();
             return;
         }
@@ -296,8 +299,8 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
             default -> {
             }
         }
-        // 非战场怪：身边 64 格无人累计 1 分钟自散（防探索区游荡怪越攒越多）
-        if (!battleMob && tickCount % 20 == 0) {
+        // 非战场怪：身边 64 格无人累计 1 分钟自散（防探索区游荡怪越攒越多；管理员召唤实体豁免）
+        if (!battleMob && !this.getTags().contains(ADMIN_SPAWN_TAG) && tickCount % 20 == 0) {
             lonelyTicks = serverLevel.getNearestPlayer(this, 64) == null ? lonelyTicks + 20 : 0;
             if (lonelyTicks >= SixtySecondsBalance.PVE_LONELY_DESPAWN_TICKS) {
                 discard();

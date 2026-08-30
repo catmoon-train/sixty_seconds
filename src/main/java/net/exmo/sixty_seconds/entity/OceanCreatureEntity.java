@@ -172,8 +172,9 @@ public abstract class OceanCreatureEntity extends PathfinderMob {
             }
         }
 
-        // 模式关闭时非持久生物自毁
-        if (!SixtySecondsMod.isActive((ServerLevel) level()) && !isPersistenceRequired()) {
+        // 模式关闭时非持久生物自毁；管理员召唤实体豁免（只会被打死）
+        if (!SixtySecondsMod.isActive((ServerLevel) level()) && !isPersistenceRequired()
+                && !this.getTags().contains(net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity.ADMIN_SPAWN_TAG)) {
             discard();
         }
     }

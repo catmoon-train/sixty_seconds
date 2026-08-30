@@ -1354,9 +1354,13 @@ public final class SixtySecondsStartCommand {
      *  不要求 60s 模式运行——任何维度、控制台均可刷。 */
     private static int spawnBoss(CommandSourceStack source, int bossLevel, String variantName) {
         net.minecraft.server.level.ServerLevel level = source.getLevel();
-        net.minecraft.core.BlockPos anchor = source.getEntity() instanceof ServerPlayer player
+        net.minecraft.core.BlockPos raw = source.getEntity() instanceof ServerPlayer player
                 ? player.blockPosition().relative(player.getDirection(), 4)
                 : net.minecraft.core.BlockPos.containing(source.getPosition());
+        // 找一个合法空位生成，避免体型大的 Boss 卡进方块被世界立即移除
+        net.minecraft.core.BlockPos anchor = net.exmo.sixty_seconds.logic.SixtySecondsPveSystem
+                .findSpawnSpot(level, raw, 1, 6, 2, 12, null, null);
+        if (anchor == null) anchor = raw.above(2);
         final net.exmo.sixty_seconds.entity.SixtySecondsBossEntity.BossVariant variant;
         if (variantName != null) {
             try {
@@ -1374,6 +1378,7 @@ public final class SixtySecondsStartCommand {
             source.sendFailure(Component.literal("§c[60s] Boss 生成失败（位置可能不合法）。"));
             return 0;
         }
+        boss.addTag(net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity.ADMIN_SPAWN_TAG);
         source.sendSuccess(() -> Component.literal("§c[60s] 已生成 Boss：")
                 .append(Component.translatable(variant.nameKey()))
                 .append(Component.literal(" §7(Lv." + bossLevel + ")")), true);
@@ -1409,6 +1414,7 @@ public final class SixtySecondsStartCommand {
             return 0;
         }
         monster.applyVariant(variant);
+        monster.addTag(net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity.ADMIN_SPAWN_TAG);
         source.sendSuccess(() -> Component.translatable("command.sixty_seconds.ocean.monster_spawned",
                 Component.translatable(variant.nameKey())).withStyle(ChatFormatting.DARK_PURPLE), true);
         return 1;
@@ -1436,6 +1442,7 @@ public final class SixtySecondsStartCommand {
             return 0;
         }
         mob.applyVariant(variant);
+        mob.addTag(net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity.ADMIN_SPAWN_TAG);
         source.sendSuccess(() -> Component.literal("§9[60s] 已生成海底小怪：")
                 .append(Component.translatable(variant.nameKey())), true);
         return 1;
@@ -1446,8 +1453,11 @@ public final class SixtySecondsStartCommand {
      */
     private static int spawnSmallMonster(CommandSourceStack source, String type) {
         net.minecraft.server.level.ServerLevel level = source.getLevel();
-        net.minecraft.core.BlockPos pos = source.getEntity() instanceof ServerPlayer player
+        net.minecraft.core.BlockPos raw = source.getEntity() instanceof ServerPlayer player
                 ? player.blockPosition() : net.minecraft.core.BlockPos.containing(source.getPosition());
+        net.minecraft.core.BlockPos pos = net.exmo.sixty_seconds.logic.SixtySecondsPveSystem
+                .findSpawnSpot(level, raw, 1, 4, 1, 8, null, null);
+        if (pos == null) pos = raw;
         net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity.Variant variant;
         try {
             variant = net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity.Variant.valueOf(type.toUpperCase());
@@ -1462,6 +1472,8 @@ public final class SixtySecondsStartCommand {
             return 0;
         }
         mob.applyVariant(variant, 1.0, 1.0);
+        mob.setBattleMob(true); // 管理员召唤的怪不应被孤独自散清除
+        mob.addTag(net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity.ADMIN_SPAWN_TAG);
         mob.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
         level.addFreshEntity(mob);
         source.sendSuccess(() -> Component.literal("§a[60s] 已生成小怪：")

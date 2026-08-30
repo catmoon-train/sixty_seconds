@@ -761,7 +761,7 @@ public final class SixtySecondsPveSystem {
      * 距离 minDist~minDist+randDist-1、垂直 ±vertRange、attempts 次尝试；
      * zone/data 非空时约束「留在探索区盒内（XZ）、不落进任何队伍的家」。
      */
-    static BlockPos findSpawnSpot(ServerLevel level, BlockPos anchor, int minDist, int randDist,
+    public static BlockPos findSpawnSpot(ServerLevel level, BlockPos anchor, int minDist, int randDist,
             int vertRange, int attempts, AABB zone, SixtySecondsState.Data data) {
         for (int attempt = 0; attempt < attempts; attempt++) {
             double angle = level.getRandom().nextDouble() * Math.PI * 2;
@@ -808,7 +808,8 @@ public final class SixtySecondsPveSystem {
         for (Entity entity : level.getAllEntities()) {
             if (entity instanceof Mob
                     && (entity instanceof SixtySecondsMonsterEntity
-                            || entity.getTags().contains(SixtySecondsMonsterEntity.PVE_TAG))) {
+                            || entity.getTags().contains(SixtySecondsMonsterEntity.PVE_TAG))
+                    && !entity.getTags().contains(SixtySecondsMonsterEntity.ADMIN_SPAWN_TAG)) {
                 toRemove.add(entity);
             }
         }

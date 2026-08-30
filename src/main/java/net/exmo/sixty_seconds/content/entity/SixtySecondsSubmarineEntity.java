@@ -83,7 +83,7 @@ public class SixtySecondsSubmarineEntity extends Mob {
     public void tick() {
         Entity rider = this.getFirstPassenger();
         if (rider instanceof Player) {
-            float forward = ((Player) rider).zza;   // W = +1, S = -1
+            float forward = ((Player) rider).zza;   // W = +1 前进, S = -1 后退（沿艇艏方向）
             float steer = ((Player) rider).xxa;      // A = +1, D = -1
             boolean ascend = this.entityData.get(DATA_ASCEND);
             boolean descend = this.entityData.get(DATA_DESCEND);
@@ -100,8 +100,10 @@ public class SixtySecondsSubmarineEntity extends Mob {
             this.setYRot(this.getYRot() - steer * TURN_RATE);
 
             Vec3 dir = Vec3.directionFromRotation(this.getXRot(), this.getYRot());
-            double vx = dir.x * forward * SPEED;
-            double vz = dir.z * forward * SPEED;
+            // 渲染以 (180 - yaw) 摆放模型，dir 实际指向艇艉，故水平分量取反得到艇艏前进方向；
+            // 竖直分量保持 dir.y，使俯仰与上下潜一致（按空格/左 Ctrl 前进即斜向上/下）。
+            double vx = -dir.x * forward * SPEED;
+            double vz = -dir.z * forward * SPEED;
             double vy = dir.y * forward * SPEED;
             if (ascend) vy += LIFT;
             if (descend) vy -= LIFT;
@@ -116,25 +118,37 @@ public class SixtySecondsSubmarineEntity extends Mob {
             this.zza = 0.0F;
             this.xxa = 0.0F;
         }
-        // 载具自身不会溺水
+        // 载具自身不会溺水；乘员在水下也不会溺水
         this.setAirSupply(this.getMaxAirSupply());
+        for (Entity passenger : this.getPassengers()) {
+            if (passenger instanceof Player playerRider) {
+                playerRider.setAirSupply(playerRider.getMaxAirSupply());
+            }
+        }
         super.tick();
     }
 
     @Override
     public void positionRider(Entity rider, Entity.MoveFunction moveFunction) {
         if (this.hasPassenger(rider)) {
-            moveFunction.accept(rider, this.getX(), this.getY() + this.getPassengersRidingOffset(), this.getZ());
+            int index = this.getPassengers().indexOf(rider);
+            // 0 号乘客（驾驶员）在前方 +1 格，1 号乘客在其后一格（中心）
+            double along = (1 - index) * 1.0D;
+            Vec3 fwd = Vec3.directionFromRotation(0.0F, this.getYRot()).scale(-1.0D);
+            double x = this.getX() + fwd.x * along;
+            double z = this.getZ() + fwd.z * along;
+            double y = this.getY() + this.getPassengersRidingOffset();
+            moveFunction.accept(rider, x, y, z);
         }
     }
 
     public double getPassengersRidingOffset() {
-        return 0.75D;
+        return 1.5D;
     }
 
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (!this.level().isClientSide && this.getFirstPassenger() == null) {
+        if (!this.level().isClientSide && this.getPassengers().size() < 2) {
             player.startRiding(this);
             return InteractionResult.CONSUME;
         }
@@ -144,6 +158,17 @@ public class SixtySecondsSubmarineEntity extends Mob {
     @Override
     public boolean isNoGravity() {
         return true;
+    }
+
+    @Override
+    public boolean isAffectedByFluids() {
+        // 关闭水浮力/水流推动，使潜水艇能真正潜入水下而不浮到水面
+        return false;
+    }
+
+    @Override
+    public boolean canAddPassenger(Entity entity) {
+        return this.getPassengers().size() < 2;
     }
 
     @Override

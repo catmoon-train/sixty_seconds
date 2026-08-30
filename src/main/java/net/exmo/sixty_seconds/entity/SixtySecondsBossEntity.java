@@ -141,6 +141,9 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         builder.define(HOME_ISLAND_ID, -1);
     }
 
+    /** 陆地 Boss 体型相对原有尺寸的放大倍数（基础为原有尺寸的 2.5 倍）。 */
+    private static final float BOSS_SCALE_MULTIPLIER = 2.5F;
+
     /** 按 Boss 等级装配（普通尸潮领主）。 */
     public void applyBossLevel(int level) {
         applyBossLevel(level, false, BossVariant.RAVAGER);
@@ -166,7 +169,9 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         setAttr(Attributes.MAX_HEALTH, baseHealth * apexMult);
         setAttr(Attributes.MOVEMENT_SPEED, (apex ? 0.27 : 0.24) * variant.speedMult);
         setAttr(Attributes.KNOCKBACK_RESISTANCE, 1.0);
-        setAttr(Attributes.SCALE, (apex ? 1.7 : 1.35) + 0.15 * (lvl - 1));
+        // 陆地 Boss 体型：基础为原有尺寸的 2.5 倍，并保留按等级/apex 变化
+        float baseScale = (apex ? 1.7F : 1.35F) + 0.15F * (lvl - 1);
+        setAttr(Attributes.SCALE, baseScale * BOSS_SCALE_MULTIPLIER);
         setHealth(getMaxHealth());
         // 名称
         Component name;

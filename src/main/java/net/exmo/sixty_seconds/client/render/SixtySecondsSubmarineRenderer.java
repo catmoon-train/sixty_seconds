@@ -21,7 +21,7 @@ public class SixtySecondsSubmarineRenderer extends EntityRenderer<SixtySecondsSu
 
     private final SixtySecondsSubmarineModel model;
     private final ResourceLocation texture;
-    private static final float MODEL_SCALE = 1.0F;
+    private static final float MODEL_SCALE = 3.0F;
 
     public SixtySecondsSubmarineRenderer(EntityRendererProvider.Context context) {
         super(context);

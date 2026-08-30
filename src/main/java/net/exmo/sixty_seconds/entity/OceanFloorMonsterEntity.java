@@ -94,6 +94,7 @@ public class OceanFloorMonsterEntity extends OceanCreatureEntity {
     public void applyVariant(Variant variant) {
         applyVariant(variant.id, variant.health, variant.speed, variant.scale, variant.nameKey());
         setCustomNameVisible(false);
+        setPersistenceRequired(); // 避免非 60s 模式下被 OceanCreatureEntity 的失活清理删掉
     }
 
     public Variant getVariant() {
