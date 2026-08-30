@@ -7,6 +7,8 @@ import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
 import net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity;
 import net.exmo.sixty_seconds.entity.OceanSharkEntity;
 import net.exmo.sixty_seconds.entity.OceanFloorMonsterEntity;
+import net.exmo.sixty_seconds.entity.OceanFaunaEntity;
+import net.exmo.sixty_seconds.entity.OceanTitanEntity;
 import net.exmo.sixty_seconds.init.ModOceanEntities;
 import net.exmo.sixty_seconds.registry.ModEntities;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
@@ -69,6 +71,8 @@ public final class OceanCreatureSpawner {
     private static final double NEARBY_RADIUS = 64.0;
     private static final double MONSTER_FOG_RADIUS = 32.0; // 海怪浓雾作用半径
     private static final int FLOOR_MONSTER_AREA_CAP = 4;  // 海底小怪局部上限
+    private static final int FAUNA_AREA_CAP = 5;          // 海洋生物群系（第二批次）局部上限
+    private static final int TITAN_CAP = 1;               // 海洋霸主全局上限（同时最多 1 只）
 
     private static final int SPAWN_MIN_DIST = 14;
     private static final int SPAWN_MAX_DIST = 36;
@@ -183,6 +187,48 @@ public final class OceanCreatureSpawner {
                 if (spot != null) spawnFloorMonster(level, spot, random);
             }
         }
+
+        // ── 海洋生物群系（第二批次 10 变体）：水中自然刷新，与海底小怪共用上限口径 ──
+        for (ServerPlayer player : level.players()) {
+            if (player.isSpectator() || player.isCreative()
+                    || !net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {
+                continue;
+            }
+            int nearbyFauna = countNearby(level, player, OceanFaunaEntity.class, NEARBY_RADIUS);
+            if (nearbyFauna < FAUNA_AREA_CAP
+                    && random.nextDouble() < 0.05 * dayRatio * earlyDayMult) {
+                BlockPos spot = findWaterSpot(level, player.blockPosition(),
+                        SPAWN_MIN_DIST, SPAWN_MAX_DIST, random);
+                if (spot != null) spawnOceanFauna(level, spot, random);
+            }
+        }
+
+        // ── 海洋霸主（10 个独立建模 Boss）：低概率、全局限 1 只 ──
+        tickTitanBars(level);
+        if (countNearbyTitans(level) < TITAN_CAP
+                && random.nextDouble() < 0.0035 * dayRatio * earlyDayMult) {
+            for (ServerPlayer player : level.players()) {
+                if (player.isSpectator() || player.isCreative()
+                        || !net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {
+                    continue;
+                }
+                BlockPos spot = findWaterSpot(level, player.blockPosition(),
+                        SPAWN_MIN_DIST + 8, SPAWN_MAX_DIST + 8, random);
+                if (spot == null) continue;
+                OceanTitanEntity.Variant[] vs = OceanTitanEntity.Variant.values();
+                spawnTitan(level, spot, vs[random.nextInt(vs.length)]);
+                break;
+            }
+        }
+    }
+
+    /** 统计当前维度的海洋霸主数量。 */
+    private static int countNearbyTitans(ServerLevel level) {
+        int n = 0;
+        for (net.minecraft.world.entity.Entity e : level.getAllEntities()) {
+            if (e instanceof OceanTitanEntity && e.isAlive()) n++;
+        }
+        return n;
     }
 
     /**
@@ -434,6 +480,79 @@ public final class OceanCreatureSpawner {
         monster.finalizeSpawn(level, level.getCurrentDifficultyAt(waterPos), MobSpawnType.NATURAL, null);
         level.addFreshEntity(monster);
         return monster;
+    }
+
+    /**
+     * 生成海洋霸主（10 个独立建模 Boss 之一）。<b>生成方式与既有 Boss 一致</b>：
+     * 全服播报坐标 + 音效 + {@code BossEvent} 血条登记。
+     */
+    @Nullable
+    public static OceanTitanEntity spawnTitan(ServerLevel level, BlockPos pos,
+                                              OceanTitanEntity.Variant variant) {
+        OceanTitanEntity titan = ModEntities.OCEAN_TITAN.create(level);
+        if (titan == null) return null;
+        titan.setPos(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
+        titan.applyVariant(variant);
+        level.addFreshEntity(titan);
+
+        // 血条（与既有 Boss 同款）
+        net.minecraft.server.level.ServerBossEvent bar = new net.minecraft.server.level.ServerBossEvent(
+                net.minecraft.network.chat.Component.translatable(variant.nameKey()),
+                net.minecraft.world.BossEvent.BossBarColor.BLUE,
+                net.minecraft.world.BossEvent.BossBarOverlay.PROGRESS);
+        // 让当前维度所有玩家都看到血条
+        for (ServerPlayer p : level.players()) {
+            bar.addPlayer(p);
+        }
+        TITAN_BARS.put(titan.getUUID(), bar);
+
+        net.minecraft.network.chat.Component message = net.minecraft.network.chat.Component
+                .literal("§b[60s] 海洋霸主 ")
+                .append(net.minecraft.network.chat.Component.translatable(variant.nameKey()))
+                .append(" 已苏醒！坐标 " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ());
+        for (ServerPlayer player : level.players()) {
+            player.displayClientMessage(message, false);
+            player.playNotifySound(net.minecraft.sounds.SoundEvents.WITHER_SPAWN,
+                    net.minecraft.sounds.SoundSource.HOSTILE, 0.7F, 0.75F);
+        }
+        return titan;
+    }
+
+    /** 海洋霸主血条表（UUID → Boss 事件）。 */
+    private static final java.util.Map<java.util.UUID, net.minecraft.server.level.ServerBossEvent> TITAN_BARS =
+            new java.util.HashMap<>();
+
+    /** 每 tick 同步海洋霸主血条；死亡/移除时清理。 */
+    public static void tickTitanBars(ServerLevel level) {
+        if (TITAN_BARS.isEmpty()) return;
+        var it = TITAN_BARS.entrySet().iterator();
+        while (it.hasNext()) {
+            var e = it.next();
+            net.minecraft.world.entity.Entity ent = level.getEntity(e.getKey());
+            if (!(ent instanceof OceanTitanEntity titan) || !titan.isAlive()) {
+                e.getValue().removeAllPlayers();
+                it.remove();
+                continue;
+            }
+            e.getValue().setProgress(titan.getHealth() / titan.getMaxHealth());
+        }
+    }
+
+    /**
+     * 在给定水体位置生成一只<b>随机</b>海洋生物群系生物（第二批次 10 变体之一）。
+     * 具体变体由指令侧通过 {@code applyVariant} 覆盖；自然刷新则在此随机挑选。
+     */
+    @Nullable
+    public static OceanFaunaEntity spawnOceanFauna(ServerLevel level, BlockPos waterPos, RandomSource random) {
+        OceanFaunaEntity mob = ModEntities.OCEAN_FAUNA.create(level);
+        if (mob == null) return null;
+        OceanFaunaEntity.Variant[] variants = OceanFaunaEntity.Variant.values();
+        mob.applyVariant(variants[random.nextInt(variants.length)]);
+        mob.moveTo(waterPos.getX() + 0.5, waterPos.getY(), waterPos.getZ() + 0.5,
+                random.nextFloat() * 360.0F, 0.0F);
+        mob.finalizeSpawn(level, level.getCurrentDifficultyAt(waterPos), MobSpawnType.NATURAL, null);
+        level.addFreshEntity(mob);
+        return mob;
     }
 
     /** 在玩家 XZ 附近找一块贴近海底的水方块位置。 */

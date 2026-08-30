@@ -297,6 +297,28 @@ public final class SixtySecondsStartCommand {
                                                 })
                                                 .executes(c -> spawnSmallMonster(c.getSource(),
                                                         StringArgumentType.getString(c, "type")))))
+                                // 海洋生物群系（第二批次，10 变体）：/60s spawn fauna <变体>
+                                .then(literal("fauna")
+                                        .then(argument("type", StringArgumentType.word())
+                                                .suggests((ctx, builder) -> {
+                                                    for (var v : net.exmo.sixty_seconds.entity.OceanFaunaEntity.Variant.values()) {
+                                                        builder.suggest(v.name().toLowerCase(java.util.Locale.ROOT));
+                                                    }
+                                                    return builder.buildFuture();
+                                                })
+                                                .executes(c -> spawnOceanFauna(c.getSource(),
+                                                        StringArgumentType.getString(c, "type")))))
+                                // 海洋霸主（10 个独立建模 Boss）：/60s spawn titan <变体>
+                                .then(literal("titan")
+                                        .then(argument("type", StringArgumentType.word())
+                                                .suggests((ctx, builder) -> {
+                                                    for (var v : net.exmo.sixty_seconds.entity.OceanTitanEntity.Variant.values()) {
+                                                        builder.suggest(v.name().toLowerCase(java.util.Locale.ROOT));
+                                                    }
+                                                    return builder.buildFuture();
+                                                })
+                                                .executes(c -> spawnOceanTitan(c.getSource(),
+                                                        StringArgumentType.getString(c, "type")))))
                                 // 潜水艇载具：/60s spawn submarine
                                 .then(literal("submarine")
                                         .executes(c -> spawnSubmarine(c.getSource())))
@@ -1444,6 +1466,59 @@ public final class SixtySecondsStartCommand {
         mob.applyVariant(variant);
         mob.addTag(net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity.ADMIN_SPAWN_TAG);
         source.sendSuccess(() -> Component.literal("§9[60s] 已生成海底小怪：")
+                .append(Component.translatable(variant.nameKey())), true);
+        return 1;
+    }
+
+    /**
+     * 管理员：在自身/指令位置刷海洋生物群系（第二批次 10 变体）。<b>不要求 60s 模式运行</b>。
+     * 落点取执行者位置；若在水中则原地生成，否则向上寻找水体。
+     */
+    private static int spawnOceanFauna(CommandSourceStack source, String type) {
+        net.minecraft.server.level.ServerLevel level = source.getLevel();
+        net.minecraft.core.BlockPos pos = source.getEntity() instanceof ServerPlayer player
+                ? player.blockPosition() : net.minecraft.core.BlockPos.containing(source.getPosition());
+        net.exmo.sixty_seconds.entity.OceanFaunaEntity.Variant variant;
+        try {
+            variant = net.exmo.sixty_seconds.entity.OceanFaunaEntity.Variant.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            source.sendFailure(Component.translatable("commands.60s.ocean_fauna_unknown_type", type));
+            return 0;
+        }
+        net.exmo.sixty_seconds.entity.OceanFaunaEntity mob =
+                net.exmo.sixty_seconds.logic.OceanCreatureSpawner.spawnOceanFauna(level, pos, level.getRandom());
+        if (mob == null) {
+            source.sendFailure(Component.literal("§c[60s] 海洋生物生成失败（需在海洋且附近有水体）。"));
+            return 0;
+        }
+        mob.applyVariant(variant);
+        source.sendSuccess(() -> Component.literal("§b[60s] 已生成海洋生物：")
+                .append(Component.translatable(variant.nameKey())), true);
+        return 1;
+    }
+
+    /**
+     * 管理员：刷海洋霸主（10 个独立建模 Boss 之一）。<b>不要求 60s 模式运行</b>。
+     * 生成方式与既有 Boss 一致（全服播报 + 血条）。
+     */
+    private static int spawnOceanTitan(CommandSourceStack source, String type) {
+        net.minecraft.server.level.ServerLevel level = source.getLevel();
+        net.minecraft.core.BlockPos pos = source.getEntity() instanceof ServerPlayer player
+                ? player.blockPosition() : net.minecraft.core.BlockPos.containing(source.getPosition());
+        net.exmo.sixty_seconds.entity.OceanTitanEntity.Variant variant;
+        try {
+            variant = net.exmo.sixty_seconds.entity.OceanTitanEntity.Variant.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            source.sendFailure(Component.translatable("commands.60s.ocean_titan_unknown_type", type));
+            return 0;
+        }
+        net.exmo.sixty_seconds.entity.OceanTitanEntity titan =
+                net.exmo.sixty_seconds.logic.OceanCreatureSpawner.spawnTitan(level, pos, variant);
+        if (titan == null) {
+            source.sendFailure(Component.literal("§c[60s] 海洋霸主生成失败。"));
+            return 0;
+        }
+        source.sendSuccess(() -> Component.literal("§b[60s] 已生成海洋霸主：")
                 .append(Component.translatable(variant.nameKey())), true);
         return 1;
     }

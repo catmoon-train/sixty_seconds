@@ -24,6 +24,8 @@ import net.exmo.sixty_seconds.client.render.CanyuesaHorseRenderer;
 import net.exmo.sixty_seconds.client.render.OceanSeaMonsterRenderer;
 import net.exmo.sixty_seconds.client.render.OceanSharkRenderer;
 import net.exmo.sixty_seconds.client.render.OceanFloorMonsterRenderer;
+import net.exmo.sixty_seconds.client.render.OceanFaunaRenderer;
+import net.exmo.sixty_seconds.client.render.OceanTitanRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsSubmarineRenderer;
 import net.exmo.sixty_seconds.entity.OceanFloorMonsterEntity;
 import net.exmo.sixty_seconds.client.render.RainbowHorseRenderer;
@@ -326,6 +328,8 @@ public final class SixtySecondsClient {
         event.registerEntityRenderer(ModEntities.OCEAN_SHARK, OceanSharkRenderer::new);
         event.registerEntityRenderer(ModEntities.OCEAN_SEA_MONSTER, OceanSeaMonsterRenderer::new);
         event.registerEntityRenderer(ModEntities.OCEAN_FLOOR_MONSTER, OceanFloorMonsterRenderer::new);
+        event.registerEntityRenderer(ModEntities.OCEAN_FAUNA, OceanFaunaRenderer::new);
+        event.registerEntityRenderer(ModEntities.OCEAN_TITAN, OceanTitanRenderer::new);
         event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_SUBMARINE, SixtySecondsSubmarineRenderer::new);
         event.registerEntityRenderer(ModEntities.SUPER_PIG_HORSE, SuperPigHorseRenderer::new);
         event.registerEntityRenderer(ModEntities.RAINBOW_HORSE, RainbowHorseRenderer::new);

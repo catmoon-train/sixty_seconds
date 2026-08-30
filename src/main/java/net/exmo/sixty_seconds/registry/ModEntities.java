@@ -12,6 +12,8 @@ import net.exmo.sixty_seconds.content.entity.WheelchairEntity;
 import net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity;
 import net.exmo.sixty_seconds.content.entity.WheelchairFieldItemEntity;
 import net.exmo.sixty_seconds.entity.OceanSharkEntity;
+import net.exmo.sixty_seconds.entity.OceanFaunaEntity;
+import net.exmo.sixty_seconds.entity.OceanTitanEntity;
 import net.exmo.sixty_seconds.entity.OceanFloorMonsterEntity;
 import net.exmo.sixty_seconds.entity.SuperPigHorseEntity;
 import net.exmo.sixty_seconds.entity.RainbowHorseEntity;
@@ -192,6 +194,24 @@ public final class ModEntities {
                 return OCEAN_FLOOR_MONSTER;
             });
 
+    /** 海洋生物群系（第二批次，10 变体）：蝠鲼 / 水母 / 巨型乌贼 / 河豚 / 海星 / 海马 / 狮子鱼 / 铁甲蟹 / 鹦鹉螺 / 梭鱼。 */
+    public static EntityType<OceanFaunaEntity> OCEAN_FAUNA;
+    public static final DeferredHolder<EntityType<?>, EntityType<OceanFaunaEntity>> HOLD_OCEAN_FAUNA =
+            ENTITY_TYPES.register("ocean_fauna", () -> {
+                OCEAN_FAUNA = EntityType.Builder.of(OceanFaunaEntity::new, MobCategory.WATER_CREATURE)
+                        .sized(1.2f, 1.2f).clientTrackingRange(80).updateInterval(2).build("ocean_fauna");
+                return OCEAN_FAUNA;
+            });
+
+    /** 海洋霸主（10 个独立建模 Boss，非僵尸人形）。 */
+    public static EntityType<OceanTitanEntity> OCEAN_TITAN;
+    public static final DeferredHolder<EntityType<?>, EntityType<OceanTitanEntity>> HOLD_OCEAN_TITAN =
+            ENTITY_TYPES.register("ocean_titan", () -> {
+                OCEAN_TITAN = EntityType.Builder.of(OceanTitanEntity::new, MobCategory.WATER_CREATURE)
+                        .sized(2.4f, 3.0f).clientTrackingRange(96).updateInterval(2).build("ocean_titan");
+                return OCEAN_TITAN;
+            });
+
     // ── 三种临时坐骑马 ──
     public static EntityType<SuperPigHorseEntity> SUPER_PIG_HORSE;
     public static final DeferredHolder<EntityType<?>, EntityType<SuperPigHorseEntity>> HOLD_SUPER_PIG_HORSE =
@@ -281,6 +301,19 @@ public final class ModEntities {
         event.put(SIXTY_SECONDS_SUBMARINE, net.minecraft.world.entity.Mob.createMobAttributes()
                 .add(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH, 200.0)
                 .add(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, 0.30)
+                .build());
+        event.put(OCEAN_FAUNA, OceanFaunaEntity.createMobAttributes()
+                .add(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH, 45.0)
+                .add(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, 0.30)
+                .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE, 8.0)
+                .add(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE, 32.0)
+                .build());
+        event.put(OCEAN_TITAN, OceanTitanEntity.createMobAttributes()
+                .add(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH, 420.0)
+                .add(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, 0.26)
+                .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE, 26.0)
+                .add(net.minecraft.world.entity.ai.attributes.Attributes.KNOCKBACK_RESISTANCE, 0.85)
+                .add(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE, 48.0)
                 .build());
     }
 }
