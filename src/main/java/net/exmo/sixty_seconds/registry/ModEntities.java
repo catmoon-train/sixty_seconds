@@ -278,5 +278,9 @@ public final class ModEntities {
                 .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE, 8.0)
                 .add(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE, 32.0)
                 .build());
+        event.put(SIXTY_SECONDS_SUBMARINE, net.minecraft.world.entity.Mob.createMobAttributes()
+                .add(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH, 200.0)
+                .add(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, 0.30)
+                .build());
     }
 }

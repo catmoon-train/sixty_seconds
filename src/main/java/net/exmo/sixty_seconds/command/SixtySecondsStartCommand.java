@@ -262,18 +262,44 @@ public final class SixtySecondsStartCommand {
                                                 .executes(c -> spawnBoss(c.getSource(),
                                                         IntegerArgumentType.getInteger(c, "level"))))
                                         .executes(c -> spawnBoss(c.getSource(), 1)))
-                                // 海洋 Boss / 海怪：/60s spawn monster <kraken|serpent|leviathan>
+                                // 海洋 Boss / 海怪：/60s spawn monster <6 个变体>
                                 // 不要求 60s 模式运行，可在海洋（海岛）维度使用。
                                 .then(literal("monster")
                                         .then(argument("type", StringArgumentType.word())
                                                 .suggests((ctx, builder) -> {
-                                                    for (String t : new String[]{"kraken", "serpent", "leviathan"}) {
+                                                    for (String t : new String[]{"kraken", "serpent", "leviathan",
+                                                            "abyss_kraken", "trench_serpent", "sunken_leviathan"}) {
                                                         builder.suggest(t);
                                                     }
                                                     return builder.buildFuture();
                                                 })
                                                 .executes(c -> spawnOceanMonster(c.getSource(),
                                                         StringArgumentType.getString(c, "type")))))
+                                // 海底小怪：/60s spawn floor <6 个变体>
+                                .then(literal("floor")
+                                        .then(argument("type", StringArgumentType.word())
+                                                .suggests((ctx, builder) -> {
+                                                    for (var v : net.exmo.sixty_seconds.entity.OceanFloorMonsterEntity.Variant.values()) {
+                                                        builder.suggest(v.name().toLowerCase(java.util.Locale.ROOT));
+                                                    }
+                                                    return builder.buildFuture();
+                                                })
+                                                .executes(c -> spawnFloorMonster(c.getSource(),
+                                                        StringArgumentType.getString(c, "type")))))
+                                // 常规小怪（僵尸系）：/60s spawn mob <17 个变体>
+                                .then(literal("mob")
+                                        .then(argument("type", StringArgumentType.word())
+                                                .suggests((ctx, builder) -> {
+                                                    for (var v : net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity.Variant.values()) {
+                                                        builder.suggest(v.name().toLowerCase(java.util.Locale.ROOT));
+                                                    }
+                                                    return builder.buildFuture();
+                                                })
+                                                .executes(c -> spawnSmallMonster(c.getSource(),
+                                                        StringArgumentType.getString(c, "type")))))
+                                // 潜水艇载具：/60s spawn submarine
+                                .then(literal("submarine")
+                                        .executes(c -> spawnSubmarine(c.getSource())))
                                 // 鲨鱼：/60s spawn shark <reef_shark|tiger_shark|hammerhead|great_white|megalodon>
                                 .then(literal("shark")
                                         .then(argument("type", StringArgumentType.word())
@@ -1324,17 +1350,14 @@ public final class SixtySecondsStartCommand {
         return spawnBoss(source, bossLevel, null);
     }
 
-    /** 管理员：在自身位置刷指定等级+变体 Boss。variantName 为 null 或无法识别时默认破坏者。 */
+    /** 管理员：在自身/指令位置刷指定等级+变体 Boss。variantName 为 null 或无法识别时默认破坏者。
+     *  不要求 60s 模式运行——任何维度、控制台均可刷。 */
     private static int spawnBoss(CommandSourceStack source, int bossLevel, String variantName) {
-        if (!SixtySecondsMod.isActive(source.getLevel())) {
-            source.sendFailure(Component.translatable("message.sixty_seconds.sixty_seconds.cmd_not_running"));
-            return 0;
-        }
-        if (!(source.getEntity() instanceof ServerPlayer player)) {
-            source.sendFailure(Component.literal("player only"));
-            return 0;
-        }
-        var variant = net.exmo.sixty_seconds.entity.SixtySecondsBossEntity.BossVariant.RAVAGER;
+        net.minecraft.server.level.ServerLevel level = source.getLevel();
+        net.minecraft.core.BlockPos anchor = source.getEntity() instanceof ServerPlayer player
+                ? player.blockPosition().relative(player.getDirection(), 4)
+                : net.minecraft.core.BlockPos.containing(source.getPosition());
+        final net.exmo.sixty_seconds.entity.SixtySecondsBossEntity.BossVariant variant;
         if (variantName != null) {
             try {
                 variant = net.exmo.sixty_seconds.entity.SixtySecondsBossEntity.BossVariant.valueOf(variantName.toUpperCase());
@@ -1342,11 +1365,19 @@ public final class SixtySecondsStartCommand {
                 source.sendFailure(Component.translatable("commands.60s.boss_unknown_variant", variantName));
                 return 0;
             }
+        } else {
+            variant = net.exmo.sixty_seconds.entity.SixtySecondsBossEntity.BossVariant.RAVAGER;
         }
         var boss = net.exmo.sixty_seconds.logic.SixtySecondsPveSystem.spawnBoss(
-                source.getLevel(), player.blockPosition().relative(player.getDirection(), 4),
-                bossLevel, false, variant);
-        return boss != null ? 1 : 0;
+                level, anchor, bossLevel, false, variant);
+        if (boss == null) {
+            source.sendFailure(Component.literal("§c[60s] Boss 生成失败（位置可能不合法）。"));
+            return 0;
+        }
+        source.sendSuccess(() -> Component.literal("§c[60s] 已生成 Boss：")
+                .append(Component.translatable(variant.nameKey()))
+                .append(Component.literal(" §7(Lv." + bossLevel + ")")), true);
+        return 1;
     }
 
     /**
@@ -1362,6 +1393,9 @@ public final class SixtySecondsStartCommand {
             case "kraken" -> net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity.Variant.KRAKEN;
             case "serpent" -> net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity.Variant.SERPENT;
             case "leviathan" -> net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity.Variant.LEVIATHAN;
+            case "abyss_kraken" -> net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity.Variant.ABYSS_KRAKEN;
+            case "trench_serpent" -> net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity.Variant.TRENCH_SERPENT;
+            case "sunken_leviathan" -> net.exmo.sixty_seconds.entity.OceanSeaMonsterEntity.Variant.SUNKEN_LEVIATHAN;
             default -> {
                 source.sendFailure(Component.translatable("commands.60s.ocean_boss_unknown_type", type));
                 yield null;
@@ -1377,6 +1411,82 @@ public final class SixtySecondsStartCommand {
         monster.applyVariant(variant);
         source.sendSuccess(() -> Component.translatable("command.sixty_seconds.ocean.monster_spawned",
                 Component.translatable(variant.nameKey())).withStyle(ChatFormatting.DARK_PURPLE), true);
+        return 1;
+    }
+
+    /**
+     * 管理员：在自身/指令位置刷海底小怪。<b>不要求 60s 模式运行</b>。
+     * 落点优先取脚下水面/海底，由生成器负责定位。
+     */
+    private static int spawnFloorMonster(CommandSourceStack source, String type) {
+        net.minecraft.server.level.ServerLevel level = source.getLevel();
+        net.minecraft.core.BlockPos pos = source.getEntity() instanceof ServerPlayer player
+                ? player.blockPosition() : net.minecraft.core.BlockPos.containing(source.getPosition());
+        net.exmo.sixty_seconds.entity.OceanFloorMonsterEntity.Variant variant;
+        try {
+            variant = net.exmo.sixty_seconds.entity.OceanFloorMonsterEntity.Variant.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            source.sendFailure(Component.translatable("commands.60s.ocean_floor_unknown_type", type));
+            return 0;
+        }
+        net.exmo.sixty_seconds.entity.OceanFloorMonsterEntity mob =
+                net.exmo.sixty_seconds.logic.OceanCreatureSpawner.spawnFloorMonster(level, pos, level.getRandom());
+        if (mob == null) {
+            source.sendFailure(Component.literal("§c[60s] 海底小怪生成失败（需在海洋且附近有海底）。"));
+            return 0;
+        }
+        mob.applyVariant(variant);
+        source.sendSuccess(() -> Component.literal("§9[60s] 已生成海底小怪：")
+                .append(Component.translatable(variant.nameKey())), true);
+        return 1;
+    }
+
+    /**
+     * 管理员：在自身/指令位置刷常规小怪（僵尸系）。<b>不要求 60s 模式运行</b>。
+     */
+    private static int spawnSmallMonster(CommandSourceStack source, String type) {
+        net.minecraft.server.level.ServerLevel level = source.getLevel();
+        net.minecraft.core.BlockPos pos = source.getEntity() instanceof ServerPlayer player
+                ? player.blockPosition() : net.minecraft.core.BlockPos.containing(source.getPosition());
+        net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity.Variant variant;
+        try {
+            variant = net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity.Variant.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            source.sendFailure(Component.translatable("commands.60s.monster_unknown_type", type));
+            return 0;
+        }
+        net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity mob =
+                net.exmo.sixty_seconds.registry.ModEntities.SIXTY_SECONDS_MONSTER.create(level);
+        if (mob == null) {
+            source.sendFailure(Component.literal("§c[60s] 小怪生成失败。"));
+            return 0;
+        }
+        mob.applyVariant(variant, 1.0, 1.0);
+        mob.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
+        level.addFreshEntity(mob);
+        source.sendSuccess(() -> Component.literal("§a[60s] 已生成小怪：")
+                .append(Component.translatable(variant.nameKey())), true);
+        return 1;
+    }
+
+    /**
+     * 管理员：在自身/指令位置刷潜水艇载具。<b>不要求 60s 模式运行</b>。
+     */
+    private static int spawnSubmarine(CommandSourceStack source) {
+        net.minecraft.server.level.ServerLevel level = source.getLevel();
+        net.minecraft.core.BlockPos pos = source.getEntity() instanceof ServerPlayer player
+                ? player.blockPosition() : net.minecraft.core.BlockPos.containing(source.getPosition());
+        float yaw = source.getEntity() instanceof ServerPlayer player ? player.getYRot() : 0F;
+        net.exmo.sixty_seconds.content.entity.SixtySecondsSubmarineEntity sub =
+                net.exmo.sixty_seconds.registry.ModEntities.SIXTY_SECONDS_SUBMARINE.create(level);
+        if (sub == null) {
+            source.sendFailure(Component.literal("§c[60s] 潜水艇生成失败。"));
+            return 0;
+        }
+        sub.setPos(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5);
+        sub.setYRot(yaw);
+        level.addFreshEntity(sub);
+        source.sendSuccess(() -> Component.literal("§b[60s] 已生成潜水艇。"), true);
         return 1;
     }
 
