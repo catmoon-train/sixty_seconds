@@ -11,22 +11,32 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
 /**
- * 海怪盒子模型（128×128 贴图）。3 个海怪变体（克拉肯/海蛇/利维坦）共用本模型，只换贴图——
- * 头足类轮廓：椭球躯体 + 头冠 + 双眼 + 喙 + 8 条三节触手。
- * <p>
- * 8 条触手共享同一组 UV 矩形（它们外观一致，没必要各占一块贴图）。
- * 模型空间 y=24 基线；{@code texOffs}/尺寸与
- * {@code tools/gen_sixtyseconds_ocean_textures.py} 逐面上色的矩形一一对应——改模型须同步改脚本。
+ * 海怪模型（128×128 贴图，多套几何按变体切换）。
  *
- * <h3>UV 布局（128×128）</h3>
+ * <ul>
+ *   <li><b>classic</b>（KRAKEN / SERPENT / LEVIATHAN）：头足类轮廓——椭球套体 + 头冠 + 双眼 + 喙 + 8 条三节触手。</li>
+ *   <li><b>abyss_kraken</b>（深渊克拉肯）：加高套体 + 背脊甲 + 头冠板 + 6 条四节长触手（末节带倒钩）。</li>
+ *   <li><b>trench_serpent</b>（海沟巨蛇）：长头 + 双角 + 8 节逐级收窄蛇躯 + 背鳍带 + 胸鳍 + 竖尾鳍。</li>
+ *   <li><b>sunken_leviathan</b>（沉没利维坦）：巨口鲸兽 —— 巨头 + 下颌 + 骨脊板 + 外露肋骨 + 双鳍 + 尾鳍。</li>
+ * </ul>
+ *
+ * 模型空间 y=24 基线；{@code texOffs}/尺寸与 {@code tools/gen_ocean_entities.py}
+ * 逐面上色的矩形一一对应——改模型须同步改脚本。
+ *
+ * <h3>UV 布局（各变体独立贴图，故区域可重叠复用）</h3>
  * <pre>
- *   body    texOffs(0,0)    14×18×14
- *   crest   texOffs(0,34)   8×4×2
- *   eye     texOffs(60,0)   4×4×4   （左右共用）
- *   beak    texOffs(60,12)  6×3×3
- *   tent1   texOffs(0,44)   4×8×4   （8 条共用）
- *   tent2   texOffs(20,44)  3×7×3
- *   tent3   texOffs(36,44)  2×6×2
+ * classic:            body(0,0) 14×18×14 | crest(0,34) 8×4×2 | eye(60,0) 4×4×4
+ *                     beak(60,12) 6×3×3  | tent1(0,44) 4×8×4 | tent2(20,44) 3×7×3 | tent3(36,44) 2×6×2
+ * abyss_kraken:       mantle(0,0) 16×22×16 | ridge(0,40) 4×6×18 | eye(66,0) 5×5×5 | glow(66,12) 3×3×1
+ *                     beak(88,0) 8×4×4 | tentA(48,40) 5×10×5 | tentB(70,40) 4×9×4
+ *                     tentC(88,40) 3×8×3 | tentD(0,66) 2×8×2 | barb(12,66) 2×4×2 | crown(24,66) 10×5×3
+ * trench_serpent:     head(0,0) 12×11×16 | jaw(58,0) 12×4×14 | horn(58,20) 2×9×2 | eye(68,20) 3×3×2
+ *                     seg(0,30) 11×11×10 | dorsal(44,30) 1×7×10 | tailFin(0,54) 1×14×10
+ *                     pect(24,54) 9×2×5 | tailTip(54,54) 5×5×8 | fang(82,54) 1×4×1
+ * sunken_leviathan:   head(0,0) 14×12×14 | maw(58,0) 14×4×12 | teeth(58,18) 14×2×1 | eye(90,18) 3×3×2
+ *                     torso(0,28) 16×14×20 | spine(74,28) 4×5×14 | tail(0,64) 8×8×12
+ *                     fluke(42,64) 14×1×8 | flipper(88,64) 10×2×6 | rib(0,86) 2×8×2
+ *                     spike(12,86) 2×7×2 | barnacle(24,86) 3×2×3
  * </pre>
  */
 public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
@@ -34,40 +44,124 @@ public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
     private static final int TEX_W = 128;
     private static final int TEX_H = 128;
 
+    private static final int CLASSIC_TENTACLES = 8;
+    private static final int ABYSS_TENTACLES = 6;
+    private static final int ABYSS_SEGMENTS = 4;
+    private static final int SERPENT_SEGMENTS = 8;
+
     private final ModelPart root;
+
+    // ── classic（克拉肯 / 海蛇 / 利维坦，沿用旧几何与旧贴图）────────────
+    private final ModelPart classic;
     private final ModelPart body;
     private final ModelPart leftEye;
     private final ModelPart rightEye;
-    private final ModelPart[] tentacles;
+    private final ModelPart[] tentacles = new ModelPart[CLASSIC_TENTACLES];
+
+    // ── abyss_kraken ────────────────────────────────────────────────
+    private final ModelPart abyss;
+    private final ModelPart abyssMantle;
+    private final ModelPart abyssEyeL;
+    private final ModelPart abyssEyeR;
+    private final ModelPart[] abyssTentacles = new ModelPart[ABYSS_TENTACLES];
+    private final ModelPart[][] abyssSegs = new ModelPart[ABYSS_TENTACLES][ABYSS_SEGMENTS];
+
+    // ── trench_serpent ──────────────────────────────────────────────
+    private final ModelPart serpent;
+    private final ModelPart serpentHead;
+    private final ModelPart serpentJaw;
+    private final ModelPart[] serpentSegs = new ModelPart[SERPENT_SEGMENTS];
+    private final ModelPart serpentTailFin;
+    private final ModelPart serpentPectL;
+    private final ModelPart serpentPectR;
+
+    // ── sunken_leviathan ────────────────────────────────────────────
+    private final ModelPart leviathan;
+    private final ModelPart leviHead;
+    private final ModelPart leviMaw;
+    private final ModelPart leviTorso;
+    private final ModelPart leviTail;
+    private final ModelPart leviFluke;
+    private final ModelPart leviFlipperL;
+    private final ModelPart leviFlipperR;
 
     public OceanSeaMonsterModel(ModelPart root) {
         this.root = root;
-        this.body = root.getChild("body");
+
+        this.classic = root.getChild("classic");
+        this.body = classic.getChild("body");
         this.leftEye = body.getChild("left_eye");
         this.rightEye = body.getChild("right_eye");
-        this.tentacles = new ModelPart[8];
-        for (int i = 0; i < 8; i++) {
-            tentacles[i] = root.getChild("tentacle_" + i);
+        for (int i = 0; i < CLASSIC_TENTACLES; i++) {
+            tentacles[i] = classic.getChild("tentacle_" + i);
         }
+
+        this.abyss = root.getChild("abyss_kraken");
+        this.abyssMantle = abyss.getChild("mantle");
+        this.abyssEyeL = abyssMantle.getChild("eye_l");
+        this.abyssEyeR = abyssMantle.getChild("eye_r");
+        for (int i = 0; i < ABYSS_TENTACLES; i++) {
+            abyssTentacles[i] = abyss.getChild("arm_" + i);
+            ModelPart seg = abyssTentacles[i];
+            for (int k = 0; k < ABYSS_SEGMENTS; k++) {
+                seg = seg.getChild("seg_" + k);
+                abyssSegs[i][k] = seg;
+                // 逐节缩窄（ModelPart 的 scale 会向子节点传递，天然形成锥形）
+                seg.xScale = seg.zScale = 0.9F;
+            }
+        }
+
+        this.serpent = root.getChild("trench_serpent");
+        this.serpentHead = serpent.getChild("head");
+        this.serpentJaw = serpentHead.getChild("jaw");
+        ModelPart sSeg = serpent;
+        for (int k = 0; k < SERPENT_SEGMENTS; k++) {
+            sSeg = sSeg.getChild("seg_" + k);
+            serpentSegs[k] = sSeg;
+            if (k > 0) {
+                sSeg.xScale = sSeg.yScale = sSeg.zScale = 0.93F;
+            }
+        }
+        this.serpentTailFin = serpentSegs[SERPENT_SEGMENTS - 1].getChild("tail_tip").getChild("tail_fin");
+        this.serpentPectL = serpent.getChild("pect_l");
+        this.serpentPectR = serpent.getChild("pect_r");
+
+        this.leviathan = root.getChild("sunken_leviathan");
+        this.leviHead = leviathan.getChild("head");
+        this.leviMaw = leviHead.getChild("maw");
+        this.leviTorso = leviathan.getChild("torso");
+        this.leviTail = leviTorso.getChild("tail");
+        this.leviFluke = leviTail.getChild("fluke");
+        this.leviFlipperL = leviathan.getChild("flipper_l");
+        this.leviFlipperR = leviathan.getChild("flipper_r");
     }
 
     public static LayerDefinition create() {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition part = mesh.getRoot();
 
-        // 主体（椭球状套体）
+        buildClassic(part.addOrReplaceChild("classic", CubeListBuilder.create(), PartPose.ZERO));
+        buildAbyssKraken(part.addOrReplaceChild("abyss_kraken", CubeListBuilder.create(), PartPose.ZERO));
+        buildTrenchSerpent(part.addOrReplaceChild("trench_serpent", CubeListBuilder.create(), PartPose.ZERO));
+        buildSunkenLeviathan(part.addOrReplaceChild("sunken_leviathan", CubeListBuilder.create(), PartPose.ZERO));
+
+        return LayerDefinition.create(mesh, TEX_W, TEX_H);
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // classic（保持原几何，勿改 UV：ocean_kraken/serpent/leviathan 贴图依赖它）
+    // ════════════════════════════════════════════════════════════════
+    private static void buildClassic(PartDefinition part) {
         PartDefinition bodyDef = part.addOrReplaceChild("body",
                 CubeListBuilder.create().texOffs(0, 0)
                         .addBox(-7.0F, -9.0F, -7.0F, 14.0F, 18.0F, 14.0F),
                 PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        // 头顶冠/角（薄片）
         bodyDef.addOrReplaceChild("crest",
                 CubeListBuilder.create().texOffs(0, 34)
                         .addBox(-4.0F, -4.0F, -1.0F, 8.0F, 4.0F, 2.0F),
                 PartPose.offset(0.0F, -9.0F, 0.0F));
 
-        // 双眼（朝 -Z 前方，向两侧张开）
         bodyDef.addOrReplaceChild("left_eye",
                 CubeListBuilder.create().texOffs(60, 0)
                         .addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
@@ -77,75 +171,368 @@ public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
                         .addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
                 PartPose.offset(-5.0F, -3.0F, -7.0F));
 
-        // 喙/口器（腹侧前方）
         bodyDef.addOrReplaceChild("beak",
                 CubeListBuilder.create().texOffs(60, 12)
                         .addBox(-3.0F, 0.0F, -2.0F, 6.0F, 3.0F, 3.0F),
                 PartPose.offset(0.0F, 5.0F, -6.0F));
 
-        // 8 条触手（绕躯体环状；每条 3 节，逐节收窄；8 条共用同一组 UV）
-        for (int i = 0; i < 8; i++) {
-            double angle = (2 * Math.PI / 8) * i;
+        for (int i = 0; i < CLASSIC_TENTACLES; i++) {
+            double angle = (2 * Math.PI / CLASSIC_TENTACLES) * i;
             float x = (float) (Math.cos(angle) * 6.0);
             float z = (float) (Math.sin(angle) * 6.0);
             PartDefinition tentDef = part.addOrReplaceChild("tentacle_" + i,
                     CubeListBuilder.create(),
                     PartPose.offsetAndRotation(x, 24.0F + 7.0F, z, 0.3F, (float) angle, 0.0F));
-            tentDef.addOrReplaceChild("seg1",
+            PartDefinition s1 = tentDef.addOrReplaceChild("seg1",
                     CubeListBuilder.create().texOffs(0, 44)
                             .addBox(-2.0F, 0.0F, -2.0F, 4.0F, 8.0F, 4.0F),
-                    PartPose.offset(0.0F, 0.0F, 0.0F));
-            tentDef.getChild("seg1").addOrReplaceChild("seg2",
+                    PartPose.ZERO);
+            PartDefinition s2 = s1.addOrReplaceChild("seg2",
                     CubeListBuilder.create().texOffs(20, 44)
                             .addBox(-1.5F, 0.0F, -1.5F, 3.0F, 7.0F, 3.0F),
                     PartPose.offset(0.0F, 8.0F, 0.0F));
-            tentDef.getChild("seg1").getChild("seg2").addOrReplaceChild("seg3",
+            s2.addOrReplaceChild("seg3",
                     CubeListBuilder.create().texOffs(36, 44)
                             .addBox(-1.0F, 0.0F, -1.0F, 2.0F, 6.0F, 2.0F),
                     PartPose.offset(0.0F, 7.0F, 0.0F));
         }
+    }
 
-        return LayerDefinition.create(mesh, TEX_W, TEX_H);
+    // ════════════════════════════════════════════════════════════════
+    // ABYSS_KRAKEN 深渊克拉肯：装甲化头足类，6 条四节长臂
+    // ════════════════════════════════════════════════════════════════
+    private static void buildAbyssKraken(PartDefinition part) {
+        PartDefinition mantle = part.addOrReplaceChild("mantle",
+                CubeListBuilder.create().texOffs(0, 0)
+                        .addBox(-8.0F, -11.0F, -8.0F, 16.0F, 22.0F, 16.0F),
+                PartPose.offset(0.0F, 13.0F, 0.0F));
+
+        mantle.addOrReplaceChild("ridge",
+                CubeListBuilder.create().texOffs(0, 40)
+                        .addBox(-2.0F, -6.0F, -9.0F, 4.0F, 6.0F, 18.0F),
+                PartPose.offset(0.0F, -10.0F, 1.0F));
+        mantle.addOrReplaceChild("crown",
+                CubeListBuilder.create().texOffs(24, 66)
+                        .addBox(-5.0F, -5.0F, -1.5F, 10.0F, 5.0F, 3.0F),
+                PartPose.offsetAndRotation(0.0F, -10.0F, -6.0F, -0.4F, 0.0F, 0.0F));
+
+        PartDefinition eyeL = mantle.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(66, 0)
+                        .addBox(-2.5F, -2.5F, -2.5F, 5.0F, 5.0F, 5.0F),
+                PartPose.offset(5.5F, -3.0F, -7.5F));
+        eyeL.addOrReplaceChild("glow",
+                CubeListBuilder.create().texOffs(66, 12)
+                        .addBox(-1.5F, -1.5F, -0.5F, 3.0F, 3.0F, 1.0F),
+                PartPose.offset(0.0F, 0.0F, -3.0F));
+        PartDefinition eyeR = mantle.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(66, 0).mirror()
+                        .addBox(-2.5F, -2.5F, -2.5F, 5.0F, 5.0F, 5.0F),
+                PartPose.offset(-5.5F, -3.0F, -7.5F));
+        eyeR.addOrReplaceChild("glow",
+                CubeListBuilder.create().texOffs(66, 12)
+                        .addBox(-1.5F, -1.5F, -0.5F, 3.0F, 3.0F, 1.0F),
+                PartPose.offset(0.0F, 0.0F, -3.0F));
+
+        mantle.addOrReplaceChild("beak",
+                CubeListBuilder.create().texOffs(88, 0)
+                        .addBox(-4.0F, 0.0F, -2.0F, 8.0F, 4.0F, 4.0F),
+                PartPose.offset(0.0F, 7.0F, -7.0F));
+
+        // 6 条四节长臂（UV 逐节独立；各臂共享同一组 UV）
+        for (int i = 0; i < ABYSS_TENTACLES; i++) {
+            double angle = (2 * Math.PI / ABYSS_TENTACLES) * i;
+            float x = (float) (Math.cos(angle) * 6.5);
+            float z = (float) (Math.sin(angle) * 6.5);
+            PartDefinition arm = part.addOrReplaceChild("arm_" + i,
+                    CubeListBuilder.create(),
+                    PartPose.offsetAndRotation(x, 22.0F, z, 0.25F, (float) angle, 0.0F));
+            PartDefinition s0 = arm.addOrReplaceChild("seg_0",
+                    CubeListBuilder.create().texOffs(48, 40)
+                            .addBox(-2.5F, 0.0F, -2.5F, 5.0F, 10.0F, 5.0F),
+                    PartPose.ZERO);
+            PartDefinition s1 = s0.addOrReplaceChild("seg_1",
+                    CubeListBuilder.create().texOffs(70, 40)
+                            .addBox(-2.0F, 0.0F, -2.0F, 4.0F, 9.0F, 4.0F),
+                    PartPose.offset(0.0F, 9.5F, 0.0F));
+            PartDefinition s2 = s1.addOrReplaceChild("seg_2",
+                    CubeListBuilder.create().texOffs(88, 40)
+                            .addBox(-1.5F, 0.0F, -1.5F, 3.0F, 8.0F, 3.0F),
+                    PartPose.offset(0.0F, 8.5F, 0.0F));
+            PartDefinition s3 = s2.addOrReplaceChild("seg_3",
+                    CubeListBuilder.create().texOffs(0, 66)
+                            .addBox(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F),
+                    PartPose.offset(0.0F, 7.5F, 0.0F));
+            // 末节倒钩
+            s3.addOrReplaceChild("barb",
+                    CubeListBuilder.create().texOffs(12, 66)
+                            .addBox(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F),
+                    PartPose.offsetAndRotation(0.0F, 7.5F, 0.0F, 0.5F, 0.0F, 0.0F));
+        }
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // TRENCH_SERPENT 海沟巨蛇：长头 + 双角 + 8 节蛇躯 + 背鳍带
+    // ════════════════════════════════════════════════════════════════
+    private static void buildTrenchSerpent(PartDefinition part) {
+        PartDefinition head = part.addOrReplaceChild("head",
+                CubeListBuilder.create().texOffs(0, 0)
+                        .addBox(-6.0F, -5.5F, -16.0F, 12.0F, 11.0F, 16.0F),
+                PartPose.offset(0.0F, 16.0F, -6.0F));
+
+        PartDefinition jaw = head.addOrReplaceChild("jaw",
+                CubeListBuilder.create().texOffs(58, 0)
+                        .addBox(-6.0F, 0.0F, -14.0F, 12.0F, 4.0F, 14.0F),
+                PartPose.offsetAndRotation(0.0F, 5.5F, -1.0F, 0.15F, 0.0F, 0.0F));
+        jaw.addOrReplaceChild("fang_l",
+                CubeListBuilder.create().texOffs(82, 54)
+                        .addBox(-0.5F, -4.0F, -0.5F, 1.0F, 4.0F, 1.0F),
+                PartPose.offset(4.0F, 0.0F, -12.0F));
+        jaw.addOrReplaceChild("fang_r",
+                CubeListBuilder.create().texOffs(82, 54)
+                        .addBox(-0.5F, -4.0F, -0.5F, 1.0F, 4.0F, 1.0F),
+                PartPose.offset(-4.0F, 0.0F, -12.0F));
+
+        head.addOrReplaceChild("horn_l",
+                CubeListBuilder.create().texOffs(58, 20)
+                        .addBox(-1.0F, -9.0F, -1.0F, 2.0F, 9.0F, 2.0F),
+                PartPose.offsetAndRotation(3.5F, -5.0F, -4.0F, -0.45F, 0.0F, 0.25F));
+        head.addOrReplaceChild("horn_r",
+                CubeListBuilder.create().texOffs(58, 20).mirror()
+                        .addBox(-1.0F, -9.0F, -1.0F, 2.0F, 9.0F, 2.0F),
+                PartPose.offsetAndRotation(-3.5F, -5.0F, -4.0F, -0.45F, 0.0F, -0.25F));
+        head.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(68, 20)
+                        .addBox(-1.5F, -1.5F, -1.0F, 3.0F, 3.0F, 2.0F),
+                PartPose.offsetAndRotation(5.2F, -2.0F, -11.0F, 0.0F, 1.5708F, 0.0F));
+        head.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(68, 20)
+                        .addBox(-1.5F, -1.5F, -1.0F, 3.0F, 3.0F, 2.0F),
+                PartPose.offsetAndRotation(-5.2F, -2.0F, -11.0F, 0.0F, -1.5708F, 0.0F));
+
+        // 8 节蛇躯逐节嵌套（父节缩放向子节传递，形成自然收窄）
+        PartDefinition cur = part;
+        for (int k = 0; k < SERPENT_SEGMENTS; k++) {
+            PartPose pose = (k == 0)
+                    ? PartPose.offset(0.0F, 16.0F, -6.0F)
+                    : PartPose.offset(0.0F, 0.0F, 9.5F);
+            cur = cur.addOrReplaceChild("seg_" + k,
+                    CubeListBuilder.create().texOffs(0, 30)
+                            .addBox(-5.5F, -5.5F, 0.0F, 11.0F, 11.0F, 10.0F),
+                    pose);
+            if (k < 6) {
+                cur.addOrReplaceChild("dorsal",
+                        CubeListBuilder.create().texOffs(44, 30)
+                                .addBox(0.0F, -7.0F, 0.0F, 0.0F, 7.0F, 10.0F),
+                        PartPose.offset(0.0F, -5.5F, 0.0F));
+            }
+        }
+        PartDefinition tip = cur.addOrReplaceChild("tail_tip",
+                CubeListBuilder.create().texOffs(54, 54)
+                        .addBox(-2.5F, -2.5F, 0.0F, 5.0F, 5.0F, 8.0F),
+                PartPose.offset(0.0F, 0.0F, 9.5F));
+        tip.addOrReplaceChild("tail_fin",
+                CubeListBuilder.create().texOffs(0, 54)
+                        .addBox(0.0F, -7.0F, 0.0F, 0.0F, 14.0F, 10.0F),
+                PartPose.offset(0.0F, 0.0F, 7.0F));
+
+        part.addOrReplaceChild("pect_l",
+                CubeListBuilder.create().texOffs(24, 54)
+                        .addBox(0.0F, -1.0F, -2.5F, 9.0F, 2.0F, 5.0F),
+                PartPose.offsetAndRotation(5.0F, 18.0F, 2.0F, 0.0F, 0.0F, 0.35F));
+        part.addOrReplaceChild("pect_r",
+                CubeListBuilder.create().texOffs(24, 54).mirror()
+                        .addBox(-9.0F, -1.0F, -2.5F, 9.0F, 2.0F, 5.0F),
+                PartPose.offsetAndRotation(-5.0F, 18.0F, 2.0F, 0.0F, 0.0F, -0.35F));
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // SUNKEN_LEVIATHAN 沉没利维坦：巨口鲸兽 + 骨脊 + 外露肋骨
+    // ════════════════════════════════════════════════════════════════
+    private static void buildSunkenLeviathan(PartDefinition part) {
+        PartDefinition head = part.addOrReplaceChild("head",
+                CubeListBuilder.create().texOffs(0, 0)
+                        .addBox(-7.0F, -6.0F, -14.0F, 14.0F, 12.0F, 14.0F),
+                PartPose.offset(0.0F, 14.0F, -8.0F));
+
+        PartDefinition maw = head.addOrReplaceChild("maw",
+                CubeListBuilder.create().texOffs(58, 0)
+                        .addBox(-7.0F, 0.0F, -12.0F, 14.0F, 4.0F, 12.0F),
+                PartPose.offsetAndRotation(0.0F, 6.0F, -1.0F, 0.25F, 0.0F, 0.0F));
+        maw.addOrReplaceChild("teeth",
+                CubeListBuilder.create().texOffs(58, 18)
+                        .addBox(-7.0F, -2.0F, 0.0F, 14.0F, 2.0F, 1.0F),
+                PartPose.offset(0.0F, 0.0F, -12.0F));
+        head.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(90, 18)
+                        .addBox(-1.5F, -1.5F, -1.0F, 3.0F, 3.0F, 2.0F),
+                PartPose.offsetAndRotation(7.2F, -2.0F, -9.0F, 0.0F, 1.5708F, 0.0F));
+        head.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(90, 18)
+                        .addBox(-1.5F, -1.5F, -1.0F, 3.0F, 3.0F, 2.0F),
+                PartPose.offsetAndRotation(-7.2F, -2.0F, -9.0F, 0.0F, -1.5708F, 0.0F));
+        head.addOrReplaceChild("barnacle_a",
+                CubeListBuilder.create().texOffs(24, 86)
+                        .addBox(-1.5F, -1.0F, -1.5F, 3.0F, 2.0F, 3.0F),
+                PartPose.offset(4.0F, -6.5F, -6.0F));
+        head.addOrReplaceChild("barnacle_b",
+                CubeListBuilder.create().texOffs(24, 86)
+                        .addBox(-1.5F, -1.0F, -1.5F, 3.0F, 2.0F, 3.0F),
+                PartPose.offset(-3.0F, -6.5F, -10.0F));
+
+        PartDefinition torso = part.addOrReplaceChild("torso",
+                CubeListBuilder.create().texOffs(0, 28)
+                        .addBox(-8.0F, -7.0F, 0.0F, 16.0F, 14.0F, 20.0F),
+                PartPose.offset(0.0F, 14.0F, -6.0F));
+
+        torso.addOrReplaceChild("spine_plate",
+                CubeListBuilder.create().texOffs(74, 28)
+                        .addBox(-2.0F, -5.0F, 0.0F, 4.0F, 5.0F, 14.0F),
+                PartPose.offset(0.0F, -7.0F, 3.0F));
+        for (int k = 0; k < 4; k++) {
+            torso.addOrReplaceChild("spike_" + k,
+                    CubeListBuilder.create().texOffs(12, 86)
+                            .addBox(-1.0F, -7.0F, -1.0F, 2.0F, 7.0F, 2.0F),
+                    PartPose.offsetAndRotation(0.0F, -11.0F, 2.0F + k * 4.0F, -0.15F, 0.0F, 0.0F));
+            torso.addOrReplaceChild("rib_l_" + k,
+                    CubeListBuilder.create().texOffs(0, 86)
+                            .addBox(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F),
+                    PartPose.offsetAndRotation(8.0F, -2.0F, 3.0F + k * 4.0F, 0.0F, 0.0F, -0.45F));
+            torso.addOrReplaceChild("rib_r_" + k,
+                    CubeListBuilder.create().texOffs(0, 86).mirror()
+                            .addBox(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F),
+                    PartPose.offsetAndRotation(-8.0F, -2.0F, 3.0F + k * 4.0F, 0.0F, 0.0F, 0.45F));
+        }
+
+        PartDefinition tail = torso.addOrReplaceChild("tail",
+                CubeListBuilder.create().texOffs(0, 64)
+                        .addBox(-4.0F, -4.0F, 0.0F, 8.0F, 8.0F, 12.0F),
+                PartPose.offset(0.0F, 0.0F, 20.0F));
+        tail.addOrReplaceChild("fluke",
+                CubeListBuilder.create().texOffs(42, 64)
+                        .addBox(-7.0F, 0.0F, 0.0F, 14.0F, 1.0F, 8.0F),
+                PartPose.offset(0.0F, 0.0F, 12.0F));
+
+        part.addOrReplaceChild("flipper_l",
+                CubeListBuilder.create().texOffs(88, 64)
+                        .addBox(0.0F, -1.0F, -3.0F, 10.0F, 2.0F, 6.0F),
+                PartPose.offsetAndRotation(8.0F, 19.0F, 2.0F, 0.0F, 0.0F, 0.3F));
+        part.addOrReplaceChild("flipper_r",
+                CubeListBuilder.create().texOffs(88, 64).mirror()
+                        .addBox(-10.0F, -1.0F, -3.0F, 10.0F, 2.0F, 6.0F),
+                PartPose.offsetAndRotation(-8.0F, 19.0F, 2.0F, 0.0F, 0.0F, -0.3F));
     }
 
     @Override
     public void setupAnim(OceanSeaMonsterEntity entity, float limbSwing, float limbSwingAmount,
             float ageInTicks, float netHeadYaw, float headPitch) {
-        // 躯体上下浮动
+        classic.visible = false;
+        abyss.visible = false;
+        serpent.visible = false;
+        leviathan.visible = false;
+
+        switch (entity.getVariant()) {
+            case ABYSS_KRAKEN -> {
+                abyss.visible = true;
+                animAbyss(ageInTicks, netHeadYaw, headPitch);
+            }
+            case TRENCH_SERPENT -> {
+                serpent.visible = true;
+                animSerpent(ageInTicks, limbSwingAmount, netHeadYaw, headPitch);
+            }
+            case SUNKEN_LEVIATHAN -> {
+                leviathan.visible = true;
+                animLeviathan(ageInTicks, limbSwingAmount, netHeadYaw, headPitch);
+            }
+            default -> {
+                classic.visible = true;
+                animClassic(ageInTicks);
+            }
+        }
+
+        // 受伤全身抖动（各变体共用根节点抖动）
+        if (entity.hurtTime > 0) {
+            float shake = Mth.sin(entity.hurtTime * 0.9F) * 0.08F;
+            root.xRot = shake;
+            root.zRot = shake;
+        } else {
+            root.xRot = 0.0F;
+            root.zRot = 0.0F;
+        }
+    }
+
+    private void animClassic(float ageInTicks) {
         body.y = 24.0F + Mth.sin(ageInTicks * 0.08F) * 1.0F;
 
-        // 眼睛脉动（发光感）
         float eyeGlow = Mth.sin(ageInTicks * 0.15F) * 0.05F;
         leftEye.zScale = leftEye.xScale = 1.0F + eyeGlow;
         rightEye.zScale = rightEye.xScale = 1.0F + eyeGlow;
 
-        // 触手波浪摆动（每条相位错开，逐节递减传播）
-        for (int i = 0; i < 8; i++) {
-            float phase = i * 0.785F; // π/4
+        for (int i = 0; i < CLASSIC_TENTACLES; i++) {
+            float phase = i * 0.785F;
             float swing = Mth.sin(ageInTicks * 0.12F + phase) * 0.3F;
             float swing2 = Mth.cos(ageInTicks * 0.1F + phase) * 0.25F;
             tentacles[i].xRot = 0.3F + swing;
             tentacles[i].zRot = swing2;
-            var seg1 = tentacles[i].getChild("seg1");
-            if (seg1 != null) {
-                seg1.xRot = swing * 0.5F;
-                var seg2 = seg1.getChild("seg2");
-                if (seg2 != null) {
-                    seg2.xRot = swing * 0.3F;
-                    var seg3 = seg2.getChild("seg3");
-                    if (seg3 != null) {
-                        seg3.xRot = swing * 0.2F;
-                    }
-                }
+            ModelPart seg1 = tentacles[i].getChild("seg1");
+            seg1.xRot = swing * 0.5F;
+            ModelPart seg2 = seg1.getChild("seg2");
+            seg2.xRot = swing * 0.3F;
+            seg2.getChild("seg3").xRot = swing * 0.2F;
+        }
+    }
+
+    private void animAbyss(float ageInTicks, float netHeadYaw, float headPitch) {
+        abyssMantle.y = 13.0F + Mth.sin(ageInTicks * 0.06F) * 1.4F;
+        abyssMantle.yRot = netHeadYaw * 0.004F;
+        abyssMantle.xRot = headPitch * 0.004F;
+
+        float pulse = 1.0F + Mth.sin(ageInTicks * 0.2F) * 0.08F;
+        abyssEyeL.xScale = abyssEyeL.yScale = pulse;
+        abyssEyeR.xScale = abyssEyeR.yScale = pulse;
+
+        for (int i = 0; i < ABYSS_TENTACLES; i++) {
+            float phase = i * 1.047F; // π/3
+            float swing = Mth.sin(ageInTicks * 0.09F + phase) * 0.35F;
+            abyssTentacles[i].xRot = 0.25F + swing;
+            abyssTentacles[i].zRot = Mth.cos(ageInTicks * 0.07F + phase) * 0.28F;
+            for (int k = 0; k < ABYSS_SEGMENTS; k++) {
+                abyssSegs[i][k].xRot = Mth.sin(ageInTicks * 0.09F + phase - (k + 1) * 0.5F) * (0.16F + k * 0.05F);
             }
         }
+    }
 
-        // 受伤全身抖动
-        if (entity.hurtTime > 0) {
-            float shake = Mth.sin(entity.hurtTime * 0.9F) * 0.08F;
-            body.xRot = shake;
-            body.zRot = shake;
+    private void animSerpent(float ageInTicks, float limbSwingAmount, float netHeadYaw, float headPitch) {
+        float speed = 0.09F + limbSwingAmount * 0.06F;
+        serpentHead.yRot = Mth.sin(ageInTicks * speed) * 0.18F + netHeadYaw * 0.005F;
+        serpentHead.xRot = headPitch * 0.005F;
+        serpentJaw.xRot = 0.15F + Mth.sin(ageInTicks * 0.12F) * 0.18F;
+
+        for (int k = 0; k < SERPENT_SEGMENTS; k++) {
+            float wave = Mth.sin(ageInTicks * speed - k * 0.55F);
+            serpentSegs[k].yRot = wave * (0.16F + k * 0.015F);
+            serpentSegs[k].xRot = Mth.cos(ageInTicks * speed * 0.6F - k * 0.4F) * 0.05F;
         }
+        serpentTailFin.yRot = Mth.sin(ageInTicks * speed - SERPENT_SEGMENTS * 0.55F) * 0.3F;
+        serpentPectL.zRot = 0.35F + Mth.sin(ageInTicks * 0.1F) * 0.18F;
+        serpentPectR.zRot = -0.35F - Mth.sin(ageInTicks * 0.1F) * 0.18F;
+    }
+
+    private void animLeviathan(float ageInTicks, float limbSwingAmount, float netHeadYaw, float headPitch) {
+        float sway = Mth.sin(ageInTicks * 0.05F);
+        leviTorso.yRot = sway * 0.06F;
+        leviTorso.y = 14.0F + sway * 1.2F;
+        leviHead.y = 14.0F + sway * 1.2F;
+        leviHead.yRot = netHeadYaw * 0.004F + sway * 0.05F;
+        leviHead.xRot = headPitch * 0.004F;
+
+        // 巨口周期性张合（吞噬预警）
+        float open = Mth.sin(ageInTicks * 0.055F);
+        leviMaw.xRot = 0.25F + Math.max(0.0F, open) * 0.55F;
+
+        leviTail.yRot = Mth.sin(ageInTicks * (0.07F + limbSwingAmount * 0.05F) - 0.8F) * 0.22F;
+        leviFluke.xRot = Mth.sin(ageInTicks * 0.09F - 1.2F) * 0.25F;
+        leviFlipperL.zRot = 0.3F + Mth.sin(ageInTicks * 0.06F) * 0.22F;
+        leviFlipperR.zRot = -0.3F - Mth.sin(ageInTicks * 0.06F) * 0.22F;
     }
 
     @Override

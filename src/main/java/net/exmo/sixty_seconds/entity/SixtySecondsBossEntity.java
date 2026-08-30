@@ -245,9 +245,9 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
             return ResourceLocation.fromNamespaceAndPath("sixty_seconds",
                     "textures/entity/sixty_seconds_boss_apex.png");
         }
-        // 每个变体使用独立纹理（贴图由美术后续产出，当前为占位图）
+        // 每个 Boss 变体使用独立纹理（注意取 BossVariant，而非父类的小怪 Variant）
         return ResourceLocation.fromNamespaceAndPath("sixty_seconds",
-                "textures/entity/" + getVariant().textureName + ".png");
+                "textures/entity/" + getBossVariant().textureName + ".png");
     }
 
     // ── Boss 血条 ─────────────────────────────────────────────────────
