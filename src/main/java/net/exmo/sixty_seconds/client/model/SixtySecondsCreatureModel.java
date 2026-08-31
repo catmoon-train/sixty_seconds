@@ -34,9 +34,17 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
 
     private final ModelPart root;
 
-    // ── 僵尸人形组（3 个基础小怪共用几何）──
+    // ── 僵尸人形组（遗留：BRUTE/RUNNER/SHAMBLER 现已各自独立建模，此组不再被使用）──
     private final ModelPart humanoid;
     private final ModelPart hHead, hBody, hArmL, hArmR, hLegL, hLegR;
+
+    // ── 原人形组三小怪的独立建模几何 ──
+    private final ModelPart brute, runner, shambler;
+    private final ModelPart brHead, brBody, brArmL, brArmR, brLegL, brLegR;
+    private final ModelPart ruHead, ruBody, ruArmL, ruArmR, ruLegL, ruLegR;
+    private final ModelPart ruHandL, ruHandR;
+    private final ModelPart shHead, shBody, shArmL, shArmR, shLegL, shLegR;
+    private final ModelPart shHandL, shHandR;
 
     // ── 15 个独立几何组 ──
     private final ModelPart spitter, stalker, howler, bloater, juggernaut;
@@ -70,6 +78,34 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         this.hArmR = humanoid.getChild("arm_r");
         this.hLegL = humanoid.getChild("leg_l");
         this.hLegR = humanoid.getChild("leg_r");
+
+        this.brute = root.getChild("brute");
+        this.brHead = brute.getChild("head");
+        this.brBody = brute.getChild("body");
+        this.brArmL = brute.getChild("arm_l");
+        this.brArmR = brute.getChild("arm_r");
+        this.brLegL = brute.getChild("leg_l");
+        this.brLegR = brute.getChild("leg_r");
+
+        this.runner = root.getChild("runner");
+        this.ruHead = runner.getChild("head");
+        this.ruBody = runner.getChild("body");
+        this.ruArmL = runner.getChild("arm_l");
+        this.ruArmR = runner.getChild("arm_r");
+        this.ruLegL = runner.getChild("leg_l");
+        this.ruLegR = runner.getChild("leg_r");
+        this.ruHandL = runner.getChild("hand_l");
+        this.ruHandR = runner.getChild("hand_r");
+
+        this.shambler = root.getChild("shambler");
+        this.shHead = shambler.getChild("head");
+        this.shBody = shambler.getChild("body");
+        this.shArmL = shambler.getChild("arm_l");
+        this.shArmR = shambler.getChild("arm_r");
+        this.shLegL = shambler.getChild("leg_l");
+        this.shLegR = shambler.getChild("leg_r");
+        this.shHandL = shambler.getChild("hand_l");
+        this.shHandR = shambler.getChild("hand_r");
 
         this.spitter = root.getChild("spitter");
         this.spitHump = spitter.getChild("hump");
@@ -164,6 +200,102 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         hum.addOrReplaceChild("leg_l",
                 CubeListBuilder.create().texOffs(0, 32).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F),
                 PartPose.offset(2.0F, 12.0F, 0.0F));
+
+        // ══════════════════════════════════════════════════════════
+        // BRUTE 重锤兽：宽厚躯干 + 牛角 + 锤状双臂 + 粗壮双腿（独立建模）
+        // ══════════════════════════════════════════════════════════
+        PartDefinition br = root.addOrReplaceChild("brute", CubeListBuilder.create(), PartPose.ZERO);
+        br.addOrReplaceChild("body",
+                CubeListBuilder.create().texOffs(0, 0).addBox(-7.0F, -10.0F, -5.0F, 14.0F, 12.0F, 10.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        PartDefinition brHead = br.addOrReplaceChild("head",
+                CubeListBuilder.create().texOffs(0, 34).addBox(-4.0F, -22.0F, -4.0F, 8.0F, 8.0F, 8.0F),
+                PartPose.offset(0.0F, 18.0F, 0.0F));
+        brHead.addOrReplaceChild("eyes",
+                CubeListBuilder.create().texOffs(24, 34).addBox(-3.0F, -20.0F, -5.0F, 2.0F, 1.0F, 1.0F),
+                PartPose.offset(0.0F, 0.0F, 0.0F));
+        br.addOrReplaceChild("horn_l",
+                CubeListBuilder.create().texOffs(24, 40).addBox(-6.0F, -24.0F, -2.0F, 2.0F, 5.0F, 2.0F),
+                PartPose.offset(0.0F, 18.0F, 0.0F));
+        br.addOrReplaceChild("horn_r",
+                CubeListBuilder.create().texOffs(30, 40).addBox(4.0F, -24.0F, -2.0F, 2.0F, 5.0F, 2.0F),
+                PartPose.offset(0.0F, 18.0F, 0.0F));
+        br.addOrReplaceChild("arm_l",
+                CubeListBuilder.create().texOffs(40, 0).addBox(-10.0F, -10.0F, -3.0F, 4.0F, 10.0F, 5.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        br.addOrReplaceChild("arm_r",
+                CubeListBuilder.create().texOffs(58, 0).addBox(6.0F, -10.0F, -3.0F, 4.0F, 10.0F, 5.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        br.addOrReplaceChild("leg_l",
+                CubeListBuilder.create().texOffs(40, 22).addBox(-6.0F, 0.0F, -4.0F, 5.0F, 10.0F, 6.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        br.addOrReplaceChild("leg_r",
+                CubeListBuilder.create().texOffs(62, 22).addBox(1.0F, 0.0F, -4.0F, 5.0F, 10.0F, 6.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+
+        // ══════════════════════════════════════════════════════════
+        // RUNNER 奔跑者：瘦长躯干 + 长腿 + 后掠双臂（独立建模）
+        // ══════════════════════════════════════════════════════════
+        PartDefinition ru = root.addOrReplaceChild("runner", CubeListBuilder.create(), PartPose.ZERO);
+        ru.addOrReplaceChild("body",
+                CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -12.0F, -3.0F, 8.0F, 10.0F, 5.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        PartDefinition ruHead = ru.addOrReplaceChild("head",
+                CubeListBuilder.create().texOffs(0, 22).addBox(-3.0F, -19.0F, -3.0F, 6.0F, 6.0F, 6.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        ruHead.addOrReplaceChild("eyes",
+                CubeListBuilder.create().texOffs(20, 22).addBox(-2.0F, -17.0F, -4.0F, 2.0F, 1.0F, 1.0F),
+                PartPose.offset(0.0F, 0.0F, 0.0F));
+        ru.addOrReplaceChild("arm_l",
+                CubeListBuilder.create().texOffs(20, 0).addBox(-6.0F, -11.0F, -2.0F, 2.0F, 8.0F, 3.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        ru.addOrReplaceChild("arm_r",
+                CubeListBuilder.create().texOffs(30, 0).addBox(4.0F, -11.0F, -2.0F, 2.0F, 8.0F, 3.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        ru.addOrReplaceChild("hand_l",
+                CubeListBuilder.create().texOffs(40, 0).addBox(-6.0F, -4.0F, -3.0F, 2.0F, 2.0F, 2.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        ru.addOrReplaceChild("hand_r",
+                CubeListBuilder.create().texOffs(46, 0).addBox(4.0F, -4.0F, -3.0F, 2.0F, 2.0F, 2.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        ru.addOrReplaceChild("leg_l",
+                CubeListBuilder.create().texOffs(20, 16).addBox(-4.0F, -2.0F, -2.0F, 2.0F, 14.0F, 3.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        ru.addOrReplaceChild("leg_r",
+                CubeListBuilder.create().texOffs(30, 16).addBox(2.0F, -2.0F, -2.0F, 2.0F, 14.0F, 3.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+
+        // ══════════════════════════════════════════════════════════
+        // SHAMBLER 拖行者：驼背躯干 + 一只巨大拖地臂 + 细弱双腿（独立建模）
+        // ══════════════════════════════════════════════════════════
+        PartDefinition sh = root.addOrReplaceChild("shambler", CubeListBuilder.create(), PartPose.ZERO);
+        sh.addOrReplaceChild("body",
+                CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, -8.0F, -3.0F, 10.0F, 8.0F, 6.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        PartDefinition shHead = sh.addOrReplaceChild("head",
+                CubeListBuilder.create().texOffs(0, 22).addBox(-3.0F, -13.0F, -3.0F, 6.0F, 5.0F, 6.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        shHead.addOrReplaceChild("eyes",
+                CubeListBuilder.create().texOffs(20, 22).addBox(-2.0F, -11.0F, -4.0F, 2.0F, 1.0F, 1.0F),
+                PartPose.offset(0.0F, 0.0F, 0.0F));
+        sh.addOrReplaceChild("arm_l",
+                CubeListBuilder.create().texOffs(24, 0).addBox(-10.0F, -6.0F, -2.0F, 4.0F, 6.0F, 8.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        sh.addOrReplaceChild("hand_l",
+                CubeListBuilder.create().texOffs(46, 0).addBox(-10.0F, 0.0F, -2.0F, 4.0F, 3.0F, 8.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        sh.addOrReplaceChild("arm_r",
+                CubeListBuilder.create().texOffs(24, 24).addBox(5.0F, -6.0F, -2.0F, 2.0F, 7.0F, 3.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        sh.addOrReplaceChild("hand_r",
+                CubeListBuilder.create().texOffs(36, 24).addBox(5.0F, 0.0F, -2.0F, 2.0F, 2.0F, 3.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        sh.addOrReplaceChild("leg_l",
+                CubeListBuilder.create().texOffs(44, 24).addBox(-4.0F, -1.0F, -2.0F, 2.0F, 5.0F, 3.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
+        sh.addOrReplaceChild("leg_r",
+                CubeListBuilder.create().texOffs(54, 24).addBox(2.0F, -1.0F, -2.0F, 2.0F, 5.0F, 3.0F),
+                PartPose.offset(0.0F, 16.0F, 0.0F));
 
         // ══════════════════════════════════════════════════════════
         // SPITTER 吐酸者：驼背躯干 + 背部巨毒囊 + 前伸喷口 + 细肢
@@ -717,14 +849,25 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         SixtySecondsMonsterEntity.Variant v = entity.getVariant();
 
         switch (v) {
-            // ── 保留僵尸人形的 3 个基础小怪 ──
-            case SHAMBLER, RUNNER, BRUTE -> {
-                humanoid.visible = true;
-                setupHumanoidAnim(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            // ── 原人形组三小怪（现已各自独立建模）──
+            case BRUTE -> {
+                brute.visible = true;
+                setupBiped(brHead, brBody, brArmL, brArmR, brLegL, brLegR, null, null,
+                        limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
             }
-            // ── 15 个独立建模小怪 ──
+            case RUNNER -> {
+                runner.visible = true;
+                setupBiped(ruHead, ruBody, ruArmL, ruArmR, ruLegL, ruLegR, ruHandL, ruHandR,
+                        limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            }
+            case SHAMBLER -> {
+                shambler.visible = true;
+                setupBiped(shHead, shBody, shArmL, shArmR, shLegL, shLegR, shHandL, shHandR,
+                        limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            }
+            // ── 其余独立建模小怪 ──
             default -> {
-                // 独立组动画在 APPEND_ANIM 中补齐
+                // 独立组动画在 animateIndependent 中补齐
                 animateIndependent(v, limbSwing, limbSwingAmount, t);
             }
         }
@@ -744,6 +887,31 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         hLegL.xRot = Mth.cos(swing + (float) Math.PI) * 1.4F * limbSwingAmount;
         hLegR.yRot = 0.0F;
         hLegL.yRot = 0.0F;
+    }
+
+    /**
+     * 通用双足走路动画，供独立建模的小怪（重锤兽/奔跑者/拖行者）复用。
+     * handL/handR 可为 null（无独立手部件时）。
+     */
+    private void setupBiped(ModelPart head, ModelPart body, ModelPart armL, ModelPart armR,
+                            ModelPart legL, ModelPart legR, ModelPart handL, ModelPart handR,
+                            float limbSwing, float limbSwingAmount, float ageInTicks,
+                            float netHeadYaw, float headPitch) {
+        head.yRot = netHeadYaw * Mth.DEG_TO_RAD;
+        head.xRot = headPitch * Mth.DEG_TO_RAD;
+        float swing = limbSwing * 0.6662F;
+        armR.xRot = Mth.cos(swing + (float) Math.PI) * 1.4F * limbSwingAmount;
+        armL.xRot = Mth.cos(swing) * 1.4F * limbSwingAmount;
+        armR.zRot = 0.0F;
+        armL.zRot = 0.0F;
+        legR.xRot = Mth.cos(swing) * 1.4F * limbSwingAmount;
+        legL.xRot = Mth.cos(swing + (float) Math.PI) * 1.4F * limbSwingAmount;
+        legR.yRot = 0.0F;
+        legL.yRot = 0.0F;
+        if (handL != null) {
+            handL.xRot = armL.xRot;
+            handR.xRot = armR.xRot;
+        }
     }
 
     /** 15 个独立小怪各自的循环动画（逐步补齐）。 */

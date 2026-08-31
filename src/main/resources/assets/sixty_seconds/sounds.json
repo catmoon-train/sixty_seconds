@@ -3,5 +3,77 @@
   "item.revolver.shoot": { "sounds": ["minecraft:item/crossbow/shoot"] },
   "item.grenade.throw": { "sounds": ["minecraft:entity/snowball/throw"] },
   "broken_alarm": { "sounds": ["sixty_seconds:broken_alarm"] },
-  "cough": { "sounds": ["sixty_seconds:cough"] }
+  "cough": { "sounds": ["sixty_seconds:cough"] },
+
+  "monster.shambler.ambient": { "sounds": ["minecraft:entity/husk/ambient"] },
+  "monster.shambler.hurt": { "sounds": ["minecraft:entity/husk/hurt"] },
+  "monster.shambler.death": { "sounds": ["minecraft:entity/husk/death"] },
+
+  "monster.runner.ambient": { "sounds": ["minecraft:entity/phantom/ambient"] },
+  "monster.runner.hurt": { "sounds": ["minecraft:entity/phantom/hurt"] },
+  "monster.runner.death": { "sounds": ["minecraft:entity/phantom/death"] },
+
+  "monster.brute.ambient": { "sounds": ["minecraft:entity/ravager/ambient"] },
+  "monster.brute.hurt": { "sounds": ["minecraft:entity/ravager/hurt"] },
+  "monster.brute.death": { "sounds": ["minecraft:entity/ravager/death"] },
+
+  "monster.spitter.ambient": { "sounds": ["minecraft:entity/witch/ambient"] },
+  "monster.spitter.hurt": { "sounds": ["minecraft:entity/witch/hurt"] },
+  "monster.spitter.death": { "sounds": ["minecraft:entity/witch/death"] },
+
+  "monster.stalker.ambient": { "sounds": ["minecraft:entity/enderman/ambient"] },
+  "monster.stalker.hurt": { "sounds": ["minecraft:entity/enderman/hurt"] },
+  "monster.stalker.death": { "sounds": ["minecraft:entity/enderman/death"] },
+
+  "monster.howler.ambient": { "sounds": ["minecraft:entity/wolf/ambient"] },
+  "monster.howler.hurt": { "sounds": ["minecraft:entity/wolf/hurt"] },
+  "monster.howler.death": { "sounds": ["minecraft:entity/wolf/death"] },
+
+  "monster.bloater.ambient": { "sounds": ["minecraft:entity/zoglin/ambient"] },
+  "monster.bloater.hurt": { "sounds": ["minecraft:entity/zoglin/hurt"] },
+  "monster.bloater.death": { "sounds": ["minecraft:entity/zoglin/death"] },
+
+  "monster.juggernaut.ambient": { "sounds": ["minecraft:entity/warden/ambient"] },
+  "monster.juggernaut.hurt": { "sounds": ["minecraft:entity/warden/hurt"] },
+  "monster.juggernaut.death": { "sounds": ["minecraft:entity/warden/death"] },
+
+  "monster.cinderling.ambient": { "sounds": ["minecraft:entity/blaze/ambient"] },
+  "monster.cinderling.hurt": { "sounds": ["minecraft:entity/blaze/hurt"] },
+  "monster.cinderling.death": { "sounds": ["minecraft:entity/blaze/death"] },
+
+  "monster.frostling.ambient": { "sounds": ["minecraft:entity/stray/ambient"] },
+  "monster.frostling.hurt": { "sounds": ["minecraft:entity/stray/hurt"] },
+  "monster.frostling.death": { "sounds": ["minecraft:entity/stray/death"] },
+
+  "monster.huskbrute.ambient": { "sounds": ["minecraft:entity/hoglin/ambient"] },
+  "monster.huskbrute.hurt": { "sounds": ["minecraft:entity/hoglin/hurt"] },
+  "monster.huskbrute.death": { "sounds": ["minecraft:entity/hoglin/death"] },
+
+  "monster.ravenor.ambient": { "sounds": ["minecraft:entity/vex/ambient"] },
+  "monster.ravenor.hurt": { "sounds": ["minecraft:entity/vex/hurt"] },
+  "monster.ravenor.death": { "sounds": ["minecraft:entity/vex/death"] },
+
+  "monster.wailer.ambient": { "sounds": ["minecraft:entity/ghast/ambient"] },
+  "monster.wailer.hurt": { "sounds": ["minecraft:entity/ghast/hurt"] },
+  "monster.wailer.death": { "sounds": ["minecraft:entity/ghast/death"] },
+
+  "monster.burster.ambient": { "sounds": ["minecraft:entity/vindicator/ambient"] },
+  "monster.burster.hurt": { "sounds": ["minecraft:entity/vindicator/hurt"] },
+  "monster.burster.death": { "sounds": ["minecraft:entity/vindicator/death"] },
+
+  "monster.gorehound.ambient": { "sounds": ["minecraft:entity/zombified_piglin/ambient"] },
+  "monster.gorehound.hurt": { "sounds": ["minecraft:entity/zombified_piglin/hurt"] },
+  "monster.gorehound.death": { "sounds": ["minecraft:entity/zombified_piglin/death"] },
+
+  "monster.shadowmute.ambient": { "sounds": ["minecraft:entity/spider/ambient"] },
+  "monster.shadowmute.hurt": { "sounds": ["minecraft:entity/spider/hurt"] },
+  "monster.shadowmute.death": { "sounds": ["minecraft:entity/spider/death"] },
+
+  "monster.bonelord.ambient": { "sounds": ["minecraft:entity/wither_skeleton/ambient"] },
+  "monster.bonelord.hurt": { "sounds": ["minecraft:entity/wither_skeleton/hurt"] },
+  "monster.bonelord.death": { "sounds": ["minecraft:entity/wither_skeleton/death"] },
+
+  "monster.spinewalker.ambient": { "sounds": ["minecraft:entity/skeleton/ambient"] },
+  "monster.spinewalker.hurt": { "sounds": ["minecraft:entity/skeleton/hurt"] },
+  "monster.spinewalker.death": { "sounds": ["minecraft:entity/skeleton/death"] }
 }
