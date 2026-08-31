@@ -195,59 +195,108 @@ public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
     }
 
     // ════════════════════════════════════════════════════════════════
-    // KRAKEN 克拉肯（独立建模）：锥形外套膜 + 巨眼头 + 8 条渐细腕足 + 背鳍
+    // KRAKEN 克拉肯（独立建模·重制）：锥形外套膜 + 顶部脊 + 巨眼头 + 喙
+    //   + 眼柄发光巨眼 + 大侧鳍 + 8 条三节渐细腕足（带吸盘）
     // 贴图：ocean_kraken.png
     // ════════════════════════════════════════════════════════════════
     private static void buildKraken(PartDefinition part) {
+        // 锥形外套膜 + 顶部脊
         part.addOrReplaceChild("mantle",
                 CubeListBuilder.create().texOffs(0, 0)
-                        .addBox(-6.0F, -14.0F, -6.0F, 12.0F, 14.0F, 12.0F),
+                        .addBox(-7.0F, -16.0F, -7.0F, 14.0F, 16.0F, 14.0F),
                 PartPose.offset(0.0F, 24.0F, 0.0F));
+        part.addOrReplaceChild("mantle_ridge",
+                CubeListBuilder.create().texOffs(44, 0)
+                        .addBox(-2.0F, -4.0F, -7.0F, 4.0F, 4.0F, 14.0F),
+                PartPose.offset(0.0F, 24.0F, 0.0F));
+
+        // 头部 + 喙
         part.addOrReplaceChild("head",
-                CubeListBuilder.create().texOffs(0, 28)
+                CubeListBuilder.create().texOffs(0, 46)
                         .addBox(-5.0F, -4.0F, -5.0F, 10.0F, 8.0F, 10.0F),
                 PartPose.offset(0.0F, 12.0F, -2.0F));
+        part.addOrReplaceChild("beak",
+                CubeListBuilder.create().texOffs(32, 46)
+                        .addBox(-2.5F, 0.0F, -3.0F, 5.0F, 5.0F, 5.0F),
+                PartPose.offset(0.0F, 10.0F, -4.0F));
+
+        // 眼柄 + 巨眼 + 发光瞳（左右共享 UV）
+        part.addOrReplaceChild("eye_stalk_l",
+                CubeListBuilder.create().texOffs(50, 46)
+                        .addBox(-0.5F, -3.0F, -0.5F, 1.0F, 4.0F, 1.0F),
+                PartPose.offsetAndRotation(3.5F, 13.0F, -5.0F, 0.0F, 0.0F, -0.25F));
         part.addOrReplaceChild("eye_l",
-                CubeListBuilder.create().texOffs(0, 48)
-                        .addBox(-1.5F, -1.5F, -1.5F, 3.0F, 3.0F, 3.0F),
-                PartPose.offset(4.0F, 11.0F, -5.0F));
+                CubeListBuilder.create().texOffs(56, 46)
+                        .addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(4.5F, 15.0F, -5.0F));
+        part.addOrReplaceChild("pupil_l",
+                CubeListBuilder.create().texOffs(70, 46)
+                        .addBox(-1.0F, -1.0F, -0.5F, 2.0F, 2.0F, 1.0F),
+                PartPose.offset(4.5F, 15.0F, -7.0F));
+        part.addOrReplaceChild("eye_stalk_r",
+                CubeListBuilder.create().texOffs(50, 46)
+                        .addBox(-0.5F, -3.0F, -0.5F, 1.0F, 4.0F, 1.0F),
+                PartPose.offsetAndRotation(-3.5F, 13.0F, -5.0F, 0.0F, 0.0F, 0.25F));
         part.addOrReplaceChild("eye_r",
-                CubeListBuilder.create().texOffs(14, 48)
-                        .addBox(-1.5F, -1.5F, -1.5F, 3.0F, 3.0F, 3.0F),
-                PartPose.offset(-4.0F, 11.0F, -5.0F));
+                CubeListBuilder.create().texOffs(56, 46)
+                        .addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(-4.5F, 15.0F, -5.0F));
+        part.addOrReplaceChild("pupil_r",
+                CubeListBuilder.create().texOffs(70, 46)
+                        .addBox(-1.0F, -1.0F, -0.5F, 2.0F, 2.0F, 1.0F),
+                PartPose.offset(-4.5F, 15.0F, -7.0F));
+
+        // 大侧鳍（左右共享 UV）
         part.addOrReplaceChild("fin_l",
-                CubeListBuilder.create().texOffs(0, 56)
-                        .addBox(-5.0F, 0.0F, -2.0F, 5.0F, 1.0F, 4.0F),
-                PartPose.offsetAndRotation(-5.0F, 8.0F, 0.0F, 0.0F, 0.0F, 0.35F));
+                CubeListBuilder.create().texOffs(0, 76)
+                        .addBox(-7.0F, 0.0F, -3.0F, 7.0F, 1.0F, 6.0F),
+                PartPose.offsetAndRotation(-6.0F, 6.0F, 0.0F, 0.0F, 0.0F, 0.40F));
         part.addOrReplaceChild("fin_r",
-                CubeListBuilder.create().texOffs(0, 62)
-                        .addBox(0.0F, 0.0F, -2.0F, 5.0F, 1.0F, 4.0F),
-                PartPose.offsetAndRotation(5.0F, 8.0F, 0.0F, 0.0F, 0.0F, -0.35F));
-        // 8 条腕足：texOffs 必须是字面量（贴图脚本正则解析），故逐条展开，按 45° 分布
-        part.addOrReplaceChild("arm_0",
-                CubeListBuilder.create().texOffs(32, 48).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
-                PartPose.offsetAndRotation(3.5F, 16.0F, 3.5F, 0.0F, 0.0F, 0.0F));
-        part.addOrReplaceChild("arm_1",
-                CubeListBuilder.create().texOffs(46, 48).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
-                PartPose.offsetAndRotation(0.0F, 16.0F, 5.0F, 0.0F, 0.7854F, 0.0F));
-        part.addOrReplaceChild("arm_2",
-                CubeListBuilder.create().texOffs(60, 48).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
-                PartPose.offsetAndRotation(-3.5F, 16.0F, 3.5F, 0.0F, 1.5708F, 0.0F));
-        part.addOrReplaceChild("arm_3",
-                CubeListBuilder.create().texOffs(74, 48).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
-                PartPose.offsetAndRotation(-5.0F, 16.0F, 0.0F, 0.0F, 2.3562F, 0.0F));
-        part.addOrReplaceChild("arm_4",
-                CubeListBuilder.create().texOffs(88, 48).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
-                PartPose.offsetAndRotation(-3.5F, 16.0F, -3.5F, 0.0F, 3.1416F, 0.0F));
-        part.addOrReplaceChild("arm_5",
-                CubeListBuilder.create().texOffs(102, 48).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
-                PartPose.offsetAndRotation(0.0F, 16.0F, -5.0F, 0.0F, 3.9270F, 0.0F));
-        part.addOrReplaceChild("arm_6",
-                CubeListBuilder.create().texOffs(32, 64).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
-                PartPose.offsetAndRotation(3.5F, 16.0F, -3.5F, 0.0F, 4.7124F, 0.0F));
-        part.addOrReplaceChild("arm_7",
-                CubeListBuilder.create().texOffs(46, 64).addBox(-1.5F, 0.0F, -1.5F, 3.0F, 12.0F, 3.0F),
-                PartPose.offsetAndRotation(5.0F, 16.0F, 0.0F, 0.0F, 5.4978F, 0.0F));
+                CubeListBuilder.create().texOffs(0, 76)
+                        .addBox(0.0F, 0.0F, -3.0F, 7.0F, 1.0F, 6.0F),
+                PartPose.offsetAndRotation(6.0F, 6.0F, 0.0F, 0.0F, 0.0F, -0.40F));
+
+        // 8 条三节渐细腕足（共享 UV），逐条展开按 45° 分布
+        float[][] armDefs = {
+                { 3.5F, 16.0F,  3.5F, 0.0F, 0.0F,    0.0F},
+                { 0.0F, 16.0F,  5.0F, 0.0F, 0.7854F, 0.0F},
+                {-3.5F, 16.0F,  3.5F, 0.0F, 1.5708F, 0.0F},
+                {-5.0F, 16.0F,  0.0F, 0.0F, 2.3562F, 0.0F},
+                {-3.5F, 16.0F, -3.5F, 0.0F, 3.1416F, 0.0F},
+                { 0.0F, 16.0F, -5.0F, 0.0F, 3.9270F, 0.0F},
+                { 3.5F, 16.0F, -3.5F, 0.0F, 4.7124F, 0.0F},
+                { 5.0F, 16.0F,  0.0F, 0.0F, 5.4978F, 0.0F},
+        };
+        for (int i = 0; i < 8; i++) {
+            float[] a = armDefs[i];
+            PartDefinition arm = part.addOrReplaceChild("arm_" + i,
+                    CubeListBuilder.create(),
+                    PartPose.offsetAndRotation(a[0], a[1], a[2], a[3], a[4], a[5]));
+            arm.addOrReplaceChild("seg0",
+                    CubeListBuilder.create().texOffs(20, 76)
+                            .addBox(-2.0F, -5.0F, -2.0F, 4.0F, 5.0F, 4.0F),
+                    PartPose.ZERO);
+            arm.addOrReplaceChild("suck0",
+                    CubeListBuilder.create().texOffs(56, 76)
+                            .addBox(-1.2F, -4.0F, 1.6F, 2.4F, 1.0F, 1.0F),
+                    PartPose.ZERO);
+            PartDefinition k1 = arm.addOrReplaceChild("seg1",
+                    CubeListBuilder.create().texOffs(34, 76)
+                            .addBox(-1.5F, -4.0F, -1.5F, 3.0F, 4.0F, 3.0F),
+                    PartPose.offsetAndRotation(0.0F, -4.0F, 0.0F, -0.12F, 0.0F, 0.0F));
+            k1.addOrReplaceChild("suck1",
+                    CubeListBuilder.create().texOffs(56, 76)
+                            .addBox(-1.0F, -3.0F, 1.2F, 2.0F, 1.0F, 1.0F),
+                    PartPose.ZERO);
+            PartDefinition k2 = k1.addOrReplaceChild("seg2",
+                    CubeListBuilder.create().texOffs(46, 76)
+                            .addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F),
+                    PartPose.offsetAndRotation(0.0F, -4.0F, 0.0F, -0.18F, 0.0F, 0.0F));
+            k2.addOrReplaceChild("suck2",
+                    CubeListBuilder.create().texOffs(56, 76)
+                            .addBox(-0.6F, -3.0F, 0.8F, 1.2F, 1.0F, 1.0F),
+                    PartPose.ZERO);
+        }
     }
 
     // ════════════════════════════════════════════════════════════════
