@@ -674,7 +674,7 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
         setNoAi(editorPreview);
         if (editorPreview) {
             setPersistenceRequired();
-            setCustomNameVisible(true);
+            setCustomNameVisible(false);
         }
     }
 

@@ -194,7 +194,7 @@ public final class SixtySecondsAreaBossSystem {
         Component name = Component.translatable("entity.sixty_seconds.sixty_seconds_damage_boss", bossLevel)
                 .withStyle(ChatFormatting.DARK_PURPLE);
         boss.setCustomName(name);
-        boss.setCustomNameVisible(true);
+        boss.setCustomNameVisible(false);
         DAMAGE_BOSS_SPAWNED.add(level);
         // 全服播报
         Component message = Component.translatable(

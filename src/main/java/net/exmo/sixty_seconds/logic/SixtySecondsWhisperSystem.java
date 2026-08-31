@@ -150,7 +150,7 @@ public final class SixtySecondsWhisperSystem {
             vex.setPersistenceRequired();
             vex.addTag(WHISPER_TAG);
             vex.setCustomName(Component.translatable("entity.sixty_seconds.sixty_seconds_whisper"));
-            vex.setCustomNameVisible(true);
+            vex.setCustomNameVisible(false);
             level.addFreshEntity(vex);
             whispers.add(vex.getUUID());
             for (UUID uuid : team.members) {

@@ -130,7 +130,7 @@ public class OceanTitanEntity extends OceanCreatureEntity {
 
     public void applyVariant(Variant variant) {
         applyVariant(variant.id, variant.health, variant.speed, variant.scale, variant.nameKey());
-        setCustomNameVisible(true);
+        setCustomNameVisible(false);
         setPersistenceRequired();
         // Boss 级：提高基础属性与击退抗性
         var attr = getAttribute(Attributes.KNOCKBACK_RESISTANCE);

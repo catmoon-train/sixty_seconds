@@ -48,7 +48,7 @@ public class PlayerBodyEntity extends Mob implements MenuProvider {
     public void setOwner(ServerPlayer player) {
         this.entityData.set(OWNER, Optional.of(player.getUUID()));
         this.setCustomName(player.getName());
-        this.setCustomNameVisible(true);
+        this.setCustomNameVisible(false);
     }
 
     public UUID getPlayerUuid() {

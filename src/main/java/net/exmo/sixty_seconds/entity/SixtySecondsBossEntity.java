@@ -190,7 +190,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
                     .withStyle(apex ? ChatFormatting.DARK_PURPLE : ChatFormatting.DARK_RED);
         }
         setCustomName(name);
-        setCustomNameVisible(true);
+        setCustomNameVisible(false);
         bossEvent.setName(name);
         bossEvent.setColor(apex ? BossEvent.BossBarColor.PURPLE : BossEvent.BossBarColor.RED);
         setPersistenceRequired();

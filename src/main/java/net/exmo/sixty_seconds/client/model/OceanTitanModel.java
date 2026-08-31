@@ -28,6 +28,8 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
 
     private final ModelPart root;
     private final ModelPart[] groups = new ModelPart[10];
+    // 重建模新增的发光眼 / 细节部件（索引:[变体][0=eye_l,1=eye_r,2=detail]）
+    private final ModelPart[][] extra = new ModelPart[10][3];
 
     // 动画用子部件
     private final ModelPart whaleTail, whaleFlukeL, whaleFlukeR, whaleJaw;
@@ -48,6 +50,9 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
                 "wreck_wraith", "trident_sovereign"};
         for (int i = 0; i < names.length; i++) {
             groups[i] = root.getChild(names[i]);
+            extra[i][0] = groups[i].getChild("eye_l");
+            extra[i][1] = groups[i].getChild("eye_r");
+            extra[i][2] = groups[i].getChild("detail");
         }
 
         ModelPart whale = groups[0];
@@ -120,6 +125,16 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
         wh.addOrReplaceChild("fin_r",
                 CubeListBuilder.create().texOffs(64, 60).addBox(0.0F, -1.0F, -3.0F, 8.0F, 2.0F, 6.0F),
                 PartPose.offsetAndRotation(7.0F, 16.0F, -6.0F, 0.0F, 0.0F, -0.35F));
+        // 重建模细节：发光眼 + 背脊冠
+        wh.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(109, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(-5.0F, 16.0F, -22.0F));
+        wh.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(109, 9).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(5.0F, 16.0F, -22.0F));
+        wh.addOrReplaceChild("detail",
+                CubeListBuilder.create().texOffs(103, 23).addBox(-3.0F, -6.0F, -3.0F, 6.0F, 6.0F, 6.0F),
+                PartPose.offset(0.0F, 2.0F, -2.0F));
 
         // ══════ 1. TEMPEST_EEL 雷暴电鳗：分段蛇形躯体 + 电弧鳍 ══════
         PartDefinition ee = root.addOrReplaceChild("tempest_eel", CubeListBuilder.create(), PartPose.ZERO);
@@ -141,6 +156,16 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
         ee.addOrReplaceChild("crest",
                 CubeListBuilder.create().texOffs(44, 0).addBox(-0.5F, -8.0F, 0.0F, 1.0F, 8.0F, 30.0F),
                 PartPose.offset(0.0F, 8.0F, -6.0F));
+        // 重建模细节：发光眼 + 电弧鳍片
+        ee.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(107, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(-3.0F, 15.0F, -9.0F));
+        ee.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(107, 9).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(3.0F, 15.0F, -9.0F));
+        ee.addOrReplaceChild("detail",
+                CubeListBuilder.create().texOffs(39, 39).addBox(-1.0F, -3.0F, -1.0F, 2.0F, 6.0F, 2.0F),
+                PartPose.offset(0.0F, 4.0F, -2.0F));
 
         // ══════ 2. BARNACLE_TITAN 藤壶巨怪：岩质躯干 + 4 组藤壶 + 巨臂 ══════
         PartDefinition bt = root.addOrReplaceChild("barnacle_titan", CubeListBuilder.create(), PartPose.ZERO);
@@ -165,6 +190,16 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
         bt.addOrReplaceChild("arm_r",
                 CubeListBuilder.create().texOffs(64, 26).addBox(0.0F, -3.0F, -3.0F, 6.0F, 14.0F, 6.0F),
                 PartPose.offsetAndRotation(9.0F, -6.0F, 0.0F, 0.0F, 0.0F, -0.30F));
+        // 重建模细节：发光眼 + 岩刺
+        bt.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(89, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(-5.0F, 14.0F, -7.0F));
+        bt.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(106, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(5.0F, 14.0F, -7.0F));
+        bt.addOrReplaceChild("detail",
+                CubeListBuilder.create().texOffs(89, 9).addBox(-3.0F, -6.0F, -3.0F, 6.0F, 6.0F, 6.0F),
+                PartPose.offset(0.0F, -4.0F, 0.0F));
 
         // ══════ 3. ANGLER_LORD 深海鮟鱇：巨口 + 灯笼诱饵 ══════
         PartDefinition al = root.addOrReplaceChild("angler_lord", CubeListBuilder.create(), PartPose.ZERO);
@@ -189,6 +224,16 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
         al.addOrReplaceChild("fin_r",
                 CubeListBuilder.create().texOffs(36, 66).addBox(0.0F, -1.0F, -2.0F, 6.0F, 2.0F, 5.0F),
                 PartPose.offsetAndRotation(8.0F, 14.0F, 2.0F, 0.0F, 0.0F, -0.40F));
+        // 重建模细节：发光眼 + 下颌獠牙簇
+        al.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(69, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(-6.0F, 12.0F, -8.0F));
+        al.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(86, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(6.0F, 12.0F, -8.0F));
+        al.addOrReplaceChild("detail",
+                CubeListBuilder.create().texOffs(103, 0).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 6.0F, 6.0F),
+                PartPose.offset(0.0F, 18.0F, -2.0F));
 
         // ══════ 4. CARAPACE_KING 碎壳巨蟹：宽甲壳 + 双巨螯 + 6 足 ══════
         PartDefinition ck = root.addOrReplaceChild("carapace_king", CubeListBuilder.create(), PartPose.ZERO);
@@ -222,6 +267,16 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
         ck.addOrReplaceChild("leg_r2",
                 CubeListBuilder.create().texOffs(36, 77).addBox(0.0F, -1.0F, -1.0F, 9.0F, 2.0F, 2.0F),
                 PartPose.offsetAndRotation(9.0F, 18.0F, 4.0F, 0.0F, 0.0F, 0.35F));
+        // 重建模细节：发光眼 + 壳刺
+        ck.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(81, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(-7.0F, 16.0F, -9.0F));
+        ck.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(98, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(7.0F, 16.0F, -9.0F));
+        ck.addOrReplaceChild("detail",
+                CubeListBuilder.create().texOffs(81, 9).addBox(-2.0F, -4.0F, -2.0F, 4.0F, 8.0F, 4.0F),
+                PartPose.offset(0.0F, 9.0F, 0.0F));
 
         // ══════ 5. GHOST_MEDUSA 幽灵水母后：巨伞盖 + 6 长触手 ══════
         PartDefinition gm = root.addOrReplaceChild("ghost_medusa", CubeListBuilder.create(), PartPose.ZERO);
@@ -249,6 +304,16 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
         gm.addOrReplaceChild("tentacle5",
                 CubeListBuilder.create().texOffs(104, 0).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 18.0F, 2.0F),
                 PartPose.offset(3.5F, 16.0F, -6.06F));
+        // 重建模细节：发光眼 + 核心光球
+        gm.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(89, 21).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(-6.0F, 12.0F, -11.0F));
+        gm.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(106, 21).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(6.0F, 12.0F, -11.0F));
+        gm.addOrReplaceChild("detail",
+                CubeListBuilder.create().texOffs(89, 30).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 6.0F, 6.0F),
+                PartPose.offset(0.0F, 10.0F, 0.0F));
 
         // ══════ 6. ABYSS_MAW 深渊之喉：环形巨口（上下颚）+ 触须 ══════
         PartDefinition am = root.addOrReplaceChild("abyss_maw", CubeListBuilder.create(), PartPose.ZERO);
@@ -270,6 +335,16 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
         am.addOrReplaceChild("fringe2",
                 CubeListBuilder.create().texOffs(60, 60).addBox(-1.0F, 0.0F, -1.0F, 2.0F, 12.0F, 2.0F),
                 PartPose.offset(0.0F, 16.0F, -9.0F));
+        // 重建模细节：发光眼 + 上颚獠牙
+        am.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(81, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(-7.0F, 14.0F, -10.0F));
+        am.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(98, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(7.0F, 14.0F, -10.0F));
+        am.addOrReplaceChild("detail",
+                CubeListBuilder.create().texOffs(81, 9).addBox(-3.0F, -4.0F, -3.0F, 6.0F, 8.0F, 6.0F),
+                PartPose.offset(0.0F, 17.0F, -8.0F));
 
         // ══════ 7. CORAL_COLOSSUS 珊瑚巨偶：岩石躯干 + 4 条珊瑚臂 ══════
         PartDefinition cc = root.addOrReplaceChild("coral_colossus", CubeListBuilder.create(), PartPose.ZERO);
@@ -291,6 +366,16 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
         cc.addOrReplaceChild("base",
                 CubeListBuilder.create().texOffs(44, 42).addBox(-10.0F, -3.0F, -10.0F, 20.0F, 3.0F, 20.0F),
                 PartPose.offset(0.0F, 20.0F, 0.0F));
+        // 重建模细节：发光眼 + 珊瑚虫光瘤
+        cc.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(65, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(-5.0F, 12.0F, -8.0F));
+        cc.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(82, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(5.0F, 12.0F, -8.0F));
+        cc.addOrReplaceChild("detail",
+                CubeListBuilder.create().texOffs(99, 0).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 6.0F, 6.0F),
+                PartPose.offset(0.0F, 16.0F, 6.0F));
 
         // ══════ 8. WRECK_WRAITH 沉船怨灵：破帆残骸 + 兜帽 + 飘带 ══════
         PartDefinition ww = root.addOrReplaceChild("wreck_wraith", CubeListBuilder.create(), PartPose.ZERO);
@@ -312,6 +397,16 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
         ww.addOrReplaceChild("wisp_r",
                 CubeListBuilder.create().texOffs(44, 20).addBox(0.0F, 0.0F, -0.5F, 4.0F, 14.0F, 1.0F),
                 PartPose.offsetAndRotation(5.0F, 6.0F, 0.0F, 0.0F, 0.0F, -0.20F));
+        // 重建模细节：兜帽中发光眼 + 破帆残片
+        ww.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(55, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(-3.0F, 0.0F, -4.0F));
+        ww.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(72, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(3.0F, 0.0F, -4.0F));
+        ww.addOrReplaceChild("detail",
+                CubeListBuilder.create().texOffs(89, 0).addBox(-2.0F, -7.0F, -0.5F, 4.0F, 14.0F, 1.0F),
+                PartPose.offsetAndRotation(-7.0F, 6.0F, 0.0F, 0.0F, 0.0F, 0.25F));
 
         // ══════ 9. TRIDENT_SOVEREIGN 海皇三叉戟：人形轮廓 + 王冠 + 三叉戟 ══════
         PartDefinition ts = root.addOrReplaceChild("trident_sovereign", CubeListBuilder.create(), PartPose.ZERO);
@@ -336,6 +431,16 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
         ts.addOrReplaceChild("trident_head",
                 CubeListBuilder.create().texOffs(40, 60).addBox(-3.0F, -4.0F, -0.5F, 6.0F, 4.0F, 1.0F),
                 PartPose.offset(7.0F, -14.0F, 0.0F));
+        // 重建模细节：发光眼 + 王冠宝石
+        ts.addOrReplaceChild("eye_l",
+                CubeListBuilder.create().texOffs(41, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(-3.0F, -2.0F, -4.0F));
+        ts.addOrReplaceChild("eye_r",
+                CubeListBuilder.create().texOffs(58, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(3.0F, -2.0F, -4.0F));
+        ts.addOrReplaceChild("detail",
+                CubeListBuilder.create().texOffs(75, 0).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
+                PartPose.offset(0.0F, -12.0F, 0.0F));
 
         return LayerDefinition.create(mesh, 128, 128);
     }
@@ -347,6 +452,12 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
 
         float t = ageInTicks * 0.12F;
         OceanTitanEntity.Variant v = entity.getVariant();
+
+        // 发光眼脉动（重建模新增部件）
+        int vi = v.ordinal();
+        float pulse = 1.0F + Mth.sin(t * 3.0F) * 0.12F;
+        extra[vi][0].xScale = extra[vi][0].yScale = extra[vi][0].zScale = pulse;
+        extra[vi][1].xScale = extra[vi][1].yScale = extra[vi][1].zScale = pulse;
 
         switch (v) {
             case ABYSS_WHALE -> {
