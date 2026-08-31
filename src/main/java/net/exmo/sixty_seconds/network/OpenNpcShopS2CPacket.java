@@ -17,8 +17,8 @@ import java.util.List;
 public record OpenNpcShopS2CPacket(int entityId, String npcName, int tokens, List<Row> rows)
         implements CustomPacketPayload {
 
-    /** 一行商品：物品 id / 单次购买给的数量 / 当日单价 / 当日剩余库存。 */
-    public record Row(String itemId, int count, int price, int stock) {
+    /** 一行商品：物品 id / 单次购买给的数量 / 当日单价 / 收购价（玩家卖给商人）/ 当日剩余库存。 */
+    public record Row(String itemId, int count, int price, int buyPrice, int stock) {
     }
 
     public static final Type<OpenNpcShopS2CPacket> ID = new Type<>(SixtySeconds.id("open_npc_shop"));
@@ -34,6 +34,7 @@ public record OpenNpcShopS2CPacket(int entityId, String npcName, int tokens, Lis
             buf.writeUtf(row.itemId);
             buf.writeVarInt(row.count);
             buf.writeVarInt(row.price);
+            buf.writeVarInt(row.buyPrice);
             buf.writeVarInt(row.stock);
         }
     }
@@ -45,7 +46,7 @@ public record OpenNpcShopS2CPacket(int entityId, String npcName, int tokens, Lis
         int count = buf.readVarInt();
         List<Row> rows = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
-            rows.add(new Row(buf.readUtf(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt()));
+            rows.add(new Row(buf.readUtf(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt()));
         }
         return new OpenNpcShopS2CPacket(entityId, npcName, tokens, rows);
     }

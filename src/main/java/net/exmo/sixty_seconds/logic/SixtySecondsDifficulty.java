@@ -3,6 +3,8 @@ package net.exmo.sixty_seconds.logic;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.exmo.sixty_seconds.SixtySeconds;
+import net.exmo.sixty_seconds.SixtySecondsDayCycle;
+import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.exmo.sixty_seconds.entity.OceanCreatureEntity;
 import net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity;
 import net.minecraft.nbt.CompoundTag;
@@ -83,7 +85,15 @@ public final class SixtySecondsDifficulty {
     // ── 读取 / 写入 ────────────────────────────────────────────────────
 
     public static int get(ServerLevel level) {
-        return level == null ? MIN : get(level.getServer());
+        if (level == null) {
+            return MIN;
+        }
+        int diff = CACHE.computeIfAbsent(level.getServer(), SixtySecondsDifficulty::loadOrDefault);
+        // 难度联动：白天时长随难度压缩（夜晚相应变长）。随 Data 同步到客户端，
+        // 在取值处惰性同步，确保加载/改难度后日内相位正确。
+        SixtySecondsState.Data data = SixtySecondsState.get(level);
+        data.daytimeTicks = (int) (SixtySecondsDayCycle.DAYTIME_TICKS - daytimeShortenTicks(diff));
+        return diff;
     }
 
     public static int get(Level level) {
@@ -283,5 +293,69 @@ public final class SixtySecondsDifficulty {
         for (LivingEntity mob : mobs) {
             applyToMob(mob);
         }
+    }
+
+    // ───────────────────────────────────────────────────────────────────
+    //  难度联动：商人 / NPC 价格
+    // ───────────────────────────────────────────────────────────────────
+    /** 售价倍率（玩家向商人购买时支付）：难度 0 = ×1，难度 10 = ×3。 */
+    public static float npcSellPriceMultiplier(int level) {
+        return 1.0F + 2.0F * clamp01(level) / 10.0F;
+    }
+
+    /** 收购价倍率（商人向玩家回收时支付）：难度 0 = ×1，难度 10 = ×(1/3)。与售价互逆。 */
+    public static float npcBuyPriceMultiplier(int level) {
+        return 1.0F / npcSellPriceMultiplier(level);
+    }
+
+    // ───────────────────────────────────────────────────────────────────
+    //  难度联动：白天时长
+    // ───────────────────────────────────────────────────────────────────
+    /** 白天被压缩的刻数（最多 1.5 分钟 = 1800 刻），难度 10 达最大。夜晚相应变长。 */
+    public static long daytimeShortenTicks(int level) {
+        return Math.round(1800.0 * clamp01(level) / 10.0);
+    }
+
+    // ───────────────────────────────────────────────────────────────────
+    //  难度联动：被袭击 / 夜袭
+    // ───────────────────────────────────────────────────────────────────
+    /** 被袭击（夜袭触发）概率倍率：难度 10 = ×2.2。 */
+    public static float raidChanceMultiplier(int level) {
+        return 1.0F + 1.2F * clamp01(level) / 10.0F;
+    }
+
+    /** 夜袭刷怪数量 / 频率倍率：难度 10 = ×1.5。 */
+    public static float nightSpawnMultiplier(int level) {
+        return 1.0F + 0.5F * clamp01(level) / 10.0F;
+    }
+
+    // ───────────────────────────────────────────────────────────────────
+    //  难度联动：前几天安全 / 降难缓冲
+    // ───────────────────────────────────────────────────────────────────
+    /**
+     * 前几天刷怪难度爬升窗口被压缩的额外天数：
+     * 难度 <5 不压缩（保留完整安全缓冲）；难度 5 起逐步压缩；难度 8 时压缩满额 → 无缓冲。
+     */
+    public static int graceCompressDays(int level) {
+        if (level < 5) return 0;
+        return (int) Math.round(7.0 * (level - 4) / 4.0);
+    }
+
+    /** 前几天安全缓冲 / 降难机制是否完全取消（难度 ≥8）。 */
+    public static boolean graceDisabled(int level) {
+        return level >= 8;
+    }
+
+    // ───────────────────────────────────────────────────────────────────
+    //  难度联动：Boss 提前出现
+    // ───────────────────────────────────────────────────────────────────
+    /** Boss 出现提前天数（0..3）：难度 5 起，难度 8 达最大 3 天。 */
+    public static int bossEarlyDayShift(int level) {
+        if (level < 5) return 0;
+        return (int) Math.round(3.0 * (level - 5) / 3.0);
+    }
+
+    private static float clamp01(float v) {
+        return v < 0.0F ? 0.0F : Math.min(1.0F, v);
     }
 }

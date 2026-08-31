@@ -75,11 +75,11 @@ public final class SixtySecondsNpcSystem {
         long now = level.getGameTime();
         // 子相位首 tick 刷新（照抄 SixtySecondsPveSystem 的 Boss 判定写法）
         long elapsed = SixtySecondsDayCycle.elapsed(data, now);
-        if (elapsed == SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.DAYTIME)) {
+        if (elapsed == SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.DAYTIME, data)) {
             SixtySecondsNpcSpawner.spawnDaily(level, data, false);
             // 房车门口概率刷（早上判定一次，一天只刷一次）
             SixtySecondsNpcSpawner.spawnAtRvDoors(level, data, false);
-        } else if (elapsed == SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.NIGHT)) {
+        } else if (elapsed == SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.NIGHT, data)) {
             SixtySecondsNpcSpawner.spawnDaily(level, data, true);
             // 房车门口概率刷（晚上判定一次，如果早上已刷则跳过）
             SixtySecondsNpcSpawner.spawnAtRvDoors(level, data, true);

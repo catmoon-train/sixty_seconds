@@ -2,6 +2,7 @@ package net.exmo.sixty_seconds;
 
 import net.exmo.sixty_seconds.entity.SixtySecondsBossEntity;
 import net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity;
+import net.exmo.sixty_seconds.logic.SixtySecondsDifficulty;
 
 /**
  * 末日60秒模式的数值平衡集中表——所有可调数值放这里，便于统一调参。
@@ -269,7 +270,17 @@ public final class SixtySecondsBalance {
      * 游荡怪刷新概率的天数倍率（前期压低、逐步爬升；怪物刷新频率+40% 后各档 ×1.4）：
      * 第1天 35%、第2天 49%、第3天 77%、第4天 105%、第5天 126%、第6~7天 140%。
      */
-    public static double ambientSpawnDayMult(int day) {
+    public static double ambientSpawnDayMult(int day, int diff) {
+        // 难度 8+：取消前期降难缓冲，全程满额刷新（不再有任何安全/保护时间）
+        if (SixtySecondsDifficulty.graceDisabled(diff)) {
+            return 1.4;
+        }
+        // 难度 5+：压缩前期爬升窗口（前几天安全时间 / 降难机制缩短）
+        int effectiveDay = day + SixtySecondsDifficulty.graceCompressDays(diff);
+        return ambientBaseDayMult(effectiveDay);
+    }
+
+    private static double ambientBaseDayMult(int day) {
         if (day <= 1) return 0.35;
         if (day == 2) return 0.49;
         if (day == 3) return 0.77;

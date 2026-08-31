@@ -76,7 +76,7 @@ public final class SixtySecondsRvRaidSystem {
         }
         // 夜晚首 tick：触发本晚突袭 / 尸潮
         long elapsed = SixtySecondsDayCycle.elapsed(data, now);
-        if (elapsed == SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.NIGHT)) {
+        if (elapsed == SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.NIGHT, data)) {
             triggerNightStart(level, data);
         }
         // 夜里低频补刷小股突袭

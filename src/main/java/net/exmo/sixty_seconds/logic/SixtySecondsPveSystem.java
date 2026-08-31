@@ -145,7 +145,7 @@ public final class SixtySecondsPveSystem {
         // Boss：夜晚首 tick 判定（概率 + 第 3/5/7 天保底）
         long elapsed = SixtySecondsDayCycle.elapsed(data, now);
         if (SixtySecondsDayCycle.isNight(data, now)
-                && elapsed == SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.NIGHT)) {
+                && elapsed == SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.NIGHT, data)) {
             tryNightBoss(level, data);
         }
     }
@@ -190,18 +190,22 @@ public final class SixtySecondsPveSystem {
             double chance = SixtySecondsBalance.AMBIENT_SPAWN_CHANCE
                     * (1.0 + SixtySecondsBalance.AMBIENT_SPAWN_CHANCE_PER_AREA_LEVEL * areaLevel);
             // 前期天数倍率：前两天刷新概率大幅降低，逐步爬升
-            chance *= SixtySecondsBalance.ambientSpawnDayMult(data.dayNumber);
+            chance *= SixtySecondsBalance.ambientSpawnDayMult(data.dayNumber, SixtySecondsDifficulty.get(level));
             if (SixtySecondsDayCycle.isNight(data, level.getGameTime())) {
                 chance *= SixtySecondsBalance.AMBIENT_NIGHT_CHANCE_MULT;
                 // 只在前 2 分钟刷新怪物（超出窗口不再刷游荡怪，但已有怪继续存在）
                 long nightElapsed = SixtySecondsDayCycle.elapsed(data, level.getGameTime())
-                        - SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.NIGHT);
+                        - SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.NIGHT, data);
                 if (nightElapsed >= SixtySecondsBalance.NIGHT_MONSTER_SPAWN_WINDOW_TICKS) {
                     continue;
                 }
             }
             // 怪物整体刷新频率 +30%（叠加在原有 +40% 之上）
             chance *= SixtySecondsBalance.MONSTER_SPAWN_FREQ_MULT;
+            // 难度联动：夜袭刷怪频率提高（最高 ×1.5）
+            if (SixtySecondsDayCycle.isNight(data, level.getGameTime())) {
+                chance *= SixtySecondsDifficulty.nightSpawnMultiplier(SixtySecondsDifficulty.get(level));
+            }
             if (level.random.nextDouble() >= chance) {
                 continue;
             }
@@ -215,6 +219,8 @@ public final class SixtySecondsPveSystem {
             AABB zone = SixtySecondsSearchZones.confineBox(player);
             int packSize = 1 + level.random.nextInt(1 + (areaLevel + 1) / 2)
                     + (data.dayNumber >= 4 ? 1 : 0);
+            // 难度联动：夜袭刷怪数量提高（最高 ×1.5）
+            packSize = (int) (packSize * SixtySecondsDifficulty.nightSpawnMultiplier(SixtySecondsDifficulty.get(level)));
             packSize = Math.min(packSize, cap - near.size());
             spawnPack(level, data, player, areaLevel, packSize, zone);
         }
@@ -373,7 +379,10 @@ public final class SixtySecondsPveSystem {
                 }
             }
 
-            boolean guaranteed = data.dayNumber == 3 || data.dayNumber == 5 || data.dayNumber == 7;
+            int bossShift = SixtySecondsDifficulty.bossEarlyDayShift(SixtySecondsDifficulty.get(level));
+            boolean guaranteed = data.dayNumber == 3 - bossShift
+                    || data.dayNumber == 5 - bossShift
+                    || data.dayNumber == 7 - bossShift;
             double chance = SixtySecondsBalance.BOSS_NIGHT_CHANCE
                     + SixtySecondsBalance.BOSS_NIGHT_CHANCE_PER_DAY * data.dayNumber;
             // 非保底日应用天数倍率（前两天 Boss 概率大幅降低）

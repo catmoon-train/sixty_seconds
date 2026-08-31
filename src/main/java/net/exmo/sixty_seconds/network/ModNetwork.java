@@ -40,6 +40,7 @@ public final class ModNetwork {
         registrar.playToServer(MinigameQuestPayload.CompleteGame.ID, adapt(MinigameQuestPayload.CompleteGame.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(NpcDialogueActionC2SPacket.ID, adapt(NpcDialogueActionC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(NpcShopBuyC2SPacket.ID, adapt(NpcShopBuyC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
+        registrar.playToServer(NpcShopSellC2SPacket.ID, adapt(NpcShopSellC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(NpcShopSaveC2SPacket.ID, adapt(NpcShopSaveC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToClient(MinigameQuestPayload.OpenConfig.ID, adapt(MinigameQuestPayload.OpenConfig.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(MinigameQuestPayload.OpenGame.ID, adapt(MinigameQuestPayload.OpenGame.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
@@ -129,6 +130,7 @@ public final class ModNetwork {
             if (payload instanceof MinigameQuestPayload.CompleteGame p) { MinigameQuestServerNetwork.handle(p, fabric); return; }
             if (payload instanceof NpcDialogueActionC2SPacket p) { NpcDialogueActionC2SPacket.handle(p, fabric); return; }
             if (payload instanceof NpcShopBuyC2SPacket p) { NpcShopBuyC2SPacket.handle(p, fabric); return; }
+            if (payload instanceof NpcShopSellC2SPacket p) { NpcShopSellC2SPacket.handle(p, fabric); return; }
             if (payload instanceof NpcShopSaveC2SPacket p) { NpcShopSaveC2SPacket.handle(p, fabric); return; }
             if (payload instanceof PhoneDialC2SPacket p) { PhoneDialC2SPacket.handle(p, fabric); return; }
             if (payload instanceof RadioChannelC2SPacket p) { RadioChannelC2SPacket.handle(p, fabric); return; }

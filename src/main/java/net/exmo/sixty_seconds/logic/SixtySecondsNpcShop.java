@@ -87,7 +87,8 @@ public final class SixtySecondsNpcShop {
             rows.add(new OpenNpcShopS2CPacket.Row(
                     entry.itemId == null ? "" : entry.itemId,
                     Math.max(1, entry.count),
-                    i < price.length ? price[i] : entry.price,
+                    scaledSellPrice(i < price.length ? price[i] : entry.price, level),
+                    scaledBuyPrice(entry, level),
                     i < stock.length ? stock[i] : 0));
         }
         return new OpenNpcShopS2CPacket(npc.getId(), npc.getDisplayName().getString(),
@@ -142,7 +143,7 @@ public final class SixtySecondsNpcShop {
         if (sample.isEmpty()) {
             return; // 管理员配了个无效 itemId：拒绝成交，别扣钱
         }
-        int totalPrice = price[rowIndex] * count;
+        int totalPrice = scaledSellPrice(price[rowIndex], level) * count;
         if (totalFunds(player) < totalPrice) {
             player.displayClientMessage(Component.translatable(
                     "message.sixty_seconds.sixty_seconds.npc.no_tokens", totalPrice)
@@ -222,5 +223,107 @@ public final class SixtySecondsNpcShop {
             stack.shrink(take);
             amount -= take;
         }
+    }
+
+    // ───────────────────────────────────────────────────────────────
+    //  难度联动：商人价格
+    // ───────────────────────────────────────────────────────────────
+
+    /** 玩家购买价（难度越高越贵，最高 ×3）。 */
+    private static int scaledSellPrice(int base, ServerLevel level) {
+        int diff = SixtySecondsDifficulty.get(level);
+        return Math.max(1, Math.round(base * SixtySecondsDifficulty.npcSellPriceMultiplier(diff)));
+    }
+
+    /** 玩家卖给商人的收购价（难度越高越低，最高 ÷3）。 */
+    private static int scaledBuyPrice(SixtySecondsShopTable.Entry entry, ServerLevel level) {
+        int diff = SixtySecondsDifficulty.get(level);
+        return Math.max(1, Math.round(entry.effectiveBuyPrice() * SixtySecondsDifficulty.npcBuyPriceMultiplier(diff)));
+    }
+
+    /**
+     * 回收（卖）结算：玩家把商品按收购价卖给商人。难度越高收购价越低（玩家越亏）。
+     * 服务端全量重校验（白天/商人存活/未逃跑/距离/下标/背包有足够物品）。
+     */
+    public static void sell(ServerPlayer player, SixtySecondsNpcEntity npc, int rowIndex, int count) {
+        ServerLevel level = player.serverLevel();
+        if (!SixtySecondsMod.isActive(level)) {
+            return;
+        }
+        SixtySecondsState.Data data = SixtySecondsState.get(level);
+        if (data.phase != SixtySecondsPhase.DAY) {
+            return;
+        }
+        if (!npc.isAlive() || npc.getVariant() != SixtySecondsNpcEntity.Variant.MERCHANT) {
+            return;
+        }
+        if (npc.isFleeing()) {
+            player.displayClientMessage(Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.npc.merchant_refuses").withStyle(ChatFormatting.RED), true);
+            return;
+        }
+        if (npc.distanceToSqr(player) > SixtySecondsBalance.NPC_USE_DISTANCE_SQR) {
+            return;
+        }
+        ensureDaily(level, npc);
+        List<SixtySecondsShopTable.Entry> entries = entriesOf(level, npc);
+        if (rowIndex < 0 || rowIndex >= entries.size()) {
+            return;
+        }
+        count = Mth.clamp(count, 1, 64);
+        SixtySecondsShopTable.Entry entry = entries.get(rowIndex);
+        ItemStack sample = SixtySecondsShopTable.makeStack(entry);
+        if (sample.isEmpty()) {
+            return;
+        }
+        int need = entry.count * count;
+        int have = player.getInventory().countItem(sample.getItem());
+        if (have < need) {
+            player.displayClientMessage(Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.npc.sell_no_item",
+                    sample.getHoverName(), need).withStyle(ChatFormatting.RED), true);
+            return;
+        }
+        int payout = scaledBuyPrice(entry, level) * count;
+        int removed = takeItems(player, sample.getItem(), need);
+        if (removed < need) {
+            // 兜底：理论上 countItem 已校验，极少触发；把多扣的退回
+            if (removed > 0) {
+                player.getInventory().add(new ItemStack(sample.getItem(), removed));
+            }
+            return;
+        }
+        grant(player, payout);
+        level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                SoundEvents.VILLAGER_YES, SoundSource.NEUTRAL, 0.8F, 1.0F);
+        player.displayClientMessage(Component.translatable(
+                "message.sixty_seconds.sixty_seconds.npc.sold",
+                sample.getHoverName(), count, payout).withStyle(ChatFormatting.GREEN), true);
+        // 重推 S2C：刷新收购价/余额显示
+        ServerPlayNetworking.send(player, buildPacket(level, player, npc));
+    }
+
+    /** 从背包扣除指定数量某物品，返回实际扣除数。 */
+    private static int takeItems(ServerPlayer player, net.minecraft.world.item.Item item, int amount) {
+        int left = amount;
+        var inventory = player.getInventory();
+        for (int slot = 0; slot < inventory.getContainerSize() && left > 0; slot++) {
+            ItemStack stack = inventory.getItem(slot);
+            if (!stack.is(item)) {
+                continue;
+            }
+            int take = Math.min(left, stack.getCount());
+            stack.shrink(take);
+            left -= take;
+        }
+        return amount - left;
+    }
+
+    /** 给玩家加游戏币（直接进余额）。 */
+    private static void grant(ServerPlayer player, int amount) {
+        if (amount <= 0) {
+            return;
+        }
+        SixtySecPlayerMinigameTaskComponent.KEY.get(player).addTokens(amount);
     }
 }

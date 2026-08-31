@@ -100,6 +100,9 @@ public class SixtySecondsSubmarineEntity extends Mob {
 
     @Override
     public void tick() {
+        // 先跑原版 LivingEntity/Mob 的 tick（其中 travel() 已被我们接管并短路，
+        // 不会再次施加重力/阻力/骑乘输入），随后由本方法手动 setDeltaMovement 并 move()。
+        super.tick();
         Entity rider = this.getFirstPassenger();
         if (rider instanceof Player) {
             float forward = ((Player) rider).zza;   // W = +1 前进, S = -1 后退（沿艇艏方向）
@@ -136,11 +139,14 @@ public class SixtySecondsSubmarineEntity extends Mob {
             if (ascend) vy += LIFT;
             if (descend) vy -= LIFT;
             this.setDeltaMovement(vx, vy, vz);
+            // 由我们自己驱动位移，原版 travel() 不再插手
+            this.move(MoverType.SELF, this.getDeltaMovement());
             // 阻止 Mob 自带 travel 再次施力：清空其输入
             this.zza = 0.0F;
             this.xxa = 0.0F;
         } else {
             this.setDeltaMovement(this.getDeltaMovement().multiply(0.85, 0.85, 0.85));
+            this.move(MoverType.SELF, this.getDeltaMovement());
             this.pitch *= 0.95F;
             this.entityData.set(DATA_PITCH, this.pitch);
             this.zza = 0.0F;
@@ -153,7 +159,32 @@ public class SixtySecondsSubmarineEntity extends Mob {
                 playerRider.setAirSupply(playerRider.getMaxAirSupply());
             }
         }
-        super.tick();
+    }
+
+    /**
+     * 接管移动：完全接管位移逻辑，不再调用原版 {@link Mob#travel}，
+     * 避免其重新施加重力 / 阻力 / 骑乘输入而覆盖掉 {@link #tick()} 中 setDeltaMovement 的竖直速度。
+     * 实际位移由 {@link #tick()} 内的 {@code move(MoverType.SELF, ...)} 完成。
+     */
+    @Override
+    public void travel(Vec3 travelVector) {
+        // 与 SixtySecondsFlyingVehicleEntity 一致：不调用 super.travel
+    }
+
+    @Override
+    protected void tickRidden(Player player, Vec3 travelVector) {
+        // 骑乘时由 tick() 自己驱动位移，这里清空原版施加的速度
+        setDeltaMovement(Vec3.ZERO);
+    }
+
+    @Override
+    protected Vec3 getRiddenInput(Player player, Vec3 travelVector) {
+        return Vec3.ZERO;
+    }
+
+    @Override
+    protected float getRiddenSpeed(Player player) {
+        return 0.0F;
     }
 
     @Override

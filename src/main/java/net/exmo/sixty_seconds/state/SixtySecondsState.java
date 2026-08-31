@@ -149,6 +149,8 @@ public final class SixtySecondsState {
         public SixtySecondsPhase phase = SixtySecondsPhase.INACTIVE;
         public int dayNumber = 0;
         public long phaseEndTick = 0L;
+        /** 当前白天时长（tick），随难度压缩（见 SixtySecondsDifficulty#daytimeShortenTicks）；夜晚相应变长。整天总时长不变。 */
+        public int daytimeTicks = net.exmo.sixty_seconds.SixtySecondsDayCycle.DAYTIME_TICKS;
         /** teamId → TeamData（保持插入顺序，用于网格布局的 index）。 */
         public final Map<Integer, TeamData> teams = new LinkedHashMap<>();
         /** ocean 模式：teamId → 房车在岛屿陆地上的自动落点（仅海岛模式填充；普通模式为空，房车落于庇护所）。 */

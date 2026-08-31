@@ -179,8 +179,9 @@ public final class SixtySecondsDefenseSystem {
         } else {
             // 夜晚开始的第一个 tick：刷夜袭（受开关控制，默认关；关闭时仅手动召唤）
             long elapsed = SixtySecondsDayCycle.elapsed(data, now);
-            if (elapsed == SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.NIGHT)
-                    && nightAssaultEnabled(level)) {
+            if (elapsed == SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.NIGHT, data)
+                    && nightAssaultEnabled(level)
+                    && level.random.nextFloat() < SixtySecondsDifficulty.raidChanceMultiplier(SixtySecondsDifficulty.get(level))) {
                 spawnAssault(level, data, mobs);
             }
         }
@@ -226,7 +227,8 @@ public final class SixtySecondsDefenseSystem {
                 continue;
             }
             active.add(team);
-            int count = SixtySecondsBalance.ASSAULT_BASE_COUNT + data.dayNumber;
+            int count = (int) ((SixtySecondsBalance.ASSAULT_BASE_COUNT + data.dayNumber)
+                    * SixtySecondsDifficulty.nightSpawnMultiplier(SixtySecondsDifficulty.get(level)));
             if (team.alarmTonight) {
                 count = Math.max(1, count - 1);
             }

@@ -69,7 +69,7 @@ public final class SixtySecondsAreaBossSystem {
             return;
         }
         long elapsed = SixtySecondsDayCycle.elapsed(data, now);
-        if (elapsed != SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.NIGHT)) {
+        if (elapsed != SixtySecondsDayCycle.startOf(SixtySecondsDayCycle.SubPhase.NIGHT, data)) {
             return;
         }
         tryAreaBosses(level, data);
@@ -175,7 +175,7 @@ public final class SixtySecondsAreaBossSystem {
         if (DAMAGE_BOSS_SPAWNED.contains(level)) {
             return;
         }
-        if (data.dayNumber < SixtySecondsBalance.DAMAGE_BOSS_SPAWN_DAY) {
+        if (data.dayNumber < SixtySecondsBalance.DAMAGE_BOSS_SPAWN_DAY - SixtySecondsDifficulty.bossEarlyDayShift(SixtySecondsDifficulty.get(level))) {
             return;
         }
         BlockPos spot = resolveDamageSpot(level, data);

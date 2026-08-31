@@ -529,7 +529,7 @@ public final class SixtySecondsManager {
             } catch (IllegalArgumentException e) {
                 return false;
             }
-            remaining = DAY_TICKS - net.exmo.sixty_seconds.SixtySecondsDayCycle.startOf(sub);
+            remaining = DAY_TICKS - net.exmo.sixty_seconds.SixtySecondsDayCycle.startOf(sub, data);
         }
         data.phaseEndTick = level.getGameTime() + remaining;
         resyncPhaseEnd(level, data);

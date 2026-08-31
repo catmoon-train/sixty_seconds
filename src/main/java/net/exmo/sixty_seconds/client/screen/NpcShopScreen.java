@@ -1,6 +1,7 @@
 package net.exmo.sixty_seconds.client.screen;
 
 import net.exmo.sixty_seconds.network.NpcShopBuyC2SPacket;
+import net.exmo.sixty_seconds.network.NpcShopSellC2SPacket;
 import net.exmo.sixty_seconds.network.OpenNpcShopS2CPacket;
 import net.exmo.sixty_seconds.bridge.fabric.ClientPlayNetworking;
 import net.minecraft.ChatFormatting;
@@ -152,7 +153,7 @@ public class NpcShopScreen extends Screen {
                 : icon.getHoverName();
         g.drawString(this.font, name, x + 26, y + 9, enabled ? blendColors(TEXT, GOLD, t) : 0xFF7A6F5C);
 
-        // 右侧：库存 + 单价
+        // 右侧：库存 + 单价 + 收购价
         Component stock = inStock
                 ? Component.translatable("gui.sixty_seconds.sixty_seconds.npc.shop.stock", row.stock())
                 : Component.translatable("gui.sixty_seconds.sixty_seconds.npc.shop.sold_out");
@@ -160,14 +161,17 @@ public class NpcShopScreen extends Screen {
         g.drawString(this.font, stock, x + w - 58 - stockW, y + 9, inStock ? MUTED : RED);
         Component price = Component.translatable(
                 "gui.sixty_seconds.sixty_seconds.npc.shop.price", row.price());
-        g.drawString(this.font, price, x + w - 4 - this.font.width(price), y + 9,
+        g.drawString(this.font, price, x + w - 4 - this.font.width(price), y + 3,
                 affordable ? GREEN : RED);
+        Component buy = Component.translatable(
+                "gui.sixty_seconds.sixty_seconds.npc.shop.sell", row.buyPrice());
+        g.drawString(this.font, buy, x + w - 4 - this.font.width(buy), y + 15, GREEN);
         return hover;
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (button == 0) {
+        if (button == 0 || button == 1) {
             int x = panelX + PAD;
             int w = panelW - PAD * 2;
             for (int i = 0; i < data.rows().size(); i++) {
@@ -176,16 +180,23 @@ public class NpcShopScreen extends Screen {
                 if (!isInRect((int) mouseX, (int) mouseY, x, y, w, ROW_H)) {
                     continue;
                 }
-                if (row.stock() <= 0 || data.tokens() < row.price()) {
-                    Minecraft.getInstance().getSoundManager().play(
-                            SimpleSoundInstance.forUI(SoundEvents.VILLAGER_NO, 1.0F));
-                    return true;
-                }
-                Minecraft.getInstance().getSoundManager().play(
-                        SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
                 int count = hasShiftDown() ? BULK_COUNT : 1;
-                // 不关屏：服务端成交后会重推 OpenNpcShopS2CPacket 整屏替换（含新库存/价格/余额）
-                ClientPlayNetworking.send(new NpcShopBuyC2SPacket(data.entityId(), i, count));
+                if (button == 0) {
+                    // 左键：买
+                    if (row.stock() <= 0 || data.tokens() < row.price()) {
+                        Minecraft.getInstance().getSoundManager().play(
+                                SimpleSoundInstance.forUI(SoundEvents.VILLAGER_NO, 1.0F));
+                        return true;
+                    }
+                    Minecraft.getInstance().getSoundManager().play(
+                            SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+                    ClientPlayNetworking.send(new NpcShopBuyC2SPacket(data.entityId(), i, count));
+                } else {
+                    // 右键：卖（回收）
+                    Minecraft.getInstance().getSoundManager().play(
+                            SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+                    ClientPlayNetworking.send(new NpcShopSellC2SPacket(data.entityId(), i, count));
+                }
                 return true;
             }
         }

@@ -29,6 +29,8 @@ public class SixtySecondsShopTable {
         public int count = 1;
         /** 基准价（代币）；实际售价 = 基准价 × (1 ± priceJitter)，每商人每日一掷。 */
         public int price = 5;
+        /** 收购价（商人回收玩家物品时支付）；0 表示按售价半数折算。随难度下调。 */
+        public int buyPrice = 0;
         /**
          * 结算货币。当前只实现 {@code MINIGAME_TOKEN}（= SixtySecPlayerMinigameTaskComponent 代币，
          * 亦即 60s 的实体币 sixty_seconds_coin）。留字符串口子给以后接 ShopEntry.Currency.MONEY。
@@ -51,6 +53,11 @@ public class SixtySecondsShopTable {
             this.stock = stock;
             this.restockPerDay = restockPerDay;
             this.priceJitter = priceJitter;
+        }
+
+        /** 实际收购价：显式设置优先，否则按售价半数折算。 */
+        public int effectiveBuyPrice() {
+            return buyPrice > 0 ? buyPrice : Math.max(1, Math.round(price * 0.5F));
         }
     }
 
@@ -120,6 +127,7 @@ public class SixtySecondsShopTable {
                 buf.writeUtf(entry.itemId == null ? "" : entry.itemId);
                 buf.writeVarInt(entry.count);
                 buf.writeVarInt(entry.price);
+                buf.writeVarInt(entry.buyPrice);
                 buf.writeUtf(entry.currency == null ? "MINIGAME_TOKEN" : entry.currency);
                 buf.writeVarInt(entry.stock);
                 buf.writeVarInt(entry.restockPerDay);
@@ -140,6 +148,7 @@ public class SixtySecondsShopTable {
                 entry.itemId = buf.readUtf();
                 entry.count = buf.readVarInt();
                 entry.price = buf.readVarInt();
+                entry.buyPrice = buf.readVarInt();
                 entry.currency = buf.readUtf();
                 entry.stock = buf.readVarInt();
                 entry.restockPerDay = buf.readVarInt();
