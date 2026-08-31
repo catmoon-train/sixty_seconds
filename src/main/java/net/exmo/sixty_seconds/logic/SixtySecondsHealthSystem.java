@@ -409,6 +409,15 @@ public final class SixtySecondsHealthSystem {
         if (attacker != null && !stats.monster) {
             baseDamage = (int) Math.max(1, baseDamage * SixtySecondsBalance.PVP_DAMAGE_MULT);
         }
+        // 血月/电磁风暴：怪物攻击力强化（健康伤害 +50%）。
+        // 模组怪物攻击统一走本方法且 attacker 多为 null；玩家攻击 attacker 非空且非怪物形态，不受影响。
+        if (net.exmo.sixty_seconds.logic.SixtySecondsEventSystem.isMonsterStrengthBoosted(victim.serverLevel())) {
+            boolean fromMonster = attacker == null
+                    || (attacker != null && SixtySecondsStatsComponent.KEY.get(attacker).monster);
+            if (fromMonster) {
+                baseDamage = (int) Math.ceil(baseDamage * SixtySecondsBalance.MONSTER_STRENGTH_MULT);
+            }
+        }
         if (stats.monster) {
             // 怪物玩家：正常扣血（250 血），不受护甲减免，健康扣完即死
             hurtFeedback(victim, attacker);

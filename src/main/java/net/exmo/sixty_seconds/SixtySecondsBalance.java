@@ -412,6 +412,8 @@ public final class SixtySecondsBalance {
     public static final float HAIL_DAMAGE_PER_2S = 0.5F;
     /** 血月持续一整夜（8分钟），仅在夜间事件池中出现 */
     public static final int BLOOD_MOON_DURATION = 20 * 60 * 8;
+    /** 血月/电磁风暴期间怪物攻击力强化倍率（健康伤害 +50%） */
+    public static final float MONSTER_STRENGTH_MULT = 1.5F;
     /** 辐射泄漏持续 3 分钟 */
     public static final int RADIATION_LEAK_DURATION = 20 * 60 * 3;
     /** 辐射泄漏中·全员：每10秒污染+1（即使在屋内也缓慢累积） */

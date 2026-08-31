@@ -1,6 +1,7 @@
 package net.exmo.sixty_seconds;
 
 import net.exmo.sixty_seconds.state.SixtySecondsState;
+import net.exmo.sixty_seconds.logic.SixtySecondsEventSystem;
 
 /**
  * 日内子相位时间轴：清晨 1 分钟 → 白天 6 分钟 → 晚上 2.5 分钟（其中最后 45 秒为睡觉时间），
@@ -127,6 +128,11 @@ public final class SixtySecondsDayCycle {
             } else {
                 t = 13000L + (elapsed - MORNING_TICKS - data.daytimeTicks) * 10000L / nightTicks(data);
             }
+        }
+        // 血月天气：世界时间强制为夜晚观感（仅改 dayTime 视觉，不影响 gameTime 与玩法相位/时钟）
+        // 血月结束后该条件立即失效，下一 tick 由上方逻辑恢复原本应处的世界时间。
+        if (SixtySecondsEventSystem.isBloodMoon(level)) {
+            t = 18000L; // 午夜：月亮高悬、天空最暗
         }
         level.setDayTime(t % 24000L);
     }

@@ -292,8 +292,8 @@ public final class SixtySecondsEventSystem {
                         stats.sanity = Math.max(0, stats.sanity - 3);
                         stats.sync();
                     }
-                    // 玩家受到的伤害 +50%（通过虚弱间接实现；直接减伤由下面怪物攻击加成覆盖）
-                    // 怪物攻击力强化：在怪物生成和攻击时由 SixtySecondsMonsterSystem 处理
+                    // 玩家受到的伤害 +50% 未直接实现（仅施加虚弱降低玩家输出）；怪物攻击力强化见下方说明
+                    // 怪物攻击力强化：由 SixtySecondsHealthSystem.applyInjury 依据 isMonsterStrengthBoosted 实现
                 }
                 case SWARM -> {
                     // 虫潮：户外缓慢 + 持续受击
@@ -364,7 +364,7 @@ public final class SixtySecondsEventSystem {
                     }
                 }
                 case BLOOD_MOON -> {
-                    // 血月：全员理智缓慢下降，怪物强化由 MonsterSystem 根据 isBloodMoon 判断
+                    // 血月：全员理智缓慢下降；怪物攻击力强化由 SixtySecondsHealthSystem.applyInjury 依据 isBloodMoon 实现
                     if (now % (20 * 15) == 0) {
                         stats.sanity = Math.max(0, stats.sanity - 2);
                         stats.sync();
