@@ -24,7 +24,7 @@ import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.ChatFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -34,7 +34,7 @@ import net.minecraft.world.entity.player.Player;
  * {@code OceanTitanModel} 中拥有各自完全独立的盒体几何（鲸、电鳗、藤壶巨怪、
  * 鮟鱇、巨型螃蟹、幽灵水母、深渊之喉、珊瑚巨偶、沉船怨灵、海皇三叉戟）。
  *
- * <p>每个 Boss 同时拥有<b>独立招式</b>：由 {@code TitanMove} 定义，
+ * <p>每个 Boss 拥有<b>完全独立的招式集</b>：由 {@code castVariantMove} 按变体分发，
  * 在 {@link #aiStep()} 中按冷却轮流释放（冲撞 / 雷击 / 酸雨 / 诱捕灯 /
  * 漩涡 / 毒刺 / 吞噬 / 尖啸 / 召唤 / 三叉戟等）。
  *
@@ -43,61 +43,33 @@ import net.minecraft.world.entity.player.Player;
  */
 public class OceanTitanEntity extends OceanCreatureEntity {
 
-    /** Boss 招式集合。 */
-    public enum TitanMove {
-        /** 巨兽冲撞：短暂加速冲向目标，命中击飞。 */
-        RAM,
-        /** 雷霆放电：以自身为中心对范围内玩家放电。 */
-        DISCHARGE,
-        /** 腐蚀酸雨：在目标上空降下持续伤害区域。 */
-        ACID_RAIN,
-        /** 诱捕灯笼：致盲并吸引周围玩家。 */
-        LURE,
-        /** 深渊漩涡：把附近玩家拉向自己。 */
-        WHIRLPOOL,
-        /** 毒棘齐射：扇形发射减速毒棘。 */
-        SPINE_VOLLEY,
-        /** 吞噬：对近身目标高额伤害并回复自身。 */
-        DEVOUR,
-        /** 灵魂尖啸：范围恐惧 + 虚弱。 */
-        SHRIEK,
-        /** 藤壶召唤：召唤小型海洋生物助战。 */
-        SUMMON,
-        /** 三叉戟审判：直线穿透伤害。 */
-        TRIDENT_JUDGEMENT,
-    }
+    /**
+     * 海洋霸主招式设计原则：每个变体拥有<b>完全独立</b>的招式集合（不共享通用池）。
+     * 招式在 {@link #castVariantMove(ServerLevel, Variant, LivingEntity)} 中按变体分发，
+     * 每个变体循环释放自己的 3 个专属招式（见各 {@code tickXxx} 方法）。
+     */
 
     public enum Variant {
-        /** 深渊巨鲸：高血冲撞型，撞击附带强击退。 */
-        ABYSS_WHALE(   0, 420.0, 0.26, 26, 3.2F, "ocean_titan_abyss_whale",
-                new TitanMove[]{TitanMove.RAM, TitanMove.WHIRLPOOL, TitanMove.SHRIEK}),
-        /** 雷暴电鳗：放电 + 麻痹。 */
-        TEMPEST_EEL(   1, 340.0, 0.32, 22, 2.6F, "ocean_titan_tempest_eel",
-                new TitanMove[]{TitanMove.DISCHARGE, TitanMove.RAM, TitanMove.WHIRLPOOL}),
-        /** 藤壶巨怪：召唤小怪 + 酸雨。 */
-        BARNACLE_TITAN(2, 460.0, 0.16, 24, 3.0F, "ocean_titan_barnacle_titan",
-                new TitanMove[]{TitanMove.ACID_RAIN, TitanMove.SUMMON, TitanMove.RAM}),
-        /** 深海鮟鱇：诱捕灯笼 + 吞噬。 */
-        ANGLER_LORD(   3, 380.0, 0.22, 28, 2.8F, "ocean_titan_angler_lord",
-                new TitanMove[]{TitanMove.LURE, TitanMove.DEVOUR, TitanMove.WHIRLPOOL}),
-        /** 碎壳巨蟹：高防高伤，钳击与冲撞。 */
-        CARAPACE_KING( 4, 500.0, 0.18, 30, 3.0F, "ocean_titan_carapace_king",
-                new TitanMove[]{TitanMove.RAM, TitanMove.SPINE_VOLLEY, TitanMove.DEVOUR}),
-        /** 幽灵水母后：致盲 + 毒棘齐射。 */
-        GHOST_MEDUSA(  5, 330.0, 0.20, 20, 2.6F, "ocean_titan_ghost_medusa",
-                new TitanMove[]{TitanMove.SPINE_VOLLEY, TitanMove.LURE, TitanMove.SHRIEK}),
-        /** 深渊之喉：吞噬 + 漩涡。 */
-        ABYSS_MAW(     6, 440.0, 0.24, 32, 3.4F, "ocean_titan_abyss_maw",
-                new TitanMove[]{TitanMove.DEVOUR, TitanMove.WHIRLPOOL, TitanMove.RAM}),
-        /** 珊瑚巨偶：极高血，酸雨与尖啸。 */
-        CORAL_COLOSSUS(7, 520.0, 0.14, 26, 3.2F, "ocean_titan_coral_colossus",
-                new TitanMove[]{TitanMove.ACID_RAIN, TitanMove.SHRIEK, TitanMove.SPINE_VOLLEY}),
-        /** 沉船怨灵：尖啸恐惧 + 召唤。 */
-        WRECK_WRAITH(  8, 360.0, 0.28, 24, 2.8F, "ocean_titan_wreck_wraith",
-                new TitanMove[]{TitanMove.SHRIEK, TitanMove.SUMMON, TitanMove.LURE}),
-        /** 海皇三叉戟：远程审判 + 放电。 */
-        TRIDENT_SOVEREIGN(9, 400.0, 0.24, 28, 3.0F, "ocean_titan_trident_sovereign",
-                new TitanMove[]{TitanMove.TRIDENT_JUDGEMENT, TitanMove.DISCHARGE, TitanMove.WHIRLPOOL});
+        /** 深渊巨鲸：高血冲撞型，撞击附带强击退与溅水浪。 */
+        ABYSS_WHALE(   0, 420.0, 0.26, 26, 3.2F, "ocean_titan_abyss_whale"),
+        /** 雷暴电鳗：连锁闪电 + 麻痹。 */
+        TEMPEST_EEL(   1, 340.0, 0.32, 22, 2.6F, "ocean_titan_tempest_eel"),
+        /** 藤壶巨怪：甲壳猛击自强化 + 召唤小怪 + 酸雨。 */
+        BARNACLE_TITAN(2, 460.0, 0.16, 24, 3.0F, "ocean_titan_barnacle_titan"),
+        /** 深海鮟鱇：诱捕灯塔 + 深渊吞噬 + 磷光致盲弹。 */
+        ANGLER_LORD(   3, 380.0, 0.22, 28, 2.8F, "ocean_titan_angler_lord"),
+        /** 碎壳巨蟹：钳击连斩 + 甲壳冲锋 + 碎壳重压。 */
+        CARAPACE_KING( 4, 500.0, 0.18, 30, 3.0F, "ocean_titan_carapace_king"),
+        /** 幽灵水母后：毒刺齐射 + 幽光致盲 + 灵魂尖啸。 */
+        GHOST_MEDUSA(  5, 330.0, 0.20, 20, 2.6F, "ocean_titan_ghost_medusa"),
+        /** 深渊之喉：吞噬回血 + 深渊漩涡 + 喉部喷涌。 */
+        ABYSS_MAW(     6, 440.0, 0.24, 32, 3.4F, "ocean_titan_abyss_maw"),
+        /** 珊瑚巨偶：极高血，珊瑚酸雨 + 尖啸恐惧 + 棘刺爆发。 */
+        CORAL_COLOSSUS(7, 520.0, 0.14, 26, 3.2F, "ocean_titan_coral_colossus"),
+        /** 沉船怨灵：怨灵尖啸 + 召唤亡魂 + 鬼火诱捕。 */
+        WRECK_WRAITH(  8, 360.0, 0.28, 24, 2.8F, "ocean_titan_wreck_wraith"),
+        /** 海皇三叉戟：远程审判 + 海皇之怒弹幕 + 潮汐审判。 */
+        TRIDENT_SOVEREIGN(9, 400.0, 0.24, 28, 3.0F, "ocean_titan_trident_sovereign");
 
         public final int id;
         public final double health;
@@ -105,18 +77,15 @@ public class OceanTitanEntity extends OceanCreatureEntity {
         public final int injury;
         public final float scale;
         public final String textureName;
-        /** 该 Boss 的专属招式循环。 */
-        public final TitanMove[] moves;
 
         Variant(int id, double health, double speed, int injury, float scale,
-                String textureName, TitanMove[] moves) {
+                String textureName) {
             this.id = id;
             this.health = health;
             this.speed = speed;
             this.injury = injury;
             this.scale = scale;
             this.textureName = textureName;
-            this.moves = moves;
         }
 
         public static Variant byId(int id) {
@@ -226,9 +195,8 @@ public class OceanTitanEntity extends OceanCreatureEntity {
         }
 
         Variant v = getVariant();
-        if (v.moves.length == 0) return;
 
-        // 冲撞状态推进
+        // 冲撞状态推进（各变体的冲撞招式共用此帧推进，命中时按变体结算）
         if (ramTicks > 0) {
             ramTicks--;
             if (tickCount % 3 == 0) {
@@ -239,10 +207,7 @@ public class OceanTitanEntity extends OceanCreatureEntity {
                 Vec3 dir = t.position().subtract(position()).normalize();
                 setDeltaMovement(dir.x * 0.55, getDeltaMovement().y * 0.5 + 0.02, dir.z * 0.55);
                 if (distanceToSqr(t) < 9.0) {
-                    doHurtTarget(t);
-                    Vec3 away = t.position().subtract(position()).normalize();
-                    t.setDeltaMovement(away.x * 1.4, 0.7, away.z * 1.4);
-                    t.hurtMarked = true;
+                    variantRamImpact(t);
                     ramTicks = 0;
                 }
             }
@@ -258,9 +223,9 @@ public class OceanTitanEntity extends OceanCreatureEntity {
             return;
         }
 
-        TitanMove move = v.moves[moveIndex % v.moves.length];
+        // 每变体独立招式集：按 0/1/2 槽循环释放自己的 3 个专属招式
+        castVariantMove(serverLevel, v, target, moveIndex % 3);
         moveIndex++;
-        castMove(serverLevel, move, target);
         moveCooldown = 100 + random.nextInt(60);
     }
 
@@ -292,12 +257,17 @@ public class OceanTitanEntity extends OceanCreatureEntity {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         if (titanSpawnDay >= 0) tag.putInt("TitanSpawnDay", titanSpawnDay);
+        tag.putInt("TitanMoveIndex", moveIndex);
+        tag.putInt("TitanMoveCooldown", moveCooldown);
+        // 注：键名保留 Titan* 前缀以兼容旧存档
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         titanSpawnDay = tag.contains("TitanSpawnDay") ? tag.getInt("TitanSpawnDay") : -1;
+        moveIndex = tag.getInt("TitanMoveIndex");
+        moveCooldown = tag.getInt("TitanMoveCooldown");
     }
 
     /** 客户端局部粒子：仅在渲染该实体的客户端生成（无网络开销），数量受控以保性能。 */
@@ -312,113 +282,379 @@ public class OceanTitanEntity extends OceanCreatureEntity {
         }
     }
 
-    /** 释放一个招式。 */
-    private void castMove(ServerLevel level, TitanMove move, LivingEntity target) {
-        switch (move) {
-            case RAM -> {
-                ramTicks = 30;
-                playSound(SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, 1.4F, 0.5F);
-                clientParticle(ParticleTypes.CLOUD, getX(), getY() + 1.0, getZ(), 4);
+    /** 按变体分发：释放该变体独立招式集中的第 slot(0/1/2) 招。 */
+    private void castVariantMove(ServerLevel level, Variant v, LivingEntity target, int slot) {
+        switch (v) {
+            case ABYSS_WHALE     -> whaleMove(level, target, slot);
+            case TEMPEST_EEL     -> eelMove(level, target, slot);
+            case BARNACLE_TITAN  -> barnacleMove(level, target, slot);
+            case ANGLER_LORD     -> anglerMove(level, target, slot);
+            case CARAPACE_KING   -> crabMove(level, target, slot);
+            case GHOST_MEDUSA    -> medusaMove(level, target, slot);
+            case ABYSS_MAW       -> mawMove(level, target, slot);
+            case CORAL_COLOSSUS  -> coralMove(level, target, slot);
+            case WRECK_WRAITH    -> wraithMove(level, target, slot);
+            case TRIDENT_SOVEREIGN -> tridentMove(level, target, slot);
+        }
+    }
+
+    /** 冲撞命中结算：各变体的冲撞招式在此定义独特效果。 */
+    private void variantRamImpact(LivingEntity t) {
+        Vec3 away = t.position().subtract(position()).normalize();
+        switch (getVariant()) {
+            case ABYSS_WHALE -> {           // 巨尾拍击式俯冲：强击退 + 溅水浪
+                t.hurt(damageSources().mobAttack(this), lvlDmg(16.0F));
+                t.setDeltaMovement(away.x * 2.0, 0.9, away.z * 2.0);
+                t.hurtMarked = true;
+                clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, t.getX(), t.getY(), t.getZ(), 6);
+                playSound(SoundEvents.DOLPHIN_SPLASH, 1.2F, 0.6F);
             }
-            case DISCHARGE -> {
-                // 雷霆放电：范围内玩家受伤 + 麻痹（缓慢）
-                for (ServerPlayer p : radiusPlayers(level, 12)) {
-                    p.hurt(damageSources().mobAttack(this), lvlDmg(8.0F));
-                    p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 1));
-                    clientParticle(ParticleTypes.SCULK_SOUL, p.getX(), p.getY() + 1.0, p.getZ(), 3);
-                }
-                clientParticle(ParticleTypes.SCULK_SOUL, getX(), getEyeY(), getZ(), 6);
-                playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 1.2F, 0.8F);
+            case TEMPEST_EEL -> {          // 电浆冲撞：伤害 + 麻痹
+                t.hurt(damageSources().mobAttack(this), lvlDmg(12.0F));
+                if (t instanceof LivingEntity le) le.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 4, 1));
+                clientParticle(ParticleTypes.SCULK_SOUL, t.getX(), t.getY() + 1.0, t.getZ(), 4);
+                playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 0.8F, 1.0F);
             }
-            case ACID_RAIN -> {
-                // 腐蚀酸雨：目标周围降下持续伤害区
-                BlockPos c = target.blockPosition();
-                clientParticle(ParticleTypes.ITEM_SLIME, c.getX() + 0.5, c.getY() + 6.0, c.getZ() + 0.5, 6);
+            case CARAPACE_KING -> {        // 甲壳冲锋：高额伤害 + 轻微击退
+                t.hurt(damageSources().mobAttack(this), lvlDmg(20.0F));
+                t.setDeltaMovement(away.x * 1.2, 0.5, away.z * 1.2);
+                t.hurtMarked = true;
+                clientParticle(ParticleTypes.CRIMSON_SPORE, t.getX(), t.getY() + 1.0, t.getZ(), 4);
+                playSound(SoundEvents.ANVIL_LAND, 1.0F, 0.5F);
+            }
+            default -> {
+                t.hurt(damageSources().mobAttack(this), lvlDmg(12.0F));
+                t.setDeltaMovement(away.x * 1.4, 0.7, away.z * 1.4);
+                t.hurtMarked = true;
+            }
+        }
+    }
+
+    // ════════════════ 深渊巨鲸（高血冲撞型） ════════════════
+    private void whaleMove(ServerLevel level, LivingEntity target, int slot) {
+        if (slot == 0) {                   // 巨尾拍击：近身环形击退 + 伤害
+            clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 0.5, getZ(), 6);
+            for (ServerPlayer p : radiusPlayers(level, 7)) {
+                p.hurt(damageSources().mobAttack(this), lvlDmg(10.0F));
+                Vec3 away = p.position().subtract(position()).normalize();
+                p.setDeltaMovement(away.x * 1.6, 0.8, away.z * 1.6);
+                p.hurtMarked = true;
+            }
+            playSound(SoundEvents.DOLPHIN_SPLASH, 1.4F, 0.5F);
+        } else if (slot == 1) {            // 潮汐喷涌：朝目标直线冲击（逐格伤害 + 击退）
+            Vec3 dir = target.position().subtract(position()).normalize();
+            clientParticle(ParticleTypes.SPLASH, getX(), getEyeY(), getZ(), 4);
+            for (int step = 1; step <= 14; step += 2) {
+                BlockPos at = blockPosition().offset((int)(dir.x*step*1.5), 0, (int)(dir.z*step*1.5));
+                clientParticle(ParticleTypes.BUBBLE, at.getX()+0.5, getY()+1.0, at.getZ()+0.5, 1);
                 for (net.minecraft.world.entity.player.Player pl : level.getNearbyPlayers(
                         net.minecraft.world.entity.ai.targeting.TargetingConditions.DEFAULT,
-                        null, new AABB(c).inflate(8))) {
-                    pl.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 6, 1));
-                    pl.hurt(damageSources().mobAttack(this), lvlDmg(5.0F));
+                        null, new AABB(at).inflate(1.5))) {
+                    pl.hurt(damageSources().mobAttack(this), lvlDmg(7.0F));
+                    Vec3 away = pl.position().subtract(position()).normalize();
+                    pl.setDeltaMovement(away.x * 0.8, 0.3, away.z * 0.8);
+                    pl.hurtMarked = true;
                 }
-                playSound(SoundEvents.SPLASH_POTION_BREAK, 1.0F, 0.6F);
             }
-            case LURE -> {
-                // 诱捕灯笼：致盲 + 拉向自己
-                clientParticle(ParticleTypes.END_ROD, getX(), getEyeY(), getZ(), 5);
-                for (ServerPlayer p : radiusPlayers(level, 16)) {
-                    p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 5, 0));
-                    pull(p, 0.35);
-                    clientParticle(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.0, p.getZ(), 3);
+            playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 1.0F, 0.6F);
+        } else {                            // 深渊俯冲：突进（走 ramTicks 框架）
+            ramTicks = 32;
+            playSound(SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, 1.4F, 0.5F);
+            clientParticle(ParticleTypes.CLOUD, getX(), getY() + 1.0, getZ(), 4);
+        }
+    }
+
+    // ════════════════ 雷暴电鳗（连锁闪电 + 麻痹） ════════════════
+    private void eelMove(ServerLevel level, LivingEntity target, int slot) {
+        if (slot == 0) {                   // 连锁闪电：跳 3 个目标，每跳伤害 + 缓慢
+            java.util.List<ServerPlayer> near = radiusPlayers(level, 14);
+            if (!near.isEmpty()) {
+                ServerPlayer from = near.get(0);
+                for (int jump = 0; jump < 3 && !near.isEmpty(); jump++) {
+                    ServerPlayer next = nearestIn(from.position(), near);
+                    clientParticle(ParticleTypes.SCULK_SOUL, from.getX(), from.getY()+1.0, from.getZ(), 3);
+                    next.hurt(damageSources().mobAttack(this), lvlDmg(9.0F));
+                    next.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20*3, 1));
+                    from = next;
+                    near.remove(next);
                 }
-                playSound(SoundEvents.END_PORTAL_FRAME_FILL, 1.0F, 0.7F);
             }
-            case WHIRLPOOL -> {
-                // 深渊漩涡：强吸引
-                clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(), 6);
-                for (ServerPlayer p : radiusPlayers(level, 18)) {
-                    pull(p, 0.75);
-                    clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, p.getX(), p.getY(), p.getZ(), 2);
+            playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 1.2F, 0.8F);
+        } else if (slot == 1) {            // 雷暴云：自身范围放电 + 缓慢
+            clientParticle(ParticleTypes.SCULK_SOUL, getX(), getEyeY(), getZ(), 6);
+            for (ServerPlayer p : radiusPlayers(level, 12)) {
+                p.hurt(damageSources().mobAttack(this), lvlDmg(7.0F));
+                p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20*3, 1));
+                clientParticle(ParticleTypes.SCULK_SOUL, p.getX(), p.getY()+1.0, p.getZ(), 2);
+            }
+            playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 0.9F, 1.0F);
+        } else {                            // 电浆冲撞：突进（走 ramTicks 框架）
+            ramTicks = 30;
+            playSound(SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, 1.0F, 0.7F);
+            clientParticle(ParticleTypes.SCULK_SOUL, getX(), getY() + 1.0, getZ(), 4);
+        }
+    }
+
+    private ServerPlayer nearestIn(Vec3 from, java.util.List<ServerPlayer> list) {
+        ServerPlayer best = null; double bd = Double.MAX_VALUE;
+        for (ServerPlayer p : list) {
+            double d = p.position().distanceToSqr(from);
+            if (d < bd) { bd = d; best = p; }
+        }
+        return best;
+    }
+
+    // ════════════════ 藤壶巨怪（甲壳猛击 + 召唤 + 酸雨） ════════════════
+    private void barnacleMove(ServerLevel level, LivingEntity target, int slot) {
+        if (slot == 0) {                   // 甲壳猛击：近身高伤 + 自身减伤自强化
+            clientParticle(ParticleTypes.ITEM_SLIME, getX(), getEyeY(), getZ(), 4);
+            for (ServerPlayer p : radiusPlayers(level, 6)) {
+                p.hurt(damageSources().mobAttack(this), lvlDmg(13.0F));
+                clientParticle(ParticleTypes.CRIMSON_SPORE, p.getX(), p.getY()+1.0, p.getZ(), 2);
+            }
+            addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 20*5, 1));
+            playSound(SoundEvents.ANVIL_LAND, 1.0F, 0.5F);
+        } else if (slot == 1) {            // 藤壶召唤：召唤小怪助战
+            for (int i = 0; i < 3; i++) {
+                net.exmo.sixty_seconds.logic.OceanCreatureSpawner.spawnOceanFauna(
+                        level, blockPosition().offset(random.nextInt(9)-4, 1, random.nextInt(9)-4), random);
+            }
+            clientParticle(ParticleTypes.PORTAL, getX(), getY()+0.5, getZ(), 8);
+            clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getY()+0.5, getZ(), 4);
+            playSound(SoundEvents.SLIME_SQUISH, 1.0F, 0.6F);
+        } else {                            // 藤壶酸雨：目标上空持续伤害区
+            BlockPos c = target.blockPosition();
+            clientParticle(ParticleTypes.ITEM_SLIME, c.getX()+0.5, c.getY()+6.0, c.getZ()+0.5, 6);
+            for (net.minecraft.world.entity.player.Player pl : level.getNearbyPlayers(
+                    net.minecraft.world.entity.ai.targeting.TargetingConditions.DEFAULT,
+                    null, new AABB(c).inflate(8))) {
+                pl.addEffect(new MobEffectInstance(MobEffects.POISON, 20*6, 1));
+                pl.hurt(damageSources().mobAttack(this), lvlDmg(5.0F));
+            }
+            playSound(SoundEvents.SPLASH_POTION_BREAK, 1.0F, 0.6F);
+        }
+    }
+
+    // ════════════════ 深海鮟鱇（诱捕 + 吞噬 + 磷光弹） ════════════════
+    private void anglerMove(ServerLevel level, LivingEntity target, int slot) {
+        if (slot == 0) {                   // 诱捕灯塔：致盲 + 拉向自己
+            clientParticle(ParticleTypes.END_ROD, getX(), getEyeY(), getZ(), 5);
+            for (ServerPlayer p : radiusPlayers(level, 16)) {
+                p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20*5, 0));
+                pull(p, 0.35);
+                clientParticle(ParticleTypes.END_ROD, p.getX(), p.getY()+1.0, p.getZ(), 3);
+            }
+            playSound(SoundEvents.END_PORTAL_FRAME_FILL, 1.0F, 0.7F);
+        } else if (slot == 1) {            // 深渊吞噬：近身高额伤害并回血
+            if (distanceToSqr(target) < 16.0) {
+                target.hurt(damageSources().mobAttack(this), lvlDmg(18.0F));
+                heal(20.0F);
+                clientParticle(ParticleTypes.CRIMSON_SPORE, target.getX(), target.getY()+1.0, target.getZ(), 5);
+            }
+            clientParticle(ParticleTypes.ITEM_SLIME, getX(), getEyeY(), getZ(), 4);
+            playSound(SoundEvents.GENERIC_EAT, 1.0F, 0.6F);
+        } else {                            // 磷光致盲弹：朝目标发射致盲冲击波（范围致盲）
+            Vec3 dir = target.position().subtract(position()).normalize();
+            clientParticle(ParticleTypes.END_ROD, getX(), getEyeY(), getZ(), 4);
+            for (int step = 1; step <= 10; step += 2) {
+                BlockPos at = blockPosition().offset((int)(dir.x*step*2), 0, (int)(dir.z*step*2));
+                clientParticle(ParticleTypes.END_ROD, at.getX()+0.5, getY()+1.0, at.getZ()+0.5, 1);
+                for (net.minecraft.world.entity.player.Player pl : level.getNearbyPlayers(
+                        net.minecraft.world.entity.ai.targeting.TargetingConditions.DEFAULT,
+                        null, new AABB(at).inflate(1.8))) {
+                    pl.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20*3, 0));
                 }
-                playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 1.2F, 0.6F);
             }
-            case SPINE_VOLLEY -> {
-                // 毒棘齐射：范围伤害 + 中毒
-                clientParticle(ParticleTypes.SCULK_SOUL, getX(), getEyeY(), getZ(), 5);
-                for (ServerPlayer p : radiusPlayers(level, 14)) {
-                    p.hurt(damageSources().mobAttack(this), lvlDmg(7.0F));
-                    p.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 4, 0));
-                    clientParticle(ParticleTypes.ITEM_SLIME, p.getX(), p.getY() + 1.0, p.getZ(), 3);
+            playSound(SoundEvents.END_PORTAL_FRAME_FILL, 0.8F, 1.0F);
+        }
+    }
+
+    // ════════════════ 碎壳巨蟹（钳击 + 冲锋 + 重压） ════════════════
+    private void crabMove(ServerLevel level, LivingEntity target, int slot) {
+        if (slot == 0) {                   // 钳击连斩：近身两连击
+            clientParticle(ParticleTypes.CRIMSON_SPORE, getX(), getEyeY(), getZ(), 4);
+            for (ServerPlayer p : radiusPlayers(level, 5)) {
+                p.hurt(damageSources().mobAttack(this), lvlDmg(9.0F));
+                p.hurt(damageSources().mobAttack(this), lvlDmg(7.0F));
+                clientParticle(ParticleTypes.SWEEP_ATTACK, p.getX(), p.getY()+1.0, p.getZ(), 2);
+            }
+            playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1.0F, 0.8F);
+        } else if (slot == 1) {            // 甲壳冲锋：突进（走 ramTicks 框架）
+            ramTicks = 30;
+            playSound(SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, 1.0F, 0.5F);
+            clientParticle(ParticleTypes.CLOUD, getX(), getY() + 1.0, getZ(), 4);
+        } else {                            // 碎壳重压：范围压制 + 缓慢
+            clientParticle(ParticleTypes.CRIMSON_SPORE, getX(), getY(), getZ(), 6);
+            for (ServerPlayer p : radiusPlayers(level, 8)) {
+                p.hurt(damageSources().mobAttack(this), lvlDmg(11.0F));
+                p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20*4, 0));
+                Vec3 away = p.position().subtract(position()).normalize();
+                p.setDeltaMovement(away.x*0.6, 0.2, away.z*0.6);
+                p.hurtMarked = true;
+                clientParticle(ParticleTypes.CRIMSON_SPORE, p.getX(), p.getY()+1.0, p.getZ(), 2);
+            }
+            playSound(SoundEvents.ANVIL_LAND, 1.2F, 0.5F);
+        }
+    }
+
+    // ════════════════ 幽灵水母后（毒刺 + 致盲 + 尖啸） ════════════════
+    private void medusaMove(ServerLevel level, LivingEntity target, int slot) {
+        if (slot == 0) {                   // 毒刺齐射：范围伤害 + 中毒
+            clientParticle(ParticleTypes.SCULK_SOUL, getX(), getEyeY(), getZ(), 5);
+            for (ServerPlayer p : radiusPlayers(level, 14)) {
+                p.hurt(damageSources().mobAttack(this), lvlDmg(7.0F));
+                p.addEffect(new MobEffectInstance(MobEffects.POISON, 20*4, 0));
+                clientParticle(ParticleTypes.ITEM_SLIME, p.getX(), p.getY()+1.0, p.getZ(), 3);
+            }
+            playSound(SoundEvents.SKELETON_SHOOT, 1.0F, 0.9F);
+        } else if (slot == 1) {            // 幽光致盲：范围致盲
+            clientParticle(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(), 5);
+            for (ServerPlayer p : radiusPlayers(level, 16)) {
+                p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20*4, 0));
+                clientParticle(ParticleTypes.SONIC_BOOM, p.getX(), p.getY()+1.0, p.getZ(), 2);
+            }
+            playSound(SoundEvents.WARDEN_SONIC_BOOM, 0.8F, 0.6F);
+        } else {                            // 灵魂尖啸：虚弱 + 缓慢（恐惧）
+            clientParticle(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(), 5);
+            for (ServerPlayer p : radiusPlayers(level, 18)) {
+                p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20*6, 1));
+                p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20*3, 0));
+                clientParticle(ParticleTypes.SONIC_BOOM, p.getX(), p.getY()+1.0, p.getZ(), 2);
+            }
+            playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.0F, 0.5F);
+        }
+    }
+
+    // ════════════════ 深渊之喉（吞噬 + 漩涡 + 喷涌） ════════════════
+    private void mawMove(ServerLevel level, LivingEntity target, int slot) {
+        if (slot == 0) {                   // 吞噬回血：近身高额 + 回血
+            if (distanceToSqr(target) < 16.0) {
+                target.hurt(damageSources().mobAttack(this), lvlDmg(18.0F));
+                heal(20.0F);
+                clientParticle(ParticleTypes.CRIMSON_SPORE, target.getX(), target.getY()+1.0, target.getZ(), 5);
+            }
+            clientParticle(ParticleTypes.ITEM_SLIME, getX(), getEyeY(), getZ(), 4);
+            playSound(SoundEvents.GENERIC_EAT, 1.0F, 0.6F);
+        } else if (slot == 1) {            // 深渊漩涡：强吸引
+            clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY()+1.0, getZ(), 6);
+            for (ServerPlayer p : radiusPlayers(level, 18)) {
+                pull(p, 0.75);
+                clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, p.getX(), p.getY(), p.getZ(), 2);
+            }
+            playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 1.2F, 0.6F);
+        } else {                            // 喉部喷涌：朝目标直线伤害（毒 + 击退）
+            Vec3 dir = target.position().subtract(position()).normalize();
+            clientParticle(ParticleTypes.ITEM_SLIME, getX(), getEyeY(), getZ(), 4);
+            for (int step = 1; step <= 12; step += 2) {
+                BlockPos at = blockPosition().offset((int)(dir.x*step*1.5), 0, (int)(dir.z*step*1.5));
+                clientParticle(ParticleTypes.ITEM_SLIME, at.getX()+0.5, getY()+1.0, at.getZ()+0.5, 1);
+                for (net.minecraft.world.entity.player.Player pl : level.getNearbyPlayers(
+                        net.minecraft.world.entity.ai.targeting.TargetingConditions.DEFAULT,
+                        null, new AABB(at).inflate(1.5))) {
+                    pl.hurt(damageSources().mobAttack(this), lvlDmg(8.0F));
+                    pl.addEffect(new MobEffectInstance(MobEffects.POISON, 20*3, 0));
                 }
-                playSound(SoundEvents.SKELETON_SHOOT, 1.0F, 0.9F);
             }
-            case DEVOUR -> {
-                // 吞噬：近身高额伤害并回血
-                if (distanceToSqr(target) < 16.0) {
-                    target.hurt(damageSources().mobAttack(this), lvlDmg(18.0F));
-                    heal(20.0F);
-                    clientParticle(ParticleTypes.CRIMSON_SPORE, target.getX(), target.getY() + 1.0, target.getZ(), 5);
+            playSound(SoundEvents.SQUID_SQUIRT, 0.8F, 1.0F);
+        }
+    }
+
+    // ════════════════ 珊瑚巨偶（酸雨 + 尖啸 + 棘刺） ════════════════
+    private void coralMove(ServerLevel level, LivingEntity target, int slot) {
+        if (slot == 0) {                   // 珊瑚酸雨：目标上空持续伤害区
+            BlockPos c = target.blockPosition();
+            clientParticle(ParticleTypes.ITEM_SLIME, c.getX()+0.5, c.getY()+6.0, c.getZ()+0.5, 6);
+            for (net.minecraft.world.entity.player.Player pl : level.getNearbyPlayers(
+                    net.minecraft.world.entity.ai.targeting.TargetingConditions.DEFAULT,
+                    null, new AABB(c).inflate(8))) {
+                pl.addEffect(new MobEffectInstance(MobEffects.POISON, 20*6, 1));
+                pl.hurt(damageSources().mobAttack(this), lvlDmg(5.0F));
+            }
+            playSound(SoundEvents.SPLASH_POTION_BREAK, 1.0F, 0.6F);
+        } else if (slot == 1) {            // 尖啸恐惧：范围虚弱 + 缓慢
+            clientParticle(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(), 6);
+            for (ServerPlayer p : radiusPlayers(level, 18)) {
+                p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20*6, 1));
+                p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20*3, 0));
+                clientParticle(ParticleTypes.SONIC_BOOM, p.getX(), p.getY()+1.0, p.getZ(), 2);
+            }
+            playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.0F, 0.5F);
+        } else {                            // 棘刺爆发：范围毒刺 + 中毒
+            clientParticle(ParticleTypes.SCULK_SOUL, getX(), getEyeY(), getZ(), 6);
+            for (ServerPlayer p : radiusPlayers(level, 10)) {
+                p.hurt(damageSources().mobAttack(this), lvlDmg(8.0F));
+                p.addEffect(new MobEffectInstance(MobEffects.POISON, 20*4, 0));
+                clientParticle(ParticleTypes.ITEM_SLIME, p.getX(), p.getY()+1.0, p.getZ(), 3);
+            }
+            playSound(SoundEvents.SKELETON_SHOOT, 1.0F, 0.9F);
+        }
+    }
+
+    // ════════════════ 沉船怨灵（尖啸 + 召唤 + 鬼火） ════════════════
+    private void wraithMove(ServerLevel level, LivingEntity target, int slot) {
+        if (slot == 0) {                   // 怨灵尖啸：范围虚弱 + 恐惧
+            clientParticle(ParticleTypes.REVERSE_PORTAL, getX(), getEyeY(), getZ(), 5);
+            for (ServerPlayer p : radiusPlayers(level, 18)) {
+                p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20*6, 1));
+                p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20*3, 0));
+                clientParticle(ParticleTypes.REVERSE_PORTAL, p.getX(), p.getY()+1.0, p.getZ(), 2);
+            }
+            playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.0F, 0.5F);
+        } else if (slot == 1) {            // 召唤亡魂：召唤小怪助战
+            for (int i = 0; i < 3; i++) {
+                net.exmo.sixty_seconds.logic.OceanCreatureSpawner.spawnOceanFauna(
+                        level, blockPosition().offset(random.nextInt(9)-4, 1, random.nextInt(9)-4), random);
+            }
+            clientParticle(ParticleTypes.PORTAL, getX(), getY()+0.5, getZ(), 8);
+            clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getY()+0.5, getZ(), 4);
+            playSound(SoundEvents.SLIME_SQUISH, 1.0F, 0.6F);
+        } else {                            // 鬼火诱捕：致盲 + 拉向自己
+            clientParticle(ParticleTypes.REVERSE_PORTAL, getX(), getEyeY(), getZ(), 5);
+            for (ServerPlayer p : radiusPlayers(level, 16)) {
+                p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20*5, 0));
+                pull(p, 0.4);
+                clientParticle(ParticleTypes.REVERSE_PORTAL, p.getX(), p.getY()+1.0, p.getZ(), 2);
+            }
+            playSound(SoundEvents.END_PORTAL_FRAME_FILL, 1.0F, 0.7F);
+        }
+    }
+
+    // ════════════════ 海皇三叉戟（远程审判 + 弹幕 + 潮汐） ════════════════
+    private void tridentMove(ServerLevel level, LivingEntity target, int slot) {
+        if (slot == 0) {                   // 三叉戟审判：直线穿透伤害
+            Vec3 dir = target.position().subtract(position()).normalize();
+            clientParticle(ParticleTypes.SPLASH, getX(), getEyeY(), getZ(), 4);
+            for (int step = 1; step <= 12; step += 2) {
+                BlockPos at = blockPosition().offset((int)(dir.x*step*1.5), 0, (int)(dir.z*step*1.5));
+                clientParticle(ParticleTypes.BUBBLE, at.getX()+0.5, getY()+1.0, at.getZ()+0.5, 1);
+                for (net.minecraft.world.entity.player.Player pl : level.getNearbyPlayers(
+                        net.minecraft.world.entity.ai.targeting.TargetingConditions.DEFAULT,
+                        null, new AABB(at).inflate(1.5))) {
+                    pl.hurt(damageSources().mobAttack(this), lvlDmg(12.0F));
                 }
-                clientParticle(ParticleTypes.ITEM_SLIME, getX(), getEyeY(), getZ(), 4);
-                playSound(SoundEvents.GENERIC_EAT, 1.0F, 0.6F);
             }
-            case SHRIEK -> {
-                // 灵魂尖啸：虚弱 + 恐惧（缓慢）
-                clientParticle(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(), 5);
-                for (ServerPlayer p : radiusPlayers(level, 18)) {
-                    p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 6, 1));
-                    p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 0));
-                    clientParticle(ParticleTypes.SONIC_BOOM, p.getX(), p.getY() + 1.0, p.getZ(), 2);
-                }
-                playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.0F, 0.5F);
+            playSound(SoundEvents.TRIDENT_THROW.value(), 1.2F, 0.7F);
+        } else if (slot == 1) {            // 海皇之怒：远程酸液弹幕
+            for (int i = 0; i < 3; i++) {
+                Vec3 vel = target.position().subtract(position()).normalize()
+                        .scale(1.1).add(new Vec3((random.nextDouble()-0.5)*0.3, 0.1, (random.nextDouble()-0.5)*0.3));
+                SixtySecondsAcidSpitEntity spit = new SixtySecondsAcidSpitEntity(level, this);
+                spit.moveTo(getX(), getEyeY(), getZ());
+                spit.shoot(vel.x, vel.y, vel.z, 1.1F, 0.0F);
+                level.addFreshEntity(spit);
             }
-            case SUMMON -> {
-                // 藤壶召唤：召唤若干海洋生物助战
-                for (int i = 0; i < 3; i++) {
-                    net.exmo.sixty_seconds.logic.OceanCreatureSpawner.spawnOceanFauna(
-                            level, blockPosition().offset(random.nextInt(9) - 4, 1, random.nextInt(9) - 4),
-                            random);
-                }
-                clientParticle(ParticleTypes.PORTAL, getX(), getY() + 0.5, getZ(), 8);
-                clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getY() + 0.5, getZ(), 4);
-                playSound(SoundEvents.SLIME_SQUISH, 1.0F, 0.6F);
+            clientParticle(ParticleTypes.ITEM_SLIME, getX(), getEyeY(), getZ(), 4);
+            playSound(SoundEvents.SPLASH_POTION_THROW, 1.0F, 0.8F);
+        } else {                            // 潮汐审判：范围 + 击退
+            clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY()+0.5, getZ(), 8);
+            for (ServerPlayer p : radiusPlayers(level, 10)) {
+                p.hurt(damageSources().mobAttack(this), lvlDmg(10.0F));
+                Vec3 away = p.position().subtract(position()).normalize();
+                p.setDeltaMovement(away.x * 1.5, 0.7, away.z * 1.5);
+                p.hurtMarked = true;
+                clientParticle(ParticleTypes.BUBBLE, p.getX(), p.getY()+1.0, p.getZ(), 2);
             }
-            case TRIDENT_JUDGEMENT -> {
-                // 三叉戟审判：直线穿透伤害
-                Vec3 dir = target.position().subtract(position()).normalize();
-                clientParticle(ParticleTypes.SPLASH, getX(), getEyeY(), getZ(), 4);
-                for (int step = 1; step <= 12; step++) {
-                    if (step % 2 != 0) continue; // 隔步渲染，减少粒子数
-                    BlockPos at = blockPosition().offset(
-                            (int) (dir.x * step * 1.5), 0, (int) (dir.z * step * 1.5));
-                    clientParticle(ParticleTypes.BUBBLE, at.getX() + 0.5, getY() + 1.0, at.getZ() + 0.5, 1);
-                    for (net.minecraft.world.entity.player.Player pl : level.getNearbyPlayers(
-                            net.minecraft.world.entity.ai.targeting.TargetingConditions.DEFAULT,
-                            null, new AABB(at).inflate(1.5))) {
-                        pl.hurt(damageSources().mobAttack(this), lvlDmg(12.0F));
-                    }
-                }
-                playSound(SoundEvents.TRIDENT_THROW.value(), 1.2F, 0.7F);
-            }
+            playSound(SoundEvents.DOLPHIN_SPLASH, 1.4F, 0.5F);
         }
     }
 
@@ -456,20 +692,6 @@ public class OceanTitanEntity extends OceanCreatureEntity {
         stats.sync();
         net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem.applyInjury(player, null, injury);
         return true;
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putInt("TitanMoveIndex", moveIndex);
-        tag.putInt("TitanMoveCooldown", moveCooldown);
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        moveIndex = tag.getInt("TitanMoveIndex");
-        moveCooldown = tag.getInt("TitanMoveCooldown");
     }
 
     @Override

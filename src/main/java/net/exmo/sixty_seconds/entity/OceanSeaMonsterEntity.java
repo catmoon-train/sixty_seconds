@@ -481,37 +481,37 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     // ═══════════ 克拉肯 ═══════════
     private void tickKraken(ServerLevel sl, LivingEntity target, long now, double distSqr) {
         if (now >= nextSlamTick && distSqr <= 8 * 8) {
-            tentacleSlam(sl, now);
+            krakenTentacleSmash(sl, now);
         } else if (now >= nextPullTick && distSqr > 4 * 4 && distSqr <= 18 * 18) {
-            vortexPull(sl, now, target);
+            krakenDrag(sl, now, target);
         } else if (now >= nextInkTick && distSqr <= 14 * 14) {
-            inkCloud(sl, now);
+            krakenInkCloud(sl, now);
         }
     }
 
     // ═══════════ 海蛇 ═══════════
     private void tickSerpent(ServerLevel sl, LivingEntity target, long now, double distSqr) {
         if (now >= nextBoltTick && distSqr > 6 * 6 && distSqr <= 26 * 26 && hasLineOfSight(target)) {
-            waterBolt(sl, now, target);
+            serkerWaterJet(sl, now, target);
         } else if (now >= nextInkTick && distSqr <= 10 * 10) {
-            toxicFume(sl, now);
+            serkerVenomBreath(sl, now);
         } else if (now >= nextSlamTick && distSqr <= 10 * 10) {
-            tailSweep(sl, now);
+            serkerTailSweep(sl, now);
         }
     }
 
     // ═══════════ 利维坦 ═══════════
     private void tickLeviathan(ServerLevel sl, LivingEntity target, long now, double distSqr) {
         if (now >= nextSlamTick && distSqr <= 10 * 10) {
-            tentacleSlam(sl, now);
+            leviathanTailSweep(sl, now);
         } else if (now >= nextBoltTick && distSqr > 8 * 8 && distSqr <= 30 * 30 && hasLineOfSight(target)) {
-            waterBolt(sl, now, target);
+            leviathanSpout(sl, now, target);
         } else if (now >= nextRoarTick && distSqr <= 20 * 20) {
             leviathanRoar(sl, now);
         } else if (now >= nextSummonTick) {
-            summonMinions(sl, now);
+            leviathanSummon(sl, now);
         } else if (now >= nextPullTick && distSqr > 4 * 4 && distSqr <= 22 * 22) {
-            vortexPull(sl, now, target);
+            leviathanMaelstromPull(sl, now, target);
         }
     }
 
@@ -1004,11 +1004,11 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         }
     }
 
-    // ── 触手扫击（克拉肯/利维坦）────────────────────────────────
-    private void tentacleSlam(ServerLevel sl, long now) {
+    // ── 克拉肯：触手拍击（仅克拉肯）──────────────────────────────
+    private void krakenTentacleSmash(ServerLevel sl, long now) {
         nextSlamTick = now + cd(20 * 9);
         swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
-        double r = getVariant() == Variant.LEVIATHAN ? 10.0 : 7.0;
+        double r = 7.0;
         clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(), 4);
         playSound(SoundEvents.ELDER_GUARDIAN_HURT, 0.7F, 0.5F);
         for (ServerPlayer player : sl.players()) {
@@ -1020,26 +1020,11 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         }
     }
 
-    // ── 尾部击飞（海蛇）───────────────────────────────────────────
-    private void tailSweep(ServerLevel sl, long now) {
-        nextSlamTick = now + cd(20 * 11);
-        playSound(SoundEvents.PHANTOM_SWOOP, 0.6F, 1.4F);
-        double r = 10.0;
-        clientParticle(ParticleTypes.SPLASH, getX(), getY() + 0.5, getZ(), 3);
-        for (ServerPlayer player : sl.players()) {
-            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
-            SixtySecondsHealthSystem.applyInjury(player, null, injuryNow(getVariant().injury - 10));
-            Vec3 away = player.position().subtract(position()).normalize();
-            player.setDeltaMovement(away.x * 1.2, 0.9, away.z * 1.2);
-            player.hurtMarked = true;
-        }
-    }
-
-    // ── 漩涡拖拽（克拉肯/利维坦）─────────────────────────────────
-    private void vortexPull(ServerLevel sl, long now, LivingEntity target) {
+    // ── 克拉肯：触手拽拉（仅克拉肯）──────────────────────────────
+    private void krakenDrag(ServerLevel sl, long now, LivingEntity target) {
         nextPullTick = now + cd(20 * 14);
         playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.5F, 0.8F);
-        double r = getVariant() == Variant.LEVIATHAN ? 20.0 : 14.0;
+        double r = 14.0;
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             Vec3 toward = position().subtract(player.position()).normalize();
@@ -1050,22 +1035,9 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 2);
     }
 
-    // ── 墨云（克拉肯）────────────────────────────────────────────
-    private void inkCloud(ServerLevel sl, long now) {
-        nextInkTick = now + cd(20 * 20);
-        playSound(SoundEvents.SQUID_SQUIRT, 0.6F, 0.6F);
-        double r = 8.0;
-        clientParticle(ParticleTypes.SQUID_INK, getX(), getY() + 1.5, getZ(), 10);
-        for (ServerPlayer player : sl.players()) {
-            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
-            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 4, 0));
-            player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 20 * 3, 0));
-        }
-    }
-
-    // ── 水炮（海蛇/利维坦远程）──────────────────────────────────
-    private void waterBolt(ServerLevel sl, long now, LivingEntity target) {
-        nextBoltTick = now + cd(getVariant() == Variant.LEVIATHAN ? 20 * 4 : 20 * 7);
+    // ── 海蛇：水炮（仅海蛇）──────────────────────────────────────
+    private void serkerWaterJet(ServerLevel sl, long now, LivingEntity target) {
+        nextBoltTick = now + cd(20 * 7);
         playSound(SoundEvents.DOLPHIN_SPLASH, 0.5F, 1.6F);
         getLookControl().setLookAt(target, 30.0F, 30.0F);
         SixtySecondsAcidSpitEntity bolt = new SixtySecondsAcidSpitEntity(sl, this);
@@ -1079,8 +1051,23 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         clientParticle(ParticleTypes.BUBBLE, getX(), getEyeY(), getZ(), 2);
     }
 
-    // ── 毒息（海蛇）───────────────────────────────────────────────
-    private void toxicFume(ServerLevel sl, long now) {
+    // ── 海蛇：尾部横扫（仅海蛇）──────────────────────────────────
+    private void serkerTailSweep(ServerLevel sl, long now) {
+        nextSlamTick = now + cd(20 * 11);
+        playSound(SoundEvents.PHANTOM_SWOOP, 0.6F, 1.4F);
+        double r = 10.0;
+        clientParticle(ParticleTypes.SPLASH, getX(), getY() + 0.5, getZ(), 3);
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            SixtySecondsHealthSystem.applyInjury(player, null, injuryNow(getVariant().injury - 10));
+            Vec3 away = player.position().subtract(position()).normalize();
+            player.setDeltaMovement(away.x * 1.2, 0.9, away.z * 1.2);
+            player.hurtMarked = true;
+        }
+    }
+
+    // ── 海蛇：毒息（仅海蛇）──────────────────────────────────────
+    private void serkerVenomBreath(ServerLevel sl, long now) {
         nextInkTick = now + cd(20 * 16);
         playSound(SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT, 0.3F, 0.5F);
         double r = 11.0;
@@ -1094,6 +1081,66 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             stats.sync();
             player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 5, 1));
         }
+    }
+
+    // ── 克拉肯：墨云（仅克拉肯）──────────────────────────────────
+    private void krakenInkCloud(ServerLevel sl, long now) {
+        nextInkTick = now + cd(20 * 20);
+        playSound(SoundEvents.SQUID_SQUIRT, 0.6F, 0.6F);
+        double r = 8.0;
+        clientParticle(ParticleTypes.SQUID_INK, getX(), getY() + 1.5, getZ(), 10);
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 4, 0));
+            player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 20 * 3, 0));
+        }
+    }
+
+    // ── 利维坦：巨尾横扫（仅利维坦）──────────────────────────────
+    private void leviathanTailSweep(ServerLevel sl, long now) {
+        nextSlamTick = now + cd(20 * 9);
+        swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
+        double r = 10.0;
+        clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(), 5);
+        playSound(SoundEvents.ELDER_GUARDIAN_HURT, 0.9F, 0.4F);
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            SixtySecondsHealthSystem.applyInjury(player, null, injuryNow(getVariant().injury));
+            Vec3 away = player.position().subtract(position()).normalize();
+            player.setDeltaMovement(away.x * 0.9, 0.7, away.z * 0.9);
+            player.hurtMarked = true;
+        }
+    }
+
+    // ── 利维坦：深渊漩涡牵引（仅利维坦）──────────────────────────
+    private void leviathanMaelstromPull(ServerLevel sl, long now, LivingEntity target) {
+        nextPullTick = now + cd(20 * 14);
+        playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.5F, 0.8F);
+        double r = 20.0;
+        for (ServerPlayer player : sl.players()) {
+            if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
+            Vec3 toward = position().subtract(player.position()).normalize();
+            player.setDeltaMovement(player.getDeltaMovement().add(
+                    toward.x * 0.18, toward.y * 0.1, toward.z * 0.18));
+            player.hurtMarked = true;
+        }
+        clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 3);
+    }
+
+    // ── 利维坦：喉部水炮（仅利维坦远程）──────────────────────────
+    private void leviathanSpout(ServerLevel sl, long now, LivingEntity target) {
+        nextBoltTick = now + cd(20 * 4);
+        playSound(SoundEvents.DOLPHIN_SPLASH, 0.6F, 1.4F);
+        getLookControl().setLookAt(target, 30.0F, 30.0F);
+        SixtySecondsAcidSpitEntity bolt = new SixtySecondsAcidSpitEntity(sl, this);
+        double dx = target.getX() - getX();
+        double dy = target.getY(0.4) - bolt.getY();
+        double dz = target.getZ() - getZ();
+        double horizontal = Math.sqrt(dx * dx + dz * dz);
+        bolt.shoot(dx, dy + horizontal * 0.1, dz, 2.2F, 2.0F);
+        bolt.setNoGravity(false);
+        sl.addFreshEntity(bolt);
+        clientParticle(ParticleTypes.BUBBLE, getX(), getEyeY(), getZ(), 2);
     }
 
     // ── 利维坦咆哮 ────────────────────────────────────────────────
@@ -1117,7 +1164,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     }
 
     // ── 召唤小弟（利维坦）─────────────────────────────────────────
-    private void summonMinions(ServerLevel sl, long now) {
+    private void leviathanSummon(ServerLevel sl, long now) {
         nextSummonTick = now + cd(20 * 30);
         playSound(SoundEvents.PUFFER_FISH_BLOW_OUT, 0.5F, 0.4F);
         int count = 4 + sl.random.nextInt(3);

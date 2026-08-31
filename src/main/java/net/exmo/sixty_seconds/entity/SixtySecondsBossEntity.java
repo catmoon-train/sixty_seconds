@@ -30,6 +30,8 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * 尸潮领主（60s PVE Boss）：带<b>等级 1..5</b> 与 <b>变体</b>，属性/技能随等级与变体增强；
@@ -285,7 +287,6 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
     // ══════════════════════════════════════════════════════════════════
     //  主 tick：按变体分支
     // ══════════════════════════════════════════════════════════════════
-    @Override
     /** 客户端局部粒子：仅在渲染该实体的客户端生成（无网络开销），数量受控以保性能。 */
     private void clientParticle(ParticleOptions pt, double x, double y, double z, int n) {
         if (level().isClientSide()) {
@@ -341,185 +342,180 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
     }
 
     // ══════════════════════════════════════════════════════════════════
-    //  熔渊暴君 INFERNO（火系重装）
+    //  熔渊暴君 INFERNO（火系重装）—— 独立招式
     // ══════════════════════════════════════════════════════════════════
     private void tickInferno(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
         if (now >= nextSlamTick && distSqr <= 5 * 5) {
-            slam(serverLevel, now, lvl, 6.0, true);            // 熔岩震地（更大范围、更高伤害）
+            infernoSlam(serverLevel, now, lvl);              // 熔岩震地
         } else if (now >= nextChargeTick && distSqr >= 7 * 7 && distSqr <= 22 * 22) {
-            charge(serverLevel, now, target, 1.7);            // 烈焰冲撞
+            infernoCharge(serverLevel, now, target);        // 烈焰冲撞
         } else if (lvl >= 2 && now >= nextBarrageTick && distSqr >= 6 * 6 && distSqr <= 28 * 28 && hasLineOfSight(target)) {
-            acidBarrage(serverLevel, now, target, lvl);        // 火球弹幕
+            infernoMeteor(serverLevel, now, target, lvl);   // 火球弹幕
         } else if (lvl >= 3 && now >= nextSummonTick) {
-            summon(serverLevel, now, lvl, false);             // 火山喷发（召唤火元素）
+            infernoErupt(serverLevel, now, lvl);            // 火山喷发（召唤火元素）
         } else if (lvl >= 4 && now >= nextRoarTick && distSqr <= 12 * 12) {
-            roar(serverLevel, now, lvl, true);
+            infernoRoar(serverLevel, now, lvl);             // 烈焰咆哮
         }
     }
 
     // ══════════════════════════════════════════════════════════════════
-    //  霜噬守望 FROSTBITE（冰控法师）
+    //  霜噬守望 FROSTBITE（冰控法师）—— 独立招式
     // ══════════════════════════════════════════════════════════════════
     private void tickFrostbite(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
         if (now >= nextSpearTick && distSqr >= 4 * 4 && distSqr <= 22 * 22 && hasLineOfSight(target)) {
-            boneSpear(serverLevel, now, target, lvl);         // 冰锥
+            frostLance(serverLevel, now, target, lvl);      // 冰锥
         } else if (now >= nextBreathTick && distSqr <= 10 * 10) {
-            toxicBreath(serverLevel, now, target, lvl);      // 霜息
+            frostBreath(serverLevel, now, target, lvl);     // 霜息
         } else if (lvl >= 2 && now >= nextRoarTick && distSqr <= 14 * 14) {
-            roar(serverLevel, now, lvl, false);               // 寒霜咆哮（减速）
+            frostRoar(serverLevel, now, lvl);               // 寒霜咆哮
         } else if (lvl >= 3 && now >= nextNovaTick) {
-            toxicNova(serverLevel, now, lvl);                 // 暴雪新星
+            frostNova(serverLevel, now, lvl);               // 暴雪新星
         } else if (apex && now >= nextBarrageTick && distSqr >= 6 * 6 && distSqr <= 26 * 26 && hasLineOfSight(target)) {
-            acidBarrage(serverLevel, now, target, lvl);
+            frostShardStorm(serverLevel, now, target, lvl);// 冰晶风暴
         }
     }
 
     // ══════════════════════════════════════════════════════════════════
-    //  虫潮之主 SWARMKEEPER（召唤流）
+    //  虫潮之主 SWARMKEEPER（召唤流）—— 独立招式
     // ══════════════════════════════════════════════════════════════════
     private void tickSwarmkeeper(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
         if (now >= nextSummonTick) {
-            summon(serverLevel, now, lvl, false);             // 虫群
+            swarmSummon(serverLevel, now, lvl);            // 虫群
         } else if (lvl >= 2 && now >= nextBarrageTick && distSqr >= 6 * 6 && distSqr <= 30 * 30 && hasLineOfSight(target)) {
-            acidBarrage(serverLevel, now, target, lvl);       // 酸液弹幕
+            swarmAcid(serverLevel, now, target, lvl);      // 酸液弹幕
         } else if (lvl >= 3 && now >= nextNovaTick) {
-            toxicNova(serverLevel, now, lvl);                 // 腐蚀新星
+            swarmNova(serverLevel, now, lvl);              // 腐蚀新星
         } else if (apex && distSqr <= 12 * 12 && now >= nextSlamTick) {
-            slam(serverLevel, now, lvl, 5.5, false);
+            swarmCrush(serverLevel, now, lvl);            // 虫群碾压
         } else if (lvl >= 5 && now >= nextRoarTick) {
-            roar(serverLevel, now, lvl, true);                // 终焉：万虫咆哮
+            swarmRoar(serverLevel, now, lvl);             // 万虫咆哮
         }
     }
 
     // ══════════════════════════════════════════════════════════════════
-    //  雷霆传令 STORMHERALD（机动刺客）
+    //  雷霆传令 STORMHERALD（机动刺客）—— 独立招式
     // ══════════════════════════════════════════════════════════════════
     private void tickStormherald(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
         if (now >= nextChargeTick && distSqr >= 6 * 6 && distSqr <= 28 * 28) {
-            charge(serverLevel, now, target, 2.0);            // 瞬电冲撞
+            stormCharge(serverLevel, now, target);        // 瞬电冲撞
         } else if (lvl >= 2 && now >= nextShadowTick && distSqr <= 64) {
-            shadowStrike(serverLevel, now, target, lvl, apex);      // 雷瞬击
+            stormBlink(serverLevel, now, target, lvl, apex);   // 雷瞬击
         } else if (now >= nextBarrageTick && distSqr >= 6 * 6 && distSqr <= 30 * 30 && hasLineOfSight(target)) {
-            acidBarrage(serverLevel, now, target, lvl);       // 雷暴弹幕
+            stormBarrage(serverLevel, now, target, lvl); // 雷暴弹幕
         } else if (lvl >= 4 && apex && now >= nextRoarTick && distSqr <= 12 * 12) {
-            roar(serverLevel, now, lvl, true);
+            stormRoar(serverLevel, now, lvl);             // 雷霆咆哮
         } else if (distSqr <= 5 * 5 && now >= nextSlamTick) {
-            slam(serverLevel, now, lvl, 5.0, false);
+            stormQuake(serverLevel, now, lvl);           // 落雷震地
         }
     }
 
     // ══════════════════════════════════════════════════════════════════
-    //  虚空织者 VOIDWEAVER（暗影法师）
+    //  虚空织者 VOIDWEAVER（暗影法师）—— 独立招式
     // ══════════════════════════════════════════════════════════════════
     private void tickVoidweaver(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
         if (now >= nextDrainTick && distSqr <= 8 * 8) {
-            lifeDrain(serverLevel, now, target, lvl);        // 生命汲取（自愈）
+            voidDrain(serverLevel, now, target, lvl);    // 生命汲取
         } else if (lvl >= 2 && now >= nextShadowTick && distSqr <= 64) {
-            shadowStrike(serverLevel, now, target, lvl, apex);      // 暗影突袭
+            voidBlink(serverLevel, now, target, lvl, apex);   // 暗影突袭
         } else if (lvl >= 3 && now >= nextNovaTick) {
-            toxicNova(serverLevel, now, lvl);                 // 虚空新星
+            voidNova(serverLevel, now, lvl);             // 虚空新星
         } else if (apex && now >= nextRoarTick && distSqr <= 12 * 12) {
-            roar(serverLevel, now, lvl, true);
+            voidRoar(serverLevel, now, lvl);             // 虚空咆哮
         } else if (distSqr <= 6 * 6 && now >= nextSlamTick) {
-            slam(serverLevel, now, lvl, 5.0, false);
+            voidCrush(serverLevel, now, lvl);           // 虚空碾压
         }
     }
 
     // ══════════════════════════════════════════════════════════════════
-    //  破坏者 RAVAGER（原版技能组）
+    //  破坏者 RAVAGER（蛮力近战）—— 独立招式
     // ══════════════════════════════════════════════════════════════════
     private void tickRavager(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
         if (now >= nextSlamTick && distSqr <= 5 * 5) {
-            slam(serverLevel, now, lvl, 5.5, false);
+            ravagerQuake(serverLevel, now, lvl);        // 践踏震波
         } else if (lvl >= 2 && now >= nextRoarTick && distSqr <= 12 * 12) {
-            roar(serverLevel, now, lvl, false);
+            ravagerRoar(serverLevel, now, lvl);         // 战吼
         } else if (apex && now >= nextBarrageTick && distSqr >= 6 * 6 && distSqr <= 30 * 30
                 && hasLineOfSight(target)) {
-            acidBarrage(serverLevel, now, target, lvl);
+            ravagerVolley(serverLevel, now, target, lvl); // 投掷巨石
         } else if (lvl >= 3 && now >= nextSummonTick) {
-            summon(serverLevel, now, lvl, false);
+            ravagerCall(serverLevel, now, lvl);         // 召唤野猪兽
         } else if (lvl >= 4 && now >= nextChargeTick && distSqr >= 8 * 8 && distSqr <= 24 * 24) {
-            charge(serverLevel, now, target, 1.6);
+            ravagerCharge(serverLevel, now, target);   // 蛮力冲撞
         }
     }
 
     // ══════════════════════════════════════════════════════════════════
-    //  巨像 COLOSSUS
+    //  巨像 COLOSSUS（重装坦克）—— 独立招式
     // ══════════════════════════════════════════════════════════════════
     private void tickColossus(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
         if (now >= nextSlamTick && distSqr <= 6.5 * 6.5) {
-            // 强化震地：更大范围、更高伤害、附带短暂眩晕
-            slam(serverLevel, now, lvl, 6.5, true);
+            colossusSmash(serverLevel, now, lvl);      // 巨拳重砸
         } else if (lvl >= 2 && now >= nextSkinTick && distSqr <= 16 * 16) {
-            ironSkin(serverLevel, now, lvl, apex);
+            colossusBulwark(serverLevel, now, lvl, apex); // 铁壁
         } else if (lvl >= 3 && now >= nextSlamTick && distSqr >= 5 * 5 && distSqr <= 18 * 18) {
-            // Lv3 解锁裂地震波
-            seismicWave(serverLevel, now, target, lvl);
+            colossusQuake(serverLevel, now, target, lvl);  // 裂地震波
             nextSlamTick = now + SixtySecondsBalance.BOSS_SLAM_COOLDOWN_TICKS / 2;
         } else if (lvl >= 4 && now >= nextChargeTick && distSqr >= 8 * 8 && distSqr <= 24 * 24) {
-            charge(serverLevel, now, target, frenzied ? 2.2 : 1.8);
+            colossusCharge(serverLevel, now, target);  // 碾压冲撞
         } else if (apex && now >= nextRoarTick && distSqr <= 10 * 10) {
-            roar(serverLevel, now, lvl, true);
+            colossusStunRoar(serverLevel, now, lvl);   // 震慑咆哮
         } else if (now >= nextSlamTick && distSqr <= 5 * 5) {
-            slam(serverLevel, now, lvl, 5.5, false);
+            colossusSmash(serverLevel, now, lvl);
         }
     }
 
     // ══════════════════════════════════════════════════════════════════
-    //  亡灵术士 NECROMANCER
+    //  亡灵术士 NECROMANCER（亡灵法师）—— 独立招式
     // ══════════════════════════════════════════════════════════════════
     private void tickNecromancer(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
         if (now >= nextDrainTick && distSqr <= 10 * 10 && hasLineOfSight(target)
                 && getHealth() < getMaxHealth() * 0.7) {
-            lifeDrain(serverLevel, now, target, lvl);
+            necroDrain(serverLevel, now, target, lvl);
         } else if (now >= nextSpearTick && distSqr >= 6 * 6 && distSqr <= 22 * 22
                 && hasLineOfSight(target)) {
-            boneSpear(serverLevel, now, target, lvl);
+            necroSpear(serverLevel, now, target, lvl);
         } else if (lvl >= 2 && now >= nextSummonTick) {
-            summon(serverLevel, now, lvl, true);
+            necroRaise(serverLevel, now, lvl);
         } else if (lvl >= 3 && now >= nextRoarTick && distSqr <= 12 * 12) {
-            roar(serverLevel, now, lvl, false);
+            necroRoar(serverLevel, now, lvl);
         } else if (apex && now >= nextSummonTick && getHealth() < getMaxHealth() * 0.5) {
-            // 终焉：低血时亡者大军（翻倍召唤 + 小怪强化光环）
-            armyOfTheDead(serverLevel, now, lvl);
+            necroLegion(serverLevel, now, lvl);        // 亡者大军
         }
     }
 
     // ══════════════════════════════════════════════════════════════════
-    //  疫病者 PLAGUEBEARER
+    //  疫病者 PLAGUEBEARER（毒系）—— 独立招式
     // ══════════════════════════════════════════════════════════════════
     private void tickPlaguebearer(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
         if (now >= nextBreathTick && distSqr <= 7 * 7) {
-            toxicBreath(serverLevel, now, target, lvl);
+            plagueBreath(serverLevel, now, target, lvl);
         } else if (now >= nextBarrageTick && distSqr >= 6 * 6 && distSqr <= 26 * 26
                 && hasLineOfSight(target)) {
-            acidBarrage(serverLevel, now, target, lvl);
+            plagueBolt(serverLevel, now, target, lvl);
         } else if (lvl >= 3 && now >= nextRoarTick && distSqr <= 14 * 14) {
-            roar(serverLevel, now, lvl, true); // 毒化咆哮：污染代替扣san
+            plagueRoar(serverLevel, now, lvl);         // 毒化咆哮：污染代替扣san
         } else if (apex && now >= nextNovaTick && distSqr <= 12 * 12) {
-            toxicNova(serverLevel, now, lvl);
+            plagueNova(serverLevel, now, lvl);
         } else if (lvl >= 4 && now >= nextSummonTick) {
-            summon(serverLevel, now, lvl, false);
+            plagueSwarm(serverLevel, now, lvl);
         }
     }
 
     // ══════════════════════════════════════════════════════════════════
-    //  鬼魅 SPECTER
+    //  鬼魅 SPECTER（潜行刺客）—— 独立招式
     // ══════════════════════════════════════════════════════════════════
     private void tickSpecter(ServerLevel serverLevel, LivingEntity target, long now, int lvl, boolean apex, double distSqr) {
         if (now >= nextShadowTick && distSqr >= 5 * 5 && distSqr <= 16 * 16
                 && hasLineOfSight(target)) {
-            shadowStrike(serverLevel, now, target, lvl, apex);
+            specterBlink(serverLevel, now, target, lvl, apex);
         } else if (lvl >= 2 && now >= nextSlamTick && distSqr <= 4 * 4) {
-            // 近身用快速打击替代震地
-            shadowFlurry(serverLevel, now, lvl);
+            specterFlurry(serverLevel, now, lvl);
         } else if (lvl >= 3 && vanishCooldown <= 0 && getHealth() < getMaxHealth() * 0.65) {
-            vanish(serverLevel, now, lvl);
+            specterVanish(serverLevel, now, lvl);
         } else if (apex && now >= nextChargeTick && distSqr >= 8 * 8 && distSqr <= 30 * 30) {
-            // 死亡标记：瞬移至目标身后 + 重击
-            deathMark(serverLevel, now, target, lvl);
+            specterMark(serverLevel, now, target, lvl);
         } else if (lvl >= 4 && now >= nextRoarTick && distSqr <= 10 * 10) {
-            roar(serverLevel, now, lvl, false);
+            specterRoar(serverLevel, now, lvl);
         }
     }
 
@@ -532,139 +528,158 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         return SixtySecondsDifficulty.scaleInjury(this, base);
     }
 
-    /** 震地猛击：AoE 健康伤害 + 击飞。colossusStun 为巨像强化版（附带短暂减速）。 */
-    private void slam(ServerLevel serverLevel, long now, int lvl, double radius, boolean colossusStun) {
+    // ══════════════════════════════════════════════════════════════════
+    //  破坏者 RAVAGER 独立招式
+    // ══════════════════════════════════════════════════════════════════
+    /** 践踏震波：近身环形伤害 + 击飞。 */
+    private void ravagerQuake(ServerLevel sl, long now, int lvl) {
         nextSlamTick = now + SixtySecondsBalance.BOSS_SLAM_COOLDOWN_TICKS;
-        swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
-        double r = colossusStun ? radius * 1.15 : radius;
+        swing(InteractionHand.MAIN_HAND, true);
         clientParticle(ParticleTypes.EXPLOSION, getX(), getY() + 0.2, getZ(), 3);
-        playSound(SoundEvents.GENERIC_EXPLODE.value(), 0.8F, 0.7F);
-        int injury = skillInjury((SixtySecondsBalance.BOSS_SLAM_INJURY + 4 * (lvl - 1))
-                * (colossusStun ? 2 : 1) * (frenzied ? 2 : 1));
-        for (ServerPlayer player : serverLevel.players()) {
-            if (!isValidPrey(player) || distanceToSqr(player) > r * r) {
-                continue;
-            }
-            SixtySecondsHealthSystem.applyInjury(player, null, injury);
-            Vec3 away = player.position().subtract(position()).normalize();
-            double force = colossusStun ? 1.15 : 0.9;
-            player.setDeltaMovement(away.x * force, 0.6, away.z * force);
-            player.hurtMarked = true;
-            if (colossusStun) {
-                // 眩晕：极强减速 1.5s
-                player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 + 10, 4));
-                player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 3, 0));
-            }
+        playSound(SoundEvents.GENERIC_EXPLODE.value(), 0.9F, 0.7F);
+        int injury = skillInjury((SixtySecondsBalance.BOSS_SLAM_INJURY + 4 * (lvl - 1)) * (frenzied ? 2 : 1));
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 5.5 * 5.5) continue;
+            SixtySecondsHealthSystem.applyInjury(p, null, injury);
+            Vec3 away = p.position().subtract(position()).normalize();
+            p.setDeltaMovement(away.x * 0.9, 0.6, away.z * 0.9);
+            p.hurtMarked = true;
         }
     }
-
-    /** 骇人咆哮：范围内减速 + 黑暗 + 扣 san（或污染）。毒化版对疫病者施加污染替代扣 san。 */
-    private void roar(ServerLevel serverLevel, long now, int lvl, boolean toxic) {
+    /** 战吼：自身加速 + 范围减速（压迫感）。 */
+    private void ravagerRoar(ServerLevel sl, long now, int lvl) {
         nextRoarTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
         playSound(SoundEvents.RAVAGER_ROAR, 1.5F, 0.8F);
         clientParticle(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(), 2);
-        for (ServerPlayer player : serverLevel.players()) {
-            if (!isValidPrey(player) || distanceToSqr(player) > 12 * 12) {
-                continue;
-            }
-            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 4, 1));
-            player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 20 * 5, 0));
-            if (toxic) {
-                // 毒化版：污染 + 中毒
-                SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
-                stats.pollution = Math.min(100, stats.pollution
-                        + SixtySecondsDifficulty.scalePollutionGain(serverLevel, 8 + lvl * 2));
-                stats.sync();
-                player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 3, 0));
-            } else {
-                SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
-                stats.sanity = Math.max(0, stats.sanity - (SixtySecondsBalance.BOSS_ROAR_SAN_LOSS + lvl));
-                stats.sync();
-            }
-            player.displayClientMessage(Component
-                    .translatable("message.sixty_seconds.sixty_seconds.boss_roar")
+        addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20 * 8, 0));
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 12 * 12) continue;
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 4, 1));
+            p.displayClientMessage(Component.translatable("message.sixty_seconds.sixty_seconds.boss_roar")
                     .withStyle(ChatFormatting.DARK_PURPLE), true);
         }
     }
-
-    /** 尸潮召唤。enhanced 时召唤更强/更多小怪。 */
-    private void summon(ServerLevel serverLevel, long now, int lvl, boolean enhanced) {
-        nextSummonTick = now + (enhanced
-                ? SixtySecondsBalance.BOSS_SUMMON_COOLDOWN_TICKS * 2 / 3
-                : SixtySecondsBalance.BOSS_SUMMON_COOLDOWN_TICKS);
-        playSound(SoundEvents.ZOMBIE_AMBIENT, 1.4F, 0.5F);
-        int count = (enhanced ? 3 : 2) + lvl / 2;
-        for (int i = 0; i < count; i++) {
-            Variant variant;
-            if (enhanced) {
-                // 亡灵术士强化召唤：更多样化的怪物
-                float r = serverLevel.random.nextFloat();
-                if (r < 0.2F) variant = Variant.BRUTE;
-                else if (r < 0.45F) variant = Variant.RUNNER;
-                else if (r < 0.6F) variant = Variant.STALKER;
-                else variant = Variant.SHAMBLER;
-            } else {
-                variant = serverLevel.random.nextFloat() < 0.35F ? Variant.RUNNER : Variant.SHAMBLER;
-            }
-            net.exmo.sixty_seconds.logic.SixtySecondsPveSystem.spawnMinion(serverLevel, blockPosition(), variant);
-        }
-        swing(InteractionHand.MAIN_HAND);
-        clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getY() + 0.5, getZ(), 4);
-    }
-
-    /** 猛冲。 */
-    private void charge(ServerLevel serverLevel, long now, LivingEntity target, double speed) {
-        nextChargeTick = now + SixtySecondsBalance.BOSS_CHARGE_COOLDOWN_TICKS;
-        playSound(SoundEvents.WARDEN_SONIC_CHARGE, 1.0F, 1.3F);
-        Vec3 toward = target.position().subtract(position()).normalize();
-        setDeltaMovement(toward.x * speed, 0.25, toward.z * speed);
-        hurtMarked = true;
-        clientParticle(ParticleTypes.CLOUD, getX(), getY() + 0.3, getZ(), 3);
-    }
-
-    /** 酸雨齐射。 */
-    private void acidBarrage(ServerLevel serverLevel, long now, LivingEntity target, int lvl) {
+    /** 投掷巨石：远程酸石弹幕。 */
+    private void ravagerVolley(ServerLevel sl, long now, LivingEntity target, int lvl) {
         nextBarrageTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
         playSound(SoundEvents.LLAMA_SPIT, 1.6F, 0.5F);
         int shots = 4 + lvl / 2;
         for (int i = 0; i < shots; i++) {
-            SixtySecondsAcidSpitEntity spit = new SixtySecondsAcidSpitEntity(serverLevel, this);
-            double dx = target.getX() - getX() + (serverLevel.random.nextDouble() - 0.5) * 4.0;
+            SixtySecondsAcidSpitEntity spit = new SixtySecondsAcidSpitEntity(sl, this);
+            double dx = target.getX() - getX() + (sl.random.nextDouble() - 0.5) * 4.0;
             double dy = target.getY(0.4) - spit.getY();
-            double dz = target.getZ() - getZ() + (serverLevel.random.nextDouble() - 0.5) * 4.0;
-            double horizontal = Math.sqrt(dx * dx + dz * dz);
-            spit.shoot(dx, dy + horizontal * 0.14, dz, 1.0F, 6.0F);
-            serverLevel.addFreshEntity(spit);
+            double dz = target.getZ() - getZ() + (sl.random.nextDouble() - 0.5) * 4.0;
+            double h = Math.sqrt(dx * dx + dz * dz);
+            spit.shoot(dx, dy + h * 0.14, dz, 1.0F, 6.0F);
+            sl.addFreshEntity(spit);
         }
         clientParticle(ParticleTypes.ITEM_SLIME, getX(), getEyeY(), getZ(), 3);
     }
+    /** 召唤野猪兽：召唤地面小怪助战。 */
+    private void ravagerCall(ServerLevel sl, long now, int lvl) {
+        nextSummonTick = now + SixtySecondsBalance.BOSS_SUMMON_COOLDOWN_TICKS;
+        playSound(SoundEvents.ZOMBIE_AMBIENT, 1.4F, 0.5F);
+        int count = 2 + lvl / 2;
+        for (int i = 0; i < count; i++) {
+            Variant v = sl.random.nextFloat() < 0.35F ? Variant.RUNNER : Variant.SHAMBLER;
+            net.exmo.sixty_seconds.logic.SixtySecondsPveSystem.spawnMinion(sl, blockPosition(), v);
+        }
+        swing(InteractionHand.MAIN_HAND);
+        clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getY() + 0.5, getZ(), 4);
+    }
+    /** 蛮力冲撞：冲向目标造成伤害 + 击退。 */
+    private void ravagerCharge(ServerLevel sl, long now, LivingEntity target) {
+        nextChargeTick = now + SixtySecondsBalance.BOSS_CHARGE_COOLDOWN_TICKS;
+        playSound(SoundEvents.WARDEN_SONIC_CHARGE, 1.0F, 1.3F);
+        Vec3 toward = target.position().subtract(position()).normalize();
+        setDeltaMovement(toward.x * 1.6, 0.25, toward.z * 1.6);
+        hurtMarked = true;
+        clientParticle(ParticleTypes.CLOUD, getX(), getY() + 0.3, getZ(), 3);
+    }
 
     // ══════════════════════════════════════════════════════════════════
-    //  新增技能
+    //  巨像 COLOSSUS 独立招式
     // ══════════════════════════════════════════════════════════════════
-
-    /** 铁壁（巨像）：短暂大幅减伤 + 反伤荆棘。 */
-    private void ironSkin(ServerLevel serverLevel, long now, int lvl, boolean apex) {
+    /** 巨拳重砸：范围伤害 + 强击退。 */
+    private void colossusSmash(ServerLevel sl, long now, int lvl) {
+        nextSlamTick = now + SixtySecondsBalance.BOSS_SLAM_COOLDOWN_TICKS;
+        swing(InteractionHand.MAIN_HAND, true);
+        clientParticle(ParticleTypes.EXPLOSION, getX(), getY() + 0.2, getZ(), 3);
+        playSound(SoundEvents.ANVIL_LAND, 1.0F, 0.5F);
+        int injury = skillInjury((SixtySecondsBalance.BOSS_SLAM_INJURY + 4 * (lvl - 1)) * 2 * (frenzied ? 2 : 1));
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 6.5 * 6.5) continue;
+            SixtySecondsHealthSystem.applyInjury(p, null, injury);
+            Vec3 away = p.position().subtract(position()).normalize();
+            p.setDeltaMovement(away.x * 1.15, 0.6, away.z * 1.15);
+            p.hurtMarked = true;
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 + 10, 4));
+        }
+    }
+    /** 铁壁：短暂大幅减伤 + 冲击波击退。 */
+    private void colossusBulwark(ServerLevel sl, long now, int lvl, boolean apex) {
         nextSkinTick = now + (apex ? 20 * 25 : 20 * 35);
         playSound(SoundEvents.ANVIL_LAND, 0.6F, 1.5F);
         clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getEyeY(), getZ(), 5);
-        // 给自身抗性提升 + 反伤（通过额外减伤 + 攻击者受伤实现）
         addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 20 * 6, 2));
         addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20 * 8, 0));
-        // 周围敌人击退（铁壁展开的冲击波）
-        for (ServerPlayer player : serverLevel.players()) {
-            if (!isValidPrey(player) || distanceToSqr(player) > 4 * 4) continue;
-            Vec3 away = player.position().subtract(position()).normalize();
-            player.setDeltaMovement(away.x * 0.7, 0.35, away.z * 0.7);
-            player.hurtMarked = true;
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 4 * 4) continue;
+            Vec3 away = p.position().subtract(position()).normalize();
+            p.setDeltaMovement(away.x * 0.7, 0.35, away.z * 0.7);
+            p.hurtMarked = true;
+        }
+    }
+    /** 裂地震波：朝目标方向释放地面波。 */
+    private void colossusQuake(ServerLevel sl, long now, LivingEntity target, int lvl) {
+        playSound(SoundEvents.WARDEN_SONIC_BOOM, 0.7F, 0.5F);
+        Vec3 dir = target.position().subtract(position()).normalize();
+        for (int i = 1; i <= 16; i++) {
+            double x = getX() + dir.x * i, z = getZ() + dir.z * i;
+            if (i % 2 == 0) {
+                clientParticle(ParticleTypes.CLOUD, x, getY() + 0.1, z, 1);
+                clientParticle(ParticleTypes.EXPLOSION, x, getY() + 0.1, z, 1);
+            }
+            for (ServerPlayer p : sl.players()) {
+                if (!isValidPrey(p)) continue;
+                if (p.distanceToSqr(new Vec3(x, p.getY(), z)) < 2 * 2) {
+                    SixtySecondsHealthSystem.applyInjury(p, null, skillInjury(SixtySecondsBalance.BOSS_SLAM_INJURY + lvl * 3));
+                    p.setDeltaMovement(dir.x * 0.6, 0.4, dir.z * 0.6);
+                    p.hurtMarked = true;
+                }
+            }
+        }
+    }
+    /** 碾压冲撞：高速冲撞。 */
+    private void colossusCharge(ServerLevel sl, long now, LivingEntity target) {
+        nextChargeTick = now + SixtySecondsBalance.BOSS_CHARGE_COOLDOWN_TICKS;
+        playSound(SoundEvents.WARDEN_SONIC_CHARGE, 1.0F, 1.3F);
+        Vec3 toward = target.position().subtract(position()).normalize();
+        setDeltaMovement(toward.x * (frenzied ? 2.2 : 1.8), 0.25, toward.z * (frenzied ? 2.2 : 1.8));
+        hurtMarked = true;
+        clientParticle(ParticleTypes.CLOUD, getX(), getY() + 0.3, getZ(), 3);
+    }
+    /** 震慑咆哮：范围虚弱 + 减速。 */
+    private void colossusStunRoar(ServerLevel sl, long now, int lvl) {
+        nextRoarTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.RAVAGER_ROAR, 1.6F, 0.7F);
+        clientParticle(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(), 2);
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 10 * 10) continue;
+            p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 6, 1));
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 4, 1));
+            p.displayClientMessage(Component.translatable("message.sixty_seconds.sixty_seconds.boss_roar")
+                    .withStyle(ChatFormatting.DARK_PURPLE), true);
         }
     }
 
-    /** 生命汲取（亡灵术士）：朝目标发射汲取射线，命中持续扣血并治疗自身。 */
-    private void lifeDrain(ServerLevel serverLevel, long now, LivingEntity target, int lvl) {
+    // ══════════════════════════════════════════════════════════════════
+    //  亡灵术士 NECROMANCER 独立招式
+    // ══════════════════════════════════════════════════════════════════
+    /** 生命汲取：连线 + 自身治疗。 */
+    private void necroDrain(ServerLevel sl, long now, LivingEntity target, int lvl) {
         nextDrainTick = now + 20 * 16;
         playSound(SoundEvents.WARDEN_HEARTBEAT, 0.5F, 0.3F);
-        // 射线特效：连线粒子
         Vec3 from = new Vec3(getX(), getEyeY(), getZ());
         Vec3 to = new Vec3(target.getX(), target.getEyeY(), target.getZ());
         Vec3 step = to.subtract(from).normalize().scale(0.5);
@@ -673,55 +688,214 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
             pos = pos.add(step.scale(2.5));
             clientParticle(ParticleTypes.SCULK_SOUL, pos.x, pos.y, pos.z, 1);
         }
-        // 伤害目标 + 治疗自身
-        if (target instanceof ServerPlayer player && isValidPrey(player)) {
+        if (target instanceof ServerPlayer p && isValidPrey(p)) {
             int drain = skillInjury(8 + lvl * 2);
-            SixtySecondsHealthSystem.applyInjury(player, null, drain);
+            SixtySecondsHealthSystem.applyInjury(p, null, drain);
             heal(drain * 0.8F);
-            player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
         }
     }
-
-    /** 骨矛（亡灵术士）：朝目标发射穿透型投射物。 */
-    private void boneSpear(ServerLevel serverLevel, long now, LivingEntity target, int lvl) {
+    /** 骨矛：远程穿透投射。 */
+    private void necroSpear(ServerLevel sl, long now, LivingEntity target, int lvl) {
         nextSpearTick = now + 20 * 5;
         playSound(SoundEvents.SKELETON_SHOOT, 0.7F, 0.9F);
         getLookControl().setLookAt(target, 30.0F, 30.0F);
-        // 复用酸液投射物作为骨矛（带不同视觉逻辑）
-        SixtySecondsAcidSpitEntity spear = new SixtySecondsAcidSpitEntity(serverLevel, this);
-        double dx = target.getX() - getX();
-        double dy = target.getY(0.4) - spear.getY();
-        double dz = target.getZ() - getZ();
-        double horizontal = Math.sqrt(dx * dx + dz * dz);
-        spear.shoot(dx, dy + horizontal * 0.08, dz, 2.0F, 2.0F);
+        SixtySecondsAcidSpitEntity spear = new SixtySecondsAcidSpitEntity(sl, this);
+        double dx = target.getX() - getX(), dy = target.getY(0.4) - spear.getY(), dz = target.getZ() - getZ();
+        double h = Math.sqrt(dx * dx + dz * dz);
+        spear.shoot(dx, dy + h * 0.08, dz, 2.0F, 2.0F);
         spear.setNoGravity(true);
-        serverLevel.addFreshEntity(spear);
+        sl.addFreshEntity(spear);
         clientParticle(ParticleTypes.SCULK_SOUL, getX(), getEyeY(), getZ(), 2);
     }
+    /** 亡者召唤。 */
+    private void necroRaise(ServerLevel sl, long now, int lvl) {
+        nextSummonTick = now + SixtySecondsBalance.BOSS_SUMMON_COOLDOWN_TICKS;
+        playSound(SoundEvents.ZOMBIE_AMBIENT, 1.4F, 0.5F);
+        int count = 2 + lvl / 2;
+        for (int i = 0; i < count; i++) {
+            float r = sl.random.nextFloat();
+            Variant v = r < 0.2F ? Variant.BRUTE : r < 0.45F ? Variant.RUNNER : r < 0.6F ? Variant.STALKER : Variant.SHAMBLER;
+            net.exmo.sixty_seconds.logic.SixtySecondsPveSystem.spawnMinion(sl, blockPosition(), v);
+        }
+        swing(InteractionHand.MAIN_HAND);
+        clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getY() + 0.5, getZ(), 4);
+    }
+    /** 亡灵咆哮：范围虚弱。 */
+    private void necroRoar(ServerLevel sl, long now, int lvl) {
+        nextRoarTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.0F, 0.6F);
+        clientParticle(ParticleTypes.REVERSE_PORTAL, getX(), getEyeY(), getZ(), 2);
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 12 * 12) continue;
+            p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 5, 1));
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 0));
+        }
+    }
+    /** 亡者大军：大量召唤 + 小怪强化光环。 */
+    private void necroLegion(ServerLevel sl, long now, int lvl) {
+        nextSummonTick = now + SixtySecondsBalance.BOSS_SUMMON_COOLDOWN_TICKS;
+        playSound(SoundEvents.WITHER_SPAWN, 0.5F, 0.4F);
+        clientParticle(ParticleTypes.PORTAL, getX(), getY() + 0.5, getZ(), 8);
+        clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getY() + 0.5, getZ(), 5);
+        int count = 5 + lvl;
+        for (int i = 0; i < count; i++) {
+            float r = sl.random.nextFloat();
+            Variant v = r < 0.3F ? Variant.BRUTE : r < 0.55F ? Variant.RUNNER : r < 0.75F ? Variant.BLOATER : Variant.STALKER;
+            net.exmo.sixty_seconds.logic.SixtySecondsPveSystem.spawnMinion(sl, blockPosition(), v);
+        }
+        for (SixtySecondsMonsterEntity mob : sl.getEntitiesOfClass(SixtySecondsMonsterEntity.class, getBoundingBox().inflate(16.0))) {
+            if (mob == this) continue;
+            mob.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20 * 12, 1));
+            mob.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20 * 12, 0));
+        }
+    }
 
-    /** 毒息（疫病者）：前方锥形范围中毒+污染+健康伤害。 */
-    private void toxicBreath(ServerLevel serverLevel, long now, LivingEntity target, int lvl) {
+    // ══════════════════════════════════════════════════════════════════
+    //  疫病者 PLAGUEBEARER 独立招式
+    // ══════════════════════════════════════════════════════════════════
+    /** 毒息：前方锥形中毒 + 污染。 */
+    private void plagueBreath(ServerLevel sl, long now, LivingEntity target, int lvl) {
         nextBreathTick = now + 20 * 12;
         playSound(SoundEvents.DRAGON_FIREBALL_EXPLODE, 0.3F, 0.4F);
         Vec3 facing = getLookAngle().normalize();
         for (int i = 0; i < 8; i++) {
-            double spread = (serverLevel.random.nextDouble() - 0.5) * 1.8;
+            double spread = (sl.random.nextDouble() - 0.5) * 1.8;
             double dist = 1.0 + i * 2.5 / 8;
-            clientParticle(ParticleTypes.ITEM_SLIME,
-                    getX() + facing.x * dist + spread, getEyeY() + spread * 0.5,
-                    getZ() + facing.z * dist + spread, 1);
+            clientParticle(ParticleTypes.ITEM_SLIME, getX() + facing.x * dist + spread, getEyeY() + spread * 0.5, getZ() + facing.z * dist + spread, 1);
         }
-        for (ServerPlayer player : serverLevel.players()) {
-            if (!isValidPrey(player)) continue;
-            Vec3 toPlayer = player.position().subtract(position());
-            double dist = toPlayer.length();
-            if (dist > 7 || toPlayer.normalize().dot(facing) < 0.35) continue;
-            SixtySecondsHealthSystem.applyInjury(player, null, skillInjury(6 + lvl * 2));
-            SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
-            stats.pollution = Math.min(100, stats.pollution
-                    + SixtySecondsDifficulty.scalePollutionGain(serverLevel, 6 + lvl));
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p)) continue;
+            Vec3 toP = p.position().subtract(position());
+            if (toP.length() > 7 || toP.normalize().dot(facing) < 0.35) continue;
+            SixtySecondsHealthSystem.applyInjury(p, null, skillInjury(6 + lvl * 2));
+            SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(p);
+            stats.pollution = Math.min(100, stats.pollution + SixtySecondsDifficulty.scalePollutionGain(sl, 6 + lvl));
             stats.sync();
-            player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 4, lvl > 2 ? 1 : 0));
+            p.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 4, lvl > 2 ? 1 : 0));
+        }
+    }
+    /** 毒弹：远程酸液弹幕。 */
+    private void plagueBolt(ServerLevel sl, long now, LivingEntity target, int lvl) {
+        nextBarrageTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.LLAMA_SPIT, 1.6F, 0.5F);
+        int shots = 4 + lvl / 2;
+        for (int i = 0; i < shots; i++) {
+            SixtySecondsAcidSpitEntity spit = new SixtySecondsAcidSpitEntity(sl, this);
+            double dx = target.getX() - getX() + (sl.random.nextDouble() - 0.5) * 4.0;
+            double dy = target.getY(0.4) - spit.getY();
+            double dz = target.getZ() - getZ() + (sl.random.nextDouble() - 0.5) * 4.0;
+            double h = Math.sqrt(dx * dx + dz * dz);
+            spit.shoot(dx, dy + h * 0.14, dz, 1.0F, 6.0F);
+            sl.addFreshEntity(spit);
+        }
+        clientParticle(ParticleTypes.ITEM_SLIME, getX(), getEyeY(), getZ(), 3);
+    }
+    /** 毒化咆哮：污染代替扣 san。 */
+    private void plagueRoar(ServerLevel sl, long now, int lvl) {
+        nextRoarTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.RAVAGER_ROAR, 1.4F, 0.8F);
+        clientParticle(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(), 2);
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 14 * 14) continue;
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 4, 1));
+            SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(p);
+            stats.pollution = Math.min(100, stats.pollution + SixtySecondsDifficulty.scalePollutionGain(sl, 8 + lvl * 2));
+            stats.sync();
+            p.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 3, 0));
+        }
+    }
+    /** 疫病新星：环形毒弹 + 污染。 */
+    private void plagueNova(ServerLevel sl, long now, int lvl) {
+        nextNovaTick = now + 20 * 22;
+        playSound(SoundEvents.WITHER_BREAK_BLOCK, 0.7F, 1.2F);
+        int shots = 12 + lvl;
+        for (int i = 0; i < shots; i++) {
+            double angle = (2 * Math.PI / shots) * i;
+            SixtySecondsAcidSpitEntity spit = new SixtySecondsAcidSpitEntity(sl, this);
+            spit.shoot(Math.cos(angle), 0.1, Math.sin(angle), 0.7F, 8.0F);
+            sl.addFreshEntity(spit);
+        }
+        clientParticle(ParticleTypes.EXPLOSION, getX(), getY() + 0.5, getZ(), 3);
+    }
+    /** 疫虫召唤。 */
+    private void plagueSwarm(ServerLevel sl, long now, int lvl) {
+        nextSummonTick = now + SixtySecondsBalance.BOSS_SUMMON_COOLDOWN_TICKS;
+        playSound(SoundEvents.ZOMBIE_AMBIENT, 1.4F, 0.5F);
+        int count = 2 + lvl / 2;
+        for (int i = 0; i < count; i++) {
+            Variant v = sl.random.nextFloat() < 0.35F ? Variant.RUNNER : Variant.SHAMBLER;
+            net.exmo.sixty_seconds.logic.SixtySecondsPveSystem.spawnMinion(sl, blockPosition(), v);
+        }
+        swing(InteractionHand.MAIN_HAND);
+        clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getY() + 0.5, getZ(), 4);
+    }
+
+    // ══════════════════════════════════════════════════════════════════
+    //  鬼魅 SPECTER 独立招式
+    // ══════════════════════════════════════════════════════════════════
+    /** 暗影突袭：瞬移至目标背后重击。 */
+    private void specterBlink(ServerLevel sl, long now, LivingEntity target, int lvl, boolean apex) {
+        nextShadowTick = now + (apex ? 20 * 6 : 20 * 10);
+        playSound(SoundEvents.WARDEN_NEARBY_CLOSE, 0.6F, 1.6F);
+        Vec3 behind = target.position().add(target.getLookAngle().scale(-2.0));
+        teleportTo(behind.x, behind.y, behind.z);
+        clientParticle(ParticleTypes.PORTAL, getX(), getY() + 1.0, getZ(), 4);
+        if (target instanceof ServerPlayer p && isValidPrey(p)) {
+            int back = skillInjury((14 + lvl * 4) * (apex ? 2 : 1));
+            SixtySecondsHealthSystem.applyInjury(p, null, back);
+            p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 + 10, 0));
+        }
+    }
+    /** 暗影连斩：近身多段低伤。 */
+    private void specterFlurry(ServerLevel sl, long now, int lvl) {
+        nextSlamTick = now + 20 * 8;
+        playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 0.4F, 1.8F);
+        clientParticle(ParticleTypes.SWEEP_ATTACK, getX(), getY() + 0.5, getZ(), 2);
+        int injury = skillInjury(4 + lvl);
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 4 * 4) continue;
+            for (int i = 0; i < 3; i++) SixtySecondsHealthSystem.applyInjury(p, null, injury);
+        }
+    }
+    /** 隐匿：隐身 + 加速。 */
+    private void specterVanish(ServerLevel sl, long now, int lvl) {
+        vanishCooldown = 20 * 30;
+        playSound(SoundEvents.WARDEN_DIG, 0.5F, 1.0F);
+        addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 20 * 5, 0, false, false, false));
+        addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20 * 5, 2, false, false, false));
+        clientParticle(ParticleTypes.SMOKE, getX(), getY() + 1.0, getZ(), 6);
+    }
+    /** 死亡标记：多次瞬击。 */
+    private void specterMark(ServerLevel sl, long now, LivingEntity target, int lvl) {
+        nextChargeTick = now + 20 * 20;
+        playSound(SoundEvents.WARDEN_SONIC_BOOM, 0.6F, 0.8F);
+        if (target instanceof ServerPlayer p && isValidPrey(p)) {
+            p.addEffect(new MobEffectInstance(MobEffects.GLOWING, 20 * 4, 0));
+            p.displayClientMessage(Component.translatable("message.sixty_seconds.sixty_seconds.boss_death_mark")
+                    .withStyle(ChatFormatting.DARK_RED), true);
+        }
+        for (int i = 0; i < 3; i++) {
+            sl.getServer().tell(new net.minecraft.server.TickTask(i * 6, () -> {
+                if (!isAlive() || target == null || !target.isAlive()) return;
+                Vec3 behind = target.position().add(target.getLookAngle().scale(-2.0));
+                teleportTo(behind.x, behind.y, behind.z);
+                if (target instanceof ServerPlayer p && isValidPrey(p)) {
+                    SixtySecondsHealthSystem.applyInjury(p, null, skillInjury(10 + lvl * 3));
+                }
+                clientParticle(ParticleTypes.PORTAL, getX(), getY() + 1.0, getZ(), 3);
+            }));
+        }
+    }
+    /** 鬼魅咆哮：范围恐惧。 */
+    private void specterRoar(ServerLevel sl, long now, int lvl) {
+        nextRoarTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.0F, 0.5F);
+        clientParticle(ParticleTypes.REVERSE_PORTAL, getX(), getEyeY(), getZ(), 2);
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 10 * 10) continue;
+            p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 5, 1));
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 0));
         }
     }
 
@@ -749,134 +923,364 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         }
     }
 
-    /** 剧毒新星（疫病者终焉）：环形扩散毒弹。 */
-    private void toxicNova(ServerLevel serverLevel, long now, int lvl) {
+    // ══════════════════════════════════════════════════════════════════
+    //  熔渊暴君 INFERNO 独立招式
+    // ══════════════════════════════════════════════════════════════════
+    /** 熔岩震地：更大范围 + 点燃感。 */
+    private void infernoSlam(ServerLevel sl, long now, int lvl) {
+        nextSlamTick = now + SixtySecondsBalance.BOSS_SLAM_COOLDOWN_TICKS;
+        swing(InteractionHand.MAIN_HAND, true);
+        clientParticle(ParticleTypes.EXPLOSION, getX(), getY() + 0.2, getZ(), 4);
+        playSound(SoundEvents.GENERIC_EXPLODE.value(), 0.9F, 0.6F);
+        int injury = skillInjury((SixtySecondsBalance.BOSS_SLAM_INJURY + 4 * (lvl - 1)) * 2 * (frenzied ? 2 : 1));
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 6.0 * 6.0) continue;
+            SixtySecondsHealthSystem.applyInjury(p, null, injury);
+            Vec3 away = p.position().subtract(position()).normalize();
+            p.setDeltaMovement(away.x * 1.0, 0.6, away.z * 1.0);
+            p.hurtMarked = true;
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 + 10, 3));
+        }
+    }
+    /** 烈焰冲撞。 */
+    private void infernoCharge(ServerLevel sl, long now, LivingEntity target) {
+        nextChargeTick = now + SixtySecondsBalance.BOSS_CHARGE_COOLDOWN_TICKS;
+        playSound(SoundEvents.WARDEN_SONIC_CHARGE, 1.0F, 1.3F);
+        Vec3 toward = target.position().subtract(position()).normalize();
+        setDeltaMovement(toward.x * 1.7, 0.25, toward.z * 1.7);
+        hurtMarked = true;
+        clientParticle(ParticleTypes.CLOUD, getX(), getY() + 0.3, getZ(), 3);
+    }
+    /** 火球弹幕：远程熔岩弹。 */
+    private void infernoMeteor(ServerLevel sl, long now, LivingEntity target, int lvl) {
+        nextBarrageTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.LLAMA_SPIT, 1.6F, 0.5F);
+        int shots = 4 + lvl / 2;
+        for (int i = 0; i < shots; i++) {
+            SixtySecondsAcidSpitEntity spit = new SixtySecondsAcidSpitEntity(sl, this);
+            double dx = target.getX() - getX() + (sl.random.nextDouble() - 0.5) * 4.0;
+            double dy = target.getY(0.4) - spit.getY();
+            double dz = target.getZ() - getZ() + (sl.random.nextDouble() - 0.5) * 4.0;
+            double h = Math.sqrt(dx * dx + dz * dz);
+            spit.shoot(dx, dy + h * 0.14, dz, 1.0F, 6.0F);
+            sl.addFreshEntity(spit);
+        }
+        clientParticle(ParticleTypes.FLAME, getX(), getEyeY(), getZ(), 3);
+    }
+    /** 火山喷发：召唤火元素小怪。 */
+    private void infernoErupt(ServerLevel sl, long now, int lvl) {
+        nextSummonTick = now + SixtySecondsBalance.BOSS_SUMMON_COOLDOWN_TICKS;
+        playSound(SoundEvents.WITHER_SPAWN, 0.6F, 0.5F);
+        int count = 2 + lvl / 2;
+        for (int i = 0; i < count; i++) {
+            Variant v = sl.random.nextFloat() < 0.4F ? Variant.BRUTE : Variant.STALKER;
+            net.exmo.sixty_seconds.logic.SixtySecondsPveSystem.spawnMinion(sl, blockPosition(), v);
+        }
+        clientParticle(ParticleTypes.FLAME, getX(), getY() + 0.5, getZ(), 6);
+    }
+    /** 烈焰咆哮：范围燃烧感减速。 */
+    private void infernoRoar(ServerLevel sl, long now, int lvl) {
+        nextRoarTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.RAVAGER_ROAR, 1.5F, 0.8F);
+        clientParticle(ParticleTypes.FLAME, getX(), getEyeY(), getZ(), 3);
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 12 * 12) continue;
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 4, 2));
+            p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 3, 0));
+            p.displayClientMessage(Component.translatable("message.sixty_seconds.sixty_seconds.boss_roar")
+                    .withStyle(ChatFormatting.GOLD), true);
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════
+    //  霜噬守望 FROSTBITE 独立招式
+    // ══════════════════════════════════════════════════════════════════
+    /** 冰锥：远程穿透。 */
+    private void frostLance(ServerLevel sl, long now, LivingEntity target, int lvl) {
+        nextSpearTick = now + 20 * 5;
+        playSound(SoundEvents.SKELETON_SHOOT, 0.7F, 0.9F);
+        getLookControl().setLookAt(target, 30.0F, 30.0F);
+        SixtySecondsAcidSpitEntity spear = new SixtySecondsAcidSpitEntity(sl, this);
+        double dx = target.getX() - getX(), dy = target.getY(0.4) - spear.getY(), dz = target.getZ() - getZ();
+        double h = Math.sqrt(dx * dx + dz * dz);
+        spear.shoot(dx, dy + h * 0.08, dz, 2.0F, 2.0F);
+        spear.setNoGravity(true);
+        sl.addFreshEntity(spear);
+        clientParticle(ParticleTypes.ITEM_SLIME, getX(), getEyeY(), getZ(), 2);
+    }
+    /** 霜息：锥形冰冻 + 减速。 */
+    private void frostBreath(ServerLevel sl, long now, LivingEntity target, int lvl) {
+        nextBreathTick = now + 20 * 12;
+        playSound(SoundEvents.DRAGON_FIREBALL_EXPLODE, 0.3F, 0.4F);
+        Vec3 facing = getLookAngle().normalize();
+        for (int i = 0; i < 8; i++) {
+            double spread = (sl.random.nextDouble() - 0.5) * 1.8;
+            double dist = 1.0 + i * 2.5 / 8;
+            clientParticle(ParticleTypes.SNOWFLAKE, getX() + facing.x * dist + spread, getEyeY() + spread * 0.5, getZ() + facing.z * dist + spread, 1);
+        }
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p)) continue;
+            Vec3 toP = p.position().subtract(position());
+            if (toP.length() > 7 || toP.normalize().dot(facing) < 0.35) continue;
+            SixtySecondsHealthSystem.applyInjury(p, null, skillInjury(6 + lvl * 2));
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 5, lvl > 2 ? 2 : 1));
+        }
+    }
+    /** 寒霜咆哮：范围减速。 */
+    private void frostRoar(ServerLevel sl, long now, int lvl) {
+        nextRoarTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.RAVAGER_ROAR, 1.4F, 0.8F);
+        clientParticle(ParticleTypes.SNOWFLAKE, getX(), getEyeY(), getZ(), 3);
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 14 * 14) continue;
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 5, 1));
+            p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 3, 0));
+        }
+    }
+    /** 暴雪新星：环形冰弹。 */
+    private void frostNova(ServerLevel sl, long now, int lvl) {
         nextNovaTick = now + 20 * 22;
         playSound(SoundEvents.WITHER_BREAK_BLOCK, 0.7F, 1.2F);
         int shots = 12 + lvl;
         for (int i = 0; i < shots; i++) {
             double angle = (2 * Math.PI / shots) * i;
-            SixtySecondsAcidSpitEntity spit = new SixtySecondsAcidSpitEntity(serverLevel, this);
+            SixtySecondsAcidSpitEntity spit = new SixtySecondsAcidSpitEntity(sl, this);
             spit.shoot(Math.cos(angle), 0.1, Math.sin(angle), 0.7F, 8.0F);
-            serverLevel.addFreshEntity(spit);
+            sl.addFreshEntity(spit);
+        }
+        clientParticle(ParticleTypes.SNOWFLAKE, getX(), getY() + 0.5, getZ(), 3);
+    }
+    /** 冰晶风暴：远程密集冰弹。 */
+    private void frostShardStorm(ServerLevel sl, long now, LivingEntity target, int lvl) {
+        nextBarrageTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.LLAMA_SPIT, 1.6F, 0.5F);
+        int shots = 6 + lvl;
+        for (int i = 0; i < shots; i++) {
+            SixtySecondsAcidSpitEntity spit = new SixtySecondsAcidSpitEntity(sl, this);
+            double dx = target.getX() - getX() + (sl.random.nextDouble() - 0.5) * 3.0;
+            double dy = target.getY(0.4) - spit.getY();
+            double dz = target.getZ() - getZ() + (sl.random.nextDouble() - 0.5) * 3.0;
+            double h = Math.sqrt(dx * dx + dz * dz);
+            spit.shoot(dx, dy + h * 0.14, dz, 1.1F, 5.0F);
+            sl.addFreshEntity(spit);
+        }
+        clientParticle(ParticleTypes.SNOWFLAKE, getX(), getEyeY(), getZ(), 4);
+    }
+
+    // ══════════════════════════════════════════════════════════════════
+    //  虫潮之主 SWARMKEEPER 独立招式
+    // ══════════════════════════════════════════════════════════════════
+    /** 虫群召唤。 */
+    private void swarmSummon(ServerLevel sl, long now, int lvl) {
+        nextSummonTick = now + SixtySecondsBalance.BOSS_SUMMON_COOLDOWN_TICKS;
+        playSound(SoundEvents.ZOMBIE_AMBIENT, 1.4F, 0.5F);
+        int count = 3 + lvl / 2;
+        for (int i = 0; i < count; i++) {
+            Variant v = sl.random.nextFloat() < 0.5F ? Variant.RUNNER : Variant.SHAMBLER;
+            net.exmo.sixty_seconds.logic.SixtySecondsPveSystem.spawnMinion(sl, blockPosition(), v);
+        }
+        swing(InteractionHand.MAIN_HAND);
+        clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getY() + 0.5, getZ(), 4);
+    }
+    /** 酸液弹幕。 */
+    private void swarmAcid(ServerLevel sl, long now, LivingEntity target, int lvl) {
+        nextBarrageTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.LLAMA_SPIT, 1.6F, 0.5F);
+        int shots = 4 + lvl / 2;
+        for (int i = 0; i < shots; i++) {
+            SixtySecondsAcidSpitEntity spit = new SixtySecondsAcidSpitEntity(sl, this);
+            double dx = target.getX() - getX() + (sl.random.nextDouble() - 0.5) * 4.0;
+            double dy = target.getY(0.4) - spit.getY();
+            double dz = target.getZ() - getZ() + (sl.random.nextDouble() - 0.5) * 4.0;
+            double h = Math.sqrt(dx * dx + dz * dz);
+            spit.shoot(dx, dy + h * 0.14, dz, 1.0F, 6.0F);
+            sl.addFreshEntity(spit);
+        }
+        clientParticle(ParticleTypes.ITEM_SLIME, getX(), getEyeY(), getZ(), 3);
+    }
+    /** 腐蚀新星。 */
+    private void swarmNova(ServerLevel sl, long now, int lvl) {
+        nextNovaTick = now + 20 * 22;
+        playSound(SoundEvents.WITHER_BREAK_BLOCK, 0.7F, 1.2F);
+        int shots = 12 + lvl;
+        for (int i = 0; i < shots; i++) {
+            double angle = (2 * Math.PI / shots) * i;
+            SixtySecondsAcidSpitEntity spit = new SixtySecondsAcidSpitEntity(sl, this);
+            spit.shoot(Math.cos(angle), 0.1, Math.sin(angle), 0.7F, 8.0F);
+            sl.addFreshEntity(spit);
         }
         clientParticle(ParticleTypes.EXPLOSION, getX(), getY() + 0.5, getZ(), 3);
     }
+    /** 虫群碾压：近身范围。 */
+    private void swarmCrush(ServerLevel sl, long now, int lvl) {
+        nextSlamTick = now + SixtySecondsBalance.BOSS_SLAM_COOLDOWN_TICKS;
+        swing(InteractionHand.MAIN_HAND, true);
+        clientParticle(ParticleTypes.ITEM_SLIME, getX(), getY() + 0.2, getZ(), 4);
+        playSound(SoundEvents.GENERIC_EXPLODE.value(), 0.7F, 0.9F);
+        int injury = skillInjury(SixtySecondsBalance.BOSS_SLAM_INJURY + 4 * (lvl - 1));
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 5.5 * 5.5) continue;
+            SixtySecondsHealthSystem.applyInjury(p, null, injury);
+            Vec3 away = p.position().subtract(position()).normalize();
+            p.setDeltaMovement(away.x * 0.7, 0.4, away.z * 0.7);
+            p.hurtMarked = true;
+        }
+    }
+    /** 万虫咆哮：范围污染 + 减速。 */
+    private void swarmRoar(ServerLevel sl, long now, int lvl) {
+        nextRoarTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.RAVAGER_ROAR, 1.4F, 0.8F);
+        clientParticle(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(), 2);
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 12 * 12) continue;
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 5, 1));
+            SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(p);
+            stats.pollution = Math.min(100, stats.pollution + SixtySecondsDifficulty.scalePollutionGain(sl, 8 + lvl * 2));
+            stats.sync();
+            p.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 3, 0));
+        }
+    }
 
-    /** 暗影突袭（鬼魅）：高速冲向目标造成伤害。 */
-    private void shadowStrike(ServerLevel serverLevel, long now, LivingEntity target, int lvl, boolean apex) {
+    // ══════════════════════════════════════════════════════════════════
+    //  雷霆传令 STORMHERALD 独立招式
+    // ══════════════════════════════════════════════════════════════════
+    /** 瞬电冲撞。 */
+    private void stormCharge(ServerLevel sl, long now, LivingEntity target) {
+        nextChargeTick = now + SixtySecondsBalance.BOSS_CHARGE_COOLDOWN_TICKS;
+        playSound(SoundEvents.WARDEN_SONIC_CHARGE, 1.0F, 1.3F);
+        Vec3 toward = target.position().subtract(position()).normalize();
+        setDeltaMovement(toward.x * 2.0, 0.25, toward.z * 2.0);
+        hurtMarked = true;
+        clientParticle(ParticleTypes.CLOUD, getX(), getY() + 0.3, getZ(), 3);
+    }
+    /** 雷瞬击：瞬移至目标背后重击 + 麻痹。 */
+    private void stormBlink(ServerLevel sl, long now, LivingEntity target, int lvl, boolean apex) {
         nextShadowTick = now + (apex ? 20 * 6 : 20 * 10);
         playSound(SoundEvents.WARDEN_NEARBY_CLOSE, 0.6F, 1.6F);
-        // 瞬移至目标背后
+        Vec3 behind = target.position().add(target.getLookAngle().scale(-2.0));
+        teleportTo(behind.x, behind.y, behind.z);
+        clientParticle(ParticleTypes.ELECTRIC_SPARK, getX(), getY() + 1.0, getZ(), 4);
+        if (target instanceof ServerPlayer p && isValidPrey(p)) {
+            int back = skillInjury((14 + lvl * 4) * (apex ? 2 : 1));
+            SixtySecondsHealthSystem.applyInjury(p, null, back);
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 + 10, 2));
+        }
+    }
+    /** 雷暴弹幕：远程雷弹。 */
+    private void stormBarrage(ServerLevel sl, long now, LivingEntity target, int lvl) {
+        nextBarrageTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.LLAMA_SPIT, 1.6F, 0.5F);
+        int shots = 4 + lvl / 2;
+        for (int i = 0; i < shots; i++) {
+            SixtySecondsAcidSpitEntity spit = new SixtySecondsAcidSpitEntity(sl, this);
+            double dx = target.getX() - getX() + (sl.random.nextDouble() - 0.5) * 4.0;
+            double dy = target.getY(0.4) - spit.getY();
+            double dz = target.getZ() - getZ() + (sl.random.nextDouble() - 0.5) * 4.0;
+            double h = Math.sqrt(dx * dx + dz * dz);
+            spit.shoot(dx, dy + h * 0.14, dz, 1.0F, 6.0F);
+            sl.addFreshEntity(spit);
+        }
+        clientParticle(ParticleTypes.ELECTRIC_SPARK, getX(), getEyeY(), getZ(), 3);
+    }
+    /** 雷霆咆哮：范围虚弱。 */
+    private void stormRoar(ServerLevel sl, long now, int lvl) {
+        nextRoarTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.0F, 0.6F);
+        clientParticle(ParticleTypes.ELECTRIC_SPARK, getX(), getEyeY(), getZ(), 2);
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 12 * 12) continue;
+            p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 5, 1));
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 0));
+        }
+    }
+    /** 落雷震地：范围伤害 + 击退。 */
+    private void stormQuake(ServerLevel sl, long now, int lvl) {
+        nextSlamTick = now + SixtySecondsBalance.BOSS_SLAM_COOLDOWN_TICKS;
+        swing(InteractionHand.MAIN_HAND, true);
+        clientParticle(ParticleTypes.ELECTRIC_SPARK, getX(), getY() + 0.2, getZ(), 4);
+        playSound(SoundEvents.GENERIC_EXPLODE.value(), 0.9F, 0.7F);
+        int injury = skillInjury(SixtySecondsBalance.BOSS_SLAM_INJURY + 4 * (lvl - 1));
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 5.0 * 5.0) continue;
+            SixtySecondsHealthSystem.applyInjury(p, null, injury);
+            Vec3 away = p.position().subtract(position()).normalize();
+            p.setDeltaMovement(away.x * 0.8, 0.5, away.z * 0.8);
+            p.hurtMarked = true;
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════
+    //  虚空织者 VOIDWEAVER 独立招式
+    // ══════════════════════════════════════════════════════════════════
+    /** 生命汲取：连线 + 自愈。 */
+    private void voidDrain(ServerLevel sl, long now, LivingEntity target, int lvl) {
+        nextDrainTick = now + 20 * 16;
+        playSound(SoundEvents.WARDEN_HEARTBEAT, 0.5F, 0.3F);
+        Vec3 from = new Vec3(getX(), getEyeY(), getZ());
+        Vec3 to = new Vec3(target.getX(), target.getEyeY(), target.getZ());
+        Vec3 step = to.subtract(from).normalize().scale(0.5);
+        Vec3 pos = from;
+        for (int i = 0; i < 12; i++) {
+            pos = pos.add(step.scale(2.5));
+            clientParticle(ParticleTypes.SCULK_SOUL, pos.x, pos.y, pos.z, 1);
+        }
+        if (target instanceof ServerPlayer p && isValidPrey(p)) {
+            int drain = skillInjury(8 + lvl * 2);
+            SixtySecondsHealthSystem.applyInjury(p, null, drain);
+            heal(drain * 0.8F);
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
+        }
+    }
+    /** 暗影突袭：瞬移重击。 */
+    private void voidBlink(ServerLevel sl, long now, LivingEntity target, int lvl, boolean apex) {
+        nextShadowTick = now + (apex ? 20 * 6 : 20 * 10);
+        playSound(SoundEvents.WARDEN_NEARBY_CLOSE, 0.6F, 1.6F);
         Vec3 behind = target.position().add(target.getLookAngle().scale(-2.0));
         teleportTo(behind.x, behind.y, behind.z);
         clientParticle(ParticleTypes.PORTAL, getX(), getY() + 1.0, getZ(), 4);
-        // 伤害目标
-        if (target instanceof ServerPlayer player && isValidPrey(player)) {
-            int backstab = 14 + lvl * 4;
-            if (apex) backstab *= 2;
-            backstab = skillInjury(backstab);
-            SixtySecondsHealthSystem.applyInjury(player, null, backstab);
-            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 + 10, 0));
+        if (target instanceof ServerPlayer p && isValidPrey(p)) {
+            int back = skillInjury((14 + lvl * 4) * (apex ? 2 : 1));
+            SixtySecondsHealthSystem.applyInjury(p, null, back);
+            p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 + 10, 0));
         }
     }
-
-    /** 暗影连斩（鬼魅近身）：快速多段低伤打击。 */
-    private void shadowFlurry(ServerLevel serverLevel, long now, int lvl) {
-        nextSlamTick = now + 20 * 8;
-        playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 0.4F, 1.8F);
-        clientParticle(ParticleTypes.SWEEP_ATTACK, getX(), getY() + 0.5, getZ(), 2);
-        for (ServerPlayer player : serverLevel.players()) {
-            if (!isValidPrey(player) || distanceToSqr(player) > 4 * 4) continue;
-            int injury = skillInjury(4 + lvl);
-            // 多段伤害模拟
-            for (int i = 0; i < 3; i++) {
-                SixtySecondsHealthSystem.applyInjury(player, null, injury);
-            }
+    /** 虚空新星：环形暗影弹。 */
+    private void voidNova(ServerLevel sl, long now, int lvl) {
+        nextNovaTick = now + 20 * 22;
+        playSound(SoundEvents.WITHER_BREAK_BLOCK, 0.7F, 1.2F);
+        int shots = 12 + lvl;
+        for (int i = 0; i < shots; i++) {
+            double angle = (2 * Math.PI / shots) * i;
+            SixtySecondsAcidSpitEntity spit = new SixtySecondsAcidSpitEntity(sl, this);
+            spit.shoot(Math.cos(angle), 0.1, Math.sin(angle), 0.7F, 8.0F);
+            sl.addFreshEntity(spit);
+        }
+        clientParticle(ParticleTypes.REVERSE_PORTAL, getX(), getY() + 0.5, getZ(), 3);
+    }
+    /** 虚空咆哮：范围恐惧。 */
+    private void voidRoar(ServerLevel sl, long now, int lvl) {
+        nextRoarTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
+        playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.0F, 0.5F);
+        clientParticle(ParticleTypes.REVERSE_PORTAL, getX(), getEyeY(), getZ(), 2);
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 12 * 12) continue;
+            p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 5, 1));
+            p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 0));
         }
     }
-
-    /** 潜行（鬼魅）：隐身 + 加速，期间无法被锁定。 */
-    private void vanish(ServerLevel serverLevel, long now, int lvl) {
-        vanishCooldown = 20 * 30;
-        playSound(SoundEvents.WARDEN_DIG, 0.5F, 1.0F);
-        addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 20 * 5, 0, false, false, false));
-        addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20 * 5, 2, false, false, false));
-        clientParticle(ParticleTypes.SMOKE, getX(), getY() + 1.0, getZ(), 6);
-    }
-
-    /** 死亡标记（鬼魅终焉）：多次瞬移至目标身后打击。 */
-    private void deathMark(ServerLevel serverLevel, long now, LivingEntity target, int lvl) {
-        nextChargeTick = now + 20 * 20;
-        playSound(SoundEvents.WARDEN_SONIC_BOOM, 0.6F, 0.8F);
-        if (target instanceof ServerPlayer player && isValidPrey(player)) {
-            player.addEffect(new MobEffectInstance(MobEffects.GLOWING, 20 * 4, 0));
-            player.displayClientMessage(Component
-                    .translatable("message.sixty_seconds.sixty_seconds.boss_death_mark")
-                    .withStyle(ChatFormatting.DARK_RED), true);
-        }
-        // 连续 3 次瞬击
-        for (int i = 0; i < 3; i++) {
-            serverLevel.getServer().tell(new net.minecraft.server.TickTask(
-                    i * 6, () -> {
-                        if (!isAlive() || target == null || !target.isAlive()) return;
-                        Vec3 behind = target.position().add(target.getLookAngle().scale(-2.0));
-                        teleportTo(behind.x, behind.y, behind.z);
-                        if (target instanceof ServerPlayer p && isValidPrey(p)) {
-                            SixtySecondsHealthSystem.applyInjury(p, null, skillInjury(10 + lvl * 3));
-                        }
-                        clientParticle(ParticleTypes.PORTAL, getX(), getY() + 1.0, getZ(), 3);
-                    }));
-        }
-    }
-
-    /** 裂地震波（巨像 Lv3+）：朝目标方向释放地面波。 */
-    private void seismicWave(ServerLevel serverLevel, long now, LivingEntity target, int lvl) {
-        playSound(SoundEvents.WARDEN_SONIC_BOOM, 0.7F, 0.5F);
-        Vec3 dir = target.position().subtract(position()).normalize();
-        for (int i = 1; i <= 16; i++) {
-            double x = getX() + dir.x * i;
-            double z = getZ() + dir.z * i;
-            if (i % 2 == 0) { // 隔步渲染，减少粒子数
-                clientParticle(ParticleTypes.CLOUD, x, getY() + 0.1, z, 1);
-                clientParticle(ParticleTypes.EXPLOSION, x, getY() + 0.1, z, 1);
-            }
-            // 沿线玩家受伤
-            for (ServerPlayer player : serverLevel.players()) {
-                if (!isValidPrey(player)) continue;
-                if (player.distanceToSqr(new Vec3(x, player.getY(), z)) < 2 * 2) {
-                    SixtySecondsHealthSystem.applyInjury(player, null,
-                            skillInjury(SixtySecondsBalance.BOSS_SLAM_INJURY + lvl * 3));
-                    player.setDeltaMovement(dir.x * 0.6, 0.4, dir.z * 0.6);
-                    player.hurtMarked = true;
-                }
-            }
-        }
-    }
-
-    /** 亡者大军（亡灵术士终焉）：大量召唤 + 光环 buff。 */
-    private void armyOfTheDead(ServerLevel serverLevel, long now, int lvl) {
-        nextSummonTick = now + SixtySecondsBalance.BOSS_SUMMON_COOLDOWN_TICKS;
-        playSound(SoundEvents.WITHER_SPAWN, 0.5F, 0.4F);
-        // 亡灵军团降临：暗影传送门 + 附魔光环粒子
-        clientParticle(ParticleTypes.PORTAL, getX(), getY() + 0.5, getZ(), 8);
-        clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getY() + 0.5, getZ(), 5);
-        int count = 5 + lvl;
-        for (int i = 0; i < count; i++) {
-            Variant variant;
-            float r = serverLevel.random.nextFloat();
-            if (r < 0.3F) variant = Variant.BRUTE;
-            else if (r < 0.55F) variant = Variant.RUNNER;
-            else if (r < 0.75F) variant = Variant.BLOATER;
-            else variant = Variant.STALKER;
-            net.exmo.sixty_seconds.logic.SixtySecondsPveSystem.spawnMinion(serverLevel, blockPosition(), variant);
-        }
-        // 光环：给周围所有自研怪加速+力量
-        for (SixtySecondsMonsterEntity mob : serverLevel.getEntitiesOfClass(SixtySecondsMonsterEntity.class,
-                getBoundingBox().inflate(16.0))) {
-            if (mob == this) continue;
-            mob.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20 * 12, 1));
-            mob.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20 * 12, 0));
+    /** 虚空碾压：近身范围。 */
+    private void voidCrush(ServerLevel sl, long now, int lvl) {
+        nextSlamTick = now + SixtySecondsBalance.BOSS_SLAM_COOLDOWN_TICKS;
+        swing(InteractionHand.MAIN_HAND, true);
+        clientParticle(ParticleTypes.REVERSE_PORTAL, getX(), getY() + 0.2, getZ(), 4);
+        playSound(SoundEvents.GENERIC_EXPLODE.value(), 0.8F, 0.7F);
+        int injury = skillInjury(SixtySecondsBalance.BOSS_SLAM_INJURY + 4 * (lvl - 1));
+        for (ServerPlayer p : sl.players()) {
+            if (!isValidPrey(p) || distanceToSqr(p) > 6.0 * 6.0) continue;
+            SixtySecondsHealthSystem.applyInjury(p, null, injury);
+            Vec3 away = p.position().subtract(position()).normalize();
+            p.setDeltaMovement(away.x * 0.9, 0.6, away.z * 0.9);
+            p.hurtMarked = true;
         }
     }
 
