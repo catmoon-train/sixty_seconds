@@ -1994,7 +1994,8 @@ public final class ModItems {
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_MOTORCYCLE = ITEMS.register("sixty_seconds_motorcycle", () -> {
         SIXTY_SECONDS_MOTORCYCLE = new net.exmo.sixty_seconds.content.item.SixtySecondsVehicleItem(
                     new Item.Properties().stacksTo(1),
-                    () -> net.exmo.sixty_seconds.registry.ModEntities.SIXTY_SECONDS_MOTORCYCLE);
+                    () -> net.exmo.sixty_seconds.registry.ModEntities.SIXTY_SECONDS_MOTORCYCLE,
+                    "tooltip.sixty_seconds.motorcycle.refuel");
         return SIXTY_SECONDS_MOTORCYCLE;
     });
 
@@ -2002,7 +2003,8 @@ public final class ModItems {
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_CAR = ITEMS.register("sixty_seconds_car", () -> {
         SIXTY_SECONDS_CAR = new net.exmo.sixty_seconds.content.item.SixtySecondsVehicleItem(
                     new Item.Properties().stacksTo(1),
-                    () -> net.exmo.sixty_seconds.registry.ModEntities.SIXTY_SECONDS_CAR);
+                    () -> net.exmo.sixty_seconds.registry.ModEntities.SIXTY_SECONDS_CAR,
+                    "tooltip.sixty_seconds.car.refuel");
         return SIXTY_SECONDS_CAR;
     });
 

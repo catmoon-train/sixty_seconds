@@ -6,6 +6,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -16,6 +21,8 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.exmo.sixty_seconds.content.entity.SixtySecondsVehicleEntity;
+import net.exmo.sixty_seconds.registry.ModItems;
 
 /**
  * 潜水艇载具。继承 {@link Mob}（与飞行载具同源），实现水下三维可控移动。
@@ -37,6 +44,8 @@ public class SixtySecondsSubmarineEntity extends Mob {
             SixtySecondsSubmarineEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Float> DATA_PITCH = SynchedEntityData.defineId(
             SixtySecondsSubmarineEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Integer> DATA_FUEL = SynchedEntityData.defineId(
+            SixtySecondsSubmarineEntity.class, EntityDataSerializers.INT);
 
     /** 当前俯仰角（弧度，负值抬头、正值低头）。 */
     private float pitch = 0.0F;
@@ -44,6 +53,8 @@ public class SixtySecondsSubmarineEntity extends Mob {
     private static final double SPEED = 0.32D;
     private static final double LIFT = 0.09D;
     private static final float TURN_RATE = 3.0F;
+    /** 满油可存柴油罐数（与其它载具一致）。 */
+    private static final int BASE_FUEL_CANS = 4;
 
     /**
      * 服务端持有的上浮 / 下潜输入态。
@@ -66,6 +77,7 @@ public class SixtySecondsSubmarineEntity extends Mob {
         builder.define(DATA_ASCEND, false);
         builder.define(DATA_DESCEND, false);
         builder.define(DATA_PITCH, 0.0F);
+        builder.define(DATA_FUEL, 0);
     }
 
     public boolean isAscending() {
@@ -96,6 +108,57 @@ public class SixtySecondsSubmarineEntity extends Mob {
     public void setServerInput(boolean ascend, boolean descend) {
         this.serverAscend = ascend;
         this.serverDescend = descend;
+    }
+
+    /** 当前剩余燃料（tick）。 */
+    public int fuelTicks() {
+        return this.entityData.get(DATA_FUEL);
+    }
+
+    /** 设置燃料并夹在 [0, maxFuelTicks()] 内。 */
+    public void setFuelTicks(int ticks) {
+        this.entityData.set(DATA_FUEL, Math.max(0, Math.min(maxFuelTicks(), ticks)));
+    }
+
+    /** 满油容量：BASE_FUEL_CANS 个柴油罐的量（与其它载具一致）。 */
+    public int maxFuelTicks() {
+        return BASE_FUEL_CANS * SixtySecondsVehicleEntity.FUEL_PER_CAN_TICKS;
+    }
+
+    /**
+     * 不允许飞出水面：当潜水艇已贴近水面（艇体底部到达水柱水面）时，
+     * 抬住位置到水面、并取消继续向上的速度，使其无法探出水面（仍可用前进/转向在水面航行）。
+     */
+    private void clampToWater() {
+        if (this.level().isClientSide) return; // 仅服务端权威处理位移
+        Level level = this.level();
+        BlockPos c = this.blockPosition();
+        int cx = c.getX();
+        int cz = c.getZ();
+        int baseY = c.getY();
+        int minY = level.getMinBuildHeight();
+        int maxY = level.getMaxBuildHeight();
+        int topWaterY = -1;
+        for (int dy = -4; dy <= 4; dy++) {
+            int y = baseY + dy;
+            if (y < minY || y >= maxY) continue;
+            BlockPos bp = new BlockPos(cx, y, cz);
+            if (level.getFluidState(bp).is(FluidTags.WATER)
+                    && !level.getFluidState(bp.above()).is(FluidTags.WATER)) {
+                topWaterY = y;
+                break;
+            }
+        }
+        if (topWaterY < 0) return; // 不在水中，无需限制
+        BlockPos top = new BlockPos(cx, topWaterY, cz);
+        double surfaceY = topWaterY + level.getFluidState(top).getHeight(level, top) - 1.0D;
+        if (surfaceY <= this.getY()) return; // 艇底仍在水面之下，无需限制
+        // 艇底已到达/超过水面：贴住水面，并消去向上速度
+        this.setY(surfaceY);
+        Vec3 v = this.getDeltaMovement();
+        if (v.y > 0.0D) {
+            this.setDeltaMovement(v.x, 0.0D, v.z);
+        }
     }
 
     @Override
@@ -129,18 +192,31 @@ public class SixtySecondsSubmarineEntity extends Mob {
 
             this.setYRot(this.getYRot() - steer * TURN_RATE);
 
-            Vec3 dir = Vec3.directionFromRotation(this.getXRot(), this.getYRot());
-            // 渲染以 (180 - yaw) 摆放模型，dir 实际指向艇艉，故水平分量取反得到艇艏前进方向。
-            double vx = -dir.x * forward * SPEED;
-            double vz = -dir.z * forward * SPEED;
-            // 竖直速度：升降按键独立生效（不依赖是否按 W），
-            // 再叠加俯仰角带来的斜向分量（按 W 前进时即斜向上/下航行）。
-            double vy = dir.y * forward * SPEED;
-            if (ascend) vy += LIFT;
-            if (descend) vy -= LIFT;
-            this.setDeltaMovement(vx, vy, vz);
-            // 由我们自己驱动位移，原版 travel() 不再插手
-            this.move(MoverType.SELF, this.getDeltaMovement());
+            // 无燃料：无法驱动，保持姿态不动（仅刚上艇时提示一次）。
+            if (this.fuelTicks() > 0) {
+                Vec3 dir = Vec3.directionFromRotation(this.getXRot(), this.getYRot());
+                // 渲染以 (180 - yaw) 摆放模型，dir 实际指向艇艉，故水平分量取反得到艇艏前进方向。
+                double vx = -dir.x * forward * SPEED;
+                double vz = -dir.z * forward * SPEED;
+                // 竖直速度：升降按键独立生效（不依赖是否按 W），
+                // 再叠加俯仰角带来的斜向分量（按 W 前进时即斜向上/下航行）。
+                double vy = dir.y * forward * SPEED;
+                if (ascend) vy += LIFT;
+                if (descend) vy -= LIFT;
+                this.setDeltaMovement(vx, vy, vz);
+                // 由我们自己驱动位移，原版 travel() 不再插手
+                this.move(MoverType.SELF, this.getDeltaMovement());
+                // 服务端按输入消耗燃料
+                if (!this.level().isClientSide
+                        && (forward != 0.0F || steer != 0.0F || ascend || descend)) {
+                    setFuelTicks(this.fuelTicks() - 1);
+                    if (this.fuelTicks() == 0) {
+                        rider.displayClientMessage(Component.translatable(
+                                "message.sixty_seconds.sixty_seconds.vehicle_no_fuel")
+                                .withStyle(ChatFormatting.RED), true);
+                    }
+                }
+            }
             // 阻止 Mob 自带 travel 再次施力：清空其输入
             this.zza = 0.0F;
             this.xxa = 0.0F;
@@ -152,6 +228,8 @@ public class SixtySecondsSubmarineEntity extends Mob {
             this.zza = 0.0F;
             this.xxa = 0.0F;
         }
+        // 不允许飞出水面：贴近水面时取消继续上浮
+        this.clampToWater();
         // 载具自身不会溺水；乘员在水下也不会溺水
         this.setAirSupply(this.getMaxAirSupply());
         for (Entity passenger : this.getPassengers()) {
@@ -207,6 +285,28 @@ public class SixtySecondsSubmarineEntity extends Mob {
 
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        // 手持柴油罐/燃油罐右键加油（与其它载具一致）
+        if (!this.level().isClientSide) {
+            ItemStack held = player.getItemInHand(hand);
+            int per;
+            boolean diesel = held.is(ModItems.SIXTY_SECONDS_DIESEL_CAN);
+            boolean petrol = held.is(ModItems.SIXTY_SECONDS_FUEL_CAN);
+            if (diesel) per = SixtySecondsVehicleEntity.FUEL_PER_CAN_TICKS;
+            else if (petrol) per = SixtySecondsVehicleEntity.FUEL_PER_CAN_TICKS / 2;
+            else per = 0;
+            if (per > 0 && this.fuelTicks() < this.maxFuelTicks()) {
+                this.setFuelTicks(this.fuelTicks() + per);
+                if (!player.getAbilities().instabuild) held.shrink(1);
+                this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
+                        SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
+                int cans = Math.round((float) this.fuelTicks()
+                        / (float) SixtySecondsVehicleEntity.FUEL_PER_CAN_TICKS);
+                player.displayClientMessage(Component.translatable(
+                                "message.sixty_seconds.sixty_seconds.vehicle_fuel_added", cans)
+                        .withStyle(ChatFormatting.GREEN), true);
+                return InteractionResult.CONSUME;
+            }
+        }
         if (!this.level().isClientSide && this.getPassengers().size() < 2) {
             player.startRiding(this);
             return InteractionResult.CONSUME;
@@ -233,10 +333,12 @@ public class SixtySecondsSubmarineEntity extends Mob {
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         this.pitch = tag.getFloat("pitch");
+        this.setFuelTicks(tag.getInt("fuel"));
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         tag.putFloat("pitch", this.pitch);
+        tag.putInt("fuel", this.fuelTicks());
     }
 }

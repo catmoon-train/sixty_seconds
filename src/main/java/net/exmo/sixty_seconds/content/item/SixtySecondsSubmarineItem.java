@@ -74,6 +74,7 @@ public class SixtySecondsSubmarineItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip.sixty_seconds.submarine.controls").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("tooltip.sixty_seconds.submarine.refuel").withStyle(ChatFormatting.GRAY));
         super.appendHoverText(stack, context, tooltip, flag);
     }
 }

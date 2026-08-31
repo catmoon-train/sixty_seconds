@@ -1,18 +1,22 @@
 package net.exmo.sixty_seconds.content.item;
 
 import net.exmo.sixty_seconds.content.entity.SixtySecondsVehicleEntity;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 /**
@@ -22,11 +26,15 @@ import java.util.function.Supplier;
 public class SixtySecondsVehicleItem extends Item {
 
     private final Supplier<EntityType<SixtySecondsVehicleEntity>> typeSupplier;
+    /** 加油提示翻译键（摩托车=燃油罐，小汽车=柴油罐）。 */
+    private final String refuelTooltipKey;
 
     public SixtySecondsVehicleItem(Properties properties,
-            Supplier<EntityType<SixtySecondsVehicleEntity>> typeSupplier) {
+            Supplier<EntityType<SixtySecondsVehicleEntity>> typeSupplier,
+            String refuelTooltipKey) {
         super(properties);
         this.typeSupplier = typeSupplier;
+        this.refuelTooltipKey = refuelTooltipKey;
     }
 
     @Override
@@ -53,5 +61,11 @@ public class SixtySecondsVehicleItem extends Item {
         stack.consume(1, ctx.getPlayer());
         level.gameEvent(ctx.getPlayer(), GameEvent.ENTITY_PLACE, spawnPos);
         return InteractionResult.CONSUME;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(Component.translatable(refuelTooltipKey).withStyle(ChatFormatting.GRAY));
+        super.appendHoverText(stack, context, tooltip, flag);
     }
 }
