@@ -205,6 +205,16 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         // BRUTE 重锤兽：宽厚躯干 + 牛角 + 锤状双臂 + 粗壮双腿（独立建模）
         // ══════════════════════════════════════════════════════════
         PartDefinition br = root.addOrReplaceChild("brute", CubeListBuilder.create(), PartPose.ZERO);
+        // — 重建模细节：背脊棘 + 双拳利爪（命名复用 body/arm_ 前缀）
+        br.addOrReplaceChild("body_ridge",
+                CubeListBuilder.create().texOffs(70, 0).addBox(-4.0F, -1.0F, -1.0F, 8.0F, 2.0F, 2.0F),
+                PartPose.offset(0.0F, 17.0F, 5.0F));
+        br.addOrReplaceChild("arm_claw_l",
+                CubeListBuilder.create().texOffs(90, 0).addBox(-1.0F, -1.0F, -2.0F, 2.0F, 3.0F, 3.0F),
+                PartPose.offset(-10.0F, 6.0F, 0.0F));
+        br.addOrReplaceChild("arm_claw_r",
+                CubeListBuilder.create().texOffs(104, 0).addBox(-1.0F, -1.0F, -2.0F, 2.0F, 3.0F, 3.0F),
+                PartPose.offset(6.0F, 6.0F, 0.0F));
         br.addOrReplaceChild("body",
                 CubeListBuilder.create().texOffs(0, 0).addBox(-7.0F, -10.0F, -5.0F, 14.0F, 12.0F, 10.0F),
                 PartPose.offset(0.0F, 16.0F, 0.0F));
@@ -237,6 +247,16 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         // RUNNER 奔跑者：瘦长躯干 + 长腿 + 后掠双臂（独立建模）
         // ══════════════════════════════════════════════════════════
         PartDefinition ru = root.addOrReplaceChild("runner", CubeListBuilder.create(), PartPose.ZERO);
+        // — 重建模细节：背脊脊 + 双爪（命名复用 body/arm_ 前缀）
+        ru.addOrReplaceChild("body_ridge",
+                CubeListBuilder.create().texOffs(70, 0).addBox(-3.0F, -1.0F, -1.0F, 6.0F, 2.0F, 2.0F),
+                PartPose.offset(0.0F, 18.0F, 3.0F));
+        ru.addOrReplaceChild("arm_claw_l",
+                CubeListBuilder.create().texOffs(90, 0).addBox(-1.0F, -1.0F, -2.0F, 2.0F, 3.0F, 3.0F),
+                PartPose.offset(-7.0F, 13.0F, 0.0F));
+        ru.addOrReplaceChild("arm_claw_r",
+                CubeListBuilder.create().texOffs(104, 0).addBox(-1.0F, -1.0F, -2.0F, 2.0F, 3.0F, 3.0F),
+                PartPose.offset(5.0F, 13.0F, 0.0F));
         ru.addOrReplaceChild("body",
                 CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -12.0F, -3.0F, 8.0F, 10.0F, 5.0F),
                 PartPose.offset(0.0F, 16.0F, 0.0F));
@@ -269,6 +289,16 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         // SHAMBLER 拖行者：驼背躯干 + 一只巨大拖地臂 + 细弱双腿（独立建模）
         // ══════════════════════════════════════════════════════════
         PartDefinition sh = root.addOrReplaceChild("shambler", CubeListBuilder.create(), PartPose.ZERO);
+        // — 重建模细节：背脊脊 + 双爪（命名复用 body/arm_ 前缀）
+        sh.addOrReplaceChild("body_ridge",
+                CubeListBuilder.create().texOffs(70, 0).addBox(-3.0F, -1.0F, -1.0F, 6.0F, 2.0F, 2.0F),
+                PartPose.offset(0.0F, 18.0F, 3.0F));
+        sh.addOrReplaceChild("arm_claw_l",
+                CubeListBuilder.create().texOffs(90, 0).addBox(-1.0F, -1.0F, -2.0F, 2.0F, 3.0F, 3.0F),
+                PartPose.offset(-7.0F, 5.0F, 0.0F));
+        sh.addOrReplaceChild("arm_claw_r",
+                CubeListBuilder.create().texOffs(104, 0).addBox(-1.0F, -1.0F, -2.0F, 2.0F, 3.0F, 3.0F),
+                PartPose.offset(5.0F, 5.0F, 0.0F));
         sh.addOrReplaceChild("body",
                 CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, -8.0F, -3.0F, 10.0F, 8.0F, 6.0F),
                 PartPose.offset(0.0F, 16.0F, 0.0F));
@@ -336,6 +366,10 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         // STALKER 潜袭者：瘦长低伏四足 + 双镰刀前肢 + 尖刺长头
         // ══════════════════════════════════════════════════════════
         PartDefinition st = root.addOrReplaceChild("stalker", CubeListBuilder.create(), PartPose.ZERO);
+        // — 重建模细节：背脊甲脊（命名复用 body 前缀以继承甲壳材质）
+        st.addOrReplaceChild("body_ridge",
+                CubeListBuilder.create().texOffs(70, 0).addBox(-3.0F, -1.0F, -1.0F, 6.0F, 2.0F, 2.0F),
+                PartPose.offset(0.0F, 13.0F, 2.0F));
         st.addOrReplaceChild("body",
                 CubeListBuilder.create().texOffs(0, 0).addBox(-2.5F, -2.5F, -6.0F, 5.0F, 5.0F, 12.0F),
                 PartPose.offset(0.0F, 18.0F, 0.0F));
@@ -438,6 +472,10 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         // JUGGERNAUT 装甲重锤：厚重躯干 + 双层巨肩 + 小头 + 粗腿 + 重锤臂
         // ══════════════════════════════════════════════════════════
         PartDefinition ju = root.addOrReplaceChild("juggernaut", CubeListBuilder.create(), PartPose.ZERO);
+        // — 重建模细节：背脊装甲脊（命名复用 torso 前缀以继承钢板材质）
+        ju.addOrReplaceChild("torso_ridge",
+                CubeListBuilder.create().texOffs(70, 0).addBox(-4.0F, -1.0F, -1.0F, 8.0F, 2.0F, 2.0F),
+                PartPose.offset(0.0F, 3.0F, 5.0F));
         ju.addOrReplaceChild("torso",
                 CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, -10.0F, -4.0F, 12.0F, 16.0F, 8.0F),
                 PartPose.offset(0.0F, 12.0F, 0.0F));
@@ -508,6 +546,10 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         // FROSTLING 寒霜爬行者：冰晶棱块躯干 + 冰冠 + 双臂冰刺 + 细肢
         // ══════════════════════════════════════════════════════════
         PartDefinition fr = root.addOrReplaceChild("frostling", CubeListBuilder.create(), PartPose.ZERO);
+        // — 重建模细节：背脊冰脊（命名复用 torso 前缀以继承冰鳞材质）
+        fr.addOrReplaceChild("torso_ridge",
+                CubeListBuilder.create().texOffs(70, 0).addBox(-3.0F, -1.0F, -1.0F, 6.0F, 2.0F, 2.0F),
+                PartPose.offset(0.0F, 12.0F, 2.0F));
         fr.addOrReplaceChild("torso",
                 CubeListBuilder.create().texOffs(0, 0).addBox(-3.5F, -7.0F, -3.0F, 7.0F, 11.0F, 6.0F),
                 PartPose.offset(0.0F, 17.0F, 0.0F));
@@ -540,6 +582,10 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         // HUSKBRUTE 枯壳重锤：干裂木壳躯干 + 树瘤 + 粗大双臂 + 墩实双腿
         // ══════════════════════════════════════════════════════════
         PartDefinition hb = root.addOrReplaceChild("huskbrute", CubeListBuilder.create(), PartPose.ZERO);
+        // — 重建模细节：背脊朽木脊（命名复用 torso 前缀以继承甲壳材质）
+        hb.addOrReplaceChild("torso_ridge",
+                CubeListBuilder.create().texOffs(70, 0).addBox(-4.0F, -1.0F, -1.0F, 8.0F, 2.0F, 2.0F),
+                PartPose.offset(0.0F, 10.0F, 3.0F));
         hb.addOrReplaceChild("torso",
                 CubeListBuilder.create().texOffs(0, 0).addBox(-5.5F, -9.0F, -4.0F, 11.0F, 14.0F, 8.0F),
                 PartPose.offset(0.0F, 14.0F, 0.0F));
@@ -572,6 +618,10 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         // RAVENOR 掠影：极瘦高躯干 + 钩喙头 + 双翼膜 + 钩爪长腿
         // ══════════════════════════════════════════════════════════
         PartDefinition ra = root.addOrReplaceChild("ravenor", CubeListBuilder.create(), PartPose.ZERO);
+        // — 重建模细节：背脊羽脊（命名复用 torso 前缀以继承羽甲材质）
+        ra.addOrReplaceChild("torso_ridge",
+                CubeListBuilder.create().texOffs(70, 0).addBox(-3.0F, -1.0F, -1.0F, 6.0F, 2.0F, 2.0F),
+                PartPose.offset(0.0F, 15.0F, 2.0F));
         ra.addOrReplaceChild("torso",
                 CubeListBuilder.create().texOffs(0, 0).addBox(-2.5F, -8.0F, -2.0F, 5.0F, 13.0F, 4.0F),
                 PartPose.offset(0.0F, 15.0F, 0.0F));
@@ -610,6 +660,10 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         // WAILER 哀嚎者：高瘦佝偻躯干 + 长脸张口 + 垂落飘带 + 过膝长臂
         // ══════════════════════════════════════════════════════════
         PartDefinition wa = root.addOrReplaceChild("wailer", CubeListBuilder.create(), PartPose.ZERO);
+        // — 重建模细节：背脊飘脊（命名复用 torso 前缀以继承虚质材质）
+        wa.addOrReplaceChild("torso_ridge",
+                CubeListBuilder.create().texOffs(70, 0).addBox(-3.0F, -1.0F, -1.0F, 6.0F, 2.0F, 2.0F),
+                PartPose.offset(0.0F, 11.0F, 2.0F));
         wa.addOrReplaceChild("torso",
                 CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -9.0F, -2.5F, 6.0F, 14.0F, 5.0F),
                 PartPose.offset(0.0F, 15.0F, 0.0F));
@@ -721,6 +775,10 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         // SHADOWMUTE 暗默：无腿幽魂 + 兜帽 + 虚无下摆 + 发光眼
         // ══════════════════════════════════════════════════════════
         PartDefinition sm = root.addOrReplaceChild("shadowmute", CubeListBuilder.create(), PartPose.ZERO);
+        // — 重建模细节：背脊虚脊（命名复用 torso 前缀以继承虚质材质）
+        sm.addOrReplaceChild("torso_ridge",
+                CubeListBuilder.create().texOffs(70, 0).addBox(-3.0F, -1.0F, -1.0F, 6.0F, 2.0F, 2.0F),
+                PartPose.offset(0.0F, 7.0F, 2.0F));
         sm.addOrReplaceChild("torso",
                 CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -9.0F, -3.0F, 8.0F, 12.0F, 6.0F),
                 PartPose.offset(0.0F, 14.0F, 0.0F));
@@ -750,6 +808,13 @@ public class SixtySecondsCreatureModel extends EntityModel<SixtySecondsMonsterEn
         // BONELORD 白骨领主：骷髅巨躯 + 外露肋骨 + 头骨 + 披风 + 骨刺
         // ══════════════════════════════════════════════════════════
         PartDefinition bo = root.addOrReplaceChild("bonelord", CubeListBuilder.create(), PartPose.ZERO);
+        // — 重建模细节：背脊棘 + 颅冠（命名复用 torso/skull 前缀以继承骨材质）
+        bo.addOrReplaceChild("torso_ridge",
+                CubeListBuilder.create().texOffs(70, 0).addBox(-4.0F, -1.0F, -1.0F, 8.0F, 2.0F, 2.0F),
+                PartPose.offset(0.0F, 15.0F, 3.0F));
+        bo.addOrReplaceChild("skull_crown",
+                CubeListBuilder.create().texOffs(90, 0).addBox(-4.0F, -1.0F, -2.0F, 8.0F, 2.0F, 4.0F),
+                PartPose.offset(0.0F, 6.0F, -0.5F));
         bo.addOrReplaceChild("torso",
                 CubeListBuilder.create().texOffs(0, 0).addBox(-4.5F, -10.0F, -3.0F, 9.0F, 15.0F, 6.0F),
                 PartPose.offset(0.0F, 13.0F, 0.0F));
