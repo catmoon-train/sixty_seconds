@@ -161,7 +161,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         Component name = Component.translatable(variant.nameKey())
                 .withStyle(ChatFormatting.DARK_PURPLE);
         setCustomName(name);
-        setCustomNameVisible(true);
+        setCustomNameVisible(false);
         bossEvent.setName(name);
         bossEvent.setColor(variant == Variant.LEVIATHAN ? BossEvent.BossBarColor.RED : BossEvent.BossBarColor.PURPLE);
     }
