@@ -3080,6 +3080,7 @@
   "item.sixty_seconds.sixty_seconds_diving_boots": "Diving Boots",
   "tooltip.sixty_seconds.submarine.controls": "W/S forward-back  A/D turn  Space ascend  L-Ctrl descend",
   "tooltip.sixty_seconds.submarine.refuel": "Right-click with a diesel can to refuel",
+  "message.sixty_seconds.sixty_seconds.vehicle_fuel_added": "Refueled — about %s diesel cans' worth now",
   "tooltip.sixty_seconds.car.refuel": "Right-click with a diesel can to refuel",
   "tooltip.sixty_seconds.motorcycle.refuel": "Right-click with a fuel can to refuel",
   "key.sixty_seconds.submarine_descend": "Submarine Dive",

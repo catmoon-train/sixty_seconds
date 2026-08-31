@@ -2492,6 +2492,7 @@
   "item.sixty_seconds.diving_boots": "潜水靴",
   "tooltip.sixty_seconds.submarine.controls": "W前進/S後退  A左轉/D右轉  空白鍵上浮  左Ctrl下潛",
   "tooltip.sixty_seconds.submarine.refuel": "手持柴油罐右鍵加油",
+  "message.sixty_seconds.sixty_seconds.vehicle_fuel_added": "已加註燃料，目前約 %s 罐柴油量",
   "tooltip.sixty_seconds.car.refuel": "手持柴油罐右鍵加油",
   "tooltip.sixty_seconds.motorcycle.refuel": "手持燃油罐右鍵加油",
   "key.sixty_seconds.submarine_descend": "潜水艇下潜",

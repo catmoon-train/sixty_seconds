@@ -127,8 +127,8 @@ public class SixtySecondsSubmarineEntity extends Mob {
     }
 
     /**
-     * 不允许飞出水面：当潜水艇已贴近水面（艇体底部到达水柱水面）时，
-     * 抬住位置到水面、并取消继续向上的速度，使其无法探出水面（仍可用前进/转向在水面航行）。
+     * 不允许飞出水面：当潜水艇艇底已探出水面（高于水面）时，贴住水面并取消向上速度；
+     * 只要艇底仍在水面或水面之下，则完全自由升降（可在水下随意上浮/下潜）。
      */
     private void clampToWater() {
         if (this.level().isClientSide) return; // 仅服务端权威处理位移
@@ -153,8 +153,8 @@ public class SixtySecondsSubmarineEntity extends Mob {
         if (topWaterY < 0) return; // 不在水中，无需限制
         BlockPos top = new BlockPos(cx, topWaterY, cz);
         double surfaceY = topWaterY + level.getFluidState(top).getHeight(level, top) - 1.0D;
-        if (surfaceY <= this.getY()) return; // 艇底仍在水面之下，无需限制
-        // 艇底已到达/超过水面：贴住水面，并消去向上速度
+        if (this.getY() <= surfaceY) return; // 艇底仍在水面或水面之下：水下自由升降，不限制
+        // 艇底已探出水面：贴住水面，并消去向上速度（不允许飞出水面）
         this.setPos(this.getX(), surfaceY, this.getZ());
         Vec3 v = this.getDeltaMovement();
         if (v.y > 0.0D) {
