@@ -51,12 +51,32 @@ public final class SixtySecondsEventSystem {
         SPORE_FOG,
         /** 冰雹：户外持续微弱伤害 */
         HAIL,
-        /** 血月：仅在夜间事件池中出现，怪物生成翻倍+攻击力强化+理智下降 */
+        /** 血月：仅在夜间事件池中出现，怪物攻击力强化 + 理智下降 */
         BLOOD_MOON,
         /** 辐射泄漏：全队污染缓慢上升（屋内也受影响但减半） */
         RADIATION_LEAK,
         /** 浓雾：能见度极低 */
-        DENSE_FOG
+        DENSE_FOG,
+        /** 雷暴：户外随机落雷 + 雷暴天气（雨天+雷） */
+        THUNDERSTORM,
+        /** 潮涌：靠近水体者被水流冲击并溺水扣血（海洋主题） */
+        TIDAL_SURGE,
+        /** 虚空裂隙：仅户外玩家，每 15 秒有 5% 几率被随机传送 */
+        VOID_RIFT,
+        /** 火山灰：户外污染上升 + 偶尔窒息 */
+        ASH_FALL,
+        /** 火雨：户外玩家周期着火 + 火焰伤害 */
+        FIRE_RAIN,
+        /** 水晶风暴：户外被冰晶切割 + 缓慢 */
+        CRYSTAL_STORM,
+        /** 剧毒孢子：户外中毒 + 理智下降 */
+        TOXIC_SPORE,
+        /** 太阳耀斑：户外暴晒着火 + 口渴加速 */
+        SOLAR_FLARE,
+        /** 灵魂风：户外虚弱 + 反胃 + 理智下降 */
+        SOUL_WIND,
+        /** 余烬风暴：户外火焰伤害 + 烟尘致盲 */
+        EMBER_STORM
     }
 
     private static final Map<ServerLevel, Active> ACTIVE = new WeakHashMap<>();
@@ -91,6 +111,16 @@ public final class SixtySecondsEventSystem {
             case BLOOD_MOON -> "message.sixty_seconds.sixty_seconds.event_blood_moon_start";
             case RADIATION_LEAK -> "message.sixty_seconds.sixty_seconds.event_radiation_leak_start";
             case DENSE_FOG -> "message.sixty_seconds.sixty_seconds.event_dense_fog_start";
+            case THUNDERSTORM -> "message.sixty_seconds.sixty_seconds.event_thunderstorm_start";
+            case TIDAL_SURGE -> "message.sixty_seconds.sixty_seconds.event_tidal_surge_start";
+            case VOID_RIFT -> "message.sixty_seconds.sixty_seconds.event_void_rift_start";
+            case ASH_FALL -> "message.sixty_seconds.sixty_seconds.event_ash_fall_start";
+            case FIRE_RAIN -> "message.sixty_seconds.sixty_seconds.event_fire_rain_start";
+            case CRYSTAL_STORM -> "message.sixty_seconds.sixty_seconds.event_crystal_storm_start";
+            case TOXIC_SPORE -> "message.sixty_seconds.sixty_seconds.event_toxic_spore_start";
+            case SOLAR_FLARE -> "message.sixty_seconds.sixty_seconds.event_solar_flare_start";
+            case SOUL_WIND -> "message.sixty_seconds.sixty_seconds.event_soul_wind_start";
+            case EMBER_STORM -> "message.sixty_seconds.sixty_seconds.event_ember_storm_start";
             default -> null;
         };
     }
@@ -143,7 +173,7 @@ public final class SixtySecondsEventSystem {
 
     /** 是否为下雨型自然事件（触发世界下雨）。与 startEvent 中 setWeatherParameters(..., true, ...) 保持一致。 */
     public static boolean isRainEventType(EventType type) {
-        return type == EventType.POLLUTION_RAIN || type == EventType.HAIL;
+        return type == EventType.POLLUTION_RAIN || type == EventType.HAIL || type == EventType.THUNDERSTORM;
     }
 
     private static void startEvent(ServerLevel level, EventType type, long now) {
@@ -220,6 +250,57 @@ public final class SixtySecondsEventSystem {
                 broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_dense_fog_start")
                         .withStyle(ChatFormatting.GRAY));
             }
+            case THUNDERSTORM -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_thunderstorm_start")
+                        .withStyle(ChatFormatting.GOLD));
+                level.setWeatherParameters(0, SixtySecondsBalance.EVENT_BASE_DURATION, true, true);
+            }
+            case TIDAL_SURGE -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_tidal_surge_start")
+                        .withStyle(ChatFormatting.AQUA));
+            }
+            case VOID_RIFT -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_void_rift_start")
+                        .withStyle(ChatFormatting.DARK_PURPLE));
+            }
+            case ASH_FALL -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_ash_fall_start")
+                        .withStyle(ChatFormatting.GRAY));
+            }
+            case FIRE_RAIN -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_fire_rain_start")
+                        .withStyle(ChatFormatting.GOLD));
+            }
+            case CRYSTAL_STORM -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_crystal_storm_start")
+                        .withStyle(ChatFormatting.AQUA));
+            }
+            case TOXIC_SPORE -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_toxic_spore_start")
+                        .withStyle(ChatFormatting.GREEN));
+            }
+            case SOLAR_FLARE -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_solar_flare_start")
+                        .withStyle(ChatFormatting.GOLD));
+            }
+            case SOUL_WIND -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_soul_wind_start")
+                        .withStyle(ChatFormatting.WHITE));
+            }
+            case EMBER_STORM -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_ember_storm_start")
+                        .withStyle(ChatFormatting.GOLD));
+            }
             case AIRDROP -> airdrop(level); // 瞬发，不进 ACTIVE
         }
         if (type != EventType.AIRDROP) {
@@ -292,8 +373,7 @@ public final class SixtySecondsEventSystem {
                         stats.sanity = Math.max(0, stats.sanity - 3);
                         stats.sync();
                     }
-                    // 玩家受到的伤害 +50% 未直接实现（仅施加虚弱降低玩家输出）；怪物攻击力强化见下方说明
-                    // 怪物攻击力强化：由 SixtySecondsHealthSystem.applyInjury 依据 isMonsterStrengthBoosted 实现
+                    // 电磁风暴：全队虚弱 + 理智下降；怪物攻击力强化由 SixtySecondsHealthSystem.applyInjury 依据 isMonsterStrengthBoosted 实现
                 }
                 case SWARM -> {
                     // 虫潮：户外缓慢 + 持续受击
@@ -328,6 +408,107 @@ public final class SixtySecondsEventSystem {
                     // 地震：瞬发型，在 startEvent 中已施加反胃效果
                     // tick 中不做额外处理，仅持续至 endTick
                     continue;
+                }
+                case THUNDERSTORM -> {
+                    // 雷暴：户外玩家周期性被落雷击中（落雷本身造成范围伤害）
+                    if (inHome) continue;
+                    if (now % (20 * 10) == 0 && level.getRandom().nextDouble() < 0.1 && level.canSeeSky(player.blockPosition())) {
+                        net.minecraft.world.entity.LightningBolt bolt = new net.minecraft.world.entity.LightningBolt(
+                                net.minecraft.world.entity.EntityType.LIGHTNING_BOLT, level);
+                        bolt.setPos(player.getX(), player.getY(), player.getZ());
+                        level.addFreshEntity(bolt);
+                    }
+                    if (now % (20 * 10) == 0) {
+                        stats.sanity = Math.max(0, stats.sanity - 2);
+                        stats.sync();
+                    }
+                }
+                case TIDAL_SURGE -> {
+                    // 潮涌：靠近水体者被水流冲击并溺水扣血（海洋主题）
+                    if (now % (20 * 3) == 0 && isNearWater(level, player)) {
+                        player.hurt(player.damageSources().drown(), 2.0F);
+                        player.push(0.0, 0.5, 0.0);
+                        player.displayClientMessage(
+                                Component.translatable("message.sixty_seconds.sixty_seconds.event_tidal_surge_hit")
+                                        .withStyle(ChatFormatting.AQUA), true);
+                    }
+                }
+                case VOID_RIFT -> {
+                    // 虚空裂隙：仅户外玩家，每 15 秒有 5% 几率被随机传送
+                    if (inHome) continue;
+                    if (now % (20 * 15) == 0 && level.getRandom().nextDouble() < 0.05
+                            && level.canSeeSky(player.blockPosition())) {
+                        double nx = player.getX() + (level.getRandom().nextDouble() - 0.5) * 16.0;
+                        double nz = player.getZ() + (level.getRandom().nextDouble() - 0.5) * 16.0;
+                        player.teleportTo(nx, player.getY(), nz);
+                        player.displayClientMessage(
+                                Component.translatable("message.sixty_seconds.sixty_seconds.event_void_rift_hit")
+                                        .withStyle(ChatFormatting.DARK_PURPLE), true);
+                    }
+                }
+                case ASH_FALL -> {
+                    // 火山灰：户外无防毒面具者缓慢污染 + 每 10 秒窒息扣血
+                    if (!inHome && !hasGasMask(player) && now % (20 * 3) == 0) {
+                        addPollution(level, stats, 1);
+                    }
+                    // 窒息：仅户外且无防毒面具者，每 10 秒扣 1 点生命（不会直接致死）
+                    if (!inHome && !hasGasMask(player) && now % (20 * 10) == 0) {
+                        player.hurt(player.damageSources().generic(), 1.0F);
+                        player.displayClientMessage(Component.translatable(
+                                "message.sixty_seconds.sixty_seconds.event_ash_fall_hit").withStyle(ChatFormatting.GRAY), true);
+                    }
+                }
+                case FIRE_RAIN -> {
+                    // 火雨：户外玩家每 10 秒着火 + 火焰伤害
+                    if (inHome) continue;
+                    if (now % (20 * 10) == 0) {
+                        player.setRemainingFireTicks(60);
+                        player.hurt(player.damageSources().onFire(), 1.0F);
+                        player.displayClientMessage(Component.translatable(
+                                "message.sixty_seconds.sixty_seconds.event_fire_rain_hit").withStyle(ChatFormatting.GOLD), true);
+                    }
+                }
+                case CRYSTAL_STORM -> {
+                    // 水晶风暴：户外玩家每 8 秒被冰晶切割 + 缓慢
+                    if (inHome) continue;
+                    if (now % (20 * 8) == 0) {
+                        player.hurt(player.damageSources().generic(), 1.5F);
+                        player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0, false, false, false));
+                    }
+                }
+                case TOXIC_SPORE -> {
+                    // 剧毒孢子：户外玩家每 10 秒获得 5 秒中毒 I
+                    if (inHome) continue;
+                    if (now % (20 * 10) == 0) {
+                        player.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1, false, false, false));
+                    }
+                }
+                case SOLAR_FLARE -> {
+                    // 太阳耀斑：户外玩家每 8 秒暴晒着火 + 口渴加速
+                    if (inHome) continue;
+                    if (now % (20 * 8) == 0) {
+                        player.setRemainingFireTicks(40);
+                        stats.thirst = Math.max(0, stats.thirst - 1);
+                        stats.sync();
+                    }
+                }
+                case SOUL_WIND -> {
+                    // 灵魂风：户外玩家虚弱 + 反胃 + 掉理智
+                    if (inHome) continue;
+                    if (now % (20 * 6) == 0) {
+                        player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 120, 0, false, false, false));
+                        player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 0, false, false, false));
+                        stats.sanity = Math.max(0, stats.sanity - 2);
+                        stats.sync();
+                    }
+                }
+                case EMBER_STORM -> {
+                    // 余烬风暴：户外玩家每 4 秒污染 +1 并陷入 3 秒黑暗（烟尘）
+                    if (inHome) continue;
+                    if (now % (20 * 4) == 0) {
+                        addPollution(level, stats, 1);
+                        player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60, 0, false, false, false));
+                    }
                 }
                 case METEOR_SHOWER -> {
                     // 流星雨：户外随机被火球砸中（不放置方块/火）
@@ -485,6 +666,32 @@ public final class SixtySecondsEventSystem {
                 broadcast(level, Component.translatable(
                         "message.sixty_seconds.sixty_seconds.event_dense_fog_end").withStyle(ChatFormatting.GRAY));
             }
+            case THUNDERSTORM -> {
+                broadcast(level, Component.translatable(
+                        "message.sixty_seconds.sixty_seconds.event_thunderstorm_end").withStyle(ChatFormatting.GRAY));
+            }
+            case TIDAL_SURGE -> {
+                broadcast(level, Component.translatable(
+                        "message.sixty_seconds.sixty_seconds.event_tidal_surge_end").withStyle(ChatFormatting.GRAY));
+            }
+            case VOID_RIFT -> {
+                broadcast(level, Component.translatable(
+                        "message.sixty_seconds.sixty_seconds.event_void_rift_end").withStyle(ChatFormatting.GRAY));
+            }
+            case ASH_FALL -> broadcast(level, Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.event_ash_fall_end").withStyle(ChatFormatting.GRAY));
+            case FIRE_RAIN -> broadcast(level, Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.event_fire_rain_end").withStyle(ChatFormatting.GRAY));
+            case CRYSTAL_STORM -> broadcast(level, Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.event_crystal_storm_end").withStyle(ChatFormatting.GRAY));
+            case TOXIC_SPORE -> broadcast(level, Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.event_toxic_spore_end").withStyle(ChatFormatting.GRAY));
+            case SOLAR_FLARE -> broadcast(level, Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.event_solar_flare_end").withStyle(ChatFormatting.GRAY));
+            case SOUL_WIND -> broadcast(level, Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.event_soul_wind_end").withStyle(ChatFormatting.GRAY));
+            case EMBER_STORM -> broadcast(level, Component.translatable(
+                    "message.sixty_seconds.sixty_seconds.event_ember_storm_end").withStyle(ChatFormatting.GRAY));
             default -> {
             }
         }
@@ -521,6 +728,22 @@ public final class SixtySecondsEventSystem {
     private static boolean hasGasMask(ServerPlayer player) {
         return player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.HEAD)
                 .is(ModItems.SIXTY_SECONDS_GAS_MASK);
+    }
+
+    /** 玩家是否身处或紧邻水体（3×3×3 范围检测流体）。用于潮涌事件。 */
+    private static boolean isNearWater(ServerLevel level, ServerPlayer player) {
+        net.minecraft.core.BlockPos center = player.blockPosition();
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = -1; dy <= 1; dy++) {
+                for (int dz = -1; dz <= 1; dz++) {
+                    net.minecraft.core.BlockPos p = center.offset(dx, dy, dz);
+                    if (level.getFluidState(p).getType() != net.minecraft.world.level.material.Fluids.EMPTY) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private static void broadcast(ServerLevel level, Component message) {
@@ -578,7 +801,10 @@ public final class SixtySecondsEventSystem {
             EventType.ACID_FOG, EventType.ELECTROMAGNETIC_STORM, EventType.SWARM,
             EventType.HEAT_WAVE, EventType.SANDSTORM, EventType.METEOR_SHOWER,
             EventType.SPORE_FOG, EventType.HAIL, EventType.DENSE_FOG,
-            EventType.RADIATION_LEAK, EventType.BLOOD_MOON
+            EventType.RADIATION_LEAK, EventType.BLOOD_MOON,
+            EventType.ASH_FALL, EventType.FIRE_RAIN, EventType.CRYSTAL_STORM,
+            EventType.TOXIC_SPORE, EventType.SOLAR_FLARE, EventType.SOUL_WIND,
+            EventType.EMBER_STORM
     };
 
     /** 安排某天必定触发的事件（null 表示晴朗，不强制触发） */
@@ -611,6 +837,16 @@ public final class SixtySecondsEventSystem {
             case DENSE_FOG -> "message.sixty_seconds.sixty_seconds.event_dense_fog_name";
             case RADIATION_LEAK -> "message.sixty_seconds.sixty_seconds.event_radiation_leak_name";
             case BLOOD_MOON -> "message.sixty_seconds.sixty_seconds.event_blood_moon_name";
+            case THUNDERSTORM -> "message.sixty_seconds.sixty_seconds.event_thunderstorm_name";
+            case TIDAL_SURGE -> "message.sixty_seconds.sixty_seconds.event_tidal_surge_name";
+            case VOID_RIFT -> "message.sixty_seconds.sixty_seconds.event_void_rift_name";
+            case ASH_FALL -> "message.sixty_seconds.sixty_seconds.event_ash_fall_name";
+            case FIRE_RAIN -> "message.sixty_seconds.sixty_seconds.event_fire_rain_name";
+            case CRYSTAL_STORM -> "message.sixty_seconds.sixty_seconds.event_crystal_storm_name";
+            case TOXIC_SPORE -> "message.sixty_seconds.sixty_seconds.event_toxic_spore_name";
+            case SOLAR_FLARE -> "message.sixty_seconds.sixty_seconds.event_solar_flare_name";
+            case SOUL_WIND -> "message.sixty_seconds.sixty_seconds.event_soul_wind_name";
+            case EMBER_STORM -> "message.sixty_seconds.sixty_seconds.event_ember_storm_name";
             default -> null;
         };
     }

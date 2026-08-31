@@ -305,6 +305,38 @@ public final class SixtySecondsClient {
                 (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
         event.registerSpriteSet(ModParticles.WEATHER_DUST,
                 (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_POLLUTION_RAIN,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_BLOOD_MOTE,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_SPARK,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_RADIATION,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_EMBER,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_SNOW,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_BUBBLE,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_SAND,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_SPORE,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_ASH,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_FIRE_RAIN,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_CRYSTAL,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_TOXIC_SPORE,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_SOLAR,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_SOUL,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
+        event.registerSpriteSet(ModParticles.WEATHER_EMBER_STORM,
+                (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
     }
 
     @SubscribeEvent

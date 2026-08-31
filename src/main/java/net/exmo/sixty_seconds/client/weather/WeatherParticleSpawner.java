@@ -47,9 +47,7 @@ public final class WeatherParticleSpawner {
             double vy = theme.vy + (client.level.random.nextDouble() - 0.5) * theme.jitter * 0.5;
             double vz = theme.vz + (client.level.random.nextDouble() - 0.5) * theme.jitter;
 
-            SimpleParticleType pt = theme.streak
-                    ? ModParticles.WEATHER_STREAK
-                    : ModParticles.WEATHER_DUST;
+            SimpleParticleType pt = (SimpleParticleType) theme.particle;
             client.level.addParticle(pt, x, y, z, vx, vy, vz);
         }
     }
