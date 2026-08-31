@@ -427,6 +427,7 @@ public final class SixtySecondsDefenseSystem {
             mob.addTag(ASSAULT_MANUAL_TAG);
         }
         mob.setCustomName(Component.translatable(tier.nameKey()));
+        mob.setCustomNameVisible(false); // 夜袭小怪不显示实体名称牌
         mob.setBattleMob(true);
         mob.setGlowingTag(true);
         mobs.add(mob.getUUID());

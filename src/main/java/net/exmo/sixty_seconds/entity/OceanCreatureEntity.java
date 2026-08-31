@@ -225,6 +225,12 @@ public abstract class OceanCreatureEntity extends PathfinderMob {
         return false;
     }
 
+    /** 海洋生物（fauna/titan/shark/sea_monster/floor_monster）一律不显示实体悬浮名称牌。 */
+    @Override
+    public boolean shouldShowName() {
+        return false;
+    }
+
     @Override
     public boolean removeWhenFarAway(double distance) {
         return true;

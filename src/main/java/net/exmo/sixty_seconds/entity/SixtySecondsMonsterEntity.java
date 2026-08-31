@@ -156,6 +156,7 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
         }
         setHealth((float) health);
         setCustomName(net.minecraft.network.chat.Component.translatable(variant.nameKey()));
+        setCustomNameVisible(false); // 小怪不显示实体名称牌
         setPersistenceRequired();
         // 难度：变体装配会重设 base 属性，故以新 base 为基准重新施加难度缩放
         SixtySecondsDifficulty.reapply(this);
@@ -163,6 +164,12 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
 
     public Variant getVariant() {
         return Variant.byId(this.entityData.get(VARIANT));
+    }
+
+    /** 小怪（mob 系列）一律不显示实体悬浮名称牌。 */
+    @Override
+    public boolean shouldShowName() {
+        return false;
     }
 
     public void setBattleMob(boolean battleMob) {
