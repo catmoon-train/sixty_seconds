@@ -6,6 +6,7 @@ import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.logic.SixtySecondsDifficulty;
 import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
+import net.exmo.sixty_seconds.registry.ModSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -14,7 +15,9 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -172,6 +175,22 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
                 "textures/entity/" + getVariant().textureName + ".png");
     }
 
+    // ── 音效：每个变体使用各自独立的音效，不再统一用僵尸音 ──
+    @Override
+    public SoundEvent getAmbientSound() {
+        return ModSounds.ambientOf(getVariant().name().toLowerCase());
+    }
+
+    @Override
+    public SoundEvent getHurtSound(DamageSource source) {
+        return ModSounds.hurtOf(getVariant().name().toLowerCase());
+    }
+
+    @Override
+    public SoundEvent getDeathSound() {
+        return ModSounds.deathOf(getVariant().name().toLowerCase());
+    }
+
     // ── 和平难度 / 持久化：本模式全程 PEACEFUL，自研怪不被清、不换水生形态、不晒伤 ────
     @Override
     public boolean shouldDespawnInPeaceful() {
@@ -211,7 +230,7 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
             // 否则玩家没有原版 10 tick 的无敌保护，会被无间隔连击秒杀。
             swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
             player.invulnerableTime = 10;
-            playSound(SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, 0.3F, 1.4F);
+            playSound(ModSounds.ambientOf(getVariant().name().toLowerCase()), 0.4F, 1.0F);
             SixtySecondsHealthSystem.applyInjury(player, null,
                     SixtySecondsDifficulty.scaleInjury(this, meleeInjury()));
             return true;
@@ -372,7 +391,7 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
             buffed = true;
         }
         if (buffed) {
-            playSound(SoundEvents.WOLF_HOWL, 1.2F, 0.6F);
+            playSound(ModSounds.ambientOf(getVariant().name().toLowerCase()), 1.2F, 0.6F);
             serverLevel.sendParticles(net.minecraft.core.particles.ParticleTypes.ANGRY_VILLAGER,
                     getX(), getEyeY(), getZ(), 6, 0.6, 0.4, 0.6, 0.02);
         }
