@@ -2475,6 +2475,7 @@
   "message.sixty_seconds.sixty_seconds.event_thunderstorm_name": "Thunderstorm",
   "message.sixty_seconds.sixty_seconds.event_thunderstorm_start": "A violent thunderstorm rolls in! Lightning strikes the exposed!",
   "message.sixty_seconds.sixty_seconds.event_thunderstorm_end": "The thunder fades into the distance. The sky clears.",
+  "message.sixty_seconds.sixty_seconds.event_thunderstorm_umbrella_hit": "§cYour umbrella acts like a lightning rod and draws the strike!",
   "message.sixty_seconds.sixty_seconds.event_tidal_surge_name": "Tidal Surge",
   "message.sixty_seconds.sixty_seconds.event_tidal_surge_start": "The sea rises against you! Waters drag and drown the careless!",
   "message.sixty_seconds.sixty_seconds.event_tidal_surge_hit": "§cA surge of water crashes over you!",

@@ -358,8 +358,8 @@ public final class SixtySecondsEventSystem {
                     }
                 }
                 case ACID_FOG -> {
-                    // 酸雾：每10秒掉1点健康 + 1点污染
-                    if (!inHome && now % (20 * 10) == 0) {
+                    // 酸雾：每10秒掉1点健康 + 1点污染；室内或防毒面具免疫
+                    if (!inHome && !hasGasMask(player) && now % (20 * 10) == 0) {
                         player.hurt(player.damageSources().magic(), 1.0F);
                         addPollution(level, stats, 1);
                     }
@@ -399,8 +399,8 @@ public final class SixtySecondsEventSystem {
                     }
                 }
                 case SANDSTORM -> {
-                    // 沙尘暴：户外失明
-                    if (inHome) continue;
+                    // 沙尘暴：户外失明；室内或防毒面具（滤尘）免疫
+                    if (inHome || hasGasMask(player)) continue;
                     player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 30, 0,
                             false, false, false));
                 }
@@ -412,11 +412,19 @@ public final class SixtySecondsEventSystem {
                 case THUNDERSTORM -> {
                     // 雷暴：户外玩家周期性被落雷击中（落雷本身造成范围伤害）
                     if (inHome) continue;
-                    if (now % (20 * 10) == 0 && level.getRandom().nextDouble() < 0.1 && level.canSeeSky(player.blockPosition())) {
+                    // 手持雨伞会像避雷针一样大幅吸引落雷：无伞 10%，持伞 60%
+                    double lightningChance = hasUmbrella(player) ? 0.6 : 0.1;
+                    if (now % (20 * 10) == 0 && level.getRandom().nextDouble() < lightningChance
+                            && level.canSeeSky(player.blockPosition())) {
                         net.minecraft.world.entity.LightningBolt bolt = new net.minecraft.world.entity.LightningBolt(
                                 net.minecraft.world.entity.EntityType.LIGHTNING_BOLT, level);
                         bolt.setPos(player.getX(), player.getY(), player.getZ());
                         level.addFreshEntity(bolt);
+                        if (hasUmbrella(player)) {
+                            player.displayClientMessage(Component.translatable(
+                                    "message.sixty_seconds.sixty_seconds.event_thunderstorm_umbrella_hit")
+                                    .withStyle(ChatFormatting.RED), true);
+                        }
                     }
                     if (now % (20 * 10) == 0) {
                         stats.sanity = Math.max(0, stats.sanity - 2);
@@ -477,8 +485,8 @@ public final class SixtySecondsEventSystem {
                     }
                 }
                 case TOXIC_SPORE -> {
-                    // 剧毒孢子：户外玩家每 10 秒获得 5 秒中毒 I
-                    if (inHome) continue;
+                    // 剧毒孢子：户外玩家每 10 秒获得 5 秒中毒 I；防毒面具免疫
+                    if (inHome || hasGasMask(player)) continue;
                     if (now % (20 * 10) == 0) {
                         player.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1, false, false, false));
                     }
@@ -493,8 +501,8 @@ public final class SixtySecondsEventSystem {
                     }
                 }
                 case SOUL_WIND -> {
-                    // 灵魂风：户外玩家虚弱 + 反胃 + 掉理智
-                    if (inHome) continue;
+                    // 灵魂风：户外玩家虚弱 + 反胃 + 掉理智；室内或防毒面具（隔绝怨气）免疫
+                    if (inHome || hasGasMask(player)) continue;
                     if (now % (20 * 6) == 0) {
                         player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 120, 0, false, false, false));
                         player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 0, false, false, false));
@@ -503,10 +511,12 @@ public final class SixtySecondsEventSystem {
                     }
                 }
                 case EMBER_STORM -> {
-                    // 余烬风暴：户外玩家每 4 秒污染 +1 并陷入 3 秒黑暗（烟尘）
+                    // 余烬风暴：户外玩家每 4 秒吸入烟尘污染 +1 并陷入 3 秒黑暗；防毒面具可防污染
                     if (inHome) continue;
                     if (now % (20 * 4) == 0) {
-                        addPollution(level, stats, 1);
+                        if (!hasGasMask(player)) {
+                            addPollution(level, stats, 1);
+                        }
                         player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60, 0, false, false, false));
                     }
                 }
@@ -523,8 +533,8 @@ public final class SixtySecondsEventSystem {
                     }
                 }
                 case SPORE_FOG -> {
-                    // 孢子迷雾：户外反胃+理智下降，室内免疫
-                    if (inHome) continue;
+                    // 孢子迷雾：户外反胃+理智下降，室内免疫；防毒面具免疫
+                    if (inHome || hasGasMask(player)) continue;
                     if (!player.hasEffect(MobEffects.CONFUSION)) {
                         player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0,
                                 false, false, false));
@@ -563,8 +573,8 @@ public final class SixtySecondsEventSystem {
                     }
                 }
                 case DENSE_FOG -> {
-                    // 浓雾：户外能见度极低
-                    if (inHome) continue;
+                    // 浓雾：户外能见度极低；室内或防毒面具（滤雾）免疫
+                    if (inHome || hasGasMask(player)) continue;
                     if (now % 20 == 0) {
                         player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 30, 0,
                                 false, false, false));

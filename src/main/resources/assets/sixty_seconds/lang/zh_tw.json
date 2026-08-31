@@ -2159,6 +2159,7 @@
   "message.sixty_seconds.sixty_seconds.event_thunderstorm_name": "雷暴",
   "message.sixty_seconds.sixty_seconds.event_thunderstorm_start": "狂暴的雷暴來襲！落雷專劈暴露在室外的人！",
   "message.sixty_seconds.sixty_seconds.event_thunderstorm_end": "雷聲漸遠，天空重新放晴。",
+  "message.sixty_seconds.sixty_seconds.event_thunderstorm_umbrella_hit": "§c你的雨傘像避雷針一樣引來了落雷！",
   "message.sixty_seconds.sixty_seconds.event_tidal_surge_name": "潮湧",
   "message.sixty_seconds.sixty_seconds.event_tidal_surge_start": "海水向你湧來！水流捲走並溺斃大意之人！",
   "message.sixty_seconds.sixty_seconds.event_tidal_surge_hit": "§c一股潮水將你淹沒！",
