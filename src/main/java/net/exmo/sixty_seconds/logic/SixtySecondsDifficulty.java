@@ -308,6 +308,11 @@ public final class SixtySecondsDifficulty {
         return 1.0F / npcSellPriceMultiplier(level);
     }
 
+    /** 商店每日库存回补倍率（按难度下浮）：难度 0 = ×1，难度 10 = ×0.5。 */
+    public static float npcRestockMultiplier(int level) {
+        return 1.0F - 0.5F * clamp01(level) / 10.0F;
+    }
+
     // ───────────────────────────────────────────────────────────────────
     //  难度联动：白天时长
     // ───────────────────────────────────────────────────────────────────

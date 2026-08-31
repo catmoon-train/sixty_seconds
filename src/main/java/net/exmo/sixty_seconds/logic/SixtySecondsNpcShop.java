@@ -2,6 +2,7 @@ package net.exmo.sixty_seconds.logic;
 
 import net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
+import net.exmo.sixty_seconds.logic.SixtySecondsDifficulty;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.SixtySecondsPhase;
 import net.exmo.sixty_seconds.entity.SixtySecondsNpcEntity;
@@ -52,13 +53,15 @@ public final class SixtySecondsNpcShop {
                 npc.getUUID().getLeastSignificantBits() ^ (data.dayNumber * 0x9E3779B9L));
         int[] newStock = new int[entries.size()];
         int[] newPrice = new int[entries.size()];
+        float restockMult = SixtySecondsDifficulty.npcRestockMultiplier(SixtySecondsDifficulty.get(level));
         for (int i = 0; i < entries.size(); i++) {
             SixtySecondsShopTable.Entry entry = entries.get(i);
             int previous = rebuild || i >= stock.length ? entry.stock : stock[i];
-            // 首次/重建给满库存，之后每日按 restockPerDay 回补且不超上限
+            // 首次/重建给满库存，之后每日按 restockPerDay 回补（按难度下浮）且不超上限
+            int restock = Math.max(0, Math.round(entry.restockPerDay * restockMult));
             newStock[i] = rebuild || npc.getStockDay() < 0
                     ? entry.stock
-                    : Math.min(entry.stock, previous + entry.restockPerDay);
+                    : Math.min(entry.stock, previous + restock);
             float jitter = 1.0F + entry.priceJitter * (random.nextFloat() * 2.0F - 1.0F);
             newPrice[i] = Math.max(1, Math.round(entry.price * jitter));
         }
