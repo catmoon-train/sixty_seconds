@@ -135,7 +135,9 @@ public final class OceanCreatureSpawner {
                 BlockPos spot = findWaterSpot(level, player.blockPosition(),
                         SPAWN_MIN_DIST + 8, SPAWN_MAX_DIST + 12, random);
                 if (spot != null) {
-                    OceanSeaMonsterEntity monster = spawnSeaMonster(level, spot, random, dayRatio);
+                    OceanSeaMonsterEntity monster = spawnSeaMonster(level, spot, random, dayRatio,
+                            net.minecraft.util.Mth.clamp(1 + (int) (dayRatio * 4), 1,
+                                    net.exmo.sixty_seconds.SixtySecondsBalance.BOSS_MAX_LEVEL), null);
                     if (monster != null) {
                         announceSeaMonster(level, monster, player);
                     }
@@ -204,7 +206,6 @@ public final class OceanCreatureSpawner {
         }
 
         // ── 海洋霸主（10 个独立建模 Boss）：低概率、全局限 1 只 ──
-        tickTitanBars(level);
         if (countNearbyTitans(level) < TITAN_CAP
                 && random.nextDouble() < 0.0035 * dayRatio * earlyDayMult) {
             for (ServerPlayer player : level.players()) {
@@ -216,7 +217,9 @@ public final class OceanCreatureSpawner {
                         SPAWN_MIN_DIST + 8, SPAWN_MAX_DIST + 8, random);
                 if (spot == null) continue;
                 OceanTitanEntity.Variant[] vs = OceanTitanEntity.Variant.values();
-                spawnTitan(level, spot, vs[random.nextInt(vs.length)]);
+                int lv = net.minecraft.util.Mth.clamp(1 + (int) (dayRatio * 4), 1,
+                        net.exmo.sixty_seconds.SixtySecondsBalance.BOSS_MAX_LEVEL);
+                spawnTitan(level, spot, vs[random.nextInt(vs.length)], lv);
                 break;
             }
         }
@@ -338,21 +341,23 @@ public final class OceanCreatureSpawner {
 
     @Nullable
     public static OceanSeaMonsterEntity spawnSeaMonster(ServerLevel level, BlockPos waterPos,
-            RandomSource random, double dayRatio) {
+            RandomSource random, double dayRatio, int bossLevel,
+            @Nullable OceanSeaMonsterEntity.Variant forced) {
         OceanSeaMonsterEntity monster = ModOceanEntities.OCEAN_SEA_MONSTER.create(level);
         if (monster == null) return null;
         monster.moveTo(waterPos.getX() + 0.5, waterPos.getY(), waterPos.getZ() + 0.5,
                 random.nextFloat() * 360.0F, 0.0F);
 
-        // 利维坦不自然刷新 —— 只由指令生成
+        // forced != null 时按指定变体生成（指令召唤）；否则按 dayRatio 随机（自然刷新）
         OceanSeaMonsterEntity.Variant variant;
-        float r = random.nextFloat();
-        if (r < 0.20 + 0.15 * dayRatio) {
+        if (forced != null) {
+            variant = forced;
+        } else if (random.nextFloat() < 0.20 + 0.15 * dayRatio) {
             variant = OceanSeaMonsterEntity.Variant.SERPENT;
         } else {
             variant = OceanSeaMonsterEntity.Variant.KRAKEN;
         }
-        monster.applyVariant(variant);
+        monster.applyVariant(variant, bossLevel);
         monster.finalizeSpawn(level, level.getCurrentDifficultyAt(waterPos),
                 MobSpawnType.NATURAL, null);
         level.addFreshEntity(monster);
@@ -488,28 +493,18 @@ public final class OceanCreatureSpawner {
      */
     @Nullable
     public static OceanTitanEntity spawnTitan(ServerLevel level, BlockPos pos,
-                                              OceanTitanEntity.Variant variant) {
+                                              OceanTitanEntity.Variant variant, int bossLevel) {
         OceanTitanEntity titan = ModEntities.OCEAN_TITAN.create(level);
         if (titan == null) return null;
         titan.setPos(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
-        titan.applyVariant(variant);
+        titan.applyVariant(variant, bossLevel);
         level.addFreshEntity(titan);
 
-        // 血条（与既有 Boss 同款）
-        net.minecraft.server.level.ServerBossEvent bar = new net.minecraft.server.level.ServerBossEvent(
-                net.minecraft.network.chat.Component.translatable(variant.nameKey()),
-                net.minecraft.world.BossEvent.BossBarColor.BLUE,
-                net.minecraft.world.BossEvent.BossBarOverlay.PROGRESS);
-        // 让当前维度所有玩家都看到血条
-        for (ServerPlayer p : level.players()) {
-            bar.addPlayer(p);
-        }
-        TITAN_BARS.put(titan.getUUID(), bar);
-
+        // 血条由各实体自管理（见 OceanTitanEntity.bossEvent），此处只做世界播报
         net.minecraft.network.chat.Component message = net.minecraft.network.chat.Component
-                .literal("§b[60s] 海洋霸主 ")
-                .append(net.minecraft.network.chat.Component.translatable(variant.nameKey()))
-                .append(" 已苏醒！坐标 " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ());
+                .translatable("message.sixty_seconds.ocean.titan_awaken",
+                        net.minecraft.network.chat.Component.translatable(variant.nameKey()),
+                        bossLevel, pos.getX(), pos.getY(), pos.getZ());
         for (ServerPlayer player : level.players()) {
             player.displayClientMessage(message, false);
             player.playNotifySound(net.minecraft.sounds.SoundEvents.WITHER_SPAWN,
@@ -518,25 +513,7 @@ public final class OceanCreatureSpawner {
         return titan;
     }
 
-    /** 海洋霸主血条表（UUID → Boss 事件）。 */
-    private static final java.util.Map<java.util.UUID, net.minecraft.server.level.ServerBossEvent> TITAN_BARS =
-            new java.util.HashMap<>();
-
-    /** 每 tick 同步海洋霸主血条；死亡/移除时清理。 */
-    public static void tickTitanBars(ServerLevel level) {
-        if (TITAN_BARS.isEmpty()) return;
-        var it = TITAN_BARS.entrySet().iterator();
-        while (it.hasNext()) {
-            var e = it.next();
-            net.minecraft.world.entity.Entity ent = level.getEntity(e.getKey());
-            if (!(ent instanceof OceanTitanEntity titan) || !titan.isAlive()) {
-                e.getValue().removeAllPlayers();
-                it.remove();
-                continue;
-            }
-            e.getValue().setProgress(titan.getHealth() / titan.getMaxHealth());
-        }
-    }
+    /** 海洋霸主血条现由各实体自行管理（见 OceanTitanEntity.bossEvent）。 */
 
     /**
      * 在给定水体位置生成一只<b>随机</b>海洋生物群系生物（第二批次 10 变体之一）。

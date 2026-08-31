@@ -138,6 +138,23 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     /** 刷出时所处的游戏日；用于「存活超过上限天数后自动潜回深海」。-1 表示尚未初始化（首个服务端 tick 用当前日数填充）。 */
     private int spawnDay = -1;
 
+    // Boss 等级（与 SixtySecondsBossEntity 一致）
+    private static final net.minecraft.network.syncher.EntityDataAccessor<Integer> BOSS_LEVEL =
+            net.minecraft.network.syncher.SynchedEntityData.defineId(OceanSeaMonsterEntity.class,
+                    net.minecraft.network.syncher.EntityDataSerializers.INT);
+
+    @Override
+    protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(BOSS_LEVEL, 1);
+    }
+
+    public int bossLevel() { return this.entityData.get(BOSS_LEVEL); }
+    public void setBossLevel(int lvl) {
+        this.entityData.set(BOSS_LEVEL, net.minecraft.util.Mth.clamp(lvl, 1,
+                net.exmo.sixty_seconds.SixtySecondsBalance.BOSS_MAX_LEVEL));
+    }
+
     public OceanSeaMonsterEntity(EntityType<? extends OceanCreatureEntity> entityType, Level level) {
         super(entityType, level);
         this.xpReward = 0;
@@ -155,10 +172,17 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     }
 
     public void applyVariant(Variant variant) {
-        applyVariant(variant.id, variant.health, variant.speed, variant.scale, variant.nameKey());
+        applyVariant(variant, 1);
+    }
+
+    public void applyVariant(Variant variant, int level) {
+        setBossLevel(level);
+        double hp = variant.health + net.exmo.sixty_seconds.SixtySecondsBalance.BOSS_HEALTH_PER_LEVEL * (bossLevel() - 1);
+        applyVariant(variant.id, hp, variant.speed, variant.scale, variant.nameKey());
         setPersistenceRequired(); // 海洋 Boss 永不失活，由寿命机制统一回收
-        // Boss血条名称
+        // Boss血条名称（含等级）
         Component name = Component.translatable(variant.nameKey())
+                .append(Component.literal(" Lv." + bossLevel()))
                 .withStyle(ChatFormatting.DARK_PURPLE);
         setCustomName(name);
         setCustomNameVisible(false);

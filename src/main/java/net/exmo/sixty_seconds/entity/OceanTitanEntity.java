@@ -15,6 +15,11 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.BossEvent;
+import net.exmo.sixty_seconds.SixtySecondsBalance;
 
 /**
  * 海洋霸主（10 个<b>独立建模</b>的 Boss，不使用僵尸人形）。
@@ -123,18 +128,49 @@ public class OceanTitanEntity extends OceanCreatureEntity {
     private int moveIndex = 0;
     private int ramTicks = 0;
 
+    // 自管理 Boss 血条 + 等级（与 SixtySecondsBossEntity 一致）
+    private final ServerBossEvent bossEvent = new ServerBossEvent(
+            Component.literal(""), BossEvent.BossBarColor.BLUE, BossEvent.BossBarOverlay.PROGRESS);
+    private static final net.minecraft.network.syncher.EntityDataAccessor<Integer> BOSS_LEVEL =
+            net.minecraft.network.syncher.SynchedEntityData.defineId(OceanTitanEntity.class,
+                    net.minecraft.network.syncher.EntityDataSerializers.INT);
+
+    @Override
+    protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(BOSS_LEVEL, 1);
+    }
+
+    public int bossLevel() { return this.entityData.get(BOSS_LEVEL); }
+    public void setBossLevel(int lvl) {
+        this.entityData.set(BOSS_LEVEL, Mth.clamp(lvl, 1, SixtySecondsBalance.BOSS_MAX_LEVEL));
+    }
+
+    /** 伤害随 Boss 等级缩放（与 SixtySecondsBossEntity 一致）。 */
+    private float lvlDmg(float base) {
+        return base * (1.0F + 0.18F * (bossLevel() - 1));
+    }
+
     public OceanTitanEntity(EntityType<? extends OceanCreatureEntity> entityType, Level level) {
         super(entityType, level);
         setPersistenceRequired();
     }
 
     public void applyVariant(Variant variant) {
-        applyVariant(variant.id, variant.health, variant.speed, variant.scale, variant.nameKey());
+        applyVariant(variant, 1);
+    }
+
+    public void applyVariant(Variant variant, int level) {
+        setBossLevel(level);
+        double hp = variant.health + SixtySecondsBalance.BOSS_HEALTH_PER_LEVEL * (bossLevel() - 1);
+        applyVariant(variant.id, hp, variant.speed, variant.scale, variant.nameKey());
         setCustomNameVisible(false);
         setPersistenceRequired();
         // Boss 级：提高基础属性与击退抗性
         var attr = getAttribute(Attributes.KNOCKBACK_RESISTANCE);
         if (attr != null) attr.setBaseValue(0.85);
+        bossEvent.setName(Component.translatable(variant.nameKey())
+                .append(Component.literal(" Lv." + bossLevel())));
     }
 
     public Variant getVariant() {
@@ -157,6 +193,7 @@ public class OceanTitanEntity extends OceanCreatureEntity {
     @Override
     public void aiStep() {
         super.aiStep();
+        this.bossEvent.setProgress(Mth.clamp(this.getHealth() / this.getMaxHealth(), 0.0F, 1.0F));
         if (!(level() instanceof ServerLevel serverLevel) || isRemoved()) return;
 
         Variant v = getVariant();
@@ -205,7 +242,7 @@ public class OceanTitanEntity extends OceanCreatureEntity {
             case DISCHARGE -> {
                 // 雷霆放电：范围内玩家受伤 + 麻痹（缓慢）
                 for (ServerPlayer p : radiusPlayers(level, 12)) {
-                    p.hurt(damageSources().mobAttack(this), 8.0F);
+                    p.hurt(damageSources().mobAttack(this), lvlDmg(8.0F));
                     p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 1));
                 }
                 playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 1.2F, 0.8F);
@@ -217,7 +254,7 @@ public class OceanTitanEntity extends OceanCreatureEntity {
                         net.minecraft.world.entity.ai.targeting.TargetingConditions.DEFAULT,
                         null, new AABB(c).inflate(8))) {
                     pl.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 6, 1));
-                    pl.hurt(damageSources().mobAttack(this), 5.0F);
+                    pl.hurt(damageSources().mobAttack(this), lvlDmg(5.0F));
                 }
                 playSound(SoundEvents.SPLASH_POTION_BREAK, 1.0F, 0.6F);
             }
@@ -239,7 +276,7 @@ public class OceanTitanEntity extends OceanCreatureEntity {
             case SPINE_VOLLEY -> {
                 // 毒棘齐射：范围伤害 + 中毒
                 for (ServerPlayer p : radiusPlayers(level, 14)) {
-                    p.hurt(damageSources().mobAttack(this), 7.0F);
+                    p.hurt(damageSources().mobAttack(this), lvlDmg(7.0F));
                     p.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 4, 0));
                 }
                 playSound(SoundEvents.SKELETON_SHOOT, 1.0F, 0.9F);
@@ -247,7 +284,7 @@ public class OceanTitanEntity extends OceanCreatureEntity {
             case DEVOUR -> {
                 // 吞噬：近身高额伤害并回血
                 if (distanceToSqr(target) < 16.0) {
-                    target.hurt(damageSources().mobAttack(this), 18.0F);
+                    target.hurt(damageSources().mobAttack(this), lvlDmg(18.0F));
                     heal(20.0F);
                 }
                 playSound(SoundEvents.GENERIC_EAT, 1.0F, 0.6F);
@@ -278,7 +315,7 @@ public class OceanTitanEntity extends OceanCreatureEntity {
                     for (net.minecraft.world.entity.player.Player pl : level.getNearbyPlayers(
                             net.minecraft.world.entity.ai.targeting.TargetingConditions.DEFAULT,
                             null, new AABB(at).inflate(1.5))) {
-                        pl.hurt(damageSources().mobAttack(this), 12.0F);
+                        pl.hurt(damageSources().mobAttack(this), lvlDmg(12.0F));
                     }
                 }
                 playSound(SoundEvents.TRIDENT_THROW.value(), 1.2F, 0.7F);
@@ -311,7 +348,8 @@ public class OceanTitanEntity extends OceanCreatureEntity {
         if (!(level() instanceof ServerLevel serverLevel) || !(target instanceof ServerPlayer player)) {
             return super.doHurtTarget(target);
         }
-        int injury = net.exmo.sixty_seconds.logic.SixtySecondsDifficulty.scaleInjury(this, getVariant().injury);
+        int injury = (int) (net.exmo.sixty_seconds.logic.SixtySecondsDifficulty.scaleInjury(this, getVariant().injury)
+                * (1.0 + 0.18 * (bossLevel() - 1)));
         net.exmo.sixty_seconds.component.SixtySecondsStatsComponent stats =
                 net.exmo.sixty_seconds.component.SixtySecondsStatsComponent.KEY.get(player);
         stats.pollution = Math.min(100, stats.pollution
@@ -338,5 +376,26 @@ public class OceanTitanEntity extends OceanCreatureEntity {
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.GUARDIAN_HURT;
+    }
+
+    @Override
+    public void startSeenByPlayer(ServerPlayer player) {
+        super.startSeenByPlayer(player);
+        this.bossEvent.addPlayer(player);
+    }
+
+    @Override
+    public void stopSeenByPlayer(ServerPlayer player) {
+        super.stopSeenByPlayer(player);
+        this.bossEvent.removePlayer(player);
+    }
+
+    @Override
+    public void die(DamageSource source) {
+        super.die(source);
+        this.bossEvent.removeAllPlayers();
+        if (level() instanceof ServerLevel sl) {
+            net.exmo.sixty_seconds.logic.SixtySecondsPveSystem.onOceanTitanDied(sl, this, this.bossLevel(), source);
+        }
     }
 }

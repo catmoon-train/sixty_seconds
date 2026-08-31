@@ -2507,5 +2507,8 @@
   "message.sixty_seconds.ocean.sunken_breath": "幽冥吐息",
   "message.sixty_seconds.ocean.sunken_roar": "沉沒咆哮",
   "message.sixty_seconds.ocean.sunken_pull": "暗潮拖拽",
-  "message.sixty_seconds.ocean.sunken_maelstrom": "沉沒漩渦"
+  "message.sixty_seconds.ocean.sunken_maelstrom": "沉沒漩渦",
+  "message.sixty_seconds.ocean.titan_died": "§b[60s] 海洋霸主已被擊敗（Lv.%s）",
+  "message.sixty_seconds.ocean.titan_killed_by": "§b[60s] 海洋霸主已被 %s 擊敗（Lv.%s）",
+  "message.sixty_seconds.ocean.titan_awaken": "§b[60s] 海洋霸主 %s Lv.%s 已甦醒！座標 (%s, %s, %s)"
 }

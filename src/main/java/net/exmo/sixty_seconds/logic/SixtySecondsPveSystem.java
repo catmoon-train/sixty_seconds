@@ -618,6 +618,69 @@ public final class SixtySecondsPveSystem {
         }
     }
 
+    /**
+     * 海洋霸主（titan）死亡结算：全服播报 + 与 Boss 同级别的丰厚掉落。
+     * 海洋霸主不进入 ACTIVE_BOSS、且非终焉之王（无 apex 额外奖励），其余掉落规则与 onBossDied 一致。
+     */
+    public static void onOceanTitanDied(ServerLevel level, LivingEntity titan, int lvl, DamageSource source) {
+        String killer = source != null && source.getEntity() instanceof ServerPlayer player
+                ? player.getGameProfile().getName() : null;
+        Component message = killer == null
+                ? Component.translatable("message.sixty_seconds.ocean.titan_died", lvl).withStyle(ChatFormatting.GOLD)
+                : Component.translatable("message.sixty_seconds.ocean.titan_killed_by", killer, lvl).withStyle(ChatFormatting.GOLD);
+        for (ServerPlayer player : level.players()) {
+            player.displayClientMessage(message, false);
+            player.playNotifySound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, SoundSource.PLAYERS, 0.6F, 1.0F);
+        }
+        // 掉落：加权类别 × N 件（与 Boss 一致）
+        SixtySecondsLootTable table = SixtySecondsLootStore.get(level);
+        int rolls = SixtySecondsBalance.BOSS_LOOT_ROLLS_BASE + SixtySecondsBalance.BOSS_LOOT_ROLLS_PER_LEVEL * lvl;
+        if (lvl <= 3) rolls = (int) (rolls * 0.7);
+        double exponent = SixtySecondsAreaLevels.lootExponent(
+                Math.min(lvl + 2, SixtySecondsBalance.AREA_LEVEL_MAX));
+        String[] pool;
+        if (lvl >= 4) {
+            pool = new String[] { "airdrop", "airdrop", "airdrop", "airdrop",
+                    "advanced_weapon", "advanced_rare",
+                    "advanced_tool", "advanced_medicine", "advanced_material", "weapon" };
+        } else if (lvl >= 3) {
+            pool = new String[] { "airdrop", "airdrop",
+                    "advanced_weapon", "advanced_material",
+                    "weapon", "medicine", "material", "food" };
+        } else if (lvl >= 2) {
+            pool = new String[] { "airdrop",
+                    "advanced_weapon",
+                    "weapon", "medicine", "material", "food" };
+        } else {
+            pool = new String[] { "airdrop",
+                    "weapon", "medicine", "material", "food" };
+        }
+        for (int i = 0; i < rolls; i++) {
+            String category = pool[level.random.nextInt(pool.length)];
+            ItemStack stack = table.roll(category, level.random, exponent);
+            if (!stack.isEmpty()) dropAt(level, titan, stack);
+        }
+        dropAt(level, titan, new ItemStack(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_SCRAP,
+                (int) ((SixtySecondsBalance.BOSS_SCRAP_BASE + SixtySecondsBalance.BOSS_SCRAP_PER_LEVEL * lvl)
+                        * (lvl <= 3 ? 0.7 : 1.0))));
+        dropAt(level, titan, new ItemStack(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_AMMO,
+                (int) ((4 + 4 * lvl) * (lvl <= 3 ? 0.7 : 1.0))));
+        if (lvl >= 2) {
+            dropAt(level, titan, new ItemStack(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_STEEL_INGOT,
+                    (int) (2 * lvl * (lvl <= 3 ? 0.7 : 1.0))));
+        }
+        if (lvl >= 3) {
+            dropAt(level, titan, new ItemStack(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_ELECTRONICS,
+                    (int) (lvl * (lvl <= 3 ? 0.7 : 1.0))));
+        }
+        if (lvl >= 4) {
+            dropAt(level, titan, new ItemStack(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_GEAR, lvl));
+        }
+        if (level.random.nextFloat() < 0.40F + 0.15F * lvl) {
+            dropAt(level, titan, new ItemStack(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_BLUEPRINT));
+        }
+    }
+
     private static void dropAt(ServerLevel level, LivingEntity source, ItemStack stack) {
         double angle = level.random.nextDouble() * Math.PI * 2;
         double dist = level.random.nextDouble() * 1.5;

@@ -352,17 +352,17 @@ public class OceanTitanModel extends EntityModel<OceanTitanEntity> {
                 CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -12.0F, -8.0F, 16.0F, 24.0F, 16.0F),
                 PartPose.offset(0.0F, 8.0F, 0.0F));
         cc.addOrReplaceChild("arm0",
-                CubeListBuilder.create().texOffs(0, 42).addBox(-2.0F, -12.0F, -2.0F, 4.0F, 12.0F, 4.0F),
-                PartPose.offsetAndRotation(0.0F, -8.0F, 0.0F, 0.0F, 0.0F, 0.0F));
+                CubeListBuilder.create().texOffs(0, 42).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F),
+                PartPose.offsetAndRotation(6.0F, 14.0F, 0.0F, 0.0F, 0.0F, -0.5F));
         cc.addOrReplaceChild("arm1",
-                CubeListBuilder.create().texOffs(0, 60).addBox(-2.0F, -12.0F, -2.0F, 4.0F, 12.0F, 4.0F),
-                PartPose.offsetAndRotation(0.0F, -8.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
+                CubeListBuilder.create().texOffs(0, 60).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F),
+                PartPose.offsetAndRotation(-6.0F, 14.0F, 0.0F, 0.0F, 0.0F, 0.5F));
         cc.addOrReplaceChild("arm2",
-                CubeListBuilder.create().texOffs(0, 78).addBox(-2.0F, -12.0F, -2.0F, 4.0F, 12.0F, 4.0F),
-                PartPose.offsetAndRotation(0.0F, -8.0F, 0.0F, 0.0F, 3.1416F, 0.0F));
+                CubeListBuilder.create().texOffs(0, 78).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F),
+                PartPose.offsetAndRotation(0.0F, 14.0F, 6.0F, 0.5F, 0.0F, 0.0F));
         cc.addOrReplaceChild("arm3",
-                CubeListBuilder.create().texOffs(0, 96).addBox(-2.0F, -12.0F, -2.0F, 4.0F, 12.0F, 4.0F),
-                PartPose.offsetAndRotation(0.0F, -8.0F, 0.0F, 0.0F, 4.7124F, 0.0F));
+                CubeListBuilder.create().texOffs(0, 96).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F),
+                PartPose.offsetAndRotation(0.0F, 14.0F, -6.0F, -0.5F, 0.0F, 0.0F));
         cc.addOrReplaceChild("base",
                 CubeListBuilder.create().texOffs(44, 42).addBox(-10.0F, -3.0F, -10.0F, 20.0F, 3.0F, 20.0F),
                 PartPose.offset(0.0F, 20.0F, 0.0F));

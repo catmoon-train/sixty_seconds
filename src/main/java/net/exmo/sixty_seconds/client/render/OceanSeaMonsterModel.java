@@ -258,14 +258,14 @@ public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
 
         // 8 条三节渐细腕足（共享 UV），逐条展开按 45° 分布
         float[][] armDefs = {
-                { 3.5F, 16.0F,  3.5F, 0.0F, 0.0F,    0.0F},
-                { 0.0F, 16.0F,  5.0F, 0.0F, 0.7854F, 0.0F},
-                {-3.5F, 16.0F,  3.5F, 0.0F, 1.5708F, 0.0F},
-                {-5.0F, 16.0F,  0.0F, 0.0F, 2.3562F, 0.0F},
-                {-3.5F, 16.0F, -3.5F, 0.0F, 3.1416F, 0.0F},
-                { 0.0F, 16.0F, -5.0F, 0.0F, 3.9270F, 0.0F},
-                { 3.5F, 16.0F, -3.5F, 0.0F, 4.7124F, 0.0F},
-                { 5.0F, 16.0F,  0.0F, 0.0F, 5.4978F, 0.0F},
+                { 3.5F, 8.0F,  3.5F, 0.0F, 0.0F,    0.0F},
+                { 0.0F, 8.0F,  5.0F, 0.0F, 0.7854F, 0.0F},
+                {-3.5F, 8.0F,  3.5F, 0.0F, 1.5708F, 0.0F},
+                {-5.0F, 8.0F,  0.0F, 0.0F, 2.3562F, 0.0F},
+                {-3.5F, 8.0F, -3.5F, 0.0F, 3.1416F, 0.0F},
+                { 0.0F, 8.0F, -5.0F, 0.0F, 3.9270F, 0.0F},
+                { 3.5F, 8.0F, -3.5F, 0.0F, 4.7124F, 0.0F},
+                { 5.0F, 8.0F,  0.0F, 0.0F, 5.4978F, 0.0F},
         };
         for (int i = 0; i < 8; i++) {
             float[] a = armDefs[i];
@@ -462,28 +462,28 @@ public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
             float z = (float) (Math.sin(angle) * 6.5);
             PartDefinition arm = part.addOrReplaceChild("arm_" + i,
                     CubeListBuilder.create(),
-                    PartPose.offsetAndRotation(x, 22.0F, z, 0.25F, (float) angle, 0.0F));
+                    PartPose.offsetAndRotation(x, 2.0F, z, 0.25F, (float) angle, 0.0F));
             PartDefinition s0 = arm.addOrReplaceChild("seg_0",
                     CubeListBuilder.create().texOffs(48, 40)
-                            .addBox(-2.5F, 0.0F, -2.5F, 5.0F, 10.0F, 5.0F),
+                            .addBox(-2.5F, -10.0F, -2.5F, 5.0F, 10.0F, 5.0F),
                     PartPose.ZERO);
             PartDefinition s1 = s0.addOrReplaceChild("seg_1",
                     CubeListBuilder.create().texOffs(70, 40)
-                            .addBox(-2.0F, 0.0F, -2.0F, 4.0F, 9.0F, 4.0F),
-                    PartPose.offset(0.0F, 9.5F, 0.0F));
+                            .addBox(-2.0F, -9.0F, -2.0F, 4.0F, 9.0F, 4.0F),
+                    PartPose.offset(0.0F, -9.5F, 0.0F));
             PartDefinition s2 = s1.addOrReplaceChild("seg_2",
                     CubeListBuilder.create().texOffs(88, 40)
-                            .addBox(-1.5F, 0.0F, -1.5F, 3.0F, 8.0F, 3.0F),
-                    PartPose.offset(0.0F, 8.5F, 0.0F));
+                            .addBox(-1.5F, -8.0F, -1.5F, 3.0F, 8.0F, 3.0F),
+                    PartPose.offset(0.0F, -8.5F, 0.0F));
             PartDefinition s3 = s2.addOrReplaceChild("seg_3",
                     CubeListBuilder.create().texOffs(0, 66)
-                            .addBox(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F),
-                    PartPose.offset(0.0F, 7.5F, 0.0F));
+                            .addBox(-1.0F, -8.0F, -1.0F, 2.0F, 8.0F, 2.0F),
+                    PartPose.offset(0.0F, -7.5F, 0.0F));
             // 末节倒钩
             s3.addOrReplaceChild("barb",
                     CubeListBuilder.create().texOffs(12, 66)
-                            .addBox(-1.0F, 0.0F, -1.0F, 2.0F, 4.0F, 2.0F),
-                    PartPose.offsetAndRotation(0.0F, 7.5F, 0.0F, 0.5F, 0.0F, 0.0F));
+                            .addBox(-1.0F, -4.0F, -1.0F, 2.0F, 4.0F, 2.0F),
+                    PartPose.offsetAndRotation(0.0F, -7.5F, 0.0F, 0.5F, 0.0F, 0.0F));
         }
     }
 
