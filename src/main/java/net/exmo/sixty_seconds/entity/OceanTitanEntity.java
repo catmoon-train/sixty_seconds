@@ -336,8 +336,7 @@ public class OceanTitanEntity extends OceanCreatureEntity {
     }
 
     @Override
-    @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.GUARDIAN_HURT.value();
+        return SoundEvents.GUARDIAN_HURT;
     }
 }
