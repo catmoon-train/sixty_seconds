@@ -8,6 +8,7 @@ import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -194,6 +195,18 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         return Variant.byId(getVariantId());
     }
 
+    /** 客户端局部粒子：仅在渲染该实体的客户端生成（无网络开销），数量受控以保性能。 */
+    private void clientParticle(ParticleOptions pt, double x, double y, double z, int n) {
+        if (level().isClientSide()) {
+            for (int i = 0; i < n; i++) {
+                double ox = (level().random.nextDouble() - 0.5) * 0.6;
+                double oy = level().random.nextDouble() * 0.8;
+                double oz = (level().random.nextDouble() - 0.5) * 0.6;
+                level().addParticle(pt, x + ox, y + oy, z + oz, 0, 0.05, 0);
+            }
+        }
+    }
+
     public ResourceLocation textureLocation() {
         return SixtySeconds.id("textures/entity/" + getVariant().textureName + ".png");
     }
@@ -294,8 +307,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     private void enrageRetaliate(ServerLevel sl) {
         playSound(SoundEvents.ELDER_GUARDIAN_CURSE, 0.8F, 1.2F);
         double r = 6.0;
-        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(),
-                20, r * 0.5, 0.8, r * 0.5, 0.05);
+        clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(), 5);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             SixtySecondsHealthSystem.applyInjury(player, null, injuryNow(getVariant().injury / 2));
@@ -409,7 +421,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         bossEvent.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);
 
         playSound(SoundEvents.ELDER_GUARDIAN_CURSE, 1.2F, 0.5F);
-        sl.sendParticles(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(), 8, 1.5, 1.0, 1.5, 0);
+        clientParticle(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(), 3);
         double r = auraRadius();
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
@@ -450,8 +462,11 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
             SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
             stats.sanity = Math.max(0, stats.sanity - sanLoss);
             stats.sync();
-            sl.sendParticles(ParticleTypes.CURRENT_DOWN, player.getX(), player.getY() + 0.5,
-                    player.getZ(), 6, 0.4, 0.6, 0.4, 0.02);
+            // 客户端局部粒子：节流至每 8 tick 在玩家处极少量生成，避免每帧广播降帧
+            if (now % 8 == 0) {
+                clientParticle(ParticleTypes.CURRENT_DOWN, player.getX(), player.getY() + 0.5,
+                        player.getZ(), 1);
+            }
             if (now >= nextAuraMsgTick) {
                 player.displayClientMessage(Component.translatable("message.sixty_seconds.ocean.aura")
                         .withStyle(ChatFormatting.DARK_AQUA), true);
@@ -595,8 +610,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     private void tentacleFieldTelegraph(ServerLevel sl) {
         // 每个标记处冒起水柱预警——脚下起水柱就是「快躲开」的信号
         for (Vec3 mark : fieldMarks) {
-            sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, mark.x, mark.y, mark.z,
-                    6, 0.3, 1.2, 0.3, 0.03);
+            clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, mark.x, mark.y, mark.z, 1);
         }
         // 预警期周期性低鸣，强化「危险将至」的听觉提示
         if (sl.getGameTime() % 10 == 0) {
@@ -608,8 +622,8 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         playSound(SoundEvents.ELDER_GUARDIAN_HURT, 1.2F, 0.4F);
         double hitR = 3.5;
         for (Vec3 mark : fieldMarks) {
-            sl.sendParticles(ParticleTypes.EXPLOSION, mark.x, mark.y + 0.5, mark.z, 3, 0.6, 0.4, 0.6, 0);
-            sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, mark.x, mark.y, mark.z, 30, 0.5, 2.0, 0.5, 0.1);
+            clientParticle(ParticleTypes.EXPLOSION, mark.x, mark.y + 0.5, mark.z, 2);
+            clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, mark.x, mark.y, mark.z, 6);
             for (ServerPlayer player : sl.players()) {
                 if (!isValidOceanPrey(player)) continue;
                 if (player.position().distanceToSqr(mark) <= hitR * hitR) {
@@ -644,8 +658,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         Vec3 toward = position().subtract(p.position()).normalize();
         p.setDeltaMovement(toward.x * 0.35, toward.y * 0.2 + 0.02, toward.z * 0.35);
         p.hurtMarked = true;
-        sl.sendParticles(ParticleTypes.ITEM_SLIME, p.getX(), p.getY() + 1.0, p.getZ(),
-                4, 0.4, 0.6, 0.4, 0.01);
+        clientParticle(ParticleTypes.ITEM_SLIME, p.getX(), p.getY() + 1.0, p.getZ(), 2);
         if (now % 20 == 0) {
             constrictSeconds++;
             // 逐秒加伤：第 1/2/3 秒 = 基础 ×0.6 / ×0.9 / ×1.3，绞得越久越痛
@@ -675,8 +688,9 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
 
     private void maelstromTick(ServerLevel sl, long now) {
         double r = 30.0;
-        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(),
-                10, 2.0, 1.5, 2.0, 0.05);
+        if (now % 8 == 0) {
+            clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 4);
+        }
         // 漩涡卷入期周期性轰鸣，配合视觉强化压迫感
         if (now % 16 == 0) {
             playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 0.7F, 0.4F);
@@ -696,7 +710,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
 
     private void maelstromDetonate(ServerLevel sl) {
         playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.4F, 0.7F);
-        sl.sendParticles(ParticleTypes.EXPLOSION_EMITTER, getX(), getY() + 1.0, getZ(), 3, 2.0, 1.0, 2.0, 0);
+        clientParticle(ParticleTypes.EXPLOSION_EMITTER, getX(), getY() + 1.0, getZ(), 2);
         double r = 14.0;
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
@@ -729,7 +743,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         nextSlamTick = now + cd(20 * 9);
         swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
         double r = 9.0;
-        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(), 14, r * 0.4, 0.8, r * 0.4, 0);
+        clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(), 4);
         playSound(SoundEvents.ELDER_GUARDIAN_HURT, 0.9F, 0.5F);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
@@ -746,7 +760,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         nextPullTick = now + cd(20 * 14);
         playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.6F, 0.8F);
         double r = 16.0;
-        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 8, r * 0.3, 1.0, r * 0.3, 0.01);
+        clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 3);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             Vec3 toward = position().subtract(player.position()).normalize();
@@ -759,7 +773,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         nextInkTick = now + cd(20 * 18);
         playSound(SoundEvents.SQUID_SQUIRT, 0.7F, 0.6F);
         double r = 12.0;
-        sl.sendParticles(ParticleTypes.SMOKE, getX(), getY(), getZ(), 30, r * 0.4, 1.5, r * 0.4, 0.05);
+        clientParticle(ParticleTypes.SMOKE, getX(), getY(), getZ(), 8);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 4, 0));
@@ -782,7 +796,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     }
     private void abyssMawTelegraph(ServerLevel sl) {
         for (Vec3 mark : fieldMarks) {
-            sl.sendParticles(ParticleTypes.SMOKE, mark.x, mark.y, mark.z, 5, 0.4, 1.0, 0.4, 0.03);
+            clientParticle(ParticleTypes.SMOKE, mark.x, mark.y, mark.z, 1);
         }
         if (sl.getGameTime() % 10 == 0) playSound(SoundEvents.ELDER_GUARDIAN_AMBIENT, 0.5F, 1.2F);
     }
@@ -790,8 +804,8 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.6F, 0.6F);
         double hitR = 4.5;
         for (Vec3 mark : fieldMarks) {
-            sl.sendParticles(ParticleTypes.EXPLOSION, mark.x, mark.y + 0.5, mark.z, 4, 0.8, 0.5, 0.8, 0);
-            sl.sendParticles(ParticleTypes.SMOKE, mark.x, mark.y, mark.z, 20, 0.6, 2.0, 0.6, 0.05);
+            clientParticle(ParticleTypes.EXPLOSION, mark.x, mark.y + 0.5, mark.z, 2);
+            clientParticle(ParticleTypes.SMOKE, mark.x, mark.y, mark.z, 5);
             for (ServerPlayer player : sl.players()) {
                 if (!isValidOceanPrey(player)) continue;
                 if (player.position().distanceToSqr(mark) <= hitR * hitR) {
@@ -815,7 +829,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         nextSlamTick = now + cd(20 * 10);
         playSound(SoundEvents.PHANTOM_SWOOP, 0.8F, 1.4F);
         double r = 10.0;
-        sl.sendParticles(ParticleTypes.ITEM_SLIME, getX(), getY() + 0.5, getZ(), 10, r * 0.35, 0.4, r * 0.35, 0.01);
+        clientParticle(ParticleTypes.ITEM_SLIME, getX(), getY() + 0.5, getZ(), 3);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             SixtySecondsHealthSystem.applyInjury(player, null, injuryNow(getVariant().injury - 6));
@@ -830,7 +844,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         nextInkTick = now + cd(20 * 16);
         playSound(SoundEvents.SQUID_SQUIRT, 0.5F, 0.8F);
         double r = 10.0;
-        sl.sendParticles(ParticleTypes.SNEEZE, getX(), getY(), getZ(), 20, r * 0.4, 1.2, r * 0.4, 0.05);
+        clientParticle(ParticleTypes.SNEEZE, getX(), getY(), getZ(), 6);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 5, 1));
@@ -840,11 +854,13 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     private void trenchRoar(ServerLevel sl, long now) {
         nextRoarTick = now + cd(20 * 14);
         playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.0F, 0.6F);
+        clientParticle(ParticleTypes.SMOKE, getX(), getEyeY(), getZ(), 4);
         double r = 22.0;
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 5, 1));
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 0));
+            clientParticle(ParticleTypes.SMOKE, player.getX(), player.getY() + 1.0, player.getZ(), 2);
             SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
             stats.sanity = Math.max(0, stats.sanity - 6);
             stats.sync();
@@ -865,7 +881,9 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     }
     private void trenchMawTick(ServerLevel sl, long now) {
         double r = 28.0;
-        sl.sendParticles(ParticleTypes.ITEM_SLIME, getX(), getY(), getZ(), 10, 2.0, 1.5, 2.0, 0.05);
+        if (now % 8 == 0) {
+            clientParticle(ParticleTypes.ITEM_SLIME, getX(), getY(), getZ(), 4);
+        }
         if (now % 16 == 0) playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 0.7F, 0.4F);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
@@ -892,7 +910,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         nextSlamTick = now + cd(20 * 9);
         swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
         double r = 11.0;
-        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(), 16, r * 0.4, 0.8, r * 0.4, 0);
+        clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(), 4);
         playSound(SoundEvents.ELDER_GUARDIAN_HURT, 0.9F, 0.5F);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
@@ -908,7 +926,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         nextBoltTick = now + cd(20 * 12);
         playSound(SoundEvents.ELDER_GUARDIAN_CURSE, 1.0F, 0.5F);
         double r = 13.0;
-        sl.sendParticles(ParticleTypes.REVERSE_PORTAL, getX(), getY(), getZ(), 24, r * 0.4, 1.5, r * 0.4, 0.05);
+        clientParticle(ParticleTypes.REVERSE_PORTAL, getX(), getY(), getZ(), 6);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             player.addEffect(new MobEffectInstance(MobEffects.WITHER, 20 * 4, 1));
@@ -918,11 +936,13 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     private void sunkenRoar(ServerLevel sl, long now) {
         nextRoarTick = now + cd(20 * 13);
         playSound(SoundEvents.ELDER_GUARDIAN_CURSE, 1.4F, 0.4F);
+        clientParticle(ParticleTypes.REVERSE_PORTAL, getX(), getEyeY(), getZ(), 4);
         double r = 20.0;
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 5, 1));
             player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 20 * 4, 0));
+            clientParticle(ParticleTypes.REVERSE_PORTAL, player.getX(), player.getY() + 1.0, player.getZ(), 2);
             SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
             stats.sanity = Math.max(0, stats.sanity - 8);
             stats.sync();
@@ -933,7 +953,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         nextPullTick = now + cd(20 * 14);
         playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.6F, 0.8F);
         double r = 20.0;
-        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 8, r * 0.3, 1.0, r * 0.3, 0.01);
+        clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 3);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             Vec3 toward = position().subtract(player.position()).normalize();
@@ -956,7 +976,9 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     }
     private void sunkenMaelstromTick(ServerLevel sl, long now) {
         double r = 32.0;
-        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 12, 2.4, 1.6, 2.4, 0.05);
+        if (now % 8 == 0) {
+            clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 4);
+        }
         if (now % 16 == 0) playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 0.8F, 0.4F);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
@@ -968,7 +990,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
     }
     private void sunkenMaelstromDetonate(ServerLevel sl) {
         playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.6F, 0.7F);
-        sl.sendParticles(ParticleTypes.EXPLOSION_EMITTER, getX(), getY() + 1.0, getZ(), 4, 2.4, 1.0, 2.4, 0);
+        clientParticle(ParticleTypes.EXPLOSION_EMITTER, getX(), getY() + 1.0, getZ(), 2);
         double r = 16.0;
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
@@ -987,8 +1009,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         nextSlamTick = now + cd(20 * 9);
         swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
         double r = getVariant() == Variant.LEVIATHAN ? 10.0 : 7.0;
-        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(),
-                12, r * 0.4, 0.6, r * 0.4, 0);
+        clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(), 4);
         playSound(SoundEvents.ELDER_GUARDIAN_HURT, 0.7F, 0.5F);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
@@ -1004,8 +1025,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         nextSlamTick = now + cd(20 * 11);
         playSound(SoundEvents.PHANTOM_SWOOP, 0.6F, 1.4F);
         double r = 10.0;
-        sl.sendParticles(ParticleTypes.SPLASH, getX(), getY() + 0.5, getZ(),
-                8, r * 0.35, 0.3, r * 0.35, 0);
+        clientParticle(ParticleTypes.SPLASH, getX(), getY() + 0.5, getZ(), 3);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             SixtySecondsHealthSystem.applyInjury(player, null, injuryNow(getVariant().injury - 10));
@@ -1027,8 +1047,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
                     toward.x * 0.15, toward.y * 0.08, toward.z * 0.15));
             player.hurtMarked = true;
         }
-        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(),
-                6, r * 0.3, 0.8, r * 0.3, 0.01);
+        clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 2);
     }
 
     // ── 墨云（克拉肯）────────────────────────────────────────────
@@ -1036,8 +1055,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         nextInkTick = now + cd(20 * 20);
         playSound(SoundEvents.SQUID_SQUIRT, 0.6F, 0.6F);
         double r = 8.0;
-        sl.sendParticles(ParticleTypes.SQUID_INK, getX(), getY() + 1.5, getZ(),
-                40, r * 0.4, 0.5, r * 0.4, 0.02);
+        clientParticle(ParticleTypes.SQUID_INK, getX(), getY() + 1.5, getZ(), 10);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 4, 0));
@@ -1058,8 +1076,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         bolt.shoot(dx, dy + horizontal * 0.1, dz, 2.0F, 3.0F);
         bolt.setNoGravity(false);
         sl.addFreshEntity(bolt);
-        sl.sendParticles(ParticleTypes.BUBBLE, getX(), getEyeY(), getZ(),
-                6, 0.3, 0.2, 0.3, 0.05);
+        clientParticle(ParticleTypes.BUBBLE, getX(), getEyeY(), getZ(), 2);
     }
 
     // ── 毒息（海蛇）───────────────────────────────────────────────
@@ -1067,8 +1084,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         nextInkTick = now + cd(20 * 16);
         playSound(SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT, 0.3F, 0.5F);
         double r = 11.0;
-        sl.sendParticles(ParticleTypes.ITEM_SLIME, getX(), getY() + 1.0, getZ(),
-                30, r * 0.3, 0.6, r * 0.3, 0.01);
+        clientParticle(ParticleTypes.ITEM_SLIME, getX(), getY() + 1.0, getZ(), 8);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             int injury = injuryNow(getVariant().injury - 15);
@@ -1085,8 +1101,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         nextRoarTick = now + cd(20 * 22);
         playSound(SoundEvents.ELDER_GUARDIAN_AMBIENT, 1.0F, 0.6F);
         double r = 22.0;
-        sl.sendParticles(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(),
-                5, 1.0, 0.5, 1.0, 0);
+        clientParticle(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(), 2);
         for (ServerPlayer player : sl.players()) {
             if (!isValidOceanPrey(player) || distanceToSqr(player) > r * r) continue;
             player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 6, 2));
@@ -1133,8 +1148,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
                     .withStyle(ChatFormatting.GOLD);
             sl.getServer().getPlayerList().broadcastSystemMessage(msg, false);
             // 粒子爆发
-            sl.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 2, getZ(),
-                    8, 2.0, 1.0, 2.0, 0);
+            clientParticle(ParticleTypes.EXPLOSION, getX(), getY() + 2, getZ(), 3);
             // 死亡轰鸣
             playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.4F, 0.6F);
             // 掉落战利品
@@ -1208,8 +1222,7 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
                         getCustomName() != null ? getCustomName() : Component.literal("???"))
                 .withStyle(ChatFormatting.AQUA);
         sl.getServer().getPlayerList().broadcastSystemMessage(msg, false);
-        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(),
-                40, 2.0, 1.5, 2.0, 0.06);
+        clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 10);
         playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 1.0F, 0.5F);
         bossEvent.removeAllPlayers();
         discard();

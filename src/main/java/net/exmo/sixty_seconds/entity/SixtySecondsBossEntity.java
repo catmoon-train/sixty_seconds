@@ -6,6 +6,7 @@ import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.logic.SixtySecondsDifficulty;
 import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -285,6 +286,18 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
     //  主 tick：按变体分支
     // ══════════════════════════════════════════════════════════════════
     @Override
+    /** 客户端局部粒子：仅在渲染该实体的客户端生成（无网络开销），数量受控以保性能。 */
+    private void clientParticle(ParticleOptions pt, double x, double y, double z, int n) {
+        if (level().isClientSide()) {
+            for (int i = 0; i < n; i++) {
+                double ox = (level().random.nextDouble() - 0.5) * 0.6;
+                double oy = level().random.nextDouble() * 0.8;
+                double oz = (level().random.nextDouble() - 0.5) * 0.6;
+                level().addParticle(pt, x + ox, y + oy, z + oz, 0, 0.05, 0);
+            }
+        }
+    }
+
     public void tick() {
         super.tick();
         if (!(level() instanceof ServerLevel serverLevel) || isRemoved()) {
@@ -524,8 +537,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         nextSlamTick = now + SixtySecondsBalance.BOSS_SLAM_COOLDOWN_TICKS;
         swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
         double r = colossusStun ? radius * 1.15 : radius;
-        serverLevel.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 0.2, getZ(),
-                6, r * 0.27, 0.3, r * 0.27, 0);
+        clientParticle(ParticleTypes.EXPLOSION, getX(), getY() + 0.2, getZ(), 3);
         playSound(SoundEvents.GENERIC_EXPLODE.value(), 0.8F, 0.7F);
         int injury = skillInjury((SixtySecondsBalance.BOSS_SLAM_INJURY + 4 * (lvl - 1))
                 * (colossusStun ? 2 : 1) * (frenzied ? 2 : 1));
@@ -550,8 +562,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
     private void roar(ServerLevel serverLevel, long now, int lvl, boolean toxic) {
         nextRoarTick = now + SixtySecondsBalance.BOSS_ROAR_COOLDOWN_TICKS;
         playSound(SoundEvents.RAVAGER_ROAR, 1.5F, 0.8F);
-        serverLevel.sendParticles(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(),
-                3, 0.8, 0.5, 0.8, 0);
+        clientParticle(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(), 2);
         for (ServerPlayer player : serverLevel.players()) {
             if (!isValidPrey(player) || distanceToSqr(player) > 12 * 12) {
                 continue;
@@ -597,6 +608,8 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
             }
             net.exmo.sixty_seconds.logic.SixtySecondsPveSystem.spawnMinion(serverLevel, blockPosition(), variant);
         }
+        swing(InteractionHand.MAIN_HAND);
+        clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getY() + 0.5, getZ(), 4);
     }
 
     /** 猛冲。 */
@@ -606,8 +619,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         Vec3 toward = target.position().subtract(position()).normalize();
         setDeltaMovement(toward.x * speed, 0.25, toward.z * speed);
         hurtMarked = true;
-        serverLevel.sendParticles(ParticleTypes.CLOUD, getX(), getY() + 0.3, getZ(),
-                12, 0.4, 0.2, 0.4, 0.05);
+        clientParticle(ParticleTypes.CLOUD, getX(), getY() + 0.3, getZ(), 3);
     }
 
     /** 酸雨齐射。 */
@@ -624,8 +636,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
             spit.shoot(dx, dy + horizontal * 0.14, dz, 1.0F, 6.0F);
             serverLevel.addFreshEntity(spit);
         }
-        serverLevel.sendParticles(ParticleTypes.ITEM_SLIME, getX(), getEyeY(), getZ(),
-                12, 0.6, 0.4, 0.6, 0.05);
+        clientParticle(ParticleTypes.ITEM_SLIME, getX(), getEyeY(), getZ(), 3);
     }
 
     // ══════════════════════════════════════════════════════════════════
@@ -636,8 +647,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
     private void ironSkin(ServerLevel serverLevel, long now, int lvl, boolean apex) {
         nextSkinTick = now + (apex ? 20 * 25 : 20 * 35);
         playSound(SoundEvents.ANVIL_LAND, 0.6F, 1.5F);
-        serverLevel.sendParticles(ParticleTypes.ENCHANTED_HIT, getX(), getEyeY(), getZ(),
-                20, 0.5, 0.8, 0.5, 0.1);
+        clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getEyeY(), getZ(), 5);
         // 给自身抗性提升 + 反伤（通过额外减伤 + 攻击者受伤实现）
         addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 20 * 6, 2));
         addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20 * 8, 0));
@@ -659,10 +669,9 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         Vec3 to = new Vec3(target.getX(), target.getEyeY(), target.getZ());
         Vec3 step = to.subtract(from).normalize().scale(0.5);
         Vec3 pos = from;
-        for (int i = 0; i < 30; i++) {
-            pos = pos.add(step);
-            serverLevel.sendParticles(ParticleTypes.SCULK_SOUL, pos.x, pos.y, pos.z,
-                    1, 0.1, 0.1, 0.1, 0);
+        for (int i = 0; i < 12; i++) {
+            pos = pos.add(step.scale(2.5));
+            clientParticle(ParticleTypes.SCULK_SOUL, pos.x, pos.y, pos.z, 1);
         }
         // 伤害目标 + 治疗自身
         if (target instanceof ServerPlayer player && isValidPrey(player)) {
@@ -687,8 +696,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         spear.shoot(dx, dy + horizontal * 0.08, dz, 2.0F, 2.0F);
         spear.setNoGravity(true);
         serverLevel.addFreshEntity(spear);
-        serverLevel.sendParticles(ParticleTypes.SCULK_SOUL, getX(), getEyeY(), getZ(),
-                4, 0.2, 0.2, 0.2, 0);
+        clientParticle(ParticleTypes.SCULK_SOUL, getX(), getEyeY(), getZ(), 2);
     }
 
     /** 毒息（疫病者）：前方锥形范围中毒+污染+健康伤害。 */
@@ -696,12 +704,12 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         nextBreathTick = now + 20 * 12;
         playSound(SoundEvents.DRAGON_FIREBALL_EXPLODE, 0.3F, 0.4F);
         Vec3 facing = getLookAngle().normalize();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 8; i++) {
             double spread = (serverLevel.random.nextDouble() - 0.5) * 1.8;
-            double dist = 1.0 + i * 2.5 / 20;
-            serverLevel.sendParticles(ParticleTypes.ITEM_SLIME,
+            double dist = 1.0 + i * 2.5 / 8;
+            clientParticle(ParticleTypes.ITEM_SLIME,
                     getX() + facing.x * dist + spread, getEyeY() + spread * 0.5,
-                    getZ() + facing.z * dist + spread, 1, 0.2, 0.2, 0.2, 0);
+                    getZ() + facing.z * dist + spread, 1);
         }
         for (ServerPlayer player : serverLevel.players()) {
             if (!isValidPrey(player)) continue;
@@ -720,14 +728,24 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
     /** 腐化光环（疫病者被动）：每 1s 周围玩家获得污染。 */
     private void tickCorruptionAura(ServerLevel serverLevel) {
         double radius = isApex() ? 10.0 : 7.0;
-        serverLevel.sendParticles(ParticleTypes.MYCELIUM, getX(), getY() + 0.5, getZ(),
-                2, radius * 0.5, 0.3, radius * 0.5, 0);
         for (ServerPlayer player : serverLevel.players()) {
             if (!isValidPrey(player) || distanceToSqr(player) > radius * radius) continue;
             SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
             stats.pollution = Math.min(100, stats.pollution
                     + SixtySecondsDifficulty.scalePollutionGain(serverLevel, 1));
             stats.sync();
+        }
+        // 客户端局部粒子：仅渲染该实体的客户端产生（无网络开销），节流至每 10 tick 极少量以保性能
+        if (level().isClientSide() && tickCount % 10 == 0) {
+            clientParticle(ParticleTypes.MYCELIUM, getX(), getY() + 0.5, getZ(), 2);
+            for (Player p : level().players()) {
+                if (p.hasEffect(MobEffects.POISON) && p.distanceToSqr(this) < radius * radius) {
+                    clientParticle(ParticleTypes.ITEM_SLIME, p.getX(), p.getY() + 0.5, p.getZ(), 1);
+                }
+            }
+        }
+        if (tickCount % 40 == 0) {
+            playSound(SoundEvents.WITHER_AMBIENT, 0.12F, 1.4F);
         }
     }
 
@@ -742,8 +760,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
             spit.shoot(Math.cos(angle), 0.1, Math.sin(angle), 0.7F, 8.0F);
             serverLevel.addFreshEntity(spit);
         }
-        serverLevel.sendParticles(ParticleTypes.EXPLOSION, getX(), getY() + 0.5, getZ(),
-                4, 1.5, 0.3, 1.5, 0);
+        clientParticle(ParticleTypes.EXPLOSION, getX(), getY() + 0.5, getZ(), 3);
     }
 
     /** 暗影突袭（鬼魅）：高速冲向目标造成伤害。 */
@@ -753,8 +770,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         // 瞬移至目标背后
         Vec3 behind = target.position().add(target.getLookAngle().scale(-2.0));
         teleportTo(behind.x, behind.y, behind.z);
-        serverLevel.sendParticles(ParticleTypes.PORTAL, getX(), getY() + 1.0, getZ(),
-                12, 0.3, 0.5, 0.3, 0.1);
+        clientParticle(ParticleTypes.PORTAL, getX(), getY() + 1.0, getZ(), 4);
         // 伤害目标
         if (target instanceof ServerPlayer player && isValidPrey(player)) {
             int backstab = 14 + lvl * 4;
@@ -769,8 +785,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
     private void shadowFlurry(ServerLevel serverLevel, long now, int lvl) {
         nextSlamTick = now + 20 * 8;
         playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 0.4F, 1.8F);
-        serverLevel.sendParticles(ParticleTypes.SWEEP_ATTACK, getX(), getY() + 0.5, getZ(),
-                3, 1.5, 0.3, 1.5, 0);
+        clientParticle(ParticleTypes.SWEEP_ATTACK, getX(), getY() + 0.5, getZ(), 2);
         for (ServerPlayer player : serverLevel.players()) {
             if (!isValidPrey(player) || distanceToSqr(player) > 4 * 4) continue;
             int injury = skillInjury(4 + lvl);
@@ -787,8 +802,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         playSound(SoundEvents.WARDEN_DIG, 0.5F, 1.0F);
         addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 20 * 5, 0, false, false, false));
         addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20 * 5, 2, false, false, false));
-        serverLevel.sendParticles(ParticleTypes.SMOKE, getX(), getY() + 1.0, getZ(),
-                20, 0.5, 0.5, 0.5, 0.02);
+        clientParticle(ParticleTypes.SMOKE, getX(), getY() + 1.0, getZ(), 6);
     }
 
     /** 死亡标记（鬼魅终焉）：多次瞬移至目标身后打击。 */
@@ -811,8 +825,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
                         if (target instanceof ServerPlayer p && isValidPrey(p)) {
                             SixtySecondsHealthSystem.applyInjury(p, null, skillInjury(10 + lvl * 3));
                         }
-                        serverLevel.sendParticles(ParticleTypes.PORTAL, getX(), getY() + 1.0, getZ(),
-                                8, 0.2, 0.4, 0.2, 0.05);
+                        clientParticle(ParticleTypes.PORTAL, getX(), getY() + 1.0, getZ(), 3);
                     }));
         }
     }
@@ -824,10 +837,10 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         for (int i = 1; i <= 16; i++) {
             double x = getX() + dir.x * i;
             double z = getZ() + dir.z * i;
-            serverLevel.sendParticles(ParticleTypes.CLOUD, x, getY() + 0.1, z,
-                    2, 0.3, 0.1, 0.3, 0);
-            serverLevel.sendParticles(ParticleTypes.EXPLOSION, x, getY() + 0.1, z,
-                    1, 0.2, 0.1, 0.2, 0);
+            if (i % 2 == 0) { // 隔步渲染，减少粒子数
+                clientParticle(ParticleTypes.CLOUD, x, getY() + 0.1, z, 1);
+                clientParticle(ParticleTypes.EXPLOSION, x, getY() + 0.1, z, 1);
+            }
             // 沿线玩家受伤
             for (ServerPlayer player : serverLevel.players()) {
                 if (!isValidPrey(player)) continue;
@@ -845,6 +858,9 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
     private void armyOfTheDead(ServerLevel serverLevel, long now, int lvl) {
         nextSummonTick = now + SixtySecondsBalance.BOSS_SUMMON_COOLDOWN_TICKS;
         playSound(SoundEvents.WITHER_SPAWN, 0.5F, 0.4F);
+        // 亡灵军团降临：暗影传送门 + 附魔光环粒子
+        clientParticle(ParticleTypes.PORTAL, getX(), getY() + 0.5, getZ(), 8);
+        clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getY() + 0.5, getZ(), 5);
         int count = 5 + lvl;
         for (int i = 0; i < count; i++) {
             Variant variant;
@@ -871,8 +887,7 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
             frenzied = true;
             playSound(SoundEvents.RAVAGER_ROAR, 1.8F, 0.5F);
             if (level() instanceof ServerLevel sl) {
-                sl.sendParticles(ParticleTypes.ANGRY_VILLAGER, getX(), getEyeY(), getZ(),
-                        10, 0.6, 0.5, 0.6, 0.05);
+                clientParticle(ParticleTypes.ANGRY_VILLAGER, getX(), getEyeY(), getZ(), 4);
             }
             addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20 * 60, 1));
             addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20 * 60, 1));

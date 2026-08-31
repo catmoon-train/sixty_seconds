@@ -22,6 +22,7 @@ import net.minecraft.world.BossEvent;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.ChatFormatting;
 import net.minecraft.world.entity.player.Player;
@@ -230,6 +231,9 @@ public class OceanTitanEntity extends OceanCreatureEntity {
         // 冲撞状态推进
         if (ramTicks > 0) {
             ramTicks--;
+            if (tickCount % 3 == 0) {
+                clientParticle(ParticleTypes.CLOUD, getX(), getY() + 0.5, getZ(), 1);
+            }
             LivingEntity t = getTarget();
             if (t != null) {
                 Vec3 dir = t.position().subtract(position()).normalize();
@@ -278,7 +282,7 @@ public class OceanTitanEntity extends OceanCreatureEntity {
                         getCustomName() != null ? getCustomName() : Component.literal("海洋霸主"))
                 .withStyle(ChatFormatting.AQUA);
         sl.getServer().getPlayerList().broadcastSystemMessage(msg, false);
-        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 40, 2.0, 1.5, 2.0, 0.06);
+        clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 10);
         playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 1.0F, 0.5F);
         bossEvent.removeAllPlayers();
         discard();
@@ -296,24 +300,40 @@ public class OceanTitanEntity extends OceanCreatureEntity {
         titanSpawnDay = tag.contains("TitanSpawnDay") ? tag.getInt("TitanSpawnDay") : -1;
     }
 
+    /** 客户端局部粒子：仅在渲染该实体的客户端生成（无网络开销），数量受控以保性能。 */
+    private void clientParticle(ParticleOptions pt, double x, double y, double z, int n) {
+        if (level().isClientSide()) {
+            for (int i = 0; i < n; i++) {
+                double ox = (level().random.nextDouble() - 0.5) * 0.6;
+                double oy = level().random.nextDouble() * 0.8;
+                double oz = (level().random.nextDouble() - 0.5) * 0.6;
+                level().addParticle(pt, x + ox, y + oy, z + oz, 0, 0.05, 0);
+            }
+        }
+    }
+
     /** 释放一个招式。 */
     private void castMove(ServerLevel level, TitanMove move, LivingEntity target) {
         switch (move) {
             case RAM -> {
                 ramTicks = 30;
                 playSound(SoundEvents.ZOMBIE_ATTACK_IRON_DOOR, 1.4F, 0.5F);
+                clientParticle(ParticleTypes.CLOUD, getX(), getY() + 1.0, getZ(), 4);
             }
             case DISCHARGE -> {
                 // 雷霆放电：范围内玩家受伤 + 麻痹（缓慢）
                 for (ServerPlayer p : radiusPlayers(level, 12)) {
                     p.hurt(damageSources().mobAttack(this), lvlDmg(8.0F));
                     p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 1));
+                    clientParticle(ParticleTypes.SCULK_SOUL, p.getX(), p.getY() + 1.0, p.getZ(), 3);
                 }
+                clientParticle(ParticleTypes.SCULK_SOUL, getX(), getEyeY(), getZ(), 6);
                 playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 1.2F, 0.8F);
             }
             case ACID_RAIN -> {
                 // 腐蚀酸雨：目标周围降下持续伤害区
                 BlockPos c = target.blockPosition();
+                clientParticle(ParticleTypes.ITEM_SLIME, c.getX() + 0.5, c.getY() + 6.0, c.getZ() + 0.5, 6);
                 for (net.minecraft.world.entity.player.Player pl : level.getNearbyPlayers(
                         net.minecraft.world.entity.ai.targeting.TargetingConditions.DEFAULT,
                         null, new AABB(c).inflate(8))) {
@@ -324,24 +344,30 @@ public class OceanTitanEntity extends OceanCreatureEntity {
             }
             case LURE -> {
                 // 诱捕灯笼：致盲 + 拉向自己
+                clientParticle(ParticleTypes.END_ROD, getX(), getEyeY(), getZ(), 5);
                 for (ServerPlayer p : radiusPlayers(level, 16)) {
                     p.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 5, 0));
                     pull(p, 0.35);
+                    clientParticle(ParticleTypes.END_ROD, p.getX(), p.getY() + 1.0, p.getZ(), 3);
                 }
                 playSound(SoundEvents.END_PORTAL_FRAME_FILL, 1.0F, 0.7F);
             }
             case WHIRLPOOL -> {
                 // 深渊漩涡：强吸引
+                clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY() + 1.0, getZ(), 6);
                 for (ServerPlayer p : radiusPlayers(level, 18)) {
                     pull(p, 0.75);
+                    clientParticle(ParticleTypes.BUBBLE_COLUMN_UP, p.getX(), p.getY(), p.getZ(), 2);
                 }
                 playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 1.2F, 0.6F);
             }
             case SPINE_VOLLEY -> {
                 // 毒棘齐射：范围伤害 + 中毒
+                clientParticle(ParticleTypes.SCULK_SOUL, getX(), getEyeY(), getZ(), 5);
                 for (ServerPlayer p : radiusPlayers(level, 14)) {
                     p.hurt(damageSources().mobAttack(this), lvlDmg(7.0F));
                     p.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 4, 0));
+                    clientParticle(ParticleTypes.ITEM_SLIME, p.getX(), p.getY() + 1.0, p.getZ(), 3);
                 }
                 playSound(SoundEvents.SKELETON_SHOOT, 1.0F, 0.9F);
             }
@@ -350,14 +376,18 @@ public class OceanTitanEntity extends OceanCreatureEntity {
                 if (distanceToSqr(target) < 16.0) {
                     target.hurt(damageSources().mobAttack(this), lvlDmg(18.0F));
                     heal(20.0F);
+                    clientParticle(ParticleTypes.CRIMSON_SPORE, target.getX(), target.getY() + 1.0, target.getZ(), 5);
                 }
+                clientParticle(ParticleTypes.ITEM_SLIME, getX(), getEyeY(), getZ(), 4);
                 playSound(SoundEvents.GENERIC_EAT, 1.0F, 0.6F);
             }
             case SHRIEK -> {
                 // 灵魂尖啸：虚弱 + 恐惧（缓慢）
+                clientParticle(ParticleTypes.SONIC_BOOM, getX(), getEyeY(), getZ(), 5);
                 for (ServerPlayer p : radiusPlayers(level, 18)) {
                     p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20 * 6, 1));
                     p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 3, 0));
+                    clientParticle(ParticleTypes.SONIC_BOOM, p.getX(), p.getY() + 1.0, p.getZ(), 2);
                 }
                 playSound(SoundEvents.WARDEN_SONIC_BOOM, 1.0F, 0.5F);
             }
@@ -368,14 +398,19 @@ public class OceanTitanEntity extends OceanCreatureEntity {
                             level, blockPosition().offset(random.nextInt(9) - 4, 1, random.nextInt(9) - 4),
                             random);
                 }
+                clientParticle(ParticleTypes.PORTAL, getX(), getY() + 0.5, getZ(), 8);
+                clientParticle(ParticleTypes.ENCHANTED_HIT, getX(), getY() + 0.5, getZ(), 4);
                 playSound(SoundEvents.SLIME_SQUISH, 1.0F, 0.6F);
             }
             case TRIDENT_JUDGEMENT -> {
                 // 三叉戟审判：直线穿透伤害
                 Vec3 dir = target.position().subtract(position()).normalize();
+                clientParticle(ParticleTypes.SPLASH, getX(), getEyeY(), getZ(), 4);
                 for (int step = 1; step <= 12; step++) {
+                    if (step % 2 != 0) continue; // 隔步渲染，减少粒子数
                     BlockPos at = blockPosition().offset(
                             (int) (dir.x * step * 1.5), 0, (int) (dir.z * step * 1.5));
+                    clientParticle(ParticleTypes.BUBBLE, at.getX() + 0.5, getY() + 1.0, at.getZ() + 0.5, 1);
                     for (net.minecraft.world.entity.player.Player pl : level.getNearbyPlayers(
                             net.minecraft.world.entity.ai.targeting.TargetingConditions.DEFAULT,
                             null, new AABB(at).inflate(1.5))) {
