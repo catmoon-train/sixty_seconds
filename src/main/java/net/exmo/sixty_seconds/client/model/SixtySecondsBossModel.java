@@ -171,31 +171,19 @@ public class SixtySecondsBossModel extends EntityModel<SixtySecondsBossEntity> {
 
         // ══════════════════════════════════════════════════════
         // NECROMANCER 亡灵术士：瘦高躯干 + 兜帽 + 法杖 + 长袍 + 亡灵光
-        // ══════════════════════════════════════════════════════
-        PartDefinition ne = root.addOrReplaceChild("necromancer", CubeListBuilder.create(), PartPose.ZERO);
-        ne.addOrReplaceChild("torso",
-                CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -10.0F, -3.0F, 8.0F, 16.0F, 6.0F),
-                PartPose.offset(0.0F, 12.0F, 0.0F));
-        ne.addOrReplaceChild("robe",
-                CubeListBuilder.create().texOffs(0, 24).addBox(-6.0F, 0.0F, -5.0F, 12.0F, 16.0F, 10.0F),
-                PartPose.offset(0.0F, 18.0F, 0.0F));
-        ne.addOrReplaceChild("hood",
-                CubeListBuilder.create().texOffs(0, 52).addBox(-5.0F, -6.0F, -5.0F, 10.0F, 8.0F, 10.0F),
-                PartPose.offset(0.0F, 1.0F, 0.0F));
-        ne.addOrReplaceChild("face",
-                CubeListBuilder.create().texOffs(0, 72).addBox(-2.0F, -1.0F, -4.0F, 4.0F, 3.0F, 1.0F),
-                PartPose.offset(0.0F, 2.0F, -1.0F));
-        ne.addOrReplaceChild("staff",
-                CubeListBuilder.create().texOffs(0, 78).addBox(-0.5F, -18.0F, -0.5F, 1.0F, 28.0F, 1.0F),
-                PartPose.offsetAndRotation(6.0F, 14.0F, 0.0F, 0.0F, 0.0F, -0.12F));
-        ne.addOrReplaceChild("orb",
-                CubeListBuilder.create().texOffs(10, 78).addBox(-2.0F, -3.0F, -2.0F, 4.0F, 4.0F, 4.0F),
-                PartPose.offset(6.0F, -5.0F, 0.0F));
-        ne.addOrReplaceChild("arm_l",
-                CubeListBuilder.create().texOffs(24, 78).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 12.0F, 2.0F),
-                PartPose.offsetAndRotation(-5.0F, 4.0F, 0.0F, 0.0F, 0.0F, 0.12F));
 
-        // ══════════════════════════════════════════════════════
+        PartDefinition necromancer = root.addOrReplaceChild("necromancer", CubeListBuilder.create(), PartPose.ZERO);
+        necromancer.addOrReplaceChild("torso", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -10.0F, -3.0F, 8.0F, 16.0F, 6.0F), PartPose.offset(0.0F, 12.0F, 0.0F));
+        necromancer.addOrReplaceChild("robe", CubeListBuilder.create().texOffs(29, 0).addBox(-6.0F, 0.0F, -5.0F, 12.0F, 16.0F, 10.0F), PartPose.offset(0.0F, 18.0F, 0.0F));
+        necromancer.addOrReplaceChild("belt", CubeListBuilder.create().texOffs(74, 0).addBox(-6.5F, 0.0F, -5.5F, 13.0F, 2.0F, 11.0F), PartPose.offset(0.0F, 18.0F, 0.0F));
+        necromancer.addOrReplaceChild("hood", CubeListBuilder.create().texOffs(0, 27).addBox(-5.0F, -6.0F, -5.0F, 10.0F, 8.0F, 10.0F), PartPose.offset(0.0F, 1.0F, 0.0F));
+        necromancer.addOrReplaceChild("face", CubeListBuilder.create().texOffs(41, 27).addBox(-2.0F, -1.0F, -4.0F, 4.0F, 3.0F, 1.0F), PartPose.offset(0.0F, 2.0F, -1.0F));
+        necromancer.addOrReplaceChild("skullgem", CubeListBuilder.create().texOffs(52, 27).addBox(-2.0F, -2.0F, -1.0F, 4.0F, 4.0F, 1.0F), PartPose.offset(0.0F, 4.0F, -4.5F));
+        necromancer.addOrReplaceChild("pauldron_l", CubeListBuilder.create().texOffs(63, 27).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 5.0F, 6.0F), PartPose.offset(6.0F, 4.0F, 0.0F));
+        necromancer.addOrReplaceChild("pauldron_r", CubeListBuilder.create().texOffs(88, 27).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 5.0F, 6.0F), PartPose.offset(-6.0F, 4.0F, 0.0F));
+        necromancer.addOrReplaceChild("staff", CubeListBuilder.create().texOffs(113, 27).addBox(-0.5F, -18.0F, -0.5F, 1.0F, 28.0F, 1.0F), PartPose.offsetAndRotation(6.0F, 14.0F, 0.0F, 0.0F, 0.0F, -0.12F));
+        necromancer.addOrReplaceChild("orb", CubeListBuilder.create().texOffs(0, 57).addBox(-2.0F, -3.0F, -2.0F, 4.0F, 4.0F, 4.0F), PartPose.offset(6.0F, -5.0F, 0.0F));
+        necromancer.addOrReplaceChild("arm_l", CubeListBuilder.create().texOffs(17, 57).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 12.0F, 2.0F), PartPose.offsetAndRotation(-5.0F, 4.0F, 0.0F, 0.0F, 0.0F, 0.12F));
         // PLAGUEBEARER 疫病者：驼背巨囊 + 双侧毒腺 + 破布长袍 + 面罩
         // ══════════════════════════════════════════════════════
         PartDefinition pl = root.addOrReplaceChild("plaguebearer", CubeListBuilder.create(), PartPose.ZERO);
@@ -229,34 +217,20 @@ public class SixtySecondsBossModel extends EntityModel<SixtySecondsBossEntity> {
 
         // ══════════════════════════════════════════════════════
         // SPECTER 鬼魅：无腿幽魂 + 破烂长袍 + 兜帽 + 长爪臂
-        // ══════════════════════════════════════════════════════
-        PartDefinition sp = root.addOrReplaceChild("specter", CubeListBuilder.create(), PartPose.ZERO);
-        sp.addOrReplaceChild("torso",
-                CubeListBuilder.create().texOffs(0, 0).addBox(-4.5F, -11.0F, -3.5F, 9.0F, 14.0F, 7.0F),
-                PartPose.offset(0.0F, 12.0F, 0.0F));
-        sp.addOrReplaceChild("robe",
-                CubeListBuilder.create().texOffs(0, 22).addBox(-6.5F, 0.0F, -5.0F, 13.0F, 18.0F, 10.0F),
-                PartPose.offset(0.0F, 15.0F, 0.0F));
-        sp.addOrReplaceChild("hood",
-                CubeListBuilder.create().texOffs(0, 52).addBox(-5.0F, -6.0F, -5.0F, 10.0F, 7.0F, 10.0F),
-                PartPose.offset(0.0F, 0.0F, 0.0F));
-        sp.addOrReplaceChild("glow",
-                CubeListBuilder.create().texOffs(0, 70).addBox(-2.0F, -1.0F, -4.0F, 4.0F, 2.0F, 1.0F),
-                PartPose.offset(0.0F, 1.0F, -1.0F));
-        sp.addOrReplaceChild("arm_l",
-                CubeListBuilder.create().texOffs(0, 74).addBox(-0.5F, -1.0F, -0.5F, 1.0F, 14.0F, 1.0F),
-                PartPose.offsetAndRotation(5.0F, 3.0F, 0.0F, 0.0F, 0.0F, 0.15F));
-        sp.addOrReplaceChild("arm_r",
-                CubeListBuilder.create().texOffs(8, 74).addBox(-0.5F, -1.0F, -0.5F, 1.0F, 14.0F, 1.0F),
-                PartPose.offsetAndRotation(-5.0F, 3.0F, 0.0F, 0.0F, 0.0F, -0.15F));
-        sp.addOrReplaceChild("claw_l",
-                CubeListBuilder.create().texOffs(16, 74).addBox(-1.0F, 12.0F, -2.0F, 2.0F, 3.0F, 3.0F),
-                PartPose.offset(5.0F, 3.0F, 0.0F));
-        sp.addOrReplaceChild("claw_r",
-                CubeListBuilder.create().texOffs(28, 74).addBox(-1.0F, 12.0F, -2.0F, 2.0F, 3.0F, 3.0F),
-                PartPose.offset(-5.0F, 3.0F, 0.0F));
 
-        // ══════════════════════════════════════════════════════
+        PartDefinition specter = root.addOrReplaceChild("specter", CubeListBuilder.create(), PartPose.ZERO);
+        specter.addOrReplaceChild("torso", CubeListBuilder.create().texOffs(0, 0).addBox(-4.5F, -11.0F, -3.5F, 9.0F, 14.0F, 7.0F), PartPose.offset(0.0F, 12.0F, 0.0F));
+        specter.addOrReplaceChild("robe", CubeListBuilder.create().texOffs(33, 0).addBox(-6.5F, 0.0F, -5.0F, 13.0F, 18.0F, 10.0F), PartPose.offset(0.0F, 15.0F, 0.0F));
+        specter.addOrReplaceChild("hem_l", CubeListBuilder.create().texOffs(80, 0).addBox(-3.0F, 14.0F, -3.0F, 3.0F, 4.0F, 6.0F), PartPose.offset(-4.0F, 13.0F, 0.0F));
+        specter.addOrReplaceChild("hem_r", CubeListBuilder.create().texOffs(99, 0).addBox(-3.0F, 14.0F, -3.0F, 3.0F, 4.0F, 6.0F), PartPose.offset(4.0F, 13.0F, 0.0F));
+        specter.addOrReplaceChild("hood", CubeListBuilder.create().texOffs(0, 29).addBox(-5.0F, -6.0F, -5.0F, 10.0F, 7.0F, 10.0F), PartPose.offset(0.0F, 0.0F, 0.0F));
+        specter.addOrReplaceChild("glow", CubeListBuilder.create().texOffs(41, 29).addBox(-2.0F, -1.0F, -4.0F, 4.0F, 2.0F, 1.0F), PartPose.offset(0.0F, 1.0F, -1.0F));
+        specter.addOrReplaceChild("wisp_l", CubeListBuilder.create().texOffs(52, 29).addBox(-1.0F, 6.0F, -1.0F, 2.0F, 6.0F, 2.0F), PartPose.offset(-6.0F, 6.0F, 0.0F));
+        specter.addOrReplaceChild("wisp_r", CubeListBuilder.create().texOffs(61, 29).addBox(-1.0F, 6.0F, -1.0F, 2.0F, 6.0F, 2.0F), PartPose.offset(6.0F, 6.0F, 0.0F));
+        specter.addOrReplaceChild("arm_l", CubeListBuilder.create().texOffs(70, 29).addBox(-0.5F, -1.0F, -0.5F, 1.0F, 14.0F, 1.0F), PartPose.offsetAndRotation(5.0F, 3.0F, 0.0F, 0.0F, 0.0F, 0.15F));
+        specter.addOrReplaceChild("arm_r", CubeListBuilder.create().texOffs(75, 29).addBox(-0.5F, -1.0F, -0.5F, 1.0F, 14.0F, 1.0F), PartPose.offsetAndRotation(-5.0F, 3.0F, 0.0F, 0.0F, 0.0F, -0.15F));
+        specter.addOrReplaceChild("claw_l", CubeListBuilder.create().texOffs(80, 29).addBox(-1.0F, 12.0F, -2.0F, 2.0F, 3.0F, 3.0F), PartPose.offset(5.0F, 3.0F, 0.0F));
+        specter.addOrReplaceChild("claw_r", CubeListBuilder.create().texOffs(91, 29).addBox(-1.0F, 12.0F, -2.0F, 2.0F, 3.0F, 3.0F), PartPose.offset(-5.0F, 3.0F, 0.0F));
         // INFERNO 熔渊暴君：熔岩躯干 + 发光核心 + 火焰鬃毛 + 巨臂
         // ══════════════════════════════════════════════════════
         PartDefinition in = root.addOrReplaceChild("inferno", CubeListBuilder.create(), PartPose.ZERO);
@@ -293,153 +267,74 @@ public class SixtySecondsBossModel extends EntityModel<SixtySecondsBossEntity> {
 
         // ══════════════════════════════════════════════════════
         // FROSTBITE 霜噬守望：冰甲巨躯 + 冰晶头冠 + 双冰盾肩 + 冰刺
-        // ══════════════════════════════════════════════════════
-        PartDefinition fz = root.addOrReplaceChild("frostbite", CubeListBuilder.create(), PartPose.ZERO);
-        fz.addOrReplaceChild("torso",
-                CubeListBuilder.create().texOffs(0, 0).addBox(-7.0F, -12.0F, -4.5F, 14.0F, 18.0F, 9.0F),
-                PartPose.offset(0.0F, 12.0F, 0.0F));
-        fz.addOrReplaceChild("plate",
-                CubeListBuilder.create().texOffs(0, 30).addBox(-6.0F, -8.0F, -5.5F, 12.0F, 10.0F, 3.0F),
-                PartPose.offset(0.0F, 9.0F, -4.5F));
-        fz.addOrReplaceChild("head",
-                CubeListBuilder.create().texOffs(0, 46).addBox(-3.5F, -4.0F, -3.5F, 7.0F, 7.0F, 7.0F),
-                PartPose.offset(0.0F, -4.0F, -1.0F));
-        fz.addOrReplaceChild("crown",
-                CubeListBuilder.create().texOffs(0, 62).addBox(-4.5F, -4.0F, -4.0F, 9.0F, 4.0F, 8.0F),
-                PartPose.offset(0.0F, -7.0F, -1.0F));
-        fz.addOrReplaceChild("shield_l",
-                CubeListBuilder.create().texOffs(0, 76).addBox(-2.0F, -6.0F, -5.0F, 5.0F, 11.0F, 10.0F),
-                PartPose.offsetAndRotation(8.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.12F));
-        fz.addOrReplaceChild("shield_r",
-                CubeListBuilder.create().texOffs(32, 76).addBox(-3.0F, -6.0F, -5.0F, 5.0F, 11.0F, 10.0F),
-                PartPose.offsetAndRotation(-8.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.12F));
-        fz.addOrReplaceChild("spike0",
-                CubeListBuilder.create().texOffs(64, 76).addBox(-1.0F, -5.0F, -1.0F, 2.0F, 5.0F, 2.0F),
-                PartPose.offsetAndRotation(-4.0F, 4.0F, 3.5F, 0.4F, 0.0F, 0.25F));
-        fz.addOrReplaceChild("spike1",
-                CubeListBuilder.create().texOffs(74, 76).addBox(-1.0F, -5.0F, -1.0F, 2.0F, 5.0F, 2.0F),
-                PartPose.offsetAndRotation(0.0F, 3.0F, 4.0F, 0.5F, 0.0F, 0.0F));
-        fz.addOrReplaceChild("spike2",
-                CubeListBuilder.create().texOffs(84, 76).addBox(-1.0F, -5.0F, -1.0F, 2.0F, 5.0F, 2.0F),
-                PartPose.offsetAndRotation(4.0F, 4.0F, 3.5F, 0.4F, 0.0F, -0.25F));
-        fz.addOrReplaceChild("leg_l",
-                CubeListBuilder.create().texOffs(94, 76).addBox(-2.5F, 0.0F, -2.5F, 5.0F, 12.0F, 5.0F),
-                PartPose.offset(3.5F, 18.0F, 0.0F));
-        fz.addOrReplaceChild("leg_r",
-                CubeListBuilder.create().texOffs(0, 94).addBox(-2.5F, 0.0F, -2.5F, 5.0F, 12.0F, 5.0F),
-                PartPose.offset(-3.5F, 18.0F, 0.0F));
 
-        // ══════════════════════════════════════════════════════
+        PartDefinition frostbite = root.addOrReplaceChild("frostbite", CubeListBuilder.create(), PartPose.ZERO);
+        frostbite.addOrReplaceChild("torso", CubeListBuilder.create().texOffs(0, 0).addBox(-7.0F, -12.0F, -4.5F, 14.0F, 18.0F, 9.0F), PartPose.offset(0.0F, 12.0F, 0.0F));
+        frostbite.addOrReplaceChild("plate", CubeListBuilder.create().texOffs(47, 0).addBox(-6.0F, -8.0F, -5.5F, 12.0F, 10.0F, 3.0F), PartPose.offset(0.0F, 9.0F, -4.5F));
+        frostbite.addOrReplaceChild("chestgem", CubeListBuilder.create().texOffs(78, 0).addBox(-2.0F, -2.0F, -1.0F, 4.0F, 4.0F, 2.0F), PartPose.offset(0.0F, 6.0F, -5.6F));
+        frostbite.addOrReplaceChild("head", CubeListBuilder.create().texOffs(91, 0).addBox(-3.5F, -4.0F, -3.5F, 7.0F, 7.0F, 7.0F), PartPose.offset(0.0F, -4.0F, -1.0F));
+        frostbite.addOrReplaceChild("crown", CubeListBuilder.create().texOffs(0, 28).addBox(-4.5F, -4.0F, -4.0F, 9.0F, 4.0F, 8.0F), PartPose.offset(0.0F, -7.0F, -1.0F));
+        frostbite.addOrReplaceChild("shoulder_l", CubeListBuilder.create().texOffs(35, 28).addBox(-4.0F, -5.0F, -6.0F, 8.0F, 9.0F, 12.0F), PartPose.offset(10.0F, -6.0F, 0.0F));
+        frostbite.addOrReplaceChild("shoulder_r", CubeListBuilder.create().texOffs(76, 28).addBox(-4.0F, -5.0F, -6.0F, 8.0F, 9.0F, 12.0F), PartPose.offset(-10.0F, -6.0F, 0.0F));
+        frostbite.addOrReplaceChild("shield_l", CubeListBuilder.create().texOffs(0, 50).addBox(-2.0F, -6.0F, -5.0F, 5.0F, 11.0F, 10.0F), PartPose.offsetAndRotation(8.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.12F));
+        frostbite.addOrReplaceChild("shield_r", CubeListBuilder.create().texOffs(31, 50).addBox(-3.0F, -6.0F, -5.0F, 5.0F, 11.0F, 10.0F), PartPose.offsetAndRotation(-8.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.12F));
+        frostbite.addOrReplaceChild("arm_l", CubeListBuilder.create().texOffs(62, 50).addBox(-1.5F, -1.0F, -1.5F, 3.0F, 13.0F, 3.0F), PartPose.offsetAndRotation(9.0F, 3.0F, 0.0F, 0.0F, 0.0F, 0.12F));
+        frostbite.addOrReplaceChild("arm_r", CubeListBuilder.create().texOffs(75, 50).addBox(-1.5F, -1.0F, -1.5F, 3.0F, 13.0F, 3.0F), PartPose.offsetAndRotation(-9.0F, 3.0F, 0.0F, 0.0F, 0.0F, -0.12F));
+        frostbite.addOrReplaceChild("leg_l", CubeListBuilder.create().texOffs(88, 50).addBox(-2.5F, 0.0F, -2.5F, 5.0F, 12.0F, 5.0F), PartPose.offset(3.5F, 18.0F, 0.0F));
+        frostbite.addOrReplaceChild("leg_r", CubeListBuilder.create().texOffs(0, 72).addBox(-2.5F, 0.0F, -2.5F, 5.0F, 12.0F, 5.0F), PartPose.offset(-3.5F, 18.0F, 0.0F));
+        frostbite.addOrReplaceChild("spike0", CubeListBuilder.create().texOffs(21, 72).addBox(-1.0F, -5.0F, -1.0F, 2.0F, 5.0F, 2.0F), PartPose.offsetAndRotation(-4.0F, 4.0F, 3.5F, 0.4F, 0.0F, 0.25F));
+        frostbite.addOrReplaceChild("spike1", CubeListBuilder.create().texOffs(30, 72).addBox(-1.0F, -5.0F, -1.0F, 2.0F, 5.0F, 2.0F), PartPose.offsetAndRotation(0.0F, 3.0F, 4.0F, 0.5F, 0.0F, 0.0F));
+        frostbite.addOrReplaceChild("spike2", CubeListBuilder.create().texOffs(39, 72).addBox(-1.0F, -5.0F, -1.0F, 2.0F, 5.0F, 2.0F), PartPose.offsetAndRotation(4.0F, 4.0F, 3.5F, 0.4F, 0.0F, -0.25F));
         // SWARMKEEPER 虫潮之主：甲壳躯干 + 分节腹囊 + 双螯肢 + 6 足
-        // ══════════════════════════════════════════════════════
-        PartDefinition sk = root.addOrReplaceChild("swarmkeeper", CubeListBuilder.create(), PartPose.ZERO);
-        sk.addOrReplaceChild("thorax",
-                CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, -8.0F, -6.0F, 12.0F, 12.0F, 12.0F),
-                PartPose.offset(0.0F, 15.0F, -2.0F));
-        sk.addOrReplaceChild("abdomen",
-                CubeListBuilder.create().texOffs(0, 26).addBox(-5.0F, -5.0F, 0.0F, 10.0F, 10.0F, 14.0F),
-                PartPose.offsetAndRotation(0.0F, 15.0F, 4.0F, 0.15F, 0.0F, 0.0F));
-        sk.addOrReplaceChild("head",
-                CubeListBuilder.create().texOffs(0, 52).addBox(-3.5F, -3.5F, -5.0F, 7.0F, 7.0F, 6.0F),
-                PartPose.offset(0.0F, 15.0F, -7.0F));
-        sk.addOrReplaceChild("claw_l",
-                CubeListBuilder.create().texOffs(0, 66).addBox(0.0F, -1.5F, -6.0F, 3.0F, 3.0F, 7.0F),
-                PartPose.offsetAndRotation(4.5F, 15.0F, -6.0F, 0.0F, 0.35F, 0.0F));
-        sk.addOrReplaceChild("claw_r",
-                CubeListBuilder.create().texOffs(22, 66).addBox(-3.0F, -1.5F, -6.0F, 3.0F, 3.0F, 7.0F),
-                PartPose.offsetAndRotation(-4.5F, 15.0F, -6.0F, 0.0F, -0.35F, 0.0F));
-        sk.addOrReplaceChild("leg0",
-                CubeListBuilder.create().texOffs(44, 66).addBox(0.0F, -0.5F, -0.5F, 7.0F, 1.0F, 1.0F),
-                PartPose.offsetAndRotation(5.0F, 18.0F, -4.0F, 0.0F, 0.5F, -0.35F));
-        sk.addOrReplaceChild("leg1",
-                CubeListBuilder.create().texOffs(60, 66).addBox(0.0F, -0.5F, -0.5F, 7.0F, 1.0F, 1.0F),
-                PartPose.offsetAndRotation(5.0F, 18.0F, 0.0F, 0.0F, 0.0F, -0.35F));
-        sk.addOrReplaceChild("leg2",
-                CubeListBuilder.create().texOffs(76, 66).addBox(0.0F, -0.5F, -0.5F, 7.0F, 1.0F, 1.0F),
-                PartPose.offsetAndRotation(5.0F, 18.0F, 4.0F, 0.0F, -0.5F, -0.35F));
-        sk.addOrReplaceChild("leg3",
-                CubeListBuilder.create().texOffs(92, 66).addBox(-7.0F, -0.5F, -0.5F, 7.0F, 1.0F, 1.0F),
-                PartPose.offsetAndRotation(-5.0F, 18.0F, -4.0F, 0.0F, -0.5F, 0.35F));
-        sk.addOrReplaceChild("leg4",
-                CubeListBuilder.create().texOffs(0, 76).addBox(-7.0F, -0.5F, -0.5F, 7.0F, 1.0F, 1.0F),
-                PartPose.offsetAndRotation(-5.0F, 18.0F, 0.0F, 0.0F, 0.0F, 0.35F));
-        sk.addOrReplaceChild("leg5",
-                CubeListBuilder.create().texOffs(16, 76).addBox(-7.0F, -0.5F, -0.5F, 7.0F, 1.0F, 1.0F),
-                PartPose.offsetAndRotation(-5.0F, 18.0F, 4.0F, 0.0F, 0.5F, 0.35F));
-        sk.addOrReplaceChild("horn",
-                CubeListBuilder.create().texOffs(32, 76).addBox(-1.0F, -4.0F, -2.0F, 2.0F, 4.0F, 4.0F),
-                PartPose.offset(0.0F, 11.0F, -8.0F));
 
-        // ══════════════════════════════════════════════════════
+        PartDefinition swarmkeeper = root.addOrReplaceChild("swarmkeeper", CubeListBuilder.create(), PartPose.ZERO);
+        swarmkeeper.addOrReplaceChild("thorax", CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, -8.0F, -6.0F, 12.0F, 12.0F, 12.0F), PartPose.offset(0.0F, 15.0F, -2.0F));
+        swarmkeeper.addOrReplaceChild("seg1", CubeListBuilder.create().texOffs(49, 0).addBox(-4.5F, -4.0F, 1.0F, 9.0F, 8.0F, 6.0F), PartPose.offset(0.0F, 15.0F, 2.0F));
+        swarmkeeper.addOrReplaceChild("abdomen", CubeListBuilder.create().texOffs(0, 25).addBox(-5.0F, -5.0F, 0.0F, 10.0F, 10.0F, 14.0F), PartPose.offsetAndRotation(0.0F, 15.0F, 4.0F, 0.15F, 0.0F, 0.0F));
+        swarmkeeper.addOrReplaceChild("seg2", CubeListBuilder.create().texOffs(49, 25).addBox(-3.5F, -3.0F, 9.0F, 7.0F, 6.0F, 5.0F), PartPose.offsetAndRotation(0.0F, 15.0F, 9.0F, 0.3F, 0.0F, 0.0F));
+        swarmkeeper.addOrReplaceChild("head", CubeListBuilder.create().texOffs(74, 25).addBox(-3.5F, -3.5F, -5.0F, 7.0F, 7.0F, 6.0F), PartPose.offset(0.0F, 15.0F, -7.0F));
+        swarmkeeper.addOrReplaceChild("mandible_l", CubeListBuilder.create().texOffs(101, 25).addBox(-1.0F, -1.0F, -3.0F, 2.0F, 2.0F, 4.0F), PartPose.offsetAndRotation(-3.0F, 14.0F, -9.0F, 0.0F, 0.3F, 0.0F));
+        swarmkeeper.addOrReplaceChild("mandible_r", CubeListBuilder.create().texOffs(114, 25).addBox(-1.0F, -1.0F, -3.0F, 2.0F, 2.0F, 4.0F), PartPose.offsetAndRotation(3.0F, 14.0F, -9.0F, 0.0F, -0.3F, 0.0F));
+        swarmkeeper.addOrReplaceChild("claw_l", CubeListBuilder.create().texOffs(0, 50).addBox(0.0F, -1.5F, -6.0F, 3.0F, 3.0F, 7.0F), PartPose.offsetAndRotation(4.5F, 15.0F, -6.0F, 0.0F, 0.35F, 0.0F));
+        swarmkeeper.addOrReplaceChild("claw_r", CubeListBuilder.create().texOffs(21, 50).addBox(-3.0F, -1.5F, -6.0F, 3.0F, 3.0F, 7.0F), PartPose.offsetAndRotation(-4.5F, 15.0F, -6.0F, 0.0F, -0.35F, 0.0F));
+        swarmkeeper.addOrReplaceChild("leg0", CubeListBuilder.create().texOffs(42, 50).addBox(0.0F, -0.5F, -0.5F, 7.0F, 1.0F, 1.0F), PartPose.offsetAndRotation(5.0F, 18.0F, -4.0F, 0.0F, 0.5F, -0.35F));
+        swarmkeeper.addOrReplaceChild("leg1", CubeListBuilder.create().texOffs(59, 50).addBox(0.0F, -0.5F, -0.5F, 7.0F, 1.0F, 1.0F), PartPose.offsetAndRotation(5.0F, 18.0F, 0.0F, 0.0F, 0.0F, -0.35F));
+        swarmkeeper.addOrReplaceChild("leg2", CubeListBuilder.create().texOffs(76, 50).addBox(0.0F, -0.5F, -0.5F, 7.0F, 1.0F, 1.0F), PartPose.offsetAndRotation(5.0F, 18.0F, 4.0F, 0.0F, -0.5F, -0.35F));
+        swarmkeeper.addOrReplaceChild("leg3", CubeListBuilder.create().texOffs(93, 50).addBox(-7.0F, -0.5F, -0.5F, 7.0F, 1.0F, 1.0F), PartPose.offsetAndRotation(-5.0F, 18.0F, -4.0F, 0.0F, -0.5F, 0.35F));
+        swarmkeeper.addOrReplaceChild("leg4", CubeListBuilder.create().texOffs(110, 50).addBox(-7.0F, -0.5F, -0.5F, 7.0F, 1.0F, 1.0F), PartPose.offsetAndRotation(-5.0F, 18.0F, 0.0F, 0.0F, 0.0F, 0.35F));
+        swarmkeeper.addOrReplaceChild("leg5", CubeListBuilder.create().texOffs(0, 61).addBox(-7.0F, -0.5F, -0.5F, 7.0F, 1.0F, 1.0F), PartPose.offsetAndRotation(-5.0F, 18.0F, 4.0F, 0.0F, 0.5F, 0.35F));
+        swarmkeeper.addOrReplaceChild("stinger", CubeListBuilder.create().texOffs(17, 61).addBox(-1.0F, -4.0F, -2.0F, 2.0F, 4.0F, 4.0F), PartPose.offsetAndRotation(0.0F, 11.0F, -8.5F, 0.0F, 0.0F, 0.0F));
         // STORMHERALD 雷霆传令：带电躯干 + 双雷翼 + 雷角 + 悬浮下摆
-        // ══════════════════════════════════════════════════════
-        PartDefinition sh = root.addOrReplaceChild("stormherald", CubeListBuilder.create(), PartPose.ZERO);
-        sh.addOrReplaceChild("torso",
-                CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, -11.0F, -4.0F, 10.0F, 16.0F, 8.0F),
-                PartPose.offset(0.0F, 13.0F, 0.0F));
-        sh.addOrReplaceChild("head",
-                CubeListBuilder.create().texOffs(0, 26).addBox(-3.5F, -4.0F, -4.0F, 7.0F, 7.0F, 7.0F),
-                PartPose.offset(0.0F, 1.0F, -1.0F));
-        sh.addOrReplaceChild("horn_l",
-                CubeListBuilder.create().texOffs(0, 42).addBox(0.0F, -7.0F, -1.0F, 2.0F, 7.0F, 2.0F),
-                PartPose.offsetAndRotation(2.5F, -2.0F, 0.0F, -0.3F, 0.0F, -0.35F));
-        sh.addOrReplaceChild("horn_r",
-                CubeListBuilder.create().texOffs(10, 42).addBox(-2.0F, -7.0F, -1.0F, 2.0F, 7.0F, 2.0F),
-                PartPose.offsetAndRotation(-2.5F, -2.0F, 0.0F, -0.3F, 0.0F, 0.35F));
-        sh.addOrReplaceChild("wing_l",
-                CubeListBuilder.create().texOffs(0, 54).addBox(0.0F, -8.0F, -0.5F, 14.0F, 16.0F, 1.0F),
-                PartPose.offsetAndRotation(4.0F, 2.0F, 2.5F, 0.0F, 0.0F, -0.25F));
-        sh.addOrReplaceChild("wing_r",
-                CubeListBuilder.create().texOffs(32, 54).addBox(-14.0F, -8.0F, -0.5F, 14.0F, 16.0F, 1.0F),
-                PartPose.offsetAndRotation(-4.0F, 2.0F, 2.5F, 0.0F, 0.0F, 0.25F));
-        sh.addOrReplaceChild("arm_l",
-                CubeListBuilder.create().texOffs(64, 54).addBox(-1.5F, -1.0F, -1.5F, 3.0F, 13.0F, 3.0F),
-                PartPose.offsetAndRotation(6.0F, 3.0F, 0.0F, 0.0F, 0.0F, 0.15F));
-        sh.addOrReplaceChild("arm_r",
-                CubeListBuilder.create().texOffs(78, 54).addBox(-1.5F, -1.0F, -1.5F, 3.0F, 13.0F, 3.0F),
-                PartPose.offsetAndRotation(-6.0F, 3.0F, 0.0F, 0.0F, 0.0F, -0.15F));
-        sh.addOrReplaceChild("skirt",
-                CubeListBuilder.create().texOffs(92, 54).addBox(-5.5F, 0.0F, -4.5F, 11.0F, 12.0F, 9.0F),
-                PartPose.offset(0.0F, 18.0F, 0.0F));
-        sh.addOrReplaceChild("bolt",
-                CubeListBuilder.create().texOffs(0, 74).addBox(-0.5F, -16.0F, -0.5F, 1.0F, 6.0F, 1.0F),
-                PartPose.offset(6.0F, 4.0F, -2.0F));
 
-        // ══════════════════════════════════════════════════════
+        PartDefinition stormherald = root.addOrReplaceChild("stormherald", CubeListBuilder.create(), PartPose.ZERO);
+        stormherald.addOrReplaceChild("torso", CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, -11.0F, -4.0F, 10.0F, 16.0F, 8.0F), PartPose.offset(0.0F, 13.0F, 0.0F));
+        stormherald.addOrReplaceChild("core", CubeListBuilder.create().texOffs(37, 0).addBox(-2.5F, -2.5F, -2.5F, 5.0F, 5.0F, 3.0F), PartPose.offset(0.0F, 3.0F, -5.0F));
+        stormherald.addOrReplaceChild("head", CubeListBuilder.create().texOffs(54, 0).addBox(-3.5F, -4.0F, -4.0F, 7.0F, 7.0F, 7.0F), PartPose.offset(0.0F, 1.0F, -1.0F));
+        stormherald.addOrReplaceChild("horn_l", CubeListBuilder.create().texOffs(83, 0).addBox(0.0F, -7.0F, -1.0F, 2.0F, 7.0F, 2.0F), PartPose.offsetAndRotation(2.5F, -2.0F, 0.0F, -0.3F, 0.0F, -0.35F));
+        stormherald.addOrReplaceChild("horn_r", CubeListBuilder.create().texOffs(92, 0).addBox(-2.0F, -7.0F, -1.0F, 2.0F, 7.0F, 2.0F), PartPose.offsetAndRotation(-2.5F, -2.0F, 0.0F, -0.3F, 0.0F, 0.35F));
+        stormherald.addOrReplaceChild("wing_l", CubeListBuilder.create().texOffs(0, 25).addBox(0.0F, -8.0F, -0.5F, 14.0F, 16.0F, 1.0F), PartPose.offsetAndRotation(4.0F, 2.0F, 2.5F, 0.0F, 0.0F, -0.25F));
+        stormherald.addOrReplaceChild("wing_r", CubeListBuilder.create().texOffs(31, 25).addBox(-14.0F, -8.0F, -0.5F, 14.0F, 16.0F, 1.0F), PartPose.offsetAndRotation(-4.0F, 2.0F, 2.5F, 0.0F, 0.0F, 0.25F));
+        stormherald.addOrReplaceChild("shoulder_l", CubeListBuilder.create().texOffs(62, 25).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 7.0F, 8.0F), PartPose.offset(8.0F, 2.0F, 0.0F));
+        stormherald.addOrReplaceChild("shoulder_r", CubeListBuilder.create().texOffs(95, 25).addBox(-4.0F, -4.0F, -4.0F, 8.0F, 7.0F, 8.0F), PartPose.offset(-8.0F, 2.0F, 0.0F));
+        stormherald.addOrReplaceChild("arm_l", CubeListBuilder.create().texOffs(0, 43).addBox(-1.5F, -1.0F, -1.5F, 3.0F, 13.0F, 3.0F), PartPose.offsetAndRotation(6.0F, 3.0F, 0.0F, 0.0F, 0.0F, 0.15F));
+        stormherald.addOrReplaceChild("arm_r", CubeListBuilder.create().texOffs(13, 43).addBox(-1.5F, -1.0F, -1.5F, 3.0F, 13.0F, 3.0F), PartPose.offsetAndRotation(-6.0F, 3.0F, 0.0F, 0.0F, 0.0F, -0.15F));
+        stormherald.addOrReplaceChild("skirt", CubeListBuilder.create().texOffs(26, 43).addBox(-5.5F, 0.0F, -4.5F, 11.0F, 12.0F, 9.0F), PartPose.offset(0.0F, 18.0F, 0.0F));
+        stormherald.addOrReplaceChild("bolt", CubeListBuilder.create().texOffs(67, 43).addBox(-0.5F, -16.0F, -0.5F, 1.0F, 6.0F, 1.0F), PartPose.offset(6.0F, 4.0F, -2.0F));
         // VOIDWEAVER 虚空织者：悬浮虚空长袍 + 无面兜帽 + 悬浮核心 + 4 触须
-        // ══════════════════════════════════════════════════════
-        PartDefinition vw = root.addOrReplaceChild("voidweaver", CubeListBuilder.create(), PartPose.ZERO);
-        vw.addOrReplaceChild("torso",
-                CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, -11.0F, -4.0F, 10.0F, 15.0F, 8.0F),
-                PartPose.offset(0.0F, 12.0F, 0.0F));
-        vw.addOrReplaceChild("robe",
-                CubeListBuilder.create().texOffs(0, 24).addBox(-7.0F, 0.0F, -5.5F, 14.0F, 16.0F, 11.0F),
-                PartPose.offset(0.0F, 16.0F, 0.0F));
-        vw.addOrReplaceChild("hood",
-                CubeListBuilder.create().texOffs(0, 52).addBox(-5.5F, -6.0F, -5.5F, 11.0F, 8.0F, 11.0F),
-                PartPose.offset(0.0F, 0.0F, 0.0F));
-        vw.addOrReplaceChild("void_face",
-                CubeListBuilder.create().texOffs(0, 72).addBox(-2.5F, -1.5F, -4.5F, 5.0F, 3.0F, 1.0F),
-                PartPose.offset(0.0F, 1.0F, -1.0F));
-        vw.addOrReplaceChild("core",
-                CubeListBuilder.create().texOffs(0, 78).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F),
-                PartPose.offset(0.0F, 6.0F, -5.0F));
-        vw.addOrReplaceChild("tendril0",
-                CubeListBuilder.create().texOffs(0, 88).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 10.0F, 1.0F),
-                PartPose.offsetAndRotation(5.0F, 8.0F, 2.0F, 0.3F, 0.0F, -0.30F));
-        vw.addOrReplaceChild("tendril1",
-                CubeListBuilder.create().texOffs(8, 88).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 10.0F, 1.0F),
-                PartPose.offsetAndRotation(-5.0F, 8.0F, 2.0F, 0.3F, 0.0F, 0.30F));
-        vw.addOrReplaceChild("tendril2",
-                CubeListBuilder.create().texOffs(16, 88).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F),
-                PartPose.offsetAndRotation(3.0F, 6.0F, 4.0F, 0.5F, 0.0F, -0.20F));
-        vw.addOrReplaceChild("tendril3",
-                CubeListBuilder.create().texOffs(24, 88).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F),
-                PartPose.offsetAndRotation(-3.0F, 6.0F, 4.0F, 0.5F, 0.0F, 0.20F));
-        vw.addOrReplaceChild("ring",
-                CubeListBuilder.create().texOffs(32, 88).addBox(-6.0F, -1.0F, -1.0F, 12.0F, 1.0F, 1.0F),
-                PartPose.offset(0.0F, -6.0F, 0.0F));
 
+        PartDefinition voidweaver = root.addOrReplaceChild("voidweaver", CubeListBuilder.create(), PartPose.ZERO);
+        voidweaver.addOrReplaceChild("torso", CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, -11.0F, -4.0F, 10.0F, 15.0F, 8.0F), PartPose.offset(0.0F, 12.0F, 0.0F));
+        voidweaver.addOrReplaceChild("robe", CubeListBuilder.create().texOffs(37, 0).addBox(-7.0F, 0.0F, -5.5F, 14.0F, 16.0F, 11.0F), PartPose.offset(0.0F, 16.0F, 0.0F));
+        voidweaver.addOrReplaceChild("hood", CubeListBuilder.create().texOffs(0, 28).addBox(-5.5F, -6.0F, -5.5F, 11.0F, 8.0F, 11.0F), PartPose.offset(0.0F, 0.0F, 0.0F));
+        voidweaver.addOrReplaceChild("void_face", CubeListBuilder.create().texOffs(45, 28).addBox(-2.5F, -1.5F, -4.5F, 5.0F, 3.0F, 1.0F), PartPose.offset(0.0F, 1.0F, -1.0F));
+        voidweaver.addOrReplaceChild("core", CubeListBuilder.create().texOffs(58, 28).addBox(-2.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F), PartPose.offset(0.0F, 6.0F, -5.0F));
+        voidweaver.addOrReplaceChild("ring", CubeListBuilder.create().texOffs(75, 28).addBox(-6.0F, -1.0F, -1.0F, 12.0F, 1.0F, 1.0F), PartPose.offset(0.0F, -6.0F, 0.0F));
+        voidweaver.addOrReplaceChild("mote_l", CubeListBuilder.create().texOffs(102, 28).addBox(-1.5F, -1.5F, -1.5F, 3.0F, 3.0F, 3.0F), PartPose.offset(7.0F, 4.0F, 2.0F));
+        voidweaver.addOrReplaceChild("mote_r", CubeListBuilder.create().texOffs(115, 28).addBox(-1.5F, -1.5F, -1.5F, 3.0F, 3.0F, 3.0F), PartPose.offset(-7.0F, 4.0F, 2.0F));
+        voidweaver.addOrReplaceChild("tendril0", CubeListBuilder.create().texOffs(0, 48).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 10.0F, 1.0F), PartPose.offsetAndRotation(5.0F, 8.0F, 2.0F, 0.3F, 0.0F, -0.3F));
+        voidweaver.addOrReplaceChild("tendril1", CubeListBuilder.create().texOffs(5, 48).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 10.0F, 1.0F), PartPose.offsetAndRotation(-5.0F, 8.0F, 2.0F, 0.3F, 0.0F, 0.3F));
+        voidweaver.addOrReplaceChild("tendril2", CubeListBuilder.create().texOffs(10, 48).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(3.0F, 6.0F, 4.0F, 0.5F, 0.0F, -0.2F));
+        voidweaver.addOrReplaceChild("tendril3", CubeListBuilder.create().texOffs(15, 48).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(-3.0F, 6.0F, 4.0F, 0.5F, 0.0F, 0.2F));
         return LayerDefinition.create(mesh, 128, 128);
     }
 

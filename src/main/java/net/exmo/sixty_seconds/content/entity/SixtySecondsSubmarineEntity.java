@@ -20,6 +20,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.exmo.sixty_seconds.content.entity.SixtySecondsVehicleEntity;
 import net.exmo.sixty_seconds.registry.ModItems;
@@ -154,7 +155,7 @@ public class SixtySecondsSubmarineEntity extends Mob {
         double surfaceY = topWaterY + level.getFluidState(top).getHeight(level, top) - 1.0D;
         if (surfaceY <= this.getY()) return; // 艇底仍在水面之下，无需限制
         // 艇底已到达/超过水面：贴住水面，并消去向上速度
-        this.setY(surfaceY);
+        this.setPos(this.getX(), surfaceY, this.getZ());
         Vec3 v = this.getDeltaMovement();
         if (v.y > 0.0D) {
             this.setDeltaMovement(v.x, 0.0D, v.z);
@@ -211,7 +212,7 @@ public class SixtySecondsSubmarineEntity extends Mob {
                         && (forward != 0.0F || steer != 0.0F || ascend || descend)) {
                     setFuelTicks(this.fuelTicks() - 1);
                     if (this.fuelTicks() == 0) {
-                        rider.displayClientMessage(Component.translatable(
+                        ((Player) rider).displayClientMessage(Component.translatable(
                                 "message.sixty_seconds.sixty_seconds.vehicle_no_fuel")
                                 .withStyle(ChatFormatting.RED), true);
                     }
