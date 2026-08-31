@@ -47,6 +47,12 @@ public final class WeatherThemes {
         put(SOLAR_FLARE,            1.00f, 0.85f, 0.30f, 0.70f, 0.22f, 0.050f, ModParticles.WEATHER_SOLAR,         10, 0.00f, -0.45f, 0.00f, 0.15f, 20,  35);
         put(SOUL_WIND,              0.80f, 0.80f, 0.95f, 0.40f, 0.45f, 0.000f, ModParticles.WEATHER_SOUL,           9,  0.25f,  0.00f, 0.25f, 0.30f, 50,  90);
         put(EMBER_STORM,            1.00f, 0.40f, 0.10f, 0.65f, 0.20f, 0.000f, ModParticles.WEATHER_EMBER_STORM,    11, 0.15f, -0.15f, 0.15f, 0.30f, 40,  70);
+        // 第三批：雨类天气视觉（复用既有粒子，配色区分）
+        put(ACID_RAIN,              0.30f, 0.80f, 0.20f, 0.60f, 0.22f, 0.040f, ModParticles.WEATHER_POLLUTION_RAIN, 11, 0.00f, -0.40f, 0.00f, 0.15f, 25,  40);
+        put(POISON_RAIN,            0.40f, 0.70f, 0.25f, 0.55f, 0.22f, 0.040f, ModParticles.WEATHER_SPORE,          11, 0.00f, -0.40f, 0.00f, 0.15f, 25,  40);
+        put(FROST_RAIN,             0.75f, 0.90f, 1.00f, 0.70f, 0.20f, 0.040f, ModParticles.WEATHER_SNOW,            11, 0.00f, -0.35f, 0.00f, 0.15f, 25,  40);
+        put(SLIME_RAIN,             0.45f, 0.80f, 0.30f, 0.55f, 0.22f, 0.040f, ModParticles.WEATHER_BUBBLE,         11, 0.00f, -0.40f, 0.00f, 0.15f, 25,  40);
+        put(SPARK_RAIN,             1.00f, 0.85f, 0.20f, 0.70f, 0.20f, 0.040f, ModParticles.WEATHER_SPARK,          10, 0.00f, -0.35f, 0.00f, 0.15f, 25,  40);
     }
 
     private static void put(SixtySecondsEventSystem.EventType t, float r, float g, float b, float a, float sz,

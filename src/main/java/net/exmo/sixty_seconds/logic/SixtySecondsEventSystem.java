@@ -76,7 +76,18 @@ public final class SixtySecondsEventSystem {
         /** 灵魂风：户外虚弱 + 反胃 + 理智下降 */
         SOUL_WIND,
         /** 余烬风暴：户外火焰伤害 + 烟尘致盲 */
-        EMBER_STORM
+        EMBER_STORM,
+        // ── 第三批事件：雨类（可被雨伞抵御，每 12 秒施加一次负面效果）──
+        /** 酸雨：户外无伞者每 12 秒腐蚀扣血 + 污染 */
+        ACID_RAIN,
+        /** 毒雨：户外无伞者每 12 秒中毒 I（5 秒） */
+        POISON_RAIN,
+        /** 霜雨：户外无伞者每 12 秒缓慢 + 寒冷伤害 */
+        FROST_RAIN,
+        /** 粘液雨：户外无伞者每 12 秒缓慢 + 反胃 */
+        SLIME_RAIN,
+        /** 电雨：户外无伞者每 12 秒虚弱 */
+        SPARK_RAIN
     }
 
     private static final Map<ServerLevel, Active> ACTIVE = new WeakHashMap<>();
@@ -121,6 +132,11 @@ public final class SixtySecondsEventSystem {
             case SOLAR_FLARE -> "message.sixty_seconds.sixty_seconds.event_solar_flare_start";
             case SOUL_WIND -> "message.sixty_seconds.sixty_seconds.event_soul_wind_start";
             case EMBER_STORM -> "message.sixty_seconds.sixty_seconds.event_ember_storm_start";
+            case ACID_RAIN -> "message.sixty_seconds.sixty_seconds.event_acid_rain_start";
+            case POISON_RAIN -> "message.sixty_seconds.sixty_seconds.event_poison_rain_start";
+            case FROST_RAIN -> "message.sixty_seconds.sixty_seconds.event_frost_rain_start";
+            case SLIME_RAIN -> "message.sixty_seconds.sixty_seconds.event_slime_rain_start";
+            case SPARK_RAIN -> "message.sixty_seconds.sixty_seconds.event_spark_rain_start";
             default -> null;
         };
     }
@@ -173,7 +189,10 @@ public final class SixtySecondsEventSystem {
 
     /** 是否为下雨型自然事件（触发世界下雨）。与 startEvent 中 setWeatherParameters(..., true, ...) 保持一致。 */
     public static boolean isRainEventType(EventType type) {
-        return type == EventType.POLLUTION_RAIN || type == EventType.HAIL || type == EventType.THUNDERSTORM;
+        return type == EventType.POLLUTION_RAIN || type == EventType.HAIL || type == EventType.THUNDERSTORM
+                || type == EventType.ACID_RAIN || type == EventType.POISON_RAIN
+                || type == EventType.FROST_RAIN || type == EventType.SLIME_RAIN
+                || type == EventType.SPARK_RAIN;
     }
 
     private static void startEvent(ServerLevel level, EventType type, long now) {
@@ -300,6 +319,37 @@ public final class SixtySecondsEventSystem {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
                 broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_ember_storm_start")
                         .withStyle(ChatFormatting.GOLD));
+            }
+            // ── 第三批：雨类天气（下雨型，可被雨伞抵御）──
+            case ACID_RAIN -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.ACID_RAIN_DURATION));
+                level.setWeatherParameters(0, SixtySecondsBalance.ACID_RAIN_DURATION, true, false);
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_acid_rain_start")
+                        .withStyle(ChatFormatting.GREEN));
+            }
+            case POISON_RAIN -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.POISON_RAIN_DURATION));
+                level.setWeatherParameters(0, SixtySecondsBalance.POISON_RAIN_DURATION, true, false);
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_poison_rain_start")
+                        .withStyle(ChatFormatting.DARK_GREEN));
+            }
+            case FROST_RAIN -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.FROST_RAIN_DURATION));
+                level.setWeatherParameters(0, SixtySecondsBalance.FROST_RAIN_DURATION, true, false);
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_frost_rain_start")
+                        .withStyle(ChatFormatting.AQUA));
+            }
+            case SLIME_RAIN -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.SLIME_RAIN_DURATION));
+                level.setWeatherParameters(0, SixtySecondsBalance.SLIME_RAIN_DURATION, true, false);
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_slime_rain_start")
+                        .withStyle(ChatFormatting.GREEN));
+            }
+            case SPARK_RAIN -> {
+                ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.SPARK_RAIN_DURATION));
+                level.setWeatherParameters(0, SixtySecondsBalance.SPARK_RAIN_DURATION, true, false);
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_spark_rain_start")
+                        .withStyle(ChatFormatting.YELLOW));
             }
             case AIRDROP -> airdrop(level); // 瞬发，不进 ACTIVE
         }
@@ -520,6 +570,45 @@ public final class SixtySecondsEventSystem {
                         player.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 60, 0, false, false, false));
                     }
                 }
+                // ── 第三批：雨类天气（户外无伞者每 12 秒施加一次负面效果）──
+                case ACID_RAIN -> {
+                    // 酸雨：户外无伞者每 12 秒腐蚀扣血 + 污染
+                    if (inHome || hasUmbrella(player)) continue;
+                    if (now % (20 * 12) == 0) {
+                        player.hurt(player.damageSources().generic(), 1.0F);
+                        addPollution(level, stats, 1);
+                    }
+                }
+                case POISON_RAIN -> {
+                    // 毒雨：户外无伞者每 12 秒中毒 I（5 秒）
+                    if (inHome || hasUmbrella(player)) continue;
+                    if (now % (20 * 12) == 0) {
+                        player.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1, false, false, false));
+                    }
+                }
+                case FROST_RAIN -> {
+                    // 霜雨：户外无伞者每 12 秒缓慢 + 寒冷伤害
+                    if (inHome || hasUmbrella(player)) continue;
+                    if (now % (20 * 12) == 0) {
+                        player.hurt(player.damageSources().generic(), 1.0F);
+                        player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0, false, false, false));
+                    }
+                }
+                case SLIME_RAIN -> {
+                    // 粘液雨：户外无伞者每 12 秒缓慢 + 反胃
+                    if (inHome || hasUmbrella(player)) continue;
+                    if (now % (20 * 12) == 0) {
+                        player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 1, false, false, false));
+                        player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, false, false));
+                    }
+                }
+                case SPARK_RAIN -> {
+                    // 电雨：户外无伞者每 12 秒虚弱
+                    if (inHome || hasUmbrella(player)) continue;
+                    if (now % (20 * 12) == 0) {
+                        player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 120, 0, false, false, false));
+                    }
+                }
                 case METEOR_SHOWER -> {
                     // 流星雨：户外随机被火球砸中（不放置方块/火）
                     if (inHome) continue;
@@ -702,6 +791,31 @@ public final class SixtySecondsEventSystem {
                     "message.sixty_seconds.sixty_seconds.event_soul_wind_end").withStyle(ChatFormatting.GRAY));
             case EMBER_STORM -> broadcast(level, Component.translatable(
                     "message.sixty_seconds.sixty_seconds.event_ember_storm_end").withStyle(ChatFormatting.GRAY));
+            case ACID_RAIN -> {
+                level.setWeatherParameters(0, 0, false, false);
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_acid_rain_end")
+                        .withStyle(ChatFormatting.GREEN));
+            }
+            case POISON_RAIN -> {
+                level.setWeatherParameters(0, 0, false, false);
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_poison_rain_end")
+                        .withStyle(ChatFormatting.DARK_GREEN));
+            }
+            case FROST_RAIN -> {
+                level.setWeatherParameters(0, 0, false, false);
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_frost_rain_end")
+                        .withStyle(ChatFormatting.AQUA));
+            }
+            case SLIME_RAIN -> {
+                level.setWeatherParameters(0, 0, false, false);
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_slime_rain_end")
+                        .withStyle(ChatFormatting.GREEN));
+            }
+            case SPARK_RAIN -> {
+                level.setWeatherParameters(0, 0, false, false);
+                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_spark_rain_end")
+                        .withStyle(ChatFormatting.YELLOW));
+            }
             default -> {
             }
         }
@@ -814,7 +928,8 @@ public final class SixtySecondsEventSystem {
             EventType.RADIATION_LEAK, EventType.BLOOD_MOON,
             EventType.ASH_FALL, EventType.FIRE_RAIN, EventType.CRYSTAL_STORM,
             EventType.TOXIC_SPORE, EventType.SOLAR_FLARE, EventType.SOUL_WIND,
-            EventType.EMBER_STORM
+            EventType.EMBER_STORM, EventType.ACID_RAIN, EventType.POISON_RAIN,
+            EventType.FROST_RAIN, EventType.SLIME_RAIN, EventType.SPARK_RAIN
     };
 
     /** 安排某天必定触发的事件（null 表示晴朗，不强制触发） */
@@ -857,6 +972,11 @@ public final class SixtySecondsEventSystem {
             case SOLAR_FLARE -> "message.sixty_seconds.sixty_seconds.event_solar_flare_name";
             case SOUL_WIND -> "message.sixty_seconds.sixty_seconds.event_soul_wind_name";
             case EMBER_STORM -> "message.sixty_seconds.sixty_seconds.event_ember_storm_name";
+            case ACID_RAIN -> "message.sixty_seconds.sixty_seconds.event_acid_rain_name";
+            case POISON_RAIN -> "message.sixty_seconds.sixty_seconds.event_poison_rain_name";
+            case FROST_RAIN -> "message.sixty_seconds.sixty_seconds.event_frost_rain_name";
+            case SLIME_RAIN -> "message.sixty_seconds.sixty_seconds.event_slime_rain_name";
+            case SPARK_RAIN -> "message.sixty_seconds.sixty_seconds.event_spark_rain_name";
             default -> null;
         };
     }

@@ -420,6 +420,17 @@ public final class SixtySecondsBalance {
     public static final int RADIATION_POLLUTION_PER_10S = 1;
     /** 浓雾持续 2 分钟 */
     public static final int DENSE_FOG_DURATION = 20 * 60 * 2;
+    // ── 第三批天气：雨类（均 2 分钟，户外无伞每 12 秒施加一次负面效果）──
+    /** 酸雨持续 2 分钟 */
+    public static final int ACID_RAIN_DURATION = 20 * 60 * 2;
+    /** 毒雨持续 2 分钟 */
+    public static final int POISON_RAIN_DURATION = 20 * 60 * 2;
+    /** 霜雨持续 2 分钟 */
+    public static final int FROST_RAIN_DURATION = 20 * 60 * 2;
+    /** 粘液雨持续 2 分钟 */
+    public static final int SLIME_RAIN_DURATION = 20 * 60 * 2;
+    /** 电雨持续 2 分钟 */
+    public static final int SPARK_RAIN_DURATION = 20 * 60 * 2;
 
     // ── 海岛远征：扬帆 / 返航（SixtySecondsIslands）────────────────────────────
     /** 登岛后多久才能返航（tick）：刚上岛就撤会让海岛沦为无风险的物资自助餐。 */
