@@ -386,6 +386,8 @@ public final class SixtySecondsBalance {
     // ── 海洋 Boss 寿命（OceanSeaMonsterEntity）────────────────────────────
     /** 海洋 Boss 存活超过此天数（且无人交战）后潜回深海自动消失，避免无限堆积。普通夜晚 Boss 为 2 天。 */
     public static final int OCEAN_BOSS_MAX_LIFETIME_DAYS = 3;
+    /** titan 类海洋 Boss（海洋霸主）寿命：出现后到第二天即潜回深海自动消失（比普通夜晚 Boss 的 2 天更短）。 */
+    public static final int TITAN_MAX_LIFETIME_DAYS = 1;
     /** 退场判定时，若有可被捕食的玩家在此半径内则视为「激战中」，暂缓退场。 */
     public static final double OCEAN_BOSS_ENGAGE_RADIUS = 40.0;
     /** 新天气事件的通用持续时间（酸雾/电磁风暴/虫潮/热浪 = 1.5分钟） */

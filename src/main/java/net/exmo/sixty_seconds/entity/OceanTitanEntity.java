@@ -20,6 +20,11 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
+import net.exmo.sixty_seconds.SixtySecondsMod;
+import net.exmo.sixty_seconds.state.SixtySecondsState;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.ChatFormatting;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * 海洋霸主（10 个<b>独立建模</b>的 Boss，不使用僵尸人形）。
@@ -128,6 +133,11 @@ public class OceanTitanEntity extends OceanCreatureEntity {
     private int moveIndex = 0;
     private int ramTicks = 0;
 
+    // 寿命 / 远离消失（参考普通 Boss 寿命 与 普通海洋生物远离消失）
+    private int titanSpawnDay = -1;
+    private int awayTicks = 0;
+    private static final int TITAN_DESPAWN_RADIUS = 128;   // 玩家远离超过此距离(格)持续过久则潜回深海
+
     // 自管理 Boss 血条 + 等级（与 SixtySecondsBossEntity 一致）
     private final ServerBossEvent bossEvent = new ServerBossEvent(
             Component.literal(""), BossEvent.BossBarColor.BLUE, BossEvent.BossBarOverlay.PROGRESS);
@@ -196,6 +206,24 @@ public class OceanTitanEntity extends OceanCreatureEntity {
         this.bossEvent.setProgress(Mth.clamp(this.getHealth() / this.getMaxHealth(), 0.0F, 1.0F));
         if (!(level() instanceof ServerLevel serverLevel) || isRemoved()) return;
 
+        // ── titan 寿命 / 远离自动消失（参考普通 Boss 寿命 与 普通海洋生物远离消失）──
+        if (SixtySecondsMod.isActive(serverLevel)) {
+            if (titanSpawnDay < 0) {
+                titanSpawnDay = SixtySecondsState.get(serverLevel).dayNumber;
+            } else if (SixtySecondsState.get(serverLevel).dayNumber - titanSpawnDay
+                    >= SixtySecondsBalance.TITAN_MAX_LIFETIME_DAYS) {
+                retreatToDeep(serverLevel);
+                return;
+            }
+        }
+        // 玩家远离一定距离持续过久 → 潜回深海（参考普通海洋生物远离消失；无玩家时不消失）
+        double dSqr = nearestPlayerDistanceSqr();
+        if (dSqr < Double.MAX_VALUE && dSqr > (double) TITAN_DESPAWN_RADIUS * TITAN_DESPAWN_RADIUS) {
+            if (++awayTicks > 600) { retreatToDeep(serverLevel); return; }
+        } else {
+            awayTicks = 0;
+        }
+
         Variant v = getVariant();
         if (v.moves.length == 0) return;
 
@@ -230,6 +258,42 @@ public class OceanTitanEntity extends OceanCreatureEntity {
         moveIndex++;
         castMove(serverLevel, move, target);
         moveCooldown = 100 + random.nextInt(60);
+    }
+
+    // ══════════════════════ 寿命 / 远离退场 ══════════════════════
+
+    /** 最近存活玩家到本体的距离平方（旁观者不计）。 */
+    private double nearestPlayerDistanceSqr() {
+        double best = Double.MAX_VALUE;
+        for (Player p : level().players()) {
+            if (p.isSpectator() || !p.isAlive()) continue;
+            best = Math.min(best, distanceToSqr(p));
+        }
+        return best;
+    }
+
+    /** titan 寿命到期 / 远离过久：潜回深海自动消失（参考 OceanSeaMonsterEntity 的退场）。 */
+    private void retreatToDeep(ServerLevel sl) {
+        Component msg = Component.translatable("message.sixty_seconds.ocean.monster_retreat",
+                        getCustomName() != null ? getCustomName() : Component.literal("海洋霸主"))
+                .withStyle(ChatFormatting.AQUA);
+        sl.getServer().getPlayerList().broadcastSystemMessage(msg, false);
+        sl.sendParticles(ParticleTypes.BUBBLE_COLUMN_UP, getX(), getY(), getZ(), 40, 2.0, 1.5, 2.0, 0.06);
+        playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 1.0F, 0.5F);
+        bossEvent.removeAllPlayers();
+        discard();
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        if (titanSpawnDay >= 0) tag.putInt("TitanSpawnDay", titanSpawnDay);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        titanSpawnDay = tag.contains("TitanSpawnDay") ? tag.getInt("TitanSpawnDay") : -1;
     }
 
     /** 释放一个招式。 */
