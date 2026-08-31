@@ -25,8 +25,8 @@ public final class OceanSeabedRuins {
     }
 
     public static final int TEMPLATE_COUNT = 20;
-    /** 城市建筑网格间距（方块）。 */
-    public static final int SPACING = 180;
+    /** 城市建筑网格间距（方块）。调小以在海床更密集地出现废墟城市。 */
+    public static final int SPACING = 110;
 
     /** 建筑落位信息（由 {@link #plan} 确定性生成）。 */
     public static final class Placement {
@@ -57,7 +57,7 @@ public final class OceanSeabedRuins {
         h ^= (h >>> 33);
         h *= 0xFF51AFD7ED558CCDL;
         h ^= (h >>> 33);
-        if ((h & 7) < 3) return null; // 约 37% 留空
+        if ((h & 15) < 2) return null; // 约 12% 留空（更密集）
         int type = (int) Long.remainderUnsigned(h >>> 3, TEMPLATE_COUNT);
         int jxoff = (int) Long.remainderUnsigned(h >>> 8, 80) - 40;
         int jzoff = (int) Long.remainderUnsigned(h >>> 16, 80) - 40;
@@ -67,11 +67,11 @@ public final class OceanSeabedRuins {
         return new Placement(type, cx, cz, seed);
     }
 
-    /** 放置单座建筑（仅写入与 chunk 交叠的方块，由 Placer 负责裁剪）。 */
-    public static void placeAll(Placer p, Placement b, int seaY) {
+    /** 放置单座建筑（仅写入与 chunk 交叠的方块，由 Placer 负责裁剪）。floorY 为海床顶面 y。 */
+    public static void placeAll(Placer p, Placement b, int seaY, int floorY) {
         RandomSource rng = RandomSource.create(b.seed);
-        // 海床基准：沙层顶在 y=12，建筑从 y=13（其上方空气）起建
-        BlockPos o = new BlockPos(b.centerX, 13, b.centerZ);
+        // 建筑坐落在真实海床顶面之上（floorY 由地形噪声计算），随起伏自适应
+        BlockPos o = new BlockPos(b.centerX, floorY + 1, b.centerZ);
         build(p, b.type, o, rng, seaY);
     }
 
@@ -319,12 +319,12 @@ public final class OceanSeabedRuins {
         p.set(o.offset(dx, dy, dz), s);
     }
 
-    /** 在占地内随机散布 2~4 个物资箱（多于海岛的 1 个）。 */
+    /** 在占地内随机散布物资箱（每座 4~10 个，远多于海岛的 1 个）。 */
     private static void scatterBoxes(Placer p, BlockPos o, RandomSource rng, int spread, int count) {
-        int n = count + rng.nextInt(2); // 2..count+1（至少 2，至多 count+1）
+        int n = count + 2 + rng.nextInt(3); // 比原先翻倍以上（至少 count+2，至多 count+4）
         List<BlockPos> spots = new ArrayList<>();
         int tries = 0;
-        while (spots.size() < n && tries < 40) {
+        while (spots.size() < n && tries < 60) {
             tries++;
             int dx = rng.nextInt(spread * 2 + 1) - spread;
             int dz = rng.nextInt(spread * 2 + 1) - spread;

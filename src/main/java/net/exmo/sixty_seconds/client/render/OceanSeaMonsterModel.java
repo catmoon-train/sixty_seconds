@@ -652,6 +652,8 @@ public class OceanSeaMonsterModel extends EntityModel<OceanSeaMonsterEntity> {
         switch (entity.getVariant()) {
             case KRAKEN -> {
                 kraken.visible = true;
+                // 整体上下颠倒（绕 X 轴 180°，几何与位置一同翻转）
+                kraken.xRot = (float) Math.PI;
                 animKraken(ageInTicks, netHeadYaw, headPitch);
             }
             case SERPENT -> {

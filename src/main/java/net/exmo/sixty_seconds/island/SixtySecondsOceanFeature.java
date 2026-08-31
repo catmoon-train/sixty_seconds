@@ -152,7 +152,8 @@ public final class SixtySecondsOceanFeature extends Feature<NoneFeatureConfigura
                 int half = 12;
                 if (x1 < b.centerX - half || x0 > b.centerX + half) continue;
                 if (z1 < b.centerZ - half || z0 > b.centerZ + half) continue;
-                OceanSeabedRuins.placeAll(placer, b, seaY);
+                int floorY = OceanSeabedTerrain.topAt(worldSeed, b.centerX, b.centerZ, seaY);
+                OceanSeabedRuins.placeAll(placer, b, seaY, floorY);
             }
         }
     }
