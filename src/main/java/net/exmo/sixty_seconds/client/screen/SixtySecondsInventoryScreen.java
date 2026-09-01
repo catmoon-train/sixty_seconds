@@ -2,7 +2,11 @@ package net.exmo.sixty_seconds.client.screen;
 
 import com.mojang.datafixers.util.Pair;
 import net.exmo.sixty_seconds.SixtySeconds;
+import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.bridge.SixtySecPlayerMinigameTaskComponent;
+import net.exmo.sixty_seconds.client.WeightConfigClient;
+import net.exmo.sixty_seconds.weights.SixtySecondsWeightCalc;
+import net.exmo.sixty_seconds.weights.SixtySecondsWeightConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -115,6 +119,7 @@ public class SixtySecondsInventoryScreen extends LimitedHandledScreen<InventoryM
         super.render(context, mouseX, mouseY, delta);
 
         renderTokenBalance(context);
+        renderWeight(context);
         ItemStack hoveredBackpack = renderRow(context, BACKPACK_SLOTS,
                 rowStartX(BACKPACK_SLOTS.length), backpackRowY(), mouseX, mouseY);
         ItemStack hoveredEquip = renderRow(context, EQUIP_SLOTS,
@@ -186,6 +191,28 @@ public class SixtySecondsInventoryScreen extends LimitedHandledScreen<InventoryM
         context.blit(GAME_COIN, iconX, y, 0, 0, COIN_ICON, COIN_ICON, COIN_ICON, COIN_ICON);
         // 现在浮在半透明的世界画面上（不再垫着物品栏底图），加描边阴影保证可读
         context.drawString(this.font, text, iconX + COIN_ICON + COIN_GAP, y + 4, COIN_TEXT, true);
+    }
+
+    /**
+     * 在右上角游戏币余额下方显示当前负重（仅在本模式且负重系统启用时）。
+     * 配置取自客户端缓存；未打开过配置面板时回退到模组内置默认配置，因此不需要服务端额外发包。
+     */
+    private void renderWeight(GuiGraphics context) {
+        SixtySecondsWeightConfig cfg = WeightConfigClient.getOrBuiltin();
+        if (cfg == null || !cfg.enabled) {
+            return;
+        }
+        if (!SixtySecondsMod.isActive(this.player.level())) {
+            return;
+        }
+        double load = SixtySecondsWeightCalc.computeLoad(this.player, cfg);
+        int ratio = (int) Math.min(100, load / Math.max(1e-4, cfg.maxLoad) * 100);
+        Component text = Component.literal(String.format("负重 %.1f / %.0f", load, cfg.maxLoad));
+        int textW = this.font.width(text);
+        int x = this.width - COIN_MARGIN - textW;
+        int y = COIN_MARGIN + COIN_ICON + 4; // 货币图标正下方
+        int col = ratio >= 100 ? 0xFFCC3333 : 0xFFE6E6E6;
+        context.drawString(this.font, text, x, y, col, true);
     }
 
     private void renderCoinButton(GuiGraphics context, int mouseX, int mouseY) {

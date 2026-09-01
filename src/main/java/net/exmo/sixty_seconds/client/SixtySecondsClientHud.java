@@ -57,8 +57,8 @@ public final class SixtySecondsClientHud {
             consumer.accept(fake, delta);
         }
 
-        // 负重 HUD：客户端本地按缓存配置计算，不依赖服务端实时同步包
-        SixtySecondsWeightConfig wcfg = WeightConfigClient.get();
+        // 负重 HUD：客户端本地按缓存配置计算（未打开面板时回退内置默认），不依赖服务端实时同步包
+        SixtySecondsWeightConfig wcfg = WeightConfigClient.getOrBuiltin();
         if (wcfg != null && wcfg.enabled && SixtySecondsClientHud.isActive()) {
             LocalPlayer lp = Minecraft.getInstance().player;
             if (lp != null) {

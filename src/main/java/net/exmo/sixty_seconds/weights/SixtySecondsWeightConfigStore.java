@@ -79,59 +79,6 @@ public final class SixtySecondsWeightConfigStore {
         }
     }
 
-    /** TACZ 枪械/弹药/配件的具体型号默认重量（键与 TACZ custom_data 中的 id 一致）。仅 TACZ 加载时写入。 */
-    private static final Map<String, Double> TACZ_DEFAULTS = new LinkedHashMap<>() {{
-        // 手枪 / 步枪 / 狙击 / 霰弹 / 冲锋枪 / 重武器
-        put("tacz:glock_17", 5.0);
-        put("tacz:taurus943", 5.0);
-        put("tacz:cz75", 5.0);
-        put("tacz:timeless50", 5.5);
-        put("tacz:db_short", 4.0);
-        put("tacz:m870", 5.0);
-        put("tacz:kar98", 6.0);
-        put("tacz:uzi", 4.5);
-        put("tacz:sks_tactical", 6.0);
-        put("tacz:m320", 4.0);
-        put("tacz:rpg7", 9.0);
-        put("tacz:ak47", 5.5);
-        put("tacz:ai_awp", 7.0);
-        // 弹药
-        put("tacz:9mm", 0.3);
-        put("tacz:22wmr", 0.3);
-        put("tacz:12g", 0.4);
-        put("tacz:50ae", 0.3);
-        put("tacz:792x57", 0.5);
-        put("tacz:762x39", 0.5);
-        put("tacz:40mm", 0.6);
-        put("tacz:338", 0.6);
-        put("tacz:rpg_rocket", 1.0);
-        put("tacz:ammo_box", 3.0);
-        // 配件
-        put("tacz:laser_compact", 0.3);
-        put("tacz:sight_sro_dot", 0.3);
-        put("tacz:scope_acog_ta31", 0.5);
-        put("tacz:scope_vudu", 0.6);
-        put("tacz:muzzle_a1", 0.5);
-        put("tacz:muzzle_a2", 0.5);
-        put("tacz:muzzle_a3", 0.5);
-        put("tacz:bayonet_6h3", 0.8);
-        put("tacz:stock_a1", 0.6);
-        put("tacz:stock_a2", 0.6);
-        put("tacz:stock_a3", 0.6);
-        put("tacz:grip_a1", 0.4);
-        put("tacz:grip_a2", 0.4);
-        put("tacz:grip_a3", 0.4);
-        put("tacz:extended_mag_a1", 0.4);
-        put("tacz:extended_mag_a2", 0.4);
-        put("tacz:extended_mag_a3", 0.4);
-        put("tacz:ammo_mod_a1", 0.3);
-        put("tacz:ammo_mod_a2", 0.3);
-        put("tacz:ammo_mod_a3", 0.3);
-    }};
-
-    public static boolean isTaczLoaded() {
-        return BuiltInRegistries.ITEM.getOptional(ResourceLocation.tryParse("tacz:modern_kinetic_gun")).isPresent();
-    }
 
     /** 生成默认配置：优先使用内置资源 {@code default_weights.json} 作为兜底，再补充反射/TACZ 项。 */
     public static SixtySecondsWeightConfig defaultConfig() {
@@ -151,11 +98,6 @@ public final class SixtySecondsWeightConfigStore {
                 // 跳过不可访问字段
             }
         }
-        if (isTaczLoaded()) {
-            for (Map.Entry<String, Double> e : TACZ_DEFAULTS.entrySet()) {
-                cfg.itemWeights.putIfAbsent(e.getKey(), e.getValue());
-            }
-        }
         if (cfg.tagWeights == null) cfg.tagWeights = new LinkedHashMap<>();
         cfg.tagWeights.putIfAbsent("#minecraft:planks", 0.5);
         cfg.tagWeights.putIfAbsent("#minecraft:logs", 2.0);
@@ -165,7 +107,7 @@ public final class SixtySecondsWeightConfigStore {
     }
 
     /** 从模组内置资源读取默认配置（兜底用）。读取失败或不存在时回退到空配置。 */
-    private static SixtySecondsWeightConfig loadBuiltinDefault() {
+    public static SixtySecondsWeightConfig loadBuiltinDefault() {
         try (InputStream in = SixtySecondsWeightConfigStore.class.getResourceAsStream(BUILTIN_PATH)) {
             if (in != null) {
                 SixtySecondsWeightConfig cfg = GSON.fromJson(
@@ -199,7 +141,6 @@ public final class SixtySecondsWeightConfigStore {
             } catch (IllegalAccessException ignored) {
             }
         }
-        if (isTaczLoaded()) ids.addAll(TACZ_DEFAULTS.keySet());
         ids.addAll(cfg.itemWeights.keySet());
         return List.copyOf(ids);
     }
