@@ -45,8 +45,8 @@ import java.util.WeakHashMap;
  * <p>保留手动刷怪以维持播报/浓雾/音效等出场特效。</p>
  *
  * <h3>利维坦 LEVIATHAN（定时刷）</h3>
- * <p>游戏开始时（dayNumber 未记录过）刷第一只，之后每 {@link #LEVIATHAN_PERIOD_DAYS}（6）个由对局推进的游戏日刷一只，
- * 与鲨鱼/海怪独立、不计入刷怪上限、可与其他 Boss 共存，优先刷在玩家附近海域。</p>
+ * <p>仅当玩家处于<b>海洋维度</b>时，在游戏天数达到 {@link #LEVIATHAN_PERIOD_DAYS}（6）及其倍数天（6、12、18…）刷一只；
+ * 与鲨鱼/海怪独立、不计入刷怪上限、可与其他 Boss 共存，优先刷在玩家附近海域。游戏开始首日（非倍数天）不会刷。</p>
  *
  * <h3>难度按天数比例递增</h3>
  * <p>基础概率 × dayRatio = 当前概率。dayRatio = currentDay / totalDays。
@@ -64,7 +64,7 @@ public final class OceanCreatureSpawner {
 
     public static final int CHECK_INTERVAL = 20 * 14;
 
-    /** 利维坦（LEVIATHAN）刷新周期：每 6 个由对局推进的游戏日（dayNumber）刷一只（固定刷新，不计入深海 Boss 全局唯一限制）。 */
+    /** 利维坦（LEVIATHAN）固定刷新周期：仅在游戏天数为 {@code 6} 及其倍数（6、12、18…）时刷新（固定刷新，不计入深海 Boss 全局唯一限制）。 */
     public static final int LEVIATHAN_PERIOD_DAYS = 6;
 
     private static final int MAX_NEARBY_MONSTERS = 2;
@@ -111,8 +111,8 @@ public final class OceanCreatureSpawner {
         RandomSource random = level.getRandom();
         double spawnMult = net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.spawnMultiplier(level);
 
-        // 利维坦定时刷新（与鲨鱼/海怪独立，可共存）
-        tickLeviathan(level, dayNumber);
+        // 利维坦定时刷新（与鲨鱼/海怪独立，可共存；仅海洋维度 + 第6天/倍数天）
+        tickLeviathan(level, dayNumber, inOcean);
 
         // 世界范围内鲨鱼总数（受 SHARK_GLOBAL_CAP 约束）—— 由计数器维护，不再全图扫描
         int globalSharks = getSharkCount(level);
@@ -276,20 +276,29 @@ public final class OceanCreatureSpawner {
     }
 
     /**
-     * 利维坦定时刷新：游戏开始时（dayNumber 未记录过）刷第一只，之后每跨过
-     * {@link #LEVIATHAN_PERIOD_DAYS}（6）个由对局推进的游戏日（dayNumber）刷一只。
+     * 利维坦（LEVIATHAN）固定刷新规则：
+     * <ul>
+     *   <li>仅在玩家处于<b>海洋维度</b>（{@code inOcean}）时才允许刷新；</li>
+     *   <li>仅在游戏天数达到 {@link #LEVIATHAN_PERIOD_DAYS}（6）及其<b>倍数天</b>（6、12、18…）刷新，此前不刷；</li>
+     *   <li>当天只刷新一次（记录 {@code leviathanLastSpawnDay}），避免一日内重复触发；</li>
+     * </ul>
      * 与鲨鱼/海怪完全独立，不计入 {@code MAX_NEARBY_MONSTERS} 上限，可与其他 Boss 共存。
      * 优先刷新在最近存活玩家的附近开阔海域。
      *
      * @param dayNumber 当前由对局推进的游戏天数（SixtySecondsState.Data.dayNumber）
+     * @param inOcean   当前维度是否为海洋维度（只有海洋维度才允许利维坦固定刷新）
      */
-    private static void tickLeviathan(ServerLevel level, int dayNumber) {
+    private static void tickLeviathan(ServerLevel level, int dayNumber, boolean inOcean) {
         SixtySecondsState.Data data = SixtySecondsState.get(level);
         if (data == null) return;
-        boolean neverSpawned = data.leviathanLastSpawnDay == Integer.MIN_VALUE;
-        if (!neverSpawned && dayNumber - data.leviathanLastSpawnDay < LEVIATHAN_PERIOD_DAYS) {
-            return;
-        }
+        // ① 仅当玩家处于海洋维度时才允许利维坦固定刷新
+        if (!inOcean) return;
+        // ② 仅在第 LEVIATHAN_PERIOD_DAYS（6）天及其倍数天刷新（此前不刷，杜绝游戏开始首日即刷）
+        if (dayNumber < LEVIATHAN_PERIOD_DAYS) return;
+        if (dayNumber % LEVIATHAN_PERIOD_DAYS != 0) return;
+        // ③ 当天已刷新过则跳过，避免一日内重复刷新
+        if (data.leviathanLastSpawnDay == dayNumber) return;
+
         // 选最近存活玩家作为刷新锚点；无人则本轮跳过（等下次 tick）
         ServerPlayer target = null;
         double best = Double.MAX_VALUE;
