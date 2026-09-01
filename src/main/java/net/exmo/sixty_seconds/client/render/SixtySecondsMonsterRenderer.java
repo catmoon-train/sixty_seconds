@@ -30,4 +30,14 @@ public class SixtySecondsMonsterRenderer
     public ResourceLocation getTextureLocation(SixtySecondsMonsterEntity entity) {
         return entity.textureLocation();
     }
+
+    /**
+     * 小怪即使被准星选中也不显示名称牌。
+     * 原版 EntityRenderer 会在准星指向拥有自定义名称的实体时绕过实体的 shouldShowName()，
+     * 因此仅在实体上调用 setCustomNameVisible(false) 仍然无法屏蔽鼠标指向时的名称。
+     */
+    @Override
+    protected boolean shouldShowName(SixtySecondsMonsterEntity entity) {
+        return false;
+    }
 }
