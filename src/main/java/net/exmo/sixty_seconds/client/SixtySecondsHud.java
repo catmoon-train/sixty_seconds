@@ -61,6 +61,18 @@ public final class SixtySecondsHud {
     private static final int COL_VALUE = 0xFFF0F0F0;     // 数值（亮白）
     private static final int COL_HEALTH_TRACK = 0xFF202020; // 血量背板（暗灰）
 
+    /** 状态图标纹理（16x16，位于 textures/gui/hud/）。 */
+    private static final ResourceLocation ICON_HEALTH =
+            ResourceLocation.fromNamespaceAndPath("sixty_seconds", "textures/gui/hud/hud_health.png");
+    private static final ResourceLocation ICON_HUNGER =
+            ResourceLocation.fromNamespaceAndPath("sixty_seconds", "textures/gui/hud/hud_hunger.png");
+    private static final ResourceLocation ICON_THIRST =
+            ResourceLocation.fromNamespaceAndPath("sixty_seconds", "textures/gui/hud/hud_thirst.png");
+    private static final ResourceLocation ICON_SANITY =
+            ResourceLocation.fromNamespaceAndPath("sixty_seconds", "textures/gui/hud/hud_sanity.png");
+    private static final ResourceLocation ICON_POLLUTION =
+            ResourceLocation.fromNamespaceAndPath("sixty_seconds", "textures/gui/hud/hud_pollution.png");
+
     private static final int HEALTH_GAP = -20;                  // 血条额外下移 20px（从紧贴位置再向下）
 
     private SixtySecondsHud() {
@@ -166,8 +178,14 @@ public final class SixtySecondsHud {
         renderTopLeftInfo(graphics, client, stats, hasFamily, remaining, hasClock,
                 prepCountdown, hasExploreCd, exploreCd, pulse);
 
-        // ── 物品栏上方：状态面板（4条横排 + 健康独占一行）──
-        renderStatusBarPanel(graphics, client, stats);
+        // ── 物品栏上方：状态面板 ──
+        // vanilla=原版状态栏显示（默认，居中贴物品栏，2×2 网格 + 健康独占一行）
+        // compact=简洁竖排（左/右侧）
+        if (net.exmo.sixty_seconds.weather.WeatherVisualConfig.isVanillaHud()) {
+            renderVanillaPanel(graphics, client, stats);
+        } else {
+            renderCompactPanel(graphics, client, stats);
+        }
     }
 
     /**
@@ -249,14 +267,14 @@ public final class SixtySecondsHud {
     }
 
     /**
-     * 状态面板（纯色简约风 bar + 深色背景面板）：
+     * 简洁竖排面板（compact 模式，纯色简约风 bar + 深色背景面板）：
      * <ul>
      *   <li>健康条：居中、紧贴物品栏上方；健康数值在右侧。</li>
      *   <li>饥饿/口渴/理智/污染：移至右中下角、竖排（一行一个）；数值位置保持（bar 下方居中）。</li>
      *   <li>按下 Shift 时在每个状态条的数值上方显示其名称。</li>
      * </ul>
      */
-    private static void renderStatusBarPanel(FakeGuiGraphics graphics, Minecraft client,
+    private static void renderCompactPanel(FakeGuiGraphics graphics, Minecraft client,
             SixtySecondsStatsComponent stats) {
         boolean shift = isShiftDown(client);
         int screenW = graphics.guiWidth();
@@ -345,6 +363,139 @@ public final class SixtySecondsHud {
             graphics.drawString(client.font, String.valueOf(clamped), barX + statBarW + 4, cy,
                     low ? 0xFFFF6060 : COL_VALUE);
         }
+    }
+
+    /**
+     * 原版状态栏显示（vanilla 模式，默认）：居中紧贴物品栏上方。
+     * <ul>
+     *   <li>2×2 网格：理智值/污染值（上排），饥饿值/口渴值（下排），每格 = 图标 + 条。</li>
+     *   <li>健康值独占一行（图标 + 横跨整行条），位于 2×2 网格之上、物品栏之下。</li>
+     *   <li>按下 Shift 时在每个状态条上方显示其名称与数值。</li>
+     * </ul>
+     */
+    private static void renderVanillaPanel(FakeGuiGraphics graphics, Minecraft client,
+            SixtySecondsStatsComponent stats) {
+        boolean shift = isShiftDown(client);
+        int screenW = graphics.guiWidth();
+        int screenH = graphics.guiHeight();
+        int usableW = PANEL_W - PAD * 2;
+
+        int iconSize = 12;
+        int iconBarGap = 3;
+        int gridRowGap = 4;
+        int colGap = 8;
+
+        // 每个状态条宽度（2 列）
+        int colW = (usableW - colGap) / 2;
+        int barW = colW - iconSize - iconBarGap;
+
+        int gridRowH = Math.max(BAR_H, iconSize) + gridRowGap;
+        int gridH = 2 * (Math.max(BAR_H, iconSize)) + gridRowGap; // 两行图标/条高度
+        int healthRowH = Math.max(HEALTH_BAR_H, iconSize);
+        int panelH = PAD + gridH + ROW_GAP + healthRowH + PAD;
+
+        // 紧贴物品栏上方
+        int bottomY = screenH - HOTBAR_TOP_OFFSET - GAP_ABOVE_HOTBAR;
+        int panelY = bottomY - panelH;
+        int panelX = (screenW - PANEL_W) / 2;
+
+        // 背景面板 + 边框
+        graphics.fill(panelX, panelY, panelX + PANEL_W, panelY + panelH, 0x80000000);
+        graphics.renderOutline(panelX, panelY, PANEL_W, panelH, 0xFF303030);
+
+        // 2×2 网格状态定义
+        Stat[] cells = {
+                new Stat("sanity", stats.sanity, Math.max(stats.sanityMax, SixtySecondsStatsComponent.MAX),
+                        0xFFB06AE6, false),
+                new Stat("pollution", stats.pollution, stats.pollutionMax, 0xFF74B04A, true),
+                new Stat("hunger", stats.hunger, stats.hungerMax, 0xFFE0A030, false),
+                new Stat("thirst", stats.thirst, stats.thirstMax, 0xFF37A7E6, false),
+        };
+
+        int gridTop = panelY + PAD;
+        int leftColX = panelX + PAD;
+        int rightColX = panelX + PAD + colW + colGap;
+        for (int r = 0; r < 2; r++) {
+            int y = gridTop + r * (Math.max(BAR_H, iconSize) + gridRowGap);
+            drawStatCell(graphics, client, leftColX, y, iconSize, barW, cells[r * 2], shift);
+            drawStatCell(graphics, client, rightColX, y, iconSize, barW, cells[r * 2 + 1], shift);
+        }
+
+        // 健康独占一行（图标 + 整行条）
+        int healthY = gridTop + gridH + ROW_GAP;
+        int hIconX = panelX + PAD;
+        int hBarX = hIconX + iconSize + iconBarGap;
+        int hBarW = usableW - iconSize - iconBarGap;
+        drawIcon(graphics, "health", hIconX, healthY, iconSize, 0xFFE64848);
+        drawHealthBar(graphics, client, hBarX, healthY + (HEALTH_BAR_H - BAR_H) / 2, hBarW,
+                stats.health, stats.healthMax, 0xFFE64848);
+        if (shift) {
+            graphics.drawString(client.font,
+                    Component.translatable("hud.sixty_seconds.sixty_seconds.health"),
+                    hBarX, healthY - BAR_H - 1, COL_TITLE);
+            graphics.drawString(client.font, String.valueOf(Mth.clamp(stats.health, 0, stats.healthMax)),
+                    hBarX + hBarW + 2, healthY + (HEALTH_BAR_H - VALUE_H) / 2, COL_VALUE);
+        }
+    }
+
+    /** 单个状态单元格：图标 + 条（+Shift 时名称与数值）。 */
+    private static void drawStatCell(FakeGuiGraphics g, Minecraft client, int x, int y,
+            int iconSize, int barW, Stat s, boolean shift) {
+        drawIcon(g, s.key, x, y, iconSize, s.color);
+        int barX = x + iconSize + 3;
+        int barY = y + (iconSize - BAR_H) / 2;
+        g.fill(barX, barY, barX + barW, barY + BAR_H, COL_HEALTH_TRACK);
+
+        int clamped = Mth.clamp(s.value, 0, s.max);
+        double ratio = s.max > 0 ? clamped / (double) s.max : 0;
+        boolean low = s.highIsBad ? clamped >= s.max : ratio <= LOW_RATIO;
+        int fill = low ? 0xFFFF6060 : s.color;
+        int fillW = (int) Math.round(barW * ratio);
+        if (fillW > 0) {
+            g.fill(barX, barY, barX + fillW, barY + BAR_H, fill);
+        }
+        if (shift) {
+            g.drawString(client.font,
+                    Component.translatable("hud.sixty_seconds.sixty_seconds." + s.key),
+                    barX, barY - BAR_H - 1, COL_TITLE);
+            g.drawString(client.font, String.valueOf(clamped), barX + barW + 2, barY, COL_VALUE);
+        }
+    }
+
+    /** 状态单元数据载体。 */
+    private static final class Stat {
+        final String key;
+        final int value;
+        final int max;
+        final int color;
+        final boolean highIsBad;
+
+        Stat(String key, int value, int max, int color, boolean highIsBad) {
+            this.key = key;
+            this.value = value;
+            this.max = max;
+            this.color = color;
+            this.highIsBad = highIsBad;
+        }
+    }
+
+    /**
+     * 绘制状态图标（从 PNG 纹理加载）：将 16x16 纹理缩放到 s 大小，绘制在 (x, y)。
+     */
+    private static void drawIcon(FakeGuiGraphics g, String key, int x, int y, int s, int color) {
+        ResourceLocation tex = switch (key) {
+            case "health" -> ICON_HEALTH;
+            case "hunger" -> ICON_HUNGER;
+            case "thirst" -> ICON_THIRST;
+            case "sanity" -> ICON_SANITY;
+            case "pollution" -> ICON_POLLUTION;
+            default -> null;
+        };
+        if (tex == null) {
+            g.fill(x, y, s, s, color);
+            return;
+        }
+        g.blit(tex, x, y, 0, 0, s, s, 16, 16);
     }
 
     /**

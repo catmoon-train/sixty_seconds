@@ -1,6 +1,8 @@
 {
   "neoforge.config.sixty_seconds.hudSide": "状态栏位置",
   "neoforge.config.sixty_seconds.hudSide.comment": "状态栏显示位置：left=屏幕左侧居中（默认），right=屏幕右侧居中",
+  "neoforge.config.sixty_seconds.hudDisplayMode": "状态栏显示模式",
+  "neoforge.config.sixty_seconds.hudDisplayMode.comment": "状态栏显示模式：vanilla=原版状态栏显示（默认，居中贴物品栏，2×2 状态网格+健康行），compact=简洁竖排（左/右侧）",
   "message.sixty_seconds.sixty_seconds.save_no_game": "当前没有进行中的游戏，无法保存。",
   "message.sixty_seconds.sixty_seconds.save_done": "已保存当前游戏进度（含玩家状态与物品栏）。",
   "message.sixty_seconds.sixty_seconds.stop_no_game": "当前没有进行中的游戏，无需停止。",

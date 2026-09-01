@@ -20,6 +20,7 @@ public final class WeatherVisualConfig {
     public static final ModConfigSpec.BooleanValue SKY_TINT_ENABLED;
     public static final ModConfigSpec.DoubleValue SKY_TINT_STRENGTH;
     public static final ModConfigSpec.ConfigValue<String> HUD_SIDE;
+    public static final ModConfigSpec.ConfigValue<String> HUD_DISPLAY_MODE;
 
     static {
         ENABLED = BUILDER.comment("启用天气粒子覆盖（封掉原版雨雪渲染并替换为主题化粒子）")
@@ -36,11 +37,23 @@ public final class WeatherVisualConfig {
                 .defineInRange("skyTintStrength", 0.8, 0.0, 1.0);
         HUD_SIDE = BUILDER.comment("neoforge.config.sixty_seconds.hudSide.comment")
                 .define("hudSide", "left");
+        HUD_DISPLAY_MODE = BUILDER.comment("neoforge.config.sixty_seconds.hudDisplayMode.comment")
+                .define("hudDisplayMode", "vanilla");
         SPEC = BUILDER.build();
     }
 
-    /** 状态栏是否绘制在屏幕左侧（默认），否则为右侧。 */
+    /** 状态栏是否绘制在屏幕左侧（默认），否则为右侧。仅 compact 模式使用。 */
     public static boolean isHudLeft() {
         return !"right".equalsIgnoreCase(HUD_SIDE.get());
+    }
+
+    /** 当前 HUD 显示模式：vanilla=原版状态栏显示（默认），compact=简洁竖排（左/右侧）。 */
+    public static String getHudDisplayMode() {
+        return HUD_DISPLAY_MODE.get();
+    }
+
+    /** 是否使用“原版状态栏显示”模式（默认）。 */
+    public static boolean isVanillaHud() {
+        return "vanilla".equalsIgnoreCase(HUD_DISPLAY_MODE.get());
     }
 }

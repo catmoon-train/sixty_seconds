@@ -1,6 +1,8 @@
 {
   "neoforge.config.sixty_seconds.hudSide": "Status Bar Side",
   "neoforge.config.sixty_seconds.hudSide.comment": "Status bar position: left = centered on the left side of the screen (default), right = centered on the right side",
+  "neoforge.config.sixty_seconds.hudDisplayMode": "HUD Display Mode",
+  "neoforge.config.sixty_seconds.hudDisplayMode.comment": "HUD display mode: vanilla = vanilla-style status bar (default, centered above hotbar, 2x2 status grid + health row), compact = compact vertical column (left/right)",
   "message.sixty_seconds.sixty_seconds.save_no_game": "No game in progress — cannot save.",
   "message.sixty_seconds.sixty_seconds.save_done": "Saved current game progress (player stats & inventories included).",
   "message.sixty_seconds.sixty_seconds.stop_no_game": "No game in progress — nothing to stop.",
