@@ -57,6 +57,8 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
             long elapsed = now - searchStart.get(slot);
             float prog = (float) elapsed / searchDuration.get(slot);
             if (prog >= 1f) {
+                // 搜刮完成：清除「搜索中」标记（随即由服务端替换为战利品）
+                SixtySecondsLootMagnifierItem.setSearching(this.menu.getSlot(slot).getItem(), false);
                 sendReveal(slot);
                 searchStart.remove(slot);
                 searchDuration.remove(slot);
@@ -109,6 +111,8 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
         }
         searchStart.put(slotIndex, this.minecraft.level.getGameTime());
         searchDuration.put(slotIndex, ticks);
+        // 标记该放大镜为「搜索中」，使物品名显示 搜索中
+        SixtySecondsLootMagnifierItem.setSearching(mag, true);
         if (this.minecraft.player != null) {
             this.minecraft.player.playSound(SoundEvents.CHEST_OPEN, 0.9f, 1.0f);
         }

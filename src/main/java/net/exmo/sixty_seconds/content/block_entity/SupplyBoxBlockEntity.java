@@ -8,6 +8,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -315,6 +316,10 @@ public class SupplyBoxBlockEntity extends BlockEntity {
         }
         searchItems.set(slot, loot.copy());
         setChanged();
+        // 立即把新战利品同步给打开容器的客户端（强制广播，避免依赖下一 tick 的自动同步导致不刷新）
+        if (player.containerMenu instanceof AbstractContainerMenu menu) {
+            menu.broadcastChanges();
+        }
     }
 
     /** 一次性箱（空投奖励箱）箱内物资被取空后移除方块。 */

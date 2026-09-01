@@ -62,7 +62,8 @@ public final class NeoForgeEvents {
     public static void onServerTickPost(ServerTickEvent.Post event) {
         GameUtils.tickTaskQueue(event.getServer());
         net.exmo.sixty_seconds.weather.WeatherSync.serverTick(event.getServer());
-        for (ServerTickEvents.EndServerTick listener : ServerTickEvents.END_SERVER_TICK.invokers()) {
+        // 迭代前做快照，避免事件列表在别处被并发注册/注销导致 ConcurrentModificationException
+        for (ServerTickEvents.EndServerTick listener : new java.util.ArrayList<>(ServerTickEvents.END_SERVER_TICK.invokers())) {
             listener.onEndTick(event.getServer());
         }
     }
@@ -85,7 +86,8 @@ public final class NeoForgeEvents {
                     net.exmo.sixty_seconds.logic.SixtySecondsNpcSpawner.spawnPirates(level, od, level.isNight());
                 }
             }
-            for (ServerTickEvents.EndWorldTick listener : ServerTickEvents.END_WORLD_TICK.invokers()) {
+            // 迭代前做快照，避免事件列表在别处被并发注册/注销导致 ConcurrentModificationException
+            for (ServerTickEvents.EndWorldTick listener : new java.util.ArrayList<>(ServerTickEvents.END_WORLD_TICK.invokers())) {
                 listener.onEndTick(level);
             }
             // 潜水服套装效果：穿戴全套时获得水下呼吸

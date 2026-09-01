@@ -26,7 +26,11 @@ public class SixtySecondsLootMagnifierItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        // 放大镜本身不暴露真实战利品名称
+        // 放大镜本身不暴露真实战利品名称；搜索进行中显示「搜索中」
+        CustomData cd = stack.get(DataComponents.CUSTOM_DATA);
+        if (cd != null && cd.copyTag().getBoolean("Searching")) {
+            return Component.translatable("item.sixty_seconds.loot_magnifier.searching");
+        }
         return Component.translatable("item.sixty_seconds.loot_magnifier.prompt");
     }
 
@@ -71,5 +75,21 @@ public class SixtySecondsLootMagnifierItem extends Item {
         }
         int t = cd.copyTag().getInt("SearchTicks");
         return t <= 0 ? SixtySecondsBalance.SUPPLY_SEARCH_BASE_TICKS : t;
+    }
+
+    /**
+     * 仅在客户端调用：标记/清除放大镜的「搜索中」状态，用于让物品名显示「搜索中」。
+     * 该标记只存在于客户端拷贝，不会被发往服务端，服务端替换战利品后会自然清除。
+     */
+    public static void setSearching(ItemStack mag, boolean searching) {
+        if (!(mag.getItem() instanceof SixtySecondsLootMagnifierItem)) return;
+        CustomData cd = mag.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        CompoundTag tag = cd.copyTag();
+        if (searching) {
+            tag.putBoolean("Searching", true);
+        } else {
+            tag.remove("Searching");
+        }
+        mag.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     }
 }
