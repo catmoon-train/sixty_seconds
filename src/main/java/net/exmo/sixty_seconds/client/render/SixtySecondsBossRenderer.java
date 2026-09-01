@@ -2,11 +2,11 @@ package net.exmo.sixty_seconds.client.render;
 
 import net.exmo.sixty_seconds.client.model.SixtySecondsBossModel;
 import net.exmo.sixty_seconds.entity.SixtySecondsBossEntity;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;

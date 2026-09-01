@@ -4,6 +4,7 @@ import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.client.FakeGuiGraphics;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
+import net.exmo.sixty_seconds.entity.SixtySecondsBossEntity;
 import net.exmo.sixty_seconds.network.PlayerHealthS2CPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
