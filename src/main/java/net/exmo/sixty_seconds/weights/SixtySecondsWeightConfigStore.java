@@ -12,6 +12,8 @@ import net.minecraft.world.level.storage.LevelResource;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -25,13 +27,16 @@ import java.util.Set;
 /**
  * 负重配置的本地存储。配置文件位于世界目录 {@code <world>/sixty_seconds_weight_config.json}。
  *
- * <p>默认配置会为模组内每个注册物品生成一份默认重量，同时（在 TACZ 已加载时）为 TACZ 枪械/弹药/
- * 配件生成默认重量，并附带若干物品标签的统一定义示例。
+ * <p>默认配置优先使用模组内置的资源文件 {@code /assets/sixty_seconds/weights/default_weights.json}
+ * （为模组内每个注册物品提供默认重量，并附带若干物品标签的统一定义）。该内置 JSON 作为默认配置与
+ * 兜底使用；运行时还会通过 {@link ModItems} 反射补充内置 JSON 未覆盖的物品，并在 TACZ 加载时为
+ * TACZ 枪械/弹药/配件补充默认重量。
  */
 public final class SixtySecondsWeightConfigStore {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final String FILE_NAME = "sixty_seconds_weight_config.json";
+    private static final String BUILTIN_PATH = "/assets/sixty_seconds/weights/default_weights.json";
 
     private static SixtySecondsWeightConfig current;
     private static Path file;
@@ -54,7 +59,7 @@ public final class SixtySecondsWeightConfigStore {
                 if (current.itemWeights == null) current.itemWeights = new LinkedHashMap<>();
                 if (current.tagWeights == null) current.tagWeights = new LinkedHashMap<>();
             } catch (IOException e) {
-                SixtySeconds.LOGGER.error("读取负重配置失败，使用默认配置", e);
+                SixtySeconds.LOGGER.error("Failed to read weight config, using default config", e);
                 current = defaultConfig();
             }
         } else {
@@ -70,7 +75,7 @@ public final class SixtySecondsWeightConfigStore {
             Files.createDirectories(file.getParent());
             Files.write(file, GSON.toJson(cfg).getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
-            SixtySeconds.LOGGER.error("保存负重配置失败", e);
+            SixtySeconds.LOGGER.error("Failed to save weight config", e);
         }
     }
 
@@ -128,13 +133,14 @@ public final class SixtySecondsWeightConfigStore {
         return BuiltInRegistries.ITEM.getOptional(ResourceLocation.tryParse("tacz:modern_kinetic_gun")).isPresent();
     }
 
+    /** 生成默认配置：优先使用内置资源 {@code default_weights.json} 作为兜底，再补充反射/TACZ 项。 */
     public static SixtySecondsWeightConfig defaultConfig() {
-        SixtySecondsWeightConfig cfg = new SixtySecondsWeightConfig();
+        SixtySecondsWeightConfig cfg = loadBuiltinDefault();
+        // 运行时反射补充：捕获内置 JSON 未覆盖或 id 拼写差异的模组物品
         for (Field f : ModItems.class.getDeclaredFields()) {
             f.setAccessible(true);
             try {
-                Object v = f.get(null);
-                Item item = asItem(v);
+                Item item = asItem(f.get(null));
                 if (item != null) {
                     String id = BuiltInRegistries.ITEM.getKey(item).toString();
                     if (!id.equals("minecraft:air")) {
@@ -150,10 +156,32 @@ public final class SixtySecondsWeightConfigStore {
                 cfg.itemWeights.putIfAbsent(e.getKey(), e.getValue());
             }
         }
-        cfg.tagWeights.put("#minecraft:planks", 0.5);
-        cfg.tagWeights.put("#minecraft:logs", 2.0);
-        cfg.tagWeights.put("#minecraft:stone", 2.5);
-        cfg.tagWeights.put("#minecraft:storage_blocks", 4.0);
+        if (cfg.tagWeights == null) cfg.tagWeights = new LinkedHashMap<>();
+        cfg.tagWeights.putIfAbsent("#minecraft:planks", 0.5);
+        cfg.tagWeights.putIfAbsent("#minecraft:logs", 2.0);
+        cfg.tagWeights.putIfAbsent("#minecraft:stone", 2.5);
+        cfg.tagWeights.putIfAbsent("#minecraft:storage_blocks", 4.0);
+        return cfg;
+    }
+
+    /** 从模组内置资源读取默认配置（兜底用）。读取失败或不存在时回退到空配置。 */
+    private static SixtySecondsWeightConfig loadBuiltinDefault() {
+        try (InputStream in = SixtySecondsWeightConfigStore.class.getResourceAsStream(BUILTIN_PATH)) {
+            if (in != null) {
+                SixtySecondsWeightConfig cfg = GSON.fromJson(
+                        new InputStreamReader(in, StandardCharsets.UTF_8), SixtySecondsWeightConfig.class);
+                if (cfg != null) {
+                    if (cfg.itemWeights == null) cfg.itemWeights = new LinkedHashMap<>();
+                    if (cfg.tagWeights == null) cfg.tagWeights = new LinkedHashMap<>();
+                    return cfg;
+                }
+            }
+        } catch (Exception e) {
+            SixtySeconds.LOGGER.warn("Failed to read built-in default weight config, fallback to empty config", e);
+        }
+        SixtySecondsWeightConfig cfg = new SixtySecondsWeightConfig();
+        cfg.itemWeights = new LinkedHashMap<>();
+        cfg.tagWeights = new LinkedHashMap<>();
         return cfg;
     }
 
