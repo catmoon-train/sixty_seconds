@@ -12,6 +12,9 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 第二代普通 mob 模型。
  *
@@ -74,7 +77,34 @@ public class SixtySecondsMobModelV2 extends EntityModel<SixtySecondsMonsterEntit
                 PartPose.offsetAndRotation(ox, oy, oz, rx, ry, rz));
     }
 
+    /**
+     * 动画肢体：几何与 UV 与 {@link #cube} 完全一致，但把部件原点（枢轴）移到
+     * 盒体顶端 {@code (0, y, 0)}，即肢体与躯干相连的关节处。
+     *
+     * <p>普通 {@link #cube} 的部件原点在实体脚底中心 {@code (0,0,0)}，给这类部件
+     * 施加旋转会让整条肢体绕脚底画出一个巨大的弧线（腿会被甩到身后十几格）。
+     * 这里通过「盒体坐标相对枢轴平移 + PartPose 反向平移」让两者抵消，
+     * 得到的世界空间几何完全相同，但旋转中心变成关节，动画才正确。</p>
+     */
+    private static void limb(PartDefinition parent, String name, int u, int v,
+                             float x, float y, float z, float dx, float dy, float dz) {
+        parent.addOrReplaceChild(name,
+                CubeListBuilder.create().texOffs(u, v).addBox(x, 0, z, dx, dy, dz),
+                PartPose.offset(0, y, 0));
+        LIMB_ROLE.put(currentForm + ":" + name, guessRole(name));
+    }
+
+    private static void limb(PartDefinition parent, String name, int u, int v,
+                             float x, float y, float z, float dx, float dy, float dz,
+                             float rx, float ry, float rz) {
+        parent.addOrReplaceChild(name,
+                CubeListBuilder.create().texOffs(u, v).addBox(x, 0, z, dx, dy, dz),
+                PartPose.offsetAndRotation(0, y, 0, rx, ry, rz));
+        LIMB_ROLE.put(currentForm + ":" + name, guessRole(name));
+    }
+
     private static PartDefinition form(PartDefinition root, String name) {
+        currentForm = name;
         return root.addOrReplaceChild(name, CubeListBuilder.create(), PartPose.ZERO);
     }
 
