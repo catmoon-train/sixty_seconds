@@ -5,6 +5,7 @@ import net.exmo.sixty_seconds.bridge.stubs.SixtySecItems;
 import net.exmo.sixty_seconds.bridge.stubs.SixtySecSounds;
 import net.exmo.sixty_seconds.network.ModNetwork;
 import net.exmo.sixty_seconds.registry.ModBlocks;
+import net.exmo.sixty_seconds.registry.ModMenuTypes;
 import net.exmo.sixty_seconds.registry.ModEffects;
 import net.exmo.sixty_seconds.registry.ModEntities;
 import net.exmo.sixty_seconds.registry.ModItems;
@@ -35,6 +36,7 @@ public class Sixty_seconds {
     public Sixty_seconds(IEventBus modEventBus, ModContainer modContainer) {
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
         ModEntities.register(modEventBus);
         ModEffects.register(modEventBus);
         ModSounds.register(modEventBus);

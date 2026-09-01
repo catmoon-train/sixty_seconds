@@ -13,7 +13,17 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.exmo.sixty_seconds.registry.ModBlocks;
+import net.exmo.sixty_seconds.SixtySecondsBalance;
+import net.exmo.sixty_seconds.content.item.SixtySecondsLootMagnifierItem;
+import net.exmo.sixty_seconds.weights.SixtySecondsWeightCalc;
+import net.exmo.sixty_seconds.weights.SixtySecondsWeightConfig;
+import net.exmo.sixty_seconds.weights.SixtySecondsWeightConfigStore;
+import net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem;
+import net.exmo.sixty_seconds.content.block.SupplyBoxBlock;
+import net.minecraft.core.NonNullList;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,6 +42,12 @@ public class SupplyBoxBlockEntity extends BlockEntity {
     private boolean oneShot = false;
     /** 上锁箱是否已被撬开（撬开后持续开放）。 */
     private boolean unlocked = false;
+
+    /** 容器搜刮形式：箱内物品（放大镜占位或已揭示战利品），按日生成一次。 */
+    private NonNullList<ItemStack> searchItems =
+            NonNullList.withSize(SixtySecondsBalance.SUPPLY_SEARCH_CONTAINER_SIZE, ItemStack.EMPTY);
+    /** 已生成的游戏日，避免同一天重复生成放大镜。 */
+    private int generatedDay = -1;
 
     public SupplyBoxBlockEntity(BlockPos pos, BlockState state) {
         this(ModBlocks.SIXTY_SECONDS_SUPPLY_BOX_ENTITY, pos, state);
@@ -151,6 +167,7 @@ public class SupplyBoxBlockEntity extends BlockEntity {
             lastRefreshDay = day;
             claimedToday = false;
             unlocked = false;
+            generatedDay = -1;
             setChanged();
         }
     }
@@ -184,6 +201,12 @@ public class SupplyBoxBlockEntity extends BlockEntity {
         tag.putInt("BonusRolls", bonusRolls);
         tag.putBoolean("OneShot", oneShot);
         tag.putBoolean("Unlocked", unlocked);
+        net.minecraft.nbt.ListTag searchList = new net.minecraft.nbt.ListTag();
+        for (ItemStack s : searchItems) {
+            searchList.add(s.save(registries));
+        }
+        tag.put("SearchItems", searchList);
+        tag.putInt("GeneratedDay", generatedDay);
     }
 
     @Override
@@ -194,5 +217,107 @@ public class SupplyBoxBlockEntity extends BlockEntity {
         bonusRolls = tag.contains("BonusRolls") ? Math.max(1, tag.getInt("BonusRolls")) : 1;
         oneShot = tag.getBoolean("OneShot");
         unlocked = tag.getBoolean("Unlocked");
+        if (tag.contains("SearchItems", net.minecraft.nbt.Tag.TAG_LIST)) {
+            net.minecraft.nbt.ListTag searchSaved = tag.getList("SearchItems", net.minecraft.nbt.Tag.TAG_COMPOUND);
+            searchItems = NonNullList.withSize(SixtySecondsBalance.SUPPLY_SEARCH_CONTAINER_SIZE, ItemStack.EMPTY);
+            for (int i = 0; i < searchSaved.size() && i < searchItems.size(); i++) {
+                searchItems.set(i, ItemStack.parse(registries, searchSaved.getCompound(i)).orElse(ItemStack.EMPTY));
+            }
+        }
+        if (tag.contains("GeneratedDay")) {
+            generatedDay = tag.getInt("GeneratedDay");
+        }
+    }
+
+    // ── 容器搜刮形式支持 ───────────────────────────────────────────────
+
+    public NonNullList<ItemStack> getSearchItems() {
+        return searchItems;
+    }
+
+    public boolean isSearchItemsEmpty() {
+        for (ItemStack s : searchItems) {
+            if (!s.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /** 容器形式下打开箱子时调用：按需生成放大镜占位物（每日一次，与每日领取共享 claimedToday）。 */
+    public void generateSearchLoot(ServerLevel level, ServerPlayer player) {
+        ensureDaily(level);
+        int day = SixtySecondsState.get(level).dayNumber;
+        if (generatedDay == day) {
+            return;
+        }
+        generatedDay = day;
+        for (int i = 0; i < searchItems.size(); i++) {
+            searchItems.set(i, ItemStack.EMPTY);
+        }
+        List<ItemStack> loot = claim(level, player);
+        if (!loot.isEmpty()) {
+            boolean advanced = isAdvancedBox();
+            // 一次性箱（空投奖励箱）有固定的全部战利品，不按普通/高级上限截断，避免丢物资
+            int max = oneShot ? searchItems.size()
+                    : (advanced ? SixtySecondsBalance.SUPPLY_SEARCH_ADVANCED_MAX
+                    : SixtySecondsBalance.SUPPLY_SEARCH_NORMAL_MAX);
+            int n = Math.min(loot.size(), max);
+            List<Integer> slots = new ArrayList<>();
+            for (int i = 0; i < searchItems.size(); i++) {
+                slots.add(i);
+            }
+            for (int i = slots.size() - 1; i > 0; i--) {
+                int j = level.random.nextInt(i + 1);
+                Collections.swap(slots, i, j);
+            }
+            SixtySecondsWeightConfig wcfg = SixtySecondsWeightConfigStore.get(level.getServer());
+            double m = SixtySecondsTraitSystem.lootSearchMultiplier(player);
+            for (int k = 0; k < n; k++) {
+                ItemStack lootStack = loot.get(k);
+                int ticks = computeSearchTicks(lootStack, wcfg, m);
+                searchItems.set(slots.get(k), SixtySecondsLootMagnifierItem.create(level, lootStack, ticks));
+            }
+        }
+        setChanged();
+    }
+
+    /** 左键搜刮读条完成后由服务端揭示：把放大镜替换为真实战利品（仅当仍是放大镜且玩家在范围内）。 */
+    public void revealSlot(int slot, ServerPlayer player) {
+        ServerLevel level = (ServerLevel) getLevel();
+        if (level == null || slot < 0 || slot >= searchItems.size()) {
+            return;
+        }
+        ItemStack mag = searchItems.get(slot);
+        if (!SixtySecondsLootMagnifierItem.isMagnifier(mag)) {
+            return;
+        }
+        if (player.distanceToSqr(getBlockPos().getCenter()) > SixtySecondsBalance.SUPPLY_SEARCH_CONTAINER_MAX_DIST_SQR) {
+            return;
+        }
+        ItemStack loot = SixtySecondsLootMagnifierItem.getLoot(level, mag);
+        if (loot.isEmpty()) {
+            return;
+        }
+        searchItems.set(slot, loot.copy());
+        setChanged();
+    }
+
+    /** 一次性箱（空投奖励箱）箱内物资被取空后移除方块。 */
+    public void removeOneShotBox() {
+        if (getLevel() != null && getLevel().getBlockState(getBlockPos()).getBlock() == this.getBlockState().getBlock()) {
+            getLevel().removeBlock(getBlockPos(), false);
+        }
+    }
+
+    private boolean isAdvancedBox() {
+        return getBlockState().getBlock() instanceof SupplyBoxBlock box && box.advanced();
+    }
+
+    private int computeSearchTicks(ItemStack loot, SixtySecondsWeightConfig cfg, double m) {
+        double weight = SixtySecondsWeightCalc.unitWeight(loot, cfg);
+        double ticks = (SixtySecondsBalance.SUPPLY_SEARCH_BASE_TICKS + weight * SixtySecondsBalance.SUPPLY_SEARCH_WEIGHT_TICKS) * m;
+        return (int) Math.max(SixtySecondsBalance.SUPPLY_SEARCH_MIN_TICKS,
+                Math.min(SixtySecondsBalance.SUPPLY_SEARCH_MAX_TICKS, Math.round(ticks)));
     }
 }

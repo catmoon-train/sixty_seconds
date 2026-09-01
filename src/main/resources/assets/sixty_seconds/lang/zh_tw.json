@@ -1,4 +1,8 @@
 {
+  "item.sixty_seconds.loot_magnifier": "物資放大鏡",
+  "container.sixty_seconds.supply_search": "物資箱",
+  "command.sixty_seconds.lootform.usage": "用法: /60s lootform <timed|container>",
+  "command.sixty_seconds.lootform.set": "物資箱搜刮形式已切換為：%s",
   "message.sixty_seconds.sixty_seconds.save_no_game": "目前沒有進行中的遊戲，無法儲存。",
   "message.sixty_seconds.sixty_seconds.save_done": "已儲存目前遊戲進度（含玩家狀態與物品欄）。",
   "message.sixty_seconds.sixty_seconds.stop_no_game": "目前沒有進行中的遊戲，無須停止。",

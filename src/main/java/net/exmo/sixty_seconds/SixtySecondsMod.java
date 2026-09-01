@@ -91,6 +91,7 @@ public final class SixtySecondsMod {
         net.exmo.sixty_seconds.command.SixtySecondsHelicopterCommand.register();
         net.exmo.sixty_seconds.command.OceanCreatureCommand.register();
         net.exmo.sixty_seconds.command.SixtySecondsDifficultyCommand.register();
+        net.exmo.sixty_seconds.command.SixtySecondsLootFormCommand.register();
     }
 
     /** 当前世界是否正在运行本模式。 */

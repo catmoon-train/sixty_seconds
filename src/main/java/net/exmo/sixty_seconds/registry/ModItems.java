@@ -28,6 +28,7 @@ import net.exmo.sixty_seconds.content.item.MiningToolItem;
 import net.exmo.sixty_seconds.content.item.SixtySecondsBoxPryItem;
 import net.exmo.sixty_seconds.content.item.SixtySecondsPliersItem;
 import net.exmo.sixty_seconds.content.item.SixtySecondsPhoneItem;
+import net.exmo.sixty_seconds.content.item.SixtySecondsLootMagnifierItem;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.component.Tool;
 import java.util.ArrayList;
@@ -178,6 +179,13 @@ public final class ModItems {
     public static final DeferredItem<Item> HOLD_SIXTY_SECONDS_SCRAP = ITEMS.register("sixty_seconds_scrap", () -> {
         SIXTY_SECONDS_SCRAP = new Item(new Item.Properties().stacksTo(64));
         return SIXTY_SECONDS_SCRAP;
+    });
+
+    // 物资箱容器搜刮形式的放大镜占位物（仅由代码放入箱子，不进创造栏）
+    public static Item LOOT_MAGNIFIER;
+    public static final DeferredItem<Item> HOLD_LOOT_MAGNIFIER = ITEMS.register("loot_magnifier", () -> {
+        LOOT_MAGNIFIER = new SixtySecondsLootMagnifierItem(new Item.Properties().stacksTo(1));
+        return LOOT_MAGNIFIER;
     });
 
     public static Item SIXTY_SECONDS_RAG;

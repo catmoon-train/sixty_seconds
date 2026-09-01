@@ -5,6 +5,8 @@ import net.exmo.sixty_seconds.content.block_entity.SupplyBoxBlockEntity;
 import net.exmo.sixty_seconds.loot.SixtySecondsLootStore;
 import net.exmo.sixty_seconds.loot.SixtySecondsLootTable;
 import net.exmo.sixty_seconds.network.OpenLootTableEditS2CPacket;
+import net.exmo.sixty_seconds.loot.SixtySecondsLootFormConfig;
+import net.exmo.sixty_seconds.menu.SupplySearchMenu;
 import net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -134,7 +136,16 @@ public class SupplyBoxBlock extends BaseEntityBlock {
             serverPlayer.displayClientMessage(Component.translatable(
                     "message.sixty_seconds.sixty_seconds.supply_box_unlocked"), true);
         }
-        // 生存：开始「搜刮」定时（搜打撤式），完成才发放物资（见 SixtySecondsLootSearch）
-        net.exmo.sixty_seconds.logic.SixtySecondsLootSearch.start(serverLevel, serverPlayer, box, pos);
+        // 生存：按配置选择搜刮形式
+        if (SixtySecondsLootFormConfig.isContainer(serverLevel.getServer())) {
+            // 新容器形式：打开带放大镜搜刮逻辑的容器界面
+            box.generateSearchLoot(serverLevel, serverPlayer);
+            serverPlayer.openMenu(new net.minecraft.world.SimpleMenuProvider(
+                    (syncId, inv, p) -> SupplySearchMenu.createServer(syncId, inv, box),
+                    Component.translatable("container.sixty_seconds.supply_search")));
+        } else {
+            // 旧形式：站在箱前定时读条
+            net.exmo.sixty_seconds.logic.SixtySecondsLootSearch.start(serverLevel, serverPlayer, box, pos);
+        }
     }
 }

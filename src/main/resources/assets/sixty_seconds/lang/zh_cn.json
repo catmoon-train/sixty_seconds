@@ -1,4 +1,8 @@
 {
+  "item.sixty_seconds.loot_magnifier": "物资放大镜",
+  "container.sixty_seconds.supply_search": "物资箱",
+  "command.sixty_seconds.lootform.usage": "用法: /60s lootform <timed|container>",
+  "command.sixty_seconds.lootform.set": "物资箱搜刮形式已切换为：%s",
   "neoforge.config.sixty_seconds.hudSide": "状态栏位置",
   "neoforge.config.sixty_seconds.hudSide.comment": "状态栏显示位置：left=屏幕左侧居中（默认），right=屏幕右侧居中",
   "neoforge.config.sixty_seconds.hudDisplayMode": "状态栏显示模式",

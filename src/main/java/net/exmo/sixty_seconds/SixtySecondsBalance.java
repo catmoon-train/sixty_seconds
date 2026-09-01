@@ -514,6 +514,23 @@ public final class SixtySecondsBalance {
     public static final int SUPPLY_SEARCH_TICKS = 20 * 3;        // 搜刮时长 3 秒
     public static final double SUPPLY_SEARCH_MAX_DIST_SQR = 3 * 3; // 离箱超过 3 格中断搜刮
 
+    // ── 物资箱搜刮形式：容器形式（放大镜逐个搜刮，越重越久；见 SupplySearchMenu）──
+    /** 容器形式下箱内格子数（9×3）。 */
+    public static final int SUPPLY_SEARCH_CONTAINER_SIZE = 27;
+    /** 普通物资箱一次性最多刷出的放大镜（战利品）数量。 */
+    public static final int SUPPLY_SEARCH_NORMAL_MAX = 3;
+    /** 高级物资箱一次性最多刷出的放大镜（战利品）数量。 */
+    public static final int SUPPLY_SEARCH_ADVANCED_MAX = 5;
+    /** 搜刮基础刻数（重量≈0 时），单位刻。 */
+    public static final int SUPPLY_SEARCH_BASE_TICKS = 20;
+    /** 每 1 单位重量增加的刻数：越重搜刮越久。 */
+    public static final double SUPPLY_SEARCH_WEIGHT_TICKS = 8.0;
+    /** 搜刮最短 / 最长刻数。 */
+    public static final int SUPPLY_SEARCH_MIN_TICKS = 20;
+    public static final int SUPPLY_SEARCH_MAX_TICKS = 20 * 20;
+    /** 容器形式下离箱超过此距离（平方）无法揭示。 */
+    public static final double SUPPLY_SEARCH_CONTAINER_MAX_DIST_SQR = 8 * 8;
+
     // ── 枪械（SixtySecondsGunItem：需子弹、攻击冷却、降噪枪声）──────────────
     /** 命中玩家的健康伤害（受护甲减免；倒地者=处决，怪物=立即死亡）。 */
     public static final int GUN_PLAYER_DAMAGE = 50;

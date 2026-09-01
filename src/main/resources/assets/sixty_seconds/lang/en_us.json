@@ -1,4 +1,8 @@
 {
+  "item.sixty_seconds.loot_magnifier": "Loot Magnifier",
+  "container.sixty_seconds.supply_search": "Supply Box",
+  "command.sixty_seconds.lootform.usage": "Usage: /60s lootform <timed|container>",
+  "command.sixty_seconds.lootform.set": "Supply box loot form switched to: %s",
   "neoforge.config.sixty_seconds.hudSide": "Status Bar Side",
   "neoforge.config.sixty_seconds.hudSide.comment": "Status bar position: left = centered on the left side of the screen (default), right = centered on the right side",
   "neoforge.config.sixty_seconds.hudDisplayMode": "HUD Display Mode",

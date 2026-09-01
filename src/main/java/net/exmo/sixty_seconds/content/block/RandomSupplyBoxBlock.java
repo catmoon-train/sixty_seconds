@@ -7,8 +7,11 @@ import net.exmo.sixty_seconds.loot.SixtySecondsLootTable;
 import net.exmo.sixty_seconds.loot.SixtySecondsRandomBoxConfigStore;
 import net.exmo.sixty_seconds.network.OpenLootTableEditS2CPacket;
 import net.exmo.sixty_seconds.network.OpenRandomSupplyBoxConfigS2CPacket;
+import net.exmo.sixty_seconds.loot.SixtySecondsLootFormConfig;
+import net.exmo.sixty_seconds.menu.SupplySearchMenu;
 import net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -128,8 +131,15 @@ public class RandomSupplyBoxBlock extends SupplyBoxBlock {
         }
 
         // 上锁箱逻辑：跳过（随机物资箱不支持上锁）
-        // 生存：开始「搜刮」定时（搜打撤式），完成才发放物资（见 SixtySecondsLootSearch）
-        net.exmo.sixty_seconds.logic.SixtySecondsLootSearch.start(serverLevel, serverPlayer, box, pos);
+        // 生存：按配置选择搜刮形式
+        if (SixtySecondsLootFormConfig.isContainer(serverLevel.getServer())) {
+            box.generateSearchLoot(serverLevel, serverPlayer);
+            serverPlayer.openMenu(new net.minecraft.world.SimpleMenuProvider(
+                    (syncId, inv, p) -> SupplySearchMenu.createServer(syncId, inv, box),
+                    Component.translatable("container.sixty_seconds.supply_search")));
+        } else {
+            net.exmo.sixty_seconds.logic.SixtySecondsLootSearch.start(serverLevel, serverPlayer, box, pos);
+        }
     }
 
     /** 获取当前 loot 表中匹配本等级的可用类别。 */

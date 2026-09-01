@@ -312,6 +312,12 @@ public final class SixtySecondsClient {
      * 从而避免手动 getTextureAtlas(...).apply(...) 在图集未就绪时抛 NPE。
      */
     @SubscribeEvent
+    public static void registerMenuScreens(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event) {
+        event.register(net.exmo.sixty_seconds.registry.ModMenuTypes.SUPPLY_SEARCH.get(),
+                net.exmo.sixty_seconds.client.screen.SupplySearchScreen::new);
+    }
+
+    @SubscribeEvent
     public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ModParticles.WEATHER_STREAK,
                 (SpriteSet sprites) -> new WeatherParticle.Provider(sprites));
