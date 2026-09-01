@@ -76,6 +76,13 @@ public final class SixtySecondsWinConditions {
      */
     private static boolean anySurvivorAlive(ServerLevel level) {
         for (ServerPlayer player : level.players()) {
+            if (GameUtils.isPlayerEliminated(player)) {
+                continue;
+            }
+            // 游戏进行中，创造模式玩家视作正在参与游戏的玩家（如单人测试时切创造不应结束游戏）
+            if (player.isCreative()) {
+                return true;
+            }
             if (!GameUtils.isPlayerAliveAndSurvival(player)) {
                 continue;
             }
