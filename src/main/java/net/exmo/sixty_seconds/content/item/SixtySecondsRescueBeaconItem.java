@@ -38,7 +38,7 @@ public class SixtySecondsRescueBeaconItem extends Item {
                 || !(level instanceof ServerLevel serverLevel)) {
             return InteractionResultHolder.consume(stack);
         }
-        if (!SixtySecondsMod.isActive(level) || !GameUtils.isPlayerAliveAndSurvival(player)) {
+        if (!player.isCreative() && !GameUtils.isPlayerAliveAndSurvival(player)) {
             return InteractionResultHolder.pass(stack);
         }
         SixtySecondsState.Data data = SixtySecondsState.get(serverLevel);
@@ -57,7 +57,7 @@ public class SixtySecondsRescueBeaconItem extends Item {
         if (team != null) {
             long alive = team.members.stream()
                     .filter(uuid -> serverLevel.getPlayerByUUID(uuid) instanceof ServerPlayer m
-                            && GameUtils.isPlayerAliveAndSurvival(m)
+                            && (m.isCreative() || GameUtils.isPlayerAliveAndSurvival(m))
                             && !SixtySecondsStatsComponent.KEY.get(m).monster)
                     .count();
             if (alive > 1) {

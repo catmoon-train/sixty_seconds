@@ -63,9 +63,6 @@ public class SixtySecondsMeleeWeaponItem extends Item implements SixtySecItemPro
 
     @Override
     public boolean onServerAttack(ServerPlayer attacker, ServerPlayer target, ItemStack mainhandItem) {
-        if (!SixtySecondsMod.isActive(attacker.level())) {
-            return true; // 非本模式走原版
-        }
         // 攻击冷却：防连点
         if (SixtySecondsHealthSystem.checkAttackCooldown(attacker)) {
             return false;

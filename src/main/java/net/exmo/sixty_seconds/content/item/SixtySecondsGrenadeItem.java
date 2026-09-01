@@ -52,9 +52,6 @@ public class SixtySecondsGrenadeItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(stack);
-        }
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SixtySecSounds.ITEM_GRENADE_THROW, SoundSource.NEUTRAL,
                 0.6F, 1.0F + (level.random.nextFloat() - 0.5F) / 10F);

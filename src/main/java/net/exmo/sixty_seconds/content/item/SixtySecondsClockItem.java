@@ -32,9 +32,6 @@ public class SixtySecondsClockItem extends Item {
                 || !(level instanceof ServerLevel serverLevel)) {
             return InteractionResultHolder.success(stack);
         }
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(stack);
-        }
         serverPlayer.displayClientMessage(timeText(serverLevel), false);
         return InteractionResultHolder.success(stack);
     }

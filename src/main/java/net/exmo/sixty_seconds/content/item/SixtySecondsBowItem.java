@@ -34,9 +34,6 @@ public class SixtySecondsBowItem extends BowItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(stack);
-        }
         if (!player.isCreative() && findArrowSlot(player) < 0) {
             return InteractionResultHolder.fail(stack);
         }
@@ -46,8 +43,7 @@ public class SixtySecondsBowItem extends BowItem {
 
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
-        if (!(entity instanceof ServerPlayer player) || !(level instanceof ServerLevel serverLevel)
-                || !SixtySecondsMod.isActive(level)) {
+        if (!(entity instanceof ServerPlayer player) || !(level instanceof ServerLevel serverLevel)) {
             return;
         }
         int usedTicks = 72000 - timeLeft;

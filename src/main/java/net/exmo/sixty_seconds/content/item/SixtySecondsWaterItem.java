@@ -29,9 +29,6 @@ public class SixtySecondsWaterItem extends CocktailItem {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(player.getItemInHand(hand));
-        }
         return ItemUtils.startUsingInstantly(level, player, hand);
     }
 

@@ -38,8 +38,6 @@ public class SixtySecondsCrossbowItem extends CrossbowItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!SixtySecondsMod.isActive(level))
-            return InteractionResultHolder.pass(stack);
 
         // 已装填 → 射击
         if (CrossbowItem.isCharged(stack)) {

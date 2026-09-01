@@ -36,6 +36,6 @@ public class SixtySecondsTorchItem extends StandingAndWallBlockItem implements A
             return false;
         }
         Player player = context.getPlayer();
-        return (player != null && player.isCreative()) || SixtySecondsMod.isActive(context.getLevel());
+        return player != null && player.isCreative();
     }
 }

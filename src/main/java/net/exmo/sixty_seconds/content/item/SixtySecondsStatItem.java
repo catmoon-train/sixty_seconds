@@ -113,18 +113,12 @@ public class SixtySecondsStatItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
-        if (!SixtySecondsMod.isActive(world)) {
-            return InteractionResultHolder.pass(user.getItemInHand(hand));
-        }
         return ItemUtils.startUsingInstantly(world, user, hand);
     }
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
         if (!(user instanceof ServerPlayer serverPlayer)) {
-            return stack;
-        }
-        if (!SixtySecondsMod.isActive(level)) {
             return stack;
         }
         SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(serverPlayer);

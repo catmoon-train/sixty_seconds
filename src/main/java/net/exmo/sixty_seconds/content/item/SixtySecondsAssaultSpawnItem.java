@@ -34,11 +34,6 @@ public class SixtySecondsAssaultSpawnItem extends Item {
                 || !(context.getPlayer() instanceof ServerPlayer player)) {
             return InteractionResult.SUCCESS;
         }
-        if (!SixtySecondsMod.isActive(level)) {
-            player.displayClientMessage(
-                    Component.translatable("message.sixty_seconds.sixty_seconds.cmd_not_running"), true);
-            return InteractionResult.FAIL;
-        }
         BlockPos spawn = context.getClickedPos().relative(context.getClickedFace());
         if (!SixtySecondsDefenseSystem.spawnManualAssault(level, spawn, tier)) {
             player.displayClientMessage(

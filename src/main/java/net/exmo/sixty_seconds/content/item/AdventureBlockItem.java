@@ -24,6 +24,6 @@ public class AdventureBlockItem extends BlockItem implements AdventureUsable {
             return false;
         }
         Player player = context.getPlayer();
-        return (player != null && player.isCreative()) || SixtySecondsMod.isActive(context.getLevel());
+        return player != null && player.isCreative();
     }
 }

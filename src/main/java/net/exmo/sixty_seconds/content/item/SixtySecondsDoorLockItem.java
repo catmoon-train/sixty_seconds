@@ -57,9 +57,6 @@ public class SixtySecondsDoorLockItem extends Item {
         if (ctx.getLevel().isClientSide() || !(ctx.getPlayer() instanceof ServerPlayer player)) {
             return InteractionResult.SUCCESS;
         }
-        if (!SixtySecondsMod.isActive(ctx.getLevel())) {
-            return InteractionResult.PASS;
-        }
         if (!(ctx.getLevel().getBlockState(ctx.getClickedPos()).getBlock() instanceof ShelterDoorBlock)) {
             player.displayClientMessage(
                     Component.translatable("message.sixty_seconds.sixty_seconds.door_lock_invalid"), true);

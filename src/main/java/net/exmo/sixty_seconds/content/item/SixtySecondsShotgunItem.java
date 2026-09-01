@@ -45,7 +45,7 @@ public class SixtySecondsShotgunItem extends SixtySecondsGunItem {
             }
             double falloff = Math.max(0.5, 2.0 - 1.5 * dist / range); // 近距 2× → 满射程 0.5×
             if (entity instanceof ServerPlayer target) {
-                if (!GameUtils.isPlayerAliveAndSurvival(target)
+                if ((!target.isCreative() && !GameUtils.isPlayerAliveAndSurvival(target))
                         || SixtySecondsHealthSystem.isPvpBlocked(level, shooter, target)) {
                     continue;
                 }

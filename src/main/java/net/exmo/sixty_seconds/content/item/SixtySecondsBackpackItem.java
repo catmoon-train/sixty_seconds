@@ -45,9 +45,6 @@ public class SixtySecondsBackpackItem extends Item {
         if (level.isClientSide() || !(player instanceof ServerPlayer serverPlayer)) {
             return InteractionResultHolder.success(stack);
         }
-        if (!SixtySecondsMod.isActive(level) && !serverPlayer.isCreative()) {
-            return InteractionResultHolder.pass(stack);
-        }
         serverPlayer.openMenu(new SimpleMenuProvider(
                 (syncId, inventory, p) -> new BackpackMenu(syncId, inventory, stack, rows),
                 stack.getHoverName()));

@@ -56,9 +56,6 @@ public class SixtySecondsUtilityItem extends Item {
                 || !(level instanceof ServerLevel serverLevel)) {
             return InteractionResultHolder.success(stack);
         }
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(stack);
-        }
         SixtySecondsState.Data data = SixtySecondsState.get(serverLevel);
         SixtySecondsState.TeamData team = data.teams.get(SixtySecondsStatsComponent.KEY.get(serverPlayer).teamId);
         boolean consumed = switch (type) {

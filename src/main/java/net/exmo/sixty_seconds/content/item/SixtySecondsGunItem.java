@@ -166,7 +166,7 @@ public class SixtySecondsGunItem extends Item implements SixtySecItemProperties.
             return;
         }
         ServerLevel level = player.serverLevel();
-        boolean active = SixtySecondsMod.isActive(level);
+        boolean active = true;
 
         // 命中目标（server-authoritative）：优先信任客户端上报的命中（含客户端插值、更跟手），
         // 但服务端做校验/兜底——客户端射线偶发漏报会回传 -1，导致「枪械打不中人」；此时服务端
@@ -226,7 +226,8 @@ public class SixtySecondsGunItem extends Item implements SixtySecItemProperties.
         if (hit == null) {
             return;
         }
-        if (hit instanceof ServerPlayer target && GameUtils.isPlayerAliveAndSurvival(target)) {
+        if (hit instanceof ServerPlayer target
+                && (target.isCreative() || GameUtils.isPlayerAliveAndSurvival(target))) {
             // applyInjury：怪物玩家正常扣血（250 血），普通玩家扣健康（护甲减免），归零则倒地
             SixtySecondsHealthSystem.applyInjury(target, shooter, playerDamage);
         } else if (hit instanceof LivingEntity living) {
@@ -288,7 +289,7 @@ public class SixtySecondsGunItem extends Item implements SixtySecItemProperties.
     /** 枪械可命中判定：存活玩家（含倒地者/怪物玩家）或任意生物（低语怪/夜袭者/其他 mod 怪物）。 */
     private static boolean isGunTargetable(Entity entity) {
         if (entity instanceof Player player) {
-            return GameUtils.isPlayerAliveAndSurvival(player);
+            return player.isCreative() || GameUtils.isPlayerAliveAndSurvival(player);
         }
         return entity instanceof LivingEntity;
     }

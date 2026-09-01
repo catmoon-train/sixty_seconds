@@ -42,9 +42,6 @@ public class SixtySecondsFlashlightItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(stack);
-        }
         if (!(player instanceof ServerPlayer serverPlayer) || !(level instanceof ServerLevel serverLevel)) {
             return InteractionResultHolder.success(stack); // 客户端：等服务端结算
         }

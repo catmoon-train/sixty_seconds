@@ -46,18 +46,12 @@ public class SixtySecondsMedicineItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(stack);
-        }
         return ItemUtils.startUsingInstantly(level, player, hand);
     }
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
         if (!(user instanceof ServerPlayer serverPlayer)) {
-            return stack;
-        }
-        if (!SixtySecondsMod.isActive(level)) {
             return stack;
         }
         SixtySecondsSicknessSystem.cure(serverPlayer);

@@ -48,9 +48,6 @@ public class SixtySecondsBreakInItem extends Item {
         if (level.isClientSide() || !(player instanceof ServerPlayer serverPlayer)) {
             return InteractionResultHolder.success(stack);
         }
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(stack);
-        }
         // 不再远程开选队界面——闯入改走统一门菜单：在探索区对着别队的避难所门右键，
         // 菜单里选「强闯/潜入」（SixtySecondsDoorMenu → SixtySecondsBreakIn.executeAtDoor）
         serverPlayer.displayClientMessage(

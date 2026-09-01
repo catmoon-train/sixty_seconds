@@ -31,9 +31,6 @@ public class SixtySecondsPlaceableBlockItem extends BlockItem implements Adventu
         if (player != null && player.isCreative()) {
             return true;
         }
-        if (!SixtySecondsMod.isActive(context.getLevel())) {
-            return false;
-        }
         // 判定应基于“实际放置位置”，而非点到的方块：点在混凝土顶面时，放置位置在混凝土之上，
         // 其下方才是标记。同时兼容点可替换方块（放置位置即点击位置）的情况。
         BlockPos clickPos = context.getClickedPos();

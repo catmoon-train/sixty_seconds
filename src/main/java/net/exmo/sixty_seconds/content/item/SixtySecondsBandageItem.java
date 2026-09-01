@@ -63,9 +63,6 @@ public class SixtySecondsBandageItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(stack);
-        }
         if (player instanceof ServerPlayer serverPlayer) {
             SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(serverPlayer);
             // 健康上限是 healthMax(150)，不是 MAX(100)——MAX 是饥饿/口渴/理智的上限。
@@ -82,9 +79,6 @@ public class SixtySecondsBandageItem extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity user) {
         if (!(user instanceof ServerPlayer serverPlayer)) {
-            return stack;
-        }
-        if (!SixtySecondsMod.isActive(level)) {
             return stack;
         }
         SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(serverPlayer);

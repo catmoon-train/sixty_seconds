@@ -47,9 +47,6 @@ public class SixtySecondsEntertainmentItem extends Item {
                 || !(level instanceof ServerLevel serverLevel)) {
             return InteractionResultHolder.success(stack);
         }
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(stack);
-        }
         SixtySecondsStatsComponent selfStats = SixtySecondsStatsComponent.KEY.get(serverPlayer);
         if (selfStats.monster || selfStats.downed) {
             return InteractionResultHolder.pass(stack);

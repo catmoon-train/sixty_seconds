@@ -42,9 +42,6 @@ public class SixtySecondsFlareGunItem extends Item {
         if (level.isClientSide || !(player instanceof ServerPlayer serverPlayer)) {
             return InteractionResultHolder.consume(stack);
         }
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(stack);
-        }
         ServerLevel serverLevel = serverPlayer.serverLevel();
         // 必须朝天开枪：头顶要露天
         BlockPos pos = serverPlayer.blockPosition();

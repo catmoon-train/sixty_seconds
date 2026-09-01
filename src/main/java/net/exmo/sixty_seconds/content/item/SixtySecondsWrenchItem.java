@@ -52,9 +52,6 @@ public class SixtySecondsWrenchItem extends Item implements AdventureUsable {
                 || !(context.getPlayer() instanceof ServerPlayer player)) {
             return InteractionResult.SUCCESS;
         }
-        if (!SixtySecondsMod.isActive(level) && !player.isCreative()) {
-            return InteractionResult.PASS;
-        }
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
 
