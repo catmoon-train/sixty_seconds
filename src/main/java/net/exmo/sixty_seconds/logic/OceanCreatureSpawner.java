@@ -64,7 +64,7 @@ public final class OceanCreatureSpawner {
 
     public static final int CHECK_INTERVAL = 20 * 14;
 
-    /** 利维坦（LEVIATHAN）刷新周期：每 6 个由对局推进的游戏日（dayNumber）刷一只。 */
+    /** 利维坦（LEVIATHAN）刷新周期：每 6 个由对局推进的游戏日（dayNumber）刷一只（固定刷新，不计入深海 Boss 全局唯一限制）。 */
     public static final int LEVIATHAN_PERIOD_DAYS = 6;
 
     private static final int MAX_NEARBY_MONSTERS = 2;
@@ -161,17 +161,36 @@ public final class OceanCreatureSpawner {
             }
         }
 
-        // ── 海底 Boss 刷新（仅贴近海底的玩家触发；远离海底由实体自行消失）──
-        for (ServerPlayer player : level.players()) {
-            if (player.isSpectator() || player.isCreative()
-                    || !net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {
-                continue;
-            }
-            if (!isNearSeafloor(level, player.blockPosition())) continue;
-            if (oceanBossCount(level) < seafloorBossCap(dayNumber)
-                    && random.nextDouble() < 0.012 * dayRatio * earlyDayMult * spawnMult) {
-                OceanSeaMonsterEntity boss = spawnSeafloorBoss(level, player.blockPosition(), random);
-                if (boss != null) announceSeaMonster(level, boss, player);
+        // ── 深海 Boss 刷新（ABYSS_KRAKEN / TRENCH_SERPENT / SUNKEN_LEVIATHAN）──
+        // 规则：全局仅存在一个（所有深海 Boss 共享位置）；前三天不刷；一天至多尝试刷新一次；
+        // 有概率（随难度/天数浮动，非必刷）；仅在玩家真正处于海里、贴海底时刷新（房子/庇护所内不刷）。
+        {
+            SixtySecondsState.Data data = SixtySecondsState.get(level);
+            if (dayNumber > 3) {
+                int deepSeaCount = countDeepSeaBosses(level);
+                boolean attemptedToday = data.deepSeaBossLastAttemptDay == dayNumber;
+                if (deepSeaCount < 1 && !attemptedToday) {
+                    ServerPlayer trigger = null;
+                    for (ServerPlayer player : level.players()) {
+                        if (player.isSpectator() || player.isCreative()
+                                || !net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {
+                            continue;
+                        }
+                        if (!player.isEyeInFluid(net.minecraft.tags.FluidTags.WATER)) continue; // 必须在水里，排除房子/庇护所
+                        if (!isNearSeafloor(level, player.blockPosition())) continue;
+                        trigger = player;
+                        break;
+                    }
+                    if (trigger != null) {
+                        // 概率随天数（dayRatio）与难度/特质（spawnMult）浮动；非必刷
+                        double prob = 0.18 * dayRatio * earlyDayMult * spawnMult;
+                        if (random.nextDouble() < prob) {
+                            OceanSeaMonsterEntity boss = spawnSeafloorBoss(level, trigger.blockPosition(), random);
+                            if (boss != null) announceSeaMonster(level, boss, trigger);
+                        }
+                        data.deepSeaBossLastAttemptDay = dayNumber; // 一天至多尝试一次
+                    }
+                }
             }
         }
 
@@ -440,6 +459,23 @@ public final class OceanCreatureSpawner {
     /** 海底 Boss 同时存活上限：随天数升高（1→3）。 */
     private static int seafloorBossCap(int dayNumber) {
         return Math.min(3, 1 + dayNumber / 5);
+    }
+
+    /** 当前存活的深海 Boss 数量（ABYSS_KRAKEN / TRENCH_SERPENT / SUNKEN_LEVIATHAN），
+     *  用于全局唯一限制；利维坦（LEVIATHAN）不计入。 */
+    private static int countDeepSeaBosses(ServerLevel level) {
+        int n = 0;
+        for (var e : level.getEntities().getAll()) {
+            if (e instanceof OceanSeaMonsterEntity m) {
+                OceanSeaMonsterEntity.Variant v = m.getVariant();
+                if (v == OceanSeaMonsterEntity.Variant.ABYSS_KRAKEN
+                        || v == OceanSeaMonsterEntity.Variant.TRENCH_SERPENT
+                        || v == OceanSeaMonsterEntity.Variant.SUNKEN_LEVIATHAN) {
+                    n++;
+                }
+            }
+        }
+        return n;
     }
 
     /** 当前维度存活的海洋 Boss（含海底 Boss）总数。 */

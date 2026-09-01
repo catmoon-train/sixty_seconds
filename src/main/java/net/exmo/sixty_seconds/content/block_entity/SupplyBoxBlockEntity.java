@@ -201,11 +201,15 @@ public class SupplyBoxBlockEntity extends BlockEntity {
         tag.putInt("BonusRolls", bonusRolls);
         tag.putBoolean("OneShot", oneShot);
         tag.putBoolean("Unlocked", unlocked);
-        net.minecraft.nbt.ListTag searchList = new net.minecraft.nbt.ListTag();
-        for (ItemStack s : searchItems) {
-            searchList.add(s.save(registries));
+        // 仅保存非空物品；空 ItemStack 无法编码，会导致写存档抛 IllegalStateException
+        net.minecraft.nbt.CompoundTag searchMap = new net.minecraft.nbt.CompoundTag();
+        for (int i = 0; i < searchItems.size(); i++) {
+            ItemStack s = searchItems.get(i);
+            if (!s.isEmpty()) {
+                searchMap.put(Integer.toString(i), s.save(registries));
+            }
         }
-        tag.put("SearchItems", searchList);
+        tag.put("SearchItems", searchMap);
         tag.putInt("GeneratedDay", generatedDay);
     }
 
@@ -217,7 +221,17 @@ public class SupplyBoxBlockEntity extends BlockEntity {
         bonusRolls = tag.contains("BonusRolls") ? Math.max(1, tag.getInt("BonusRolls")) : 1;
         oneShot = tag.getBoolean("OneShot");
         unlocked = tag.getBoolean("Unlocked");
-        if (tag.contains("SearchItems", net.minecraft.nbt.Tag.TAG_LIST)) {
+        if (tag.contains("SearchItems", net.minecraft.nbt.Tag.TAG_COMPOUND)) {
+            net.minecraft.nbt.CompoundTag searchSaved = tag.getCompound("SearchItems");
+            searchItems = NonNullList.withSize(SixtySecondsBalance.SUPPLY_SEARCH_CONTAINER_SIZE, ItemStack.EMPTY);
+            for (int i = 0; i < searchItems.size(); i++) {
+                String key = Integer.toString(i);
+                if (searchSaved.contains(key, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
+                    searchItems.set(i, ItemStack.parse(registries, searchSaved.getCompound(key)).orElse(ItemStack.EMPTY));
+                }
+            }
+        } else if (tag.contains("SearchItems", net.minecraft.nbt.Tag.TAG_LIST)) {
+            // 兼容旧版本：SearchItems 曾为 ListTag
             net.minecraft.nbt.ListTag searchSaved = tag.getList("SearchItems", net.minecraft.nbt.Tag.TAG_COMPOUND);
             searchItems = NonNullList.withSize(SixtySecondsBalance.SUPPLY_SEARCH_CONTAINER_SIZE, ItemStack.EMPTY);
             for (int i = 0; i < searchSaved.size() && i < searchItems.size(); i++) {

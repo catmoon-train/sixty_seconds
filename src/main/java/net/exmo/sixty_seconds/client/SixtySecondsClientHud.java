@@ -57,26 +57,7 @@ public final class SixtySecondsClientHud {
             consumer.accept(fake, delta);
         }
 
-        // 负重 HUD：客户端本地按缓存配置计算（未打开面板时回退内置默认），不依赖服务端实时同步包
-        SixtySecondsWeightConfig wcfg = WeightConfigClient.getOrBuiltin();
-        if (wcfg != null && wcfg.enabled && SixtySecondsClientHud.isActive()) {
-            LocalPlayer lp = Minecraft.getInstance().player;
-            if (lp != null) {
-                double load = SixtySecondsWeightCalc.computeLoad(lp, wcfg);
-                int sw = gui.guiWidth();
-                int sh = gui.guiHeight();
-                int bw = 140, bh = 10;
-                int bx = sw / 2 - bw / 2;
-                int by = sh - 50;
-                int ratio = (int) Math.min(100, load / Math.max(1e-4, net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.traitMaxLoad(lp, wcfg.maxLoad)) * 100);
-                gui.fill(bx, by, bx + bw, by + bh, 0x80000000);
-                int col = ratio >= 100 ? 0xFFCC2222 : 0xFF33AA33;
-                gui.fill(bx, by, bx + bw * ratio / 100, by + bh, col);
-                gui.drawString(Minecraft.getInstance().font,
-                        Component.translatable("hud.sixty_seconds.sixty_seconds.weight", String.format("%.1f", load), String.format("%.0f", net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.traitMaxLoad(lp, wcfg.maxLoad))),
-                        bx, by - 10, 0xFFFFFF);
-            }
-        }
+        // 负重 HUD 已移除：负重数值仅在玩家打开物品栏（SixtySecondsInventoryScreen）时显示。
     }
 
     /** 进行中时隐藏原版生命/饥饿/护甲/氧气/骑乘生命条 */

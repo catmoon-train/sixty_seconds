@@ -172,5 +172,7 @@ public final class SixtySecondsState {
          * 注意：用 dayNumber 而非 gameTime，使刷新节奏跟随对局天数而非真实世界时间。
          */
         public int leviathanLastSpawnDay = Integer.MIN_VALUE;
+        /** 深海 Boss（ABYSS_KRAKEN / TRENCH_SERPENT / SUNKEN_LEVIATHAN）上次尝试刷新的游戏日；用于「一天至多尝试一次」。 */
+        public int deepSeaBossLastAttemptDay = -1;
     }
 }

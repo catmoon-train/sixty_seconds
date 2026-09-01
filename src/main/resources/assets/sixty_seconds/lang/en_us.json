@@ -1,5 +1,7 @@
 {
   "item.sixty_seconds.loot_magnifier": "Loot Magnifier",
+  "item.sixty_seconds.loot_magnifier.prompt": "Click to search",
+  "item.sixty_seconds.loot_magnifier.searching": "Searching",
   "container.sixty_seconds.supply_search": "Supply Box",
   "command.sixty_seconds.lootform.usage": "Usage: /60s lootform <timed|container>",
   "command.sixty_seconds.lootform.set": "Supply box loot form switched to: %s",
@@ -3096,6 +3098,8 @@
   "trait.screen.points": "Points available: %d",
   "trait.screen.mode_active": "Allocation mode (picked traits cannot be undone)",
   "trait.screen.mode_preview": "Preview mode: allocation opens after the 60s game starts",
+  "trait.tab.positive": "Positive Traits",
+  "trait.tab.negative": "Negative Traits",
   "message.sixty_seconds.trait.slow_healer_fail": "Medicine failed to cure the sickness",
   "trait.strong.name": "Strong",
   "trait.strong.desc": "Permanent Strength I, +25 weight cap",

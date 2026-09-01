@@ -1,5 +1,7 @@
 {
   "item.sixty_seconds.loot_magnifier": "物資放大鏡",
+  "item.sixty_seconds.loot_magnifier.prompt": "點擊搜尋",
+  "item.sixty_seconds.loot_magnifier.searching": "搜尋中",
   "container.sixty_seconds.supply_search": "物資箱",
   "command.sixty_seconds.lootform.usage": "用法: /60s lootform <timed|container>",
   "command.sixty_seconds.lootform.set": "物資箱搜刮形式已切換為：%s",
@@ -2506,6 +2508,8 @@
   "trait.screen.points": "可用點數: %d",
   "trait.screen.mode_active": "加點模式（已點亮無法取消）",
   "trait.screen.mode_preview": "預覽模式：60秒遊戲開始後才可加點",
+  "trait.tab.positive": "正面特質",
+  "trait.tab.negative": "負面特質",
   "message.sixty_seconds.trait.slow_healer_fail": "藥物未能治癒疾病",
   "trait.strong.name": "身強體壯",
   "trait.strong.desc": "獲得永久力量I，負重上限+25",

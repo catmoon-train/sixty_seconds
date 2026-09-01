@@ -47,6 +47,8 @@ public final class SixtySecondsWeightCalc {
     /** 单件物品的重量（不含堆叠数量）。 */
     public static double unitWeight(ItemStack stack, SixtySecondsWeightConfig cfg) {
         if (stack.isEmpty()) return 0;
+        // 屏障方块（60s 模式占位格）不计入负重
+        if (stack.is(net.minecraft.world.item.Items.BARRIER)) return 0;
         String key = itemKey(stack);
         Double w = cfg.itemWeights.get(key);
         if (w != null) return w;

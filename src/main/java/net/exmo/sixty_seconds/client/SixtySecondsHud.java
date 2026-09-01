@@ -35,8 +35,8 @@ public final class SixtySecondsHud {
     private static final int PANEL_W = 200;
     private static final int PAD = 5;
     /** 原版 hotbar 顶端 y = guiHeight - 39。 */
-    private static final int HOTBAR_TOP_OFFSET = 39;
-    private static final int GAP_ABOVE_HOTBAR = 4;
+    private static final int HOTBAR_TOP_OFFSET = 22;
+    private static final int GAP_ABOVE_HOTBAR = 2;
     private static final int SEP_H = 2;
     private static final int BAR_H = 4;            // 纯色简约：原 5，-25% 厚度
     private static final int HEALTH_BAR_H = 5;     // 纯色简约：原 7，-25% 厚度
@@ -73,7 +73,7 @@ public final class SixtySecondsHud {
     private static final ResourceLocation ICON_POLLUTION =
             ResourceLocation.fromNamespaceAndPath("sixty_seconds", "textures/gui/hud/hud_pollution.png");
 
-    private static final int HEALTH_GAP = -20;                  // 血条额外下移 20px（从紧贴位置再向下）
+    private static final int HEALTH_GAP = 0;                    // 血条直接贴物品栏上方（不再下移到物品栏内重叠）
 
     private SixtySecondsHud() {
     }
@@ -327,16 +327,12 @@ public final class SixtySecondsHud {
         int panelW = rowContentW + PAD * 2;
         int panelH = PAD + STAT_COUNT * ROW_H + (STAT_COUNT - 1) * ROW_GAP_V + PAD;
 
-        // 状态栏位置：默认左侧（左中侧），可在客户端配置 hudSide 切换为右侧
+        // 状态栏位置：默认左侧（左中侧），可在客户端配置 hudSide 切换为右侧；整体贴着物品栏上方
         boolean left = WeatherVisualConfig.isHudLeft();
         int panelX = left ? statsRight : screenW - statsRight - panelW;
-        int panelY = (screenH - panelH) / 2;
+        int panelY = screenH - HOTBAR_TOP_OFFSET - panelH - 2;
 
-        // 背景面板
-        int colPanelBg = 0x80000000;
-        int colPanelBorder = 0xFF303030;
-        graphics.fill(panelX, panelY, panelX + panelW, panelY + panelH, colPanelBg);
-        graphics.renderOutline(panelX, panelY, panelW, panelH, colPanelBorder);
+        // 不绘制黑色透明背景（按需求）
 
         for (int i = 0; i < STAT_COUNT; i++) {
             int ry = panelY + PAD + i * (ROW_H + ROW_GAP_V);
@@ -399,9 +395,7 @@ public final class SixtySecondsHud {
         int panelY = bottomY - panelH;
         int panelX = (screenW - PANEL_W) / 2;
 
-        // 背景面板 + 边框
-        graphics.fill(panelX, panelY, panelX + PANEL_W, panelY + panelH, 0x80000000);
-        graphics.renderOutline(panelX, panelY, PANEL_W, panelH, 0xFF303030);
+        // 不绘制黑色透明背景（按需求）
 
         // 2×2 网格状态定义
         Stat[] cells = {
@@ -495,7 +489,8 @@ public final class SixtySecondsHud {
             g.fill(x, y, s, s, color);
             return;
         }
-        g.blit(tex, x, y, 0, 0, s, s, 16, 16);
+        // 完整绘制 16x16 纹理并缩放到 s，避免只显示四分之一
+        g.blit(tex, x, y, s, s, 0, 0, 16, 16, 16, 16);
     }
 
     /**

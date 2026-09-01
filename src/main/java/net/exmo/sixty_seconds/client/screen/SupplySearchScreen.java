@@ -68,19 +68,23 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
     @Override
     protected void renderSlot(GuiGraphics g, Slot slot) {
         super.renderSlot(g, slot);
-        if (searchStart.containsKey(slot.index)) {
-            long now = this.minecraft.level.getGameTime();
-            long elapsed = now - searchStart.get(slot.index);
-            float prog = (float) elapsed / searchDuration.get(slot.index);
-            prog = Math.max(0f, Math.min(1f, prog));
-            int x = slot.x;
-            int y = slot.y;
-            // 半透明暗化遮罩，表示正在搜刮
-            g.fill(x, y, x + 16, y + 16, 0x80000000);
-            // 底部进度条
-            int barW = Math.round(14 * prog);
-            g.fill(x + 1, y + 13, x + 15, y + 15, 0xFF222222);
-            g.fill(x + 1, y + 13, x + 1 + barW, y + 15, 0xFF3FC46B);
+        // 容器内格子不渲染「点击搜索/搜索中」文字，只显示物品本身；搜索中仅画进度条
+        if (SixtySecondsLootMagnifierItem.isMagnifier(slot.getItem())) {
+            boolean searching = searchStart.containsKey(slot.index);
+            if (searching) {
+                long now = this.minecraft.level.getGameTime();
+                long elapsed = now - searchStart.get(slot.index);
+                float prog = (float) elapsed / searchDuration.get(slot.index);
+                prog = Math.max(0f, Math.min(1f, prog));
+                int x = slot.x;
+                int y = slot.y;
+                // 半透明暗化遮罩，表示正在搜刮
+                g.fill(x, y, x + 16, y + 16, 0x80000000);
+                // 底部进度条
+                int barW = Math.round(14 * prog);
+                g.fill(x + 1, y + 13, x + 15, y + 15, 0xFF222222);
+                g.fill(x + 1, y + 13, x + 1 + barW, y + 15, 0xFF3FC46B);
+            }
         }
     }
 

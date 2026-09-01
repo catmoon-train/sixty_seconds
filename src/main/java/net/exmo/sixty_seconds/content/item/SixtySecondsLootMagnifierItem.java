@@ -4,6 +4,7 @@ import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.registry.ModItems;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -21,6 +22,12 @@ import net.minecraft.world.item.component.CustomData;
 public class SixtySecondsLootMagnifierItem extends Item {
     public SixtySecondsLootMagnifierItem(Item.Properties props) {
         super(props.stacksTo(1));
+    }
+
+    @Override
+    public Component getName(ItemStack stack) {
+        // 放大镜本身不暴露真实战利品名称
+        return Component.translatable("item.sixty_seconds.loot_magnifier.prompt");
     }
 
     /** 放大镜永远不能掉落到世界。 */
