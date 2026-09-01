@@ -38,6 +38,11 @@ public class PlayerBodyRenderer extends HumanoidMobRenderer<PlayerBodyEntity, Pl
     }
 
     @Override
+    protected boolean shouldShowName(PlayerBodyEntity entity) {
+        return false;
+    }
+
+    @Override
     public void render(PlayerBodyEntity entity, float entityYaw, float partialTick,
                       PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         // 倒地动画：生成后约 30 tick（1.5 秒）内从直立翻倒到平躺

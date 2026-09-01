@@ -59,4 +59,9 @@ public class SixtySecondsBossRenderer
         // 贴图沿用各 Boss 变体自有纹理（尸潮领主用 sixty_seconds_boss_ravager.png，非原版僵尸图）
         return entity.textureLocation();
     }
+
+    @Override
+    protected boolean shouldShowName(SixtySecondsBossEntity entity) {
+        return false;
+    }
 }
