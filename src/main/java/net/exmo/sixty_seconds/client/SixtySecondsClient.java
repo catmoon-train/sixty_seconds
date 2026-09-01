@@ -39,6 +39,7 @@ import net.exmo.sixty_seconds.client.render.SixtySecondsRvRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsSeaVehicleRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsTurretRenderer;
 import net.exmo.sixty_seconds.client.render.SixtySecondsVehicleRenderer;
+import net.exmo.sixty_seconds.client.render.PlayerBodyRenderer;
 import net.exmo.sixty_seconds.client.gui.screen.NewspaperScreen;
 import net.exmo.sixty_seconds.client.gui.screen.RadioChannelScreen;
 import net.exmo.sixty_seconds.client.screen.SixtySecondsInventoryScreen;
@@ -387,7 +388,7 @@ public final class SixtySecondsClient {
         event.registerEntityRenderer(ModEntities.SIXTY_SECONDS_GRENADE, ThrownItemRenderer::new);
         event.registerEntityRenderer(ModEntities.WHEELCHAIR, WheelchairEntityRenderer::new);
         event.registerEntityRenderer(ModEntities.WHEELCHAIR_FIELD_ITEM, WheelchairFieldItemRenderer::new);
-        event.registerEntityRenderer(ModEntities.PLAYER_BODY, SixtySecondsClient::bodyRenderer);
+        event.registerEntityRenderer(ModEntities.PLAYER_BODY, PlayerBodyRenderer::new);
     }
 
     @SubscribeEvent
@@ -580,16 +581,6 @@ public final class SixtySecondsClient {
             }
         }
         return false;
-    }
-
-    private static HumanoidMobRenderer<PlayerBodyEntity, HumanoidModel<PlayerBodyEntity>> bodyRenderer(
-            EntityRendererProvider.Context ctx) {
-        return new HumanoidMobRenderer<>(ctx, new HumanoidModel<>(ctx.bakeLayer(ModelLayers.PLAYER)), 0.5F) {
-            @Override
-            public ResourceLocation getTextureLocation(PlayerBodyEntity entity) {
-                return DefaultPlayerSkin.getDefaultTexture();
-            }
-        };
     }
 
     private static void registerPayloadReceivers() {

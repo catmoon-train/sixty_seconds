@@ -148,14 +148,8 @@ public final class SixtySecondsMystic {
         dead.getInventory().setItem(37, saved[11]);  // legs
         dead.getInventory().setItem(36, saved[12]);  // feet
         dead.getInventory().setItem(40, saved[13]);  // offhand
-        SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(dead);
-        stats.downed = false;
-        stats.downedFromInjury = false;
-        stats.downedCountToday = 0;
-        stats.reviveEndTick = 0L;
-        stats.sanZeroTick = 0L;
-        stats.health = REVIVE_HEALTH;
-        stats.sync();
+        // 完整恢复到可行动水平（清倒地/病症/探索区限制/尸体标记等），与自动复活共用；保留尸体背包继承
+        SixtySecondsAutoRevive.restoreSurvivor(level, dead, REVIVE_HEALTH);
         // 清空尸体物品栏防止掉落
         corpseInv.clearContent();
         body.discard();

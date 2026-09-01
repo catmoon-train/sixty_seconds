@@ -3,6 +3,7 @@ package net.exmo.sixty_seconds.logic;
 import net.exmo.sixty_seconds.bridge.stubs.TrainVoicePlugin;
 import net.exmo.sixty_seconds.bridge.entity.PlayerBodyEntity;
 import net.exmo.sixty_seconds.bridge.GameUtils;
+import net.exmo.sixty_seconds.registry.ModEffects;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.arena.SixtySecondsSearchZones;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
@@ -205,9 +206,10 @@ public final class SixtySecondsAutoRevive {
         }
         BlockPos safe = SixtySecondsSearchZones.findSafeSpot(level, home);
 
-        // 从记录中取出尸体实体 UUID（在 revivePlayer 之前取——revivePlayer 会改游戏模式）
+        // 取出尸体记录（revivePlayer 之前取——revivePlayer 会改游戏模式）；
+        // 这里只取引用，真正的移除 + 清客户端标记交给 restoreSurvivor→clearCorpseMark，避免标记残留
         Map<UUID, CorpseRecord> corpses = CORPSES.get(level);
-        CorpseRecord record = corpses != null ? corpses.remove(player.getUUID()) : null;
+        CorpseRecord record = corpses != null ? corpses.get(player.getUUID()) : null;
 
         // revivePlayer 内置：清除 DeathPenaltyComponent（死亡语音隔离）
         // + TrainVoicePlugin.resetPlayer（离开旁观语音组）→ 复活后回到正常近距离语音
@@ -226,26 +228,11 @@ public final class SixtySecondsAutoRevive {
             }
         }
 
-        stats.reviveEndTick = 0L;
         // 计入本局已用次数（无限上限时也累加，供 HUD/查询显示）
         stats.reviveCount++;
         int revived = (int) (SixtySecondsStatsComponent.MAX * SixtySecondsBalance.AUTO_REVIVE_STAT_PERCENT);
-        stats.health = revived;
-        stats.hunger = revived;
-        stats.thirst = revived;
-        // 理智以「本局已被杀人代价永久压低的上限」为顶，别把上限惩罚洗掉
-        stats.sanity = Math.min(stats.sanityMax,
-                (int) (stats.sanityMax * SixtySecondsBalance.AUTO_REVIVE_STAT_PERCENT));
-        stats.pollution = 0;
-        stats.downed = false;
-        stats.downedFromInjury = false;
-        stats.bleedOutEndTick = 0L;
-        stats.sanZeroTick = 0L;
-        stats.sync();
-        // 生病走既有治愈路径（它自己会清感染计时并同步）
-        SixtySecondsSicknessSystem.cure(player);
-        // 死在探索区/海岛的：复活已经把人拉回家了，清掉「在外」状态，免得还被限制在那片盒子里
-        SixtySecondsSearchZones.clearReturnEntry(player);
+        // 完整恢复到可行动水平（清倒地/病症/探索区限制/尸体标记等），与复活图腾共用
+        restoreSurvivor(level, player, revived);
 
         clearCorpseMark(level, player);
         level.playSound(null, safe, SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 0.7F, 1.2F);
@@ -256,6 +243,39 @@ public final class SixtySecondsAutoRevive {
                 : Component.translatable("message.sixty_seconds.sixty_seconds.revive_done_with_remaining",
                         Math.max(0, max - stats.reviveCount));
         player.displayClientMessage(done.withStyle(ChatFormatting.GREEN), false);
+    }
+
+    /**
+     * 把玩家从死亡/倒地状态完整恢复到可正常行动的水平（自动复活与复活图腾共用）。
+     * 仅重置状态与副作用，不处理传送与物品继承。
+     */
+    public static void restoreSurvivor(ServerLevel level, ServerPlayer player, int reviveHealth) {
+        SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
+        stats.health = reviveHealth;
+        stats.hunger = reviveHealth;
+        stats.thirst = reviveHealth;
+        // 理智以「本局已被杀人代价永久压低的上限」为顶，别把上限惩罚洗掉
+        stats.sanity = Math.min(stats.sanityMax,
+                (int) (stats.sanityMax * SixtySecondsBalance.AUTO_REVIVE_STAT_PERCENT));
+        stats.pollution = 0;
+        stats.downed = false;
+        stats.downedFromInjury = false;
+        stats.downedCountToday = 0;
+        stats.bleedOutEndTick = 0L;
+        stats.reviveEndTick = 0L;
+        stats.sanZeroTick = 0L;
+        stats.recovering = false;
+        stats.monster = false;
+        stats.sync();
+        // 清掉可能残留的倒地禁移动/禁操作药水效果
+        player.removeEffect(ModEffects.MOVE_BANED);
+        player.removeEffect(ModEffects.USED_BANED);
+        // 治愈残留病症
+        SixtySecondsSicknessSystem.cure(player);
+        // 死在探索区/海岛的：复活已把人拉回，清掉「在外」状态，免得还被限制在那片盒子里
+        SixtySecondsSearchZones.clearReturnEntry(player);
+        // 清掉自动复活登记的尸体标记与记录（图腾/手动复活也应清除，避免重复复活或残留暗红点）
+        clearCorpseMark(level, player);
     }
 
     /** 清掉该玩家的尸体标记（客户端地图 + 服务端记录）。 */

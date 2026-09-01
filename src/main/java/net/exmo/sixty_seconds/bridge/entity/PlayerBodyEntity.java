@@ -26,6 +26,8 @@ import java.util.UUID;
 public class PlayerBodyEntity extends Mob implements MenuProvider {
     private static final EntityDataAccessor<Optional<UUID>> OWNER = SynchedEntityData.defineId(
             PlayerBodyEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    private static final EntityDataAccessor<String> OWNER_NAME = SynchedEntityData.defineId(
+            PlayerBodyEntity.class, EntityDataSerializers.STRING);
 
     private final BodyComponent component = new BodyComponent();
 
@@ -43,16 +45,22 @@ public class PlayerBodyEntity extends Mob implements MenuProvider {
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(OWNER, Optional.empty());
+        builder.define(OWNER_NAME, "");
     }
 
     public void setOwner(ServerPlayer player) {
         this.entityData.set(OWNER, Optional.of(player.getUUID()));
+        this.entityData.set(OWNER_NAME, player.getGameProfile().getName());
         this.setCustomName(player.getName());
         this.setCustomNameVisible(false);
     }
 
     public UUID getPlayerUuid() {
         return this.entityData.get(OWNER).orElse(this.getUUID());
+    }
+
+    public String getOwnerName() {
+        return this.entityData.get(OWNER_NAME);
     }
 
     public BodyComponent getComponent() {
@@ -82,6 +90,7 @@ public class PlayerBodyEntity extends Mob implements MenuProvider {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         this.entityData.get(OWNER).ifPresent(uuid -> tag.putUUID("Owner", uuid));
+        tag.putString("OwnerName", getOwnerName());
         tag.put("Corpse", component.inventory.createTag(this.registryAccess()));
     }
 
@@ -90,6 +99,9 @@ public class PlayerBodyEntity extends Mob implements MenuProvider {
         super.readAdditionalSaveData(tag);
         if (tag.hasUUID("Owner")) {
             this.entityData.set(OWNER, Optional.of(tag.getUUID("Owner")));
+        }
+        if (tag.contains("OwnerName", 8)) {
+            this.entityData.set(OWNER_NAME, tag.getString("OwnerName"));
         }
         component.inventory.fromTag(tag.getList("Corpse", 10), this.registryAccess());
     }
