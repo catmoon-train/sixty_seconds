@@ -1,7 +1,6 @@
 package net.exmo.sixty_seconds.content.item;
 
 import net.exmo.sixty_seconds.SixtySecondsBalance;
-import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.bridge.fabric.ServerTickEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -51,9 +50,6 @@ public class SixtySecondsRopeItem extends Item {
         if (level.isClientSide || !(player instanceof ServerPlayer serverPlayer)
                 || !(level instanceof ServerLevel serverLevel)) {
             return InteractionResultHolder.consume(stack);
-        }
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(stack);
         }
         // 从玩家所在格向上放置缠怨藤（可攀爬），遇非空气截断
         BlockPos base = serverPlayer.blockPosition();

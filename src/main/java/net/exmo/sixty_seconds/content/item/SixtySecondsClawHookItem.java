@@ -1,6 +1,5 @@
 package net.exmo.sixty_seconds.content.item;
 
-import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,9 +42,6 @@ public class SixtySecondsClawHookItem extends Item {
         if (level.isClientSide || !(player instanceof ServerPlayer serverPlayer)
                 || !(level instanceof ServerLevel serverLevel)) {
             return InteractionResultHolder.consume(stack);
-        }
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(stack);
         }
         LivingEntity target = pickTarget(serverLevel, serverPlayer);
         if (target == null) {

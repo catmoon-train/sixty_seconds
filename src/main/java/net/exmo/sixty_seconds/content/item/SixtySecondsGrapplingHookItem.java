@@ -1,7 +1,6 @@
 package net.exmo.sixty_seconds.content.item;
 
 import net.exmo.sixty_seconds.SixtySecondsBalance;
-import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.bridge.fabric.ServerTickEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -54,9 +53,6 @@ public class SixtySecondsGrapplingHookItem extends Item {
         if (level.isClientSide || !(player instanceof ServerPlayer serverPlayer)
                 || !(level instanceof ServerLevel serverLevel)) {
             return InteractionResultHolder.consume(stack);
-        }
-        if (!SixtySecondsMod.isActive(level)) {
-            return InteractionResultHolder.pass(stack);
         }
         HitResult hit = player.pick(SixtySecondsBalance.GRAPPLE_RANGE, 0, false);
         if (hit.getType() != HitResult.Type.BLOCK) {
