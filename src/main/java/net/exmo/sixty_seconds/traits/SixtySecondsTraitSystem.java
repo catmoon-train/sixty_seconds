@@ -2,11 +2,12 @@ package net.exmo.sixty_seconds.traits;
 
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.bridge.GameUtils;
-import net.exmo.sixty_seconds.bridge.ServerTickEvents;
+import net.exmo.sixty_seconds.bridge.fabric.ServerTickEvents;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.content.item.SixtySecondsCigaretteItem;
 import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
@@ -122,8 +123,8 @@ public final class SixtySecondsTraitSystem {
         // 8) 老司机：驾驶载具时载具速度 +20%
         if (comp.has("speed_demon") && player.isPassenger()) {
             Entity veh = player.getVehicle();
-            if (veh != null) {
-                addHiddenEntity(veh, MobEffects.MOVEMENT_SPEED, 1, 60);
+            if (veh instanceof LivingEntity livingVeh) {
+                addHiddenEntity(livingVeh, MobEffects.MOVEMENT_SPEED, 1, 60);
             }
         }
 
@@ -164,18 +165,18 @@ public final class SixtySecondsTraitSystem {
         }
     }
 
-    private static void addHidden(Player player, MobEffect effect, int amp) {
+    private static void addHidden(Player player, Holder<MobEffect> effect, int amp) {
         MobEffectInstance cur = player.getEffect(effect);
         if (cur == null || cur.getAmplifier() != amp) {
             player.addEffect(new MobEffectInstance(effect, Integer.MAX_VALUE, amp, false, false, false));
         }
     }
 
-    private static void addHidden(Player player, MobEffect effect, int amp, int ticks) {
+    private static void addHidden(Player player, Holder<MobEffect> effect, int amp, int ticks) {
         player.addEffect(new MobEffectInstance(effect, ticks, amp, false, false, false));
     }
 
-    private static void addHiddenEntity(Entity e, MobEffect effect, int amp, int ticks) {
+    private static void addHiddenEntity(LivingEntity e, Holder<MobEffect> effect, int amp, int ticks) {
         MobEffectInstance cur = e.getEffect(effect);
         if (cur == null || cur.getAmplifier() != amp) {
             e.addEffect(new MobEffectInstance(effect, ticks, amp, false, false, false));
@@ -376,7 +377,7 @@ public final class SixtySecondsTraitSystem {
     }
 
     public static void clearTraitEffects(ServerPlayer player) {
-        for (MobEffect e : new MobEffect[]{
+        for (Holder<MobEffect> e : new Holder[]{
                 MobEffects.DAMAGE_BOOST, MobEffects.MOVEMENT_SPEED, MobEffects.JUMP,
                 MobEffects.DOLPHINS_GRACE, MobEffects.MOVEMENT_SLOWDOWN, MobEffects.WEAKNESS,
                 MobEffects.NIGHT_VISION, MobEffects.LUCK, MobEffects.BLINDNESS, MobEffects.GLOWING

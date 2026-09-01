@@ -81,17 +81,17 @@ public class SixtySecondsTraitScreen extends Screen {
     }
 
     @Override
-    public boolean mouseScrolled(double mx, double my, double delta) {
+    public boolean mouseScrolled(double mx, double my, double scrollX, double scrollY) {
         int visible = Math.max(1, (this.height - TOP - 24) / ROW_H);
         int maxScroll = Math.max(0, list.size() - visible);
-        scroll = (int) Math.max(0, Math.min(maxScroll, scroll - delta * 2));
+        scroll = (int) Math.max(0, Math.min(maxScroll, scroll - scrollY * 2));
         buildButtons();
         return true;
     }
 
     @Override
     public void render(GuiGraphics g, int mx, int my, float pt) {
-        this.renderBackground(g);
+        this.renderBackground(g, mx, my, pt);
         Player player = Minecraft.getInstance().player;
         int points = player != null ? SixtySecondsTraitComponent.KEY.get(player).points() : 0;
         boolean active = player != null && SixtySecondsMod.isActive(player.level());
