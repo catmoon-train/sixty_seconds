@@ -23,4 +23,9 @@ public class OceanSharkRenderer extends MobRenderer<OceanSharkEntity, OceanShark
     public ResourceLocation getTextureLocation(OceanSharkEntity entity) {
         return entity.textureLocation();
     }
+
+    @Override
+    protected boolean shouldShowName(OceanSharkEntity entity) {
+        return false;
+    }
 }

@@ -20,4 +20,9 @@ public class OceanTitanRenderer extends MobRenderer<OceanTitanEntity, OceanTitan
     public ResourceLocation getTextureLocation(OceanTitanEntity entity) {
         return entity.textureLocation();
     }
+
+    @Override
+    protected boolean shouldShowName(OceanTitanEntity entity) {
+        return false;
+    }
 }

@@ -27,4 +27,9 @@ public class OceanSeaMonsterRenderer extends MobRenderer<OceanSeaMonsterEntity, 
     public ResourceLocation getTextureLocation(OceanSeaMonsterEntity entity) {
         return entity.textureLocation();
     }
+
+    @Override
+    protected boolean shouldShowName(OceanSeaMonsterEntity entity) {
+        return false;
+    }
 }

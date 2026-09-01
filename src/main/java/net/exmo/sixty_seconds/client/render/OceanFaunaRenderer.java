@@ -23,4 +23,9 @@ public class OceanFaunaRenderer extends MobRenderer<OceanFaunaEntity, OceanFauna
     public ResourceLocation getTextureLocation(OceanFaunaEntity entity) {
         return entity.textureLocation();
     }
+
+    @Override
+    protected boolean shouldShowName(OceanFaunaEntity entity) {
+        return false;
+    }
 }

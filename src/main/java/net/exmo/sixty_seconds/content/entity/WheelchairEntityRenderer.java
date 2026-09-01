@@ -17,4 +17,9 @@ public class WheelchairEntityRenderer extends LivingEntityRenderer<WheelchairEnt
     public ResourceLocation getTextureLocation(WheelchairEntity entity) {
         return TEXTURE;
     }
+
+    @Override
+    protected boolean shouldShowName(WheelchairEntity entity) {
+        return false;
+    }
 }

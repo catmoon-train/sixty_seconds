@@ -22,4 +22,9 @@ public class OceanFloorMonsterRenderer extends MobRenderer<OceanFloorMonsterEnti
     public ResourceLocation getTextureLocation(OceanFloorMonsterEntity entity) {
         return entity.textureLocation();
     }
+
+    @Override
+    protected boolean shouldShowName(OceanFloorMonsterEntity entity) {
+        return false;
+    }
 }
