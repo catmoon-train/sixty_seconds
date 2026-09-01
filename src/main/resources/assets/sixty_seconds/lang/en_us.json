@@ -3146,5 +3146,17 @@
   "message.sixty_seconds.ocean.sunken_breath": "Phantom Breath",
   "message.sixty_seconds.ocean.sunken_roar": "Sunken Roar",
   "message.sixty_seconds.ocean.sunken_pull": "Undertow",
-  "message.sixty_seconds.ocean.sunken_maelstrom": "Sunken Maelstrom"
-}
+  "message.sixty_seconds.ocean.sunken_maelstrom": "Sunken Maelstrom",
+  "message.sixty_seconds.weight.config_title": "Weight Config",
+  "message.sixty_seconds.weight.enabled_on": "System: ON",
+  "message.sixty_seconds.weight.enabled_off": "System: OFF",
+  "message.sixty_seconds.weight.hint_item_id": "Item id (e.g. sixty_seconds:iron_pipe / tacz:glock_17)",
+  "message.sixty_seconds.weight.hint_weight": "Weight",
+  "message.sixty_seconds.weight.button_add": "Add",
+  "message.sixty_seconds.weight.button_save": "Save",
+  "message.sixty_seconds.weight.button_close": "Close",
+  "message.sixty_seconds.weight.header": "Weight Config (items in backpack weigh less by the backpack factor; enabled by default)",
+  "message.sixty_seconds.weight.cmd_enabled": "Weight system enabled",
+  "message.sixty_seconds.weight.cmd_disabled": "Weight system disabled",
+  "message.sixty_seconds.weight.cmd_reloaded": "Weight config reloaded",
+  "message.sixty_seconds.weight.cmd_player_only": "This command can only be run by a player"}

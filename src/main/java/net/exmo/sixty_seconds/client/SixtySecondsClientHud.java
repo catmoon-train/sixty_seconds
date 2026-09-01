@@ -8,6 +8,11 @@ import net.exmo.sixty_seconds.bridge.client.FakeGuiGraphics;
 import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.fabric.HudRenderCallback;
 import net.exmo.sixty_seconds.client.SixtySecondsHud;
+import net.exmo.sixty_seconds.client.WeightConfigClient;
+import net.minecraft.network.chat.Component;
+import net.exmo.sixty_seconds.weights.SixtySecondsWeightCalc;
+import net.exmo.sixty_seconds.weights.SixtySecondsWeightConfig;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
@@ -50,6 +55,27 @@ public final class SixtySecondsClientHud {
         FakeGuiGraphics fake = new FakeGuiGraphics(gui, true);
         for (var consumer : CommonHudRenderCallback.EVENT.getConsumer()) {
             consumer.accept(fake, delta);
+        }
+
+        // 负重 HUD：客户端本地按缓存配置计算，不依赖服务端实时同步包
+        SixtySecondsWeightConfig wcfg = WeightConfigClient.get();
+        if (wcfg != null && wcfg.enabled && SixtySecondsClientHud.isActive()) {
+            LocalPlayer lp = Minecraft.getInstance().player;
+            if (lp != null) {
+                double load = SixtySecondsWeightCalc.computeLoad(lp, wcfg);
+                int sw = gui.guiWidth();
+                int sh = gui.guiHeight();
+                int bw = 140, bh = 10;
+                int bx = sw / 2 - bw / 2;
+                int by = sh - 50;
+                int ratio = (int) Math.min(100, load / Math.max(1e-4, wcfg.maxLoad) * 100);
+                gui.fill(bx, by, bx + bw, by + bh, 0x80000000);
+                int col = ratio >= 100 ? 0xFFCC2222 : 0xFF33AA33;
+                gui.fill(bx, by, bx + bw * ratio / 100, by + bh, col);
+                gui.drawString(Minecraft.getInstance().font,
+                        Component.literal(String.format("负重 %.1f / %.0f", load, wcfg.maxLoad)),
+                        bx, by - 10, 0xFFFFFF);
+            }
         }
     }
 

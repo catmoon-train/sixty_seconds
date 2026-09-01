@@ -2561,5 +2561,17 @@
   "message.sixty_seconds.ocean.sunken_maelstrom": "沉沒漩渦",
   "message.sixty_seconds.ocean.titan_died": "§b[60s] 海洋霸主已被擊敗（Lv.%s）",
   "message.sixty_seconds.ocean.titan_killed_by": "§b[60s] 海洋霸主已被 %s 擊敗（Lv.%s）",
-  "message.sixty_seconds.ocean.titan_awaken": "§b[60s] 海洋霸主 %s Lv.%s 已甦醒！座標 (%s, %s, %s)"
-}
+  "message.sixty_seconds.ocean.titan_awaken": "§b[60s] 海洋霸主 %s Lv.%s 已甦醒！座標 (%s, %s, %s)",
+  "message.sixty_seconds.weight.config_title": "負重配置面板",
+  "message.sixty_seconds.weight.enabled_on": "系統: 開",
+  "message.sixty_seconds.weight.enabled_off": "系統: 關",
+  "message.sixty_seconds.weight.hint_item_id": "物品id（如 sixty_seconds:iron_pipe / tacz:glock_17）",
+  "message.sixty_seconds.weight.hint_weight": "重量",
+  "message.sixty_seconds.weight.button_add": "新增",
+  "message.sixty_seconds.weight.button_save": "儲存",
+  "message.sixty_seconds.weight.button_close": "關閉",
+  "message.sixty_seconds.weight.header": "負重配置（背包內物品按背包倍率計重，預設啟用）",
+  "message.sixty_seconds.weight.cmd_enabled": "已開啟負重系統",
+  "message.sixty_seconds.weight.cmd_disabled": "已關閉負重系統",
+  "message.sixty_seconds.weight.cmd_reloaded": "已重新載入負重配置",
+  "message.sixty_seconds.weight.cmd_player_only": "該指令只能由玩家執行"}

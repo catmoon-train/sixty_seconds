@@ -4007,5 +4007,17 @@
   "message.sixty_seconds.ocean.sunken_breath": "幽冥吐息",
   "message.sixty_seconds.ocean.sunken_roar": "沉没咆哮",
   "message.sixty_seconds.ocean.sunken_pull": "暗潮拖拽",
-  "message.sixty_seconds.ocean.sunken_maelstrom": "沉没漩涡"
-}
+  "message.sixty_seconds.ocean.sunken_maelstrom": "沉没漩涡",
+  "message.sixty_seconds.weight.config_title": "负重配置面板",
+  "message.sixty_seconds.weight.enabled_on": "系统: 开",
+  "message.sixty_seconds.weight.enabled_off": "系统: 关",
+  "message.sixty_seconds.weight.hint_item_id": "物品id（如 sixty_seconds:iron_pipe / tacz:glock_17）",
+  "message.sixty_seconds.weight.hint_weight": "重量",
+  "message.sixty_seconds.weight.button_add": "添加",
+  "message.sixty_seconds.weight.button_save": "保存",
+  "message.sixty_seconds.weight.button_close": "关闭",
+  "message.sixty_seconds.weight.header": "负重配置（背包内物品按背包倍率计重，默认启用）",
+  "message.sixty_seconds.weight.cmd_enabled": "已开启负重系统",
+  "message.sixty_seconds.weight.cmd_disabled": "已关闭负重系统",
+  "message.sixty_seconds.weight.cmd_reloaded": "已重新加载负重配置",
+  "message.sixty_seconds.weight.cmd_player_only": "该指令只能由玩家执行"}

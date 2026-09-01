@@ -83,6 +83,9 @@ import net.exmo.sixty_seconds.network.OpenNpcShopS2CPacket;
 import net.exmo.sixty_seconds.network.OpenPowerPanelS2CPacket;
 import net.exmo.sixty_seconds.network.OpenRadioChannelS2CPacket;
 import net.exmo.sixty_seconds.network.OpenRandomSupplyBoxConfigS2CPacket;
+import net.exmo.sixty_seconds.network.OpenWeightConfigS2CPacket;
+import net.exmo.sixty_seconds.client.WeightConfigClient;
+import net.exmo.sixty_seconds.client.screen.WeightConfigScreen;
 import net.exmo.sixty_seconds.network.OpenRvConsoleS2CPacket;
 import net.exmo.sixty_seconds.network.OpenShelterDoorS2CPacket;
 import net.exmo.sixty_seconds.network.OpenShelterPanelS2CPacket;
@@ -595,6 +598,11 @@ public final class SixtySecondsClient {
                 context.client().execute(() -> context.client().setScreen(
                         new RandomSupplyBoxConfigScreen(payload.pos(), payload.tier(),
                                 payload.allCategories(), payload.enabledCategories()))));
+        ClientPlayNetworking.registerGlobalReceiver(OpenWeightConfigS2CPacket.ID, (payload, context) ->
+                context.client().execute(() -> {
+                    WeightConfigClient.set(payload.config());
+                    context.client().setScreen(new WeightConfigScreen(payload.config()));
+                }));
         ClientPlayNetworking.registerGlobalReceiver(OpenAirdropEditS2CPacket.ID, (payload, context) ->
                 context.client().execute(() -> context.client().setScreen(new AirdropLootEditScreen(payload.table()))));
         ClientPlayNetworking.registerGlobalReceiver(OpenVisitRequestS2CPacket.ID, (payload, context) ->

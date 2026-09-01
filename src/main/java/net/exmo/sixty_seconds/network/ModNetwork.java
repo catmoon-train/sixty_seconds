@@ -15,6 +15,8 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.exmo.sixty_seconds.bridge.stubs.AdvancedCameraPayload;
 import net.exmo.sixty_seconds.bridge.stubs.ShootMuzzleS2CPayload;
 import net.exmo.sixty_seconds.bridge.stubs.TriggerScreenEdgeEffectPayload;
+import net.exmo.sixty_seconds.network.OpenWeightConfigS2CPacket;
+import net.exmo.sixty_seconds.network.WeightConfigSaveC2SPacket;
 import net.exmo.sixty_seconds.network.WeatherS2CPacket;
 
 public final class ModNetwork {
@@ -110,6 +112,8 @@ public final class ModNetwork {
         registrar.playToClient(ShootMuzzleS2CPayload.TYPE, adapt(ShootMuzzleS2CPayload.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(TriggerScreenEdgeEffectPayload.TYPE, adapt(TriggerScreenEdgeEffectPayload.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(WeatherS2CPacket.TYPE, adapt(WeatherS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
+        registrar.playToClient(OpenWeightConfigS2CPacket.ID, adapt(OpenWeightConfigS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
+        registrar.playToServer(WeightConfigSaveC2SPacket.ID, adapt(WeightConfigSaveC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
     }
 
     private static void handleC2S(CustomPacketPayload payload, IPayloadContext ctx) {
@@ -152,6 +156,7 @@ public final class ModNetwork {
             if (payload instanceof VisitRequestC2SPacket p) { VisitRequestC2SPacket.handle(p, fabric); return; }
             if (payload instanceof VisitResponseC2SPacket p) { VisitResponseC2SPacket.handle(p, fabric); return; }
             if (payload instanceof SubmarineControlC2SPacket p) { SubmarineControlC2SPacket.handle(p, fabric); return; }
+            if (payload instanceof WeightConfigSaveC2SPacket p) { WeightConfigSaveC2SPacket.handle(p, fabric); return; }
         });
     }
 

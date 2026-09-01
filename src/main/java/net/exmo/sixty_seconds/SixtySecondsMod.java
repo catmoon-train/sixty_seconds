@@ -44,6 +44,8 @@ public final class SixtySecondsMod {
         net.exmo.sixty_seconds.arena.SixtySecondsArena.registerEntityClearWindow(); // 开局清卸载区块里的残留尸体/掉落物
         net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem.register();
         net.exmo.sixty_seconds.logic.SixtySecondsMonsterSystem.registerEvents();
+        net.exmo.sixty_seconds.logic.SixtySecondsWeightSystem.register();
+        net.exmo.sixty_seconds.command.SixtySecondsWeightCommand.register();
         net.exmo.sixty_seconds.logic.SixtySecondsStations.register(); // 合成台绑定（书桌/灶台/浴缸）
         net.exmo.sixty_seconds.logic.SixtySecondsCorpseLoot.register(); // 死亡物品装入尸体箱可搜刮
         net.exmo.sixty_seconds.logic.SixtySecondsLootSearch.register(); // 物资箱搜刮全局推进（游戏外也生效）
