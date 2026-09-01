@@ -25,7 +25,8 @@ public final class SixtySecondsSaveCommand {
                                 .executes(context -> {
                                     CommandSourceStack source = context.getSource();
                                     ServerLevel level = source.getLevel();
-                                    if (!SixtySecondsMod.RUNNING || !SixtySecondsMod.isActive(level)) {
+                                    ServerLevel main = level.getServer().getLevel(net.minecraft.world.level.Level.OVERWORLD);
+                                    if (!SixtySecondsMod.RUNNING || main == null || !SixtySecondsMod.isActive(main)) {
                                         source.sendFailure(Component.translatable(
                                                 "message.sixty_seconds.sixty_seconds.save_no_game")
                                                 .withStyle(ChatFormatting.RED));

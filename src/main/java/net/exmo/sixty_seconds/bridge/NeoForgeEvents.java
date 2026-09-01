@@ -253,10 +253,9 @@ public final class NeoForgeEvents {
     @SubscribeEvent
     public static void onServerStopping(ServerStoppingEvent event) {
         // 服务器即将关闭：立即保存当前对局进度，避免退出存档后进度丢失
-        for (ServerLevel level : event.getServer().getAllLevels()) {
-            if (SixtySecondsMod.RUNNING && SixtySecondsMod.isActive(level)) {
-                net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.save(level);
-            }
+        ServerLevel level = event.getServer().getLevel(Level.OVERWORLD);
+        if (level != null && SixtySecondsMod.RUNNING && SixtySecondsMod.isActive(level)) {
+            net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.save(level);
         }
     }
 
@@ -265,6 +264,7 @@ public final class NeoForgeEvents {
         // 先重置 RUNNING 标志，否则重进存档时 onPlayerJoin 检查 !RUNNING 为 false，不会触发 resume
         SixtySecondsMod.RUNNING = false;
         net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.resetRuntimeState();
+        net.exmo.sixty_seconds.logic.SixtySecondsReconnect.reset();
     }
 
     @SubscribeEvent

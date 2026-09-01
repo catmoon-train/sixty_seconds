@@ -21,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraft.world.phys.AABB;
@@ -29,6 +30,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -86,6 +88,12 @@ public final class SixtySecondsSaveManager {
         return level.getServer().getWorldPath(LevelResource.ROOT).resolve(FILE_NAME);
     }
 
+    /** 存档以主世界为唯一权威入口，避免多维度退出时互相覆盖同一个文件。 */
+    private static ServerLevel mainLevel(ServerLevel level) {
+        ServerLevel overworld = level.getServer().getLevel(Level.OVERWORLD);
+        return overworld != null ? overworld : level;
+    }
+
     public static boolean hasSave(ServerLevel level) {
         try {
             return Files.exists(savePath(level));
@@ -108,8 +116,9 @@ public final class SixtySecondsSaveManager {
     // ── 立即保存 ──────────────────────────────────────────────────────
     public static void save(ServerLevel level) {
         try {
-            SavedGame snap = buildSnapshot(level);
-            writeSnapshot(level, snap);
+            ServerLevel main = mainLevel(level);
+            SavedGame snap = buildSnapshot(main);
+            writeSnapshot(main, snap);
         } catch (Exception e) {
             System.err.println("[SixtySecondsSaveManager] 保存失败: " + e);
             e.printStackTrace();
@@ -118,31 +127,31 @@ public final class SixtySecondsSaveManager {
 
     // ── 自动存档（每 tick 调用） ──────────────────────────────────────
     public static void autoSaveIfNeeded(ServerLevel level) {
-        if (!SixtySecondsMod.RUNNING || !SixtySecondsMod.isActive(level)) {
+        ServerLevel main = mainLevel(level);
+        if (!SixtySecondsMod.RUNNING || !SixtySecondsMod.isActive(main)) {
             return;
         }
-        long now = level.getGameTime();
-        Long last = lastAutoSave.get(level);
+        long now = main.getGameTime();
+        Long last = lastAutoSave.get(main);
         if (last == null || now - last >= AUTO_SAVE_INTERVAL) {
-            lastAutoSave.put(level, now);
-            save(level);
+            lastAutoSave.put(main, now);
+            save(main);
         }
     }
 
     // ── 玩家加入世界时调用 ────────────────────────────────────────────
     public static void onPlayerJoin(ServerPlayer player) {
         ServerLevel level = player.serverLevel();
-        if (!(level instanceof ServerLevel sl) || sl.dimension() != Level.OVERWORLD) {
-            return;
-        }
+        ServerLevel main = mainLevel(level);
         // 重载世界后，若存在存档且当前没有进行中的游戏，自动重开并恢复上一局
-        if (!SixtySecondsMod.RUNNING && hasSave(sl) && !resumeTriggered) {
-            resume(sl);
+        if (!SixtySecondsMod.RUNNING
+                && hasSave(main) && !resumeTriggered) {
+            resume(main);
         }
         // 离线玩家（建图时尚未上线）的恢复缓存
         PlayerSave ps = offlineRestores.remove(player.getUUID());
         if (ps != null) {
-            restorePlayer(player, ps, sl);
+            restorePlayer(player, ps, main);
         }
     }
 
@@ -267,6 +276,9 @@ public final class SixtySecondsSaveManager {
         pendingWorldId = null;
         try {
             freshData.dayNumber = snap.dayNumber;
+            freshData.daytimeTicks = snap.daytimeTicks;
+            freshData.oceanRvSpots.clear();
+            freshData.oceanRvSpots.putAll(snap.oceanRvSpots);
             freshData.phase = snap.phase;
             freshData.phaseEndTick = snap.phaseEndTick;
             freshData.lastDayStage = snap.lastDayStage;
@@ -274,6 +286,10 @@ public final class SixtySecondsSaveManager {
             freshData.helicopterArrived = snap.helicopterArrived;
             freshData.helicopterEvacuated.clear();
             freshData.helicopterEvacuated.addAll(snap.helicopterEvacuated);
+            freshData.leviathanLastSpawnDay = snap.leviathanLastSpawnDay;
+            freshData.deepSeaBossLastAttemptDay = snap.deepSeaBossLastAttemptDay;
+            freshData.areaBossKillCooldownDay.clear();
+            freshData.areaBossKillCooldownDay.putAll(snap.areaBossKillCooldownDay);
 
             // 各队进度（建筑坐标已由 takeResumeLayout 沿用存档，这里只覆盖数值型进度）
             for (SixtySecondsState.TeamData ft : freshData.teams.values()) {
@@ -330,6 +346,10 @@ public final class SixtySecondsSaveManager {
         ft.dailyModifiers.putAll(st.dailyModifiers);
         ft.sisterOutside = st.sisterOutside;
         ft.sisterUUID = st.sisterUUID;
+        ft.rvEntityUuid = st.rvEntityUuid;
+        ft.rvForcedChunkX = st.rvForcedChunkX;
+        ft.rvForcedChunkZ = st.rvForcedChunkZ;
+        ft.assaultDoorPos = st.assaultDoorPos;
     }
 
     /** 把存档中的建筑布局（位置类字段）覆盖回队伍：续档沿用上一局留在世界里的住宅/避难所。 */
@@ -349,7 +369,43 @@ public final class SixtySecondsSaveManager {
 
     private static void restorePlayer(ServerPlayer p, PlayerSave ps, ServerLevel level) {
         try {
-            p.getInventory().load(ps.inventory);
+            // 原版玩家 NBT 覆盖生命、饥饿、经验、效果、装备、末影箱、能力、选中槽等全部状态。
+            // 旧存档没有 playerData 时再退回旧的 inventory 字段。
+            boolean hasFullPlayerData = ps.playerData != null && !ps.playerData.isEmpty();
+            if (hasFullPlayerData) {
+                p.load(ps.playerData.copy());
+            } else if (ps.inventory != null) {
+                p.getInventory().load(ps.inventory);
+            }
+            if (ps.gameMode >= 0) {
+                p.setGameMode(GameType.byId(ps.gameMode));
+            }
+            ServerLevel targetLevel = level;
+            if (hasFullPlayerData && ps.dimension != null && !ps.dimension.isBlank()) {
+                ResourceLocation dimensionId = ResourceLocation.parse(ps.dimension);
+                var key = net.minecraft.resources.ResourceKey.create(
+                        net.minecraft.core.registries.Registries.DIMENSION, dimensionId);
+                ServerLevel resolved = level.getServer().getLevel(key);
+                if (resolved != null) {
+                    targetLevel = resolved;
+                }
+            }
+            // load() 会恢复原版坐标；再次显式传送，确保跨维度和浮点坐标都精确恢复。
+            if (hasFullPlayerData) {
+                p.teleportTo(targetLevel, ps.x, ps.y, ps.z, ps.yaw, ps.pitch);
+            }
+            p.getInventory().setChanged();
+            p.containerMenu.broadcastChanges();
+            if (ps.traits != null) {
+                net.exmo.sixty_seconds.traits.SixtySecondsTraitComponent traits =
+                        net.exmo.sixty_seconds.traits.SixtySecondsTraitComponent.KEY.get(p);
+                traits.chosen.clear();
+                traits.chosen.addAll(readStringList(ps.traits.getList("chosen", Tag.TAG_STRING)));
+                traits.fastLearnerUsed = ps.traits.getBoolean("fastLearnerUsed");
+                traits.lastSmokeTick = ps.traits.getLong("lastSmokeTick");
+                traits.lastAttackEffectTick = ps.traits.getLong("lastAttackEffectTick");
+                traits.sync();
+            }
             SixtySecondsStatsComponent comp = SixtySecondsStatsComponent.KEY.get(p);
             comp.readFromSyncNbt(ps.stats, level.registryAccess());
             // 必须同步给客户端：readFromSyncNbt 只改了服务端组件，
@@ -361,6 +417,43 @@ public final class SixtySecondsSaveManager {
         }
     }
 
+    /** 玩家快照的统一入口；主存档和掉线恢复必须使用同一份数据结构。 */
+    static PlayerSnapshot capturePlayerSnapshot(ServerPlayer player, HolderLookup.Provider provider) {
+        return new PlayerSnapshot(capturePlayerSave(player, provider));
+    }
+
+    static void restorePlayerSnapshot(ServerPlayer player, PlayerSnapshot snapshot, ServerLevel level) {
+        if (snapshot != null) {
+            restorePlayer(player, snapshot.save, level);
+        }
+    }
+
+    private static PlayerSave capturePlayerSave(ServerPlayer p, HolderLookup.Provider provider) {
+        SixtySecondsStatsComponent comp = SixtySecondsStatsComponent.KEY.get(p);
+        PlayerSave ps = new PlayerSave();
+        ps.uuid = p.getUUID();
+        ps.playerData = p.saveWithoutId(new CompoundTag());
+        ps.dimension = p.level().dimension().location().toString();
+        ps.x = p.getX();
+        ps.y = p.getY();
+        ps.z = p.getZ();
+        ps.yaw = p.getYRot();
+        ps.pitch = p.getXRot();
+        ps.gameMode = p.gameMode.getGameModeForPlayer().getId();
+        // 保留旧字段，便于旧版存档在升级后仍可读取。
+        ps.inventory = p.getInventory().save(new ListTag());
+        ps.stats = new CompoundTag();
+        comp.writeToSyncNbt(ps.stats, provider);
+        net.exmo.sixty_seconds.traits.SixtySecondsTraitComponent traits =
+                net.exmo.sixty_seconds.traits.SixtySecondsTraitComponent.KEY.get(p);
+        ps.traits = new CompoundTag();
+        ps.traits.put("chosen", stringList(new ArrayList<>(traits.chosen)));
+        ps.traits.putBoolean("fastLearnerUsed", traits.fastLearnerUsed);
+        ps.traits.putLong("lastSmokeTick", traits.lastSmokeTick);
+        ps.traits.putLong("lastAttackEffectTick", traits.lastAttackEffectTick);
+        return ps;
+    }
+
     // ── 快照构建 ──────────────────────────────────────────────────────
     private static SavedGame buildSnapshot(ServerLevel level) {
         SixtySecondsState.Data data = SixtySecondsState.get(level);
@@ -368,12 +461,17 @@ public final class SixtySecondsSaveManager {
         SavedGame g = new SavedGame();
         g.minutes = SixtySecGameTimeComponent.KEY.get(level).getResetTime();
         g.dayNumber = data.dayNumber;
+        g.daytimeTicks = data.daytimeTicks;
+        g.oceanRvSpots = new HashMap<>(data.oceanRvSpots);
         g.phase = data.phase;
         g.phaseEndTick = data.phaseEndTick;
         g.lastDayStage = data.lastDayStage;
         g.lastNpcRvSpawnDay = data.lastNpcRvSpawnDay;
         g.helicopterArrived = data.helicopterArrived;
         g.helicopterEvacuated = new ArrayList<>(data.helicopterEvacuated);
+        g.leviathanLastSpawnDay = data.leviathanLastSpawnDay;
+        g.deepSeaBossLastAttemptDay = data.deepSeaBossLastAttemptDay;
+        g.areaBossKillCooldownDay = new HashMap<>(data.areaBossKillCooldownDay);
 
         g.teams = new ArrayList<>();
         for (SixtySecondsState.TeamData t : data.teams.values()) {
@@ -384,18 +482,18 @@ public final class SixtySecondsSaveManager {
         g.buildAnchor = net.exmo.sixty_seconds.SixtySecondsMod.PREBUILT_ANCHOR;
 
         g.players = new ArrayList<>();
-        for (ServerPlayer p : level.players()) {
-            SixtySecondsStatsComponent comp = SixtySecondsStatsComponent.KEY.get(p);
-            if (comp.teamId < 0) {
-                continue; // 仅保存参战玩家
+        // 玩家可能在 ocean 维度，不能只遍历主世界玩家列表。
+        for (ServerPlayer p : level.getServer().getPlayerList().getPlayers()) {
+            g.players.add(capturePlayerSnapshot(p, provider).save);
+        }
+        Set<UUID> captured = new HashSet<>();
+        for (PlayerSave player : g.players) {
+            captured.add(player.uuid);
+        }
+        for (PlayerSnapshot snapshot : SixtySecondsReconnect.snapshotsForSave()) {
+            if (snapshot.save != null && captured.add(snapshot.save.uuid)) {
+                g.players.add(snapshot.save);
             }
-            PlayerSave ps = new PlayerSave();
-            ps.uuid = p.getUUID();
-            ps.inventory = p.getInventory().save(new ListTag());
-            CompoundTag st = new CompoundTag();
-            comp.writeToSyncNbt(st, provider);
-            ps.stats = st;
-            g.players.add(ps);
         }
         return g;
     }
@@ -421,6 +519,10 @@ public final class SixtySecondsSaveManager {
         s.dailyModifiers = new HashMap<>(t.dailyModifiers);
         s.sisterOutside = t.sisterOutside;
         s.sisterUUID = t.sisterUUID;
+        s.rvEntityUuid = t.rvEntityUuid;
+        s.rvForcedChunkX = t.rvForcedChunkX;
+        s.rvForcedChunkZ = t.rvForcedChunkZ;
+        s.assaultDoorPos = t.assaultDoorPos;
         // 建筑布局：续档时沿用世界里的既有住宅/避难所，不重新克隆
         s.residentialSpawn = t.residentialSpawn;
         s.shelterSpawn = t.shelterSpawn;
@@ -439,14 +541,34 @@ public final class SixtySecondsSaveManager {
     private static void writeSnapshot(ServerLevel level, SavedGame g) throws Exception {
         HolderLookup.Provider provider = level.registryAccess();
         CompoundTag root = new CompoundTag();
+        root.putInt("schemaVersion", 2);
         root.putInt("minutes", g.minutes);
         root.putInt("dayNumber", g.dayNumber);
+        root.putInt("daytimeTicks", g.daytimeTicks);
+        ListTag rvSpots = new ListTag();
+        for (Map.Entry<Integer, BlockPos> entry : g.oceanRvSpots.entrySet()) {
+            CompoundTag spot = new CompoundTag();
+            spot.putInt("teamId", entry.getKey());
+            spot.putLong("pos", entry.getValue().asLong());
+            rvSpots.add(spot);
+        }
+        root.put("oceanRvSpots", rvSpots);
         root.putString("phase", g.phase.name());
         root.putLong("phaseEndTick", g.phaseEndTick);
         root.putInt("lastDayStage", g.lastDayStage);
         root.putInt("lastNpcRvSpawnDay", g.lastNpcRvSpawnDay);
         root.putBoolean("helicopterArrived", g.helicopterArrived);
         root.put("helicopterEvacuated", uuidList(g.helicopterEvacuated));
+        root.putInt("leviathanLastSpawnDay", g.leviathanLastSpawnDay);
+        root.putInt("deepSeaBossLastAttemptDay", g.deepSeaBossLastAttemptDay);
+        ListTag bossCooldowns = new ListTag();
+        for (Map.Entry<String, Integer> entry : g.areaBossKillCooldownDay.entrySet()) {
+            CompoundTag cooldown = new CompoundTag();
+            cooldown.putString("key", entry.getKey());
+            cooldown.putInt("day", entry.getValue());
+            bossCooldowns.add(cooldown);
+        }
+        root.put("areaBossKillCooldownDay", bossCooldowns);
         root.putBoolean("hasLayout", g.hasLayout);
         if (g.buildAnchor != null) {
             root.putLong("buildAnchor", g.buildAnchor.asLong());
@@ -463,9 +585,15 @@ public final class SixtySecondsSaveManager {
         root.put("players", pls);
 
         Path path = savePath(level);
+        Path temp = path.resolveSibling(path.getFileName() + ".tmp");
         Files.createDirectories(path.getParent());
-        try (OutputStream os = Files.newOutputStream(path)) {
+        try (OutputStream os = Files.newOutputStream(temp)) {
             NbtIo.writeCompressed(root, os);
+        }
+        try {
+            Files.move(temp, path, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+        } catch (java.nio.file.AtomicMoveNotSupportedException ignored) {
+            Files.move(temp, path, StandardCopyOption.REPLACE_EXISTING);
         }
     }
 
@@ -479,12 +607,28 @@ public final class SixtySecondsSaveManager {
             SavedGame g = new SavedGame();
             g.minutes = root.getInt("minutes");
             g.dayNumber = root.getInt("dayNumber");
+            g.daytimeTicks = root.contains("daytimeTicks") ? root.getInt("daytimeTicks")
+                    : net.exmo.sixty_seconds.SixtySecondsDayCycle.DAYTIME_TICKS;
+            g.oceanRvSpots = new HashMap<>();
+            for (Tag t : root.getList("oceanRvSpots", Tag.TAG_COMPOUND)) {
+                CompoundTag spot = (CompoundTag) t;
+                g.oceanRvSpots.put(spot.getInt("teamId"), BlockPos.of(spot.getLong("pos")));
+            }
             g.phase = SixtySecondsPhase.valueOf(root.getString("phase"));
             g.phaseEndTick = root.getLong("phaseEndTick");
             g.lastDayStage = root.getInt("lastDayStage");
             g.lastNpcRvSpawnDay = root.getInt("lastNpcRvSpawnDay");
             g.helicopterArrived = root.getBoolean("helicopterArrived");
             g.helicopterEvacuated = readUuidList(root.getList("helicopterEvacuated", Tag.TAG_STRING));
+            g.leviathanLastSpawnDay = root.contains("leviathanLastSpawnDay")
+                    ? root.getInt("leviathanLastSpawnDay") : Integer.MIN_VALUE;
+            g.deepSeaBossLastAttemptDay = root.contains("deepSeaBossLastAttemptDay")
+                    ? root.getInt("deepSeaBossLastAttemptDay") : -1;
+            g.areaBossKillCooldownDay = new HashMap<>();
+            for (Tag t : root.getList("areaBossKillCooldownDay", Tag.TAG_COMPOUND)) {
+                CompoundTag cooldown = (CompoundTag) t;
+                g.areaBossKillCooldownDay.put(cooldown.getString("key"), cooldown.getInt("day"));
+            }
             g.hasLayout = root.getBoolean("hasLayout");
             if (root.contains("buildAnchor")) {
                 g.buildAnchor = BlockPos.of(root.getLong("buildAnchor"));
@@ -537,6 +681,14 @@ public final class SixtySecondsSaveManager {
         c.putBoolean("sisterOutside", t.sisterOutside);
         if (t.sisterUUID != null) {
             c.putString("sisterUUID", t.sisterUUID.toString());
+        }
+        if (t.rvEntityUuid != null) {
+            c.putString("rvEntityUuid", t.rvEntityUuid.toString());
+        }
+        c.putInt("rvForcedChunkX", t.rvForcedChunkX);
+        c.putInt("rvForcedChunkZ", t.rvForcedChunkZ);
+        if (t.assaultDoorPos != null) {
+            c.putLong("assaultDoorPos", t.assaultDoorPos.asLong());
         }
         // 建筑布局（位置类字段）
         if (t.residentialSpawn != null) {
@@ -633,6 +785,14 @@ public final class SixtySecondsSaveManager {
         if (c.contains("sisterUUID")) {
             t.sisterUUID = UUID.fromString(c.getString("sisterUUID"));
         }
+        if (c.contains("rvEntityUuid")) {
+            t.rvEntityUuid = UUID.fromString(c.getString("rvEntityUuid"));
+        }
+        t.rvForcedChunkX = c.contains("rvForcedChunkX") ? c.getInt("rvForcedChunkX") : Integer.MIN_VALUE;
+        t.rvForcedChunkZ = c.contains("rvForcedChunkZ") ? c.getInt("rvForcedChunkZ") : Integer.MIN_VALUE;
+        if (c.contains("assaultDoorPos")) {
+            t.assaultDoorPos = BlockPos.of(c.getLong("assaultDoorPos"));
+        }
         // 建筑布局（位置类字段）
         if (c.contains("residentialSpawn")) {
             t.residentialSpawn = BlockPos.of(c.getLong("residentialSpawn"));
@@ -678,6 +838,21 @@ public final class SixtySecondsSaveManager {
     private static CompoundTag writePlayer(PlayerSave p) {
         CompoundTag c = new CompoundTag();
         c.putString("uuid", p.uuid.toString());
+        if (p.playerData != null) {
+            c.put("playerData", p.playerData);
+        }
+        if (p.dimension != null) {
+            c.putString("dimension", p.dimension);
+        }
+        if (p.traits != null) {
+            c.put("traits", p.traits);
+        }
+        c.putDouble("x", p.x);
+        c.putDouble("y", p.y);
+        c.putDouble("z", p.z);
+        c.putFloat("yaw", p.yaw);
+        c.putFloat("pitch", p.pitch);
+        c.putInt("gameMode", p.gameMode);
         c.put("inventory", p.inventory);
         c.put("stats", p.stats);
         return c;
@@ -686,6 +861,19 @@ public final class SixtySecondsSaveManager {
     private static PlayerSave readPlayer(CompoundTag c) {
         PlayerSave p = new PlayerSave();
         p.uuid = UUID.fromString(c.getString("uuid"));
+        if (c.contains("playerData", Tag.TAG_COMPOUND)) {
+            p.playerData = c.getCompound("playerData");
+        }
+        p.dimension = c.contains("dimension") ? c.getString("dimension") : null;
+        if (c.contains("traits", Tag.TAG_COMPOUND)) {
+            p.traits = c.getCompound("traits");
+        }
+        p.x = c.getDouble("x");
+        p.y = c.getDouble("y");
+        p.z = c.getDouble("z");
+        p.yaw = c.getFloat("yaw");
+        p.pitch = c.getFloat("pitch");
+        p.gameMode = c.contains("gameMode") ? c.getInt("gameMode") : -1;
         p.inventory = c.getList("inventory", Tag.TAG_COMPOUND);
         p.stats = c.getCompound("stats");
         return p;
@@ -727,12 +915,17 @@ public final class SixtySecondsSaveManager {
     private static final class SavedGame {
         int minutes;
         int dayNumber;
+        int daytimeTicks;
+        Map<Integer, BlockPos> oceanRvSpots = new HashMap<>();
         SixtySecondsPhase phase;
         long phaseEndTick;
         int lastDayStage;
         int lastNpcRvSpawnDay;
         boolean helicopterArrived;
         List<UUID> helicopterEvacuated;
+        int leviathanLastSpawnDay;
+        int deepSeaBossLastAttemptDay;
+        Map<String, Integer> areaBossKillCooldownDay = new HashMap<>();
         List<TeamSave> teams;
         List<PlayerSave> players;
         /** 是否记录了建筑布局；旧存档没有该字段，续档时回退到正常开局建图。 */
@@ -770,6 +963,10 @@ public final class SixtySecondsSaveManager {
         Map<String, Double> dailyModifiers;
         boolean sisterOutside;
         UUID sisterUUID;
+        UUID rvEntityUuid;
+        int rvForcedChunkX = Integer.MIN_VALUE;
+        int rvForcedChunkZ = Integer.MIN_VALUE;
+        BlockPos assaultDoorPos;
 
         // ── 建筑布局（续档复用世界里的既有建筑，不重新克隆）──────────────
         BlockPos residentialSpawn;
@@ -786,7 +983,25 @@ public final class SixtySecondsSaveManager {
 
     private static final class PlayerSave {
         UUID uuid;
+        CompoundTag playerData;
+        String dimension;
+        double x;
+        double y;
+        double z;
+        float yaw;
+        float pitch;
+        int gameMode = -1;
         ListTag inventory;
         CompoundTag stats;
+        CompoundTag traits;
+    }
+
+    /** 主存档与掉线恢复共用的玩家快照包装，避免两套字段逐渐产生差异。 */
+    static final class PlayerSnapshot {
+        private final PlayerSave save;
+
+        private PlayerSnapshot(PlayerSave save) {
+            this.save = save;
+        }
     }
 }

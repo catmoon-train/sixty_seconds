@@ -17,10 +17,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -77,6 +80,7 @@ public class LootTableEditScreen extends Screen {
     private EditBox idBox;
     private EditBox countBox;
     private EditBox weightBox;
+    private EditBox nbtBox;
     private EditBox newCatBox;
     private boolean updatingEditors; // setValue 触发 responder 的回写保护
 
@@ -90,7 +94,7 @@ public class LootTableEditScreen extends Screen {
             List<RowData> rows = new ArrayList<>();
             if (e.getValue() != null) {
                 for (SixtySecondsLootTable.Entry entry : e.getValue()) {
-                    rows.add(new RowData(entry.itemId, entry.count, entry.weight));
+                    rows.add(new RowData(entry.itemId, entry.count, entry.weight, entry.nbt));
                 }
             }
             categories.put(e.getKey(), rows);
@@ -113,7 +117,7 @@ public class LootTableEditScreen extends Screen {
         leftW = (int) ((panelW - PAD * 3) * 0.58F);
         rightX = leftX + leftW + PAD;
         rightW = panelX + panelW - PAD - rightX;
-        detailTop = panelY + panelH - 28 - 46;
+        detailTop = panelY + panelH - 28 - 64;
         listBottom = detailTop - 4;
     }
 
@@ -124,6 +128,8 @@ public class LootTableEditScreen extends Screen {
         idBox = editor(leftX, boxY, leftW - 100, 128);
         countBox = editor(leftX + leftW - 96, boxY, 42, 8);
         weightBox = editor(leftX + leftW - 50, boxY, 50, 12);
+        nbtBox = editor(leftX, boxY + 29, leftW, 128);
+        nbtBox.setHint(Component.literal("nbt: GunId=tacz:glock_17; 分号分隔"));
         idBox.setResponder(v -> {
             if (!updatingEditors && selected != null) {
                 selected.itemId = v.trim();
@@ -137,6 +143,11 @@ public class LootTableEditScreen extends Screen {
         weightBox.setResponder(v -> {
             if (!updatingEditors && selected != null) {
                 selected.weight = Math.max(0, parseFloat(v, selected.weight));
+            }
+        });
+        nbtBox.setResponder(v -> {
+            if (!updatingEditors && selected != null) {
+                selected.nbt = parseNbt(v);
             }
         });
         newCatBox = editor(panelX + panelW - PAD - 96, panelY + 22, 96, 24);
@@ -160,10 +171,12 @@ public class LootTableEditScreen extends Screen {
         idBox.setVisible(has);
         countBox.setVisible(has);
         weightBox.setVisible(has);
+        nbtBox.setVisible(has);
         if (has) {
             idBox.setValue(selected.itemId);
             countBox.setValue(Integer.toString(selected.count));
             weightBox.setValue(trimFloat(selected.weight));
+            nbtBox.setValue(encodeNbt(selected.nbt));
         }
         updatingEditors = false;
     }
@@ -335,7 +348,7 @@ public class LootTableEditScreen extends Screen {
                     : Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.unknown_item");
             g.drawString(this.font, name, x + 26, y + 5, valid ? TEXT : RED, false);
             g.drawString(this.font, row.itemId, x + 26, y + 17, MUTED, false);
-            String meta = "×" + row.count + "  w" + trimFloat(row.weight);
+            String meta = "×" + row.count + "  w" + trimFloat(row.weight) + (row.nbt != null ? "  ✦" : "");
             g.drawString(this.font, meta, leftX + leftW - this.font.width(meta) - 18, y + 10,
                     0xFFC8B898, false);
             // hover 时行尾的删除 ×
@@ -417,6 +430,10 @@ public class LootTableEditScreen extends Screen {
         g.drawString(this.font,
                 Component.translatable("screen.sixty_seconds.sixty_seconds.loot_edit.weight"),
                 weightBox.getX(), detailTop + 1, MUTED, false);
+        // nbt（TACZ 等需型号标识的第三方物品）编辑框标签
+        g.drawString(this.font,
+                Component.literal("nbt"),
+                nbtBox.getX(), nbtBox.getY() - 11, MUTED, false);
     }
 
     /** 底部「导出 / 导入 / 保存 / 完成」按钮（自绘 hover 态）。 */
@@ -685,7 +702,7 @@ public class LootTableEditScreen extends Screen {
             return;
         }
         ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        RowData row = new RowData(id.toString(), stack.getCount(), 1.0F);
+        RowData row = new RowData(id.toString(), stack.getCount(), 1.0F, readCustomNbt(stack));
         rows.add(row);
         selected = row;
         listScroll = Math.max(0, rows.size() * ROW_H - (listBottom - contentTop));
@@ -742,7 +759,7 @@ public class LootTableEditScreen extends Screen {
                 List<RowData> rows = new ArrayList<>();
                 if (e.getValue() != null) {
                     for (SixtySecondsLootTable.Entry entry : e.getValue()) {
-                        rows.add(new RowData(entry.itemId, entry.count, entry.weight));
+                        rows.add(new RowData(entry.itemId, entry.count, entry.weight, entry.nbt));
                     }
                 }
                 categories.put(e.getKey(), rows);
@@ -794,7 +811,7 @@ public class LootTableEditScreen extends Screen {
             for (RowData row : e.getValue()) {
                 if (!row.itemId.isEmpty()) {
                     list.add(new SixtySecondsLootTable.Entry(
-                            row.itemId, Math.max(1, row.count), Math.max(0, row.weight)));
+                            row.itemId, Math.max(1, row.count), Math.max(0, row.weight), row.nbt));
                 }
             }
             if (!list.isEmpty()) {
@@ -850,6 +867,63 @@ public class LootTableEditScreen extends Screen {
         }
     }
 
+    /** 解析 nbt 编辑框文本（格式：key=value;key2=value2）→ 单层字符串键值表；空 → null。 */
+    private static Map<String, String> parseNbt(String s) {
+        s = s == null ? "" : s.trim();
+        if (s.isEmpty()) {
+            return null;
+        }
+        Map<String, String> map = new LinkedHashMap<>();
+        for (String part : s.split(";")) {
+            part = part.trim();
+            if (part.isEmpty()) {
+                continue;
+            }
+            int idx = part.indexOf('=');
+            if (idx <= 0) {
+                continue;
+            }
+            String k = part.substring(0, idx).trim();
+            String v = part.substring(idx + 1).trim();
+            if (!k.isEmpty()) {
+                map.put(k, v);
+            }
+        }
+        return map.isEmpty() ? null : map;
+    }
+
+    /** 单层字符串键值表 → 编辑框文本（key=value; key2=value2）。 */
+    private static String encodeNbt(Map<String, String> nbt) {
+        if (nbt == null || nbt.isEmpty()) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> e : nbt.entrySet()) {
+            if (sb.length() > 0) {
+                sb.append("; ");
+            }
+            sb.append(e.getKey()).append("=").append(e.getValue());
+        }
+        return sb.toString();
+    }
+
+    /** 从物品 CUSTOM_DATA 读取单层字符串键值（用于 TACZ 等型号标识）。 */
+    private static Map<String, String> readCustomNbt(ItemStack stack) {
+        CustomData cd = stack.get(DataComponents.CUSTOM_DATA);
+        if (cd == null) {
+            return null;
+        }
+        CompoundTag tag = cd.copyTag();
+        if (tag.isEmpty()) {
+            return null;
+        }
+        Map<String, String> map = new LinkedHashMap<>();
+        for (String key : tag.getAllKeys()) {
+            map.put(key, tag.get(key).getAsString());
+        }
+        return map.isEmpty() ? null : map;
+    }
+
     @Override
     public boolean isPauseScreen() {
         return false;
@@ -860,11 +934,17 @@ public class LootTableEditScreen extends Screen {
         String itemId;
         int count;
         float weight;
+        Map<String, String> nbt;
 
         RowData(String itemId, int count, float weight) {
+            this(itemId, count, weight, null);
+        }
+
+        RowData(String itemId, int count, float weight, Map<String, String> nbt) {
             this.itemId = itemId;
             this.count = count;
             this.weight = weight;
+            this.nbt = (nbt == null || nbt.isEmpty()) ? null : new LinkedHashMap<>(nbt);
         }
 
         ItemStack icon() {

@@ -244,7 +244,11 @@ public class SixtySecondsLootTable {
                 new Entry("sixty_seconds:sixty_seconds_iron_arrow", 4, 1.5F),
                 new Entry("sixty_seconds:sixty_seconds_cleaver", 1, 1.0F),
                 new Entry("sixty_seconds:sixty_seconds_incendiary_grenade", 1, 0.8F),
-                new Entry("sixty_seconds:sixty_seconds_frag_grenade", 1, 0.7F))));
+                new Entry("sixty_seconds:sixty_seconds_frag_grenade", 1, 0.7F),
+                // TACZ 兼容：型号标识经 CUSTOM_DATA 持久化（见 makeStack），未安装 TACZ 时该条目掉落为空
+                new Entry("tacz:modern_kinetic_gun", 1, 0.35F, Map.of("GunId", "tacz:glock_17")),
+                new Entry("tacz:ammo", 16, 1.5F, Map.of("AmmoId", "tacz:9mm")),
+                new Entry("tacz:attachment", 1, 0.3F, Map.of("AttachmentId", "tacz:red_dot_sight")))));
         // 空投专属（高价值物资，各队争抢焦点）：枪械/高级材料/药品/食物混编
         table.categories.put("airdrop", new ArrayList<>(List.of(
                 new Entry("sixty_seconds:sixty_seconds_ammo", 8, 5.0F),
@@ -267,7 +271,9 @@ public class SixtySecondsLootTable {
                 new Entry("minecraft:golden_apple", 1, 0.6F),
                 new Entry("sixty_seconds:sixty_seconds_fertilizer", 2, 1.5F),
                 // 救援信标：已从科技线移除配方，改为小概率（~0.3%）空投产出
-                new Entry("sixty_seconds:sixty_seconds_rescue_beacon", 1, 0.08F))));
+                new Entry("sixty_seconds:sixty_seconds_rescue_beacon", 1, 0.08F),
+                new Entry("tacz:modern_kinetic_gun", 1, 0.25F, Map.of("GunId", "tacz:m4a1")),
+                new Entry("tacz:ammo", 32, 0.8F, Map.of("AmmoId", "tacz:5.56mm")))));
         // ══ 高级物资箱专属（advanced_* 类别，与普通物资箱完全分开）══════════════
         // 高级食品：更稀有、更高价值的食物
         table.categories.put("advanced_food", new ArrayList<>(List.of(
@@ -334,7 +340,9 @@ public class SixtySecondsLootTable {
                 new Entry("sixty_seconds:sixty_seconds_frag_grenade", 1, 1.0F),
                 new Entry("sixty_seconds:sixty_seconds_incendiary_grenade", 1, 1.0F),
                 new Entry("sixty_seconds:sixty_seconds_hunting_bow", 1, 1.0F),
-                new Entry("sixty_seconds:sixty_seconds_iron_arrow", 6, 2.0F))));
+                new Entry("sixty_seconds:sixty_seconds_iron_arrow", 6, 2.0F),
+                new Entry("tacz:modern_kinetic_gun", 1, 0.3F, Map.of("GunId", "tacz:ak47")),
+                new Entry("tacz:ammo", 24, 1.0F, Map.of("AmmoId", "tacz:7.62mm")))));
         // 高级稀有：极小概率出极品
         table.categories.put("advanced_rare", new ArrayList<>(List.of(
                 new Entry("sixty_seconds:sixty_seconds_sniper", 1, 1.0F),
