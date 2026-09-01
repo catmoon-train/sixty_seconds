@@ -174,5 +174,7 @@ public final class SixtySecondsState {
         public int leviathanLastSpawnDay = Integer.MIN_VALUE;
         /** 深海 Boss（ABYSS_KRAKEN / TRENCH_SERPENT / SUNKEN_LEVIATHAN）上次尝试刷新的游戏日；用于「一天至多尝试一次」。 */
         public int deepSeaBossLastAttemptDay = -1;
+        /** 区域 Boss（4/5星区域与岛屿）被玩家击杀当天的游戏日，key 为区域标识。击杀后 2 天内该区域不再刷新。运行时不持久化。 */
+        public final java.util.Map<String, Integer> areaBossKillCooldownDay = new java.util.HashMap<>();
     }
 }

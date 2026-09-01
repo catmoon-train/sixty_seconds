@@ -220,10 +220,18 @@ public final class SixtySecondsBalance {
     public static final int AREA_BOSS_MIN_AREA_LEVEL = 4;
     /** 区域固定 Boss 等级 = clamp(areaLevel - 1, 1, 本值)。4 星→Lv3，5 星→Lv4。 */
     public static final int AREA_BOSS_MAX_LEVEL = 4;
-    /** 4-5 星区域 Boss 每日刷新概率（每个区域独立掷骰，~15%，替代原来的 100% 固定刷新）。 */
-    public static final double AREA_BOSS_SPAWN_CHANCE = 0.15;
-    /** 每天最多刷新的区域 Boss 数量上限（设为 0 = 禁用区域 Boss，每天只保留夜晚 Boss 一只）。 */
-    public static final int AREA_BOSS_MAX_PER_DAY = 0;
+    /** 4/5 星区域 Boss 启用后，世界范围内同时存活的区域 Boss（4/5星区域与岛屿）上限；超出后暂停刷新，靠清理不活跃 Boss 释放名额。 */
+    public static final int AREA_BOSS_WORLD_CAP = 6;
+    /** 区域 Boss 系统扫描间隔（tick）：每 5 秒执行一次刷新/清理检查（固定刷新，与天数无关）。 */
+    public static final int AREA_BOSS_CHECK_INTERVAL = 20 * 5;
+    /** 不活跃回收上限（tick）：区域 Boss 附近长时间无玩家、且久未被攻击、或所在区块未加载，则移除释放名额。 */
+    public static final int AREA_BOSS_INACTIVE_DESPAWN_TICKS = 20 * 45;
+    /** 区域 Boss 被玩家击杀后的冷却天数：冷却期内该区域不重新刷新。 */
+    public static final int AREA_BOSS_KILL_COOLDOWN_DAYS = 2;
+    /** 判定「玩家在区域内」的触发/存活半径（方块），用于玩家进入区域时立即补刷与不活跃回收。 */
+    public static final int AREA_BOSS_PLAYER_RADIUS = 100;
+    /** 区域 Boss 刷新尝试在区域中心周围的随机落点半径（方块）。 */
+    public static final int AREA_BOSS_SPAWN_RADIUS = 64;
     /** 「伤害 Boss」固定伤害（近战命中健康伤害；护甲不减免）。每局仅一只，第 3 天夜晚降临。 */
     public static final int DAMAGE_BOSS_MELEE_INJURY = 60;
     /** 「伤害 Boss」降临的游戏日（≥本值那晚首 tick 触发，每局仅一次）。 */

@@ -3,6 +3,7 @@ package net.exmo.sixty_seconds.entity;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
+import net.exmo.sixty_seconds.logic.SixtySecondsAreaBossSystem;
 import net.exmo.sixty_seconds.logic.SixtySecondsDifficulty;
 import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
 import net.minecraft.ChatFormatting;
@@ -125,6 +126,11 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
     private long nextSpearTick = 0;       // 骨矛
     private long nextSkinTick = 0;        // 铁壁
     private long nextNovaTick = 0;        // 剧毒新星
+
+    /** 玩家最后一次攻击本 Boss 的 gameTime；用于「仅受攻击时显示血条」，超时则隐藏血条。 */
+    private long lastPlayerDamageTick = Long.MIN_VALUE;
+    /** 血条在玩家停止攻击后保持显示的时长（tick）；超过则隐藏。 */
+    private static final long BOSS_BAR_HIDE_TICKS = 20L * 6;
 
     /** 狂怒已激活标记（巨像低血被动） */
     private boolean frenzied = false;
@@ -274,14 +280,36 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
         bossEvent.removePlayer(player);
     }
 
-    /** 单次受击封顶；巨像额外 30% 减伤。 */
+    /** 单次受击封顶；巨像额外 30% 减伤。玩家攻击时显示血条并通知区域 Boss 系统（避免被不活跃回收）。 */
     @Override
     public boolean hurt(DamageSource source, float amount) {
         float capped = Math.min(amount, SixtySecondsBalance.BOSS_MAX_SINGLE_HIT);
         if (getBossVariant() == BossVariant.COLOSSUS) {
             capped *= 0.7F;
         }
-        return super.hurt(source, capped);
+        boolean result = super.hurt(source, capped);
+        if (result && isPlayerDamage(source)) {
+            lastPlayerDamageTick = level().getGameTime();
+            bossEvent.setVisible(true);
+            if (this.getTags().contains(SixtySecondsAreaBossSystem.AREA_BOSS_TAG)) {
+                SixtySecondsAreaBossSystem.noteBossAttacked(this);
+            }
+        }
+        return result;
+    }
+
+    /** 判定伤害来源是否为玩家（直接近战 / 弹射物 owner 为玩家）。 */
+    private boolean isPlayerDamage(DamageSource source) {
+        net.minecraft.world.entity.Entity attacker = source.getEntity();
+        net.minecraft.world.entity.Entity direct = source.getDirectEntity();
+        if (attacker instanceof Player || direct instanceof Player) {
+            return true;
+        }
+        if (direct instanceof net.minecraft.world.entity.projectile.Projectile proj
+                && proj.getOwner() instanceof Player) {
+            return true;
+        }
+        return false;
     }
 
     // ══════════════════════════════════════════════════════════════════
@@ -305,6 +333,8 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
             return;
         }
         bossEvent.setProgress(getHealth() / getMaxHealth());
+        // 仅在玩家攻击后的短时间内显示血条；长时间未受攻击则隐藏
+        bossEvent.setVisible(serverLevel.getGameTime() - lastPlayerDamageTick < BOSS_BAR_HIDE_TICKS);
         LivingEntity target = getTarget();
         if (target == null || tickCount % 2 != 0) {
             return;
@@ -1307,6 +1337,10 @@ public class SixtySecondsBossEntity extends SixtySecondsMonsterEntity {
     // ══════════════════════════════════════════════════════════════════
     @Override
     public void die(DamageSource damageSource) {
+        if (level() instanceof ServerLevel serverLevel
+                && this.getTags().contains(SixtySecondsAreaBossSystem.AREA_BOSS_TAG)) {
+            SixtySecondsAreaBossSystem.onAreaBossKilled(serverLevel, this);
+        }
         super.die(damageSource);
         if (level() instanceof ServerLevel serverLevel) {
             net.exmo.sixty_seconds.logic.SixtySecondsPveSystem.onBossDied(serverLevel, this, damageSource);

@@ -301,6 +301,13 @@ public final class SixtySecondsIslands {
         }
     }
 
+    /** 返回该维度当前所有岛屿（含等级、包围盒信息），供区域 Boss 系统枚举 4/5 星岛。 */
+    public static List<SixtySecondsIsland> islandList(ServerLevel level) {
+        Data data = STATES.get(level);
+        if (data == null) return List.of();
+        return data.save.islands;
+    }
+
     // ── tick：登岛沿检测 + 返回住所倒计时完成（Manager DAY 相位每 tick 调，内部 10 tick 一次）──────────
 
     public static void tick(ServerLevel level) {
