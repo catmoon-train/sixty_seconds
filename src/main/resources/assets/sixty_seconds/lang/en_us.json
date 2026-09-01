@@ -3100,6 +3100,7 @@
   "trait.screen.mode_preview": "Preview mode: allocation opens after the 60s game starts",
   "trait.tab.positive": "Positive Traits",
   "trait.tab.negative": "Negative Traits",
+  "trait.screen.owned": "Owned Traits",
   "message.sixty_seconds.trait.slow_healer_fail": "Medicine failed to cure the sickness",
   "trait.strong.name": "Strong",
   "trait.strong.desc": "Permanent Strength I, +25 weight cap",

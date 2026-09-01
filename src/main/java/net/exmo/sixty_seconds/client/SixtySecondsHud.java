@@ -44,7 +44,7 @@ public final class SixtySecondsHud {
     private static final int VALUE_H = 9;
     private static final int STAT_GAP = 4;
     private static final int STAT_COUNT = 4; // 饥饿/口渴/理智/污染（健康单独一行）
-    private static final int ROW_GAP = 3;
+    private static final int ROW_GAP = 4;                    // 健康行与 2×2 网格的间隔，与网格内上下排间隔(gridRowGap)一致
     /** 游戏币（代币）图标。 */
     private static final ResourceLocation GAME_COIN =
             ResourceLocation.fromNamespaceAndPath("sixty_seconds", "textures/gui/game_coin.png");

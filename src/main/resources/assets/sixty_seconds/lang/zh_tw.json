@@ -2510,6 +2510,7 @@
   "trait.screen.mode_preview": "預覽模式：60秒遊戲開始後才可加點",
   "trait.tab.positive": "正面特質",
   "trait.tab.negative": "負面特質",
+  "trait.screen.owned": "已擁有特質",
   "message.sixty_seconds.trait.slow_healer_fail": "藥物未能治癒疾病",
   "trait.strong.name": "身強體壯",
   "trait.strong.desc": "獲得永久力量I，負重上限+25",
