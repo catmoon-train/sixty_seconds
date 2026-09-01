@@ -109,6 +109,7 @@ public final class OceanCreatureSpawner {
         double monsterBase = (night ? 0.042 : 0.007) * dayRatio * earlyDayMult;
 
         RandomSource random = level.getRandom();
+        double spawnMult = net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.spawnMultiplier(level);
 
         // 利维坦定时刷新（与鲨鱼/海怪独立，可共存）
         tickLeviathan(level, dayNumber);
@@ -131,7 +132,7 @@ public final class OceanCreatureSpawner {
             int nearbyMonsters = countNearby(level, player, OceanSeaMonsterEntity.class, NEARBY_RADIUS);
 
             // ── 海怪刷新（KRAKEN / SERPENT，含出场特效）───────────────────
-            if (nearbyMonsters < MAX_NEARBY_MONSTERS && random.nextDouble() < monsterBase) {
+            if (nearbyMonsters < MAX_NEARBY_MONSTERS && random.nextDouble() < monsterBase * spawnMult) {
                 BlockPos spot = findWaterSpot(level, player.blockPosition(),
                         SPAWN_MIN_DIST + 8, SPAWN_MAX_DIST + 12, random);
                 if (spot != null) {
@@ -151,7 +152,7 @@ public final class OceanCreatureSpawner {
             int areaSharks = countNearby(level, player, OceanSharkEntity.class, Sixty_seconds.SHARK_AREA_RADIUS);
             if (globalSharks < Sixty_seconds.SHARK_GLOBAL_CAP
                     && areaSharks < Sixty_seconds.SHARK_AREA_CAP
-                    && random.nextDouble() < 0.35 * dayRatio * earlyDayMult) {
+                    && random.nextDouble() < 0.35 * dayRatio * earlyDayMult * spawnMult) {
                 BlockPos spot = findWaterSpot(level, player.blockPosition(),
                         SPAWN_MIN_DIST, SPAWN_MAX_DIST, random);
                 if (spot != null) {
@@ -168,7 +169,7 @@ public final class OceanCreatureSpawner {
             }
             if (!isNearSeafloor(level, player.blockPosition())) continue;
             if (oceanBossCount(level) < seafloorBossCap(dayNumber)
-                    && random.nextDouble() < 0.012 * dayRatio * earlyDayMult) {
+                    && random.nextDouble() < 0.012 * dayRatio * earlyDayMult * spawnMult) {
                 OceanSeaMonsterEntity boss = spawnSeafloorBoss(level, player.blockPosition(), random);
                 if (boss != null) announceSeaMonster(level, boss, player);
             }
@@ -183,7 +184,7 @@ public final class OceanCreatureSpawner {
             if (!isNearSeafloor(level, player.blockPosition())) continue;
             int nearbyFloor = countNearby(level, player, OceanFloorMonsterEntity.class, NEARBY_RADIUS);
             if (nearbyFloor < FLOOR_MONSTER_AREA_CAP
-                    && random.nextDouble() < 0.06 * dayRatio * earlyDayMult) {
+                    && random.nextDouble() < 0.06 * dayRatio * earlyDayMult * spawnMult) {
                 BlockPos spot = findSeafloorSpot(level, player.blockPosition(),
                         SPAWN_MIN_DIST, SPAWN_MAX_DIST, random);
                 if (spot != null) spawnFloorMonster(level, spot, random);
@@ -198,7 +199,7 @@ public final class OceanCreatureSpawner {
             }
             int nearbyFauna = countNearby(level, player, OceanFaunaEntity.class, NEARBY_RADIUS);
             if (nearbyFauna < FAUNA_AREA_CAP
-                    && random.nextDouble() < 0.05 * dayRatio * earlyDayMult) {
+                    && random.nextDouble() < 0.05 * dayRatio * earlyDayMult * spawnMult) {
                 BlockPos spot = findWaterSpot(level, player.blockPosition(),
                         SPAWN_MIN_DIST, SPAWN_MAX_DIST, random);
                 if (spot != null) spawnOceanFauna(level, spot, random);
@@ -207,7 +208,7 @@ public final class OceanCreatureSpawner {
 
         // ── 海洋霸主（10 个独立建模 Boss）：低概率、全局限 1 只 ──
         if (countNearbyTitans(level) < TITAN_CAP
-                && random.nextDouble() < 0.0035 * dayRatio * earlyDayMult) {
+                && random.nextDouble() < 0.0035 * dayRatio * earlyDayMult * spawnMult) {
             for (ServerPlayer player : level.players()) {
                 if (player.isSpectator() || player.isCreative()
                         || !net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {

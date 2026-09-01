@@ -61,10 +61,12 @@ public final class SixtySecondsLootSearch {
                     Component.translatable("message.sixty_seconds.sixty_seconds.supply_empty"), true);
             return;
         }
-        long end = level.getGameTime() + SixtySecondsBalance.SUPPLY_SEARCH_TICKS;
+        int searchTicks = (int) (SixtySecondsBalance.SUPPLY_SEARCH_TICKS
+                * net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.lootSearchMultiplier(player));
+        long end = level.getGameTime() + searchTicks;
         SESSIONS.put(id, new Session(level.dimension(), pos.immutable(), end));
         ServerPlayNetworking.send(player, new SupplySearchS2CPacket(
-                SupplySearchS2CPacket.STATE_START, pos, SixtySecondsBalance.SUPPLY_SEARCH_TICKS));
+                SupplySearchS2CPacket.STATE_START, pos, searchTicks));
         level.playSound(null, pos, SoundEvents.BARREL_OPEN, SoundSource.BLOCKS, 0.5F, 0.9F);
     }
 

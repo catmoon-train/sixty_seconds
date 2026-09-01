@@ -46,11 +46,12 @@ public final class SixtySecondsWeightSystem {
     }
 
     private static void applyPenalty(ServerPlayer player, double load, SixtySecondsWeightConfig cfg) {
-        if (!cfg.speedPenaltyEnabled || load <= cfg.maxLoad) {
+        double maxLoad = net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.traitMaxLoad(player, cfg.maxLoad);
+        if (!cfg.speedPenaltyEnabled || load <= maxLoad) {
             player.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
             return;
         }
-        double excess = load - cfg.maxLoad;
+        double excess = load - maxLoad;
         int level_ = (int) Math.floor(excess / Math.max(1e-4, cfg.speedPenaltyPerLoad));
         level_ = Math.max(0, Math.min(10, level_));
         player.addEffect(new MobEffectInstance(

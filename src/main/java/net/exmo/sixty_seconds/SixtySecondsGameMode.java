@@ -102,6 +102,7 @@ public class SixtySecondsGameMode extends GameMode {
 
     @Override
     public void stopGame(ServerLevel world) {
+        net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.resetAll(world);
         net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.delete(world); // 一局结束：删除上一局存档
         net.exmo.sixty_seconds.SixtySecondsMod.RUNNING = false;
         // 清掉预建标记：游戏结束（或中途 stop）后，预建方块会被还原，几何数据不再有效

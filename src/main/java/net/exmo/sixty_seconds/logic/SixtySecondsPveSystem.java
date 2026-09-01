@@ -202,6 +202,8 @@ public final class SixtySecondsPveSystem {
             }
             // 怪物整体刷新频率 +30%（叠加在原有 +40% 之上）
             chance *= SixtySecondsBalance.MONSTER_SPAWN_FREQ_MULT;
+            // 特质：优雅降低、万众瞩目提高惊动怪物概率
+            chance *= net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.startleMultiplier(player);
             // 难度联动：夜袭刷怪频率提高（最高 ×1.5）
             if (SixtySecondsDayCycle.isNight(data, level.getGameTime())) {
                 chance *= SixtySecondsDifficulty.nightSpawnMultiplier(SixtySecondsDifficulty.get(level));

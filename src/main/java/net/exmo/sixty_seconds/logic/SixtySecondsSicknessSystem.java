@@ -49,6 +49,11 @@ public final class SixtySecondsSicknessSystem {
         if (!stats.sick && !stats.recovering) {
             return;
         }
+        if (net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.slowHealerFails(player)) {
+            player.displayClientMessage(Component.translatable("message.sixty_seconds.trait.slow_healer_fail")
+                    .withStyle(net.minecraft.ChatFormatting.RED), true);
+            return;
+        }
         stats.sick = false;
         stats.recovering = false;
         stats.sync();

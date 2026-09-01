@@ -118,40 +118,41 @@ public final class SixtySecondsConsumables {
      * 注：原版已有的食物效果（如腐肉自带饥饿、河豚自带中毒等）会与此叠加，进一步加重惩罚。
      */
     private static void applyNegativeEffects(ServerPlayer player, ItemStack stack) {
+        double wsm = net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.weakStomachMultiplier(player);
         Item item = stack.getItem();
         if (item == Items.ROTTEN_FLESH) {
-            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 30, 0,
+            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, (int) (20 * 30 * wsm), 0,
                     false, true, true));
             if (player.getRandom().nextFloat() < 0.2f) {
-                player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 5, 0,
+                player.addEffect(new MobEffectInstance(MobEffects.POISON, (int) (20 * 5 * wsm), 0,
                         false, true, true));
             }
         } else if (item == Items.POISONOUS_POTATO) {
-            player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 5, 0,
+            player.addEffect(new MobEffectInstance(MobEffects.POISON, (int) (20 * 5 * wsm), 0,
                     false, true, true));
         } else if (item == Items.PUFFERFISH) {
-            player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 15, 1,
+            player.addEffect(new MobEffectInstance(MobEffects.POISON, (int) (20 * 15 * wsm), 1,
                     false, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 20 * 15, 0,
+            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, (int) (20 * 15 * wsm), 0,
                     false, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 30, 1,
+            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, (int) (20 * 30 * wsm), 1,
                     false, true, true));
         } else if (item == Items.SPIDER_EYE) {
-            player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 8, 0,
+            player.addEffect(new MobEffectInstance(MobEffects.POISON, (int) (20 * 8 * wsm), 0,
                     false, true, true));
         } else if (item == Items.CHICKEN) {
-            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 20, 0,
+            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, (int) (20 * 20 * wsm), 0,
                     false, true, true));
             if (player.getRandom().nextFloat() < 0.3f) {
-                player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 5, 0,
+                player.addEffect(new MobEffectInstance(MobEffects.POISON, (int) (20 * 5 * wsm), 0,
                         false, true, true));
             }
         } else if (item == Items.BEEF || item == Items.PORKCHOP
                 || item == Items.MUTTON || item == Items.RABBIT) {
-            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 20 * 20, 0,
+            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, (int) (20 * 20 * wsm), 0,
                     false, true, true));
             if (player.getRandom().nextFloat() < 0.15f) {
-                player.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 3, 0,
+                player.addEffect(new MobEffectInstance(MobEffects.POISON, (int) (20 * 3 * wsm), 0,
                         false, true, true));
             }
         }

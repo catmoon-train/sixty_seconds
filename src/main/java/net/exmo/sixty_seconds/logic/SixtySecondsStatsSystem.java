@@ -84,6 +84,10 @@ public final class SixtySecondsStatsSystem {
                     sanityMod = team.modifier("drain_sanity");
                     polluteMod = team.modifier("drain_pollution");
                 }
+                hungerMod *= net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.hungerMultiplier(player);
+                thirstMod *= net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.thirstMultiplier(player);
+                sanityMod *= net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.sanityMultiplier(player);
+                polluteMod *= net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.pollutionMultiplier(player);
                 // 毒雾期间（drain_pollution == 1.5），户外玩家显示绿色边框警示
                 if (polluteMod >= 1.5 && !sheltered && now % 40 == 0) {
                     ServerPlayNetworking.send(player,
@@ -107,6 +111,9 @@ public final class SixtySecondsStatsSystem {
                 }
                 // 难度加成：污染累积随难度加快（难度 8 起封顶 ×2.5）
                 pollutionMult *= SixtySecondsDifficulty.pollutionMultiplier(SixtySecondsDifficulty.get(level));
+                if (net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.has(player, "allergic") && pollutionMult > 0) {
+                    pollutionMult += Math.max(1, pollutionMult / 5); // 过敏体质：额外 +20% 且至少 +1
+                }
                 stats.pollution = clampUp(stats.pollution,
                         scaleChance(level, SixtySecondsBalance.POLLUTION_GAIN_PER_MIN, pollutionMult * polluteMod));
                 changed = true;
@@ -140,8 +147,9 @@ public final class SixtySecondsStatsSystem {
             if (stats.pollution >= MAX) {
                 player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 0, false, false, false));
                 if (now % SixtySecondsBalance.POLLUTION_SICK_ROLL_INTERVAL == 0
-                        && level.getRandom().nextDouble() < SixtySecondsBalance.POLLUTION_SICK_CHANCE
-                                + SixtySecondsDifficulty.sickChanceBonus(SixtySecondsDifficulty.get(level))) {
+                        && level.getRandom().nextDouble() < (SixtySecondsBalance.POLLUTION_SICK_CHANCE
+                                + SixtySecondsDifficulty.sickChanceBonus(SixtySecondsDifficulty.get(level)))
+                                * net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.sicknessMultiplier(player)) {
                     SixtySecondsSicknessSystem.makeSick(player);
                 }
             }

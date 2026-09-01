@@ -418,6 +418,8 @@ public final class SixtySecondsHealthSystem {
                 baseDamage = (int) Math.ceil(baseDamage * SixtySecondsBalance.MONSTER_STRENGTH_MULT);
             }
         }
+        baseDamage = (int) Math.round(baseDamage * net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.damageMultiplier(victim));
+        net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.onAttacked(victim);
         if (stats.monster) {
             // 怪物玩家：正常扣血（250 血），不受护甲减免，健康扣完即死
             hurtFeedback(victim, attacker);

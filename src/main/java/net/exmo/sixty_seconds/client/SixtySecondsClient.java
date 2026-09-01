@@ -86,6 +86,7 @@ import net.exmo.sixty_seconds.network.OpenRandomSupplyBoxConfigS2CPacket;
 import net.exmo.sixty_seconds.network.OpenWeightConfigS2CPacket;
 import net.exmo.sixty_seconds.client.WeightConfigClient;
 import net.exmo.sixty_seconds.client.screen.WeightConfigScreen;
+import net.exmo.sixty_seconds.client.screen.SixtySecondsTraitScreen;
 import net.exmo.sixty_seconds.network.OpenRvConsoleS2CPacket;
 import net.exmo.sixty_seconds.network.OpenShelterDoorS2CPacket;
 import net.exmo.sixty_seconds.network.OpenShelterPanelS2CPacket;
@@ -195,6 +196,13 @@ public final class SixtySecondsClient {
             new KeyMapping("key.sixty_seconds.submarine_descend",
                     KeyConflictContext.IN_GAME, KeyModifier.CONTROL,
                     InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_CONTROL,
+                    "key.categories.sixty_seconds"));
+
+    /** 天赋特质界面键（C）：60s 未启动为预览，已启动方可加点；游戏结束重置。 */
+    public static final KeyMapping TRAIT_KEY = KeyBindingHelper.registerKeyBinding(
+            new KeyMapping("key.sixty_seconds.trait",
+                    KeyConflictContext.IN_GAME, KeyModifier.NONE,
+                    InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_C,
                     "key.categories.sixty_seconds"));
 
     /** 上一次已上报服务端的潜水艇升降状态，用于只在状态变化时才发包。 */
@@ -396,6 +404,9 @@ public final class SixtySecondsClient {
 
     private static void onClientTick(ClientTickEvent.Post event) {
         Minecraft client = Minecraft.getInstance();
+        if (TRAIT_KEY.consumeClick() && client.screen == null && client.player != null) {
+            client.setScreen(new SixtySecondsTraitScreen());
+        }
         if (client.level != null) {
             SixtySecGameWorldComponent.KEY.get(client.level).clientTick();
         }

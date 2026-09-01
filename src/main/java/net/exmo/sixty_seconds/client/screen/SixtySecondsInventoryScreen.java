@@ -206,8 +206,8 @@ public class SixtySecondsInventoryScreen extends LimitedHandledScreen<InventoryM
             return;
         }
         double load = SixtySecondsWeightCalc.computeLoad(this.player, cfg);
-        int ratio = (int) Math.min(100, load / Math.max(1e-4, cfg.maxLoad) * 100);
-        Component text = Component.literal(String.format("负重 %.1f / %.0f", load, cfg.maxLoad));
+        int ratio = (int) Math.min(100, load / Math.max(1e-4, net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.traitMaxLoad(this.player, cfg.maxLoad)) * 100);
+        Component text = Component.translatable("hud.sixty_seconds.sixty_seconds.weight", String.format("%.1f", load), String.format("%.0f", net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.traitMaxLoad(this.player, cfg.maxLoad)));
         int textW = this.font.width(text);
         int x = this.width - COIN_MARGIN - textW;
         int y = COIN_MARGIN + COIN_ICON + 4; // 货币图标正下方

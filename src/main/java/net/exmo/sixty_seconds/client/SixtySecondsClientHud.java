@@ -68,12 +68,12 @@ public final class SixtySecondsClientHud {
                 int bw = 140, bh = 10;
                 int bx = sw / 2 - bw / 2;
                 int by = sh - 50;
-                int ratio = (int) Math.min(100, load / Math.max(1e-4, wcfg.maxLoad) * 100);
+                int ratio = (int) Math.min(100, load / Math.max(1e-4, net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.traitMaxLoad(player, wcfg.maxLoad)) * 100);
                 gui.fill(bx, by, bx + bw, by + bh, 0x80000000);
                 int col = ratio >= 100 ? 0xFFCC2222 : 0xFF33AA33;
                 gui.fill(bx, by, bx + bw * ratio / 100, by + bh, col);
                 gui.drawString(Minecraft.getInstance().font,
-                        Component.literal(String.format("负重 %.1f / %.0f", load, wcfg.maxLoad)),
+                        Component.translatable("hud.sixty_seconds.sixty_seconds.weight", String.format("%.1f", load), String.format("%.0f", net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.traitMaxLoad(player, wcfg.maxLoad))),
                         bx, by - 10, 0xFFFFFF);
             }
         }

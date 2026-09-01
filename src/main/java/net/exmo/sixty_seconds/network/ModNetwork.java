@@ -17,6 +17,7 @@ import net.exmo.sixty_seconds.bridge.stubs.ShootMuzzleS2CPayload;
 import net.exmo.sixty_seconds.bridge.stubs.TriggerScreenEdgeEffectPayload;
 import net.exmo.sixty_seconds.network.OpenWeightConfigS2CPacket;
 import net.exmo.sixty_seconds.network.WeightConfigSaveC2SPacket;
+import net.exmo.sixty_seconds.network.TraitAllocateC2SPacket;
 import net.exmo.sixty_seconds.network.WeatherS2CPacket;
 
 public final class ModNetwork {
@@ -102,6 +103,7 @@ public final class ModNetwork {
         registrar.playToServer(TokenExchangeC2SPacket.ID, adapt(TokenExchangeC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(TradeActionC2SPacket.ID, adapt(TradeActionC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(VaultLockpickCompleteC2SPacket.ID, adapt(VaultLockpickCompleteC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
+        registrar.playToServer(TraitAllocateC2SPacket.ID, adapt(TraitAllocateC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToClient(VehicleCameraS2CPacket.ID, adapt(VehicleCameraS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToClient(VisitChatMessageS2CPacket.ID, adapt(VisitChatMessageS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
         registrar.playToServer(VisitChatSendC2SPacket.ID, adapt(VisitChatSendC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
@@ -126,6 +128,7 @@ public final class ModNetwork {
                 return;
             }
             if (payload instanceof BreakInExecuteC2SPacket p) { BreakInExecuteC2SPacket.handle(p, fabric); return; }
+            if (payload instanceof TraitAllocateC2SPacket p) { TraitAllocateC2SPacket.handle(p, fabric); return; }
             if (payload instanceof DismantleC2SPacket p) { DismantleC2SPacket.handle(p, fabric); return; }
             if (payload instanceof EditNewspaperPacket p) { EditNewspaperPacket.handle(p, fabric); return; }
             if (payload instanceof LootTableSaveC2SPacket p) { LootTableSaveC2SPacket.handle(p, fabric); return; }

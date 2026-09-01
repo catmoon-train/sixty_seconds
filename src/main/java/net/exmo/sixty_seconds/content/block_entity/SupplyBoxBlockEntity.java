@@ -100,6 +100,13 @@ public class SupplyBoxBlockEntity extends BlockEntity {
                 out.add(field);
             }
         }
+        if (net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.lootExtraChance(player) > 0
+                && level.random.nextDouble() < 0.10) {
+            ItemStack extra = table.roll(chooseCategory(level, table), level.random, exponent);
+            if (!extra.isEmpty()) {
+                out.add(extra);
+            }
+        }
         return out;
     }
 

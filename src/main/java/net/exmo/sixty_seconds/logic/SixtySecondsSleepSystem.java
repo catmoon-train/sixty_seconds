@@ -119,7 +119,8 @@ public final class SixtySecondsSleepSystem {
                 if (!inHome && now % (20 * 10) == 0) {
                     int minStat = Math.min(Math.min(stats.hunger, stats.thirst), stats.sanity);
                     double sickChance = SixtySecondsBalance.NIGHT_OUTDOOR_SICK_CHANCE
-                            * (1.0 - SixtySecondsBalance.SICK_CHANCE_STAT_FACTOR * minStat / (double) MAX);
+                            * (1.0 - SixtySecondsBalance.SICK_CHANCE_STAT_FACTOR * minStat / (double) MAX)
+                            * net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.sicknessMultiplier(player);
                     if (level.getRandom().nextDouble() < sickChance) {
                         SixtySecondsSicknessSystem.makeSick(player);
                     }
