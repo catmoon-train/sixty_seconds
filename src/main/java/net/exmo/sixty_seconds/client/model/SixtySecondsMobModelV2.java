@@ -178,17 +178,19 @@ public class SixtySecondsMobModelV2 extends EntityModel<SixtySecondsMonsterEntit
 
     private static void addRunner(PartDefinition root) {
         PartDefinition p = form(root, "runner");
-        cube(p, "rib_body", 58, 115, -3, 9, -2, 6, 9, 4);
-        cube(p, "raptor_neck", 12, 103, -2, 3, -1, 4, 8, 3, 0, 0, 0, -0.35F, 0, 0);
-        cube(p, "long_head", 30, 114, -3, -2, -4, 6, 6, 8);
-        cube(p, "snout", 78, 118, -2, 0, -10, 4, 3, 7);
-        limb(p, "tail", 0, 114, -2, 12, 2, 4, 3, 11, 12, Role.TAIL, 0.42F, 0, 0);
-        limb(p, "leg_l", 98, 104, -3, 16, -1, 3, 11, 3, 16, Role.LEG, -0.72F, 0, -0.12F);
-        limb(p, "leg_r", 110, 104, 0, 16, -1, 3, 11, 3, 16, Role.LEG, -0.28F, 0, 0.12F);
-        limb(p, "ankle_l", 100, 118, -4, 24, -5, 3, 3, 7, 16, Role.LEG, 0.92F, 0, 0);
-        limb(p, "ankle_r", 78, 108, 1, 24, -5, 3, 3, 7, 16, Role.LEG, 0.92F, 0, 0);
-        limb(p, "forearm_l", 58, 102, -7, 9, -2, 3, 10, 3, 9, Role.ARM, -0.95F, 0, 0.08F);
-        limb(p, "forearm_r", 0, 101, 4, 9, -2, 3, 10, 3, 9, Role.ARM, -0.95F, 0, -0.08F);
+        // 中央躯干：加宽加厚，作为所有肢体的连接核心
+        cube(p, "torso", 58, 115, -4, 8, -3, 8, 11, 6);
+        cube(p, "neck", 12, 103, -2, 2, -2, 4, 7, 4, 0, 0, 0, -0.3F, 0, 0);
+        cube(p, "head", 30, 114, -3, -3, -5, 6, 6, 9);
+        cube(p, "snout", 78, 118, -2, 0, -12, 4, 3, 8);
+        limb(p, "tail", 0, 114, -2, 12, 3, 5, 3, 13, 12, Role.TAIL, 0.42F, 0, 0);
+        limb(p, "leg_l", 98, 104, -4, 16, -2, 4, 11, 4, 16, Role.LEG, -0.72F, 0, -0.1F);
+        limb(p, "leg_r", 110, 104, 0, 16, -2, 4, 11, 4, 16, Role.LEG, -0.28F, 0, 0.1F);
+        limb(p, "ankle_l", 100, 118, -5, 25, -5, 3, 3, 7, 16, Role.LEG, 0.92F, 0, 0);
+        limb(p, "ankle_r", 78, 108, 2, 25, -5, 3, 3, 7, 16, Role.LEG, 0.92F, 0, 0);
+        // 前臂根部贴躯干侧面，避免悬空
+        limb(p, "arm_l", 58, 102, -5, 10, -2, 3, 10, 3, 10, Role.ARM, -0.95F, 0, 0.1F);
+        limb(p, "arm_r", 0, 101, 2, 10, -2, 3, 10, 3, 10, Role.ARM, -0.95F, 0, -0.1F);
     }
 
     private static void addBrute(PartDefinition root) {
@@ -274,14 +276,16 @@ public class SixtySecondsMobModelV2 extends EntityModel<SixtySecondsMonsterEntit
 
     private static void addCinderling(PartDefinition root) {
         PartDefinition p = form(root, "cinderling");
-        cube(p, "charred_core", 0, 110, -5, 9, -4, 10, 10, 8);
+        cube(p, "charred_core", 0, 110, -5, 7, -4, 10, 12, 8);
         cube(p, "ember_face", 36, 115, -4, 3, -8, 8, 7, 6);
         cube(p, "flame_crown", 64, 116, -3, -4, -2, 6, 8, 4, 0, 0, 0, -0.15F, 0, 0);
-        limb(p, "flame_tail", 84, 116, -3, 17, 3, 6, 9, 3, 17, Role.TAIL, 0.65F, 0, 0);
+        // 尾根部移到 charred_core 内（z 起 1），与身体相连
+        limb(p, "flame_tail", 84, 116, -3, 16, 1, 6, 9, 3, 16, Role.TAIL, 0.5F, 0, 0);
         limb(p, "coal_arm_l", 102, 115, -9, 10, -2, 4, 9, 4, 10, Role.ARM, -0.55F, 0, -0.2F);
         limb(p, "coal_arm_r", 64, 103, 5, 10, -2, 4, 9, 4, 10, Role.ARM, -0.55F, 0, 0.2F);
-        limb(p, "coal_leg_l", 80, 105, -5, 18, -1, 4, 7, 4, 18, Role.LEG, 0.2F, 0, 0);
-        limb(p, "coal_leg_r", 36, 104, 1, 18, -1, 4, 7, 4, 18, Role.LEG, 0.2F, 0, 0);
+        // 腿加长，使脚接近地面模型 y=27
+        limb(p, "coal_leg_l", 80, 105, -5, 18, -1, 4, 9, 4, 18, Role.LEG, 0.2F, 0, 0);
+        limb(p, "coal_leg_r", 36, 104, 1, 18, -1, 4, 9, 4, 18, Role.LEG, 0.2F, 0, 0);
     }
 
     private static void addFrostling(PartDefinition root) {
@@ -311,13 +315,14 @@ public class SixtySecondsMobModelV2 extends EntityModel<SixtySecondsMonsterEntit
 
     private static void addRavenor(PartDefinition root) {
         PartDefinition p = form(root, "ravenor");
-        cube(p, "bird_body", 0, 110, -4, 8, -3, 8, 12, 6, 0, 0, 0, -0.18F, 0, 0);
+        // 加长躯干向下覆盖脚枢轴，并让腿延伸到地面模型 y≈27
+        cube(p, "bird_body", 0, 110, -4, 4, -3, 8, 18, 6, 0, 0, 0, -0.18F, 0, 0);
         cube(p, "beaked_head", 28, 113, -4, 1, -8, 8, 7, 8);
         cube(p, "beak", 104, 118, -2, 4, -14, 4, 3, 7);
         limb(p, "wing_l", 60, 113, -12, 6, 0, 8, 12, 3, 6, Role.WING, 0.2F, 0, -0.35F);
         limb(p, "wing_r", 82, 113, 4, 6, 0, 8, 12, 3, 6, Role.WING, 0.2F, 0, 0.35F);
-        limb(p, "talon_l", 28, 101, -6, 19, -2, 4, 8, 4, 19, Role.LEG, 0.72F, 0, -0.18F);
-        limb(p, "talon_r", 44, 101, 2, 19, -2, 4, 8, 4, 19, Role.LEG, 0.72F, 0, 0.18F);
+        limb(p, "talon_l", 28, 101, -6, 19, -2, 4, 11, 4, 19, Role.LEG, 0.72F, 0, -0.18F);
+        limb(p, "talon_r", 44, 101, 2, 19, -2, 4, 11, 4, 19, Role.LEG, 0.72F, 0, 0.18F);
         limb(p, "tail_feather", 104, 103, -2, 16, 3, 4, 12, 3, 16, Role.TAIL, 0.72F, 0, 0);
     }
 
@@ -329,8 +334,8 @@ public class SixtySecondsMobModelV2 extends EntityModel<SixtySecondsMonsterEntit
         cube(p, "jaw", 58, 117, -3, -3, -9, 6, 4, 7);
         limb(p, "ribbon_l", 100, 109, -8, 9, 0, 3, 16, 3, 9, Role.ARM, 0.12F, 0, -0.15F);
         limb(p, "ribbon_r", 112, 109, 5, 9, 0, 3, 16, 3, 9, Role.ARM, 0.12F, 0, 0.15F);
-        limb(p, "thin_arm_l", 58, 98, -9, 8, -1, 3, 16, 3, 8, Role.ARM, -0.18F, 0, 0);
-        limb(p, "thin_arm_r", 70, 98, 6, 8, -1, 3, 16, 3, 8, Role.ARM, -0.18F, 0, 0);
+        limb(p, "thin_arm_l", 58, 98, -6, 8, -1, 3, 16, 3, 8, Role.ARM, -0.18F, 0, 0);
+        limb(p, "thin_arm_r", 70, 98, 5, 8, -1, 3, 16, 3, 8, Role.ARM, -0.18F, 0, 0);
         limb(p, "needle_leg_l", 28, 101, -4, 21, -1, 3, 8, 3, 21, Role.LEG, 0.1F, 0, 0);
         limb(p, "needle_leg_r", 40, 101, 1, 21, -1, 3, 8, 3, 21, Role.LEG, 0.1F, 0, 0);
     }
@@ -347,13 +352,13 @@ public class SixtySecondsMobModelV2 extends EntityModel<SixtySecondsMonsterEntit
         PartDefinition p = form(root, "burster");
         cube(p, "mine_body", 0, 102, -7, 9, -7, 14, 12, 14);
         cube(p, "central_eye", 56, 115, -4, 5, -11, 8, 8, 5);
-        cube(p, "fuse", 92, 102, -2, 0, -2, 4, 8, 4, 0, 0, 0, -0.35F, 0, 0);
+        cube(p, "fuse", 92, 102, -2, 1, -2, 4, 8, 4, 0, 0, 0, -0.35F, 0, 0);
         cube(p, "spike_front", 100, 114, -2, 12, -14, 4, 9, 5, 0, 0, 0, 0.8F, 0, 0);
         cube(p, "spike_back", 82, 114, -2, 12, 7, 4, 9, 5, 0, 0, 0, -0.8F, 0, 0);
         cube(p, "spike_l", 56, 103, -14, 12, -2, 5, 8, 4, 0, 0, 0, 0, 0, -0.8F);
         cube(p, "spike_r", 74, 102, 9, 12, -2, 5, 8, 4, 0, 0, 0, 0, 0, 0.8F);
-        cube(p, "stub_l", 108, 105, -6, 20, -5, 4, 5, 4, 0, 0, 0, 0.28F, 0, 0);
-        cube(p, "stub_r", 108, 96, 2, 20, -5, 4, 5, 4, 0, 0, 0, 0.28F, 0, 0);
+        cube(p, "stub_l", 108, 105, -6, 20, -5, 4, 7, 4, 0, 0, 0, 0.28F, 0, 0);
+        cube(p, "stub_r", 108, 96, 2, 20, -5, 4, 7, 4, 0, 0, 0, 0.28F, 0, 0);
     }
 
     private static void addGorehound(PartDefinition root) {
@@ -364,23 +369,26 @@ public class SixtySecondsMobModelV2 extends EntityModel<SixtySecondsMonsterEntit
         cube(p, "muzzle", 38, 102, -3, 2, -15, 6, 4, 8);
         cube(p, "ear_l", 114, 105, -7, -5, -3, 4, 6, 3, 0, 0, 0, 0, 0, -0.35F);
         cube(p, "ear_r", 16, 102, 3, -5, -3, 4, 6, 3, 0, 0, 0, 0, 0, 0.35F);
-        limb(p, "leg_fl", 82, 99, -6, 16, -2, 4, 10, 4, 16, Role.LEG, 0.52F, 0, 0);
-        limb(p, "leg_fr", 0, 97, 2, 16, -2, 4, 10, 4, 16, Role.LEG, 0.52F, 0, 0);
-        limb(p, "leg_bl", 98, 100, -6, 16, 1, 4, 10, 4, 16, Role.LEG, -0.52F, 0, 0);
-        limb(p, "leg_br", 66, 99, 2, 16, 1, 4, 10, 4, 16, Role.LEG, -0.52F, 0, 0);
+        limb(p, "leg_fl", 82, 99, -4, 16, -1, 4, 11, 4, 16, Role.LEG, 0.52F, 0, 0);
+        limb(p, "leg_fr", 0, 97, 3, 16, -1, 4, 11, 4, 16, Role.LEG, 0.52F, 0, 0);
+        limb(p, "leg_bl", 98, 100, -4, 16, 0, 4, 11, 4, 16, Role.LEG, -0.52F, 0, 0);
+        limb(p, "leg_br", 66, 99, 3, 16, 0, 4, 11, 4, 16, Role.LEG, -0.52F, 0, 0);
         limb(p, "tail", 98, 114, 1, 10, 3, 4, 3, 11, 10, Role.TAIL, -0.55F, 0, 0);
     }
 
     private static void addShadowmute(PartDefinition root) {
         PartDefinition p = form(root, "shadowmute");
-        cube(p, "floating_cloak", 0, 107, -6, 8, -3, 12, 15, 6);
+        // 披风加宽 z 覆盖触手根部，消除与身体的缝隙
+        cube(p, "floating_cloak", 0, 107, -6, 8, -4, 12, 15, 7);
         cube(p, "hood", 36, 111, -5, -3, -4, 10, 10, 7);
         cube(p, "face_void", 70, 116, -4, 1, -9, 8, 7, 5);
-        limb(p, "tendril_l", 114, 112, -9, 12, 0, 3, 13, 3, 12, Role.ARM, 0.32F, 0, -0.2F);
-        limb(p, "tendril_r", 70, 100, 6, 12, 0, 3, 13, 3, 12, Role.ARM, 0.32F, 0, 0.2F);
+        // 触手根部落回披风内（x 贴身侧）
+        limb(p, "tendril_l", 114, 112, -7, 12, -1, 3, 13, 3, 12, Role.ARM, 0.32F, 0, -0.2F);
+        limb(p, "tendril_r", 70, 100, 6, 12, -1, 3, 13, 3, 12, Role.ARM, 0.32F, 0, 0.2F);
         limb(p, "cloak_tail", 96, 115, -3, 20, 1, 6, 10, 3, 20, Role.TAIL, 0.4F, 0, 0);
-        limb(p, "floating_hand_l", 82, 104, -11, 12, -2, 4, 7, 4, 12, Role.ARM, -0.5F, 0, 0);
-        limb(p, "floating_hand_r", 98, 104, 7, 12, -2, 4, 7, 4, 12, Role.ARM, -0.5F, 0, 0);
+        // 手移近身体，不再悬空
+        limb(p, "floating_hand_l", 82, 104, -7, 12, -2, 4, 7, 4, 12, Role.ARM, -0.5F, 0, 0);
+        limb(p, "floating_hand_r", 98, 104, 6, 12, -2, 4, 7, 4, 12, Role.ARM, -0.5F, 0, 0);
     }
 
     private static void addBonelord(PartDefinition root) {
@@ -393,23 +401,25 @@ public class SixtySecondsMobModelV2 extends EntityModel<SixtySecondsMonsterEntit
         limb(p, "bone_arm_r", 104, 109, 7, 8, -1, 3, 16, 3, 8, Role.ARM, -0.22F, 0, 0.12F);
         limb(p, "bone_leg_l", 116, 116, -4, 20, -1, 3, 9, 3, 20, Role.LEG, 0.1F, 0, 0);
         limb(p, "bone_leg_r", 116, 104, 1, 20, -1, 3, 9, 3, 20, Role.LEG, 0.1F, 0, 0);
-        cube(p, "vertebrae_cape", 68, 110, -5, 10, 3, 10, 16, 2, 0, 0, 0, 0.2F, 0, 0);
+        cube(p, "vertebrae_cape", 68, 110, -5, 10, 1, 10, 16, 2, 0, 0, 0, 0.2F, 0, 0);
     }
 
     private static void addSpinewalker(PartDefinition root) {
         PartDefinition p = form(root, "spinewalker");
-        cube(p, "vertebra_body", 32, 110, -4, 8, -3, 8, 12, 6);
-        cube(p, "spine_neck", 60, 113, -3, -2, 0, 6, 11, 4, 0, 0, 0, -0.3F, 0, 0);
+        // 重建：加厚中央躯干，让四肢根部都落在躯干内
+        cube(p, "vertebra_body", 32, 110, -5, 8, -4, 10, 12, 8);
+        cube(p, "spine_neck", 60, 113, -3, -1, -4, 6, 11, 4, 0, 0, 0, -0.3F, 0, 0);
         cube(p, "spine_head", 0, 112, -4, -9, -6, 8, 8, 8);
         cube(p, "jaw", 80, 118, -3, -2, -11, 6, 4, 6);
         cube(p, "spike_0", 24, 99, -2, 1, 4, 4, 7, 4, 0, 0, 0, -0.8F, 0, 0);
         cube(p, "spike_1", 96, 103, -2, 6, 4, 4, 8, 4, 0, 0, 0, -0.8F, 0, 0);
         cube(p, "spike_2", 112, 103, -2, 11, 4, 4, 8, 4, 0, 0, 0, -0.8F, 0, 0);
         cube(p, "spike_3", 60, 101, -2, 16, 4, 4, 8, 4, 0, 0, 0, -0.8F, 0, 0);
-        limb(p, "leg_l", 104, 115, -5, 19, -1, 4, 9, 4, 19, Role.LEG, 0.18F, 0, 0);
-        limb(p, "leg_r", 80, 105, 1, 19, -1, 4, 9, 4, 19, Role.LEG, 0.18F, 0, 0);
-        limb(p, "arm_l", 0, 97, -9, 9, -1, 3, 12, 3, 9, Role.ARM, -0.38F, 0, 0);
-        limb(p, "arm_r", 12, 97, 6, 9, -1, 3, 12, 3, 9, Role.ARM, -0.38F, 0, 0);
+        // 四肢根部紧贴加厚后的躯干（x 在 ±5 内），不再悬空
+        limb(p, "leg_l", 104, 115, -6, 19, -2, 4, 9, 4, 19, Role.LEG, 0.18F, 0, 0);
+        limb(p, "leg_r", 80, 105, 2, 19, -2, 4, 9, 4, 19, Role.LEG, 0.18F, 0, 0);
+        limb(p, "arm_l", 0, 97, -6, 9, -2, 3, 12, 3, 9, Role.ARM, -0.38F, 0, 0);
+        limb(p, "arm_r", 12, 97, 3, 9, -2, 3, 12, 3, 9, Role.ARM, -0.38F, 0, 0);
     }
 
     /**
