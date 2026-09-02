@@ -120,16 +120,16 @@ public class SixtySecondsBossModel extends EntityModel<SixtySecondsBossEntity> {
         PartDefinition hum = root.addOrReplaceChild("humanoid", CubeListBuilder.create(), PartPose.ZERO);
         hum.addOrReplaceChild("head",
                 CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F),
-                PartPose.offset(0.0F, 24.0F, 0.0F));
+                PartPose.offset(0.0F, 0.0F, 0.0F));
         hum.addOrReplaceChild("body",
                 CubeListBuilder.create().texOffs(16, 16).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F),
-                PartPose.offset(0.0F, 24.0F, 0.0F));
+                PartPose.offset(0.0F, 0.0F, 0.0F));
         hum.addOrReplaceChild("arm_r",
                 CubeListBuilder.create().texOffs(40, 16).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F),
-                PartPose.offset(-5.0F, 24.0F, 0.0F));
+                PartPose.offset(-5.0F, 0.0F, 0.0F));
         hum.addOrReplaceChild("arm_l",
                 CubeListBuilder.create().texOffs(40, 32).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F),
-                PartPose.offset(5.0F, 24.0F, 0.0F));
+                PartPose.offset(5.0F, 0.0F, 0.0F));
         hum.addOrReplaceChild("leg_r",
                 CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F),
                 PartPose.offset(-2.0F, 12.0F, 0.0F));
