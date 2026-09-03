@@ -740,7 +740,16 @@ public final class SixtySecondsLostCitiesStarMap {
         // 按完整 id（含命名空间）匹配 DeceasedCraft（deceasedcraft）建筑：
         // 普通建筑按 DC_BUILDING_STARS 评级；其 multibuilding 建筑群走
         // starForMultiBuilding 的默认 5 星，不经此处。
+        // 注意：DeceasedCraft 普通建筑的运行时 id 是「家族/文件」双段格式
+        // （如 deceasedcraft:building_officebank/building_officebank），
+        // DC_BUILDING_STARS 用裸名做键，因此命中失败时需去掉 / 家族路径再试。
         Integer dcStar = DC_BUILDING_STARS.get(name);
+        if (dcStar == null) {
+            int slash = name.indexOf('/');
+            if (slash > 0) {
+                dcStar = DC_BUILDING_STARS.get(name.substring(0, slash));
+            }
+        }
         if (dcStar != null) {
             return dcStar;
         }
@@ -1153,7 +1162,14 @@ public final class SixtySecondsLostCitiesStarMap {
         }
         // DeceasedCraft（deceasedcraft）建筑：multibuilding 父 id 与普通建筑均登记在
         // DC_BUILDING_DISPLAY，避免星图上显示 deceasedcraft:multi_hospital 这类原始 id。
+        // 普通建筑运行时 id 带「家族/文件」路径，同样需要去路径回退再试。
         String dcSuffix = DC_BUILDING_DISPLAY.get(key);
+        if (dcSuffix == null) {
+            int slash = key.indexOf('/');
+            if (slash > 0) {
+                dcSuffix = DC_BUILDING_DISPLAY.get(key.substring(0, slash));
+            }
+        }
         if (dcSuffix != null) {
             return BUILDING_LANG + dcSuffix;
         }
