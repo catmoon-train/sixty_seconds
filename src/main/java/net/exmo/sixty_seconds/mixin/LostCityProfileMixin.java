@@ -19,15 +19,17 @@ public abstract class LostCityProfileMixin {
     // ===== 建筑废墟化 =====
     /**
      * 建筑被削顶/塌陷的概率（默认 0.05）。
-     * 开销很大，不建议此值调太高
+     * 60秒配置：仅保留 1% 的极低概率，基本「不削楼房」；
+     * 即便触发，破坏层也只从接近楼顶处开始（见下方比例），只削掉顶部一点点。
      */
-    private static final float FORCED_RUIN_CHANCE = 0.1f;
+    private static final float FORCED_RUIN_CHANCE = 0.01f;
     /**
-     * 废墟破坏层起始高度占楼高的最小比例（默认 0.8）。调低=更多楼从更低处被削。
+     * 废墟破坏层起始高度占楼高的最小比例（默认 0.8）。
+     * 调低=更多楼从更低处被削；60秒配置调高到 0.9，保证只削顶部一小截。
      */
-    private static final float FORCED_RUIN_MINLEVEL_PERCENT = 0.5f;
+    private static final float FORCED_RUIN_MINLEVEL_PERCENT = 0.9f;
     /** 废墟破坏层起始高度占楼高的最大比例（默认 1.0）。 */
-    private static final float FORCED_RUIN_MAXLEVEL_PERCENT = 0.9f;
+    private static final float FORCED_RUIN_MAXLEVEL_PERCENT = 1.0f;
 
     // ===== 爆炸碎块外溢 =====
     /**

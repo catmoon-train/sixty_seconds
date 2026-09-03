@@ -140,7 +140,7 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("oilrig01", 5),
             Map.entry("oilrig10", 5),
             Map.entry("oilrig11", 5),
-            Map.entry("radiotower", 5),
+            Map.entry("radiotower", 4),
             Map.entry("shopping00", 4),
             Map.entry("shopping01", 4),
             Map.entry("shopping10", 4),
@@ -166,9 +166,9 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("lce:subhousel3ya_4_and_5_combo", 2),
             Map.entry("lce:subhousel3ya_3_6_7_8_9_structurebundel", 2),
             Map.entry("lce:floodedmalll3ya", 2),
-            Map.entry("lce:radio_tower1", 2),
+            Map.entry("lce:radio_tower1", 4),
             Map.entry("lce:watch_tower1", 2),
-            Map.entry("lce:radio_tower2", 2),
+            Map.entry("lce:radio_tower2", 4),
             // 3 星
             Map.entry("lce:smallshop", 3),
             Map.entry("lce:4buildingsrow", 3),
@@ -205,7 +205,7 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("lce2:base/base_aircraft_hanger", 5),
             Map.entry("lce2:base/base_building_body", 5),
             Map.entry("lce2:base/base_building_medium", 5),
-            Map.entry("lce2:base/base_container", 5),
+            Map.entry("lce2:base/base_container", 4),
             Map.entry("lce2:base/base_ground_airvent", 5),
             Map.entry("lce2:base/base_ground_ew", 5),
             Map.entry("lce2:base/base_ground_ns", 5),
@@ -246,13 +246,13 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("lce2:quarry/quarry_office", 4),
             Map.entry("lce2:quarry/quarry_stone_large", 4),
             Map.entry("lce2:quarry/quarry_stone_middle", 4),
-            // 太阳能（megasolar）= 2 星
+            // 太阳能（megasolar）：电池板阵列 2 星；太阳能反应堆按需求上调为 5 星
             Map.entry("lce2:megasolar/megasolar_cell_huge", 2),
             Map.entry("lce2:megasolar/megasolar_cell_medium", 2),
-            Map.entry("lce2:megasolar/megasolar_reactor", 2),
-            // 标准（scattered 多栋建筑）= 3 星
-            Map.entry("lce2:scattered/scattered_antenna", 3),
-            Map.entry("lce2:scattered/scattered_container", 3),
+            Map.entry("lce2:megasolar/megasolar_reactor", 5),
+            // 标准（scattered 多栋建筑）：通信天线 5 星、集装箱 4 星、其余 3 星
+            Map.entry("lce2:scattered/scattered_antenna", 5),
+            Map.entry("lce2:scattered/scattered_container", 4),
             Map.entry("lce2:scattered/scattered_cube", 3),
             Map.entry("lce2:scattered/scattered_farmland", 3),
             Map.entry("lce2:scattered/scattered_garage", 3),
@@ -260,14 +260,14 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("lce2:scattered/scattered_hanger", 3),
             Map.entry("lce2:scattered/scattered_lighthouse", 3),
             Map.entry("lce2:scattered/scattered_minifactory", 3),
-            Map.entry("lce2:scattered/scattered_radiotower", 3),
+            Map.entry("lce2:scattered/scattered_radiotower", 4),
             Map.entry("lce2:scattered/scattered_scaffold", 3),
             Map.entry("lce2:scattered/scattered_telescope", 3),
             Map.entry("lce2:scattered/scattered_watertank", 3),
             Map.entry("lce2:scattered/wind_mill", 3),
-            // 散落建筑（世界 loose scattered）= 3 星
-            Map.entry("lce2:scattered_antenna", 3),
-            Map.entry("lce2:scattered_container", 3),
+            // 散落建筑（世界 loose scattered）：与 scattered 子目录版保持一致（天线 5 星、集装箱 4 星）
+            Map.entry("lce2:scattered_antenna", 5),
+            Map.entry("lce2:scattered_container", 4),
             Map.entry("lce2:scattered_cube", 3),
             Map.entry("lce2:scattered_farmland", 3),
             Map.entry("lce2:scattered_garage", 3),
@@ -275,7 +275,7 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("lce2:scattered_hanger", 3),
             Map.entry("lce2:scattered_lighthouse", 3),
             Map.entry("lce2:scattered_minifactory", 3),
-            Map.entry("lce2:scattered_radiotower", 3),
+            Map.entry("lce2:scattered_radiotower", 4),
             Map.entry("lce2:scattered_scaffold", 3),
             Map.entry("lce2:scattered_telescope", 3),
             Map.entry("lce2:scattered_watertank", 3),
@@ -356,6 +356,187 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("lcmt:shopping", 4),
             Map.entry("lcmt:shopping_open", 4),
             Map.entry("lcmt:townhall", 4)
+    );
+
+    /**
+     * DeceasedCraft（命名空间 {@code deceasedcraft}）<b>普通建筑</b>的星级映射表。
+     *
+     * <p>评级依据官方 Wiki 的区域划分（{@code deceasedcraft.wiki.gg}）：</p>
+     * <ul>
+     *   <li><b>Residential（郊区住宅区，起始点、低危）</b>：住宅 A–D、小型公寓 A–D（含损毁）、
+     *       加油站、快餐店、服装店、五金店、寿司餐厅、树屋/小屋/餐车 → 1~2 星；</li>
+     *   <li><b>City（城市，中高危）</b>：酒店 A–D、办公楼 1–3、高档服饰店、仓库 → 3 星；
+     *       办公楼 4/5、城市银行、警察分局 → 4 星；</li>
+     *   <li><b>Wasteland / 工业（高危）</b>：工厂 A/B、加工车间 → 4 星。</li>
+     * </ul>
+     *
+     * <p>DeceasedCraft 的 <b>multibuilding（多区块建筑群）不需要在此登记</b>——
+     * 它们走 {@link #starForMultiBuilding} 的默认 {@link #MULTI_BUILDING_STAR}（5 星），
+     * 与「多区块建筑默认 5 星」的规则一致。</p>
+     */
+    private static final Map<String, Integer> DC_BUILDING_STARS = Map.ofEntries(
+            // ---- 1 星：花店 / 树屋 / 散落小屋 / 餐车 / 村舍（几乎无危险）----
+            Map.entry("deceasedcraft:building_flowershop", 1),
+            Map.entry("deceasedcraft:scattered_cabin_1", 1),
+            Map.entry("deceasedcraft:scattered_cabin_2", 1),
+            Map.entry("deceasedcraft:scattered_cabin_3", 1),
+            Map.entry("deceasedcraft:scattered_treehouse_1", 1),
+            Map.entry("deceasedcraft:scattered_foodtruck_1", 1),
+            Map.entry("deceasedcraft:villager_1", 1),
+            // ---- 2 星：郊区住宅 / 小型公寓（含损毁）/ 普通商铺 / 加油站 / 损毁仓库 / 幸存者藏身处 ----
+            Map.entry("deceasedcraft:building_residentiala", 2),
+            Map.entry("deceasedcraft:building_residentialb", 2),
+            Map.entry("deceasedcraft:building_residentialc", 2),
+            Map.entry("deceasedcraft:building_residentiald", 2),
+            Map.entry("deceasedcraft:building_apartmentsmalla", 2),
+            Map.entry("deceasedcraft:building_apartmentsmallabroken", 2),
+            Map.entry("deceasedcraft:building_apartmentsmallb", 2),
+            Map.entry("deceasedcraft:building_apartmentsmallbbroken", 2),
+            Map.entry("deceasedcraft:building_apartmentsmallc", 2),
+            Map.entry("deceasedcraft:building_apartmentsmallcbroken", 2),
+            Map.entry("deceasedcraft:building_apartmentsmalld", 2),
+            Map.entry("deceasedcraft:building_clothstore", 2),
+            Map.entry("deceasedcraft:building_fastfood", 2),
+            Map.entry("deceasedcraft:building_gasstation", 2),
+            Map.entry("deceasedcraft:building_hardwarestorece", 2),
+            Map.entry("deceasedcraft:building_hardwarestorecedamaged", 2),
+            Map.entry("deceasedcraft:building_hardwarestoreie", 2),
+            Map.entry("deceasedcraft:building_restaurantsushi", 2),
+            Map.entry("deceasedcraft:building_warehouseadamaged", 2),
+            Map.entry("deceasedcraft:building_warehousebdamaged", 2),
+            Map.entry("deceasedcraft:scattered_hideout_1", 2),
+            // ---- 3 星：酒店 / 办公楼 1–3 / 高档服饰店 / 仓库 / 废土加油站 / 损毁工厂 ----
+            Map.entry("deceasedcraft:building_hotela", 3),
+            Map.entry("deceasedcraft:building_hotelb", 3),
+            Map.entry("deceasedcraft:building_hotelc", 3),
+            Map.entry("deceasedcraft:building_hoteld", 3),
+            Map.entry("deceasedcraft:building_office1a", 3),
+            Map.entry("deceasedcraft:building_office1b", 3),
+            Map.entry("deceasedcraft:building_office2a", 3),
+            Map.entry("deceasedcraft:building_office2b", 3),
+            Map.entry("deceasedcraft:building_office3a", 3),
+            Map.entry("deceasedcraft:building_office3b", 3),
+            Map.entry("deceasedcraft:building_office3c", 3),
+            Map.entry("deceasedcraft:building_premiumclothstore", 3),
+            Map.entry("deceasedcraft:building_warehousea", 3),
+            Map.entry("deceasedcraft:building_warehouseb", 3),
+            Map.entry("deceasedcraft:building_wastelandgasstation", 3),
+            Map.entry("deceasedcraft:building_factorycdamaged", 3),
+            // ---- 4 星：办公楼 4/5 / 城市银行 / 警察分局 / 工厂 A/B / 加工车间（高价值、重感染）----
+            Map.entry("deceasedcraft:building_office4", 4),
+            Map.entry("deceasedcraft:building_office5", 4),
+            Map.entry("deceasedcraft:building_officebank", 4),
+            Map.entry("deceasedcraft:building_policeoffice1", 4),
+            Map.entry("deceasedcraft:building_factorya", 4),
+            Map.entry("deceasedcraft:building_factoryb", 4),
+            Map.entry("deceasedcraft:building_processingunita", 4)
+    );
+
+    /**
+     * DeceasedCraft 建筑（含 multibuilding 建筑群）的显示名映射表：
+     * 键为含命名空间的全名，值为语言文件 {@code building.sixty_seconds.sixty_seconds.<后缀>} 的后缀。
+     * 没有这张表时，星图 / 进入提示会直接显示 {@code deceasedcraft:multi_hospital} 这类未翻译的原始 id。
+     */
+    private static final Map<String, String> DC_BUILDING_DISPLAY = Map.ofEntries(
+            // ---- multibuilding 建筑群（星图按父 id 出图，必须登记父 id）----
+            Map.entry("deceasedcraft:multi_alienresearch", "multi_alienresearch"),
+            Map.entry("deceasedcraft:multi_apartmentmedium", "multi_apartmentmedium"),
+            Map.entry("deceasedcraft:multi_arcfurnace", "multi_arcfurnace"),
+            Map.entry("deceasedcraft:multi_cabin1", "multi_cabin1"),
+            Map.entry("deceasedcraft:multi_cabin2", "multi_cabin2"),
+            Map.entry("deceasedcraft:multi_cabin3", "multi_cabin3"),
+            Map.entry("deceasedcraft:multi_cafe", "multi_cafe"),
+            Map.entry("deceasedcraft:multi_campsite1", "multi_campsite1"),
+            Map.entry("deceasedcraft:multi_casino", "multi_casino"),
+            Map.entry("deceasedcraft:multi_communitycenter", "multi_communitycenter"),
+            Map.entry("deceasedcraft:multi_convenientstore", "multi_convenientstore"),
+            Map.entry("deceasedcraft:multi_courtyardofficetower", "multi_courtyardofficetower"),
+            Map.entry("deceasedcraft:multi_farmhouse1", "multi_farmhouse1"),
+            Map.entry("deceasedcraft:multi_filmworkstower", "multi_filmworkstower"),
+            Map.entry("deceasedcraft:multi_flatapartment", "multi_flatapartment"),
+            Map.entry("deceasedcraft:multi_flatlarge", "multi_flatlarge"),
+            Map.entry("deceasedcraft:multi_flatmedium", "multi_flatmedium"),
+            Map.entry("deceasedcraft:multi_gallery", "multi_gallery"),
+            Map.entry("deceasedcraft:multi_gasstation", "multi_gasstation"),
+            Map.entry("deceasedcraft:multi_gunstore", "multi_gunstore"),
+            Map.entry("deceasedcraft:multi_hospital", "multi_hospital"),
+            Map.entry("deceasedcraft:multi_hospitaldamaged", "multi_hospitaldamaged"),
+            Map.entry("deceasedcraft:multi_laboratory", "multi_laboratory"),
+            Map.entry("deceasedcraft:multi_militarybase", "multi_militarybase"),
+            Map.entry("deceasedcraft:multi_militaryradiocamp", "multi_militaryradiocamp"),
+            Map.entry("deceasedcraft:multi_nuclearpowerplant", "multi_nuclearpowerplant"),
+            Map.entry("deceasedcraft:multi_oasiscondo", "multi_oasiscondo"),
+            Map.entry("deceasedcraft:multi_officethefirst", "multi_officethefirst"),
+            Map.entry("deceasedcraft:multi_planecrash1", "multi_planecrash1"),
+            Map.entry("deceasedcraft:multi_policeapartment", "multi_policeapartment"),
+            Map.entry("deceasedcraft:multi_policestation", "multi_policestation"),
+            Map.entry("deceasedcraft:multi_polyclinic", "multi_polyclinic"),
+            Map.entry("deceasedcraft:multi_pumpjack", "multi_pumpjack"),
+            Map.entry("deceasedcraft:multi_residentiale", "multi_residentiale"),
+            Map.entry("deceasedcraft:multi_residentialf", "multi_residentialf"),
+            Map.entry("deceasedcraft:multi_residentialsurvivor", "multi_residentialsurvivor"),
+            Map.entry("deceasedcraft:multi_storageyard", "multi_storageyard"),
+            Map.entry("deceasedcraft:multi_sunkenclub", "multi_sunkenclub"),
+            Map.entry("deceasedcraft:multi_sunkenmonumentpark", "multi_sunkenmonumentpark"),
+            Map.entry("deceasedcraft:multi_taigaresidence", "multi_taigaresidence"),
+            Map.entry("deceasedcraft:multi_terraceplaza", "multi_terraceplaza"),
+            Map.entry("deceasedcraft:multi_thering", "multi_thering"),
+            Map.entry("deceasedcraft:multi_timbertower", "multi_timbertower"),
+            Map.entry("deceasedcraft:multi_verticalschool", "multi_verticalschool"),
+            Map.entry("deceasedcraft:multi_workerquarters", "multi_workerquarters"),
+            Map.entry("deceasedcraft:multi_workshop", "multi_workshop"),
+            // ---- 普通建筑 ----
+            Map.entry("deceasedcraft:building_apartmentsmalla", "building_apartmentsmalla"),
+            Map.entry("deceasedcraft:building_apartmentsmallabroken", "building_apartmentsmallabroken"),
+            Map.entry("deceasedcraft:building_apartmentsmallb", "building_apartmentsmallb"),
+            Map.entry("deceasedcraft:building_apartmentsmallbbroken", "building_apartmentsmallbbroken"),
+            Map.entry("deceasedcraft:building_apartmentsmallc", "building_apartmentsmallc"),
+            Map.entry("deceasedcraft:building_apartmentsmallcbroken", "building_apartmentsmallcbroken"),
+            Map.entry("deceasedcraft:building_apartmentsmalld", "building_apartmentsmalld"),
+            Map.entry("deceasedcraft:building_clothstore", "building_clothstore"),
+            Map.entry("deceasedcraft:building_factorya", "building_factorya"),
+            Map.entry("deceasedcraft:building_factoryb", "building_factoryb"),
+            Map.entry("deceasedcraft:building_factorycdamaged", "building_factorycdamaged"),
+            Map.entry("deceasedcraft:building_fastfood", "building_fastfood"),
+            Map.entry("deceasedcraft:building_flowershop", "building_flowershop"),
+            Map.entry("deceasedcraft:building_gasstation", "building_gasstation"),
+            Map.entry("deceasedcraft:building_hardwarestorece", "building_hardwarestorece"),
+            Map.entry("deceasedcraft:building_hardwarestorecedamaged", "building_hardwarestorecedamaged"),
+            Map.entry("deceasedcraft:building_hardwarestoreie", "building_hardwarestoreie"),
+            Map.entry("deceasedcraft:building_hotela", "building_hotela"),
+            Map.entry("deceasedcraft:building_hotelb", "building_hotelb"),
+            Map.entry("deceasedcraft:building_hotelc", "building_hotelc"),
+            Map.entry("deceasedcraft:building_hoteld", "building_hoteld"),
+            Map.entry("deceasedcraft:building_office1a", "building_office1a"),
+            Map.entry("deceasedcraft:building_office1b", "building_office1b"),
+            Map.entry("deceasedcraft:building_office2a", "building_office2a"),
+            Map.entry("deceasedcraft:building_office2b", "building_office2b"),
+            Map.entry("deceasedcraft:building_office3a", "building_office3a"),
+            Map.entry("deceasedcraft:building_office3b", "building_office3b"),
+            Map.entry("deceasedcraft:building_office3c", "building_office3c"),
+            Map.entry("deceasedcraft:building_office4", "building_office4"),
+            Map.entry("deceasedcraft:building_office5", "building_office5"),
+            Map.entry("deceasedcraft:building_officebank", "building_officebank"),
+            Map.entry("deceasedcraft:building_policeoffice1", "building_policeoffice1"),
+            Map.entry("deceasedcraft:building_premiumclothstore", "building_premiumclothstore"),
+            Map.entry("deceasedcraft:building_processingunita", "building_processingunita"),
+            Map.entry("deceasedcraft:building_residentiala", "building_residentiala"),
+            Map.entry("deceasedcraft:building_residentialb", "building_residentialb"),
+            Map.entry("deceasedcraft:building_residentialc", "building_residentialc"),
+            Map.entry("deceasedcraft:building_residentiald", "building_residentiald"),
+            Map.entry("deceasedcraft:building_restaurantsushi", "building_restaurantsushi"),
+            Map.entry("deceasedcraft:building_warehousea", "building_warehousea"),
+            Map.entry("deceasedcraft:building_warehouseadamaged", "building_warehouseadamaged"),
+            Map.entry("deceasedcraft:building_warehouseb", "building_warehouseb"),
+            Map.entry("deceasedcraft:building_warehousebdamaged", "building_warehousebdamaged"),
+            Map.entry("deceasedcraft:building_wastelandgasstation", "building_wastelandgasstation"),
+            Map.entry("deceasedcraft:scattered_cabin_1", "scattered_cabin_1"),
+            Map.entry("deceasedcraft:scattered_cabin_2", "scattered_cabin_2"),
+            Map.entry("deceasedcraft:scattered_cabin_3", "scattered_cabin_3"),
+            Map.entry("deceasedcraft:scattered_foodtruck_1", "scattered_foodtruck_1"),
+            Map.entry("deceasedcraft:scattered_hideout_1", "scattered_hideout_1"),
+            Map.entry("deceasedcraft:scattered_treehouse_1", "scattered_treehouse_1"),
+            Map.entry("deceasedcraft:villager_1", "villager_1")
     );
 
     /**
@@ -555,6 +736,13 @@ public final class SixtySecondsLostCitiesStarMap {
         Integer lceStar = BUILDING_STARS.get(name);
         if (lceStar != null) {
             return lceStar;
+        }
+        // 按完整 id（含命名空间）匹配 DeceasedCraft（deceasedcraft）建筑：
+        // 普通建筑按 DC_BUILDING_STARS 评级；其 multibuilding 建筑群走
+        // starForMultiBuilding 的默认 5 星，不经此处。
+        Integer dcStar = DC_BUILDING_STARS.get(name);
+        if (dcStar != null) {
+            return dcStar;
         }
         // 防御：调用方可能误传入带命名空间的全名（如 lostcities:building1），统一取路径部分。
         int sep = name.indexOf(':');
@@ -962,6 +1150,12 @@ public final class SixtySecondsLostCitiesStarMap {
         String suffix = BUILDING_DISPLAY.get(key);
         if (suffix != null) {
             return BUILDING_LANG + suffix;
+        }
+        // DeceasedCraft（deceasedcraft）建筑：multibuilding 父 id 与普通建筑均登记在
+        // DC_BUILDING_DISPLAY，避免星图上显示 deceasedcraft:multi_hospital 这类原始 id。
+        String dcSuffix = DC_BUILDING_DISPLAY.get(key);
+        if (dcSuffix != null) {
+            return BUILDING_LANG + dcSuffix;
         }
         // 防御：剥离命名空间后按裸名匹配原版 / 安全区 / 撤离点建筑。
         int sep = key.indexOf(':');
