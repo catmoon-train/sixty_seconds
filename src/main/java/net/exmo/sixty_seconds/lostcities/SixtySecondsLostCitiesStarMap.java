@@ -559,9 +559,11 @@ public final class SixtySecondsLostCitiesStarMap {
      * 避免每次都经 {@code api().getLostInfo(level)} + try/catch 重新取。
      * 用 WeakHashMap 以免阻止世界对象被 GC（维度卸载后自动清理）。
      */
-    private static final Map<ServerLevel, ILostCityInformation> INFO_CACHE = new WeakHashMap<>();
+    private static final Map<ServerLevel, ILostCityInformation> INFO_CACHE =
+            Collections.synchronizedMap(new WeakHashMap<>());
     /** 解析为 null（维度暂未就绪 / 非城市维度）时的重试冷却时间戳，避免每 tick 反复调用 getLostInfo，也避免首帧失败就永久失效。 */
-    private static final Map<ServerLevel, Long> NULL_RETRY_AT = new WeakHashMap<>();
+    private static final Map<ServerLevel, Long> NULL_RETRY_AT =
+            Collections.synchronizedMap(new WeakHashMap<>());
 
     /**
      * 每维度、按区块坐标缓存 {@code getChunkInfo} 结果（有界 LRU）。

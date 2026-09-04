@@ -88,6 +88,73 @@ public class SeaChartScreen extends Screen {
         }
         addRenderableWidget(Button.builder(net.minecraft.network.chat.CommonComponents.GUI_DONE,
                 button -> onClose()).bounds(mapX + mapW - 96, mapY + mapH + 6, 96, 20).build());
+
+        // 一次性预栅格化所有岛屿轮廓（此前在 render 每帧重算，岛多时每帧数万次噪声采样，
+        // 打开海图明显掉帧）。窗口尺寸变化会重新走 init()，缓存随之重建。
+        buildRasterCache();
+    }
+
+    /** 预栅格化缓存条目：同一行内连续同色像素合并为一个矩形段，减少每帧绘制调用。 */
+    private record RasterRun(int x, int y, int width, int color) {
+    }
+
+    /** 所有岛的像素段缓存（init 时构建一次）。 */
+    private List<RasterRun> rasterCache = List.of();
+
+    /** 逐岛栅格化并按行合并同色段。噪声计算只发生在这里（每次打开海图一次）。 */
+    private void buildRasterCache() {
+        List<RasterRun> runs = new ArrayList<>();
+        for (SixtySecondsSeaChartS2CPacket.Entry entry : data.islands()) {
+            int cx = toScreenX(entry.centerX());
+            int cy = toScreenY(entry.centerZ());
+            int screenR = Math.max(4, (int) (entry.radius() * scale));
+            SixtySecondsIsland island = toIsland(entry);
+            rasterizeTo(island, entry, cx, cy, screenR, !entry.unlocked(), runs);
+        }
+        rasterCache = runs;
+    }
+
+    /** 用服务端同款形状函数低分辨率栅格化岛屿轮廓（2px 格），同行连续同色合并输出。 */
+    private void rasterizeTo(SixtySecondsIsland island, SixtySecondsSeaChartS2CPacket.Entry entry,
+            int cx, int cy, int screenR, boolean fog, List<RasterRun> out) {
+        int step = 2;
+        int mainColor = fog ? COLOR_FOG : LEVEL_COLORS[Mth.clamp(entry.level(), 1, 5) - 1];
+        int runStart = -1;
+        int runColor = 0;
+        for (int py = cy - screenR; py <= cy + screenR; py += step) {
+            for (int px = cx - screenR; px <= cx + screenR + step; px += step) {
+                int color = 0;
+                if (px <= cx + screenR && px >= mapX && px < mapX + mapW - step
+                        && py >= mapY && py < mapY + mapH - step) {
+                    double worldX = worldMinX + (px - mapX) / scale;
+                    double worldZ = worldMinZ + (py - mapY) / scale;
+                    float landVal = SixtySecondsIslandGenerator.landValue(island, worldX, worldZ);
+                    if (landVal > SixtySecondsIslandGenerator.LAND_THRESHOLD) {
+                        if (fog) {
+                            color = COLOR_FOG;
+                        } else if (landVal < SixtySecondsIslandGenerator.LAND_THRESHOLD + 0.08F) {
+                            color = COLOR_BEACH;
+                        } else {
+                            color = landVal > 0.55F ? darken(mainColor) : mainColor;
+                        }
+                    }
+                }
+                // 行程编码：同行连续同色合并；行尾/颜色切换/出岛时结算
+                if (color != runColor && runColor != 0 && runStart >= 0) {
+                    out.add(new RasterRun(runStart, py, px - runStart, runColor));
+                    runStart = -1;
+                }
+                if (color != 0) {
+                    if (runColor != color || runStart < 0) {
+                        runStart = px;
+                    }
+                    runColor = color;
+                } else {
+                    runColor = 0;
+                    runStart = -1;
+                }
+            }
+        }
     }
 
     private int toScreenX(double worldX) {
@@ -114,6 +181,10 @@ public class SeaChartScreen extends Screen {
         graphics.drawCenteredString(font, title, width / 2, mapY - 16, 0xFFE8D9A8);
 
         hoveredIsland = -1;
+        // 岛屿轮廓：直接画 init 时预栅格化的像素段缓存（render 内零噪声计算）
+        for (RasterRun run : rasterCache) {
+            graphics.fill(run.x(), run.y(), run.x() + run.width(), run.y() + 2, run.color());
+        }
         List<Runnable> labels = new ArrayList<>();
         for (SixtySecondsSeaChartS2CPacket.Entry entry : data.islands()) {
             renderIsland(graphics, entry, mouseX, mouseY, labels);
@@ -152,6 +223,7 @@ public class SeaChartScreen extends Screen {
         super.render(graphics, mouseX, mouseY, partialTick);
     }
 
+    /** 逐岛处理悬浮检测与标签（轮廓已由预栅格化缓存统一绘制）。 */
     private void renderIsland(GuiGraphics graphics, SixtySecondsSeaChartS2CPacket.Entry entry,
             int mouseX, int mouseY, List<Runnable> labels) {
         int cx = toScreenX(entry.centerX());
@@ -163,14 +235,9 @@ public class SeaChartScreen extends Screen {
             hoveredIsland = entry.id();
         }
         if (!entry.unlocked()) {
-            // 迷雾：暗色噪点团 + 「?」
-            SixtySecondsIsland island = toIsland(entry);
-            rasterize(graphics, island, entry, cx, cy, screenR, true);
             labels.add(() -> graphics.drawCenteredString(font, "?", cx, cy - 4, 0xFF6C7A88));
             return;
         }
-        SixtySecondsIsland island = toIsland(entry);
-        rasterize(graphics, island, entry, cx, cy, screenR, false);
         int color = LEVEL_COLORS[Mth.clamp(entry.level(), 1, 5) - 1];
         String label = islandName(entry).getString() + " Lv." + entry.level()
                 + (entry.visited() ? " ✓" : "");

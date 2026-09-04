@@ -4,6 +4,7 @@ import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
 import net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking;
 import net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesStarMap;
+import net.exmo.sixty_seconds.lostcities.StarMapRegionService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -73,6 +74,11 @@ public record SixtySecondsStarMapS2CPacket(List<RegionEntry> regions) implements
      * 打包并发送给指定玩家。参考海图加载方式：服务端从 LostCities 世界生成数据<b>动态计算</b>玩家附近的
      * 「建筑星级区域」并下发（而非仅读取静态配置）。这样一来星图能真实反映哪一块城区属于什么星级。
      * 管理员在配置里手写的 {@code areaLevelOverrides} 仍作为覆盖层叠加。
+     *
+     * <p><b>性能</b>：区域计算经由 {@link StarMapRegionService} 缓存 + 异步化——
+     * 缓存命中时本方法只做内存拼包（微秒级）；缓存过期时立即下发旧快照并投递后台重算，
+     * 算完后自动回主线程再推一版新数据。<b>主线程永远不会被全量扫描阻塞</b>，
+     * 打开星图不再有可感知卡顿。</p>
      */
     public static void send(ServerPlayer player) {
         ServerLevel level = player.serverLevel();
@@ -80,14 +86,13 @@ public record SixtySecondsStarMapS2CPacket(List<RegionEntry> regions) implements
         int pcx = p.getX() >> 4;
         int pcz = p.getZ() >> 4;
         List<RegionEntry> entries = new ArrayList<>();
-        // 1) 动态生成：扫描玩家周围已加载建筑区块，按连通同名建筑聚合成星级区域
-        for (SixtySecondsLostCitiesStarMap.BuildingRegion br
-                : SixtySecondsLostCitiesStarMap.buildingStarRegions(level, pcx, pcz, SixtySecondsLostCitiesStarMap.STAR_MAP_SCAN_RADIUS_CHUNKS)) {
+        // 1) 动态生成：读取缓存的星级区域快照（命中则最新，未命中则旧数据先行 + 后台重算）
+        for (SixtySecondsLostCitiesStarMap.BuildingRegion br : StarMapRegionService.snapshot(pcx, pcz)) {
             // 下发翻译键，由客户端 Component.translatable 按玩家语言渲染（语言文件随模组下发，客户端必含）
             entries.add(new RegionEntry(br.minX, br.minZ, br.maxX, br.maxZ, br.star,
                     br.displayName));
         }
-        // 2) 管理员覆盖层（若存在）
+        // 2) 管理员覆盖层（若存在；纯内存读取，主线程执行无压力）
         SixtySecondsConfigStore.current(level).ifPresent(config -> {
             if (config.areaLevelOverrides != null) {
                 for (SixtySecondsConfig.LevelRegion lr : config.areaLevelOverrides) {
@@ -105,5 +110,7 @@ public record SixtySecondsStarMapS2CPacket(List<RegionEntry> regions) implements
             }
         });
         ServerPlayNetworking.send(player, new SixtySecondsStarMapS2CPacket(entries));
+        // 3) 缓存过期则投递后台重算，完成后回主线程自动再推一版（本方法重入时缓存已新鲜，直接返回）
+        StarMapRegionService.refreshIfNeeded(level, player, pcx, pcz, () -> send(player));
     }
 }

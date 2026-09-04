@@ -294,14 +294,8 @@ public class LostCityCityEdgeBlendMixin {
             int chunkX = blockX >> 4;
             int chunkZ = blockZ >> 4;
             if (world instanceof WorldGenRegion region) {
-                WorldGenRegionAccessor accessor = (WorldGenRegionAccessor) region;
-                var firstPos = accessor.ss$getFirstPos();
-                var lastPos = accessor.ss$getLastPos();
-                if (firstPos == null || lastPos == null) {
-                    return false;
-                }
-                return chunkX >= firstPos.x && chunkX <= lastPos.x
-                    && chunkZ >= firstPos.z && chunkZ <= lastPos.z;
+                // hasChunk(int,int) 是官方公开的区域范围判定（越界返回 false 而非抛异常）。
+                return region.hasChunk(chunkX, chunkZ);
             }
             return world.hasChunk(chunkX, chunkZ);
         } catch (Throwable t) {

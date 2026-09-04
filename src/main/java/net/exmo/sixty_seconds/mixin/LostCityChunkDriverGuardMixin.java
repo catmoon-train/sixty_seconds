@@ -39,8 +39,8 @@ public class LostCityChunkDriverGuardMixin {
     private static final LongAdder SS_STALE_REMOVED = new LongAdder();
     private static final LongAdder SS_FAILURES = new LongAdder();
 
-    /** 供调试命令/诊断输出的累计统计。 */
-    public static String ss$diagnostics() {
+    /** 累计统计（诊断用）。Mixin 类内的辅助方法必须为 private。 */
+    private static String ss$diagnostics() {
         return "checked=" + SS_POSITIONS_CHECKED.sum()
             + ", removed=" + SS_STALE_REMOVED.sum()
             + ", failures=" + SS_FAILURES.sum();
