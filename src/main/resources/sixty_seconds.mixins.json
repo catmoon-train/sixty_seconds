@@ -30,7 +30,9 @@
     "SixtySecondsHangingEntityFixMixin",
     "SixtySecondsPoiLogQuietMixin",
     "LostCityMultiChunkTimingsMixin",
-    "LostCityCityEdgeBlendMixin"
+    "LostCityCityEdgeBlendMixin",
+    "BuildingInfoInvoker",
+    "LostCityBuildingInfoParallelMixin"
   ],
   "client": [
     "WeatherRendererMixin",
