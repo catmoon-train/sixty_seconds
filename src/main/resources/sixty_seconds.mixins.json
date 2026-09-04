@@ -31,7 +31,8 @@
     "LostCityMultiChunkTimingsMixin",
     "LostCityCityEdgeBlendMixin",
     "BuildingInfoInvoker",
-    "LostCityBuildingInfoParallelMixin"
+    "LostCityBuildingInfoParallelMixin",
+    "LostCitySetupCustomizeMixin"
   ],
   "client": [
     "WeatherRendererMixin",
