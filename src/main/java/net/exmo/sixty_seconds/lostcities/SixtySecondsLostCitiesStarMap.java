@@ -547,7 +547,10 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("deceasedcraft:scattered_foodtruck_1", "scattered_foodtruck_1"),
             Map.entry("deceasedcraft:scattered_hideout_1", "scattered_hideout_1"),
             Map.entry("deceasedcraft:scattered_treehouse_1", "scattered_treehouse_1"),
-            Map.entry("deceasedcraft:villager_1", "villager_1")
+            Map.entry("deceasedcraft:villager_1", "villager_1"),
+            // ---- 空置填充建筑（无可用显示名映射 → 专用键）----
+            Map.entry("lce:common_empty", "common_empty"),
+            Map.entry("lce2:common_empty", "common_empty")
     );
 
     /**
