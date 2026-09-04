@@ -1,5 +1,6 @@
 package net.exmo.sixty_seconds.client.screen;
 
+import com.mojang.blaze3d.platform.NativeImage;
 import net.exmo.sixty_seconds.client.SixtySecondsClientSeaChart;
 import net.exmo.sixty_seconds.island.SixtySecondsIsland;
 import net.exmo.sixty_seconds.island.SixtySecondsIslandGenerator;
@@ -10,12 +11,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 全屏海图——可拖动、缩放的末日60秒海岛远征海图。
@@ -43,7 +48,6 @@ public class SeaChartFullScreen extends Screen {
     private static final int COLOR_HARDCORE = 0xFFB71C1C;
     private static final int COLOR_HARDCORE_BORDER = 0xFF000000;
     private static final int COLOR_BEACH = 0xFFD8CC9A;
-    private static final int COLOR_OCEAN = 0xFF0B2740;
     private static final int COLOR_OCEAN_DEEP = 0xFF081C30;
     private static final int COLOR_FOG = 0xFF25313D;
     private static final int COLOR_ARRIVAL = 0x4400CCFF;
@@ -89,8 +93,24 @@ public class SeaChartFullScreen extends Screen {
     /** 悬浮的岛屿 id */
     private int hoveredIsland = -1;
 
+    /** 每帧标签任务列表（复用，避免每帧 new ArrayList）。 */
+    private final List<Runnable> labels = new ArrayList<>();
+    /** 每帧允许新建的岛屿贴图数量预算：把栅格化开销分摊到多帧，避免开图瞬间卡顿。 */
+    private int textureBuildBudget = 0;
+
+    /** 岛屿预渲染贴图缓存（id → 贴图）：拖动/缩放只是缩放贴图，零栅格化开销。 */
+    private final Map<Integer, CachedIsland> islandTextures = new HashMap<>();
+    /** 岛屿形状元数据缓存（id → island），init 时构建一次，避免每帧 toIsland 分配。 */
+    private final Map<Integer, SixtySecondsIsland> islandsById = new HashMap<>();
+    /** 背景波纹预渲染贴图（init 时按窗口尺寸构建一次）。 */
+    private ResourceLocation oceanBackgroundTexture = null;
+
     /** 登岛落点（客户端缓存，服务端同步） */
     public static BlockPos cachedArrivalPos = null;
+
+    /** 预渲染岛体贴图条目。res 为贴图边长（正方形）。 */
+    private record CachedIsland(ResourceLocation location, int res) {
+    }
 
     private Button returnButton;
 
@@ -137,6 +157,15 @@ public class SeaChartFullScreen extends Screen {
         viewCenterZ = pc != null ? pc.getZ() : (worldMinZ + worldMaxZ) / 2.0;
         scale = Math.min((double) width / spanX, (double) height / spanZ);
 
+        // 岛屿形状元数据只构建一次（此前每帧 toIsland 分配）
+        islandsById.clear();
+        for (SixtySecondsSeaChartS2CPacket.Entry entry : data.islands()) {
+            islandsById.put(entry.id(), toIsland(entry));
+        }
+
+        // 背景波纹预渲染成贴图（窗口 resize 会重新走 init()，随之重建）
+        buildOceanBackgroundTexture();
+
         // 按钮
         int btnW = 100;
         int btnH = 20;
@@ -165,7 +194,21 @@ public class SeaChartFullScreen extends Screen {
         if (Minecraft.getInstance().getConnection() != null) {
             ClientPlayNetworking.send(new SixtySecondsSeaChartWatchC2SPacket(false));
         }
+        releaseTextures();
         super.removed();
+    }
+
+    /** 释放所有动态贴图（TextureManager.release 会 close 并回收显存）。 */
+    private void releaseTextures() {
+        Minecraft mc = Minecraft.getInstance();
+        for (CachedIsland cached : islandTextures.values()) {
+            mc.getTextureManager().release(cached.location());
+        }
+        islandTextures.clear();
+        if (oceanBackgroundTexture != null) {
+            mc.getTextureManager().release(oceanBackgroundTexture);
+            oceanBackgroundTexture = null;
+        }
     }
 
     // ── 坐标映射 ──────────────────────────────────────────────────────
@@ -211,7 +254,8 @@ public class SeaChartFullScreen extends Screen {
         }
         // 岛屿
         hoveredIsland = -1;
-        List<Runnable> labels = new ArrayList<>();
+        textureBuildBudget = 2; // 每帧最多新建 2 张岛体贴图，栅格化开销分摊到多帧
+        labels.clear();
         for (SixtySecondsSeaChartS2CPacket.Entry entry : data.islands()) {
             renderIsland(graphics, entry, mouseX, mouseY, labels);
         }
@@ -252,17 +296,121 @@ public class SeaChartFullScreen extends Screen {
     }
 
     private void renderOceanBackground(GuiGraphics graphics) {
-        // 深色背景铺满全屏
-        graphics.fill(0, 0, width, height, 0xFF050D18);
-        // 星星点（深海波纹）
-        long seed = data.islands().isEmpty() ? 0 : data.islands().get(0).seed();
-        for (int i = 0; i < 600; i++) {
-            int px = (int) ((i * 97L + (long) i * i * 13 % 51 + seed * 3) % width);
-            int py = (int) ((i * 61L + (long) i * i * 7 % 37 + seed * 7) % height);
-            if (px >= 0 && px < width && py >= 0 && py < height) {
-                graphics.fill(px, py, px + 1, py + 1, COLOR_OCEAN_DEEP);
-            }
+        if (oceanBackgroundTexture != null) {
+            // 背景已预渲染成贴图：每帧只需一次缩放贴图，不再逐点重画
+            graphics.blit(oceanBackgroundTexture, 0, 0, width, height,
+                    0.0F, 0.0F, width, height, width, height);
+        } else {
+            graphics.fill(0, 0, width, height, 0xFF050D18);
         }
+    }
+
+    /** 把背景底色 + 600 个波纹散点烘焙成一张全屏贴图（init 时构建一次）。 */
+    private void buildOceanBackgroundTexture() {
+        Minecraft mc = Minecraft.getInstance();
+        if (oceanBackgroundTexture != null) {
+            mc.getTextureManager().release(oceanBackgroundTexture);
+            oceanBackgroundTexture = null;
+        }
+        int w = Math.max(1, width);
+        int h = Math.max(1, height);
+        DynamicTexture tex = new DynamicTexture(w, h, true);
+        NativeImage img = tex.getPixels();
+        if (img != null) {
+            int base = toAbgr(0xFF050D18);
+            int dot = toAbgr(COLOR_OCEAN_DEEP);
+            for (int y = 0; y < h; y++) {
+                for (int x = 0; x < w; x++) {
+                    img.setPixelRGBA(x, y, base);
+                }
+            }
+            long seed = data.islands().isEmpty() ? 0 : data.islands().get(0).seed();
+            for (int i = 0; i < 600; i++) {
+                int px = (int) ((i * 97L + (long) i * i * 13 % 51 + seed * 3) % w);
+                int py = (int) ((i * 61L + (long) i * i * 7 % 37 + seed * 7) % h);
+                if (px >= 0 && px < w && py >= 0 && py < h) {
+                    img.setPixelRGBA(px, py, dot);
+                }
+            }
+            tex.upload();
+        }
+        oceanBackgroundTexture = ResourceLocation.fromNamespaceAndPath("sixty_seconds", "sea_chart_full_bg");
+        mc.getTextureManager().register(oceanBackgroundTexture, tex);
+    }
+
+    /**
+     * 画岛体：优先用预渲染贴图缩放贴图（拖动/缩放完全零栅格化开销）；
+     * 贴图未就绪（每帧构建预算用完）时回退到实时栅格化，下一帧补上。
+     */
+    private void drawIslandBody(GuiGraphics graphics, SixtySecondsSeaChartS2CPacket.Entry entry,
+            int cx, int cy, int screenR) {
+        CachedIsland cached = islandTextures.get(entry.id());
+        if (cached == null && textureBuildBudget > 0) {
+            textureBuildBudget--;
+            cached = buildIslandTexture(islandsById.get(entry.id()), entry);
+            islandTextures.put(entry.id(), cached);
+        }
+        if (cached != null) {
+            int size = Math.max(2, screenR * 2);
+            graphics.blit(cached.location(), cx - size / 2, cy - size / 2, size, size,
+                    0.0F, 0.0F, cached.res(), cached.res(), cached.res(), cached.res());
+            return;
+        }
+        rasterize(graphics, islandsById.get(entry.id()), entry, cx, cy, screenR, !entry.unlocked());
+    }
+
+    /** 把单个岛屿按服务端同款形状函数烘焙成固定分辨率贴图（每岛只做一次噪声采样）。 */
+    private CachedIsland buildIslandTexture(SixtySecondsIsland island,
+            SixtySecondsSeaChartS2CPacket.Entry entry) {
+        int ext = entry.radius(); // 世界半宽：陆地只存在于 d<1，radius 覆盖足够
+        int res = Mth.clamp(ext * 2, 128, 512); // 约 0.5~1 格/像素
+        DynamicTexture tex = new DynamicTexture(res, res, true);
+        tex.setFilter(true, false); // 线性过滤：缩放时边缘平滑，缩小无散点闪烁
+        NativeImage img = tex.getPixels();
+        if (img != null) {
+            boolean fog = !entry.unlocked();
+            int mainColor = entry.hardcore() ? COLOR_HARDCORE
+                    : entry.evacuation() ? COLOR_EVAC
+                            : LEVEL_COLORS[Mth.clamp(entry.level(), 1, 5) - 1];
+            int mainAbgr = toAbgr(mainColor);
+            int beachAbgr = toAbgr(COLOR_BEACH);
+            int darkAbgr = toAbgr(darken(mainColor));
+            int fogAbgr = toAbgr(COLOR_FOG);
+            double cell = 2.0 * ext / res;
+            for (int ty = 0; ty < res; ty++) {
+                double worldZ = entry.centerZ() - ext + (ty + 0.5) * cell;
+                for (int tx = 0; tx < res; tx++) {
+                    double worldX = entry.centerX() - ext + (tx + 0.5) * cell;
+                    float landVal = SixtySecondsIslandGenerator.landValue(island, worldX, worldZ);
+                    if (landVal <= SixtySecondsIslandGenerator.LAND_THRESHOLD) {
+                        continue; // 海面：保持透明
+                    }
+                    int color;
+                    if (fog) {
+                        color = fogAbgr;
+                    } else if (landVal < SixtySecondsIslandGenerator.LAND_THRESHOLD + 0.08F) {
+                        color = beachAbgr;
+                    } else {
+                        color = landVal > 0.55F ? darkAbgr : mainAbgr;
+                    }
+                    img.setPixelRGBA(tx, ty, color);
+                }
+            }
+            tex.upload();
+        }
+        ResourceLocation loc = ResourceLocation.fromNamespaceAndPath("sixty_seconds",
+                "sea_chart_island_" + entry.id());
+        Minecraft.getInstance().getTextureManager().register(loc, tex);
+        return new CachedIsland(loc, res);
+    }
+
+    /** ARGB → NativeImage.setPixelRGBA 需要的 ABGR 打包格式。 */
+    private static int toAbgr(int argb) {
+        int a = argb >> 24 & 0xFF;
+        int r = argb >> 16 & 0xFF;
+        int g = argb >> 8 & 0xFF;
+        int b = argb & 0xFF;
+        return a << 24 | b << 16 | g << 8 | r;
     }
 
     private void renderIsland(GuiGraphics graphics, SixtySecondsSeaChartS2CPacket.Entry entry,
@@ -293,14 +441,12 @@ public class SeaChartFullScreen extends Screen {
         }
 
         if (!entry.unlocked()) {
-            SixtySecondsIsland island = toIsland(entry);
-            rasterize(graphics, island, entry, cx, cy, screenR, true);
+            drawIslandBody(graphics, entry, cx, cy, screenR);
             labels.add(() -> graphics.drawCenteredString(font, "?", cx, cy - 5, 0xFF6C7A88));
             return;
         }
 
-        SixtySecondsIsland island = toIsland(entry);
-        rasterize(graphics, island, entry, cx, cy, screenR, false);
+        drawIslandBody(graphics, entry, cx, cy, screenR);
 
         // 登岛落点区域圈（仅 sea_teleport 开启时显示，表示可在此返航）
         if (data.teleportAllowed() && cachedArrivalPos != null) {
@@ -624,25 +770,23 @@ public class SeaChartFullScreen extends Screen {
         return 0xFF000000 | r << 16 | g << 8 | b;
     }
 
+    /** 实心圆：逐行扫描线算弦长画矩形，O(r) 次 fill（此前 O(r²) 逐像素）。 */
     private void drawCircle(GuiGraphics graphics, int cx, int cy, int r, int color) {
-        // 大圈降采样
-        int step = r > 100 ? 2 : 1;
-        for (int dx = -r; dx <= r; dx += step) {
-            for (int dy = -r; dy <= r; dy += step) {
-                if (dx * dx + dy * dy <= r * r) {
-                    int px = cx + dx;
-                    int py = cy + dy;
-                    if (px >= 0 && px < width && py >= 0 && py < height) {
-                        graphics.fill(px, py, px + step, py + step, color);
-                    }
-                }
+        for (int dy = -r; dy <= r; dy++) {
+            int py = cy + dy;
+            if (py < 0 || py >= height) {
+                continue;
+            }
+            int dx = (int) Math.sqrt((double) r * r - (double) dy * dy);
+            int x0 = Math.max(cx - dx, 0);
+            int x1 = Math.min(cx + dx + 1, width);
+            if (x1 > x0) {
+                graphics.fill(x0, py, x1, py + 1, color);
             }
         }
     }
 
     private void drawCircleBorder(GuiGraphics graphics, int cx, int cy, int r, int color) {
-        int prevX = cx + r;
-        int prevY = cy;
         for (int angle = 1; angle <= 360; angle += 4) {
             double rad = Math.toRadians(angle);
             int px = cx + (int) (Math.cos(rad) * r);

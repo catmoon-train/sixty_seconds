@@ -252,35 +252,6 @@ public class SeaChartScreen extends Screen {
         });
     }
 
-    /** 用服务端同款形状函数低分辨率栅格化岛屿轮廓（2px 格）。 */
-    private void rasterize(GuiGraphics graphics, SixtySecondsIsland island,
-            SixtySecondsSeaChartS2CPacket.Entry entry, int cx, int cy, int screenR, boolean fog) {
-        int step = 2;
-        int mainColor = fog ? COLOR_FOG : LEVEL_COLORS[Mth.clamp(entry.level(), 1, 5) - 1];
-        for (int px = cx - screenR; px <= cx + screenR; px += step) {
-            for (int py = cy - screenR; py <= cy + screenR; py += step) {
-                if (px < mapX || px >= mapX + mapW - step || py < mapY || py >= mapY + mapH - step) {
-                    continue;
-                }
-                double worldX = worldMinX + (px - mapX) / scale;
-                double worldZ = worldMinZ + (py - mapY) / scale;
-                float landVal = SixtySecondsIslandGenerator.landValue(island, worldX, worldZ);
-                if (landVal <= SixtySecondsIslandGenerator.LAND_THRESHOLD) {
-                    continue;
-                }
-                int color;
-                if (fog) {
-                    color = COLOR_FOG;
-                } else if (landVal < SixtySecondsIslandGenerator.LAND_THRESHOLD + 0.08F) {
-                    color = COLOR_BEACH;
-                } else {
-                    color = landVal > 0.55F ? darken(mainColor) : mainColor;
-                }
-                graphics.fill(px, py, px + step, py + step, color);
-            }
-        }
-    }
-
     private static int darken(int argb) {
         int r = (argb >> 16 & 0xFF) * 7 / 10;
         int g = (argb >> 8 & 0xFF) * 7 / 10;
