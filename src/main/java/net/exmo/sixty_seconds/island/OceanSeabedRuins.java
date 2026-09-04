@@ -16,7 +16,7 @@ import java.util.List;
  * （岛屿废墟）区分——这里所有建筑都坐落于海床（水下），且每栋放置 2~4 个物资箱，数量明显多于海岛（1 个），
  * 符合"物资箱比海岛多"的要求。
  *
- * <p>建筑以确定性网格散布于海床（每约 180 格一座，约 37% 留空形成间隔），每座由世界种子确定性决定类型与朝向抖动，
+ * <p>建筑以确定性网格散布于海床（每约 56 格一座，约 3% 留空形成间隔，高密度海底城市），每座由世界种子确定性决定类型与朝向抖动，
  * 保证同一世界稳定重现。
  */
 public final class OceanSeabedRuins {
@@ -25,8 +25,8 @@ public final class OceanSeabedRuins {
     }
 
     public static final int TEMPLATE_COUNT = 20;
-    /** 城市建筑网格间距（方块）。调小以在海床更密集地出现废墟城市。 */
-    public static final int SPACING = 110;
+    /** 城市建筑网格间距（方块）。调小以在海床更密集地出现废墟城市（110 → 56，密度约 4 倍）。 */
+    public static final int SPACING = 56;
 
     /** 建筑落位信息（由 {@link #plan} 确定性生成）。 */
     public static final class Placement {
@@ -57,12 +57,12 @@ public final class OceanSeabedRuins {
         h ^= (h >>> 33);
         h *= 0xFF51AFD7ED558CCDL;
         h ^= (h >>> 33);
-        if ((h & 15) < 2) return null; // 约 12% 留空（更密集）
+        if ((h & 63) < 2) return null; // 约 3% 留空（高密度）
         int type = (int) Long.remainderUnsigned(h >>> 3, TEMPLATE_COUNT);
-        int jxoff = (int) Long.remainderUnsigned(h >>> 8, 80) - 40;
-        int jzoff = (int) Long.remainderUnsigned(h >>> 16, 80) - 40;
-        int cx = gx * SPACING + 90 + jxoff;
-        int cz = gz * SPACING + 90 + jzoff;
+        int jxoff = (int) Long.remainderUnsigned(h >>> 8, 41) - 20;
+        int jzoff = (int) Long.remainderUnsigned(h >>> 16, 41) - 20;
+        int cx = gx * SPACING + 28 + jxoff;
+        int cz = gz * SPACING + 28 + jzoff;
         long seed = h ^ 0xC17AB1EL;
         return new Placement(type, cx, cz, seed);
     }
