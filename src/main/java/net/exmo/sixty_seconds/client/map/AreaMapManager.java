@@ -36,7 +36,14 @@ public final class AreaMapManager {
 
     /** 3D 视图的墙体层数（也是墙高采样上限，单位：方块）。 */
     public static final int WALL_LAYERS = 4;
-    private static final int SCAN_BUDGET_PER_TICK = 800;
+    /**
+     * 每 tick 扫描预算：<b>按方块读取次数</b>而非列数计——地板列向下逐格找方块，
+     * 一列可能消耗几十次读取，按列计预算时单 tick 实际会发起数万次 getBlockState（卡顿根源）。
+     * 读取数预算把每 tick 的世界访问成本封顶在约 1~2ms。
+     */
+    private static final int SCAN_READ_BUDGET_PER_TICK = 16000;
+    /** 每 tick 列数硬上限（配合读取预算，防止预算被个别列整段烧光）。 */
+    private static final int SCAN_COLUMNS_PER_TICK = 4000;
     private static final long UPLOAD_INTERVAL_MS = 500;
     private static final int MIN_RENDER_RADIUS_BLOCKS = 32;
     /** 玩家 Y 坐标变化超过此阈值才更新地形切片高度，避免上下几格就重扫全图。 */
@@ -69,6 +76,12 @@ public final class AreaMapManager {
     private static int originX, originZ, minY, maxY;
     private static int sizeX, sizeZ, step = 1;
     private static int totalCells = 0;
+    /**
+     * 行扫描顺序：按 |行号 - 玩家所在行| 从近到远排列，玩家所在行最先扫出（首帧即见周围地形）。
+     * 玩家跨行移动足够远时重建。
+     */
+    private static int[] rowOrder = new int[0];
+    private static int rowCenter = Integer.MIN_VALUE;
     private static int cursor = 0;
     private static int sliceY = Integer.MIN_VALUE;
     private static boolean firstPassDone = false;
@@ -178,7 +191,7 @@ public final class AreaMapManager {
             // 不重置 cursor / firstPassDone：连续扫描会逐步用新切片高度覆盖旧数据，
             // 地图保持可见不闪烁，避免「高了一格就重新加载」的问题。
         }
-        scanSome(mc.level, SCAN_BUDGET_PER_TICK);
+        scanSome(mc.level, SCAN_READ_BUDGET_PER_TICK, SCAN_COLUMNS_PER_TICK);
     }
 
     private static boolean needsData(Minecraft mc) {
@@ -232,6 +245,8 @@ public final class AreaMapManager {
         firstPassDone = false;
         anyColumnScanned = false;
         dirty = false;
+        rowCenter = Integer.MIN_VALUE;
+        rebuildRowOrder(mc.player.getBlockZ() - originZ);
     }
 
     private static void reset() {
@@ -257,8 +272,37 @@ public final class AreaMapManager {
         texturesRegistered = false;
     }
 
-    private static void scanSome(ClientLevel level, int budget) {
+    /**
+     * 重建行扫描顺序：以玩家所在行为中心，按 |行号 - 玩家行| 从近到远展开，
+     * 保证打开地图的第一帧就能看到玩家周围的地形。
+     */
+    private static void rebuildRowOrder(int playerRow) {
+        if (sizeZ <= 0) {
+            rowOrder = new int[0];
+            return;
+        }
+        rowOrder = new int[sizeZ];
+        int center = Mth.clamp(playerRow, 0, sizeZ - 1);
+        int out = 0;
+        rowOrder[out++] = center;
+        for (int d = 1; d < sizeZ; d++) {
+            int up = center - d;
+            if (up >= 0) rowOrder[out++] = up;
+            int down = center + d;
+            if (down < sizeZ) rowOrder[out++] = down;
+        }
+        rowCenter = center;
+    }
+
+    /**
+     * 分片扫描：受「每 tick 方块读取预算」与「每 tick 列数硬上限」双重约束，
+     * 把每 tick 的世界访问成本封顶，避免打开地图时明显卡顿。
+     */
+    private static void scanSome(ClientLevel level, int readBudget, int columnBudget) {
         if (totalCells <= 0 || baseTexture == null) return;
+        if (rowOrder.length != sizeZ) {
+            rebuildRowOrder(0);
+        }
         NativeImage base = baseTexture.getPixels();
         if (base == null) return;
         NativeImage[] walls = new NativeImage[WALL_LAYERS];
@@ -268,15 +312,19 @@ public final class AreaMapManager {
         }
 
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-        int scanned = 0;
-        while (scanned < budget) {
+        int reads = 0;
+        int columns = 0;
+        while (reads < readBudget && columns < columnBudget) {
             int i = cursor % sizeX;
-            int j = cursor / sizeX;
-            if (scanColumn(level, i, j, pos, base, walls)) {
+            int j = rowOrder[cursor / sizeX];
+            int used = scanColumn(level, i, j, pos, base, walls);
+            if (used > 0) {
                 anyColumnScanned = true;
                 dirty = true;
             }
-            scanned++;
+            // 区块未加载的列也计 1 次读取，推进光标稍后重试，避免死循环空转
+            reads += Math.max(1, used);
+            columns++;
             cursor++;
             if (cursor >= totalCells) {
                 cursor = 0;
@@ -284,30 +332,47 @@ public final class AreaMapManager {
                 break;
             }
         }
+        // 玩家跨行移动足够远后，重新按新位置展开扫描顺序
+        int playerRow = Mth.floor(Minecraft.getInstance().player.getZ()) - originZ;
+        if (Math.abs(playerRow - rowCenter) >= sizeZ / 4 + 1) {
+            int oldCursor = cursor;
+            rebuildRowOrder(playerRow);
+            cursor = oldCursor;
+        }
     }
 
-    /** 扫描一列，返回该列是否成功写入（区块未加载返回 false，稍后重试）。 */
-    private static boolean scanColumn(ClientLevel level, int i, int j, BlockPos.MutableBlockPos pos,
+    /**
+     * 扫描一列，返回该列消耗的方块读取次数（0 表示区块未加载，稍后重试）。
+     */
+    private static int scanColumn(ClientLevel level, int i, int j, BlockPos.MutableBlockPos pos,
             NativeImage base, NativeImage[] walls) {
         int wx = originX + i * step;
         int wz = originZ + j * step;
-        if (!level.hasChunk(wx >> 4, wz >> 4)) return false;
+        if (!level.hasChunk(wx >> 4, wz >> 4)) return 0;
+        int reads = 0;
 
         boolean solidFeet = isSolid(level, pos.set(wx, sliceY, wz));
+        reads++;
         boolean solidHead = isSolid(level, pos.set(wx, sliceY + 1, wz));
+        reads++;
 
         if (solidFeet || solidHead) {
             // 墙体：取切片处方块的地图色，逐层记录墙高
             pos.set(wx, solidFeet ? sliceY : sliceY + 1, wz);
             BlockState wallState = level.getBlockState(pos);
+            reads++;
             MapColor color = wallState.getMapColor(level, pos);
             int baseColor = color == MapColor.NONE
                     ? 0xFF707070 // ABGR：无地图色的墙（如玻璃）用灰色
                     : color.calculateRGBColor(MapColor.Brightness.NORMAL);
             int height = 0;
             for (int k = 0; k < WALL_LAYERS; k++) {
-                if (isSolid(level, pos.set(wx, sliceY + k, wz))) height++;
-                else break;
+                if (isSolid(level, pos.set(wx, sliceY + k, wz))) {
+                    height++;
+                    reads++;
+                } else {
+                    break;
+                }
             }
             height = Math.max(1, height);
             base.setPixelRGBA(i, j, scaleABGR(baseColor, 0.45f));
@@ -315,37 +380,39 @@ public final class AreaMapManager {
                 walls[layer].setPixelRGBA(i, j,
                         layer < height ? scaleABGR(baseColor, 0.62f + 0.13f * layer) : 0);
             }
-        } else {
-            // 地板：从切片向下找第一个有地图色的方块
-            int foundY = Integer.MIN_VALUE;
-            MapColor color = null;
-            for (int y = sliceY - 1; y >= minY; y--) {
-                pos.set(wx, y, wz);
-                BlockState state = level.getBlockState(pos);
-                if (state.isAir()) continue;
-                MapColor c = state.getMapColor(level, pos);
-                if (c != MapColor.NONE) {
-                    foundY = y;
-                    color = c;
-                    break;
-                }
-            }
-            int pixel = 0;
-            if (foundY != Integer.MIN_VALUE) {
-                int depth = sliceY - foundY;
-                MapColor.Brightness brightness;
-                if (depth <= 2) brightness = MapColor.Brightness.HIGH;
-                else if (depth <= 6) brightness = MapColor.Brightness.NORMAL;
-                else if (depth <= 14) brightness = MapColor.Brightness.LOW;
-                else brightness = MapColor.Brightness.LOWEST;
-                pixel = color.calculateRGBColor(brightness);
-            }
-            base.setPixelRGBA(i, j, pixel);
-            for (int layer = 0; layer < WALL_LAYERS; layer++) {
-                walls[layer].setPixelRGBA(i, j, 0);
+            return reads;
+        }
+
+        // 地板：从切片向下找第一个有地图色的方块
+        int foundY = Integer.MIN_VALUE;
+        MapColor color = null;
+        for (int y = sliceY - 1; y >= minY; y--) {
+            pos.set(wx, y, wz);
+            BlockState state = level.getBlockState(pos);
+            reads++;
+            if (state.isAir()) continue;
+            MapColor c = state.getMapColor(level, pos);
+            if (c != MapColor.NONE) {
+                foundY = y;
+                color = c;
+                break;
             }
         }
-        return true;
+        int pixel = 0;
+        if (foundY != Integer.MIN_VALUE) {
+            int depth = sliceY - foundY;
+            MapColor.Brightness brightness;
+            if (depth <= 2) brightness = MapColor.Brightness.HIGH;
+            else if (depth <= 6) brightness = MapColor.Brightness.NORMAL;
+            else if (depth <= 14) brightness = MapColor.Brightness.LOW;
+            else brightness = MapColor.Brightness.LOWEST;
+            pixel = color.calculateRGBColor(brightness);
+        }
+        base.setPixelRGBA(i, j, pixel);
+        for (int layer = 0; layer < WALL_LAYERS; layer++) {
+            walls[layer].setPixelRGBA(i, j, 0);
+        }
+        return reads;
     }
 
     private static boolean isSolid(ClientLevel level, BlockPos pos) {
