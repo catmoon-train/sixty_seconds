@@ -642,6 +642,7 @@
   "message.sixty_seconds.sixty_seconds.island.type.swamp": "Toxic Swamp",
   "message.sixty_seconds.sixty_seconds.island.type.mesa": "Mesa",
   "message.sixty_seconds.sixty_seconds.island.type.ashen": "Ashen",
+  "message.sixty_seconds.sixty_seconds.island.type.sculk": "Sculk",
   "message.sixty_seconds.sixty_seconds.island.type.evacuation": "Evacuation Point",
   "message.sixty_seconds.sixty_seconds.island.chart_evacuation": "Evacuation",
   "message.sixty_seconds.sixty_seconds.island.evac_name.0": "Homebound Isle",
