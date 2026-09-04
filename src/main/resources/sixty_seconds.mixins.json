@@ -23,7 +23,14 @@
     "LostCityStructureStartGuardMixin",
     "GlobalTodoMixin",
     "LevelChunkSpawnerWarningMixin",
-    "AbstractContainerMenuMixin"
+    "AbstractContainerMenuMixin",
+    "WorldGenRegionAccessor",
+    "LostCityChunkDriverGuardMixin",
+    "LostCityHighwayGuardMixin",
+    "SixtySecondsHangingEntityFixMixin",
+    "SixtySecondsPoiLogQuietMixin",
+    "LostCityMultiChunkTimingsMixin",
+    "LostCityCityEdgeBlendMixin"
   ],
   "client": [
     "WeatherRendererMixin",

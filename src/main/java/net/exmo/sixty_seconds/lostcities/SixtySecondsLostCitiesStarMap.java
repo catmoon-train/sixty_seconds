@@ -751,17 +751,10 @@ public final class SixtySecondsLostCitiesStarMap {
         if (lceStar != null) {
             return lceStar;
         }
-        // DeceasedCraft（deceasedcraft）建筑群：散布在野外的小型多区块建筑
+        // DeceasedCraft（deceasedcraft）建筑：普通建筑与散布的野外出块
         // （林间小屋 multi_cabin1-3、农舍 multi_farmhouse1、露营地 multi_campsite1、
-        // 坠机现场 multi_planecrash1）按 DC_BUILDING_STARS 单独评级；
-        // 其余 DC 城市多区块建筑群不经此表，继续走默认 5 星（符合"多区块=5星"规则）。
-        Integer dcStar = DC_BUILDING_STARS.get(name);
-        if (dcStar != null) {
-            return dcStar;
-        }
-        // 按完整 id（含命名空间）匹配 DeceasedCraft（deceasedcraft）建筑：
-        // 普通建筑按 DC_BUILDING_STARS 评级；其 multibuilding 建筑群走
-        // starForMultiBuilding 的默认 5 星，不经此处。
+        // 坠机现场 multi_planecrash1）都登记在 DC_BUILDING_STARS，可精确评级；
+        // 其余 DC 城市多区块建筑群不经此表，继续走 starForMultiBuilding 的默认 5 星。
         // 注意：DeceasedCraft 普通建筑的运行时 id 是「家族/文件」双段格式
         // （如 deceasedcraft:building_officebank/building_officebank），
         // DC_BUILDING_STARS 用裸名做键，因此命中失败时需去掉 / 家族路径再试。
@@ -825,6 +818,14 @@ public final class SixtySecondsLostCitiesStarMap {
         Integer star = BUILDING_STARS.get(name);
         if (star != null) {
             return star;
+        }
+        // DeceasedCraft 散布在野外的多区块小建筑（worldstyle scattered 列表引用）
+        // 登记在 DC_BUILDING_STARS：林间小屋/农舍/露营地 1 星、坠机现场 2 星。
+        // 若不在此查询，它们会落到下方默认 5 星——对郊野小建筑明显不合理。
+        // 其余 DC 城市多区块建筑群不在表内，继续走默认 5 星（"多区块=5星"规则）。
+        Integer dcStar = DC_BUILDING_STARS.get(name);
+        if (dcStar != null) {
+            return dcStar;
         }
         return MULTI_BUILDING_STAR;
     }
