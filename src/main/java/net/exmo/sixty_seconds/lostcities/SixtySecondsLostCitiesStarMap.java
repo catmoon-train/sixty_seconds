@@ -429,7 +429,18 @@ public final class SixtySecondsLostCitiesStarMap {
             Map.entry("deceasedcraft:building_policeoffice1", 4),
             Map.entry("deceasedcraft:building_factorya", 4),
             Map.entry("deceasedcraft:building_factoryb", 4),
-            Map.entry("deceasedcraft:building_processingunita", 4)
+            Map.entry("deceasedcraft:building_processingunita", 4),
+            // ---- 散布在野外的小型多区块建筑（worldstyle scattered 引用）----
+            // 这些是多区块形态的郊野小建筑，不应按"多区块=5星"的默认规则算成 5 星
+            Map.entry("deceasedcraft:multi_cabin1", 1),
+            Map.entry("deceasedcraft:multi_cabin2", 1),
+            Map.entry("deceasedcraft:multi_cabin3", 1),
+            Map.entry("deceasedcraft:multi_farmhouse1", 1),
+            Map.entry("deceasedcraft:multi_campsite1", 1),
+            Map.entry("deceasedcraft:multi_planecrash1", 2),
+            // ---- 空置填充建筑 ----
+            Map.entry("lce:common_empty", 1),
+            Map.entry("lce2:common_empty", 1)
     );
 
     /**
@@ -736,6 +747,14 @@ public final class SixtySecondsLostCitiesStarMap {
         Integer lceStar = BUILDING_STARS.get(name);
         if (lceStar != null) {
             return lceStar;
+        }
+        // DeceasedCraft（deceasedcraft）建筑群：散布在野外的小型多区块建筑
+        // （林间小屋 multi_cabin1-3、农舍 multi_farmhouse1、露营地 multi_campsite1、
+        // 坠机现场 multi_planecrash1）按 DC_BUILDING_STARS 单独评级；
+        // 其余 DC 城市多区块建筑群不经此表，继续走默认 5 星（符合"多区块=5星"规则）。
+        Integer dcStar = DC_BUILDING_STARS.get(name);
+        if (dcStar != null) {
+            return dcStar;
         }
         // 按完整 id（含命名空间）匹配 DeceasedCraft（deceasedcraft）建筑：
         // 普通建筑按 DC_BUILDING_STARS 评级；其 multibuilding 建筑群走
