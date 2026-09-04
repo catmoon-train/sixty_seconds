@@ -54,7 +54,11 @@ public class LostCityConcurrentCharacteristicsMixin {
 
     private static volatile boolean detectionDone = false;
 
-    @Inject(method = "getChunkCharacteristics", at = @At("HEAD"), cancellable = true)
+    // 注意：BuildingInfo 同时存在无参实例 getter getCityLevel() 与三参静态方法
+    // getCityLevel(ChunkCoord, IDimensionInfo)，method 必须写显式描述符，
+    // 否则会匹配到 getter 导致 InvalidInjectionException 崩溃。
+    @Inject(method = "getChunkCharacteristics(Lmcjty/lostcities/varia/ChunkCoord;Lmcjty/lostcities/worldgen/IDimensionInfo;)Lmcjty/lostcities/api/LostChunkCharacteristics;",
+            at = @At("HEAD"), cancellable = true)
     private static void sixtySeconds$characteristicsFastPath(ChunkCoord coord,
                                                              IDimensionInfo provider,
                                                              CallbackInfoReturnable<LostChunkCharacteristics> cir) {
@@ -68,7 +72,8 @@ public class LostCityConcurrentCharacteristicsMixin {
         }
     }
 
-    @Inject(method = "getChunkCharacteristics", at = @At("RETURN"))
+    @Inject(method = "getChunkCharacteristics(Lmcjty/lostcities/varia/ChunkCoord;Lmcjty/lostcities/worldgen/IDimensionInfo;)Lmcjty/lostcities/api/LostChunkCharacteristics;",
+            at = @At("RETURN"))
     private static void sixtySeconds$publishCharacteristics(ChunkCoord coord,
                                                             IDimensionInfo provider,
                                                             CallbackInfoReturnable<LostChunkCharacteristics> cir) {
@@ -78,7 +83,8 @@ public class LostCityConcurrentCharacteristicsMixin {
         LostCitiesConcurrency.publishCharacteristics(coord, cir.getReturnValue());
     }
 
-    @Inject(method = "getCityLevel", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getCityLevel(Lmcjty/lostcities/varia/ChunkCoord;Lmcjty/lostcities/worldgen/IDimensionInfo;)I",
+            at = @At("HEAD"), cancellable = true)
     private static void sixtySeconds$cityLevelFastPath(ChunkCoord key,
                                                        IDimensionInfo provider,
                                                        CallbackInfoReturnable<Integer> cir) {
@@ -91,7 +97,8 @@ public class LostCityConcurrentCharacteristicsMixin {
         }
     }
 
-    @Inject(method = "getCityLevel", at = @At("RETURN"))
+    @Inject(method = "getCityLevel(Lmcjty/lostcities/varia/ChunkCoord;Lmcjty/lostcities/worldgen/IDimensionInfo;)I",
+            at = @At("RETURN"))
     private static void sixtySeconds$publishCityLevel(ChunkCoord key,
                                                       IDimensionInfo provider,
                                                       CallbackInfoReturnable<Integer> cir) {
