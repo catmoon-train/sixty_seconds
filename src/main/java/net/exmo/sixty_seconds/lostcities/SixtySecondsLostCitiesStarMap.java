@@ -103,6 +103,33 @@ public final class SixtySecondsLostCitiesStarMap {
     private static final Set<String> EVAC_BUILDINGS = Set.of("evacuationpoint");
 
     /**
+     * 星图隐藏的建筑（裸名，不含命名空间/路径）：无探索价值的空置填充地块（common_empty），
+     * 整体按 1 星参与评级（物资箱等逻辑不变），但<b>不作为区域显示在星图上</b>，
+     * 也不进入「已发现建筑」登记，避免星图被大量无意义的空置地块标记刷屏。
+     */
+    private static final Set<String> STAR_MAP_HIDDEN = Set.of("common_empty");
+
+    /**
+     * 该建筑区域是否对星图隐藏（空置填充地块等）。传入运行时区域 id
+     * （可能是 {@code lce:common_empty} 或带家族路径的 {@code lce:common_empty/common_empty}）。
+     */
+    public static boolean isHiddenFromStarMap(@Nullable String regionId) {
+        if (regionId == null) {
+            return false;
+        }
+        String name = regionId.toLowerCase(Locale.ROOT);
+        int slash = name.indexOf('/');
+        if (slash > 0) {
+            name = name.substring(0, slash); // 去掉「家族/文件」路径，取建筑家族名
+        }
+        int sep = name.indexOf(':');
+        if (sep >= 0) {
+            name = name.substring(sep + 1); // 剥离命名空间
+        }
+        return STAR_MAP_HIDDEN.contains(name);
+    }
+
+    /**
      * 城市建筑「精确名称 → 星级」映射表。
      * <ul>
      *   <li>原版 LostCities / 60秒 自带城区建筑（building1-8、town*、center*、cabin、library*、oilrig*、
@@ -1273,6 +1300,9 @@ public final class SixtySecondsLostCitiesStarMap {
                 }
                 if (star < 1 || star > 5) {
                     continue; // 仅危险度 1~5 的建筑上图（安全区/撤离点等不含星级）
+                }
+                if (isHiddenFromStarMap(id)) {
+                    continue; // 空置地块等填充建筑：不作为区域上图（评级/物资箱逻辑不受影响）
                 }
                 // 洪泛填充：收集与当前 chunk 连通、且属于同一栋楼的所有已加载 chunk
                 int minCX = cx, minCZ = cz, maxCX = cx, maxCZ = cz;

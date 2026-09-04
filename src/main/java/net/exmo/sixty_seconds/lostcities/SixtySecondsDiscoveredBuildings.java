@@ -89,6 +89,9 @@ public final class SixtySecondsDiscoveredBuildings {
         if (level == null || id == null || star < 1 || star > 5) {
             return;
         }
+        if (SixtySecondsLostCitiesStarMap.isHiddenFromStarMap(id)) {
+            return; // 空置地块等填充建筑：不登记，星图不显示
+        }
         Store store = STORES.computeIfAbsent(level, k -> new Store());
         ensureLoaded(level, store);
         synchronized (store.cells) {
@@ -127,6 +130,9 @@ public final class SixtySecondsDiscoveredBuildings {
         }
         List<SixtySecondsLostCitiesStarMap.BuildingRegion> result = new ArrayList<>(boxes.size());
         for (Map.Entry<String, int[]> e : boxes.entrySet()) {
+            if (SixtySecondsLostCitiesStarMap.isHiddenFromStarMap(e.getKey())) {
+                continue; // 旧存档中已登记的空置地块：同样过滤，不上图
+            }
             int[] b = e.getValue();
             result.add(new SixtySecondsLostCitiesStarMap.BuildingRegion(
                     e.getKey(),
@@ -204,7 +210,7 @@ public final class SixtySecondsDiscoveredBuildings {
         while (SAVING.get() && System.currentTimeMillis() < deadline) {
             Thread.onSpinWait();
         }
-        for (Map.Entry<ServerLevel, Store> e : List.copyOf(STORES.entrySet()).entrySet()) {
+        for (Map.Entry<ServerLevel, Store> e : List.copyOf(STORES.entrySet())) {
             ServerLevel level = e.getKey();
             Store store = e.getValue();
             Saved snapshot;

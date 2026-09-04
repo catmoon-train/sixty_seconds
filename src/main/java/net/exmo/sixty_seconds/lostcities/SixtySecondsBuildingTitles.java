@@ -75,10 +75,12 @@ public final class SixtySecondsBuildingTitles {
                     id = chunk.getBuildingId().toString();
                     star = SixtySecondsLostCitiesStarMap.starForBuildingName(id);
                 }
-                if (id != null && star >= 1 && star <= 5) {
+                if (id != null && star >= 1 && star <= 5
+                        && !SixtySecondsLostCitiesStarMap.isHiddenFromStarMap(id)) {
                     displayKey = SixtySecondsLostCitiesStarMap.buildingDisplayKey(id);
                 } else {
-                    id = null; // 安全区/撤离点/未登记建筑：不报幕（与星图不上图一致）
+                    // 安全区/撤离点/未登记建筑/空置地块（common_empty，星图隐藏建筑）：一律不报幕
+                    id = null;
                 }
             }
             if (id != null) {
