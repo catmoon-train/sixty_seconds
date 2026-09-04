@@ -39,6 +39,10 @@ public final class SixtySecondsBuildingTitles {
         if (level.getGameTime() % 60 != 0) {
             return;
         }
+        // 已发现建筑定期落盘（脏且到间隔才真正异步写盘，主线程仅做快照）
+        if (level.getGameTime() % SixtySecondsDiscoveredBuildings.SAVE_INTERVAL_TICKS == 0) {
+            SixtySecondsDiscoveredBuildings.saveIfDirty(level);
+        }
         for (ServerPlayer player : level.players()) {
             if (!player.isAlive() || player.isSpectator()) {
                 LAST_BUILDING.remove(player);
@@ -76,6 +80,12 @@ public final class SixtySecondsBuildingTitles {
                 } else {
                     id = null; // 安全区/撤离点/未登记建筑：不报幕（与星图不上图一致）
                 }
+            }
+            if (id != null) {
+                // 已发现建筑登记：与报幕同一判定点，复用上面已取到的区块信息（零额外区块查询）。
+                // 星图下发时合并这些记录，让去过的建筑在离开后仍标在星图上（修复
+                // 「进楼报幕正确、星图却不标记」——实时扫描只看当前位置 ±16 区块的已加载区块）。
+                SixtySecondsDiscoveredBuildings.record(level, cx, cz, id, star);
             }
             if (id == null) {
                 // 不在任何星图建筑区域内（或星图信息暂不可用）：清除记录以便再次进入时重新提示

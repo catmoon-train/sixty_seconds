@@ -257,6 +257,8 @@ public final class NeoForgeEvents {
         if (level != null && SixtySecondsMod.RUNNING && SixtySecondsMod.isActive(level)) {
             net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.save(level);
         }
+        // 星图「已发现建筑」登记同步落盘（等待在途异步写结束，保证退出前写完）
+        net.exmo.sixty_seconds.lostcities.SixtySecondsDiscoveredBuildings.saveAllNow();
     }
 
     @SubscribeEvent
@@ -265,6 +267,8 @@ public final class NeoForgeEvents {
         SixtySecondsMod.RUNNING = false;
         net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.resetRuntimeState();
         net.exmo.sixty_seconds.logic.SixtySecondsReconnect.reset();
+        // 清空星图「已发现建筑」内存表（单人换世界不残留上一个世界的静态状态）
+        net.exmo.sixty_seconds.lostcities.SixtySecondsDiscoveredBuildings.resetAll();
     }
 
     @SubscribeEvent

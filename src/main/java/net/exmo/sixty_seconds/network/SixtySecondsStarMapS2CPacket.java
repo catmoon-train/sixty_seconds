@@ -3,6 +3,7 @@ package net.exmo.sixty_seconds.network;
 import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
 import net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking;
+import net.exmo.sixty_seconds.lostcities.SixtySecondsDiscoveredBuildings;
 import net.exmo.sixty_seconds.lostcities.SixtySecondsLostCitiesStarMap;
 import net.exmo.sixty_seconds.lostcities.StarMapRegionService;
 import net.minecraft.core.BlockPos;
@@ -86,8 +87,12 @@ public record SixtySecondsStarMapS2CPacket(List<RegionEntry> regions) implements
         int pcx = p.getX() >> 4;
         int pcz = p.getZ() >> 4;
         List<RegionEntry> entries = new ArrayList<>();
-        // 1) 动态生成：读取缓存的星级区域快照（命中则最新，未命中则旧数据先行 + 后台重算）
-        for (SixtySecondsLostCitiesStarMap.BuildingRegion br : StarMapRegionService.snapshot(pcx, pcz)) {
+        // 1) 动态生成：读取缓存的星级区域快照（命中则最新，未命中则旧数据先行 + 后台重算），
+        //    并与「已发现建筑」登记合并——实时扫描只覆盖当前位置 ±16 区块的已加载区块，
+        //    玩家去过的建筑（记录见 SixtySecondsDiscoveredBuildings）离开后也要继续标在星图上。
+        for (SixtySecondsLostCitiesStarMap.BuildingRegion br : SixtySecondsDiscoveredBuildings.merge(
+                StarMapRegionService.snapshot(pcx, pcz),
+                SixtySecondsDiscoveredBuildings.regions(level))) {
             // 下发翻译键，由客户端 Component.translatable 按玩家语言渲染（语言文件随模组下发，客户端必含）
             entries.add(new RegionEntry(br.minX, br.minZ, br.maxX, br.maxZ, br.star,
                     br.displayName));
