@@ -10,11 +10,15 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
@@ -101,44 +105,71 @@ public final class SixtySecondsDiscoveredBuildings {
     }
 
     /**
-     * 聚合当前维度所有已发现建筑区块 → 按建筑 id 分组的外接矩形区域（世界坐标）。
+     * 聚合当前维度所有已发现建筑区块 → 按建筑 id + 区块连通性分组的外接矩形区域（世界坐标）。
      * 仅内存操作，供星图下发时与实时扫描合并。
+     * <p>
+     * 注意：不能按建筑 id 直接并成一个外接矩形——LostCities 中两处位置不同的建筑可能是
+     * 同一模板（id 相同），直接并集会得到一个跨越两地的巨大矩形。这里改为对同 id 的
+     * 已踏入区块做相邻连通分量划分（8 邻域，与 {@link #touches} 的 1 格容差一致），
+     * 每个连通分量各自取外接矩形，与实时扫描的洪泛填充行为对齐。
      */
     public static List<SixtySecondsLostCitiesStarMap.BuildingRegion> regions(ServerLevel level) {
         Store store = level == null ? null : STORES.get(level);
         if (store == null || store.cells.isEmpty()) {
             return List.of();
         }
-        // id -> {minCx, minCz, maxCx, maxCz, star}
-        Map<String, int[]> boxes = new HashMap<>();
+        // id -> 该建筑已踏入的全部区块（打包键 -> 星级）
+        Map<String, Map<Long, Integer>> byId = new HashMap<>();
         synchronized (store.cells) {
             for (Map.Entry<Long, Cell> e : store.cells.entrySet()) {
-                long key = e.getKey();
-                int cx = (int) (key >> 32);
-                int cz = (int) key;
-                Cell cell = e.getValue();
-                int[] b = boxes.get(cell.id());
-                if (b == null) {
-                    boxes.put(cell.id(), new int[]{cx, cz, cx, cz, cell.star()});
-                } else {
-                    b[0] = Math.min(b[0], cx);
-                    b[1] = Math.min(b[1], cz);
-                    b[2] = Math.max(b[2], cx);
-                    b[3] = Math.max(b[3], cz);
-                }
+                byId.computeIfAbsent(e.getValue().id(), k -> new HashMap<>())
+                        .put(e.getKey(), e.getValue().star());
             }
         }
-        List<SixtySecondsLostCitiesStarMap.BuildingRegion> result = new ArrayList<>(boxes.size());
-        for (Map.Entry<String, int[]> e : boxes.entrySet()) {
-            if (SixtySecondsLostCitiesStarMap.isHiddenFromStarMap(e.getKey())) {
+        List<SixtySecondsLostCitiesStarMap.BuildingRegion> result = new ArrayList<>();
+        for (Map.Entry<String, Map<Long, Integer>> entry : byId.entrySet()) {
+            if (SixtySecondsLostCitiesStarMap.isHiddenFromStarMap(entry.getKey())) {
                 continue; // 旧存档中已登记的空置地块：同样过滤，不上图
             }
-            int[] b = e.getValue();
-            result.add(new SixtySecondsLostCitiesStarMap.BuildingRegion(
-                    e.getKey(),
-                    SixtySecondsLostCitiesStarMap.buildingDisplayKey(e.getKey()),
-                    b[4],
-                    b[0] * 16, b[1] * 16, b[2] * 16 + 15, b[3] * 16 + 15));
+            // 对同 id 区块做连通分量划分：每个分量取外接矩形 + 分量内最高星级
+            Map<Long, Integer> cells = entry.getValue();
+            Set<Long> visited = new HashSet<>();
+            for (Long start : cells.keySet()) {
+                if (!visited.add(start)) {
+                    continue;
+                }
+                int minCx = Integer.MAX_VALUE, minCz = Integer.MAX_VALUE;
+                int maxCx = Integer.MIN_VALUE, maxCz = Integer.MIN_VALUE;
+                int star = 0;
+                Deque<Long> stack = new ArrayDeque<>();
+                stack.push(start);
+                while (!stack.isEmpty()) {
+                    long key = stack.pop();
+                    int cx = (int) (key >> 32);
+                    int cz = (int) key;
+                    minCx = Math.min(minCx, cx);
+                    minCz = Math.min(minCz, cz);
+                    maxCx = Math.max(maxCx, cx);
+                    maxCz = Math.max(maxCz, cz);
+                    star = Math.max(star, cells.get(key));
+                    for (int dx = -1; dx <= 1; dx++) {
+                        for (int dz = -1; dz <= 1; dz++) {
+                            if (dx == 0 && dz == 0) {
+                                continue;
+                            }
+                            long nk = ((long) (cx + dx) << 32) | ((cz + dz) & 0xffffffffL);
+                            if (cells.containsKey(nk) && visited.add(nk)) {
+                                stack.push(nk);
+                            }
+                        }
+                    }
+                }
+                result.add(new SixtySecondsLostCitiesStarMap.BuildingRegion(
+                        entry.getKey(),
+                        SixtySecondsLostCitiesStarMap.buildingDisplayKey(entry.getKey()),
+                        star,
+                        minCx * 16, minCz * 16, maxCx * 16 + 15, maxCz * 16 + 15));
+            }
         }
         return result;
     }
