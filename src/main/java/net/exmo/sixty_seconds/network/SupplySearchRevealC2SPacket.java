@@ -1,7 +1,6 @@
 package net.exmo.sixty_seconds.network;
 
 import net.exmo.sixty_seconds.SixtySeconds;
-import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.bridge.fabric.ServerPlayNetworking;
 import net.exmo.sixty_seconds.content.block_entity.SupplyBoxBlockEntity;
 import net.exmo.sixty_seconds.menu.SupplySearchMenu;
@@ -33,7 +32,7 @@ public record SupplySearchRevealC2SPacket(int slot) implements CustomPacketPaylo
     public static void handle(SupplySearchRevealC2SPacket packet, ServerPlayNetworking.Context context) {
         context.server().execute(() -> {
             ServerPlayer player = context.player();
-            if (player == null || !SixtySecondsMod.isActive(player.level())) return;
+            if (player == null) return;
             if (!(player.containerMenu instanceof SupplySearchMenu menu)) return;
             SupplyBoxBlockEntity be = menu.getBlockEntity();
             if (be == null) return;
