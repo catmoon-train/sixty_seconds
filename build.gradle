@@ -132,6 +132,12 @@ dependencies {
     } else {
         compileOnly "maven.modrinth:the-lost-cities:${lostcities_version}"
     }
+
+    // PetiteInventory 前置：编译期引用其 API
+    def petiteInventoryLocalJars = fileTree(dir: 'run/mods', include: ['PetiteInventory-*.jar'])
+    if (!petiteInventoryLocalJars.isEmpty()) {
+        compileOnly petiteInventoryLocalJars
+    }
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
