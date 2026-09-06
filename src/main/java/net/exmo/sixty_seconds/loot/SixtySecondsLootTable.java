@@ -230,7 +230,7 @@ public class SixtySecondsLootTable {
                 new Entry("minecraft:potato", 2, 1.5F))));
         // 枪械与弹药（稀有；命中怪物即死/玩家扣血，见 SixtySecondsGunItem）
         table.categories.put("weapon", new ArrayList<>(List.of(
-                new Entry("sixty_seconds:sixty_seconds_ammo", 4, 4.0F),
+                new Entry("tacz:ammo", 4, 4.0F, Map.of("AmmoId", "tacz:22wmr")),
                 new Entry("sixty_seconds:sixty_seconds_pistol", 1, 1.2F),
                 new Entry("sixty_seconds:sixty_seconds_hunting_shotgun", 1, 0.6F),
                 new Entry("sixty_seconds:sixty_seconds_rifle", 1, 0.4F),
@@ -251,7 +251,7 @@ public class SixtySecondsLootTable {
                 new Entry("tacz:attachment", 1, 0.3F, Map.of("AttachmentId", "tacz:red_dot_sight")))));
         // 空投专属（高价值物资，各队争抢焦点）：枪械/高级材料/药品/食物混编
         table.categories.put("airdrop", new ArrayList<>(List.of(
-                new Entry("sixty_seconds:sixty_seconds_ammo", 8, 5.0F),
+                new Entry("tacz:ammo", 8, 5.0F, Map.of("AmmoId", "tacz:12g")),
                 new Entry("sixty_seconds:sixty_seconds_rifle", 1, 1.0F),
                 new Entry("sixty_seconds:sixty_seconds_sniper", 1, 0.6F),
                 new Entry("sixty_seconds:sixty_seconds_rpg", 1, 0.3F),
@@ -331,7 +331,7 @@ public class SixtySecondsLootTable {
                 new Entry("sixty_seconds:sixty_seconds_molotov", 1, 0.5F))));
         // 高级武器：稀有枪械和弹药
         table.categories.put("advanced_weapon", new ArrayList<>(List.of(
-                new Entry("sixty_seconds:sixty_seconds_ammo", 6, 4.0F),
+                new Entry("tacz:ammo", 6, 4.0F, Map.of("AmmoId", "tacz:5.56mm")),
                 new Entry("sixty_seconds:sixty_seconds_pistol", 1, 1.5F),
                 new Entry("sixty_seconds:sixty_seconds_hunting_shotgun", 1, 1.0F),
                 new Entry("sixty_seconds:sixty_seconds_rifle", 1, 0.8F),

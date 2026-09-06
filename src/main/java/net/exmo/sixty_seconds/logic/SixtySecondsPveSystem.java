@@ -589,8 +589,8 @@ public final class SixtySecondsPveSystem {
                 (int) ((SixtySecondsBalance.BOSS_SCRAP_BASE + SixtySecondsBalance.BOSS_SCRAP_PER_LEVEL * lvl)
                         * (lvl <= 3 ? 0.7 : 1.0))));
         // ── 额外保底奖励（等级越高越多；Lv1-3 -30%）─────────────────
-        // 弹药：4 + 4/级
-        dropAt(level, boss, new ItemStack(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_AMMO,
+        // 弹药：4 + 4/级（TACZ 子弹，未装 TACZ 时降级为本模组弹药）
+        dropAt(level, boss, taczAmmoDrop(level,
                 (int) ((4 + 4 * lvl) * (lvl <= 3 ? 0.7 : 1.0))));
         // 高级材料：Lv2+ 钢材 ×2/级，Lv3+ 电子元件 ×1/级，Lv4+ 齿轮 ×1/级
         if (lvl >= 2) {
@@ -665,7 +665,7 @@ public final class SixtySecondsPveSystem {
         dropAt(level, titan, new ItemStack(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_SCRAP,
                 (int) ((SixtySecondsBalance.BOSS_SCRAP_BASE + SixtySecondsBalance.BOSS_SCRAP_PER_LEVEL * lvl)
                         * (lvl <= 3 ? 0.7 : 1.0))));
-        dropAt(level, titan, new ItemStack(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_AMMO,
+        dropAt(level, titan, taczAmmoDrop(level,
                 (int) ((4 + 4 * lvl) * (lvl <= 3 ? 0.7 : 1.0))));
         if (lvl >= 2) {
             dropAt(level, titan, new ItemStack(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_STEEL_INGOT,
@@ -683,7 +683,28 @@ public final class SixtySecondsPveSystem {
         }
     }
 
-    private static void dropAt(ServerLevel level, LivingEntity source, ItemStack stack) {
+        private static ItemStack taczAmmoDrop(ServerLevel level, int count) {  
+        var ammo = taczItem("tacz:ammo");  
+        if (ammo == null) {  
+            return new ItemStack(net.exmo.sixty_seconds.registry.ModItems.SIXTY_SECONDS_AMMO, count);  
+        }  
+        String[] ids = { "tacz:9mm", "tacz:22wmr", "tacz:12g", "tacz:762x39",  
+                "tacz:5.56mm", "tacz:7.62mm" };  
+        String ammoId = ids[level.random.nextInt(ids.length)];  
+        ItemStack stack = new ItemStack(ammo, count); 
+        var tag = new net.minecraft.nbt.CompoundTag();  
+        tag.putString("AmmoId", ammoId);  
+        stack.set(net.minecraft.core.component.DataComponents.CUSTOM_DATA,  
+                net.minecraft.world.item.component.CustomData.of(tag));  
+        return stack;  
+    }  
+    private static net.minecraft.world.item.Item taczItem(String id) {  
+        var item = net.minecraft.core.registries.BuiltInRegistries.ITEM  
+                .get(net.minecraft.resources.ResourceLocation.tryParse(id));  
+        return item == net.minecraft.world.item.Items.AIR ? null : item;  
+    }  
+
+private static void dropAt(ServerLevel level, LivingEntity source, ItemStack stack) {
         double angle = level.random.nextDouble() * Math.PI * 2;
         double dist = level.random.nextDouble() * 1.5;
         ItemEntity drop = new ItemEntity(level,
