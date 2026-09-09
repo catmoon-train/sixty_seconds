@@ -1,6 +1,7 @@
 package net.exmo.sixty_seconds.client.screen;
 
 import com.sighs.petiteinventory.client.ClientInventoryContext;
+import com.sighs.petiteinventory.client.ScreenLayoutSettings;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.bridge.fabric.ClientPlayNetworking;
 import net.exmo.sixty_seconds.content.item.SixtySecondsLootMagnifierItem;
@@ -38,6 +39,10 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
     protected void init() {
         this.imageHeight = 168;
         this.inventoryLabelY = 74;
+        // The storage side of this menu must be included in PetiteInventory's
+        // grid so a magnifier or any weighted item can occupy several cells.
+        ScreenLayoutSettings.setEnabled(this, true);
+        ClientInventoryContext.invalidate();
         super.init();
     }
 

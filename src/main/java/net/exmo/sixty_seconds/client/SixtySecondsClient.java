@@ -44,6 +44,8 @@ import net.exmo.sixty_seconds.client.gui.screen.NewspaperScreen;
 import net.exmo.sixty_seconds.client.gui.screen.RadioChannelScreen;
 import net.exmo.sixty_seconds.client.screen.SixtySecondsInventoryScreen;
 import net.exmo.sixty_seconds.client.screen.SpecialInventoryScreen;
+import com.sighs.petiteinventory.client.ClientInventoryContext;
+import com.sighs.petiteinventory.client.ScreenLayoutSettings;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
@@ -216,6 +218,12 @@ public final class SixtySecondsClient {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
+            // PetiteInventory defaults this switch to false.  Without it,
+            // normal chest/storage screens never contribute their container
+            // slots to PetiteInventory's grid, so item footprints appear as
+            // ordinary one-cell stacks even when the rules are registered.
+            ScreenLayoutSettings.setDefaultEnabled(true);
+            ClientInventoryContext.invalidate();
             registerPayloadReceivers();
             NewspaperItem.runner = (stack, hand) -> {
                 Minecraft minecraft = Minecraft.getInstance();
