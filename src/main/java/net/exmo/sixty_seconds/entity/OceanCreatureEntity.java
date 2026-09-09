@@ -153,7 +153,7 @@ public abstract class OceanCreatureEntity extends PathfinderMob {
         // NearestAttackableTargetGoal.  Acquire a real nearby player on the
         // server as a fallback so sharks, fauna, floor monsters and bosses
         // all share the same reliable target path.
-        if (tickCount % 5 == 0) {
+        if (tickCount % 20 == 0) {
             acquireOceanTarget(serverLevel);
         }
 
@@ -198,17 +198,9 @@ public abstract class OceanCreatureEntity extends PathfinderMob {
             return;
         }
 
-        ServerPlayer nearest = null;
-        double nearestDistance = 64.0 * 64.0;
-        for (ServerPlayer candidate : level.players()) {
-            if (!isValidOceanPrey(candidate)) continue;
-            double distance = distanceToSqr(candidate);
-            if (distance < nearestDistance) {
-                nearestDistance = distance;
-                nearest = candidate;
-            }
-        }
-        setTarget(nearest);
+        net.minecraft.world.entity.player.Player nearest = level.getNearestPlayer(this, 64.0);
+        setTarget(nearest instanceof ServerPlayer player && isValidOceanPrey(player)
+                ? player : null);
     }
 
     @Override

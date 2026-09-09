@@ -530,8 +530,13 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
         }
         Player nearest = level.getNearestPlayer(this, SixtySecondsBalance.PIRATE_SIGHT);
         if (!(nearest instanceof ServerPlayer target) || !SixtySecondsMonsterEntity.isValidPrey(target)) {
+            setTarget(null);
             return;
         }
+        // The pirate is mounted while approaching, so MeleeAttackGoal cannot
+        // reliably acquire a target on its own. Keep the target authoritative
+        // and let the normal melee goal take over immediately after dismount.
+        setTarget(target);
         double dx = target.getX() - boat.getX();
         double dz = target.getZ() - boat.getZ();
         double dist = Math.sqrt(dx * dx + dz * dz);

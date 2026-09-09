@@ -31,6 +31,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.WeakHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 海洋生物刷新系统。
@@ -63,7 +65,9 @@ import java.util.WeakHashMap;
  */
 public final class OceanCreatureSpawner {
 
-    public static final int CHECK_INTERVAL = 20 * 14;
+    /** Natural ocean spawning is deliberately infrequent: one roll every
+     * five minutes, with a hard three-refresh limit per game day. */
+    public static final int CHECK_INTERVAL = 20 * 60 * 5;
 
     /** 利维坦（LEVIATHAN）固定刷新周期：仅在游戏天数为 {@code 6} 及其倍数（6、12、18…）时刷新（固定刷新，不计入深海 Boss 全局唯一限制）。 */
     public static final int LEVIATHAN_PERIOD_DAYS = 6;
@@ -89,6 +93,13 @@ public final class OceanCreatureSpawner {
     /** Both the level tick hook and the NPC system call tick(); only one roll
      * is allowed per interval, otherwise bosses become common by accident. */
     private static final Map<ServerLevel, Long> LAST_SPAWN_CHECK = new WeakHashMap<>();
+    private static final Map<ServerLevel, SpawnDayState> NATURAL_SPAWN_STATE = new WeakHashMap<>();
+    private static final int MAX_NATURAL_REFRESHES_PER_DAY = 3;
+
+    private static final class SpawnDayState {
+        int day = -1;
+        int refreshes;
+    }
 
     /**
      * 对所有在线存活探索中玩家做海洋生物刷新判定。
@@ -99,8 +110,23 @@ public final class OceanCreatureSpawner {
         if (config == null || !config.oceanCreaturesEnabled) return;
 
         long now = level.getGameTime();
+        boolean inOcean = level.dimension() == SixtySeconds.OCEAN_DIMENSION;
+        int dayNumber = resolveGameDay(level, config);
+        SpawnDayState spawnState = dayNumber > 0
+                ? NATURAL_SPAWN_STATE.computeIfAbsent(level, ignored -> new SpawnDayState())
+                : null;
+        // Observe day changes before the long spawn cooldown so old creatures
+        // are removed as soon as the new day begins, not up to five minutes
+        // later when the next natural roll happens.
+        if (spawnState != null && spawnState.day != dayNumber) {
+            if (spawnState.day > 0) {
+                clearPreviousDayCreatures(level);
+            }
+            spawnState.day = dayNumber;
+            spawnState.refreshes = 0;
+        }
         long last = LAST_SPAWN_CHECK.getOrDefault(level, Long.MIN_VALUE);
-        if (now - last < CHECK_INTERVAL) return;
+        if (last != Long.MIN_VALUE && now - last < CHECK_INTERVAL) return;
         LAST_SPAWN_CHECK.put(level, now);
 
         // PREPARATION is the house-search/protection phase.  Use the phase,
@@ -110,12 +136,12 @@ public final class OceanCreatureSpawner {
 
         // 游戏天数以主对局（主世界）为准：海洋维度自身不推进天数，故取主世界的日数，
         // 使海洋模式刷怪强度随主对局天数正常变化，不受所在维度影响。
-        boolean inOcean = level.dimension() == SixtySeconds.OCEAN_DIMENSION;
-        int dayNumber = resolveGameDay(level, config);
         // The state is zero before the 60 Seconds round has actually started.
         // Do not use totalDays as a fallback here: that made a fresh world look
         // like the final day and allowed a deep-sea boss to roll immediately.
         if (dayNumber <= 0) return;
+
+        if (spawnState.refreshes >= MAX_NATURAL_REFRESHES_PER_DAY) return;
 
         // ── 天数比例：dayRatio = currentDay / totalDays ─────────────
         double dayRatio = (double) dayNumber / Math.max(1, config.totalDays);
@@ -130,7 +156,7 @@ public final class OceanCreatureSpawner {
         double spawnMult = net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.spawnMultiplier(level);
 
         // 利维坦定时刷新（与鲨鱼/海怪独立，可共存；仅海洋维度 + 第6天/倍数天）
-        tickLeviathan(level, dayNumber, inOcean);
+        boolean spawnedThisCheck = tickLeviathan(level, dayNumber, inOcean);
 
         // 世界范围内鲨鱼总数（受 SHARK_GLOBAL_CAP 约束）—— 由计数器维护，不再全图扫描
         int globalSharks = getSharkCount(level);
@@ -150,7 +176,7 @@ public final class OceanCreatureSpawner {
             int nearbyMonsters = countNearby(level, player, OceanSeaMonsterEntity.class, NEARBY_RADIUS);
 
             // ── 海怪刷新（KRAKEN / SERPENT，含出场特效）───────────────────
-            if (dayNumber > 3 && nearbyMonsters < MAX_NEARBY_MONSTERS
+            if (!spawnedThisCheck && dayNumber > 3 && nearbyMonsters < MAX_NEARBY_MONSTERS
                     && random.nextDouble() < monsterBase * spawnMult) {
                 BlockPos spot = findBossWaterSpot(level, player.blockPosition(),
                         SPAWN_MIN_DIST + 8, SPAWN_MAX_DIST + 12, random);
@@ -159,6 +185,7 @@ public final class OceanCreatureSpawner {
                             net.minecraft.util.Mth.clamp(1 + (int) (dayRatio * 4), 1,
                                     net.exmo.sixty_seconds.SixtySecondsBalance.BOSS_MAX_LEVEL), null);
                     if (monster != null) {
+                        spawnedThisCheck = true;
                         announceSeaMonster(level, monster, player);
                     }
                 }
@@ -169,13 +196,15 @@ public final class OceanCreatureSpawner {
             // 阶段会把鲨鱼刷在虚空 Y 并瞬间“掉出世界”死亡，且每区块都刷 → 洪流。
             // 改为这里可控刷新：Y 由 findWaterSpot 保证落在真实水面，受总数/局部/天数约束。
             int areaSharks = countNearby(level, player, OceanSharkEntity.class, Sixty_seconds.SHARK_AREA_RADIUS);
-            if (globalSharks < Sixty_seconds.SHARK_GLOBAL_CAP
+            if (!spawnedThisCheck && globalSharks < Sixty_seconds.SHARK_GLOBAL_CAP
                     && areaSharks < Sixty_seconds.SHARK_AREA_CAP
                     && random.nextDouble() < 0.35 * dayRatio * earlyDayMult * spawnMult) {
                 BlockPos spot = findWaterSpot(level, player.blockPosition(),
                         SPAWN_MIN_DIST, SPAWN_MAX_DIST, random);
                 if (spot != null) {
-                    spawnShark(level, spot, random, dayRatio);
+                    if (spawnShark(level, spot, random, dayRatio) != null) {
+                        spawnedThisCheck = true;
+                    }
                 }
             }
         }
@@ -188,7 +217,7 @@ public final class OceanCreatureSpawner {
             if (dayNumber > 3) {
                 int deepSeaCount = countDeepSeaBosses(level);
                 boolean attemptedToday = data.deepSeaBossLastAttemptDay == dayNumber;
-                if (deepSeaCount < 1 && !attemptedToday) {
+                if (!spawnedThisCheck && deepSeaCount < 1 && !attemptedToday) {
                     ServerPlayer trigger = null;
                     for (ServerPlayer player : level.players()) {
                         if (player.isSpectator() || player.isCreative()
@@ -205,7 +234,10 @@ public final class OceanCreatureSpawner {
                         double prob = 0.06 * dayRatio * earlyDayMult * spawnMult;
                         if (random.nextDouble() < prob) {
                             OceanSeaMonsterEntity boss = spawnSeafloorBoss(level, trigger.blockPosition(), random);
-                            if (boss != null) announceSeaMonster(level, boss, trigger);
+                            if (boss != null) {
+                                spawnedThisCheck = true;
+                                announceSeaMonster(level, boss, trigger);
+                            }
                         }
                         data.deepSeaBossLastAttemptDay = dayNumber; // 一天至多尝试一次
                     }
@@ -221,11 +253,13 @@ public final class OceanCreatureSpawner {
             }
             if (!isNearSeafloor(level, player.blockPosition())) continue;
             int nearbyFloor = countNearby(level, player, OceanFloorMonsterEntity.class, NEARBY_RADIUS);
-            if (nearbyFloor < FLOOR_MONSTER_AREA_CAP
+            if (!spawnedThisCheck && nearbyFloor < FLOOR_MONSTER_AREA_CAP
                     && random.nextDouble() < 0.06 * dayRatio * earlyDayMult * spawnMult) {
                 BlockPos spot = findSeafloorSpot(level, player.blockPosition(),
                         SPAWN_MIN_DIST, SPAWN_MAX_DIST, random);
-                if (spot != null) spawnFloorMonster(level, spot, random);
+                if (spot != null && spawnFloorMonster(level, spot, random) != null) {
+                    spawnedThisCheck = true;
+                }
             }
         }
 
@@ -236,16 +270,18 @@ public final class OceanCreatureSpawner {
                 continue;
             }
             int nearbyFauna = countNearby(level, player, OceanFaunaEntity.class, NEARBY_RADIUS);
-            if (nearbyFauna < FAUNA_AREA_CAP
+            if (!spawnedThisCheck && nearbyFauna < FAUNA_AREA_CAP
                     && random.nextDouble() < 0.05 * dayRatio * earlyDayMult * spawnMult) {
                 BlockPos spot = findWaterSpot(level, player.blockPosition(),
                         SPAWN_MIN_DIST, SPAWN_MAX_DIST, random);
-                if (spot != null) spawnOceanFauna(level, spot, random);
+                if (spot != null && spawnOceanFauna(level, spot, random) != null) {
+                    spawnedThisCheck = true;
+                }
             }
         }
 
         // ── 海洋霸主（10 个独立建模 Boss）：低概率、全局限 1 只 ──
-        if (dayNumber > 3 && countNearbyTitans(level) < TITAN_CAP
+        if (!spawnedThisCheck && dayNumber > 3 && countNearbyTitans(level) < TITAN_CAP
                 && random.nextDouble() < 0.0008 * dayRatio * earlyDayMult * spawnMult) {
             for (ServerPlayer player : level.players()) {
                 if (player.isSpectator() || player.isCreative()
@@ -258,9 +294,14 @@ public final class OceanCreatureSpawner {
                 OceanTitanEntity.Variant[] vs = OceanTitanEntity.Variant.values();
                 int lv = net.minecraft.util.Mth.clamp(1 + (int) (dayRatio * 4), 1,
                         net.exmo.sixty_seconds.SixtySecondsBalance.BOSS_MAX_LEVEL);
-                spawnTitan(level, spot, vs[random.nextInt(vs.length)], lv);
+                if (spawnTitan(level, spot, vs[random.nextInt(vs.length)], lv) != null) {
+                    spawnedThisCheck = true;
+                }
                 break;
             }
+        }
+        if (spawnedThisCheck) {
+            spawnState.refreshes++;
         }
     }
 
@@ -271,6 +312,22 @@ public final class OceanCreatureSpawner {
             if (e instanceof OceanTitanEntity && e.isAlive()) n++;
         }
         return n;
+    }
+
+    /** Removes natural and manual ocean creatures left in the old day before
+     * the new day's ecosystem starts.  Collect first so discarding entities
+     * never mutates the live entity iterator. */
+    private static void clearPreviousDayCreatures(ServerLevel level) {
+        List<Entity> stale = new ArrayList<>();
+        for (Entity entity : level.getEntities().getAll()) {
+            if (entity instanceof net.exmo.sixty_seconds.entity.OceanCreatureEntity) {
+                stale.add(entity);
+            }
+        }
+        for (Entity entity : stale) {
+            entity.discard();
+        }
+        SHARK_COUNT.remove(level);
     }
 
     /**
@@ -316,16 +373,16 @@ public final class OceanCreatureSpawner {
      * @param dayNumber 当前由对局推进的游戏天数（SixtySecondsState.Data.dayNumber）
      * @param inOcean   当前维度是否为海洋维度（只有海洋维度才允许利维坦固定刷新）
      */
-    private static void tickLeviathan(ServerLevel level, int dayNumber, boolean inOcean) {
+    private static boolean tickLeviathan(ServerLevel level, int dayNumber, boolean inOcean) {
         SixtySecondsState.Data data = SixtySecondsState.get(level);
-        if (data == null) return;
+        if (data == null) return false;
         // ① 仅当玩家处于海洋维度时才允许利维坦固定刷新
-        if (!inOcean) return;
+        if (!inOcean) return false;
         // ② 仅在第 LEVIATHAN_PERIOD_DAYS（6）天及其倍数天刷新（此前不刷，杜绝游戏开始首日即刷）
-        if (dayNumber < LEVIATHAN_PERIOD_DAYS) return;
-        if (dayNumber % LEVIATHAN_PERIOD_DAYS != 0) return;
+        if (dayNumber < LEVIATHAN_PERIOD_DAYS) return false;
+        if (dayNumber % LEVIATHAN_PERIOD_DAYS != 0) return false;
         // ③ 当天已刷新过则跳过，避免一日内重复刷新
-        if (data.leviathanLastSpawnDay == dayNumber) return;
+        if (data.leviathanLastSpawnDay == dayNumber) return false;
 
         // 选最近存活玩家作为刷新锚点；无人则本轮跳过（等下次 tick）
         ServerPlayer target = null;
@@ -341,12 +398,12 @@ public final class OceanCreatureSpawner {
                 target = player;
             }
         }
-        if (target == null) return;
+        if (target == null) return false;
         BlockPos spot = findBossWaterSpot(level, target.blockPosition(),
                 SPAWN_MIN_DIST, SPAWN_MAX_DIST, level.getRandom());
-        if (spot == null) return;
+        if (spot == null) return false;
         OceanSeaMonsterEntity monster = ModOceanEntities.OCEAN_SEA_MONSTER.create(level);
-        if (monster == null) return;
+        if (monster == null) return false;
         monster.moveTo(spot.getX() + 0.5, spot.getY(), spot.getZ() + 0.5,
                 level.getRandom().nextFloat() * 360.0F, 0.0F);
         monster.applyVariant(OceanSeaMonsterEntity.Variant.LEVIATHAN);
@@ -354,6 +411,7 @@ public final class OceanCreatureSpawner {
         level.addFreshEntity(monster);
         data.leviathanLastSpawnDay = dayNumber;
         announceSeaMonster(level, monster, target);
+        return true;
     }
 
     // ══════════════════════════════════════════════════════════════

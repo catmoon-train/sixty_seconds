@@ -300,7 +300,7 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
             discard();
             return;
         }
-        if (tickCount % 5 == 0 && !getPersistentData().contains("sixty_seconds_decoy_target")) {
+        if (tickCount % 20 == 0 && !getPersistentData().contains("sixty_seconds_decoy_target")) {
             acquirePlayerTarget(serverLevel);
         }
         // 诱饵弹吸引：标记未到期时持续导航到爆点并抑制重新锁定玩家
@@ -352,17 +352,9 @@ public class SixtySecondsMonsterEntity extends Zombie implements SixtySecondsDoo
                 && distanceToSqr(player) <= 64.0 * 64.0) {
             return;
         }
-        ServerPlayer nearest = null;
-        double nearestDistance = 64.0 * 64.0;
-        for (ServerPlayer candidate : level.players()) {
-            if (!isValidPrey(candidate)) continue;
-            double distance = distanceToSqr(candidate);
-            if (distance < nearestDistance) {
-                nearestDistance = distance;
-                nearest = candidate;
-            }
-        }
-        setTarget(nearest);
+        net.minecraft.world.entity.player.Player nearest = level.getNearestPlayer(this, 64.0);
+        setTarget(nearest instanceof ServerPlayer player && isValidPrey(player)
+                ? player : null);
     }
 
     /** 吐酸者：目标在 4~14 格且可视时朝其吐酸（抛物线投射物，命中扣健康+污染）。 */
