@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 
 /**
  * Server-side menu for the Tarkov-style 60 Seconds inventory.
@@ -26,11 +27,18 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
 
     private final Player player;
     private final SixtySecondsExtraInventory.ContainerView extra;
+    /** The server-authoritative number of extension slots in this menu. */
+    private final int unlockedExtraSlots;
 
     public SpecialInventoryMenu(int id, Inventory inventory) {
+        this(id, inventory, getUnlockedExtraSlots(inventory.player));
+    }
+
+    public SpecialInventoryMenu(int id, Inventory inventory, int unlockedExtraSlots) {
         super(ModMenuTypes.SPECIAL_INVENTORY.get(), id);
         this.player = inventory.player;
         this.extra = new SixtySecondsExtraInventory.ContainerView(player);
+        this.unlockedExtraSlots = clampUnlockedExtraSlots(unlockedExtraSlots);
 
         // The old inventory limiter uses barrier stacks as temporary locks.
         // They are not real items and must not occupy the 27 base backpack
@@ -53,7 +61,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
         // Only unlocked extra slots are added to the menu.  Locked slots must
         // not be represented by fake/off-screen coordinates because PetiteInventory
         // builds its grid from every storage Slot it sees.
-        int unlocked = unlockedExtraSlots();
+        int unlocked = this.unlockedExtraSlots;
         for (int extraIndex = 0; extraIndex < unlocked; extraIndex++) {
             int row = extraIndex / 9;
             int col = extraIndex % 9;
@@ -78,13 +86,30 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
         addSlot(new PlayerSlot(inventory, 40, 139, 120));
     }
 
+    /** Factory used by NeoForge's menu packet; the count is sent by the server. */
+    public static SpecialInventoryMenu fromNetwork(int id, Inventory inventory,
+                                                    RegistryFriendlyByteBuf buffer) {
+        int unlocked = buffer == null
+                ? getUnlockedExtraSlots(inventory.player)
+                : buffer.readVarInt();
+        return new SpecialInventoryMenu(id, inventory, unlocked);
+    }
+
+    public static int getUnlockedExtraSlots(Player player) {
+        return clampUnlockedExtraSlots(
+                SixtySecondsStatsComponent.KEY.get(player).extraUnlockedSlots);
+    }
+
+    private static int clampUnlockedExtraSlots(int slots) {
+        return Math.min(SixtySecondsInventoryLimit.MAX_EXTRA_UNLOCK, Math.max(0, slots));
+    }
+
     public Player getPlayer() {
         return player;
     }
 
     public int unlockedExtraSlots() {
-        return Math.min(SixtySecondsInventoryLimit.MAX_EXTRA_UNLOCK,
-                Math.max(0, SixtySecondsStatsComponent.KEY.get(player).extraUnlockedSlots));
+        return unlockedExtraSlots;
     }
 
     public int extraEnd() {

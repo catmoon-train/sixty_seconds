@@ -99,10 +99,19 @@ public final class PetiteInventoryIntegration {
         if (cells == 2 || cells == 3) {
             return "1*" + cells;
         }
-        int width = 1;
-        for (int candidate = Math.min(cells, 9); candidate >= 2; candidate--) {
+        // Perfect squares stay square: 4=2*2, 9=3*3 and 16=4*4.
+        // Otherwise use the smallest non-trivial factor as the height.  This
+        // keeps the requested compact rows: 6=3*2, 8=4*2, 10=5*2,
+        // 12=6*2 and 18=9*2.  Prime weights have no factor pair and remain
+        // an exact N*1 footprint (for example 5*1 and 7*1).
+        int width = cells;
+        int squareRoot = (int) Math.sqrt(cells);
+        if (squareRoot * squareRoot == cells) {
+            return squareRoot + "*" + squareRoot;
+        }
+        for (int candidate = 2; candidate <= squareRoot; candidate++) {
             if (cells % candidate == 0) {
-                width = candidate;
+                width = cells / candidate;
                 break;
             }
         }

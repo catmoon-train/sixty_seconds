@@ -4,6 +4,7 @@ import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.SixtySecondsPhase;
 import net.exmo.sixty_seconds.component.FamilyPosition;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
+import net.exmo.sixty_seconds.arena.SixtySecondsSearchZones;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -42,9 +43,30 @@ public final class SixtySecondsInventoryLimit {
             return;
         }
         SixtySecondsState.Data data = SixtySecondsState.get(level);
+        // Outside an active round there is no 60 Seconds carry limit.  This
+        // is also required for the explicit /60s inventory command: items
+        // placed in its extra slots must survive closing the menu before the
+        // round has started.
+        if (data.phase == SixtySecondsPhase.INACTIVE
+                || data.phase == SixtySecondsPhase.FINISHED) {
+            for (ServerPlayer player : level.players()) {
+                clearMainBarriers(player);
+            }
+            return;
+        }
         boolean prep = data.phase == SixtySecondsPhase.PREPARATION;
         for (ServerPlayer player : level.players()) {
             if (GameUtils.isPlayerSpectatingOrCreative(player)) {
+                continue;
+            }
+            // Once the player is back in the shelter during a real game day,
+            // the Tarkov-style menu owns the full 27+27 inventory.  Do not
+            // reapply the legacy barrier/carry-limit system after that menu
+            // closes, otherwise items placed in the custom inventory appear
+            // to have no backing slots and are dropped on the next tick.
+            if (data.phase == SixtySecondsPhase.DAY
+                    && !SixtySecondsSearchZones.isInSearchZone(player)) {
+                clearMainBarriers(player);
                 continue;
             }
             // The special menu exposes the complete base backpack.  The
@@ -127,6 +149,24 @@ public final class SixtySecondsInventoryLimit {
         // either side of that menu.
         if (menu instanceof SpecialInventoryMenu) {
             return false;
+        }
+        // During the first house-search phase allow shift-click/quick-move
+        // from a supply container.  The old barrier slots still cannot be
+        // used as a source, but a container item may be routed into the
+        // currently available vanilla slots without requiring a manual drag.
+        if (clickType == ClickType.QUICK_MOVE && player instanceof ServerPlayer serverPlayer) {
+            SixtySecondsState.Data data = SixtySecondsState.get(serverPlayer.serverLevel());
+            boolean houseSearch = data.phase == SixtySecondsPhase.PREPARATION
+                    || SixtySecondsSearchZones.isInSearchZone(serverPlayer);
+            if (houseSearch) {
+                if (slotIndex >= 0 && slotIndex < menu.slots.size()) {
+                    Slot source = menu.slots.get(slotIndex);
+                    if (source.container == player.getInventory() && isBarrier(source.getItem())) {
+                        return true;
+                    }
+                }
+                return false;
+            }
         }
         if (slotIndex >= 0 && slotIndex < menu.slots.size()) {
             Slot slot = menu.slots.get(slotIndex);

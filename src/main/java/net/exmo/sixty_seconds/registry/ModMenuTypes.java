@@ -4,6 +4,7 @@ import net.exmo.sixty_seconds.menu.SupplySearchMenu;
 import net.exmo.sixty_seconds.menu.SpecialInventoryMenu;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -17,7 +18,7 @@ public final class ModMenuTypes {
 
     public static final DeferredHolder<MenuType<?>, MenuType<SpecialInventoryMenu>> SPECIAL_INVENTORY =
             MENUS.register("special_inventory",
-                    () -> new MenuType<>(SpecialInventoryMenu::new, FeatureFlags.DEFAULT_FLAGS));
+                    () -> IMenuTypeExtension.create(SpecialInventoryMenu::fromNetwork));
 
     private ModMenuTypes() {
     }

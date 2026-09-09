@@ -98,8 +98,13 @@ public final class SixtySecBridgeClient {
         if (player == null || !inSixtySecondsMode() || gameComponent == null) {
             return false;
         }
-        return gameComponent.getGameStatus() == SixtySecGameWorldComponent.GameStatus.ACTIVE
-                && SixtySecondsStatsComponent.KEY.get(player).dayNumber <= 0;
+        SixtySecGameWorldComponent.GameStatus status = gameComponent.getGameStatus();
+        // PREPARATION is the initial 60-second house-search phase.  The
+        // server may expose it before the per-player day sync arrives, so it
+        // must be an unconditional legacy-layout phase here.
+        return status == SixtySecGameWorldComponent.GameStatus.STARTING
+                || (status == SixtySecGameWorldComponent.GameStatus.ACTIVE
+                && SixtySecondsStatsComponent.KEY.get(player).dayNumber <= 0);
     }
 
     /** Forces PetiteInventory on for every container after the first shelter day. */

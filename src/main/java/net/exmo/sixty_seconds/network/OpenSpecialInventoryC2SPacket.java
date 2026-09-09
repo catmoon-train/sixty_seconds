@@ -37,9 +37,11 @@ public record OpenSpecialInventoryC2SPacket(boolean preparationOverride) impleme
         SixtySeconds.LOGGER.info("Opening special inventory for {} (override={}, phase={})",
                 player.getGameProfile().getName(), packet.preparationOverride(),
                 SixtySecondsState.get(player.serverLevel()).phase);
+        int unlocked = SpecialInventoryMenu.getUnlockedExtraSlots(player);
         player.openMenu(new SimpleMenuProvider(
-                (id, inventory, owner) -> new SpecialInventoryMenu(id, inventory),
-                Component.translatable("container.sixty_seconds.special_inventory")));
+                        (id, inventory, owner) -> new SpecialInventoryMenu(id, inventory, unlocked),
+                        Component.translatable("container.sixty_seconds.special_inventory")),
+                buffer -> buffer.writeVarInt(unlocked));
     }
 
     private static boolean canOpenDuringRound(ServerPlayer player, boolean preparationOverride) {

@@ -40,9 +40,11 @@ public final class SixtySecondsInventoryCommand {
                     "command.sixty_seconds.inventory.search_blocked"));
             return 0;
         }
+        int unlocked = SpecialInventoryMenu.getUnlockedExtraSlots(player);
         player.openMenu(new net.minecraft.world.SimpleMenuProvider(
-                (id, inventory, ignored) -> new SpecialInventoryMenu(id, inventory),
-                Component.translatable("container.sixty_seconds.special_inventory")));
+                        (id, inventory, ignored) -> new SpecialInventoryMenu(id, inventory, unlocked),
+                        Component.translatable("container.sixty_seconds.special_inventory")),
+                buffer -> buffer.writeVarInt(unlocked));
         return 1;
     }
 }
