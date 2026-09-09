@@ -13,29 +13,37 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
 
 /** Client asks the server to replace the local vanilla inventory menu. */
-public record OpenSpecialInventoryC2SPacket() implements CustomPacketPayload {
+public record OpenSpecialInventoryC2SPacket(boolean preparationOverride) implements CustomPacketPayload {
     public static final Type<OpenSpecialInventoryC2SPacket> ID =
             new Type<>(SixtySeconds.id("open_special_inventory"));
     public static final StreamCodec<RegistryFriendlyByteBuf, OpenSpecialInventoryC2SPacket> CODEC =
-            StreamCodec.unit(new OpenSpecialInventoryC2SPacket());
+            StreamCodec.of((buf, packet) -> buf.writeBoolean(packet.preparationOverride()),
+                    buf -> new OpenSpecialInventoryC2SPacket(buf.readBoolean()));
 
     @Override
     public Type<OpenSpecialInventoryC2SPacket> type() {
         return ID;
     }
 
-    public static void handle(OpenSpecialInventoryC2SPacket ignored, ServerPlayer player) {
-        if (!canOpenDuringRound(player)) return;
+    public static void handle(OpenSpecialInventoryC2SPacket packet, ServerPlayer player) {
+        if (!canOpenDuringRound(player, packet.preparationOverride())) return;
         player.openMenu(new SimpleMenuProvider(
                 (id, inventory, owner) -> new SpecialInventoryMenu(id, inventory),
                 Component.translatable("container.sixty_seconds.special_inventory")));
     }
 
-    private static boolean canOpenDuringRound(ServerPlayer player) {
-        if (!SixtySecondsMod.isActive(player.level())) return false;
+    private static boolean canOpenDuringRound(ServerPlayer player, boolean preparationOverride) {
         SixtySecondsState.Data data = SixtySecondsState.get(player.serverLevel());
-        // The preparation/house-search phase deliberately keeps the special UI
-        // disabled. /60s inventory is the explicit inactive-mode escape hatch.
-        return data.phase == SixtySecondsPhase.DAY;
+        // The explicit /60s inventory opt-in is allowed before a round has
+        // started.  Normal E presses never set this bit, so this does not
+        // replace the vanilla inventory for ordinary players.
+        if (preparationOverride && data.phase == SixtySecondsPhase.INACTIVE) {
+            return true;
+        }
+        if (!SixtySecondsMod.isActive(player.level())) return false;
+        // Normal E opens are limited to game days. The explicit command may
+        // opt into the new menu during the preparation/house-search phase.
+        return data.phase == SixtySecondsPhase.DAY
+                || (preparationOverride && data.phase == SixtySecondsPhase.PREPARATION);
     }
 }

@@ -10,6 +10,7 @@ import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 public final class SixtySecBridgeClient {
     public static SixtySecGameWorldComponent gameComponent;
     public static AreasWorldComponent areaComponent;
+    private static boolean specialInventoryForced;
 
     private SixtySecBridgeClient() {
     }
@@ -35,11 +36,53 @@ public final class SixtySecBridgeClient {
     /** Whether pressing E should ask the server for the Tarkov-style menu. */
     public static boolean shouldOpenSpecialInventory() {
         LocalPlayer player = Minecraft.getInstance().player;
-        return player != null && inSixtySecondsMode()
-                && gameComponent != null
-                && gameComponent.getGameStatus() == SixtySecGameWorldComponent.GameStatus.ACTIVE
-                // dayNumber is 0 during the 65-second house-search/preparation phase.
-                && SixtySecondsStatsComponent.KEY.get(player).dayNumber > 0;
+        if (player == null) {
+            return false;
+        }
+
+        // /60s inventory is also a valid opt-in before the round exists.  Do
+        // not clear this flag merely because the client has no active game
+        // component yet; it is precisely what makes subsequent E presses
+        // reopen the same menu.
+        if (specialInventoryForced) {
+            if (inSixtySecondsMode() && gameComponent != null
+                    && (gameComponent.getGameStatus() == SixtySecGameWorldComponent.GameStatus.INACTIVE
+                    || gameComponent.getGameStatus() == SixtySecGameWorldComponent.GameStatus.STOPPING)) {
+                specialInventoryForced = false;
+                return false;
+            }
+            return true;
+        }
+
+        if (!inSixtySecondsMode() || gameComponent == null) {
+            return false;
+        }
+
+        SixtySecGameWorldComponent.GameStatus status = gameComponent.getGameStatus();
+        if (status == SixtySecGameWorldComponent.GameStatus.INACTIVE
+                || status == SixtySecGameWorldComponent.GameStatus.STOPPING) {
+            return false;
+        }
+
+        // dayNumber is 0 during preparation.  The explicit /60s inventory
+        // command keeps the new menu active during that phase.
+        return specialInventoryForced
+                || (status == SixtySecGameWorldComponent.GameStatus.ACTIVE
+                && SixtySecondsStatsComponent.KEY.get(player).dayNumber > 0);
+    }
+
+    /** Called when the server has opened the menu through /60s inventory. */
+    public static void forceSpecialInventoryUntilRoundStart() {
+        specialInventoryForced = true;
+    }
+
+    public static boolean isSpecialInventoryForced() {
+        return specialInventoryForced;
+    }
+
+    /** Prevent a command used in one world from affecting the next world. */
+    public static void clearSpecialInventoryOverride() {
+        specialInventoryForced = false;
     }
 
     /**

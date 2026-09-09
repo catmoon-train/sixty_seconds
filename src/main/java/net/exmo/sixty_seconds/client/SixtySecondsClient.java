@@ -68,6 +68,7 @@ import net.exmo.sixty_seconds.client.screen.StationCraftScreen;
 import net.exmo.sixty_seconds.client.screen.TeamLobbyScreen;
 import net.exmo.sixty_seconds.client.screen.TechTreeScreen;
 import net.exmo.sixty_seconds.client.screen.TradeScreen;
+import net.exmo.sixty_seconds.integration.PetiteInventoryIntegration;
 import net.exmo.sixty_seconds.client.screen.VisitChatScreen;
 import net.exmo.sixty_seconds.client.screen.VisitPromptScreen;
 import net.exmo.sixty_seconds.client.screen.VisitRequestScreen;
@@ -224,6 +225,10 @@ public final class SixtySecondsClient {
             // ordinary one-cell stacks even when the rules are registered.
             ScreenLayoutSettings.setDefaultEnabled(true);
             ClientInventoryContext.invalidate();
+            // Reapply after all common-setup listeners have loaded
+            // PetiteInventory's persisted rule table.  This guarantees that
+            // the weight footprints are the final exact rules on the client.
+            PetiteInventoryIntegration.installWeightRules();
             registerPayloadReceivers();
             NewspaperItem.runner = (stack, hand) -> {
                 Minecraft minecraft = Minecraft.getInstance();
@@ -458,6 +463,7 @@ public final class SixtySecondsClient {
         Minecraft client = Minecraft.getInstance();
         // 离开世界/切换存档时清空天气预览，避免旧世界状态带入新世界
         net.exmo.sixty_seconds.weather.ClientWeatherState.reset();
+        SixtySecBridgeClient.clearSpecialInventoryOverride();
         for (ClientPlayConnectionEvents.Disconnect listener : ClientPlayConnectionEvents.DISCONNECT.invokers()) {
             listener.onPlayDisconnect(client.getConnection(), client);
         }

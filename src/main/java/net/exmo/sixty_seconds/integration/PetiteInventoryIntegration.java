@@ -16,8 +16,6 @@ import java.util.Map;
 
 /** Installs 60 Seconds' weight table directly into PetiteInventory's cache. */
 public final class PetiteInventoryIntegration {
-    private static boolean installed;
-
     private PetiteInventoryIntegration() {
     }
 
@@ -28,9 +26,10 @@ public final class PetiteInventoryIntegration {
      * PetiteInventory's own config file.
      */
     public static void installWeightRules() {
-        if (installed) return;
-        installed = true;
-
+        // PetiteInventory may finish loading its persisted rules after the
+        // common setup queue.  Rebuild the cache here instead of relying on a
+        // one-shot flag, then install our exact entries last so an old
+        // 1*1 rule can never shadow the weight table.
         ItemSizeRuleCache.loadAllRule();
         SixtySecondsWeightConfig config = SixtySecondsWeightConfigStore.defaultConfig();
         Map<String, List<String>> exactRules = new LinkedHashMap<>();
@@ -65,8 +64,13 @@ public final class PetiteInventoryIntegration {
             putRule(entry.getValue(), entry.getKey());
         }
 
-        SixtySeconds.LOGGER.info("Installed weight footprints in PetiteInventory for {} 60 Seconds items",
-                exactRules.values().stream().mapToInt(List::size).sum());
+        int registered = exactRules.values().stream().mapToInt(List::size).sum();
+        String waterId = "sixty_seconds:sixty_seconds_water_medium";
+        String crowbarId = "sixty_seconds:sixty_seconds_crowbar";
+        SixtySeconds.LOGGER.info(
+                "Installed weight footprints in PetiteInventory for {} 60 Seconds items ({}={}, {}={})",
+                registered, waterId, ItemSizeRuleCache.matchItem(waterId),
+                crowbarId, ItemSizeRuleCache.matchItem(crowbarId));
     }
 
     private static void putRule(List<String> matches, String result) {

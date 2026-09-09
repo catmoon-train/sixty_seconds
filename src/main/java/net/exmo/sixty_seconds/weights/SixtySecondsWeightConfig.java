@@ -27,30 +27,30 @@ public class SixtySecondsWeightConfig {
     @SerializedName("enabled")
     public boolean enabled = true;
 
-    @SerializedName("backpack_multiplier")
+    @SerializedName(value = "backpack_multiplier", alternate = {"backpackMultiplier"})
     public double backpackMultiplier = 1.5;
 
-    @SerializedName("hand_multiplier")
+    @SerializedName(value = "hand_multiplier", alternate = {"handMultiplier"})
     public double handMultiplier = 1.0;
 
-    @SerializedName("max_load")
+    @SerializedName(value = "max_load", alternate = {"maxLoad"})
     public double maxLoad = 50.0;
 
-    @SerializedName("speed_penalty_enabled")
+    @SerializedName(value = "speed_penalty_enabled", alternate = {"speedPenaltyEnabled"})
     public boolean speedPenaltyEnabled = true;
 
-    @SerializedName("speed_penalty_per_load")
+    @SerializedName(value = "speed_penalty_per_load", alternate = {"speedPenaltyPerLoad"})
     public double speedPenaltyPerLoad = 10.0;
 
     /** 未配置物品时的兜底单件重量。 */
-    @SerializedName("default_weight")
+    @SerializedName(value = "default_weight", alternate = {"defaultWeight"})
     public double defaultWeight = 1.0;
 
     /** 物品标签权重，键形如 {@code #namespace:tag}。 */
-    @SerializedName("tag_weights")
+    @SerializedName(value = "tag_weights", alternate = {"tagWeights"})
     public Map<String, Double> tagWeights = new LinkedHashMap<>();
 
     /** 物品权重，键为物品注册名或 TACZ 具体型号 id。 */
-    @SerializedName("item_weights")
+    @SerializedName(value = "item_weights", alternate = {"itemWeights"})
     public Map<String, Double> itemWeights = new LinkedHashMap<>();
 }

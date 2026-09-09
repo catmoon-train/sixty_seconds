@@ -3,6 +3,7 @@ package net.exmo.sixty_seconds.client.screen;
 import com.sighs.petiteinventory.client.ScreenLayoutSettings;
 import com.sighs.petiteinventory.client.ClientInventoryContext;
 import net.exmo.sixty_seconds.SixtySeconds;
+import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.client.WeightConfigClient;
 import net.exmo.sixty_seconds.menu.SpecialInventoryMenu;
 import net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem;
@@ -58,6 +59,9 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
 
     @Override
     protected void init() {
+        // Opening this screen through /60s inventory is an explicit opt-in.
+        // Keep that choice for subsequent E presses during preparation.
+        SixtySecBridgeClient.forceSpecialInventoryUntilRoundStart();
         // PetiteInventory normally lets the player opt into the player-grid
         // layout per screen.  This screen is intentionally always opted in.
         ScreenLayoutSettings.setEnabled(this, true);

@@ -33,7 +33,11 @@ public abstract class MinecraftMixin {
             return;
         }
         if (SixtySecBridgeClient.shouldOpenSpecialInventory()) {
-            ClientPlayNetworking.send(new OpenSpecialInventoryC2SPacket());
+            net.exmo.sixty_seconds.SixtySeconds.LOGGER.info(
+                    "Intercepted vanilla inventory; requesting special inventory (forced={})",
+                    SixtySecBridgeClient.isSpecialInventoryForced());
+            ClientPlayNetworking.send(new OpenSpecialInventoryC2SPacket(
+                    SixtySecBridgeClient.isSpecialInventoryForced()));
             ci.cancel();
             return;
         }
