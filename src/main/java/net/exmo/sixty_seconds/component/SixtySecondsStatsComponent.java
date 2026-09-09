@@ -290,6 +290,7 @@ public class SixtySecondsStatsComponent implements AutoSyncedComponent {
         tag.putLong("SanZeroTick", sanZeroTick);
         tag.putInt("PlayerKills", playerKills);
         tag.putInt("ExtraUnlockedSlots", extraUnlockedSlots);
+        writeExtraInventory(tag, registryLookup);
         tag.putBoolean("RescueMarked", rescueMarked);
     }
 
@@ -327,13 +328,44 @@ public class SixtySecondsStatsComponent implements AutoSyncedComponent {
             playerKills = tag.getInt("PlayerKills");
         }
         extraUnlockedSlots = tag.contains("ExtraUnlockedSlots") ? tag.getInt("ExtraUnlockedSlots") : 0;
+        readExtraInventory(tag, registryLookup);
         rescueMarked = tag.getBoolean("RescueMarked");
     }
 
     public void writeToNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
-        // 局内状态，不落磁盘（仅同步）。
+        writeExtraInventory(tag, registryLookup);
+        // Kept for component-provider compatibility; the save manager uses
+        // writeToSyncNbt/readFromSyncNbt for its player snapshots.
     }
 
     public void readFromNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
+        readExtraInventory(tag, registryLookup);
+    }
+
+    private void writeExtraInventory(CompoundTag tag, HolderLookup.Provider registryLookup) {
+        CompoundTag extra = new CompoundTag();
+        for (int i = 0; i < extraInventory.size(); i++) {
+            ItemStack stack = extraInventory.get(i);
+            if (!stack.isEmpty()) {
+                extra.put(Integer.toString(i), stack.save(registryLookup));
+            }
+        }
+        tag.put("ExtraInventory", extra);
+    }
+
+    private void readExtraInventory(CompoundTag tag, HolderLookup.Provider registryLookup) {
+        for (int i = 0; i < extraInventory.size(); i++) {
+            extraInventory.set(i, ItemStack.EMPTY);
+        }
+        if (tag.contains("ExtraInventory", net.minecraft.nbt.Tag.TAG_COMPOUND)) {
+            CompoundTag extra = tag.getCompound("ExtraInventory");
+            for (int i = 0; i < extraInventory.size(); i++) {
+                String key = Integer.toString(i);
+                if (extra.contains(key, net.minecraft.nbt.Tag.TAG_COMPOUND)) {
+                    extraInventory.set(i, ItemStack.parse(registryLookup, extra.getCompound(key))
+                            .orElse(ItemStack.EMPTY));
+                }
+            }
+        }
     }
 }

@@ -1,4 +1,13 @@
 {
+  "gui.sixty_seconds.inventory.brand": "60秒",
+  "gui.sixty_seconds.inventory.header": "戰術物品欄",
+  "gui.sixty_seconds.inventory.live_loadout": "目前裝備",
+  "gui.sixty_seconds.inventory.survivor": "倖存者",
+  "gui.sixty_seconds.inventory.equipment": "裝備",
+  "gui.sixty_seconds.inventory.quick_access": "快捷欄",
+  "gui.sixty_seconds.inventory.backpack": "背包",
+  "gui.sixty_seconds.inventory.slots": "9×5  //  %s/54 格",
+  "gui.sixty_seconds.inventory.load": "負重  %s / %s 公斤",
   "item.sixty_seconds.loot_magnifier": "物資放大鏡",
   "item.sixty_seconds.loot_magnifier.prompt": "點擊搜尋",
   "item.sixty_seconds.loot_magnifier.searching": "搜尋中",

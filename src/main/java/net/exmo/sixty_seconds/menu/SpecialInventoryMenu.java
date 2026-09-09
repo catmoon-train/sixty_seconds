@@ -14,20 +14,15 @@ import net.minecraft.world.item.ItemStack;
 /**
  * Server-side menu for the Tarkov-style 60 Seconds inventory.
  *
- * <p>The first 36 slots are the normal player inventory, while slots 36..53
- * are backed by {@link SixtySecondsStatsComponent#extraInventory}.  The latter
- * are deliberately kept in the menu even when locked; locked slots are hidden
- * by the screen and rejected by the server-side slot checks.</p>
+ * <p>The first 27 slots are the normal player backpack.  Unlocked extension
+ * slots are then backed by {@link SixtySecondsStatsComponent#extraInventory};
+ * locked extension slots are not added to the menu at all, so PetiteInventory
+ * cannot mistake hidden slots for real grid cells.</p>
  */
 public class SpecialInventoryMenu extends AbstractContainerMenu {
     public static final int PLAYER_MAIN_START = 0;
     public static final int PLAYER_MAIN_END = 27;
     public static final int EXTRA_START = 27;
-    public static final int EXTRA_END = 45;
-    public static final int HOTBAR_START = 45;
-    public static final int HOTBAR_END = 54;
-    public static final int ARMOR_START = 54;
-    public static final int OFFHAND_SLOT = 58;
 
     private final Player player;
     private final SixtySecondsExtraInventory.ContainerView extra;
@@ -37,22 +32,24 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
         this.player = inventory.player;
         this.extra = new SixtySecondsExtraInventory.ContainerView(player);
 
-        // Main inventory: the 27 normal backpack slots.
+        // Main inventory: the 27 normal backpack slots.  PetiteInventory
+        // treats these coordinates as a real 9x3 grid; the 18px spacing is
+        // intentionally left untouched for its footprint/click mixins.
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
                 addSlot(new PlayerSlot(inventory, 9 + row * 9 + col,
-                        190 + col * 23, 39 + row * 23));
+                        190 + col * 18, 39 + row * 18));
             }
         }
-        // Extra inventory: two additional rows, initially locked.
-        for (int row = 0; row < 2; row++) {
-            for (int col = 0; col < 9; col++) {
-                int extraIndex = row * 9 + col;
-                boolean visible = extraIndex < unlockedExtraSlots();
-                addSlot(new ExtraSlot(extra, extraIndex,
-                        visible ? 190 + col * 23 : -1000,
-                        visible ? 108 + row * 23 : -1000, extraIndex));
-            }
+        // Only unlocked extra slots are added to the menu.  Locked slots must
+        // not be represented by fake/off-screen coordinates because PetiteInventory
+        // builds its grid from every storage Slot it sees.
+        int unlocked = unlockedExtraSlots();
+        for (int extraIndex = 0; extraIndex < unlocked; extraIndex++) {
+            int row = extraIndex / 9;
+            int col = extraIndex % 9;
+            addSlot(new ExtraSlot(extra, extraIndex,
+                    190 + col * 18, 93 + row * 18, extraIndex));
         }
         // Hotbar, placed below the equipment column by the client layout.
         for (int col = 0; col < 9; col++) {
@@ -81,6 +78,26 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
                 Math.max(0, SixtySecondsStatsComponent.KEY.get(player).extraUnlockedSlots));
     }
 
+    public int extraEnd() {
+        return EXTRA_START + unlockedExtraSlots();
+    }
+
+    public int hotbarStart() {
+        return extraEnd();
+    }
+
+    public int hotbarEnd() {
+        return hotbarStart() + 9;
+    }
+
+    public int armorStart() {
+        return hotbarEnd();
+    }
+
+    public int offhandSlot() {
+        return armorStart() + 4;
+    }
+
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
         if (index < 0 || index >= slots.size()) return ItemStack.EMPTY;
@@ -89,11 +106,21 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
         ItemStack original = source.getItem().copy();
         ItemStack moving = source.getItem();
         boolean moved;
-        if (index >= EXTRA_START && index < EXTRA_END) {
-            moved = moveItemStackTo(moving, PLAYER_MAIN_START, HOTBAR_END, false);
+        if (index >= EXTRA_START && index < extraEnd()) {
+            moved = moveItemStackTo(moving, PLAYER_MAIN_START, PLAYER_MAIN_END, false)
+                    || moveItemStackTo(moving, hotbarStart(), hotbarEnd(), false);
+        } else if (index >= PLAYER_MAIN_START && index < PLAYER_MAIN_END) {
+            // Never include the source main-inventory range in its own target.
+            moved = moveItemStackTo(moving, EXTRA_START, extraEnd(), false)
+                    || moveItemStackTo(moving, hotbarStart(), hotbarEnd(), false);
+        } else if (index >= hotbarStart() && index < hotbarEnd()) {
+            // Never include the source hotbar range in its own target.
+            moved = moveItemStackTo(moving, EXTRA_START, extraEnd(), false)
+                    || moveItemStackTo(moving, PLAYER_MAIN_START, PLAYER_MAIN_END, false);
         } else {
-            moved = moveItemStackTo(moving, EXTRA_START, EXTRA_END, false)
-                    || moveItemStackTo(moving, PLAYER_MAIN_START, HOTBAR_END, false);
+            moved = moveItemStackTo(moving, EXTRA_START, extraEnd(), false)
+                    || moveItemStackTo(moving, PLAYER_MAIN_START, PLAYER_MAIN_END, false)
+                    || moveItemStackTo(moving, hotbarStart(), hotbarEnd(), false);
         }
         if (!moved) return ItemStack.EMPTY;
         if (moving.isEmpty()) source.setByPlayer(ItemStack.EMPTY);

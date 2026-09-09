@@ -1,4 +1,13 @@
 {
+  "gui.sixty_seconds.inventory.brand": "60 SECONDS",
+  "gui.sixty_seconds.inventory.header": "FIELD INVENTORY",
+  "gui.sixty_seconds.inventory.live_loadout": "LIVE LOADOUT",
+  "gui.sixty_seconds.inventory.survivor": "SURVIVOR",
+  "gui.sixty_seconds.inventory.equipment": "EQUIPMENT",
+  "gui.sixty_seconds.inventory.quick_access": "QUICK ACCESS",
+  "gui.sixty_seconds.inventory.backpack": "BACKPACK",
+  "gui.sixty_seconds.inventory.slots": "9 x 5  //  %s/54 SLOTS",
+  "gui.sixty_seconds.inventory.load": "LOAD  %s / %s KG",
   "container.sixty_seconds.special_inventory": "60 Seconds Inventory",
   "command.sixty_seconds.inventory.player_only": "This command can only be used by a player",
   "item.sixty_seconds.loot_magnifier": "Loot Magnifier",

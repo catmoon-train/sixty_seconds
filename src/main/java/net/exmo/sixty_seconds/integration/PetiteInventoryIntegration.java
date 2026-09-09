@@ -8,61 +8,73 @@ import net.exmo.sixty_seconds.weights.SixtySecondsWeightConfig;
 import net.exmo.sixty_seconds.weights.SixtySecondsWeightConfigStore;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.fml.ModList;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
-/**
- * Bridges the 60 Seconds weight table to PetiteInventory's footprint rules.
- *
- * <p>The rule is an area, not a stack-size rule: one stack still occupies the
- * footprint of one item.  This is the same convention used by PetiteInventory
- * and keeps the result consistent in chests, supply boxes and the player UI.</p>
- */
+/** Installs 60 Seconds' weight table directly into PetiteInventory's cache. */
 public final class PetiteInventoryIntegration {
     private static boolean installed;
 
     private PetiteInventoryIntegration() {
     }
 
+    /**
+     * PetiteInventory is a required dependency, so this deliberately uses its
+     * public rule API directly.  The rules stay in memory and are rebuilt from
+     * default_weights.json/config on every launch; we do not overwrite
+     * PetiteInventory's own config file.
+     */
     public static void installWeightRules() {
-        if (installed || !ModList.get().isLoaded("petiteinventory")) {
-            return;
-        }
+        if (installed) return;
         installed = true;
-        try {
-            ItemSizeRuleCache.loadAllRule();
-            SixtySecondsWeightConfig config = SixtySecondsWeightConfigStore.defaultConfig();
-            for (var entry : BuiltInRegistries.ITEM.entrySet()) {
-                var id = BuiltInRegistries.ITEM.getKey(entry.getValue());
-                if (id == null || !SixtySeconds.MOD_ID.equals(id.getNamespace())) {
-                    continue;
-                }
-                ItemStack sample = new ItemStack(entry.getValue());
-                double weight = SixtySecondsWeightCalc.unitWeight(sample, config);
-                ItemSizeRule rule = new ItemSizeRule();
-                rule.match = List.of(id.toString());
-                rule.result = footprint(weight);
-                ItemSizeRuleCache.putEntry(rule);
-            }
-            // Keep the generated rules visible to PetiteInventory's config and
-            // make the mapping survive a reload without overwriting other mods'
-            // rules.
-            ItemSizeRuleCache.saveConfig();
-            SixtySeconds.LOGGER.info("Installed weight-based PetiteInventory footprints for 60 Seconds items");
-        } catch (LinkageError | RuntimeException error) {
-            // PetiteInventory is an optional runtime dependency.  A mismatched
-            // version should not prevent the 60 Seconds game from starting.
-            installed = false;
-            SixtySeconds.LOGGER.warn("Could not install PetiteInventory weight footprints", error);
+
+        ItemSizeRuleCache.loadAllRule();
+        SixtySecondsWeightConfig config = SixtySecondsWeightConfigStore.defaultConfig();
+        Map<String, List<String>> exactRules = new LinkedHashMap<>();
+
+        for (var entry : BuiltInRegistries.ITEM.entrySet()) {
+            var id = BuiltInRegistries.ITEM.getKey(entry.getValue());
+            if (id == null || !SixtySeconds.MOD_ID.equals(id.getNamespace())) continue;
+
+            String footprint = footprint(SixtySecondsWeightCalc.unitWeight(
+                    new ItemStack(entry.getValue()), config));
+            exactRules.computeIfAbsent(footprint, ignored -> new ArrayList<>()).add(id.toString());
         }
+
+        for (Map.Entry<String, List<String>> entry : exactRules.entrySet()) {
+            putRule(entry.getValue(), entry.getKey());
+        }
+
+        // TACZ stores the concrete gun id in custom_data.  PetiteInventory
+        // exposes the same NBT rule syntax, so these entries also use the
+        // actual pre-existing PetiteInventory matcher instead of a second
+        // footprint implementation in this mod.
+        Map<String, List<String>> taczGunRules = new LinkedHashMap<>();
+        for (String key : config.itemWeights.keySet()) {
+            if (!key.startsWith("tacz:")) continue;
+            String match = "tacz:modern_kinetic_gun{GunId:\"" + key + "\"}";
+            String footprint = footprint(config.itemWeights.getOrDefault(key, config.defaultWeight));
+            taczGunRules.computeIfAbsent(footprint, ignored -> new ArrayList<>()).add(match);
+        }
+        for (Map.Entry<String, List<String>> entry : taczGunRules.entrySet()) {
+            putRule(entry.getValue(), entry.getKey());
+        }
+
+        SixtySeconds.LOGGER.info("Installed weight footprints in PetiteInventory for {} 60 Seconds items",
+                exactRules.values().stream().mapToInt(List::size).sum());
     }
 
-    /**
-     * Converts weight to a rectangle with exactly {@code ceil(weight)} cells.
-     * PetiteInventory stores rectangular footprints, so prime/non-factorable
-     * sizes use a 1-by-N strip instead of silently rounding the area again.
-     */
+    private static void putRule(List<String> matches, String result) {
+        ItemSizeRule rule = new ItemSizeRule();
+        rule.match = matches;
+        rule.result = result;
+        ItemSizeRuleCache.putEntry(rule);
+    }
+
+    /** Converts weight to exactly ceil(weight) PetiteInventory cells. */
     public static String footprint(double weight) {
         int cells = Math.max(1, (int) Math.ceil(Math.max(0.0, weight)));
         int width = 1;
@@ -72,7 +84,6 @@ public final class PetiteInventoryIntegration {
                 break;
             }
         }
-        int height = cells / width;
-        return width + "*" + height;
+        return width + "*" + (cells / width);
     }
 }

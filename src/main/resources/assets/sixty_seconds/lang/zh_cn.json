@@ -1,4 +1,13 @@
 {
+  "gui.sixty_seconds.inventory.brand": "60秒",
+  "gui.sixty_seconds.inventory.header": "战术物品栏",
+  "gui.sixty_seconds.inventory.live_loadout": "当前装备",
+  "gui.sixty_seconds.inventory.survivor": "幸存者",
+  "gui.sixty_seconds.inventory.equipment": "装备",
+  "gui.sixty_seconds.inventory.quick_access": "快捷栏",
+  "gui.sixty_seconds.inventory.backpack": "背包",
+  "gui.sixty_seconds.inventory.slots": "9×5  //  %s/54 格",
+  "gui.sixty_seconds.inventory.load": "负重  %s / %s 千克",
   "container.sixty_seconds.special_inventory": "60秒物品栏",
   "command.sixty_seconds.inventory.player_only": "此指令只能由玩家执行",
   "item.sixty_seconds.loot_magnifier": "物资放大镜",
