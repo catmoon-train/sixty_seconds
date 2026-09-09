@@ -56,7 +56,7 @@ public final class SixtySecBridgeClient {
         if (specialInventoryForced) {
             // House searching is still the legacy phase, even if the command
             // was used before the player went outside.
-            if (SixtySecondsSearchZonesClient.isInSearchZone()) {
+            if (shouldDisablePetiteInventory()) {
                 return false;
             }
             if (inSixtySecondsMode() && gameComponent != null
@@ -83,6 +83,37 @@ public final class SixtySecBridgeClient {
         return specialInventoryForced
                 || (status == SixtySecGameWorldComponent.GameStatus.ACTIVE
                 && SixtySecondsStatsComponent.KEY.get(player).dayNumber > 0);
+    }
+
+    /**
+     * Whether the first house-search phase must use the legacy inventory.
+     * The client does not receive a search-zone packet for the initial house,
+     * so checking only {@link SixtySecondsSearchZonesClient} is insufficient.
+     */
+    public static boolean shouldDisablePetiteInventory() {
+        if (SixtySecondsSearchZonesClient.isInSearchZone()) {
+            return true;
+        }
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player == null || !inSixtySecondsMode() || gameComponent == null) {
+            return false;
+        }
+        return gameComponent.getGameStatus() == SixtySecGameWorldComponent.GameStatus.ACTIVE
+                && SixtySecondsStatsComponent.KEY.get(player).dayNumber <= 0;
+    }
+
+    /** Forces PetiteInventory on for every container after the first shelter day. */
+    public static boolean shouldForcePetiteInventory() {
+        if (shouldDisablePetiteInventory()) {
+            return false;
+        }
+        if (specialInventoryForced) {
+            return true;
+        }
+        LocalPlayer player = Minecraft.getInstance().player;
+        return player != null && inSixtySecondsMode() && gameComponent != null
+                && gameComponent.getGameStatus() == SixtySecGameWorldComponent.GameStatus.ACTIVE
+                && SixtySecondsStatsComponent.KEY.get(player).dayNumber > 0;
     }
 
     /** Called when the server has opened the menu through /60s inventory. */

@@ -64,7 +64,7 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
         SixtySecBridgeClient.clearSpecialInventoryRequest();
         // Opening this screen through /60s inventory is an explicit opt-in.
         // Keep that choice for subsequent E presses during preparation.
-        boolean inSearchZone = SixtySecondsSearchZonesClient.isInSearchZone();
+        boolean inSearchZone = SixtySecBridgeClient.shouldDisablePetiteInventory();
         if (!inSearchZone) {
             SixtySecBridgeClient.forceSpecialInventoryUntilRoundStart();
         }

@@ -53,8 +53,6 @@ public record OpenSpecialInventoryC2SPacket(boolean preparationOverride) impleme
         if (!SixtySecondsMod.isActive(player.level())) return false;
         // Normal E opens are limited to game days. The explicit command may
         // opt into the new menu during the preparation/house-search phase.
-        return data.phase == SixtySecondsPhase.DAY
-                || (preparationOverride && data.phase == SixtySecondsPhase.PREPARATION
-                && !SixtySecondsSearchZones.isInSearchZone(player));
+        return data.phase == SixtySecondsPhase.DAY;
     }
 }

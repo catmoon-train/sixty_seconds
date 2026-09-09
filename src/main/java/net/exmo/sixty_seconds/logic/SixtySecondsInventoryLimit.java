@@ -122,6 +122,12 @@ public final class SixtySecondsInventoryLimit {
         if (GameUtils.isPlayerSpectatingOrCreative(player)) {
             return false;
         }
+        // The custom menu has its own 27-slot base backpack plus the separate
+        // extra-inventory container.  Never apply vanilla barrier locking to
+        // either side of that menu.
+        if (menu instanceof SpecialInventoryMenu) {
+            return false;
+        }
         if (slotIndex >= 0 && slotIndex < menu.slots.size()) {
             Slot slot = menu.slots.get(slotIndex);
             if (slot.container == player.getInventory() && isBarrier(slot.getItem())) {
@@ -138,7 +144,7 @@ public final class SixtySecondsInventoryLimit {
 
     private static void clearMainBarriers(ServerPlayer player) {
         Inventory inventory = player.getInventory();
-        for (int slot = 9; slot <= LAST_MAIN_SLOT; slot++) {
+        for (int slot = 0; slot <= LAST_MAIN_SLOT; slot++) {
             if (isBarrier(inventory.getItem(slot))) {
                 inventory.setItem(slot, ItemStack.EMPTY);
             }

@@ -3,6 +3,7 @@ package net.exmo.sixty_seconds.client.screen;
 import com.sighs.petiteinventory.client.ClientInventoryContext;
 import com.sighs.petiteinventory.client.ScreenLayoutSettings;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
+import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.fabric.ClientPlayNetworking;
 import net.exmo.sixty_seconds.content.item.SixtySecondsLootMagnifierItem;
 import net.exmo.sixty_seconds.menu.SupplySearchMenu;
@@ -41,7 +42,7 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
         this.inventoryLabelY = 74;
         // House searching uses the legacy layout.  PetiteInventory resumes
         // after the player has returned to the shelter.
-        ScreenLayoutSettings.setEnabled(this, !SixtySecondsSearchZonesClient.isInSearchZone());
+        ScreenLayoutSettings.setEnabled(this, !SixtySecBridgeClient.shouldDisablePetiteInventory());
         ClientInventoryContext.invalidate();
         super.init();
     }
