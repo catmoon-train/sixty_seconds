@@ -6,6 +6,7 @@ import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
+import net.exmo.sixty_seconds.client.screen.SixtySecondsSearchZonesClient;
 
 public final class SixtySecBridgeClient {
     public static SixtySecGameWorldComponent gameComponent;
@@ -53,6 +54,11 @@ public final class SixtySecBridgeClient {
         // component yet; it is precisely what makes subsequent E presses
         // reopen the same menu.
         if (specialInventoryForced) {
+            // House searching is still the legacy phase, even if the command
+            // was used before the player went outside.
+            if (SixtySecondsSearchZonesClient.isInSearchZone()) {
+                return false;
+            }
             if (inSixtySecondsMode() && gameComponent != null
                     && (gameComponent.getGameStatus() == SixtySecGameWorldComponent.GameStatus.INACTIVE
                     || gameComponent.getGameStatus() == SixtySecGameWorldComponent.GameStatus.STOPPING)) {

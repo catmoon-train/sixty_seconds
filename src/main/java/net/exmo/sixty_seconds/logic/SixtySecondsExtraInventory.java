@@ -6,9 +6,9 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-/** The 18 slots that extend the vanilla 36-slot player inventory to 54. */
+/** The 27 slots that extend the vanilla 27-slot backpack to 54. */
 public final class SixtySecondsExtraInventory {
-    public static final int SIZE = 18;
+    public static final int SIZE = 27;
 
     private SixtySecondsExtraInventory() {
     }

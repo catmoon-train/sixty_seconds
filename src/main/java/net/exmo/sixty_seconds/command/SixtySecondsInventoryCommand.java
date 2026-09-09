@@ -2,6 +2,7 @@ package net.exmo.sixty_seconds.command;
 
 import com.mojang.brigadier.context.CommandContext;
 import net.exmo.sixty_seconds.bridge.fabric.CommandRegistrationCallback;
+import net.exmo.sixty_seconds.arena.SixtySecondsSearchZones;
 import net.exmo.sixty_seconds.menu.SpecialInventoryMenu;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -29,6 +30,11 @@ public final class SixtySecondsInventoryCommand {
         } catch (Exception ignored) {
             context.getSource().sendFailure(Component.translatable(
                     "command.sixty_seconds.inventory.player_only"));
+            return 0;
+        }
+        if (SixtySecondsSearchZones.isInSearchZone(player)) {
+            context.getSource().sendFailure(Component.translatable(
+                    "command.sixty_seconds.inventory.search_blocked"));
             return 0;
         }
         player.openMenu(new net.minecraft.world.SimpleMenuProvider(

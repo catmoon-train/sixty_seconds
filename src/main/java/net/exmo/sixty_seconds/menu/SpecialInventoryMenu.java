@@ -32,6 +32,15 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
         this.player = inventory.player;
         this.extra = new SixtySecondsExtraInventory.ContainerView(player);
 
+        // The old inventory limiter uses barrier stacks as temporary locks.
+        // They are not real items and must not occupy the 27 base backpack
+        // slots in the new menu.
+        for (int slot = 9; slot <= 35; slot++) {
+            if (inventory.getItem(slot).is(net.minecraft.world.item.Items.BARRIER)) {
+                inventory.setItem(slot, ItemStack.EMPTY);
+            }
+        }
+
         // Main inventory: the 27 normal backpack slots.  PetiteInventory
         // treats these coordinates as a real 9x3 grid; the 18px spacing is
         // intentionally left untouched for its footprint/click mixins.

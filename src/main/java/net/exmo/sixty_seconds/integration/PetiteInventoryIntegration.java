@@ -94,6 +94,11 @@ public final class PetiteInventoryIntegration {
     /** Converts weight to exactly ceil(weight) PetiteInventory cells. */
     public static String footprint(double weight) {
         int cells = Math.max(1, (int) Math.ceil(Math.max(0.0, weight)));
+        // Keep the requested orientation for the two smallest multi-cell
+        // items: 2 -> 1*2 and 3 -> 1*3.
+        if (cells == 2 || cells == 3) {
+            return "1*" + cells;
+        }
         int width = 1;
         for (int candidate = Math.min(cells, 9); candidate >= 2; candidate--) {
             if (cells % candidate == 0) {

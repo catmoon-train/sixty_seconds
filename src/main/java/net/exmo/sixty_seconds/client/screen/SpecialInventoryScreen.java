@@ -64,10 +64,13 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
         SixtySecBridgeClient.clearSpecialInventoryRequest();
         // Opening this screen through /60s inventory is an explicit opt-in.
         // Keep that choice for subsequent E presses during preparation.
-        SixtySecBridgeClient.forceSpecialInventoryUntilRoundStart();
+        boolean inSearchZone = SixtySecondsSearchZonesClient.isInSearchZone();
+        if (!inSearchZone) {
+            SixtySecBridgeClient.forceSpecialInventoryUntilRoundStart();
+        }
         // PetiteInventory normally lets the player opt into the player-grid
         // layout per screen.  This screen is intentionally always opted in.
-        ScreenLayoutSettings.setEnabled(this, true);
+        ScreenLayoutSettings.setEnabled(this, !inSearchZone);
         ClientInventoryContext.invalidate();
         this.imageWidth = WIDTH;
         this.imageHeight = HEIGHT;
@@ -126,7 +129,7 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
         graphics.drawString(this.font, Component.translatable(
                 "gui.sixty_seconds.inventory.backpack"), x + DIVIDER_X + 10, y + 31, TEXT, false);
         graphics.drawString(this.font, Component.translatable(
-                "gui.sixty_seconds.inventory.slots", 36 + this.menu.unlockedExtraSlots()),
+                "gui.sixty_seconds.inventory.slots", 27 + this.menu.unlockedExtraSlots()),
                 x + WIDTH - 114, y + 31, MUTED, false);
         drawWeight(graphics, x, y);
     }

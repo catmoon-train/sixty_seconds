@@ -464,6 +464,7 @@ public final class SixtySecondsClient {
         // 离开世界/切换存档时清空天气预览，避免旧世界状态带入新世界
         net.exmo.sixty_seconds.weather.ClientWeatherState.reset();
         SixtySecBridgeClient.clearSpecialInventoryOverride();
+        net.exmo.sixty_seconds.client.screen.SixtySecondsSearchZonesClient.setInSearchZone(false);
         for (ClientPlayConnectionEvents.Disconnect listener : ClientPlayConnectionEvents.DISCONNECT.invokers()) {
             listener.onPlayDisconnect(client.getConnection(), client);
         }

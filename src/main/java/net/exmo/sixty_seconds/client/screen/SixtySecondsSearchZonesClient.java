@@ -1,5 +1,7 @@
 package net.exmo.sixty_seconds.client.screen;
 
+import com.sighs.petiteinventory.client.ClientInventoryContext;
+
 /**
  * 客户端搜索区状态——由服务端网络包驱动。
  * <p>
@@ -19,5 +21,9 @@ public final class SixtySecondsSearchZonesClient {
 
     public static void setInSearchZone(boolean value) {
         inSearchZone = value;
+        // Rebuild the PetiteInventory mapping immediately when a teleport
+        // changes the phase, so an already-open container cannot keep stale
+        // multi-cell coordinates.
+        ClientInventoryContext.invalidate();
     }
 }

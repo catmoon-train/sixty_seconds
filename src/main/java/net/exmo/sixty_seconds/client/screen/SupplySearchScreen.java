@@ -39,9 +39,9 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
     protected void init() {
         this.imageHeight = 168;
         this.inventoryLabelY = 74;
-        // The storage side of this menu must be included in PetiteInventory's
-        // grid so a magnifier or any weighted item can occupy several cells.
-        ScreenLayoutSettings.setEnabled(this, true);
+        // House searching uses the legacy layout.  PetiteInventory resumes
+        // after the player has returned to the shelter.
+        ScreenLayoutSettings.setEnabled(this, !SixtySecondsSearchZonesClient.isInSearchZone());
         ClientInventoryContext.invalidate();
         super.init();
     }

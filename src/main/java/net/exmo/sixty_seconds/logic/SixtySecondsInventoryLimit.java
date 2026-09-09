@@ -14,6 +14,7 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.exmo.sixty_seconds.menu.SpecialInventoryMenu;
 
 /**
  * 背包槽位限制（用屏障占位 + 弹出手动放入；仅 60s 模式相位机驱动，结束清除，不改共享代码）：
@@ -31,7 +32,7 @@ public final class SixtySecondsInventoryLimit {
     public static final int NON_FATHER_DAY_SLOTS = 13;
     public static final int LAST_MAIN_SLOT = 35;
     /** 扩容模块最多可解锁的额外槽位数。 */
-    public static final int MAX_EXTRA_UNLOCK = 18;
+    public static final int MAX_EXTRA_UNLOCK = 27;
 
     private SixtySecondsInventoryLimit() {
     }
@@ -44,6 +45,13 @@ public final class SixtySecondsInventoryLimit {
         boolean prep = data.phase == SixtySecondsPhase.PREPARATION;
         for (ServerPlayer player : level.players()) {
             if (GameUtils.isPlayerSpectatingOrCreative(player)) {
+                continue;
+            }
+            // The special menu exposes the complete base backpack.  The
+            // legacy barrier system must not turn those 27 slots back into
+            // fake locked slots while the menu is open.
+            if (player.containerMenu instanceof SpecialInventoryMenu) {
+                clearMainBarriers(player);
                 continue;
             }
             int allowed;
@@ -126,6 +134,15 @@ public final class SixtySecondsInventoryLimit {
 
     private static ItemStack barrier() {
         return new ItemStack(Items.BARRIER);
+    }
+
+    private static void clearMainBarriers(ServerPlayer player) {
+        Inventory inventory = player.getInventory();
+        for (int slot = 9; slot <= LAST_MAIN_SLOT; slot++) {
+            if (isBarrier(inventory.getItem(slot))) {
+                inventory.setItem(slot, ItemStack.EMPTY);
+            }
+        }
     }
 
     private static boolean isBarrier(ItemStack stack) {

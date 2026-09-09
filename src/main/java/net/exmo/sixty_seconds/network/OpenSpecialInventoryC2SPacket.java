@@ -3,6 +3,7 @@ package net.exmo.sixty_seconds.network;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.SixtySecondsPhase;
+import net.exmo.sixty_seconds.arena.SixtySecondsSearchZones;
 import net.exmo.sixty_seconds.menu.SpecialInventoryMenu;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -53,6 +54,7 @@ public record OpenSpecialInventoryC2SPacket(boolean preparationOverride) impleme
         // Normal E opens are limited to game days. The explicit command may
         // opt into the new menu during the preparation/house-search phase.
         return data.phase == SixtySecondsPhase.DAY
-                || (preparationOverride && data.phase == SixtySecondsPhase.PREPARATION);
+                || (preparationOverride && data.phase == SixtySecondsPhase.PREPARATION
+                && !SixtySecondsSearchZones.isInSearchZone(player));
     }
 }
