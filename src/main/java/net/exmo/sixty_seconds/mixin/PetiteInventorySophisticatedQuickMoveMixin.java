@@ -1,6 +1,7 @@
 package net.exmo.sixty_seconds.mixin;
 
 import net.exmo.sixty_seconds.logic.SixtySecondsInventoryLimit;
+import net.exmo.sixty_seconds.menu.SpecialInventoryMenu;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +18,8 @@ public abstract class PetiteInventorySophisticatedQuickMoveMixin {
                                                            Player player,
                                                            int slotIndex,
                                                            CallbackInfoReturnable<ItemStack> cir) {
-        if (SixtySecondsInventoryLimit.isPetiteInventoryDisabled(player)) {
+        if (menu instanceof SpecialInventoryMenu
+                || SixtySecondsInventoryLimit.isPetiteInventoryDisabled(player)) {
             // null means "not handled" to PetiteInventory's event listener;
             // vanilla then executes the menu's normal quickMoveStack method.
             cir.setReturnValue(null);

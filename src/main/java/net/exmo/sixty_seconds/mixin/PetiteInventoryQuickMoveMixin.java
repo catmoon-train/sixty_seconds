@@ -1,6 +1,7 @@
 package net.exmo.sixty_seconds.mixin;
 
 import net.exmo.sixty_seconds.logic.SixtySecondsInventoryLimit;
+import net.exmo.sixty_seconds.menu.SpecialInventoryMenu;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
@@ -24,7 +25,8 @@ public abstract class PetiteInventoryQuickMoveMixin {
                                                            ClickType clickType,
                                                            Player player,
                                                            CallbackInfoReturnable<Boolean> cir) {
-        if (SixtySecondsInventoryLimit.isPetiteInventoryDisabled(player)) {
+        if (menu instanceof SpecialInventoryMenu
+                || SixtySecondsInventoryLimit.isPetiteInventoryDisabled(player)) {
             cir.setReturnValue(false);
         }
     }
