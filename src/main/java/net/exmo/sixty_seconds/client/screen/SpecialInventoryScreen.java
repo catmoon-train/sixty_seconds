@@ -2,6 +2,7 @@ package net.exmo.sixty_seconds.client.screen;
 
 import com.sighs.petiteinventory.api.ItemArea;
 import com.sighs.petiteinventory.api.PetiteInventoryApi;
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.client.WeightConfigClient;
 import net.exmo.sixty_seconds.menu.SpecialInventoryMenu;
 import net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem;
@@ -11,27 +12,33 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 
-/** Tarkov-inspired field inventory: survivor and equipment on the left, bag on the right. */
+/** PNG-backed Tarkov-style inventory with square, runtime-sized backpack cells. */
 public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInventoryMenu> {
+    private static final ResourceLocation TEXTURE = SixtySeconds.id("textures/gui/special_inventory_v2.png");
+    private static final int TEXTURE_WIDTH = 1432;
+    private static final int TEXTURE_HEIGHT = 1072;
+
     private static final int WIDTH = 400;
     private static final int MIN_HEIGHT = 300;
-    private static final int DIVIDER_X = 202;
-    private static final int BAG_X = 216;
-    private static final int BAG_Y = 48;
+    private static final int DIVIDER_X = 180;
+    private static final int BAG_X = 190;
+    private static final int BAG_Y = 39;
+    /** The backpack grid is intentionally square; all item areas use this same cell size. */
+    private static final int BAG_CELL = 23;
     private static final int BAG_COLUMNS = 9;
+    // The hotbar is intentionally kept on the left, so the right-hand
+    // backpack has 27 base slots plus two unlockable rows (5 rows total).
+    private static final int BAG_ROWS = 5;
 
-    private static final int OUTER = 0xF20A0E13;
-    private static final int TOPBAR = 0xFF101820;
-    private static final int PANEL = 0xE91A232D;
-    private static final int PANEL_ALT = 0xE9141B23;
-    private static final int EDGE = 0xFF465563;
-    private static final int EDGE_SOFT = 0xFF2C3945;
-    private static final int SLOT = 0xB51B2731;
-    private static final int SLOT_HOVER = 0xD02D3A45;
+    private static final int GRID_BACKGROUND = 0xF0162028;
+    private static final int GRID_SLOT = 0xE01C2A33;
+    private static final int GRID_HOVER = 0xF03D5964;
+    private static final int GRID_EDGE = 0xFF53636D;
     private static final int TEXT = 0xFFE4E8E9;
     private static final int MUTED = 0xFF8E9BA4;
     private static final int ACCENT = 0xFFE0B15A;
@@ -45,7 +52,6 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
         super(menu, inventory, title);
         this.imageWidth = WIDTH;
         this.imageHeight = MIN_HEIGHT;
-        // All text is drawn by the custom field-inventory header below.
         this.titleLabelX = -1000;
         this.inventoryLabelX = -1000;
         rebuildLayout();
@@ -54,7 +60,8 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
     @Override
     protected void init() {
         rebuildLayout();
-        this.imageHeight = Math.max(MIN_HEIGHT, BAG_Y + backpackLayout.rows() * 18 + 72);
+        this.imageHeight = Math.max(MIN_HEIGHT,
+                BAG_Y + Math.max(BAG_ROWS, backpackLayout.rows()) * BAG_CELL + 72);
         super.init();
     }
 
@@ -72,54 +79,30 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
         int x = this.leftPos;
         int y = this.topPos;
 
-        graphics.fillGradient(x, y, x + this.imageWidth, y + this.imageHeight, OUTER, 0xFF101820);
-        graphics.fill(x, y, x + this.imageWidth, y + 28, TOPBAR);
-        graphics.fill(x + 1, y + 27, x + this.imageWidth - 1, y + 29, ACCENT_DIM);
-        graphics.renderOutline(x, y, this.imageWidth, this.imageHeight, EDGE);
-
-        // Two clear work areas: survivor/equipment and backpack.
-        graphics.fill(x + 10, y + 36, x + DIVIDER_X - 8, y + this.imageHeight - 12, PANEL);
-        graphics.fill(x + DIVIDER_X + 6, y + 36, x + this.imageWidth - 10,
-                y + this.imageHeight - 12, PANEL_ALT);
-        graphics.renderOutline(x + 10, y + 36, DIVIDER_X - 18, this.imageHeight - 48, EDGE_SOFT);
-        graphics.renderOutline(x + DIVIDER_X + 6, y + 36,
-                this.imageWidth - DIVIDER_X - 16, this.imageHeight - 48, EDGE_SOFT);
-        graphics.fill(x + DIVIDER_X - 1, y + 36, x + DIVIDER_X + 1,
-                y + this.imageHeight - 12, 0xFF26333D);
-
-        drawHeader(graphics, x, y);
-        drawLeftLabels(graphics, x, y);
-        drawRightLabels(graphics, x, y);
-        drawSlotBoxes(graphics, mouseX, mouseY);
+        // The generated PNG supplies the metal frame, lighting, bevels and decoration.
+        graphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, this.imageHeight,
+                TEXTURE_WIDTH, TEXTURE_HEIGHT);
+        drawTextLabels(graphics, x, y);
+        drawSquareBackpackGrid(graphics, mouseX, mouseY);
 
         InventoryScreen.renderEntityInInventoryFollowsMouse(graphics,
-                x + 23, y + 38, x + 189, y + 132,
-                55, 0.0F, mouseX, mouseY, this.menu.getPlayer());
+                x + 18, y + 40, x + 96, y + 177,
+                58, 0.0F, mouseX, mouseY, this.menu.getPlayer());
     }
 
-    private void drawHeader(GuiGraphics graphics, int x, int y) {
+    private void drawTextLabels(GuiGraphics graphics, int x, int y) {
         graphics.drawString(this.font, Component.literal("60 SECONDS"), x + 14, y + 8, ACCENT, false);
         graphics.drawString(this.font, Component.literal("FIELD INVENTORY"), x + 91, y + 8, TEXT, false);
         graphics.drawString(this.font, Component.literal("LIVE LOADOUT"), x + WIDTH - 91, y + 8, MUTED, false);
-        graphics.fill(x + 14, y + 21, x + 22, y + 23, ACCENT);
-        graphics.fill(x + 25, y + 21, x + 29, y + 23, ACCENT_DIM);
-    }
-
-    private void drawLeftLabels(GuiGraphics graphics, int x, int y) {
-        graphics.drawString(this.font, Component.literal("SURVIVOR"), x + 18, y + 39, TEXT, false);
-        graphics.drawString(this.font, Component.literal("EQUIPMENT"), x + 18, y + 137, MUTED, false);
-        graphics.drawString(this.font, Component.literal("QUICK ACCESS"), x + 18, y + 210, MUTED, false);
-        graphics.fill(x + 18, y + 228, x + 180, y + 229, EDGE_SOFT);
-        drawWeight(graphics, x, y);
-    }
-
-    private void drawRightLabels(GuiGraphics graphics, int x, int y) {
-        graphics.drawString(this.font, Component.literal("BACKPACK"), x + DIVIDER_X + 16, y + 39, TEXT, false);
+        graphics.drawString(this.font, Component.literal("SURVIVOR"), x + 18, y + 31, TEXT, false);
+        graphics.drawString(this.font, Component.literal("EQUIPMENT"), x + 103, y + 31, MUTED, false);
+        graphics.drawString(this.font, Component.literal("QUICK ACCESS"), x + 18, y + 180, MUTED, false);
+        graphics.drawString(this.font, Component.literal("BACKPACK"), x + DIVIDER_X + 10, y + 31, TEXT, false);
         graphics.drawString(this.font,
-                Component.literal("9 x 6  //  " + (SpecialInventoryMenu.PLAYER_MAIN_END
+                Component.literal("9 x 5  //  " + (SpecialInventoryMenu.PLAYER_MAIN_END
                         + this.menu.unlockedExtraSlots()) + "/54 SLOTS"),
-                x + WIDTH - 114, y + 39, MUTED, false);
-        graphics.fill(x + DIVIDER_X + 16, y + 43, x + WIDTH - 18, y + 44, ACCENT_DIM);
+                x + WIDTH - 114, y + 31, MUTED, false);
+        drawWeight(graphics, x, y);
     }
 
     private void drawWeight(GuiGraphics graphics, int x, int y) {
@@ -129,50 +112,57 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
         double max = SixtySecondsTraitSystem.traitMaxLoad(this.menu.getPlayer(), config.maxLoad);
         float ratio = (float) Math.max(0.0, Math.min(1.0, load / Math.max(0.01, max)));
         int barX = x + 18;
-        int barY = y + 273;
+        int barY = y + 267;
         int barW = 162;
         graphics.drawString(this.font,
                 Component.literal(String.format("LOAD  %.1f / %.0f KG", load, max)),
-                barX, y + 258, ratio >= 1.0f ? LOAD_RED : TEXT, false);
+                barX, y + 253, ratio >= 1.0f ? LOAD_RED : TEXT, false);
         graphics.fill(barX, barY, barX + barW, barY + 7, 0xFF0C1116);
         graphics.fill(barX + 1, barY + 1, barX + 1 + Math.round((barW - 2) * ratio), barY + 6,
                 ratio >= 1.0f ? LOAD_RED : LOAD_GREEN);
-        graphics.renderOutline(barX, barY, barW, 7, EDGE);
+        graphics.renderOutline(barX, barY, barW, 7, 0xFF465563);
     }
 
-    private void drawSlotBoxes(GuiGraphics graphics, int mouseX, int mouseY) {
-        for (Slot slot : this.menu.slots) {
-            int slotX = slot.x;
-            int slotY = slot.y;
-            PackedItemLayout.Position packed = backpackLayout.position(slot.index);
-            if (packed != null) {
-                slotX = BAG_X + packed.column() * 18;
-                slotY = BAG_Y + packed.row() * 18;
-            }
-            if (slotX < 0 || slotY < 0 || slotX + 18 > this.imageWidth
-                    || slotY + 18 > this.imageHeight) continue;
-            boolean hovered = mouseX >= this.leftPos + slotX - 1 && mouseX < this.leftPos + slotX + 17
-                    && mouseY >= this.topPos + slotY - 1 && mouseY < this.topPos + slotY + 17;
-            graphics.fill(this.leftPos + slotX - 1, this.topPos + slotY - 1,
-                    this.leftPos + slotX + 17, this.topPos + slotY + 17,
-                    hovered ? SLOT_HOVER : SLOT);
-            graphics.renderOutline(this.leftPos + slotX - 1, this.topPos + slotY - 1,
-                    18, 18, hovered ? ACCENT_DIM : EDGE_SOFT);
+    /** Draws the actual square cells over the PNG's decorative right-hand bay. */
+    private void drawSquareBackpackGrid(GuiGraphics graphics, int mouseX, int mouseY) {
+        int gridWidth = BAG_COLUMNS * BAG_CELL;
+        int gridHeight = Math.max(BAG_ROWS, backpackLayout.rows()) * BAG_CELL;
+        graphics.fill(this.leftPos + BAG_X, this.topPos + BAG_Y,
+                this.leftPos + BAG_X + gridWidth, this.topPos + BAG_Y + gridHeight,
+                GRID_BACKGROUND);
+        graphics.renderOutline(this.leftPos + BAG_X - 1, this.topPos + BAG_Y - 1,
+                gridWidth + 2, gridHeight + 2, GRID_EDGE);
+
+        for (int index = SpecialInventoryMenu.PLAYER_MAIN_START;
+             index < SpecialInventoryMenu.EXTRA_END; index++) {
+            PackedItemLayout.Position position = backpackLayout.position(index);
+            if (position == null) continue;
+            int slotX = BAG_X + position.column() * BAG_CELL;
+            int slotY = BAG_Y + position.row() * BAG_CELL;
+            int slotWidth = position.width() * BAG_CELL;
+            int slotHeight = position.height() * BAG_CELL;
+            boolean hovered = mouseX >= this.leftPos + slotX && mouseX < this.leftPos + slotX + slotWidth
+                    && mouseY >= this.topPos + slotY && mouseY < this.topPos + slotY + slotHeight;
+            graphics.fill(this.leftPos + slotX + 1, this.topPos + slotY + 1,
+                    this.leftPos + slotX + slotWidth - 1,
+                    this.topPos + slotY + slotHeight - 1,
+                    hovered ? GRID_HOVER : GRID_SLOT);
+            graphics.renderOutline(this.leftPos + slotX, this.topPos + slotY,
+                    slotWidth, slotHeight, hovered ? ACCENT : GRID_EDGE);
         }
     }
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        // The vanilla title and "Inventory" labels are intentionally replaced
-        // by the field-inventory header drawn in renderBg.
+        // All labels are part of the custom PNG-backed layout.
     }
 
     @Override
     protected void renderSlot(GuiGraphics graphics, Slot slot) {
-        PackedItemLayout.Position packed = backpackLayout.position(slot.index);
-        if (packed != null) {
-            int targetX = BAG_X + packed.column() * 18;
-            int targetY = BAG_Y + packed.row() * 18;
+        PackedItemLayout.Position position = backpackLayout.position(slot.index);
+        if (position != null) {
+            int targetX = BAG_X + position.column() * BAG_CELL;
+            int targetY = BAG_Y + position.row() * BAG_CELL;
             graphics.pose().pushPose();
             graphics.pose().translate(targetX - slot.x, targetY - slot.y, 0);
             super.renderSlot(graphics, slot);
@@ -199,11 +189,12 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
                 return;
             }
             if (area.width() <= 1 && area.height() <= 1) continue;
-            PackedItemLayout.Position packed = backpackLayout.position(slot.index);
-            int x = packed == null ? slot.x : BAG_X + packed.column() * 18;
-            int y = packed == null ? slot.y : BAG_Y + packed.row() * 18;
-            graphics.renderOutline(this.leftPos + x - 1, this.topPos + y - 1,
-                    area.width() * 18, area.height() * 18, ACCENT);
+            PackedItemLayout.Position position = backpackLayout.position(slot.index);
+            int x = position == null ? slot.x : BAG_X + position.column() * BAG_CELL;
+            int y = position == null ? slot.y : BAG_Y + position.row() * BAG_CELL;
+            int cell = position == null ? 18 : BAG_CELL;
+            graphics.renderOutline(this.leftPos + x, this.topPos + y,
+                    area.width() * cell, area.height() * cell, ACCENT);
         }
     }
 
@@ -213,12 +204,12 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
         double y = mouseY - this.topPos;
         for (int index = SpecialInventoryMenu.PLAYER_MAIN_START;
              index < SpecialInventoryMenu.EXTRA_END; index++) {
-            PackedItemLayout.Position packed = backpackLayout.position(index);
-            if (packed == null) continue;
-            int left = BAG_X + packed.column() * 18;
-            int top = BAG_Y + packed.row() * 18;
-            if (x >= left && x < left + packed.width() * 18
-                    && y >= top && y < top + packed.height() * 18) {
+            PackedItemLayout.Position position = backpackLayout.position(index);
+            if (position == null) continue;
+            int left = BAG_X + position.column() * BAG_CELL;
+            int top = BAG_Y + position.row() * BAG_CELL;
+            if (x >= left && x < left + position.width() * BAG_CELL
+                    && y >= top && y < top + position.height() * BAG_CELL) {
                 onMouseClick(this.menu.getSlot(index), index, button, ClickType.PICKUP);
                 return true;
             }
