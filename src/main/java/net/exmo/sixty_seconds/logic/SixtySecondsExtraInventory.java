@@ -5,6 +5,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerPlayer;
 
 /** The 27 slots that extend the vanilla 27-slot backpack to 54. */
 public final class SixtySecondsExtraInventory {
@@ -55,23 +56,25 @@ public final class SixtySecondsExtraInventory {
         @Override
         public ItemStack removeItemNoUpdate(int slot) {
             if (slot < 0 || slot >= SIZE) return ItemStack.EMPTY;
-            ItemStack result = items().get(slot);
+            ItemStack result = items().get(slot).copy();
             items().set(slot, ItemStack.EMPTY);
+            setChanged();
             return result;
         }
 
         @Override
         public void setItem(int slot, ItemStack stack) {
             if (slot < 0 || slot >= SIZE) return;
-            items().set(slot, stack);
+            items().set(slot, stack.isEmpty() ? ItemStack.EMPTY : stack.copy());
             setChanged();
         }
 
         @Override
         public void setChanged() {
-            // AbstractContainerMenu.broadcastChanges() is responsible for the
-            // network update.  Syncing the whole stats component for every
-            // mouse click would be unnecessarily expensive.
+            player.getInventory().setChanged();
+            if (player instanceof ServerPlayer) {
+                SixtySecondsStatsComponent.KEY.get(player).sync();
+            }
         }
 
         @Override

@@ -344,6 +344,14 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         super.tick();
         if (!(level() instanceof ServerLevel serverLevel) || isRemoved()) return;
 
+        // Ocean bosses are area events, not permanent global entities. Once
+        // nobody remains in their area, remove them so an abandoned region
+        // cannot accumulate invisible boss instances.
+        if (channel == 0 && !hasNearbyPrey(serverLevel, 128.0)) {
+            retreatToDeep(serverLevel);
+            return;
+        }
+
         // 海洋 Boss 寿命：像普通夜晚 Boss 一样，久未被解决也会在超过上限天数后潜回深海，避免无限堆积
         if (SixtySecondsMod.isActive(serverLevel)) {
             if (spawnDay < 0) {
@@ -1259,6 +1267,16 @@ public class OceanSeaMonsterEntity extends OceanCreatureEntity {
         double r2 = SixtySecondsBalance.OCEAN_BOSS_ENGAGE_RADIUS * SixtySecondsBalance.OCEAN_BOSS_ENGAGE_RADIUS;
         for (ServerPlayer p : sl.players()) {
             if (isValidOceanPrey(p) && distanceToSqr(p) <= r2) return true;
+        }
+        return false;
+    }
+
+    private boolean hasNearbyPrey(ServerLevel sl, double radius) {
+        double radiusSqr = radius * radius;
+        for (ServerPlayer player : sl.players()) {
+            if (isValidOceanPrey(player) && distanceToSqr(player) <= radiusSqr) {
+                return true;
+            }
         }
         return false;
     }

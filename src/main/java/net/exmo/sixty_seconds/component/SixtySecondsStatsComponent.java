@@ -215,6 +215,12 @@ public class SixtySecondsStatsComponent implements AutoSyncedComponent {
         buf.writeVarInt(reviveCount);      // 本局已用复活次数（死亡/复活时才变化，HUD 显示剩余）
         buf.writeVarInt(extraUnlockedSlots);
         buf.writeBoolean(rescueMarked);
+        // The extension backpack is authoritative on the server. Include it
+        // in the full player sync so reopening the menu cannot resurrect an
+        // empty or stale client mirror.
+        for (ItemStack stack : extraInventory) {
+            ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, stack);
+        }
 
     }
 
@@ -258,6 +264,9 @@ public class SixtySecondsStatsComponent implements AutoSyncedComponent {
         reviveCount = buf.readVarInt();
         extraUnlockedSlots = buf.readVarInt();
         rescueMarked = buf.readBoolean();
+        for (int i = 0; i < extraInventory.size(); i++) {
+            extraInventory.set(i, ItemStack.OPTIONAL_STREAM_CODEC.decode(buf));
+        }
     }
 
     /** 已被上面的紧凑二进制同步取代，仅保留以满足接口（不再被调用）。 */

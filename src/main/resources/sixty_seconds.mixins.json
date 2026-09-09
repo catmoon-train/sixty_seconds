@@ -27,6 +27,8 @@
     "PetiteInventoryTaczNbtMixin",
     "PetiteInventoryQuickMoveMixin",
     "PetiteInventorySophisticatedQuickMoveMixin",
+    "PetiteInventoryPlaceItemPayloadMixin",
+    "PetiteInventorySophisticatedQuickMovePayloadMixin",
     "LostCityChunkDriverGuardMixin",
     "LostCityHighwayGuardMixin",
     "SixtySecondsHangingEntityFixMixin",

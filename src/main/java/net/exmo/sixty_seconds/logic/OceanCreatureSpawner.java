@@ -12,6 +12,7 @@ import net.exmo.sixty_seconds.entity.OceanTitanEntity;
 import net.exmo.sixty_seconds.init.ModOceanEntities;
 import net.exmo.sixty_seconds.registry.ModEntities;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
+import net.exmo.sixty_seconds.SixtySecondsPhase;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -85,6 +86,9 @@ public final class OceanCreatureSpawner {
      * 维度卸载后随 WeakHashMap 的 key 被 GC 自然回收。
      */
     private static final Map<ServerLevel, Integer> SHARK_COUNT = new WeakHashMap<>();
+    /** Both the level tick hook and the NPC system call tick(); only one roll
+     * is allowed per interval, otherwise bosses become common by accident. */
+    private static final Map<ServerLevel, Long> LAST_SPAWN_CHECK = new WeakHashMap<>();
 
     /**
      * 对所有在线存活探索中玩家做海洋生物刷新判定。
@@ -93,6 +97,16 @@ public final class OceanCreatureSpawner {
     public static void tick(ServerLevel level) {
         SixtySecondsConfig config = SixtySecondsConfigStore.current(level).orElse(null);
         if (config == null || !config.oceanCreaturesEnabled) return;
+
+        long now = level.getGameTime();
+        long last = LAST_SPAWN_CHECK.getOrDefault(level, Long.MIN_VALUE);
+        if (now - last < CHECK_INTERVAL) return;
+        LAST_SPAWN_CHECK.put(level, now);
+
+        // PREPARATION is the house-search/protection phase.  Use the phase,
+        // not merely dayNumber, because a loaded dimension can retain an old
+        // day counter while the round itself has not started.
+        if (!isRoundDay(level)) return;
 
         // 游戏天数以主对局（主世界）为准：海洋维度自身不推进天数，故取主世界的日数，
         // 使海洋模式刷怪强度随主对局天数正常变化，不受所在维度影响。
@@ -110,7 +124,7 @@ public final class OceanCreatureSpawner {
         // 前四天额外压降 ×0.3（保证前几天几乎不刷强怪）
         double earlyDayMult = dayNumber <= 4 ? 0.3 : 1.0;
         // 海怪基础概率
-        double monsterBase = (night ? 0.042 : 0.007) * dayRatio * earlyDayMult;
+        double monsterBase = (night ? 0.012 : 0.002) * dayRatio * earlyDayMult;
 
         RandomSource random = level.getRandom();
         double spawnMult = net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.spawnMultiplier(level);
@@ -136,8 +150,9 @@ public final class OceanCreatureSpawner {
             int nearbyMonsters = countNearby(level, player, OceanSeaMonsterEntity.class, NEARBY_RADIUS);
 
             // ── 海怪刷新（KRAKEN / SERPENT，含出场特效）───────────────────
-            if (nearbyMonsters < MAX_NEARBY_MONSTERS && random.nextDouble() < monsterBase * spawnMult) {
-                BlockPos spot = findWaterSpot(level, player.blockPosition(),
+            if (dayNumber > 3 && nearbyMonsters < MAX_NEARBY_MONSTERS
+                    && random.nextDouble() < monsterBase * spawnMult) {
+                BlockPos spot = findBossWaterSpot(level, player.blockPosition(),
                         SPAWN_MIN_DIST + 8, SPAWN_MAX_DIST + 12, random);
                 if (spot != null) {
                     OceanSeaMonsterEntity monster = spawnSeaMonster(level, spot, random, dayRatio,
@@ -187,7 +202,7 @@ public final class OceanCreatureSpawner {
                     }
                     if (trigger != null) {
                         // 概率随天数（dayRatio）与难度/特质（spawnMult）浮动；非必刷
-                        double prob = 0.18 * dayRatio * earlyDayMult * spawnMult;
+                        double prob = 0.06 * dayRatio * earlyDayMult * spawnMult;
                         if (random.nextDouble() < prob) {
                             OceanSeaMonsterEntity boss = spawnSeafloorBoss(level, trigger.blockPosition(), random);
                             if (boss != null) announceSeaMonster(level, boss, trigger);
@@ -230,14 +245,14 @@ public final class OceanCreatureSpawner {
         }
 
         // ── 海洋霸主（10 个独立建模 Boss）：低概率、全局限 1 只 ──
-        if (countNearbyTitans(level) < TITAN_CAP
-                && random.nextDouble() < 0.0035 * dayRatio * earlyDayMult * spawnMult) {
+        if (dayNumber > 3 && countNearbyTitans(level) < TITAN_CAP
+                && random.nextDouble() < 0.0008 * dayRatio * earlyDayMult * spawnMult) {
             for (ServerPlayer player : level.players()) {
                 if (player.isSpectator() || player.isCreative()
                         || !net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {
                     continue;
                 }
-                BlockPos spot = findWaterSpot(level, player.blockPosition(),
+                BlockPos spot = findBossWaterSpot(level, player.blockPosition(),
                         SPAWN_MIN_DIST + 8, SPAWN_MAX_DIST + 8, random);
                 if (spot == null) continue;
                 OceanTitanEntity.Variant[] vs = OceanTitanEntity.Variant.values();
@@ -279,6 +294,15 @@ public final class OceanCreatureSpawner {
         return 0;
     }
 
+    private static boolean isRoundDay(ServerLevel level) {
+        if (SixtySecondsState.get(level).phase == SixtySecondsPhase.DAY) {
+            return true;
+        }
+        ServerLevel overworld = level.getServer().getLevel(Level.OVERWORLD);
+        return overworld != null
+                && SixtySecondsState.get(overworld).phase == SixtySecondsPhase.DAY;
+    }
+
     /**
      * 利维坦（LEVIATHAN）固定刷新规则：
      * <ul>
@@ -318,7 +342,7 @@ public final class OceanCreatureSpawner {
             }
         }
         if (target == null) return;
-        BlockPos spot = findWaterSpot(level, target.blockPosition(),
+        BlockPos spot = findBossWaterSpot(level, target.blockPosition(),
                 SPAWN_MIN_DIST, SPAWN_MAX_DIST, level.getRandom());
         if (spot == null) return;
         OceanSeaMonsterEntity monster = ModOceanEntities.OCEAN_SEA_MONSTER.create(level);
@@ -623,6 +647,25 @@ public final class OceanCreatureSpawner {
             if (!level.hasChunkAt(new BlockPos(x, near.getY(), z))) continue;
             BlockPos surface = findWaterSurface(level, new BlockPos(x, near.getY(), z));
             if (surface != null) return surface;
+        }
+        return null;
+    }
+
+    /** Returns a submerged position for large bosses, rather than the first
+     * water block directly under the surface.  This prevents their feet from
+     * being placed at the surface while the hitbox visibly hangs in air. */
+    @Nullable
+    private static BlockPos findBossWaterSpot(ServerLevel level, BlockPos near,
+            int minDist, int maxDist, RandomSource random) {
+        for (int attempt = 0; attempt < 12; attempt++) {
+            BlockPos surface = findWaterSpot(level, near, minDist, maxDist, random);
+            if (surface == null) continue;
+            BlockPos submerged = surface.below(3);
+            if (level.getFluidState(submerged).is(FluidTags.WATER)
+                    && level.getFluidState(submerged.above()).is(FluidTags.WATER)
+                    && level.getFluidState(submerged.below()).is(FluidTags.WATER)) {
+                return submerged;
+            }
         }
         return null;
     }

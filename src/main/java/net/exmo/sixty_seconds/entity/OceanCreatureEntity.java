@@ -147,7 +147,15 @@ public abstract class OceanCreatureEntity extends PathfinderMob {
     @Override
     public void tick() {
         super.tick();
-        if (!(level() instanceof ServerLevel)) return;
+        if (!(level() instanceof ServerLevel serverLevel)) return;
+
+        // The custom water MoveControl does not always wake up vanilla's
+        // NearestAttackableTargetGoal.  Acquire a real nearby player on the
+        // server as a fallback so sharks, fauna, floor monsters and bosses
+        // all share the same reliable target path.
+        if (tickCount % 5 == 0) {
+            acquireOceanTarget(serverLevel);
+        }
 
         // 陆地窒息
         if (!isInWater() && !isInWaterOrBubble()) {
@@ -179,6 +187,28 @@ public abstract class OceanCreatureEntity extends PathfinderMob {
                 && !this.getTags().contains(net.exmo.sixty_seconds.entity.SixtySecondsMonsterEntity.ADMIN_SPAWN_TAG)) {
             discard();
         }
+    }
+
+    private void acquireOceanTarget(ServerLevel level) {
+        LivingEntity current = getTarget();
+        if (current instanceof ServerPlayer player
+                && player.isAlive()
+                && isValidOceanPrey(player)
+                && distanceToSqr(player) <= 64.0 * 64.0) {
+            return;
+        }
+
+        ServerPlayer nearest = null;
+        double nearestDistance = 64.0 * 64.0;
+        for (ServerPlayer candidate : level.players()) {
+            if (!isValidOceanPrey(candidate)) continue;
+            double distance = distanceToSqr(candidate);
+            if (distance < nearestDistance) {
+                nearestDistance = distance;
+                nearest = candidate;
+            }
+        }
+        setTarget(nearest);
     }
 
     @Override

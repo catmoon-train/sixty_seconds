@@ -188,7 +188,8 @@ public class OceanTitanEntity extends OceanCreatureEntity {
         }
         // 玩家远离一定距离持续过久 → 潜回深海（参考普通海洋生物远离消失；无玩家时不消失）
         double dSqr = nearestPlayerDistanceSqr();
-        if (dSqr < Double.MAX_VALUE && dSqr > (double) TITAN_DESPAWN_RADIUS * TITAN_DESPAWN_RADIUS) {
+        if (dSqr == Double.MAX_VALUE
+                || dSqr > (double) TITAN_DESPAWN_RADIUS * TITAN_DESPAWN_RADIUS) {
             if (++awayTicks > 600) { retreatToDeep(serverLevel); return; }
         } else {
             awayTicks = 0;
