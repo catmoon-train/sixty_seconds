@@ -178,6 +178,21 @@ public final class SixtySecondsInventoryLimit {
                 && isBarrier(player.getInventory().getItem(button));
     }
 
+    /**
+     * Whether the first house-search phase must use vanilla one-cell
+     * inventory behavior.  PetiteInventory's server-side quick-move service
+     * is independent of its client screen toggle, so this check is shared by
+     * the PetiteInventory compatibility mixins as well.
+     */
+    public static boolean isPetiteInventoryDisabled(Player player) {
+        if (!(player instanceof ServerPlayer serverPlayer)) {
+            return false;
+        }
+        SixtySecondsState.Data data = SixtySecondsState.get(serverPlayer.serverLevel());
+        return data.phase == SixtySecondsPhase.PREPARATION
+                || SixtySecondsSearchZones.isInSearchZone(serverPlayer);
+    }
+
     private static ItemStack barrier() {
         return new ItemStack(Items.BARRIER);
     }

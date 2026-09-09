@@ -25,6 +25,8 @@
     "LevelChunkSpawnerWarningMixin",
     "AbstractContainerMenuMixin",
     "PetiteInventoryTaczNbtMixin",
+    "PetiteInventoryQuickMoveMixin",
+    "PetiteInventorySophisticatedQuickMoveMixin",
     "LostCityChunkDriverGuardMixin",
     "LostCityHighwayGuardMixin",
     "SixtySecondsHangingEntityFixMixin",
@@ -37,6 +39,7 @@
   ],
   "client": [
     "PetiteInventoryLayoutMixin",
+    "PetiteInventoryClientGridMixin",
     "WeatherRendererMixin",
     "LocalPlayerDropMixin",
     "MinecraftMixin",
