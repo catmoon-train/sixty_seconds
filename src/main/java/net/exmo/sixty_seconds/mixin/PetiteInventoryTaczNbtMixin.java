@@ -4,6 +4,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
+import net.exmo.sixty_seconds.integration.PetiteInventoryIntegration;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,6 +17,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 @Mixin(targets = "com.sighs.petiteinventory.config.ItemSizeRuleCache")
 public abstract class PetiteInventoryTaczNbtMixin {
+    /** Reapply 60 Seconds' exact rules after PetiteInventory reloads its file. */
+    @Inject(method = "loadAllRule", at = @At("RETURN"))
+    private static void sixtySeconds$reapplyWeightRules(org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        PetiteInventoryIntegration.installCurrentRules();
+    }
+
     @Inject(method = "getNBTKey", at = @At("HEAD"), cancellable = true)
     private static void sixtySeconds$matchTaczNbt(String itemId, ItemStack stack,
                                                     CallbackInfoReturnable<String> cir) {

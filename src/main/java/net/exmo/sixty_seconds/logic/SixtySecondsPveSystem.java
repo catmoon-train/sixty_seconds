@@ -490,6 +490,17 @@ public final class SixtySecondsPveSystem {
      */
     public static SixtySecondsBossEntity spawnBoss(ServerLevel level, BlockPos pos, int bossLevel,
             boolean apex, SixtySecondsBossEntity.BossVariant variant, boolean trackActive) {
+        return spawnBoss(level, pos, bossLevel, apex, variant, trackActive, true);
+    }
+
+    /**
+     * Creates a boss, optionally without a global announcement.  Area and
+     * island garrison bosses are proximity-driven world content, so they must
+     * not use the loud global boss-spawn notification.
+     */
+    public static SixtySecondsBossEntity spawnBoss(ServerLevel level, BlockPos pos, int bossLevel,
+            boolean apex, SixtySecondsBossEntity.BossVariant variant, boolean trackActive,
+            boolean announce) {
         SixtySecondsBossEntity boss = net.exmo.sixty_seconds.registry.ModEntities.SIXTY_SECONDS_BOSS.create(level);
         if (boss == null) {
             return null;
@@ -499,6 +510,9 @@ public final class SixtySecondsPveSystem {
         level.addFreshEntity(boss);
         if (trackActive) {
             ACTIVE_BOSS.put(level, new ActiveBoss(boss.getUUID(), SixtySecondsState.get(level).dayNumber));
+        }
+        if (!announce) {
+            return boss;
         }
         Component message;
         if (variant == SixtySecondsBossEntity.BossVariant.RAVAGER) {

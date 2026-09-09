@@ -98,6 +98,10 @@ public final class OceanCreatureSpawner {
         // 使海洋模式刷怪强度随主对局天数正常变化，不受所在维度影响。
         boolean inOcean = level.dimension() == SixtySeconds.OCEAN_DIMENSION;
         int dayNumber = resolveGameDay(level, config);
+        // The state is zero before the 60 Seconds round has actually started.
+        // Do not use totalDays as a fallback here: that made a fresh world look
+        // like the final day and allowed a deep-sea boss to roll immediately.
+        if (dayNumber <= 0) return;
 
         // ── 天数比例：dayRatio = currentDay / totalDays ─────────────
         double dayRatio = (double) dayNumber / Math.max(1, config.totalDays);
@@ -164,7 +168,7 @@ public final class OceanCreatureSpawner {
         // ── 深海 Boss 刷新（ABYSS_KRAKEN / TRENCH_SERPENT / SUNKEN_LEVIATHAN）──
         // 规则：全局仅存在一个（所有深海 Boss 共享位置）；前三天不刷；一天至多尝试刷新一次；
         // 有概率（随难度/天数浮动，非必刷）；仅在玩家真正处于海里、贴海底时刷新（房子/庇护所内不刷）。
-        {
+        if (inOcean) {
             SixtySecondsState.Data data = SixtySecondsState.get(level);
             if (dayNumber > 3) {
                 int deepSeaCount = countDeepSeaBosses(level);
@@ -272,7 +276,7 @@ public final class OceanCreatureSpawner {
             int d = SixtySecondsState.get(overworld).dayNumber;
             if (d > 0) return d;
         }
-        return Math.max(1, totalDays);
+        return 0;
     }
 
     /**

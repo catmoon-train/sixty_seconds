@@ -2,6 +2,7 @@ package net.exmo.sixty_seconds.logic;
 
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.SixtySecondsDayCycle;
+import net.exmo.sixty_seconds.SixtySecondsPhase;
 import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.exmo.sixty_seconds.config.SixtySecondsConfig;
 import net.exmo.sixty_seconds.config.SixtySecondsConfigStore;
@@ -69,6 +70,9 @@ public final class SixtySecondsAreaBossSystem {
         if (data == null) {
             return;
         }
+        if (data.phase != SixtySecondsPhase.DAY || data.dayNumber <= 0) {
+            return;
+        }
         long now = level.getGameTime();
         // 夜晚子相位有尸潮领主，区域 Boss 不抢占节奏；仅在白天子相位运行
         if (SixtySecondsDayCycle.isNight(data, now)) {
@@ -102,6 +106,12 @@ public final class SixtySecondsAreaBossSystem {
             if (hasLiveBoss(level, r.key)) {
                 continue;
             }
+            // A region is lazy-loaded: no player nearby means no spawn.  This
+            // prevents every configured island/4-5 star region from creating
+            // a boss as soon as the world starts.
+            if (!hasPlayerNear(level, r.box)) {
+                continue;
+            }
             // 击杀冷却中（玩家杀死了该区域 Boss，冷却期内不刷）
             Integer killedDay = data.areaBossKillCooldownDay.get(r.key);
             if (killedDay != null && data.dayNumber - killedDay < SixtySecondsBalance.AREA_BOSS_KILL_COOLDOWN_DAYS) {
@@ -115,7 +125,7 @@ public final class SixtySecondsAreaBossSystem {
             SixtySecondsBossEntity.BossVariant variant = SixtySecondsPveSystem.pickBossVariantPublic(
                     level.random, data.dayNumber);
             SixtySecondsBossEntity boss = SixtySecondsPveSystem.spawnBoss(
-                    level, spot, bossLevel, false, variant, false);
+                    level, spot, bossLevel, false, variant, false, false);
             if (boss == null) {
                 continue;
             }
@@ -216,6 +226,11 @@ public final class SixtySecondsAreaBossSystem {
 
     /** 清理不活跃区域 Boss：区块未加载，或长时间无玩家在附近且久未被攻击 → 移除（释放世界名额）。 */
     private static void cleanupInactiveBosses(ServerLevel level, long now) {
+        List<RegionSpawn> regions = collectRegions(level);
+        Map<String, AABB> regionBoxes = new HashMap<>();
+        for (RegionSpawn region : regions) {
+            regionBoxes.put(region.key, region.box);
+        }
         int r2 = SixtySecondsBalance.AREA_BOSS_PLAYER_RADIUS * SixtySecondsBalance.AREA_BOSS_PLAYER_RADIUS;
         List<SixtySecondsBossEntity> toRemove = new ArrayList<>();
         for (Entity e : level.getAllEntities()) {
@@ -223,6 +238,17 @@ public final class SixtySecondsAreaBossSystem {
                 continue;
             }
             UUID id = boss.getUUID();
+            String regionKey = regionKeyOf(boss);
+            AABB regionBox = regionKey == null ? null : regionBoxes.get(regionKey);
+            // The boss belongs to a concrete region.  Once no player remains
+            // in that region, remove it immediately and let the normal lazy
+            // spawn path recreate it only when somebody returns.
+            if (regionBox == null || !hasPlayerNear(level, regionBox)) {
+                toRemove.add(boss);
+                LAST_ATTACK_TICK.remove(id);
+                LAST_PLAYER_NEARBY_TICK.remove(id);
+                continue;
+            }
             // 更新「玩家在附近」时间戳
             boolean near = false;
             for (ServerPlayer p : level.players()) {
@@ -250,6 +276,19 @@ public final class SixtySecondsAreaBossSystem {
                 boss.discard();
             }
         }
+    }
+
+    private static boolean hasPlayerNear(ServerLevel level, AABB box) {
+        if (box == null) return false;
+        AABB search = box.inflate(SixtySecondsBalance.AREA_BOSS_PLAYER_RADIUS);
+        for (ServerPlayer player : level.players()) {
+            if (player.isSpectator() || player.isCreative()
+                    || !net.exmo.sixty_seconds.bridge.GameUtils.isPlayerAliveAndSurvival(player)) {
+                continue;
+            }
+            if (search.contains(player.position())) return true;
+        }
+        return false;
     }
 
     /** 区域落点：优先取落在该区域盒内的已登记 Boss 刷新点；否则在盒内随机选可站立落点。 */

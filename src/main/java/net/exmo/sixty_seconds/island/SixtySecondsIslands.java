@@ -456,7 +456,7 @@ public final class SixtySecondsIslands {
                         1, SixtySecondsBalance.AREA_BOSS_MAX_LEVEL);
                 BlockPos bossSpot = new BlockPos(island.centerX, island.seaY + 1, island.centerZ);
                 SixtySecondsBossEntity boss = SixtySecondsPveSystem.spawnBoss(
-                        level, bossSpot, bossLevel, false, island.bossVariant, false);
+                        level, bossSpot, bossLevel, false, island.bossVariant, false, false);
                 if (boss != null) {
                     boss.setHomeIslandId(island.id);
                 }
@@ -591,7 +591,7 @@ public final class SixtySecondsIslands {
                     bossSpot = new BlockPos(island.centerX, island.seaY + 1, island.centerZ);
                 }
                 SixtySecondsBossEntity boss = SixtySecondsPveSystem.spawnBoss(
-                        level, bossSpot, bossLevel, false, island.bossVariant, false);
+                        level, bossSpot, bossLevel, false, island.bossVariant, false, false);
                 if (boss != null) {
                     boss.setHomeIslandId(island.id);
                 }
@@ -601,7 +601,6 @@ public final class SixtySecondsIslands {
                                 ChatFormatting.BOLD),
                         Component.translatable(LANG + "enter_hardcore_sub").withStyle(ChatFormatting.RED),
                         80, false);
-                player.playNotifySound(SoundEvents.WITHER_SPAWN, SoundSource.HOSTILE, 1.0F, 0.9F);
             }
         }
     }

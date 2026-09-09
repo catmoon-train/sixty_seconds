@@ -2,11 +2,13 @@ package net.exmo.sixty_seconds.integration;
 
 import com.sighs.petiteinventory.config.ItemSizeRule;
 import com.sighs.petiteinventory.config.ItemSizeRuleCache;
+import com.sighs.petiteinventory.platform.inventory.ItemInventoryService;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.weights.SixtySecondsWeightCalc;
 import net.exmo.sixty_seconds.weights.SixtySecondsWeightConfig;
 import net.exmo.sixty_seconds.weights.SixtySecondsWeightConfigStore;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -31,6 +33,11 @@ public final class PetiteInventoryIntegration {
         // one-shot flag, then install our exact entries last so an old
         // 1*1 rule can never shadow the weight table.
         ItemSizeRuleCache.loadAllRule();
+        installCurrentRules();
+    }
+
+    /** Applies the 60 Seconds rules to PetiteInventory's already-loaded cache. */
+    public static void installCurrentRules() {
         SixtySecondsWeightConfig config = SixtySecondsWeightConfigStore.defaultConfig();
         Map<String, List<String>> exactRules = new LinkedHashMap<>();
 
@@ -67,9 +74,13 @@ public final class PetiteInventoryIntegration {
         int registered = exactRules.values().stream().mapToInt(List::size).sum();
         String waterId = "sixty_seconds:sixty_seconds_water_medium";
         String crowbarId = "sixty_seconds:sixty_seconds_crowbar";
+        var water = BuiltInRegistries.ITEM.get(ResourceLocation.parse(waterId));
+        var waterArea = water == null ? null : ItemInventoryService.getArea(new ItemStack(water));
         SixtySeconds.LOGGER.info(
-                "Installed weight footprints in PetiteInventory for {} 60 Seconds items ({}={}, {}={})",
+                "Installed weight footprints in PetiteInventory for {} 60 Seconds items ({}={}, area={}x{}, {}={})",
                 registered, waterId, ItemSizeRuleCache.matchItem(waterId),
+                waterArea == null ? 0 : waterArea.width(),
+                waterArea == null ? 0 : waterArea.height(),
                 crowbarId, ItemSizeRuleCache.matchItem(crowbarId));
     }
 
