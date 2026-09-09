@@ -890,6 +890,25 @@ public final class SixtySecondsStartCommand {
                 return 0;
             }
             SixtySecondsIslands.ensureOceanStarted(ocean);
+            // The ocean game must be started from inside the ocean dimension.
+            // GameUtils intentionally collects participants from the whole
+            // server, so merely passing `ocean` here does not move them there.
+            // Move the selected participants first; the normal 60s build
+            // callback will later place them in their assigned shelters.
+            List<ServerPlayer> oceanPlayers = GameUtils.getStartingPlayers(mainLevel);
+            net.minecraft.core.BlockPos oceanSpawn = OceanCreatureCommand.computeOceanSpawn(ocean);
+            for (int i = 0; i < oceanPlayers.size(); i++) {
+                ServerPlayer player = oceanPlayers.get(i);
+                // Keep players from spawning on top of each other while the
+                // ocean arena is being prepared. The final shelter teleport
+                // remains handled by SixtySecondsManager.
+                int column = i % 5;
+                int row = i / 5;
+                double x = oceanSpawn.getX() + 0.5D + (column - 2) * 2.0D;
+                double z = oceanSpawn.getZ() + 0.5D + row * 2.0D;
+                player.teleportTo(ocean, x, oceanSpawn.getY(), z,
+                        player.getYRot(), player.getXRot());
+            }
             GameUtils.startGame(ocean, SixtySecondsMod.MODE, 0);
             if (resolvedDays < 0) {
                 source.sendSuccess(() -> Component.translatable("commands.60s.start_endless",

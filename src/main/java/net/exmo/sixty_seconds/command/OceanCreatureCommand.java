@@ -103,7 +103,7 @@ public final class OceanCreatureCommand {
             source.sendFailure(Component.translatable("command.sixty_seconds.ocean.no_player"));
             return 0;
         }
-        BlockPos dest = computeOceanSpawn(ocean, player);
+        BlockPos dest = computeOceanSpawn(ocean);
         player.teleportTo(ocean, dest.getX() + 0.5, dest.getY(), dest.getZ() + 0.5,
                 player.getYRot(), player.getXRot());
         source.sendSuccess(() -> Component.translatable("command.sixty_seconds.ocean.teleported",
@@ -112,7 +112,11 @@ public final class OceanCreatureCommand {
     }
 
     /** 计算海洋维度的安全落点：优先落在 region(0,0) 的第一座岛屿中心，否则落在维度出生点上方。 */
-    private static BlockPos computeOceanSpawn(ServerLevel ocean, ServerPlayer player) {
+    /**
+     * Returns the shared safe arrival point used by both the manual ocean TP
+     * command and the ocean game start flow.
+     */
+    public static BlockPos computeOceanSpawn(ServerLevel ocean) {
         SixtySecondsConfig config = SixtySecondsConfigStore.current(ocean).orElseGet(SixtySecondsConfig::new);
         List<SixtySecondsIsland> islands = SixtySecondsOceanWorldGen.planRegion(0, 0, config, ocean.getSeed());
         if (islands != null && !islands.isEmpty()) {
