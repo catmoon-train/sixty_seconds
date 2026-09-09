@@ -59,6 +59,9 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
 
     @Override
     protected void init() {
+        // The authoritative server menu has arrived; allow a future E press
+        // only after this screen is closed (or after the request timeout).
+        SixtySecBridgeClient.clearSpecialInventoryRequest();
         // Opening this screen through /60s inventory is an explicit opt-in.
         // Keep that choice for subsequent E presses during preparation.
         SixtySecBridgeClient.forceSpecialInventoryUntilRoundStart();

@@ -26,7 +26,16 @@ public record OpenSpecialInventoryC2SPacket(boolean preparationOverride) impleme
     }
 
     public static void handle(OpenSpecialInventoryC2SPacket packet, ServerPlayer player) {
-        if (!canOpenDuringRound(player, packet.preparationOverride())) return;
+        if (!canOpenDuringRound(player, packet.preparationOverride())) {
+            SixtySeconds.LOGGER.warn("Rejected special inventory request from {} (override={}, phase={}, active={})",
+                    player.getGameProfile().getName(), packet.preparationOverride(),
+                    SixtySecondsState.get(player.serverLevel()).phase,
+                    SixtySecondsMod.isActive(player.level()));
+            return;
+        }
+        SixtySeconds.LOGGER.info("Opening special inventory for {} (override={}, phase={})",
+                player.getGameProfile().getName(), packet.preparationOverride(),
+                SixtySecondsState.get(player.serverLevel()).phase);
         player.openMenu(new SimpleMenuProvider(
                 (id, inventory, owner) -> new SpecialInventoryMenu(id, inventory),
                 Component.translatable("container.sixty_seconds.special_inventory")));

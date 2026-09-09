@@ -11,6 +11,14 @@ public final class SixtySecBridgeClient {
     public static SixtySecGameWorldComponent gameComponent;
     public static AreasWorldComponent areaComponent;
     private static boolean specialInventoryForced;
+    /**
+     * The vanilla inventory key can be repeated while the server is still
+     * opening the authoritative menu.  Do not enqueue one C2S request per
+     * key repeat; a burst of open-menu packets can make an integrated server
+     * appear to freeze and can leave several client screens racing each other.
+     */
+    private static long specialInventoryRequestNanos;
+    private static final long SPECIAL_INVENTORY_REQUEST_TIMEOUT_NANOS = 2_000_000_000L;
 
     private SixtySecBridgeClient() {
     }
@@ -74,6 +82,7 @@ public final class SixtySecBridgeClient {
     /** Called when the server has opened the menu through /60s inventory. */
     public static void forceSpecialInventoryUntilRoundStart() {
         specialInventoryForced = true;
+        clearSpecialInventoryRequest();
     }
 
     public static boolean isSpecialInventoryForced() {
@@ -83,6 +92,21 @@ public final class SixtySecBridgeClient {
     /** Prevent a command used in one world from affecting the next world. */
     public static void clearSpecialInventoryOverride() {
         specialInventoryForced = false;
+        clearSpecialInventoryRequest();
+    }
+
+    /** Returns true exactly once until the server opens the menu or timeout. */
+    public static boolean beginSpecialInventoryRequest() {
+        long now = System.nanoTime();
+        if (now - specialInventoryRequestNanos < SPECIAL_INVENTORY_REQUEST_TIMEOUT_NANOS) {
+            return false;
+        }
+        specialInventoryRequestNanos = now;
+        return true;
+    }
+
+    public static void clearSpecialInventoryRequest() {
+        specialInventoryRequestNanos = 0L;
     }
 
     /**
