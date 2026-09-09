@@ -491,6 +491,9 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
                 && !SixtySecondsMonsterEntity.isValidPrey(targetPlayer)) {
             setTarget(null);
         }
+        if (getVariant() == Variant.BANDIT && tickCount % 20 == 0) {
+            acquireBanditTarget(serverLevel);
+        }
         // 雇佣到期
         if (isHired() && serverLevel.getGameTime() >= hireEndTick) {
             endHire(serverLevel);
@@ -517,6 +520,19 @@ public class SixtySecondsNpcEntity extends PathfinderMob implements SixtySeconds
     // ── 海盗：乘船追击 ────────────────────────────────────────────────
 
     /** 海盗船 tag：随海盗一起刷出来的道具船，人没了船也得清（见 {@link #remove}）。 */
+    /** 强盗是天生敌对 NPC，主动锁定附近可攻击的玩家。 */
+    private void acquireBanditTarget(ServerLevel level) {
+        if (getTarget() instanceof ServerPlayer player
+                && player.isAlive()
+                && SixtySecondsMonsterEntity.isValidPrey(player)
+                && distanceToSqr(player) <= 16.0 * 16.0) {
+            return;
+        }
+        Player nearest = level.getNearestPlayer(this, 16.0);
+        setTarget(nearest instanceof ServerPlayer player
+                && SixtySecondsMonsterEntity.isValidPrey(player) ? player : null);
+    }
+
     public static final String PIRATE_BOAT_TAG = "sixty_seconds_pirate_boat";
 
     /**
