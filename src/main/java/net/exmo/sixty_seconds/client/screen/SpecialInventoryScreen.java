@@ -76,7 +76,11 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         int x = this.leftPos;
         int y = this.topPos;
-        graphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, this.imageHeight,
+        // The nine-argument overload treats width/height as the source region
+        // too.  Use the full-texture overload, otherwise only the PNG's
+        // upper-left 360x270 pixels are sampled.
+        graphics.blit(TEXTURE, x, y, this.imageWidth, this.imageHeight,
+                0, 0, TEXTURE_WIDTH, TEXTURE_HEIGHT,
                 TEXTURE_WIDTH, TEXTURE_HEIGHT);
 
         // This is only an empty-cell backdrop.  Item footprints and occupied
