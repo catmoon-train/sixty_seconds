@@ -48,18 +48,20 @@ public final class PetiteInventoryIntegration {
             putRule(entry.getValue(), entry.getKey());
         }
 
-        // TACZ stores the concrete gun id in custom_data.  PetiteInventory
-        // exposes the same NBT rule syntax, so these entries also use the
-        // actual pre-existing PetiteInventory matcher instead of a second
-        // footprint implementation in this mod.
-        Map<String, List<String>> taczGunRules = new LinkedHashMap<>();
+        // TACZ stores the concrete gun/ammo/attachment id in custom_data.
+        // Use PetiteInventory's NBT-rule table for all three item families;
+        // the tiny compatibility mixin only teaches PetiteInventory the two
+        // TACZ fields its current matcher does not yet recognize.
+        Map<String, List<String>> taczRules = new LinkedHashMap<>();
         for (String key : config.itemWeights.keySet()) {
             if (!key.startsWith("tacz:")) continue;
-            String match = "tacz:modern_kinetic_gun{GunId:\"" + key + "\"}";
             String footprint = footprint(config.itemWeights.getOrDefault(key, config.defaultWeight));
-            taczGunRules.computeIfAbsent(footprint, ignored -> new ArrayList<>()).add(match);
+            taczRules.computeIfAbsent(footprint, ignored -> new ArrayList<>()).add(
+                    "tacz:modern_kinetic_gun{GunId:\"" + key + "\"}");
+            taczRules.get(footprint).add("tacz:ammo{AmmoId:\"" + key + "\"}");
+            taczRules.get(footprint).add("tacz:attachment{AttachmentId:\"" + key + "\"}");
         }
-        for (Map.Entry<String, List<String>> entry : taczGunRules.entrySet()) {
+        for (Map.Entry<String, List<String>> entry : taczRules.entrySet()) {
             putRule(entry.getValue(), entry.getKey());
         }
 
