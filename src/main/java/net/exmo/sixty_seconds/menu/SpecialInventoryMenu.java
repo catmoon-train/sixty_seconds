@@ -41,7 +41,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
                 addSlot(new PlayerSlot(inventory, 9 + row * 9 + col,
-                        150 + col * 18, 18 + row * 18));
+                        216 + col * 18, 48 + row * 18));
             }
         }
         // Extra inventory: two additional rows, initially locked.
@@ -50,13 +50,13 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
                 int extraIndex = row * 9 + col;
                 boolean visible = extraIndex < unlockedExtraSlots();
                 addSlot(new ExtraSlot(extra, extraIndex,
-                        visible ? 150 + col * 18 : -1000,
-                        visible ? 72 + row * 18 : -1000, extraIndex));
+                        visible ? 216 + col * 18 : -1000,
+                        visible ? 102 + row * 18 : -1000, extraIndex));
             }
         }
         // Hotbar, placed below the equipment column by the client layout.
         for (int col = 0; col < 9; col++) {
-            addSlot(new PlayerSlot(inventory, col, 18 + col * 18, 150));
+            addSlot(new PlayerSlot(inventory, col, 18 + col * 18, 222));
         }
         for (int i = 0; i < 4; i++) {
             EquipmentSlot slot = switch (i) {
@@ -66,9 +66,10 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
                 default -> EquipmentSlot.FEET;
             };
             addSlot(new EquipmentPlayerSlot(inventory, 36 + (3 - i),
-                    18, 58 + i * 18, slot));
+                    i % 2 == 0 ? 36 : 72,
+                    146 + (i / 2) * 20, slot));
         }
-        addSlot(new PlayerSlot(inventory, 40, 54, 112));
+        addSlot(new PlayerSlot(inventory, 40, 108, 156));
     }
 
     public Player getPlayer() {

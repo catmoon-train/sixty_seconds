@@ -39,7 +39,7 @@ public abstract class MinecraftMixin {
         }
         // 受限背包：60s 模式（按家庭身份/每日槽位限制）会对锁定槽位塞入屏障占位。
         // 只要处于模式内或检测到占位即切换受限界面。
-        boolean restricted = SixtySecBridgeClient.inSixtySecondsMode()
+        boolean restricted = SixtySecBridgeClient.shouldUseLegacyInventory()
                 || hasBarrierSlots(player.getInventory());
         if (!restricted) {
             return;

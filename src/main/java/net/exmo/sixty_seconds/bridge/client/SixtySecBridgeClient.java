@@ -42,6 +42,15 @@ public final class SixtySecBridgeClient {
                 && SixtySecondsStatsComponent.KEY.get(player).dayNumber > 0;
     }
 
+    /**
+     * The legacy restricted screen remains the active screen during the
+     * preparation/house-search phase.  The new menu is deliberately limited
+     * to actual game days, while the old screen is still useful elsewhere.
+     */
+    public static boolean shouldUseLegacyInventory() {
+        return inSixtySecondsMode() && !shouldOpenSpecialInventory();
+    }
+
     public static boolean isPlayerAliveAndInSurvivalIgnoreShitSplit() {
         LocalPlayer player = Minecraft.getInstance().player;
         return player != null && !player.isSpectator() && !player.isCreative();
