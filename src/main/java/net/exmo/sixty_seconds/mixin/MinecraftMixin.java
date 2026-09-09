@@ -2,6 +2,8 @@ package net.exmo.sixty_seconds.mixin;
 
 import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.client.screen.SixtySecondsInventoryScreen;
+import net.exmo.sixty_seconds.bridge.fabric.ClientPlayNetworking;
+import net.exmo.sixty_seconds.network.OpenSpecialInventoryC2SPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -28,6 +30,11 @@ public abstract class MinecraftMixin {
         Minecraft mc = (Minecraft) (Object) this;
         LocalPlayer player = mc.player;
         if (player == null || player.isCreative() || player.isSpectator()) {
+            return;
+        }
+        if (SixtySecBridgeClient.shouldOpenSpecialInventory()) {
+            ClientPlayNetworking.send(new OpenSpecialInventoryC2SPacket());
+            ci.cancel();
             return;
         }
         // 受限背包：60s 模式（按家庭身份/每日槽位限制）会对锁定槽位塞入屏障占位。

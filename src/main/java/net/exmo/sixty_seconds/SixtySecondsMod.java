@@ -37,6 +37,7 @@ public final class SixtySecondsMod {
     }
 
     public static void init() {
+        net.exmo.sixty_seconds.integration.PetiteInventoryIntegration.installWeightRules();
         registerCommands();
         net.exmo.sixty_seconds.command.SixtySecondsWeatherCommand.register();
         SixtySecondsCreativeTab.register(); // 统一创造标签页（须在物品入页前注册）
@@ -92,6 +93,7 @@ public final class SixtySecondsMod {
         net.exmo.sixty_seconds.command.OceanCreatureCommand.register();
         net.exmo.sixty_seconds.command.SixtySecondsDifficultyCommand.register();
         net.exmo.sixty_seconds.command.SixtySecondsLootFormCommand.register();
+        net.exmo.sixty_seconds.command.SixtySecondsInventoryCommand.register();
     }
 
     /** 当前世界是否正在运行本模式。 */

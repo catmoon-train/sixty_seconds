@@ -5,6 +5,7 @@ import net.exmo.sixty_seconds.bridge.AreasWorldComponent;
 import net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 
 public final class SixtySecBridgeClient {
     public static SixtySecGameWorldComponent gameComponent;
@@ -29,6 +30,16 @@ public final class SixtySecBridgeClient {
         SixtySecGameWorldComponent.GameStatus status =
                 gameComponent != null ? gameComponent.getGameStatus() : null;
         return inMode && status != SixtySecGameWorldComponent.GameStatus.INACTIVE;
+    }
+
+    /** Whether pressing E should ask the server for the Tarkov-style menu. */
+    public static boolean shouldOpenSpecialInventory() {
+        LocalPlayer player = Minecraft.getInstance().player;
+        return player != null && inSixtySecondsMode()
+                && gameComponent != null
+                && gameComponent.getGameStatus() == SixtySecGameWorldComponent.GameStatus.ACTIVE
+                // dayNumber is 0 during the 65-second house-search/preparation phase.
+                && SixtySecondsStatsComponent.KEY.get(player).dayNumber > 0;
     }
 
     public static boolean isPlayerAliveAndInSurvivalIgnoreShitSplit() {

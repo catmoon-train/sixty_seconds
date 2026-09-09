@@ -1,4 +1,6 @@
 {
+  "container.sixty_seconds.special_inventory": "60 Seconds Inventory",
+  "command.sixty_seconds.inventory.player_only": "This command can only be used by a player",
   "item.sixty_seconds.loot_magnifier": "Loot Magnifier",
   "item.sixty_seconds.loot_magnifier.prompt": "Click to search",
   "item.sixty_seconds.loot_magnifier.searching": "Searching",

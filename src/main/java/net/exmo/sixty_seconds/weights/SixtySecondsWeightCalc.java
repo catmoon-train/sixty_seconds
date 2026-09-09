@@ -1,6 +1,7 @@
 package net.exmo.sixty_seconds.weights;
 
 import net.exmo.sixty_seconds.content.item.SixtySecondsBackpackItem;
+import net.exmo.sixty_seconds.logic.SixtySecondsExtraInventory;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -99,6 +100,15 @@ public final class SixtySecondsWeightCalc {
         for (ItemStack stack : inv.items) load += weighted(stack, cfg, false);
         for (ItemStack stack : inv.armor) load += weighted(stack, cfg, false);
         for (ItemStack stack : inv.offhand) load += weighted(stack, cfg, false);
+        for (ItemStack stack : SixtySecondsExtraInventory.slots(player)) {
+            load += weighted(stack, cfg, false);
+        }
+        /*
+        // 特殊物品栏的扩展背包格不属于 vanilla Inventory，单独计入负重。
+        for (ItemStack stack : SixtySecondsExtraInventory.slots(player)) {
+            load += weighted(stack, cfg, false);
+        }
+        */
         return load;
     }
 

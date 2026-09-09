@@ -5,6 +5,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.ItemStack;
 import net.exmo.sixty_seconds.SixtySeconds;
 import org.jetbrains.annotations.NotNull;
 import net.exmo.sixty_seconds.bridge.cca.ComponentKey;
@@ -90,6 +92,9 @@ public class SixtySecondsStatsComponent implements AutoSyncedComponent {
     public int playerKills = 0;
     /** 已解锁的额外背包槽位数（0-18，通过扩容模块获得，总可用槽位=基础+此值）。 */
     public int extraUnlockedSlots = 0;
+    /** The 18 round-only slots behind the vanilla player inventory. */
+    public final NonNullList<ItemStack> extraInventory =
+            NonNullList.withSize(net.exmo.sixty_seconds.logic.SixtySecondsExtraInventory.SIZE, ItemStack.EMPTY);
     /** 救援信标标记：使用者激活信标后被置位，使其可在撤离点建筑内直接撤离（见 SixtySecondsRescue）。 */
     public boolean rescueMarked = false;
     /** 绷带缓慢恢复剩余生命值（不使用后重置，无需持久化）。 */
@@ -137,6 +142,9 @@ public class SixtySecondsStatsComponent implements AutoSyncedComponent {
         sanZeroTick = 0L;
         playerKills = 0;
         extraUnlockedSlots = 0;
+        for (int i = 0; i < extraInventory.size(); i++) {
+            extraInventory.set(i, ItemStack.EMPTY);
+        }
         rescueMarked = false;
         lastSentHealth = -1;
         lastSentHealthMax = -1;

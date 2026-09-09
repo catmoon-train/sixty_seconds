@@ -1,4 +1,6 @@
 {
+  "container.sixty_seconds.special_inventory": "60秒物品栏",
+  "command.sixty_seconds.inventory.player_only": "此指令只能由玩家执行",
   "item.sixty_seconds.loot_magnifier": "物资放大镜",
   "item.sixty_seconds.loot_magnifier.prompt": "点击搜索",
   "item.sixty_seconds.loot_magnifier.searching": "搜索中",

@@ -43,6 +43,7 @@ import net.exmo.sixty_seconds.client.render.PlayerBodyRenderer;
 import net.exmo.sixty_seconds.client.gui.screen.NewspaperScreen;
 import net.exmo.sixty_seconds.client.gui.screen.RadioChannelScreen;
 import net.exmo.sixty_seconds.client.screen.SixtySecondsInventoryScreen;
+import net.exmo.sixty_seconds.client.screen.SpecialInventoryScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.player.LocalPlayer;
@@ -315,6 +316,8 @@ public final class SixtySecondsClient {
     public static void registerMenuScreens(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event) {
         event.register(net.exmo.sixty_seconds.registry.ModMenuTypes.SUPPLY_SEARCH.get(),
                 net.exmo.sixty_seconds.client.screen.SupplySearchScreen::new);
+        event.register(net.exmo.sixty_seconds.registry.ModMenuTypes.SPECIAL_INVENTORY.get(),
+                SpecialInventoryScreen::new);
     }
 
     @SubscribeEvent

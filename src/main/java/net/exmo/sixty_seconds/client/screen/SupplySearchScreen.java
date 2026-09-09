@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
@@ -18,35 +19,46 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 物资箱容器搜刮界面：复用原版箱子背景，放大镜槽位上叠加「搜刮读条」进度条。
- * <p>
- * 左键放大镜开始搜刮（播放开箱音效并按物品重量/搜刮速度计算的时长读条），读条完成后
- * 向服务端发送 {@link SupplySearchRevealC2SPacket} 请求揭示真实战利品。放大镜禁止任何形式的取出/丢弃/移动。
- */
+/** Supply-box search screen with a collision-free dynamic item layout. */
 public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu> {
     private static final ResourceLocation TEXTURE =
             ResourceLocation.withDefaultNamespace("textures/gui/container/generic_54.png");
 
-    private final int rows = SupplySearchMenu.CONTAINER_ROWS;
-    /** slotIndex -> 搜刮开始时的游戏刻。 */
     private final Map<Integer, Long> searchStart = new HashMap<>();
-    /** slotIndex -> 搜刮所需刻数。 */
     private final Map<Integer, Integer> searchDuration = new HashMap<>();
+    private PackedItemLayout.Layout containerLayout;
+    private int playerOffset;
 
     public SupplySearchScreen(SupplySearchMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
-        this.imageHeight = 114 + this.rows * 18;
+        rebuildLayout();
+        this.imageHeight = 114 + Math.max(3, containerLayout.rows()) * 18;
         this.inventoryLabelY = this.imageHeight - 94;
         this.titleLabelY = 6;
     }
 
     @Override
+    protected void init() {
+        rebuildLayout();
+        this.imageHeight = 114 + Math.max(3, containerLayout.rows()) * 18;
+        this.inventoryLabelY = this.imageHeight - 94;
+        super.init();
+    }
+
+    private void rebuildLayout() {
+        this.containerLayout = PackedItemLayout.build(this.menu, 0,
+                SupplySearchMenu.CONTAINER_SIZE, 9, SupplySearchMenu.CONTAINER_SIZE);
+        this.playerOffset = Math.max(0, containerLayout.rows() - 3) * 18;
+    }
+
+    @Override
     protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
+        rebuildLayout();
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - this.imageHeight) / 2;
-        g.blit(TEXTURE, i, j, 0, 0, this.imageWidth, this.rows * 18 + 17);
-        g.blit(TEXTURE, i, j + this.rows * 18 + 17, 0, 126, this.imageWidth, 96);
+        g.blit(TEXTURE, i, j, 0, 0, this.imageWidth, containerLayout.rows() * 18 + 17);
+        g.blit(TEXTURE, i, j + containerLayout.rows() * 18 + 17,
+                0, 126, this.imageWidth, 96);
     }
 
     @Override
@@ -57,7 +69,6 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
             long elapsed = now - searchStart.get(slot);
             float prog = (float) elapsed / searchDuration.get(slot);
             if (prog >= 1f) {
-                // 搜刮完成：清除「搜索中」标记（随即由服务端替换为战利品）
                 SixtySecondsLootMagnifierItem.setSearching(this.menu.getSlot(slot).getItem(), false);
                 sendReveal(slot);
                 searchStart.remove(slot);
@@ -69,53 +80,87 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
 
     @Override
     protected void renderSlot(GuiGraphics g, Slot slot) {
+        int targetX = visualX(slot);
+        int targetY = visualY(slot);
+        g.pose().pushPose();
+        g.pose().translate(targetX - slot.x, targetY - slot.y, 0);
         super.renderSlot(g, slot);
-        // 容器内格子不渲染「点击搜索/搜索中」文字，只显示物品本身；搜索中仅画进度条
-        if (SixtySecondsLootMagnifierItem.isMagnifier(slot.getItem())) {
-            boolean searching = searchStart.containsKey(slot.index);
-            if (searching) {
-                long now = this.minecraft.level.getGameTime();
-                long elapsed = now - searchStart.get(slot.index);
-                float prog = (float) elapsed / searchDuration.get(slot.index);
-                prog = Math.max(0f, Math.min(1f, prog));
-                int x = slot.x;
-                int y = slot.y;
-                // 半透明暗化遮罩，表示正在搜刮
-                g.fill(x, y, x + 16, y + 16, 0x80000000);
-                // 底部进度条
-                int barW = Math.round(14 * prog);
-                g.fill(x + 1, y + 13, x + 15, y + 15, 0xFF222222);
-                g.fill(x + 1, y + 13, x + 1 + barW, y + 15, 0xFF3FC46B);
-            }
+        g.pose().popPose();
+
+        if (SixtySecondsLootMagnifierItem.isMagnifier(slot.getItem())
+                && searchStart.containsKey(slot.index)) {
+            long now = this.minecraft.level.getGameTime();
+            float prog = (float) (now - searchStart.get(slot.index)) / searchDuration.get(slot.index);
+            prog = Math.max(0f, Math.min(1f, prog));
+            g.fill(this.leftPos + targetX, this.topPos + targetY,
+                    this.leftPos + targetX + 16, this.topPos + targetY + 16, 0x80000000);
+            int barW = Math.round(14 * prog);
+            g.fill(this.leftPos + targetX + 1, this.topPos + targetY + 13,
+                    this.leftPos + targetX + 15, this.topPos + targetY + 15, 0xFF222222);
+            g.fill(this.leftPos + targetX + 1, this.topPos + targetY + 13,
+                    this.leftPos + targetX + 1 + barW, this.topPos + targetY + 15, 0xFF3FC46B);
         }
+    }
+
+    private int visualX(Slot slot) {
+        PackedItemLayout.Position position = containerLayout.position(slot.index);
+        return position == null ? slot.x : 8 + position.column() * 18;
+    }
+
+    private int visualY(Slot slot) {
+        PackedItemLayout.Position position = containerLayout.position(slot.index);
+        if (position != null) return 18 + position.row() * 18;
+        return slot.y + playerOffset;
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        Slot slot = this.getSlotUnderMouse();
-        if (slot != null && slot.hasItem() && SixtySecondsLootMagnifierItem.isMagnifier(slot.getItem())) {
-            if (button == 0 && !searchStart.containsKey(slot.index)) {
-                startSearch(slot.index);
+        rebuildLayout();
+        double x = mouseX - this.leftPos;
+        double y = mouseY - this.topPos;
+        for (int index = 0; index < SupplySearchMenu.CONTAINER_SIZE; index++) {
+            PackedItemLayout.Position position = containerLayout.position(index);
+            if (position == null) continue;
+            int left = 8 + position.column() * 18;
+            int top = 18 + position.row() * 18;
+            if (x < left || x >= left + position.width() * 18
+                    || y < top || y >= top + position.height() * 18) continue;
+            Slot slot = this.menu.getSlot(index);
+            if (slot.hasItem() && SixtySecondsLootMagnifierItem.isMagnifier(slot.getItem())) {
+                if (button == 0 && !searchStart.containsKey(index)) startSearch(index);
+            } else {
+                onMouseClick(slot, index, button, ClickType.PICKUP);
             }
-            // 放大镜只响应左键搜刮，拦截其它一切交互
             return true;
         }
+
+        for (int index = SupplySearchMenu.CONTAINER_SIZE; index < this.menu.slots.size(); index++) {
+            Slot slot = this.menu.getSlot(index);
+            int left = visualX(slot);
+            int top = visualY(slot);
+            if (x >= left && x < left + 18 && y >= top && y < top + 18) {
+                onMouseClick(slot, index, button, ClickType.PICKUP);
+                return true;
+            }
+        }
         return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    private void onMouseClick(Slot slot, int slotId, int button, ClickType type) {
+        if (this.minecraft.gameMode != null && this.minecraft.player != null) {
+            this.minecraft.gameMode.handleInventoryMouseClick(this.menu.containerId,
+                    slotId, button, type, this.minecraft.player);
+        }
     }
 
     private void startSearch(int slotIndex) {
         ItemStack mag = this.menu.getSlot(slotIndex).getItem();
         int ticks = SixtySecondsLootMagnifierItem.getSearchTicks(mag);
-        if (ticks <= 0) {
-            ticks = SixtySecondsBalance.SUPPLY_SEARCH_BASE_TICKS;
-        }
+        if (ticks <= 0) ticks = SixtySecondsBalance.SUPPLY_SEARCH_BASE_TICKS;
         searchStart.put(slotIndex, this.minecraft.level.getGameTime());
         searchDuration.put(slotIndex, ticks);
-        // 标记该放大镜为「搜索中」，使物品名显示 搜索中
         SixtySecondsLootMagnifierItem.setSearching(mag, true);
-        if (this.minecraft.player != null) {
-            this.minecraft.player.playSound(SoundEvents.CHEST_OPEN, 0.9f, 1.0f);
-        }
+        if (this.minecraft.player != null) this.minecraft.player.playSound(SoundEvents.CHEST_OPEN, 0.9f, 1.0f);
     }
 
     private void sendReveal(int slotIndex) {

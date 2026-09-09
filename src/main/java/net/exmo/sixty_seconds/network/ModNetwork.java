@@ -104,6 +104,7 @@ public final class ModNetwork {
         registrar.playToServer(TokenExchangeC2SPacket.ID, adapt(TokenExchangeC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(TradeActionC2SPacket.ID, adapt(TradeActionC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(VaultLockpickCompleteC2SPacket.ID, adapt(VaultLockpickCompleteC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
+        registrar.playToServer(OpenSpecialInventoryC2SPacket.ID, adapt(OpenSpecialInventoryC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(SupplySearchRevealC2SPacket.ID, adapt(SupplySearchRevealC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToServer(TraitAllocateC2SPacket.ID, adapt(TraitAllocateC2SPacket.CODEC), (payload, ctx) -> handleC2S(payload, ctx));
         registrar.playToClient(VehicleCameraS2CPacket.ID, adapt(VehicleCameraS2CPacket.CODEC), (payload, ctx) -> handleS2C(payload, ctx));
@@ -157,6 +158,7 @@ public final class ModNetwork {
             if (payload instanceof TokenExchangeC2SPacket p) { TokenExchangeC2SPacket.handle(p, fabric); return; }
             if (payload instanceof TradeActionC2SPacket p) { TradeActionC2SPacket.handle(p, fabric); return; }
             if (payload instanceof VaultLockpickCompleteC2SPacket p) { VaultLockpickCompleteC2SPacket.handle(p, fabric); return; }
+            if (payload instanceof OpenSpecialInventoryC2SPacket p) { OpenSpecialInventoryC2SPacket.handle(p, player); return; }
             if (payload instanceof SupplySearchRevealC2SPacket p) { SupplySearchRevealC2SPacket.handle(p, fabric); return; }
             if (payload instanceof VisitChatSendC2SPacket p) { VisitChatSendC2SPacket.handle(p, fabric); return; }
             if (payload instanceof VisitRequestC2SPacket p) { VisitRequestC2SPacket.handle(p, fabric); return; }

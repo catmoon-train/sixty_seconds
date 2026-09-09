@@ -1,6 +1,7 @@
 package net.exmo.sixty_seconds.registry;
 
 import net.exmo.sixty_seconds.menu.SupplySearchMenu;
+import net.exmo.sixty_seconds.menu.SpecialInventoryMenu;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -13,6 +14,10 @@ public final class ModMenuTypes {
     public static final DeferredHolder<MenuType<?>, MenuType<SupplySearchMenu>> SUPPLY_SEARCH =
             MENUS.register("supply_search",
                     () -> new MenuType<>(SupplySearchMenu::new, FeatureFlags.DEFAULT_FLAGS));
+
+    public static final DeferredHolder<MenuType<?>, MenuType<SpecialInventoryMenu>> SPECIAL_INVENTORY =
+            MENUS.register("special_inventory",
+                    () -> new MenuType<>(SpecialInventoryMenu::new, FeatureFlags.DEFAULT_FLAGS));
 
     private ModMenuTypes() {
     }
