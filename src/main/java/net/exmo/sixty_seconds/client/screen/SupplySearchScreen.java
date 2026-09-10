@@ -110,12 +110,17 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
             long now = this.minecraft.level == null ? 0 : this.minecraft.level.getGameTime();
             float progress = (float) (now - searchStart.get(slot.index)) / searchDuration.get(slot.index);
             progress = Math.max(0f, Math.min(1f, progress));
-            // The search indicator belongs to the magnifier icon's own
-            // bottom edge.  Its footprint may be larger, but the progress
-            // bar must stay directly under the icon in the anchor cell.
-            int barW = Math.round(14 * progress);
-            graphics.fill(x + 1, y + 13, x + 15, y + 15, 0xFF222222);
-            graphics.fill(x + 1, y + 13, x + 1 + barW, y + 15, 0xFF3FC46B);
+            // The search indicator follows the complete footprint, not only
+            // the 16x16 anchor cell. Keep it on the footprint's bottom edge
+            // and make its length equal to that footprint's width.
+            int barLeft = x + 1;
+            int barRight = x + pixelWidth - 1;
+            int barTop = y + pixelHeight - 4;
+            int barBottom = y + pixelHeight - 1;
+            int barWidth = Math.max(0, barRight - barLeft);
+            int filledWidth = Math.round(barWidth * progress);
+            graphics.fill(barLeft, barTop, barRight, barBottom, 0xFF222222);
+            graphics.fill(barLeft, barTop, barLeft + filledWidth, barBottom, 0xFF3FC46B);
         }
     }
 

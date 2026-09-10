@@ -93,6 +93,8 @@ public final class SixtySecondsEventSystem {
     private static final Map<ServerLevel, Active> ACTIVE = new WeakHashMap<>();
     /** 天气预报调度：dayNumber → EventType（null 表示"晴朗"） */
     private static final Map<ServerLevel, Map<Integer, EventType>> SCHEDULED = new WeakHashMap<>();
+    /** The day whose forecast/random weather roll was already consumed. */
+    private static final Map<ServerLevel, Integer> DAILY_WEATHER_DECISION_DAY = new WeakHashMap<>();
 
     private record Active(EventType type, long endTick) {
     }
@@ -155,18 +157,31 @@ public final class SixtySecondsEventSystem {
         }
         // 优先检查当天是否有预报安排的天气
         SixtySecondsState.Data stateData = SixtySecondsState.get(level);
+        boolean oneWeatherPerDay = SixtySecondsDifficulty.get(level) < 6;
         Map<Integer, EventType> schedule = SCHEDULED.get(level);
         if (schedule != null && schedule.containsKey(stateData.dayNumber)) {
             // 当天已由 startDay / 热线预报明确安排（含「晴朗」null）：
             // 触发对应事件；若为晴朗则不再随机补足，保证末日日报预报与实际一致。
             EventType scheduled = schedule.remove(stateData.dayNumber);
+            if (oneWeatherPerDay) {
+                DAILY_WEATHER_DECISION_DAY.put(level, stateData.dayNumber);
+            }
             if (scheduled != null) {
                 startEvent(level, scheduled, now);
             }
             return;
         }
+        if (oneWeatherPerDay
+                && Integer.valueOf(stateData.dayNumber).equals(DAILY_WEATHER_DECISION_DAY.get(level))) {
+            return;
+        }
         if (now % SixtySecondsBalance.EVENT_CHECK_INTERVAL == 0
                 && level.getRandom().nextDouble() < SixtySecondsBalance.EVENT_CHANCE) {
+            if (oneWeatherPerDay) {
+                // Consume the day before starting the event, so its end does
+                // not immediately allow another random weather event.
+                DAILY_WEATHER_DECISION_DAY.put(level, stateData.dayNumber);
+            }
             // 根据昼夜选择不同的事件池
             boolean isNight = level.isNight();
             if (isNight) {
@@ -221,14 +236,10 @@ public final class SixtySecondsEventSystem {
             }
             case SANDSTORM -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.SANDSTORM_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_sandstorm_start")
-                        .withStyle(ChatFormatting.GOLD));
             }
             case EARTHQUAKE -> {
                 // 瞬发型事件：15秒摇晃，不进长时间ACTIVE但阻止刷其他事件
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EARTHQUAKE_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_earthquake_start")
-                        .withStyle(ChatFormatting.RED));
                 // 对全体玩家施加反胃效果（模拟地震摇晃感，不破坏任何方块）
                 for (ServerPlayer p : level.players()) {
                     if (!GameUtils.isPlayerEliminated(p)) {
@@ -239,117 +250,75 @@ public final class SixtySecondsEventSystem {
             }
             case METEOR_SHOWER -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.METEOR_SHOWER_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_meteor_shower_start")
-                        .withStyle(ChatFormatting.RED));
             }
             case SPORE_FOG -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.SPORE_FOG_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_spore_fog_start")
-                        .withStyle(ChatFormatting.DARK_GREEN));
             }
             case HAIL -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.HAIL_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_hail_start")
-                        .withStyle(ChatFormatting.AQUA));
                 // 冰雹时设为雨天
                 level.setWeatherParameters(20 * 60 * 6, 0, true, false);
             }
             case BLOOD_MOON -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.BLOOD_MOON_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_blood_moon_start")
-                        .withStyle(ChatFormatting.DARK_RED));
             }
             case RADIATION_LEAK -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.RADIATION_LEAK_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_radiation_leak_start")
-                        .withStyle(ChatFormatting.DARK_PURPLE));
             }
             case DENSE_FOG -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.DENSE_FOG_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_dense_fog_start")
-                        .withStyle(ChatFormatting.GRAY));
             }
             case THUNDERSTORM -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_thunderstorm_start")
-                        .withStyle(ChatFormatting.GOLD));
                 level.setWeatherParameters(0, SixtySecondsBalance.EVENT_BASE_DURATION, true, true);
             }
             case TIDAL_SURGE -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_tidal_surge_start")
-                        .withStyle(ChatFormatting.AQUA));
             }
             case VOID_RIFT -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_void_rift_start")
-                        .withStyle(ChatFormatting.DARK_PURPLE));
             }
             case ASH_FALL -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_ash_fall_start")
-                        .withStyle(ChatFormatting.GRAY));
             }
             case FIRE_RAIN -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_fire_rain_start")
-                        .withStyle(ChatFormatting.GOLD));
             }
             case CRYSTAL_STORM -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_crystal_storm_start")
-                        .withStyle(ChatFormatting.AQUA));
             }
             case TOXIC_SPORE -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_toxic_spore_start")
-                        .withStyle(ChatFormatting.GREEN));
             }
             case SOLAR_FLARE -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_solar_flare_start")
-                        .withStyle(ChatFormatting.GOLD));
             }
             case SOUL_WIND -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_soul_wind_start")
-                        .withStyle(ChatFormatting.WHITE));
             }
             case EMBER_STORM -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.EVENT_BASE_DURATION));
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_ember_storm_start")
-                        .withStyle(ChatFormatting.GOLD));
             }
             // ── 第三批：雨类天气（下雨型，可被雨伞抵御）──
             case ACID_RAIN -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.ACID_RAIN_DURATION));
                 level.setWeatherParameters(0, SixtySecondsBalance.ACID_RAIN_DURATION, true, false);
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_acid_rain_start")
-                        .withStyle(ChatFormatting.GREEN));
             }
             case POISON_RAIN -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.POISON_RAIN_DURATION));
                 level.setWeatherParameters(0, SixtySecondsBalance.POISON_RAIN_DURATION, true, false);
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_poison_rain_start")
-                        .withStyle(ChatFormatting.DARK_GREEN));
             }
             case FROST_RAIN -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.FROST_RAIN_DURATION));
                 level.setWeatherParameters(0, SixtySecondsBalance.FROST_RAIN_DURATION, true, false);
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_frost_rain_start")
-                        .withStyle(ChatFormatting.AQUA));
             }
             case SLIME_RAIN -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.SLIME_RAIN_DURATION));
                 level.setWeatherParameters(0, SixtySecondsBalance.SLIME_RAIN_DURATION, true, false);
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_slime_rain_start")
-                        .withStyle(ChatFormatting.GREEN));
             }
             case SPARK_RAIN -> {
                 ACTIVE.put(level, new Active(type, now + SixtySecondsBalance.SPARK_RAIN_DURATION));
                 level.setWeatherParameters(0, SixtySecondsBalance.SPARK_RAIN_DURATION, true, false);
-                broadcast(level, Component.translatable("message.sixty_seconds.sixty_seconds.event_spark_rain_start")
-                        .withStyle(ChatFormatting.YELLOW));
             }
             case AIRDROP -> airdrop(level); // 瞬发，不进 ACTIVE
         }
@@ -913,6 +882,7 @@ public final class SixtySecondsEventSystem {
     public static void reset(ServerLevel level) {
         ACTIVE.remove(level);
         SCHEDULED.remove(level);
+        DAILY_WEATHER_DECISION_DAY.remove(level);
     }
 
     // ═══════════════════════════════════════════════════════════
