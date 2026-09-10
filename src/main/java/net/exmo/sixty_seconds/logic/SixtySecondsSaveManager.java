@@ -19,6 +19,9 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -97,6 +100,46 @@ public final class SixtySecondsSaveManager {
         return overworld != null ? overworld : level;
     }
 
+    /**
+     * Returns the dimension that actually owns the running 60 Seconds round.
+     * Ocean mode runs its game loop and state in sixty_seconds:ocean, while
+     * the save file itself still belongs to the world's root directory.
+     */
+    private static ServerLevel gameLevel(ServerLevel hint) {
+        if (ownsRunningRound(hint)) {
+            return hint;
+        }
+        for (ServerLevel candidate : hint.getServer().getAllLevels()) {
+            if (ownsRunningRound(candidate)) {
+                return candidate;
+            }
+        }
+        return hint;
+    }
+
+    private static boolean ownsRunningRound(ServerLevel level) {
+        var component = net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent.KEY.get(level);
+        if (component.getGameMode() == SixtySecondsMod.MODE && component.isRunning()) {
+            return true;
+        }
+        // Keep shutdown/autosave working even if the bridge status is briefly
+        // stale while the server is tearing down.
+        SixtySecondsState.Data data = SixtySecondsState.get(level);
+        return SixtySecondsMod.RUNNING
+                && (data.phase == SixtySecondsPhase.PREPARATION || data.phase == SixtySecondsPhase.DAY);
+    }
+
+    private static ServerLevel levelForDimension(MinecraftServer server, String id) {
+        ResourceLocation location = ResourceLocation.tryParse(id == null ? "" : id);
+        if (location != null) {
+            ServerLevel level = server.getLevel(ResourceKey.create(Registries.DIMENSION, location));
+            if (level != null) {
+                return level;
+            }
+        }
+        return server.getLevel(Level.OVERWORLD);
+    }
+
     public static boolean hasSave(ServerLevel level) {
         try {
             return Files.exists(savePath(level));
@@ -134,11 +177,12 @@ public final class SixtySecondsSaveManager {
     // ── 立即保存 ──────────────────────────────────────────────────────
     public static void save(ServerLevel level) {
         try {
-            ServerLevel main = mainLevel(level);
-            SavedGame snap = buildSnapshot(main);
-            writeSnapshot(main, snap);
+            ServerLevel game = gameLevel(level);
+            ServerLevel root = mainLevel(game);
+            SavedGame snap = buildSnapshot(game);
+            writeSnapshot(root, snap);
             SixtySeconds.LOGGER.info("[60s] Saved round progress: day={}, phase={}, file={}",
-                    snap.dayNumber, snap.phase, savePath(main));
+                    snap.dayNumber, snap.phase, savePath(root));
         } catch (Exception e) {
             System.err.println("[SixtySecondsSaveManager] 保存失败: " + e);
             e.printStackTrace();
@@ -147,32 +191,33 @@ public final class SixtySecondsSaveManager {
 
     /** Save before an integrated server tears down its runtime components. */
     public static void saveIfUnfinished(ServerLevel level) {
-        ServerLevel main = mainLevel(level);
-        SixtySecondsState.Data data = SixtySecondsState.get(main);
+        ServerLevel game = gameLevel(level);
+        SixtySecondsState.Data data = SixtySecondsState.get(game);
         // The integrated server can clear the runtime GameStatus before the
         // logout event reaches this method.  The persisted phase is the
         // authoritative indication that a round is still resumable.
         boolean unfinished = data.phase == SixtySecondsPhase.PREPARATION
                 || data.phase == SixtySecondsPhase.DAY;
         if (unfinished) {
-            save(main);
+            save(game);
         }
     }
 
     // ── 自动存档（每 tick 调用） ──────────────────────────────────────
     public static void autoSaveIfNeeded(ServerLevel level) {
-        ServerLevel main = mainLevel(level);
-        SixtySecondsState.Data data = SixtySecondsState.get(main);
+        ServerLevel game = gameLevel(level);
+        ServerLevel root = mainLevel(game);
+        SixtySecondsState.Data data = SixtySecondsState.get(game);
         boolean roundInProgress = data.phase == SixtySecondsPhase.PREPARATION
                 || data.phase == SixtySecondsPhase.DAY;
         if (!roundInProgress) {
             return;
         }
-        long now = main.getGameTime();
-        Long last = lastAutoSave.get(main);
+        long now = game.getGameTime();
+        Long last = lastAutoSave.get(root);
         if (last == null || now - last >= AUTO_SAVE_INTERVAL) {
-            lastAutoSave.put(main, now);
-            save(main);
+            lastAutoSave.put(root, now);
+            save(game);
         }
     }
 
@@ -212,9 +257,10 @@ public final class SixtySecondsSaveManager {
             pendingSnapshot = snap;
             // 快照与世界绑定：后续 takeResumeLayout / applyPendingOverlay / isResuming 都会校验，
             // 一旦进程内换了世界，这份快照会被自动丢弃而不是污染新局。
-            pendingWorldId = worldIdOf(level);
+            ServerLevel game = levelForDimension(level.getServer(), snap.dimension);
+            pendingWorldId = worldIdOf(game);
             // 不限制参与玩家：重载后首位在线的非旁观玩家即可开局（minPlayerCount=1）
-            GameUtils.startGame(level, SixtySecondsMod.MODE, snap.minutes);
+            GameUtils.startGame(game, SixtySecondsMod.MODE, snap.minutes);
         } catch (Exception e) {
             System.err.println("[SixtySecondsSaveManager] 恢复失败: " + e);
             e.printStackTrace();
@@ -506,6 +552,7 @@ public final class SixtySecondsSaveManager {
         SixtySecondsState.Data data = SixtySecondsState.get(level);
         HolderLookup.Provider provider = level.registryAccess();
         SavedGame g = new SavedGame();
+        g.dimension = level.dimension().location().toString();
         g.minutes = SixtySecGameTimeComponent.KEY.get(level).getResetTime();
         g.dayNumber = data.dayNumber;
         g.daytimeTicks = data.daytimeTicks;
@@ -589,6 +636,7 @@ public final class SixtySecondsSaveManager {
         HolderLookup.Provider provider = level.registryAccess();
         CompoundTag root = new CompoundTag();
         root.putInt("schemaVersion", 2);
+        root.putString("dimension", g.dimension == null ? Level.OVERWORLD.location().toString() : g.dimension);
         root.putInt("minutes", g.minutes);
         root.putInt("dayNumber", g.dayNumber);
         root.putInt("daytimeTicks", g.daytimeTicks);
@@ -652,6 +700,8 @@ public final class SixtySecondsSaveManager {
         try (InputStream is = Files.newInputStream(path)) {
             CompoundTag root = NbtIo.readCompressed(is, NbtAccounter.create(Long.MAX_VALUE));
             SavedGame g = new SavedGame();
+            g.dimension = root.contains("dimension")
+                    ? root.getString("dimension") : Level.OVERWORLD.location().toString();
             g.minutes = root.getInt("minutes");
             g.dayNumber = root.getInt("dayNumber");
             g.daytimeTicks = root.contains("daytimeTicks") ? root.getInt("daytimeTicks")
@@ -960,6 +1010,7 @@ public final class SixtySecondsSaveManager {
 
     // ── 快照数据 ──────────────────────────────────────────────────────
     private static final class SavedGame {
+        String dimension = Level.OVERWORLD.location().toString();
         int minutes;
         int dayNumber;
         int daytimeTicks;
