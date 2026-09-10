@@ -44,7 +44,11 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
         this.inventoryLabelY = 74;
         // House searching uses the legacy layout.  PetiteInventory resumes
         // after the player has returned to the shelter.
-        ScreenLayoutSettings.setEnabled(this, !SixtySecBridgeClient.shouldDisablePetiteInventory());
+        // This screen has its own 27-cell layout and its own footprint
+        // mapping.  PetiteInventory must not remap these container slots to
+        // the player inventory, otherwise magnifiers render at the mapped
+        // slot's coordinates (often in the lower-right of the screen).
+        ScreenLayoutSettings.setEnabled(this, false);
         ClientInventoryContext.invalidate();
         super.init();
     }

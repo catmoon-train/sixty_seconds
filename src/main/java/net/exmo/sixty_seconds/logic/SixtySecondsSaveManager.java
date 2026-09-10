@@ -145,7 +145,10 @@ public final class SixtySecondsSaveManager {
     // ── 自动存档（每 tick 调用） ──────────────────────────────────────
     public static void autoSaveIfNeeded(ServerLevel level) {
         ServerLevel main = mainLevel(level);
-        if (!SixtySecondsMod.RUNNING || !SixtySecondsMod.isActive(main)) {
+        SixtySecondsState.Data data = SixtySecondsState.get(main);
+        boolean roundInProgress = data.phase == SixtySecondsPhase.PREPARATION
+                || data.phase == SixtySecondsPhase.DAY;
+        if (!roundInProgress) {
             return;
         }
         long now = main.getGameTime();

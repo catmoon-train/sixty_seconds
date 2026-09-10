@@ -59,13 +59,11 @@ public final class SixtySecondsInventoryLimit {
             if (GameUtils.isPlayerSpectatingOrCreative(player)) {
                 continue;
             }
-            // Once the player is back in the shelter during a real game day,
-            // the Tarkov-style menu owns the full 27+27 inventory.  Do not
-            // reapply the legacy barrier/carry-limit system after that menu
-            // closes, otherwise items placed in the custom inventory appear
-            // to have no backing slots and are dropped on the next tick.
-            if (data.phase == SixtySecondsPhase.DAY
-                    && SixtySecondsDailyEvents.isPlayerInShelter(player)) {
+            // After the first 60-second phase the legacy barrier inventory is
+            // permanently disabled for the rest of the round.  This must not
+            // depend on the player's current location: leaving the shelter
+            // for a supply run must not recreate barriers in the backpack.
+            if (data.phase == SixtySecondsPhase.DAY) {
                 clearMainBarriers(player);
                 continue;
             }

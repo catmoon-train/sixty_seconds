@@ -44,7 +44,7 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
     private static final int BAG_CELL = 18;
     private static final int BAG_COLUMNS = 9;
     private static final int EXCHANGE_BUTTON_X = 103;
-    private static final int EXCHANGE_BUTTON_Y = 217;
+    private static final int EXCHANGE_BUTTON_Y = 221;
     private static final int EXCHANGE_BUTTON_WIDTH = 75;
     private static final int EXCHANGE_BUTTON_HEIGHT = 14;
 
