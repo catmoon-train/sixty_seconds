@@ -5,7 +5,6 @@ import net.exmo.sixty_seconds.menu.ExpansionModuleSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -33,4 +32,5 @@ public abstract class InventoryMenuModuleSlotMixin {
             cir.setReturnValue(ItemStack.EMPTY);
         }
     }
+
 }

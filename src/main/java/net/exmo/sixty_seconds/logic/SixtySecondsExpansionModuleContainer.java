@@ -1,16 +1,22 @@
 package net.exmo.sixty_seconds.logic;
 
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.NonNullList;
 
-/** One-slot container that stores the equipped expansion module on the player component. */
-public final class SixtySecondsExpansionModuleContainer implements Container {
+/**
+ * One-slot container that stores the equipped expansion module on the player
+ * component. It extends Inventory deliberately: PetiteInventory excludes
+ * Inventory-backed slots from its storage grid, so the socket remains a normal
+ * one-slot menu slot instead of being mistaken for a multi-cell backpack slot.
+ */
+public final class SixtySecondsExpansionModuleContainer
+        extends net.minecraft.world.entity.player.Inventory {
     private final Player player;
 
     public SixtySecondsExpansionModuleContainer(Player player) {
+        super(player);
         this.player = player;
     }
 

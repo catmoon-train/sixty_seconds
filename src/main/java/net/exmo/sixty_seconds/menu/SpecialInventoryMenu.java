@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -41,6 +42,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
     /** The server-authoritative number of extension slots in this menu. */
     private final int unlockedExtraSlots;
     private final SixtySecondsExpansionModuleContainer moduleContainer;
+    private final ExpansionModuleSlot moduleSlot;
 
     public SpecialInventoryMenu(int id, Inventory inventory) {
         this(id, inventory, getUnlockedExtraSlots(inventory.player));
@@ -91,7 +93,8 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
                     44 + (i / 2) * 38, slot));
         }
         addSlot(new PlayerSlot(inventory, 40, 139, 120));
-        addSlot(new ExpansionModuleSlot(moduleContainer, 139, 158));
+        this.moduleSlot = (ExpansionModuleSlot) addSlot(
+                new ExpansionModuleSlot(moduleContainer, 139, 158));
     }
 
     /** Factory used by NeoForge's menu packet; the count is sent by the server. */
@@ -138,6 +141,16 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
 
     public int offhandSlot() {
         return armorStart() + 4;
+    }
+
+    @Override
+    public void clicked(int slotId, int button, ClickType clickType, Player player) {
+        if (slotId >= 0 && slotId < slots.size() && slots.get(slotId) == moduleSlot
+                && ExpansionModuleSlot.handleClick(this, moduleSlot, button, clickType, player)) {
+            broadcastChanges();
+            return;
+        }
+        super.clicked(slotId, button, clickType, player);
     }
 
     @Override

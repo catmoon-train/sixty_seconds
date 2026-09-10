@@ -26,6 +26,7 @@
     "AbstractContainerMenuMixin",
     "AbstractContainerMenuAddSlotInvoker",
     "InventoryMenuModuleSlotMixin",
+    "VanillaPickupDuringSearchMixin",
     "PetiteInventoryTaczNbtMixin",
     "PetiteInventoryQuickMoveMixin",
     "PetiteInventorySophisticatedQuickMoveMixin",

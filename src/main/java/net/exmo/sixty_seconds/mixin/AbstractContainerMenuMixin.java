@@ -2,9 +2,11 @@ package net.exmo.sixty_seconds.mixin;
 
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.logic.SixtySecondsInventoryLimit;
+import net.exmo.sixty_seconds.menu.ExpansionModuleSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,9 +21,19 @@ public class AbstractContainerMenuMixin {
 
     @Inject(method = "doClick", at = @At("HEAD"), cancellable = true)
     public void doClick(int slotIndex, int button, ClickType clickType, Player player, CallbackInfo ci) {
+        AbstractContainerMenu menu = (AbstractContainerMenu) (Object) this;
+        if (slotIndex >= 0 && slotIndex < menu.slots.size()) {
+            Slot slot = menu.getSlot(slotIndex);
+            if (slot instanceof ExpansionModuleSlot moduleSlot
+                    && ExpansionModuleSlot.handleClick(menu, moduleSlot, button, clickType, player)) {
+                menu.broadcastChanges();
+                ci.cancel();
+                return;
+            }
+        }
         if (SixtySecondsMod.isActive(player.level())
                 && SixtySecondsInventoryLimit.shouldBlockClick(
-                        (AbstractContainerMenu) (Object) this, slotIndex, button, clickType, player)) {
+                        menu, slotIndex, button, clickType, player)) {
             ci.cancel();
         }
     }
