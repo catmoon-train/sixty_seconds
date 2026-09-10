@@ -5,6 +5,7 @@ import mcjty.lostcities.api.ILostCityInformation;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.entity.SixtySecondsNpcEntity;
 import net.exmo.sixty_seconds.logic.SixtySecondsNpcSpawner;
+import net.exmo.sixty_seconds.state.SixtySecondsState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -20,7 +21,6 @@ import net.neoforged.neoforge.event.level.ChunkEvent;
 import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 /**
  * LostCities 建筑按种类固定刷 NPC，且<b>只刷一次、打死不补</b>：
@@ -43,6 +43,8 @@ import java.util.WeakHashMap;
  */
 public final class SixtySecondsLostCityNpcGen {
 
+    private static final String LOST_CITY_STATIC_TAG = "sixty_seconds_lost_city_static_npc";
+
     /** 安全区建筑（文件名，不含命名空间）：固定刷 3 个军人。 */
     private static final Set<String> SAFE_BUILDINGS = Set.of("safezone");
 
@@ -55,9 +57,6 @@ public final class SixtySecondsLostCityNpcGen {
     /** 交易建筑商人数量随机下限 / 上限。 */
     private static final int MERCHANT_MIN = 1;
     private static final int MERCHANT_MAX = 5;
-
-    /** 已处理过的 chunk（按世界记录），保证每个 chunk 只刷一次。 */
-    private static final WeakHashMap<Level, Set<ChunkPos>> DONE = new WeakHashMap<>();
 
     private SixtySecondsLostCityNpcGen() {
     }
@@ -79,24 +78,31 @@ public final class SixtySecondsLostCityNpcGen {
         ChunkPos cp = chunk.getPos();
 
         // 去重：本 chunk 已处理过则跳过（重启/重载/玩家往返都不重刷）
-        Set<ChunkPos> done = DONE.computeIfAbsent(level, k -> java.util.Collections.newSetFromMap(new WeakHashMap<>()));
-        if (!done.add(cp)) {
-            return;
-        }
-
+        SixtySecondsState.Data state = SixtySecondsState.get(level);
         String buildingName = buildingNameAt(level, cp);
         if (buildingName == null) {
-            return; // 非建筑 chunk：不刷
+            return;
+        }
+        if (!state.lostCityProcessedChunks.add(cp.toLong())) {
+            return;
         }
         String name = buildingName.toLowerCase(Locale.ROOT);
 
         RandomSource random = level.getRandom();
         AABB box = chunkBox(level, cp);
+        // 实体本身会随区块保存；重启后即使内存 DONE 丢失，也不要重复生成。
+        if (!level.getEntitiesOfClass(SixtySecondsNpcEntity.class, box.inflate(1.0),
+                npc -> npc.getTags().contains(LOST_CITY_STATIC_TAG)).isEmpty()) {
+            return;
+        }
 
+        boolean spawnedAny = false;
         if (SAFE_BUILDINGS.contains(name)) {
             for (int i = 0; i < SAFEZONE_SOLDIER_COUNT; i++) {
-                spawnGarrisoned(level, box, random, SixtySecondsNpcEntity.Variant.SOLDIER, "default", 6);
+                spawnedAny |= spawnGarrisoned(level, box, random,
+                        SixtySecondsNpcEntity.Variant.SOLDIER, "default", 6);
             }
+            if (!spawnedAny) state.lostCityProcessedChunks.remove(cp.toLong());
             return;
         }
 
@@ -104,21 +110,28 @@ public final class SixtySecondsLostCityNpcGen {
             if (name.startsWith(prefix)) {
                 int count = MERCHANT_MIN + random.nextInt(MERCHANT_MAX - MERCHANT_MIN + 1);
                 for (int i = 0; i < count; i++) {
-                    spawnGarrisoned(level, box, random, SixtySecondsNpcEntity.Variant.MERCHANT, "default", 5);
+                    spawnedAny |= spawnGarrisoned(level, box, random,
+                            SixtySecondsNpcEntity.Variant.MERCHANT, "default", 5);
                 }
+                if (!spawnedAny) state.lostCityProcessedChunks.remove(cp.toLong());
                 return;
             }
         }
     }
 
     /** 在 chunk 盒内找一个地面点刷一只站桩 NPC（军人/商人）。找不到地面则跳过。 */
-    private static void spawnGarrisoned(ServerLevel level, AABB box, RandomSource random,
+    private static boolean spawnGarrisoned(ServerLevel level, AABB box, RandomSource random,
             SixtySecondsNpcEntity.Variant variant, String profile, int garrisonRadius) {
         BlockPos spot = SixtySecondsNpcSpawner.findGroundSpot(level, box, random);
         if (spot == null) {
-            return;
+            return false;
         }
-        SixtySecondsNpcSpawner.spawnAt(level, spot, variant, random.nextFloat() * 360.0F, profile, garrisonRadius, -1);
+        SixtySecondsNpcEntity npc = SixtySecondsNpcSpawner.spawnAt(
+                level, spot, variant, random.nextFloat() * 360.0F, profile, garrisonRadius, -1);
+        if (npc != null) {
+            npc.addTag(LOST_CITY_STATIC_TAG);
+        }
+        return npc != null;
     }
 
     /** chunk 的世界高度 AABB（XZ 锁定 16×16，Y 用世界可建范围）。 */

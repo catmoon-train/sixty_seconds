@@ -71,6 +71,7 @@ public final class SixtySecondsPveSystem {
     private static final Map<ServerLevel, Integer> LAST_BOSS_DAY = new WeakHashMap<>();
     /** 每玩家「每日保底刷怪」上次触发的游戏日（缺省=未触发）。每日首次进入探索区按星级保底刷怪。 */
     private static final Map<UUID, Integer> LAST_GUARANTEED_DAY = new HashMap<>();
+    private static final Map<UUID, Integer> LAST_GUARANTEED_AREA_LEVEL = new HashMap<>();
     /** 每玩家待刷出的保底怪数量（分批刷：每次 tick 刷 {@link SixtySecondsBalance#GUARANTEED_BATCH_SIZE} 只直至清零）。 */
     private static final Map<UUID, Integer> PENDING_GUARANTEED = new HashMap<>();
 
@@ -153,11 +154,17 @@ public final class SixtySecondsPveSystem {
     // ── 探索区游荡怪 ──────────────────────────────────────────────────────
     private static void tickAmbientSpawns(ServerLevel level, SixtySecondsState.Data data) {
         for (ServerPlayer player : level.players()) {
-            if (!SixtySecondsSearchZones.isInSearchZone(player)
-                    || !SixtySecondsMonsterEntity.isValidPrey(player)) {
+            if (!SixtySecondsMonsterEntity.isValidPrey(player)) {
                 continue;
             }
             int areaLevel = SixtySecondsAreaLevels.levelAt(level, player.blockPosition());
+            boolean inSearchZone = SixtySecondsSearchZones.isInSearchZone(player);
+            if (!inSearchZone && areaLevel < 4) {
+                continue;
+            }
+            if (!isPveSpawnAnchor(level, player, 40.0)) {
+                continue;
+            }
             // 安全区（0 级）：不刷游荡怪，也不计保底刷怪
             if (areaLevel <= 0) {
                 continue;
@@ -167,11 +174,16 @@ public final class SixtySecondsPveSystem {
             // ── 每日保底刷怪（分批）：每玩家每日首次进入探索区，按星级保底刷 areaLevel 只 ──
             // 「每天进入固定根据星级刷几只，分批刷」：5 星保底 5 只，每次 tick 最多刷 GUARANTEED_BATCH_SIZE 只。
             int lastDay = LAST_GUARANTEED_DAY.getOrDefault(uuid, -1);
-            if (lastDay != data.dayNumber) {
+            int lastAreaLevel = lastDay == data.dayNumber
+                    ? LAST_GUARANTEED_AREA_LEVEL.getOrDefault(uuid, 0) : 0;
+            if (lastDay != data.dayNumber || areaLevel > lastAreaLevel) {
                 LAST_GUARANTEED_DAY.put(uuid, data.dayNumber);
                 // 4 星=6 只、5 星=9 只的每日保底，分批生成，避免一次性刷怪峰值。
                 int guaranteed = areaLevel >= 4 ? areaLevel + (areaLevel - 3) * 2 : areaLevel;
-                PENDING_GUARANTEED.put(uuid, guaranteed);
+                int previousTarget = lastAreaLevel >= 4
+                        ? lastAreaLevel + (lastAreaLevel - 3) * 2 : lastAreaLevel;
+                PENDING_GUARANTEED.merge(uuid, Math.max(0, guaranteed - previousTarget), Integer::sum);
+                LAST_GUARANTEED_AREA_LEVEL.put(uuid, Math.max(lastAreaLevel, areaLevel));
             }
             int pending = PENDING_GUARANTEED.getOrDefault(uuid, 0);
             if (pending > 0) {
@@ -255,6 +267,24 @@ public final class SixtySecondsPveSystem {
      * 生命按星级加成（每星+10%：1星×1.10 … 5星×1.50），返回实际刷出数量并预警附近玩家。
      * 每只怪刷出前检查落点附近是否有其他非目标玩家，有则跳过（避免怪刷在别人脸上）。
      */
+    private static boolean isPveSpawnAnchor(ServerLevel level, ServerPlayer player, double radius) {
+        double radiusSqr = radius * radius;
+        UUID own = player.getUUID();
+        for (ServerPlayer other : level.players()) {
+            if (other == player || other.isSpectator()
+                    || !SixtySecondsMonsterEntity.isValidPrey(other)
+                    || (!SixtySecondsSearchZones.isInSearchZone(other)
+                        && SixtySecondsAreaLevels.levelAt(level, other.blockPosition()) < 4)
+                    || other.distanceToSqr(player) > radiusSqr) {
+                continue;
+            }
+            if (other.getUUID().toString().compareTo(own.toString()) < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private static int spawnPack(ServerLevel level, SixtySecondsState.Data data, ServerPlayer player,
             int areaLevel, int count, AABB zone) {
         int spawned = 0;
@@ -393,6 +423,13 @@ public final class SixtySecondsPveSystem {
         // 终焉之王（apex）：刷新不被任何情况阻挡，可与普通 Boss 共存——跳过活跃 Boss 锁与概率判定。
         boolean apex = !SixtySecondsManager.isEndless(level)
                 && data.dayNumber >= SixtySecondsManager.totalDays(level);
+
+        // 前三天是全局保护期：高危 4/5 级区域和岛屿仍由各自的区域系统负责 PVE，
+        // 但全局夜袭 Boss 不应绕过保护期提前出现。
+        if (!apex && data.dayNumber <= 3) {
+            LAST_BOSS_DAY.put(level, data.dayNumber);
+            return;
+        }
 
         if (!apex) {
             // 普通 Boss：同一时间最多一只；若上一只还活着但已超 2 天存活上限，则强制消失并允许新 Boss。
@@ -962,5 +999,11 @@ private static void dropAt(ServerLevel level, LivingEntity source, ItemStack sta
         TURRETS.remove(level);
         LAST_AMBIENT_CHECK.remove(level);
         LAST_BOSS_DAY.remove(level);
+        for (ServerPlayer player : level.players()) {
+            UUID id = player.getUUID();
+            PENDING_GUARANTEED.remove(id);
+            LAST_GUARANTEED_DAY.remove(id);
+            LAST_GUARANTEED_AREA_LEVEL.remove(id);
+        }
     }
 }

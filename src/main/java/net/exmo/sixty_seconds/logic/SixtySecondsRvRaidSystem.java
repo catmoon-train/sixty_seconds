@@ -207,6 +207,7 @@ public final class SixtySecondsRvRaidSystem {
             }
             int batch = Math.min(remaining, SixtySecondsBalance.RV_HORDE_BATCH_SIZE);
             BlockPos anchor = rv.blockPosition();
+            int spawned = 0;
             for (int i = 0; i < batch; i++) {
                 BlockPos spot = SixtySecondsPveSystem.findSpawnSpot(level, anchor,
                         SixtySecondsBalance.RV_RAID_SPAWN_MIN_DIST,
@@ -215,9 +216,11 @@ public final class SixtySecondsRvRaidSystem {
                     continue;
                 }
                 SixtySecondsMonsterEntity.Variant variant = rollRaidVariant(level, data.dayNumber);
-                createRaider(level, teamId, spot, variant, horde, mobs);
+                if (createRaider(level, teamId, spot, variant, horde, mobs) != null) {
+                    spawned++;
+                }
             }
-            pending.put(teamId, remaining - batch);
+            pending.put(teamId, remaining - spawned);
             if (pending.get(teamId) <= 0) {
                 pending.remove(teamId);
             }

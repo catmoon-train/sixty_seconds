@@ -88,11 +88,6 @@ public final class NeoForgeEvents {
                 net.exmo.sixty_seconds.island.SixtySecondsIslands.tick(level);
                 // 对局未开始时不刷新海洋生物与海盗 NPC，避免无意义生成
                 if (SixtySecondsMod.RUNNING) {
-                    net.exmo.sixty_seconds.logic.OceanCreatureSpawner.tick(level);
-                    // 海盗等海面 NPC：海洋维度内（不依赖搜索区/对局）按固定间隔刷新
-                    net.exmo.sixty_seconds.state.SixtySecondsState.Data od =
-                            net.exmo.sixty_seconds.state.SixtySecondsState.get(level);
-                    net.exmo.sixty_seconds.logic.SixtySecondsNpcSpawner.spawnPirates(level, od, level.isNight());
                 }
             }
             // 迭代前做快照，避免事件列表在别处被并发注册/注销导致 ConcurrentModificationException

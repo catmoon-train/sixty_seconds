@@ -28,6 +28,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 /**
  * NPC 生成（纯生成逻辑，调度在 {@link SixtySecondsNpcSystem}）。覆盖计划里的 5 条生成路径：
@@ -40,6 +41,7 @@ import java.util.Set;
  * </ol>
  */
 public final class SixtySecondsNpcSpawner {
+    private static final Map<net.minecraft.server.level.ServerLevel, Long> LAST_PIRATE_CHECK = new WeakHashMap<>();
     private SixtySecondsNpcSpawner() {
     }
 
@@ -591,6 +593,12 @@ public final class SixtySecondsNpcSpawner {
      * 河/海自然都覆盖到，不用分两套系统。船靠 {@code SixtySecondsNpcEntity.tickPirateBoat} 划向玩家。
      */
     public static void spawnPirates(ServerLevel level, SixtySecondsState.Data data, boolean night) {
+        long now = level.getGameTime();
+        long last = LAST_PIRATE_CHECK.getOrDefault(level, Long.MIN_VALUE);
+        if (last != Long.MIN_VALUE && now - last < SixtySecondsBalance.PIRATE_CHECK_INTERVAL) {
+            return;
+        }
+        LAST_PIRATE_CHECK.put(level, now);
         RandomSource random = level.getRandom();
         double chance = SixtySecondsBalance.PIRATE_SPAWN_CHANCE
                 * (night ? SixtySecondsBalance.PIRATE_NIGHT_CHANCE_MULT : 1.0);

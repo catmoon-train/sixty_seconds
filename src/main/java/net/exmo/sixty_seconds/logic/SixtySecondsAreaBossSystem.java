@@ -60,6 +60,10 @@ public final class SixtySecondsAreaBossSystem {
     private static final Map<UUID, Long> LAST_ATTACK_TICK = new HashMap<>();
     /** Boss UUID → 最近一次有玩家在其附近的 gameTime（用于不活跃回收判定）。 */
     private static final Map<UUID, Long> LAST_PLAYER_NEARBY_TICK = new HashMap<>();
+    /** 已登记的区域 Boss。使用 UUID 索引，避免每 5 秒遍历整个维度实体列表。 */
+    private static final Map<ServerLevel, Map<String, UUID>> AREA_BOSSES = new WeakHashMap<>();
+    private static final Map<ServerLevel, Integer> REGION_CURSOR = new WeakHashMap<>();
+    private static final long NO_PLAYER_GRACE_TICKS = 20L * 10L;
 
     private SixtySecondsAreaBossSystem() {
     }
@@ -93,12 +97,17 @@ public final class SixtySecondsAreaBossSystem {
 
     // ── 4-5 星区域 / 岛屿固定 Boss ──────────────────────────────────────
     private static void tryAreaBosses(ServerLevel level, SixtySecondsState.Data data, long now) {
-        int live = countLiveAreaBosses(level);
+        List<RegionSpawn> regions = collectRegions(level);
+        Map<String, UUID> index = AREA_BOSSES.computeIfAbsent(level, ignored -> new HashMap<>());
+        rebuildIndex(level, regions, index);
+        int live = index.size();
         if (live >= SixtySecondsBalance.AREA_BOSS_WORLD_CAP) {
             return; // 世界名额已满，等待清理不活跃 Boss 释放
         }
-        List<RegionSpawn> regions = collectRegions(level);
-        for (RegionSpawn r : regions) {
+        int start = regions.isEmpty() ? 0
+                : Math.floorMod(REGION_CURSOR.getOrDefault(level, 0), regions.size());
+        for (int offset = 0; offset < regions.size(); offset++) {
+            RegionSpawn r = regions.get((start + offset) % regions.size());
             if (live >= SixtySecondsBalance.AREA_BOSS_WORLD_CAP) {
                 break;
             }
@@ -131,7 +140,12 @@ public final class SixtySecondsAreaBossSystem {
             }
             boss.addTag(AREA_BOSS_TAG);
             boss.addTag(AREA_BOSS_REGION_TAG_PREFIX + r.key);
+            index.put(r.key, boss.getUUID());
+            LAST_PLAYER_NEARBY_TICK.put(boss.getUUID(), now);
             live++;
+        }
+        if (!regions.isEmpty()) {
+            REGION_CURSOR.put(level, (start + 1) % regions.size());
         }
     }
 
@@ -152,18 +166,8 @@ public final class SixtySecondsAreaBossSystem {
                 out.add(new RegionSpawn("override_" + i, boxToCenter(box), box, region.level));
             }
         }
-        // 4/5 星岛屿
-        for (SixtySecondsIsland island : SixtySecondsIslands.islandList(level)) {
-            if (island == null || island.level < SixtySecondsBalance.AREA_BOSS_MIN_AREA_LEVEL) {
-                continue;
-            }
-            AABB box = island.cellBox();
-            if (box == null) {
-                continue;
-            }
-            BlockPos center = new BlockPos(island.centerX, island.seaY, island.centerZ);
-            out.add(new RegionSpawn("island_" + island.id, center, box, island.level));
-        }
+        // 岛屿 Boss 由 SixtySecondsIslands 的驻军系统独占管理。
+        // 这里不再把岛屿加入区域 Boss 列表，避免同一座岛生成两套 Boss。
         return out;
     }
 
@@ -171,27 +175,42 @@ public final class SixtySecondsAreaBossSystem {
         return BlockPos.containing(box.getCenter());
     }
 
-    /** 统计当前世界存活的区域 Boss 数量（世界名额用）。 */
-    private static int countLiveAreaBosses(ServerLevel level) {
-        int n = 0;
-        for (Entity e : level.getAllEntities()) {
-            if (e instanceof SixtySecondsBossEntity boss && boss.isAlive() && !boss.isRemoved()
-                    && boss.getTags().contains(AREA_BOSS_TAG)) {
-                n++;
+    /** 将已加载区域内的 Boss 登记到 UUID 索引；只查询具体区域，不扫描整个维度。 */
+    private static void rebuildIndex(ServerLevel level, List<RegionSpawn> regions,
+            Map<String, UUID> index) {
+        index.entrySet().removeIf(entry -> {
+            Entity entity = level.getEntity(entry.getValue());
+            return !(entity instanceof SixtySecondsBossEntity boss)
+                    || !boss.isAlive() || boss.isRemoved()
+                    || !boss.getTags().contains(AREA_BOSS_TAG);
+        });
+        for (RegionSpawn region : regions) {
+            if (index.containsKey(region.key)) {
+                continue;
+            }
+            List<SixtySecondsBossEntity> found = level.getEntitiesOfClass(
+                    SixtySecondsBossEntity.class, region.box,
+                    boss -> boss.isAlive() && !boss.isRemoved()
+                            && boss.getTags().contains(AREA_BOSS_TAG)
+                            && boss.getTags().contains(AREA_BOSS_REGION_TAG_PREFIX + region.key));
+            if (!found.isEmpty()) {
+                UUID id = found.get(0).getUUID();
+                index.put(region.key, id);
+                LAST_PLAYER_NEARBY_TICK.putIfAbsent(id, level.getGameTime());
             }
         }
-        return n;
     }
 
     /** 该区域标识是否已有存活 Boss。 */
     private static boolean hasLiveBoss(ServerLevel level, String key) {
-        String full = AREA_BOSS_REGION_TAG_PREFIX + key;
-        for (Entity e : level.getAllEntities()) {
-            if (e instanceof SixtySecondsBossEntity boss && boss.isAlive() && !boss.isRemoved()
-                    && boss.getTags().contains(full)) {
-                return true;
-            }
+        Map<String, UUID> index = AREA_BOSSES.computeIfAbsent(level, ignored -> new HashMap<>());
+        UUID id = index.get(key);
+        Entity entity = id == null ? null : level.getEntity(id);
+        if (entity instanceof SixtySecondsBossEntity boss && boss.isAlive() && !boss.isRemoved()
+                && boss.getTags().contains(AREA_BOSS_TAG)) {
+            return true;
         }
+        index.remove(key);
         return false;
     }
 
@@ -232,19 +251,22 @@ public final class SixtySecondsAreaBossSystem {
             regionBoxes.put(region.key, region.box);
         }
         int r2 = SixtySecondsBalance.AREA_BOSS_PLAYER_RADIUS * SixtySecondsBalance.AREA_BOSS_PLAYER_RADIUS;
+        Map<String, UUID> index = AREA_BOSSES.computeIfAbsent(level, ignored -> new HashMap<>());
         List<SixtySecondsBossEntity> toRemove = new ArrayList<>();
-        for (Entity e : level.getAllEntities()) {
-            if (!(e instanceof SixtySecondsBossEntity boss) || !boss.getTags().contains(AREA_BOSS_TAG)) {
+        for (var entry : new ArrayList<>(index.entrySet())) {
+            Entity e = level.getEntity(entry.getValue());
+            if (!(e instanceof SixtySecondsBossEntity boss)
+                    || !boss.isAlive() || boss.isRemoved()
+                    || !boss.getTags().contains(AREA_BOSS_TAG)) {
+                index.remove(entry.getKey());
                 continue;
             }
             UUID id = boss.getUUID();
-            String regionKey = regionKeyOf(boss);
-            AABB regionBox = regionKey == null ? null : regionBoxes.get(regionKey);
-            // The boss belongs to a concrete region.  Once no player remains
-            // in that region, remove it immediately and let the normal lazy
-            // spawn path recreate it only when somebody returns.
-            if (regionBox == null || !hasPlayerNear(level, regionBox)) {
+            String regionKey = entry.getKey();
+            AABB regionBox = regionBoxes.get(regionKey);
+            if (regionBox == null) {
                 toRemove.add(boss);
+                index.remove(regionKey);
                 LAST_ATTACK_TICK.remove(id);
                 LAST_PLAYER_NEARBY_TICK.remove(id);
                 continue;
@@ -263,10 +285,14 @@ public final class SixtySecondsAreaBossSystem {
             long lastNear = LAST_PLAYER_NEARBY_TICK.getOrDefault(id, 0L);
             long lastAtk = LAST_ATTACK_TICK.getOrDefault(id, 0L);
             boolean chunkUnloaded = !level.hasChunkAt(boss.blockPosition());
+            boolean noPlayerTooLong = !hasPlayerNear(level, regionBox)
+                    && now - lastNear > NO_PLAYER_GRACE_TICKS
+                    && now - lastAtk > NO_PLAYER_GRACE_TICKS;
             boolean inactive = (now - lastNear > SixtySecondsBalance.AREA_BOSS_INACTIVE_DESPAWN_TICKS)
                     && (now - lastAtk > SixtySecondsBalance.AREA_BOSS_INACTIVE_DESPAWN_TICKS);
-            if (chunkUnloaded || inactive) {
+            if (chunkUnloaded || noPlayerTooLong || inactive) {
                 toRemove.add(boss);
+                index.remove(regionKey);
                 LAST_ATTACK_TICK.remove(id);
                 LAST_PLAYER_NEARBY_TICK.remove(id);
             }
@@ -474,6 +500,8 @@ public final class SixtySecondsAreaBossSystem {
         LAST_ATTACK_TICK.clear();
         LAST_PLAYER_NEARBY_TICK.clear();
         DAMAGE_BOSS_SPAWNED.remove(level);
+        AREA_BOSSES.remove(level);
+        REGION_CURSOR.remove(level);
     }
 
     /** 区域刷新描述（区域标识 + 包围盒 + 星级）。 */

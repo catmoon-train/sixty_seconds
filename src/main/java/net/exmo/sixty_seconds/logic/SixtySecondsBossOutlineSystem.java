@@ -5,6 +5,10 @@ import net.exmo.sixty_seconds.entity.OceanTitanEntity;
 import net.exmo.sixty_seconds.entity.SixtySecondsBossEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
 
@@ -24,7 +28,11 @@ import java.util.WeakHashMap;
 public final class SixtySecondsBossOutlineSystem {
     private static final int CHECK_INTERVAL = 10;
     private static final double OUTLINE_RADIUS = 64.0D;
-    private static final Map<ServerLevel, Set<UUID>> ACTIVE = new WeakHashMap<>();
+    // Entity 的共享标记字段固定使用 id 0；通过本地 accessor 读取/发送，
+    // 避免直接访问 Entity 的 protected 常量，同时保持与原版同步协议一致。
+    private static final EntityDataAccessor<Byte> SHARED_FLAGS =
+            new EntityDataAccessor<>(0, EntityDataSerializers.BYTE);
+    private static final Map<ServerLevel, Map<UUID, Set<Integer>>> ACTIVE = new WeakHashMap<>();
 
     private SixtySecondsBossOutlineSystem() {
     }
@@ -34,44 +42,62 @@ public final class SixtySecondsBossOutlineSystem {
             return;
         }
 
-        Set<UUID> shouldGlow = new HashSet<>();
+        Map<UUID, Set<Integer>> activeByPlayer = ACTIVE.computeIfAbsent(level, ignored -> new java.util.HashMap<>());
         for (ServerPlayer player : level.players()) {
             if (player.isSpectator()) {
+                Set<Integer> previous = activeByPlayer.remove(player.getUUID());
+                if (previous != null) {
+                    for (int id : previous) {
+                        Entity entity = level.getEntity(id);
+                        if (isBoss(entity)) {
+                            sendGlow(player, entity, false);
+                        }
+                    }
+                }
                 continue;
             }
+            Set<Integer> shouldGlow = new HashSet<>();
             AABB search = player.getBoundingBox().inflate(OUTLINE_RADIUS);
             collect(level, search, SixtySecondsBossEntity.class, shouldGlow);
             collect(level, search, OceanSeaMonsterEntity.class, shouldGlow);
             collect(level, search, OceanTitanEntity.class, shouldGlow);
-        }
 
-        Set<UUID> previous = ACTIVE.get(level);
-        if (previous != null) {
-            for (UUID id : previous) {
+            Set<Integer> previous = activeByPlayer.getOrDefault(player.getUUID(), Set.of());
+            for (int id : previous) {
                 if (!shouldGlow.contains(id)) {
                     Entity entity = level.getEntity(id);
                     if (isBoss(entity)) {
-                        entity.setGlowingTag(false);
+                        sendGlow(player, entity, false);
                     }
                 }
             }
-        }
-        for (UUID id : shouldGlow) {
-            Entity entity = level.getEntity(id);
-            if (isBoss(entity)) {
-                entity.setGlowingTag(true);
+            for (int id : shouldGlow) {
+                Entity entity = level.getEntity(id);
+                if (isBoss(entity)) {
+                    sendGlow(player, entity, true);
+                }
             }
+            activeByPlayer.put(player.getUUID(), shouldGlow);
         }
-        ACTIVE.put(level, shouldGlow);
+        activeByPlayer.keySet().removeIf(uuid -> level.getServer().getPlayerList().getPlayer(uuid) == null);
     }
 
     private static <T extends Entity> void collect(ServerLevel level, AABB box, Class<T> type,
-            Set<UUID> result) {
+            Set<Integer> result) {
         for (T entity : level.getEntitiesOfClass(type, box, Entity::isAlive)) {
             if (!entity.isRemoved()) {
-                result.add(entity.getUUID());
+                result.add(entity.getId());
             }
         }
+    }
+
+    private static void sendGlow(ServerPlayer player, Entity entity, boolean glowing) {
+        byte flags = entity.getEntityData().get(SHARED_FLAGS);
+        byte packetFlags = glowing ? (byte) (flags | 0x40) : (byte) (flags & ~0x40);
+        @SuppressWarnings({"rawtypes", "unchecked"})
+        SynchedEntityData.DataValue value = new SynchedEntityData.DataValue(
+                0, EntityDataSerializers.BYTE, packetFlags);
+        player.connection.send(new ClientboundSetEntityDataPacket(entity.getId(), java.util.List.of(value)));
     }
 
     private static boolean isBoss(Entity entity) {

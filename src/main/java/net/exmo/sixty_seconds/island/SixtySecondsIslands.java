@@ -82,6 +82,8 @@ public final class SixtySecondsIslands {
     private static final double RADIO_INTEL_CHANCE = 0.45;
     /** 战斗状态持续 tick（受伤/攻击后 X 秒内视为战斗中）。 */
     private static final long COMBAT_TIMEOUT_TICKS = 20 * 5;
+    private static final Map<ServerLevel, Map<Integer, UUID>> GARRISON_BOSSES = new WeakHashMap<>();
+    private static final int GARRISON_CHECK_INTERVAL = 20;
     /** 返回住所倒计时 tick（10 秒划船动画）。 */
     public static final int RETURN_DURATION_TICKS = 20 * 10;
     /** 返回住所时需站在登岛点周围多少格以内。 */
@@ -277,6 +279,7 @@ public final class SixtySecondsIslands {
     /** 开局钩子（{@code SixtySecondsManager.begin}）：清跨局解锁态，为每队默认解锁全部 1 级港湾岛。 */
     public static void onGameStart(ServerLevel level) {
         Data data = get(level);
+        GARRISON_BOSSES.remove(level);
         data.teamUnlocked.clear();
         data.teamVisited.clear();
         data.lastIsland.clear();
@@ -398,6 +401,9 @@ public final class SixtySecondsIslands {
      * 玩家靠近 {@code <HARDCORE_BOSS_SPAWN_DIST} 且岛上无存活驻守 Boss 时重建一只。</p>
      */
     private static void tickHardcoreGarrison(ServerLevel level, Data data) {
+        if (level.getGameTime() % GARRISON_CHECK_INTERVAL != 0) {
+            return;
+        }
         // 4/5 星岛都属于高危岛：前三天的 PvP 保护期不影响岛上 PVE。
         // 只有存在高危岛时才进入实体查询，且本方法由外层每 10 tick 调用一次。
         boolean anyDangerousIsland = false;
@@ -413,18 +419,13 @@ public final class SixtySecondsIslands {
         }
         // 1) 收集维度内所有存活的驻守 Boss（按岛 id 索引，天然去重）
         //    按 Boss 类索引查询（Level.getEntities 内部按实体类存储，比遍历全维度所有实体高效）
-        Map<Integer, SixtySecondsBossEntity> garrison = new java.util.HashMap<>();
-        net.minecraft.world.level.entity.EntityTypeTest<net.minecraft.world.entity.Entity, SixtySecondsBossEntity> test =
-                net.minecraft.world.level.entity.EntityTypeTest.forClass(SixtySecondsBossEntity.class);
-        net.minecraft.world.phys.AABB big = net.minecraft.world.phys.AABB.ofSize(
-                net.minecraft.world.phys.Vec3.ZERO, 3.0E7, 3.0E7, 3.0E7);
-        java.util.List<SixtySecondsBossEntity> bossList = new java.util.ArrayList<>();
-        level.getEntities(test, big, boss -> true, bossList);
-        for (SixtySecondsBossEntity boss : bossList) {
-            if (!boss.isRemoved() && boss.isGarrisonBoss()) {
-                garrison.putIfAbsent(boss.getHomeIslandId(), boss);
-            }
-        }
+        Map<Integer, UUID> garrison = GARRISON_BOSSES.computeIfAbsent(level, ignored -> new HashMap<>());
+        garrison.entrySet().removeIf(entry -> {
+            net.minecraft.world.entity.Entity entity = level.getEntity(entry.getValue());
+            return !(entity instanceof SixtySecondsBossEntity boss)
+                    || boss.isRemoved() || !boss.isGarrisonBoss()
+                    || boss.getHomeIslandId() != entry.getKey();
+        });
         double despawnSqr = SixtySecondsBalance.HARDCORE_BOSS_DESPAWN_DIST
                 * SixtySecondsBalance.HARDCORE_BOSS_DESPAWN_DIST;
         double spawnSqr = SixtySecondsBalance.HARDCORE_BOSS_SPAWN_DIST
@@ -433,6 +434,15 @@ public final class SixtySecondsIslands {
             boolean dangerous = island.level >= SixtySecondsBalance.AREA_BOSS_MIN_AREA_LEVEL;
             if (!dangerous && (!island.hardcore || island.bossVariant == null)) {
                 continue;
+            }
+            String legacyTag = net.exmo.sixty_seconds.logic.SixtySecondsAreaBossSystem.AREA_BOSS_REGION_TAG_PREFIX
+                    + "island_" + island.id;
+            for (SixtySecondsBossEntity legacy : level.getEntitiesOfClass(
+                    SixtySecondsBossEntity.class, island.cellBox().inflate(2.0),
+                    boss -> boss.getTags().contains(
+                            net.exmo.sixty_seconds.logic.SixtySecondsAreaBossSystem.AREA_BOSS_TAG)
+                            && boss.getTags().contains(legacyTag))) {
+                legacy.discard();
             }
             // 2) 该岛最近玩家与岛心的水平距离平方
             double nearestSqr = Double.MAX_VALUE;
@@ -447,11 +457,29 @@ public final class SixtySecondsIslands {
                     nearestSqr = d;
                 }
             }
-            SixtySecondsBossEntity existing = garrison.get(island.id);
-            if (existing != null && !existing.isRemoved()) {
+            SixtySecondsBossEntity existing = null;
+            UUID existingId = garrison.get(island.id);
+            if (existingId != null && level.getEntity(existingId) instanceof SixtySecondsBossEntity boss
+                    && !boss.isRemoved() && boss.isGarrisonBoss()
+                    && boss.getHomeIslandId() == island.id) {
+                existing = boss;
+            }
+            if (existing == null && nearestSqr <= spawnSqr) {
+                List<SixtySecondsBossEntity> found = level.getEntitiesOfClass(
+                        SixtySecondsBossEntity.class, island.cellBox().inflate(2.0),
+                        boss -> boss.isAlive() && !boss.isRemoved()
+                                && boss.isGarrisonBoss()
+                                && boss.getHomeIslandId() == island.id);
+                if (!found.isEmpty()) {
+                    existing = found.get(0);
+                    garrison.put(island.id, existing.getUUID());
+                }
+            }
+            if (existing != null) {
                 // 有驻守 Boss：全部玩家远离则消失
                 if (nearestSqr > despawnSqr) {
                     existing.discard();
+                    garrison.remove(island.id);
                 }
             } else if (nearestSqr <= spawnSqr) {
                 // 无存活驻守 Boss 且玩家靠近：去重后重建一只
@@ -460,10 +488,9 @@ public final class SixtySecondsIslands {
                         1, SixtySecondsBalance.AREA_BOSS_MAX_LEVEL);
                 SixtySecondsIslandGenerator.LevelPlacer placer =
                         new SixtySecondsIslandGenerator.LevelPlacer(level, new java.util.LinkedHashMap<>());
-                BlockPos bossSpot = SixtySecondsIslandGenerator.randomGround(
-                        placer, island, level.random, 0.1, 0.7);
+                BlockPos bossSpot = findIslandBossSpot(level, placer, island, level.random, 0.1, 0.7);
                 if (bossSpot == null) {
-                    bossSpot = new BlockPos(island.centerX, island.seaY + 1, island.centerZ);
+                    continue;
                 }
                 SixtySecondsBossEntity.BossVariant variant = island.bossVariant != null
                         ? island.bossVariant
@@ -473,9 +500,29 @@ public final class SixtySecondsIslands {
                         level, bossSpot, bossLevel, false, variant, false, false);
                 if (boss != null) {
                     boss.setHomeIslandId(island.id);
+                    garrison.put(island.id, boss.getUUID());
                 }
             }
         }
+    }
+
+    private static BlockPos findIslandBossSpot(ServerLevel level,
+            SixtySecondsIslandGenerator.LevelPlacer placer, SixtySecondsIsland island,
+            RandomSource random, double minFraction, double maxFraction) {
+        for (int attempt = 0; attempt < 8; attempt++) {
+            BlockPos pos = SixtySecondsIslandGenerator.randomGround(
+                    placer, island, random, minFraction, maxFraction);
+            if (pos == null) {
+                continue;
+            }
+            if (level.getFluidState(pos).isEmpty()
+                    && level.getBlockState(pos).isAir()
+                    && level.getBlockState(pos.above()).isAir()
+                    && level.getBlockState(pos.below()).isSolidRender(level, pos.below())) {
+                return pos;
+            }
+        }
+        return null;
     }
 
     // ── 海图点位订阅（庇护所 + 队友；只在有人开着海图时推）──────────────────────
@@ -588,6 +635,7 @@ public final class SixtySecondsIslands {
             }
             SixtySecondsIslandGenerator.LevelPlacer placer =
                     new SixtySecondsIslandGenerator.LevelPlacer(level, new java.util.LinkedHashMap<>());
+            int spawnedGuards = 0;
             for (int i = 0; i < pack; i++) {
                 BlockPos spot = SixtySecondsIslandGenerator.randomGround(placer, island, rng, 0.1, 0.7);
                 if (spot != null) {
@@ -598,18 +646,22 @@ public final class SixtySecondsIslands {
                     } else {
                         v = SixtySecondsIslandGenerator.rollVariant(rng, island.level);
                     }
-                    SixtySecondsPveSystem.createMonster(level, spot, v, hpMult, 1.0);
+                    if (SixtySecondsPveSystem.createMonster(level, spot, v, hpMult, 1.0) != null) {
+                        spawnedGuards++;
+                    }
                 }
+            }
+            if (spawnedGuards < pack) {
+                data.guardSpawned.remove(island.id);
             }
             // 炼狱岛固定驻守一只 Boss（规划阶段决定的变体；首登一次性）
             if (dangerous || (island.hardcore && island.bossVariant != null)) {
                 int bossLevel = Mth.clamp(island.level - 1
                                 + (island.hardcore ? SixtySecondsBalance.HARDCORE_BOSS_LEVEL_BONUS : 0),
                         1, SixtySecondsBalance.AREA_BOSS_MAX_LEVEL);
-                BlockPos bossSpot = SixtySecondsIslandGenerator.randomGround(
-                        placer, island, rng, 0.1, 0.6);
+                BlockPos bossSpot = findIslandBossSpot(level, placer, island, rng, 0.1, 0.6);
                 if (bossSpot == null) {
-                    bossSpot = new BlockPos(island.centerX, island.seaY + 1, island.centerZ);
+                    return;
                 }
                 SixtySecondsBossEntity.BossVariant variant = island.bossVariant != null
                         ? island.bossVariant
@@ -619,6 +671,8 @@ public final class SixtySecondsIslands {
                         level, bossSpot, bossLevel, false, variant, false, false);
                 if (boss != null) {
                     boss.setHomeIslandId(island.id);
+                    GARRISON_BOSSES.computeIfAbsent(level, ignored -> new HashMap<>())
+                            .put(island.id, boss.getUUID());
                 }
                 // 炼狱岛登场额外红色警报，强调驻守 Boss
                 SubtitleCommand.sendToPlayerTop(player,

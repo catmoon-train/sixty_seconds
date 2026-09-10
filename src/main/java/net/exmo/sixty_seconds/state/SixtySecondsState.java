@@ -176,5 +176,7 @@ public final class SixtySecondsState {
         public int deepSeaBossLastAttemptDay = -1;
         /** 区域 Boss（4/5星区域与岛屿）被玩家击杀当天的游戏日，key 为区域标识。击杀后 2 天内该区域不再刷新。运行时不持久化。 */
         public final java.util.Map<String, Integer> areaBossKillCooldownDay = new java.util.HashMap<>();
+        /** Lost Cities 已处理区块，跨重启保存，避免静态 NPC 被重复生成。 */
+        public final Set<Long> lostCityProcessedChunks = new LinkedHashSet<>();
     }
 }

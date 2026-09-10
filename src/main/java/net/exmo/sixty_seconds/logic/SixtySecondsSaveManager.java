@@ -394,6 +394,8 @@ public final class SixtySecondsSaveManager {
             freshData.deepSeaBossLastAttemptDay = snap.deepSeaBossLastAttemptDay;
             freshData.areaBossKillCooldownDay.clear();
             freshData.areaBossKillCooldownDay.putAll(snap.areaBossKillCooldownDay);
+            freshData.lostCityProcessedChunks.clear();
+            freshData.lostCityProcessedChunks.addAll(snap.lostCityProcessedChunks);
 
             // 各队进度（建筑坐标已由 takeResumeLayout 沿用存档，这里只覆盖数值型进度）
             for (SixtySecondsState.TeamData ft : freshData.teams.values()) {
@@ -577,6 +579,7 @@ public final class SixtySecondsSaveManager {
         g.leviathanLastSpawnDay = data.leviathanLastSpawnDay;
         g.deepSeaBossLastAttemptDay = data.deepSeaBossLastAttemptDay;
         g.areaBossKillCooldownDay = new HashMap<>(data.areaBossKillCooldownDay);
+        g.lostCityProcessedChunks = new HashSet<>(data.lostCityProcessedChunks);
 
         g.teams = new ArrayList<>();
         for (SixtySecondsState.TeamData t : data.teams.values()) {
@@ -676,6 +679,13 @@ public final class SixtySecondsSaveManager {
             bossCooldowns.add(cooldown);
         }
         root.put("areaBossKillCooldownDay", bossCooldowns);
+        ListTag lostCityChunks = new ListTag();
+        for (Long chunkKey : g.lostCityProcessedChunks) {
+            CompoundTag chunk = new CompoundTag();
+            chunk.putLong("key", chunkKey);
+            lostCityChunks.add(chunk);
+        }
+        root.put("lostCityProcessedChunks", lostCityChunks);
         root.putBoolean("hasLayout", g.hasLayout);
         if (g.buildAnchor != null) {
             root.putLong("buildAnchor", g.buildAnchor.asLong());
@@ -737,6 +747,10 @@ public final class SixtySecondsSaveManager {
             for (Tag t : root.getList("areaBossKillCooldownDay", Tag.TAG_COMPOUND)) {
                 CompoundTag cooldown = (CompoundTag) t;
                 g.areaBossKillCooldownDay.put(cooldown.getString("key"), cooldown.getInt("day"));
+            }
+            g.lostCityProcessedChunks = new HashSet<>();
+            for (Tag t : root.getList("lostCityProcessedChunks", Tag.TAG_COMPOUND)) {
+                g.lostCityProcessedChunks.add(((CompoundTag) t).getLong("key"));
             }
             g.hasLayout = root.getBoolean("hasLayout");
             if (root.contains("buildAnchor")) {
@@ -1036,6 +1050,7 @@ public final class SixtySecondsSaveManager {
         int leviathanLastSpawnDay;
         int deepSeaBossLastAttemptDay;
         Map<String, Integer> areaBossKillCooldownDay = new HashMap<>();
+        Set<Long> lostCityProcessedChunks = new HashSet<>();
         List<TeamSave> teams;
         List<PlayerSave> players;
         /** 是否记录了建筑布局；旧存档没有该字段，续档时回退到正常开局建图。 */
