@@ -32,25 +32,18 @@ public final class SixtySecondsReconnect {
     public static void register() {
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
             ServerPlayer player = handler.getPlayer();
-            ServerLevel main = server.getLevel(net.minecraft.world.level.Level.OVERWORLD);
             // During integrated-server shutdown the generic game framework
             // may clear RUNNING before NeoForge delivers the logout event.
             // The persisted phase is the reliable test for an unfinished
             // round, so retain the player's snapshot in that case.
-            if (main != null) {
-                SixtySecondsState.Data data = SixtySecondsState.get(main);
-                boolean unfinished = data.phase == net.exmo.sixty_seconds.SixtySecondsPhase.PREPARATION
-                        || data.phase == net.exmo.sixty_seconds.SixtySecondsPhase.DAY;
-                if (!unfinished) {
-                    return;
-                }
-                save(player);
+            if (!SixtySecondsSaveManager.isRoundUnfinished(player.serverLevel())) {
+                return;
             }
+            save(player);
         });
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             ServerPlayer player = handler.getPlayer();
-            ServerLevel main = server.getLevel(net.minecraft.world.level.Level.OVERWORLD);
-            if (SixtySecondsMod.RUNNING && main != null && SixtySecondsMod.isActive(main)
+            if (SixtySecondsMod.RUNNING && SixtySecondsSaveManager.isRoundUnfinished(player.serverLevel())
                     && BACKUPS.containsKey(player.getUUID())) {
                 // 推迟一 tick：等玩家完全初始化（背包/组件就绪）再恢复
                 server.execute(() -> {
@@ -85,8 +78,7 @@ public final class SixtySecondsReconnect {
         SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
         // 换日相关用当前值刷新，避免离线期间过期
         if (player.level() instanceof ServerLevel level) {
-            ServerLevel main = level.getServer().getLevel(net.minecraft.world.level.Level.OVERWORLD);
-            ServerLevel progressLevel = main != null ? main : level;
+            ServerLevel progressLevel = SixtySecondsSaveManager.currentGameLevel(level);
             SixtySecondsState.Data data = SixtySecondsState.get(progressLevel);
             stats.dayNumber = data.dayNumber;
             stats.totalDays = SixtySecondsManager.totalDays(progressLevel); // HUD「第 X/N 天」的 N（可配置）

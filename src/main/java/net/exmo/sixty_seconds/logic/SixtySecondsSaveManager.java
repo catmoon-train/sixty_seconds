@@ -129,6 +129,17 @@ public final class SixtySecondsSaveManager {
                 && (data.phase == SixtySecondsPhase.PREPARATION || data.phase == SixtySecondsPhase.DAY);
     }
 
+    /** Returns the level containing the active 60 Seconds state. */
+    public static ServerLevel currentGameLevel(ServerLevel hint) {
+        return gameLevel(hint);
+    }
+
+    /** Used by disconnect snapshots before the integrated server is closed. */
+    public static boolean isRoundUnfinished(ServerLevel hint) {
+        SixtySecondsState.Data data = SixtySecondsState.get(gameLevel(hint));
+        return data.phase == SixtySecondsPhase.PREPARATION || data.phase == SixtySecondsPhase.DAY;
+    }
+
     private static ServerLevel levelForDimension(MinecraftServer server, String id) {
         ResourceLocation location = ResourceLocation.tryParse(id == null ? "" : id);
         if (location != null) {
@@ -575,20 +586,21 @@ public final class SixtySecondsSaveManager {
         g.hasLayout = true;
         g.buildAnchor = net.exmo.sixty_seconds.SixtySecondsMod.PREBUILT_ANCHOR;
 
-        g.players = new ArrayList<>();
+        Map<UUID, PlayerSave> playersById = new LinkedHashMap<>();
         // 玩家可能在 ocean 维度，不能只遍历主世界玩家列表。
         for (ServerPlayer p : level.getServer().getPlayerList().getPlayers()) {
-            g.players.add(capturePlayerSnapshot(p, provider).save);
-        }
-        Set<UUID> captured = new HashSet<>();
-        for (PlayerSave player : g.players) {
-            captured.add(player.uuid);
+            PlayerSave save = capturePlayerSnapshot(p, p.serverLevel().registryAccess()).save;
+            playersById.put(save.uuid, save);
         }
         for (PlayerSnapshot snapshot : SixtySecondsReconnect.snapshotsForSave()) {
-            if (snapshot.save != null && captured.add(snapshot.save.uuid)) {
-                g.players.add(snapshot.save);
+            if (snapshot.save != null) {
+                // The disconnect callback is the last authoritative state
+                // during integrated-server shutdown, so it replaces an
+                // earlier PlayerList copy for the same UUID.
+                playersById.put(snapshot.save.uuid, snapshot.save);
             }
         }
+        g.players = new ArrayList<>(playersById.values());
         return g;
     }
 
