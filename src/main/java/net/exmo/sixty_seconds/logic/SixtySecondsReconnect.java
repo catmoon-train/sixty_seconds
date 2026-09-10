@@ -33,7 +33,17 @@ public final class SixtySecondsReconnect {
         ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
             ServerPlayer player = handler.getPlayer();
             ServerLevel main = server.getLevel(net.minecraft.world.level.Level.OVERWORLD);
-            if (SixtySecondsMod.RUNNING && main != null && SixtySecondsMod.isActive(main)) {
+            // During integrated-server shutdown the generic game framework
+            // may clear RUNNING before NeoForge delivers the logout event.
+            // The persisted phase is the reliable test for an unfinished
+            // round, so retain the player's snapshot in that case.
+            if (main != null) {
+                SixtySecondsState.Data data = SixtySecondsState.get(main);
+                boolean unfinished = data.phase == net.exmo.sixty_seconds.SixtySecondsPhase.PREPARATION
+                        || data.phase == net.exmo.sixty_seconds.SixtySecondsPhase.DAY;
+                if (!unfinished) {
+                    return;
+                }
                 save(player);
             }
         });

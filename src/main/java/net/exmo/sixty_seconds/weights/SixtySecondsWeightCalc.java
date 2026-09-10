@@ -1,5 +1,6 @@
 package net.exmo.sixty_seconds.weights;
 
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.content.item.SixtySecondsBackpackItem;
 import net.exmo.sixty_seconds.logic.SixtySecondsExtraInventory;
 import net.minecraft.core.component.DataComponents;
@@ -10,6 +11,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.ItemContainerContents;
 
@@ -53,6 +55,14 @@ public final class SixtySecondsWeightCalc {
         String key = itemKey(stack);
         Double w = cfg.itemWeights.get(key);
         if (w != null) return w;
+        // 方块物品即使来自旧的世界配置、或被玩家从配置中删除，也必须保持统一的方块重量。
+        // 显式 itemWeights 仍优先，因此可以按需覆盖这个默认值。
+        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        if (stack.getItem() instanceof BlockItem
+                && itemId != null
+                && SixtySeconds.MOD_ID.equals(itemId.getNamespace())) {
+            return 4.0;
+        }
         for (Map.Entry<String, Double> e : cfg.tagWeights.entrySet()) {
             String tk = e.getKey();
             if (tk.startsWith("#")) {

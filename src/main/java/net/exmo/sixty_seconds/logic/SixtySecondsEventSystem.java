@@ -506,8 +506,8 @@ public final class SixtySecondsEventSystem {
                 case TOXIC_SPORE -> {
                     // 剧毒孢子：户外玩家每 10 秒获得 5 秒中毒 I；防毒面具免疫
                     if (inHome || hasGasMask(player)) continue;
-                    if (now % (20 * 10) == 0) {
-                        player.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1, false, false, false));
+                    if (now % (20 * 20) == 0) {
+                        player.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 0, false, false, false));
                     }
                 }
                 case SOLAR_FLARE -> {

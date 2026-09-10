@@ -145,7 +145,7 @@ public final class SixtySecondsManager {
                 net.exmo.sixty_seconds.SixtySecondsMod.RUNNING = false;
                 // 延迟一 tick 停止：此刻仍处于核心 initializeGame 中途，直接 stopGame 会被随后的
                 // setGameStatus(ACTIVE) 覆盖；等本次开局流程走完再完整地走停止流程。
-                level.getServer().execute(() -> GameUtils.stopGame(level));
+                level.getServer().execute(() -> GameUtils.stopGame(level, false));
                 return;
             }
         }

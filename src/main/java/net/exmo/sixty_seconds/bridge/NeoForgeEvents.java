@@ -281,13 +281,16 @@ public final class NeoForgeEvents {
     @SubscribeEvent
     public static void onLeave(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            // In singleplayer this callback is earlier than server shutdown;
-            // save while the round component is still ACTIVE.
-            net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.saveIfUnfinished(player.serverLevel());
             ServerPlayConnectionEvents.Handler handler = new ServerPlayConnectionEvents.Handler(player);
+            // Capture the player's inventory/component snapshot first.  The
+            // save manager can then include it even when the integrated server
+            // immediately shuts down after the last player logs out.
             for (ServerPlayConnectionEvents.Disconnect listener : ServerPlayConnectionEvents.DISCONNECT.invokers()) {
                 listener.onPlayDisconnect(handler, player.getServer());
             }
+            // In singleplayer this callback is earlier than server shutdown;
+            // save while the round component is still unfinished.
+            net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.saveIfUnfinished(player.serverLevel());
         }
     }
 

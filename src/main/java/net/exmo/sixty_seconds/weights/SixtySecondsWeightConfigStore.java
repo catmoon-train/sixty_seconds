@@ -3,6 +3,7 @@ package net.exmo.sixty_seconds.weights;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.exmo.sixty_seconds.SixtySeconds;
+import net.exmo.sixty_seconds.registry.ModBlocks;
 import net.exmo.sixty_seconds.registry.ModItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -84,20 +85,9 @@ public final class SixtySecondsWeightConfigStore {
     public static SixtySecondsWeightConfig defaultConfig() {
         SixtySecondsWeightConfig cfg = loadBuiltinDefault();
         // 运行时反射补充：捕获内置 JSON 未覆盖或 id 拼写差异的模组物品
-        for (Field f : ModItems.class.getDeclaredFields()) {
-            f.setAccessible(true);
-            try {
-                Item item = asItem(f.get(null));
-                if (item != null) {
-                    String id = BuiltInRegistries.ITEM.getKey(item).toString();
-                    if (!id.equals("minecraft:air")) {
-                        cfg.itemWeights.putIfAbsent(id, guessModItemWeight(f.getName()));
-                    }
-                }
-            } catch (IllegalAccessException ignored) {
-                // 跳过不可访问字段
-            }
-        }
+        addRegisteredItems(cfg, ModItems.class, null);
+        // ModBlocks 中注册的每个 BlockItem 都统一按 4 重量写入内置配置。
+        addRegisteredItems(cfg, ModBlocks.class, 4.0);
         if (cfg.tagWeights == null) cfg.tagWeights = new LinkedHashMap<>();
         cfg.tagWeights.putIfAbsent("#minecraft:planks", 0.5);
         cfg.tagWeights.putIfAbsent("#minecraft:logs", 2.0);
@@ -130,19 +120,40 @@ public final class SixtySecondsWeightConfigStore {
     /** 收集配置面板中可编辑的物品 id：模组物品 + TACZ 型号 + 已配置项（去重）。 */
     public static List<String> collectItemIds(SixtySecondsWeightConfig cfg) {
         Set<String> ids = new LinkedHashSet<>();
-        for (Field f : ModItems.class.getDeclaredFields()) {
+        collectRegisteredItems(ids, ModItems.class);
+        collectRegisteredItems(ids, ModBlocks.class);
+        ids.addAll(cfg.itemWeights.keySet());
+        return List.copyOf(ids);
+    }
+
+    private static void addRegisteredItems(SixtySecondsWeightConfig cfg, Class<?> registryClass,
+                                           Double fixedWeight) {
+        for (Field f : registryClass.getDeclaredFields()) {
             f.setAccessible(true);
             try {
                 Item item = asItem(f.get(null));
-                if (item != null) {
-                    String id = BuiltInRegistries.ITEM.getKey(item).toString();
-                    if (!id.equals("minecraft:air")) ids.add(id);
-                }
+                if (item == null) continue;
+                String id = BuiltInRegistries.ITEM.getKey(item).toString();
+                if (id.equals("minecraft:air")) continue;
+                cfg.itemWeights.putIfAbsent(id,
+                        fixedWeight != null ? fixedWeight : guessModItemWeight(f.getName()));
+            } catch (IllegalAccessException ignored) {
+                // 跳过不可访问字段
+            }
+        }
+    }
+
+    private static void collectRegisteredItems(Set<String> ids, Class<?> registryClass) {
+        for (Field f : registryClass.getDeclaredFields()) {
+            f.setAccessible(true);
+            try {
+                Item item = asItem(f.get(null));
+                if (item == null) continue;
+                String id = BuiltInRegistries.ITEM.getKey(item).toString();
+                if (!id.equals("minecraft:air")) ids.add(id);
             } catch (IllegalAccessException ignored) {
             }
         }
-        ids.addAll(cfg.itemWeights.keySet());
-        return List.copyOf(ids);
     }
 
     private static Item asItem(Object v) {

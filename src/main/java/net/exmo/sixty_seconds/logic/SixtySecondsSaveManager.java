@@ -80,6 +80,8 @@ public final class SixtySecondsSaveManager {
     /** 建图时尚未上线的玩家：待其加入时再恢复。 */
     private static final Map<UUID, PlayerSave> offlineRestores = new HashMap<>();
     private static final Map<ServerLevel, Long> lastAutoSave = new WeakHashMap<>();
+    /** Explicit stop/game-over callers override the default shutdown policy. */
+    private static final Map<ServerLevel, Boolean> stopPolicies = new WeakHashMap<>();
 
     private SixtySecondsSaveManager() {
     }
@@ -112,6 +114,21 @@ public final class SixtySecondsSaveManager {
         pendingWorldId = null;
         resumeTriggered = false;
         offlineRestores.clear();
+    }
+
+    /** Sets the policy consumed by the next Sixty Seconds mode stop callback. */
+    public static void setStopPolicy(ServerLevel level, boolean preserveRound) {
+        stopPolicies.put(mainLevel(level), preserveRound);
+    }
+
+    /**
+     * Returns whether the next stop should preserve the unfinished round.
+     * Direct framework shutdowns have no policy entry and therefore preserve
+     * by default; only explicit stop/game-over paths opt out.
+     */
+    public static boolean consumeStopPolicy(ServerLevel level) {
+        Boolean preserve = stopPolicies.remove(mainLevel(level));
+        return preserve == null || preserve;
     }
 
     // ── 立即保存 ──────────────────────────────────────────────────────
@@ -253,6 +270,7 @@ public final class SixtySecondsSaveManager {
         pendingWorldId = null;
         resumeTriggered = false;
         offlineRestores.clear();
+        stopPolicies.clear();
         lastAutoSave.clear();
     }
 

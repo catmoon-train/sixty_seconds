@@ -102,8 +102,16 @@ public class SixtySecondsGameMode extends GameMode {
 
     @Override
     public void stopGame(ServerLevel world) {
+        // The generic game framework can call this directly while an
+        // integrated server is shutting down.  Preserve by default, while
+        // explicit /60s stop and completed-game paths provide a delete policy
+        // through GameUtils.stopGame(..., false).
+        if (net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.consumeStopPolicy(world)) {
+            net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.saveIfUnfinished(world);
+        } else {
+            net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.delete(world);
+        }
         net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem.resetAll(world);
-        net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.delete(world); // 一局结束：删除上一局存档
         net.exmo.sixty_seconds.SixtySecondsMod.RUNNING = false;
         // 清掉预建标记：游戏结束（或中途 stop）后，预建方块会被还原，几何数据不再有效
         net.exmo.sixty_seconds.SixtySecondsMod.PREBUILT_DATA = null;

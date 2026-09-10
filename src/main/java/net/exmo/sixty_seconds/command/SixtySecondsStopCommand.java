@@ -32,7 +32,9 @@ public final class SixtySecondsStopCommand {
                                                 .withStyle(ChatFormatting.RED));
                                         return 0;
                                     }
-                                    GameUtils.stopGame(level);
+                                    // An explicit administrator stop ends the
+                                    // round and must not leave a resumable save.
+                                    GameUtils.stopGame(level, false);
                                     source.sendSuccess(
                                             () -> Component.translatable(
                                                     "message.sixty_seconds.sixty_seconds.stop_done")

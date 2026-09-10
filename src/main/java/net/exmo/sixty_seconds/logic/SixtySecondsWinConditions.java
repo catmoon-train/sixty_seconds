@@ -189,7 +189,8 @@ public final class SixtySecondsWinConditions {
                     }
                 });
 
-        GameUtils.stopGame(level);
+        // A completed round is not resumable.
+        GameUtils.stopGame(level, false);
     }
 
     private static void broadcast(ServerLevel level, Component message) {

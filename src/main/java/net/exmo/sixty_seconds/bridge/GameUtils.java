@@ -119,7 +119,24 @@ public final class GameUtils {
     }
 
     public static void stopGame(ServerLevel world) {
+        // A single-player logout also reaches this generic stop path.  Keep
+        // an unfinished 60 Seconds round so the next world load can resume
+        // it; explicit stop/game-over callers use the overload below.
+        stopGame(world, true);
+    }
+
+    /**
+     * Stops the current mode and decides whether an unfinished 60 Seconds
+     * round is a resumable shutdown or an intentional end.
+     */
+    public static void stopGame(ServerLevel world, boolean preserveSixtySecondsRound) {
         SixtySecGameWorldComponent component = SixtySecGameWorldComponent.KEY.get(world);
+        boolean sixtySeconds = SixtySecondsMod.MODE != null
+                && component.getGameMode() == SixtySecondsMod.MODE;
+        if (sixtySeconds) {
+            net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.setStopPolicy(
+                    world, preserveSixtySecondsRound);
+        }
         component.setGameStatus(SixtySecGameWorldComponent.GameStatus.STOPPING);
         if (component.gameMode != null) {
             component.gameMode.stopGame(world);
