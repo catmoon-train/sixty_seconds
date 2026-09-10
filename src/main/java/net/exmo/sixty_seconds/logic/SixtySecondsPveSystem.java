@@ -169,17 +169,27 @@ public final class SixtySecondsPveSystem {
             int lastDay = LAST_GUARANTEED_DAY.getOrDefault(uuid, -1);
             if (lastDay != data.dayNumber) {
                 LAST_GUARANTEED_DAY.put(uuid, data.dayNumber);
-                PENDING_GUARANTEED.put(uuid, areaLevel);
+                // 4 星=6 只、5 星=9 只的每日保底，分批生成，避免一次性刷怪峰值。
+                int guaranteed = areaLevel >= 4 ? areaLevel + (areaLevel - 3) * 2 : areaLevel;
+                PENDING_GUARANTEED.put(uuid, guaranteed);
             }
             int pending = PENDING_GUARANTEED.getOrDefault(uuid, 0);
             if (pending > 0) {
-                int gCap = SixtySecondsBalance.AMBIENT_MAX_NEARBY + areaLevel;
+                // 4/5 星区域不受前三天的 PVP 保护期影响：保护期只禁止
+                // 玩家互殴，不应把高危区域变成安全区。高危区提高附近容量，
+                // 但仍按单个玩家附近的上限控制，避免实体海导致卡顿。
+                boolean highDanger = areaLevel >= 4;
+                int gCap = SixtySecondsBalance.AMBIENT_MAX_NEARBY + areaLevel
+                        + (highDanger ? (areaLevel - 3) * 3 : 0);
                 List<SixtySecondsMonsterEntity> gNear = level.getEntitiesOfClass(SixtySecondsMonsterEntity.class,
                         player.getBoundingBox().inflate(40), Entity::isAlive);
                 int room = gCap - gNear.size();
                 if (room > 0) {
                     AABB gZone = SixtySecondsSearchZones.confineBox(player);
-                    int batch = Math.min(pending, Math.min(SixtySecondsBalance.GUARANTEED_BATCH_SIZE, room));
+                    int batch = Math.min(pending, Math.min(
+                            highDanger ? SixtySecondsBalance.GUARANTEED_BATCH_SIZE + 1
+                                    : SixtySecondsBalance.GUARANTEED_BATCH_SIZE,
+                            room));
                     int spawned = spawnPack(level, data, player, areaLevel, batch, gZone);
                     PENDING_GUARANTEED.put(uuid, pending - spawned);
                 }
@@ -190,7 +200,14 @@ public final class SixtySecondsPveSystem {
             double chance = SixtySecondsBalance.AMBIENT_SPAWN_CHANCE
                     * (1.0 + SixtySecondsBalance.AMBIENT_SPAWN_CHANCE_PER_AREA_LEVEL * areaLevel);
             // 前期天数倍率：前两天刷新概率大幅降低，逐步爬升
-            chance *= SixtySecondsBalance.ambientSpawnDayMult(data.dayNumber, SixtySecondsDifficulty.get(level));
+            // 前三天安全期是 PvP 保护期，不适用于 4/5 星区域的 PVE。
+            // 高危区从第 1 天就按完整刷新率运行，低星区域仍保留原来的前期缓冲。
+            if (areaLevel < 4) {
+                chance *= SixtySecondsBalance.ambientSpawnDayMult(data.dayNumber,
+                        SixtySecondsDifficulty.get(level));
+            } else {
+                chance *= 1.35D + 0.10D * (areaLevel - 4);
+            }
             if (SixtySecondsDayCycle.isNight(data, level.getGameTime())) {
                 chance *= SixtySecondsBalance.AMBIENT_NIGHT_CHANCE_MULT;
                 // 只在前 2 分钟刷新怪物（超出窗口不再刷游荡怪，但已有怪继续存在）
@@ -212,7 +229,9 @@ public final class SixtySecondsPveSystem {
                 continue;
             }
             // 附近怪已达上限则不再刷（防怪海）
-            int cap = SixtySecondsBalance.AMBIENT_MAX_NEARBY + areaLevel;
+            boolean highDanger = areaLevel >= 4;
+            int cap = SixtySecondsBalance.AMBIENT_MAX_NEARBY + areaLevel
+                    + (highDanger ? (areaLevel - 3) * 3 : 0);
             List<SixtySecondsMonsterEntity> near = level.getEntitiesOfClass(SixtySecondsMonsterEntity.class,
                     player.getBoundingBox().inflate(40), Entity::isAlive);
             if (near.size() >= cap) {
@@ -221,6 +240,9 @@ public final class SixtySecondsPveSystem {
             AABB zone = SixtySecondsSearchZones.confineBox(player);
             int packSize = 1 + level.random.nextInt(1 + (areaLevel + 1) / 2)
                     + (data.dayNumber >= 4 ? 1 : 0);
+            if (highDanger) {
+                packSize += 1 + level.random.nextInt(2);
+            }
             // 难度联动：夜袭刷怪数量提高（最高 ×1.5）
             packSize = (int) (packSize * SixtySecondsDifficulty.nightSpawnMultiplier(SixtySecondsDifficulty.get(level)));
             packSize = Math.min(packSize, cap - near.size());
@@ -248,8 +270,12 @@ public final class SixtySecondsPveSystem {
                 continue;
             }
             Variant variant = rollAmbientVariant(level, data.dayNumber, areaLevel);
+            double dangerHealth = 1.0 + SixtySecondsBalance.AMBIENT_HEALTH_PER_AREA_LEVEL * areaLevel;
+            if (areaLevel >= 4) {
+                dangerHealth *= areaLevel >= 5 ? 1.45D : 1.30D;
+            }
             SixtySecondsMonsterEntity mob = createMonster(level, spot, variant,
-                    1.0 + SixtySecondsBalance.AMBIENT_HEALTH_PER_AREA_LEVEL * areaLevel, 1.0);
+                    dangerHealth, areaLevel >= 4 ? 1.08D : 1.0D);
             if (mob != null) {
                 spawned++;
             }
@@ -290,7 +316,9 @@ public final class SixtySecondsPveSystem {
 
     /** 游荡怪变体权重：天数/区域等级越高，精英变体（装甲重锤/潜袭者/嚎叫者/爆裂怪）占比越大。 */
     private static Variant rollAmbientVariant(ServerLevel level, int day, int areaLevel) {
-        float danger = (day + areaLevel) / 12.0F; // 0.16(第1天1级) → 1.0(第7天5级)
+        // 高危区本身就是强度来源，不能等到第 4 天以后才变危险。
+        // 这样第 1 天 4/5 星区域也会稳定混入精英怪，但仍由附近数量上限控量。
+        float danger = (day + (areaLevel >= 4 ? areaLevel * 2 : areaLevel)) / 12.0F;
         float r = level.random.nextFloat();
         // 第二批小怪（第 2 天起按天数比例混入，越往后越多）
         if (day >= 2) {
@@ -301,6 +329,9 @@ public final class SixtySecondsPveSystem {
             r = level.random.nextFloat();
         }
         // 高危精英怪（越往后越常见）
+        if (areaLevel >= 4 && r < 0.16F + 0.06F * (areaLevel - 4)) {
+            return Variant.JUGGERNAUT;
+        }
         if (danger > 0.45F && r < danger * 0.12F) {
             return Variant.JUGGERNAUT;
         }

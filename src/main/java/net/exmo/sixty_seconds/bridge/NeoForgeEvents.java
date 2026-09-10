@@ -80,6 +80,8 @@ public final class NeoForgeEvents {
             }
             net.exmo.sixty_seconds.lostcities.SixtySecondsBuildingTitles.tick(level);
             SixtySecGameWorldComponent.KEY.get(level).serverTick();
+            // Boss 轮廓只在 64 格内开启，并且每 10 tick 检查一次，避免全实体高频扫描。
+            net.exmo.sixty_seconds.logic.SixtySecondsBossOutlineSystem.tick(level);
             // 海洋（海岛）维度：独立于主世界对局，自行驱动海洋生物刷新、海盗 NPC 与海岛登岛检测
             if (level.dimension() == SixtySeconds.OCEAN_DIMENSION) {
                 net.exmo.sixty_seconds.island.SixtySecondsIslands.ensureOceanStarted(level);

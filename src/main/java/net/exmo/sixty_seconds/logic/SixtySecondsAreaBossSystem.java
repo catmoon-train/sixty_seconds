@@ -117,7 +117,7 @@ public final class SixtySecondsAreaBossSystem {
             if (killedDay != null && data.dayNumber - killedDay < SixtySecondsBalance.AREA_BOSS_KILL_COOLDOWN_DAYS) {
                 continue;
             }
-            BlockPos spot = resolveRegionSpot(level, r.box);
+            BlockPos spot = resolveRegionSpot(level, r);
             if (spot == null) {
                 continue;
             }
@@ -292,7 +292,39 @@ public final class SixtySecondsAreaBossSystem {
     }
 
     /** 区域落点：优先取落在该区域盒内的已登记 Boss 刷新点；否则在盒内随机选可站立落点。 */
-    private static BlockPos resolveRegionSpot(ServerLevel level, AABB box) {
+    private static BlockPos resolveRegionSpot(ServerLevel level, RegionSpawn region) {
+        // 岛屿的 cellBox 同时包含海水和海床，不能用包围盒中线随机落点；
+        // 优先沿岛屿陆地找站立点，否则 Boss 可能生成在水里/空中，玩家自然看不到。
+        if (region.key.startsWith("island_")) {
+            try {
+                int id = Integer.parseInt(region.key.substring("island_".length()));
+                for (SixtySecondsIsland island : SixtySecondsIslands.islandList(level)) {
+                    if (island.id != id) {
+                        continue;
+                    }
+                    int radius = Math.max(2, island.radius);
+                    for (int attempt = 0; attempt < 24; attempt++) {
+                        double angle = level.random.nextDouble() * Math.PI * 2.0;
+                        double dist = radius * (0.1 + level.random.nextDouble() * 0.65);
+                        int x = island.centerX + (int) Math.round(Math.cos(angle) * dist);
+                        int z = island.centerZ + (int) Math.round(Math.sin(angle) * dist);
+                        for (int y = island.seaY + 12; y >= island.seaY - 2; y--) {
+                            BlockPos pos = new BlockPos(x, y, z);
+                            if (level.getBlockState(pos).isAir()
+                                    && level.getBlockState(pos.above()).isAir()
+                                    && level.getBlockState(pos.below()).isSolidRender(level, pos.below())
+                                    && level.getBlockState(pos.below()).getFluidState().isEmpty()) {
+                                return pos;
+                            }
+                        }
+                    }
+                    break;
+                }
+            } catch (NumberFormatException ignored) {
+                // 旧存档/损坏标识回退到通用区域落点逻辑。
+            }
+        }
+        AABB box = region.box;
         BlockPos bound = findBoundSpawnPoint(level, box);
         if (bound != null) {
             return bound;

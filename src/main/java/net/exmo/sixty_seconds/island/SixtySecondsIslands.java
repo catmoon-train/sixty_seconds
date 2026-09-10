@@ -398,15 +398,17 @@ public final class SixtySecondsIslands {
      * 玩家靠近 {@code <HARDCORE_BOSS_SPAWN_DIST} 且岛上无存活驻守 Boss 时重建一只。</p>
      */
     private static void tickHardcoreGarrison(ServerLevel level, Data data) {
-        // 无炼狱岛时直接短路，避免无谓的实体扫描
-        boolean anyHardcore = false;
+        // 4/5 星岛都属于高危岛：前三天的 PvP 保护期不影响岛上 PVE。
+        // 只有存在高危岛时才进入实体查询，且本方法由外层每 10 tick 调用一次。
+        boolean anyDangerousIsland = false;
         for (SixtySecondsIsland isl : data.save.islands) {
-            if (isl.hardcore && isl.bossVariant != null) {
-                anyHardcore = true;
+            if (isl.level >= SixtySecondsBalance.AREA_BOSS_MIN_AREA_LEVEL
+                    || (isl.hardcore && isl.bossVariant != null)) {
+                anyDangerousIsland = true;
                 break;
             }
         }
-        if (!anyHardcore) {
+        if (!anyDangerousIsland) {
             return;
         }
         // 1) 收集维度内所有存活的驻守 Boss（按岛 id 索引，天然去重）
@@ -428,7 +430,8 @@ public final class SixtySecondsIslands {
         double spawnSqr = SixtySecondsBalance.HARDCORE_BOSS_SPAWN_DIST
                 * SixtySecondsBalance.HARDCORE_BOSS_SPAWN_DIST;
         for (SixtySecondsIsland island : data.save.islands) {
-            if (!island.hardcore || island.bossVariant == null) {
+            boolean dangerous = island.level >= SixtySecondsBalance.AREA_BOSS_MIN_AREA_LEVEL;
+            if (!dangerous && (!island.hardcore || island.bossVariant == null)) {
                 continue;
             }
             // 2) 该岛最近玩家与岛心的水平距离平方
@@ -452,11 +455,22 @@ public final class SixtySecondsIslands {
                 }
             } else if (nearestSqr <= spawnSqr) {
                 // 无存活驻守 Boss 且玩家靠近：去重后重建一只
-                int bossLevel = Mth.clamp(island.level - 1 + SixtySecondsBalance.HARDCORE_BOSS_LEVEL_BONUS,
+                int bossLevel = Mth.clamp(island.level - 1
+                                + (island.hardcore ? SixtySecondsBalance.HARDCORE_BOSS_LEVEL_BONUS : 0),
                         1, SixtySecondsBalance.AREA_BOSS_MAX_LEVEL);
-                BlockPos bossSpot = new BlockPos(island.centerX, island.seaY + 1, island.centerZ);
+                SixtySecondsIslandGenerator.LevelPlacer placer =
+                        new SixtySecondsIslandGenerator.LevelPlacer(level, new java.util.LinkedHashMap<>());
+                BlockPos bossSpot = SixtySecondsIslandGenerator.randomGround(
+                        placer, island, level.random, 0.1, 0.7);
+                if (bossSpot == null) {
+                    bossSpot = new BlockPos(island.centerX, island.seaY + 1, island.centerZ);
+                }
+                SixtySecondsBossEntity.BossVariant variant = island.bossVariant != null
+                        ? island.bossVariant
+                        : SixtySecondsPveSystem.pickBossVariantPublic(level.random,
+                                SixtySecondsState.get(level).dayNumber);
                 SixtySecondsBossEntity boss = SixtySecondsPveSystem.spawnBoss(
-                        level, bossSpot, bossLevel, false, island.bossVariant, false, false);
+                        level, bossSpot, bossLevel, false, variant, false, false);
                 if (boss != null) {
                     boss.setHomeIslandId(island.id);
                 }
@@ -560,8 +574,14 @@ public final class SixtySecondsIslands {
                 && SixtySecondsPveSystem.pveEnabled(level)) {
             RandomSource rng = level.random;
             // 炼狱岛：守岛怪更多、用更强 variant、血量额外加成；并固定驻守一只 Boss
+            boolean dangerous = island.level >= SixtySecondsBalance.AREA_BOSS_MIN_AREA_LEVEL;
             int pack = 1 + island.level + rng.nextInt(2);
             double hpMult = 1.0 + 0.15 * (island.level - 1);
+            if (dangerous) {
+                // 4/5 星岛首登就应当有明显的 PVE 压力，而不是只有少量普通怪。
+                pack += 2;
+                hpMult *= 1.30;
+            }
             if (island.hardcore) {
                 pack += SixtySecondsBalance.HARDCORE_GUARD_EXTRA;
                 hpMult *= SixtySecondsBalance.HARDCORE_GUARD_HEALTH_MULT;
@@ -572,7 +592,7 @@ public final class SixtySecondsIslands {
                 BlockPos spot = SixtySecondsIslandGenerator.randomGround(placer, island, rng, 0.1, 0.7);
                 if (spot != null) {
                     SixtySecondsMonsterEntity.Variant v;
-                    if (island.hardcore) {
+                    if (island.hardcore || dangerous) {
                         v = SixtySecondsBalance.HARDCORE_GUARD_VARIANTS[
                                 rng.nextInt(SixtySecondsBalance.HARDCORE_GUARD_VARIANTS.length)];
                     } else {
@@ -582,16 +602,21 @@ public final class SixtySecondsIslands {
                 }
             }
             // 炼狱岛固定驻守一只 Boss（规划阶段决定的变体；首登一次性）
-            if (island.hardcore && island.bossVariant != null) {
-                int bossLevel = Mth.clamp(island.level - 1 + SixtySecondsBalance.HARDCORE_BOSS_LEVEL_BONUS,
+            if (dangerous || (island.hardcore && island.bossVariant != null)) {
+                int bossLevel = Mth.clamp(island.level - 1
+                                + (island.hardcore ? SixtySecondsBalance.HARDCORE_BOSS_LEVEL_BONUS : 0),
                         1, SixtySecondsBalance.AREA_BOSS_MAX_LEVEL);
                 BlockPos bossSpot = SixtySecondsIslandGenerator.randomGround(
                         placer, island, rng, 0.1, 0.6);
                 if (bossSpot == null) {
                     bossSpot = new BlockPos(island.centerX, island.seaY + 1, island.centerZ);
                 }
+                SixtySecondsBossEntity.BossVariant variant = island.bossVariant != null
+                        ? island.bossVariant
+                        : SixtySecondsPveSystem.pickBossVariantPublic(level.random,
+                                SixtySecondsState.get(level).dayNumber);
                 SixtySecondsBossEntity boss = SixtySecondsPveSystem.spawnBoss(
-                        level, bossSpot, bossLevel, false, island.bossVariant, false, false);
+                        level, bossSpot, bossLevel, false, variant, false, false);
                 if (boss != null) {
                     boss.setHomeIslandId(island.id);
                 }
