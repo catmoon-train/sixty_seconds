@@ -173,6 +173,12 @@ public final class SixtySecondsDifficulty {
         return 1.0 + (MOB_STAT_MAX_MULT - 1.0) * (l / (double) MAX_LEVEL);
     }
 
+    /** Initial RV fuel scales from 100% at difficulty 0 to 10% at max difficulty. */
+    public static double initialRvFuelMultiplier(int level) {
+        int l = Mth.clamp(level, MIN, MAX_LEVEL);
+        return 1.0D - 0.90D * (l / (double) MAX_LEVEL);
+    }
+
     /** 额外生病概率：每级 +{@link #SICK_CHANCE_PER_LEVEL}，难度 10 = +10%。 */
     public static double sickChanceBonus(int level) {
         return SICK_CHANCE_PER_LEVEL * Mth.clamp(level, MIN, MAX_LEVEL);

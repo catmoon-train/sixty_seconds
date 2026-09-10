@@ -287,6 +287,12 @@ public class SixtySecondsRvEntity extends SixtySecondsVehicleEntity {
         return cans * FUEL_PER_CAN_TICKS;
     }
 
+    /** Set starting fuel by multiplier; later fuel use/refueling/save behavior is unchanged. */
+    public void fillFuel(double multiplier) {
+        double clamped = Math.max(0.0D, Math.min(1.0D, multiplier));
+        setFuelTicks((int) Math.ceil(maxFuelTicks() * clamped));
+    }
+
     public int equipmentSlotCount() {
         return BASE_PART_SLOTS + upgradeLevel();
     }

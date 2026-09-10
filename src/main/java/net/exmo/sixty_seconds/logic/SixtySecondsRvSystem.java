@@ -156,7 +156,13 @@ public final class SixtySecondsRvSystem {
             team.rvForcedChunkX = Integer.MIN_VALUE;
             team.rvForcedChunkZ = Integer.MIN_VALUE;
             team.rvLastSafePos = null;
-            spawnRv(level, config, data, team, index);
+            SixtySecondsRvEntity rv = spawnRv(level, config, data, team, index);
+            if (rv != null) {
+                // 每队房车在本局开局时按难度配置燃油，玩家可以立即驾驶移动。
+                // 中途重生仍走普通 spawnRv 路径，不会覆盖已保存的燃油量。
+                rv.fillFuel(SixtySecondsDifficulty.initialRvFuelMultiplier(
+                        SixtySecondsDifficulty.get(level)));
+            }
             index++;
         }
         SixtySeconds.LOGGER.info("[60s] RV mode: spawned persistent RVs for {} teams.", data.teams.size());
