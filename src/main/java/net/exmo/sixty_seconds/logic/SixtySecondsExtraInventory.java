@@ -15,7 +15,10 @@ public final class SixtySecondsExtraInventory {
     }
 
     public static NonNullList<ItemStack> slots(Player player) {
-        return SixtySecondsStatsComponent.KEY.get(player).extraInventory;
+        SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
+        return SixtySecondsExpansionStorage.isModule(stats.expansionModule)
+                ? SixtySecondsExpansionStorage.read(stats.expansionModule)
+                : stats.extraInventory;
     }
 
     /** Container view used by the server menu and by the client menu mirror. */
@@ -27,7 +30,15 @@ public final class SixtySecondsExtraInventory {
         }
 
         private NonNullList<ItemStack> items() {
-            return slots(player);
+            SixtySecondsStatsComponent stats = SixtySecondsStatsComponent.KEY.get(player);
+            return SixtySecondsExpansionStorage.isModule(stats.expansionModule)
+                    ? SixtySecondsExpansionStorage.read(stats.expansionModule)
+                    : stats.extraInventory;
+        }
+
+        private boolean moduleBacked() {
+            return SixtySecondsExpansionStorage.isModule(
+                    SixtySecondsStatsComponent.KEY.get(player).expansionModule);
         }
 
         @Override
@@ -42,13 +53,17 @@ public final class SixtySecondsExtraInventory {
 
         @Override
         public ItemStack getItem(int slot) {
-            return slot >= 0 && slot < SIZE ? items().get(slot) : ItemStack.EMPTY;
+            if (slot < 0 || slot >= SIZE) return ItemStack.EMPTY;
+            NonNullList<ItemStack> items = items();
+            return items.get(slot).copy();
         }
 
         @Override
         public ItemStack removeItem(int slot, int amount) {
             if (slot < 0 || slot >= SIZE) return ItemStack.EMPTY;
-            ItemStack result = items().get(slot).split(amount);
+            NonNullList<ItemStack> items = items();
+            ItemStack result = items.get(slot).split(amount);
+            if (moduleBacked()) saveModule(items);
             setChanged();
             return result;
         }
@@ -56,8 +71,10 @@ public final class SixtySecondsExtraInventory {
         @Override
         public ItemStack removeItemNoUpdate(int slot) {
             if (slot < 0 || slot >= SIZE) return ItemStack.EMPTY;
-            ItemStack result = items().get(slot).copy();
-            items().set(slot, ItemStack.EMPTY);
+            NonNullList<ItemStack> items = items();
+            ItemStack result = items.get(slot).copy();
+            items.set(slot, ItemStack.EMPTY);
+            if (moduleBacked()) saveModule(items);
             setChanged();
             return result;
         }
@@ -65,8 +82,15 @@ public final class SixtySecondsExtraInventory {
         @Override
         public void setItem(int slot, ItemStack stack) {
             if (slot < 0 || slot >= SIZE) return;
-            items().set(slot, stack.isEmpty() ? ItemStack.EMPTY : stack.copy());
+            NonNullList<ItemStack> items = items();
+            items.set(slot, stack.isEmpty() ? ItemStack.EMPTY : stack.copy());
+            if (moduleBacked()) saveModule(items);
             setChanged();
+        }
+
+        private void saveModule(NonNullList<ItemStack> items) {
+            SixtySecondsExpansionStorage.write(
+                    SixtySecondsStatsComponent.KEY.get(player).expansionModule, items);
         }
 
         @Override
@@ -79,7 +103,9 @@ public final class SixtySecondsExtraInventory {
 
         @Override
         public void clearContent() {
-            for (int i = 0; i < SIZE; i++) items().set(i, ItemStack.EMPTY);
+            NonNullList<ItemStack> items = items();
+            for (int i = 0; i < SIZE; i++) items.set(i, ItemStack.EMPTY);
+            if (moduleBacked()) saveModule(items);
             setChanged();
         }
 

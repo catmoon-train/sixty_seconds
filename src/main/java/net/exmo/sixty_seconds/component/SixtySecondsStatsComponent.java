@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.exmo.sixty_seconds.SixtySeconds;
+import net.exmo.sixty_seconds.logic.SixtySecondsExpansionStorage;
 import org.jetbrains.annotations.NotNull;
 import net.exmo.sixty_seconds.bridge.cca.ComponentKey;
 import net.exmo.sixty_seconds.bridge.cca.ComponentRegistry;
@@ -95,6 +96,8 @@ public class SixtySecondsStatsComponent implements AutoSyncedComponent {
     /** The 18 round-only slots behind the vanilla player inventory. */
     public final NonNullList<ItemStack> extraInventory =
             NonNullList.withSize(net.exmo.sixty_seconds.logic.SixtySecondsExtraInventory.SIZE, ItemStack.EMPTY);
+    /** The module in the dedicated inventory socket; its contents live in its CONTAINER component. */
+    public ItemStack expansionModule = ItemStack.EMPTY;
     /** 救援信标标记：使用者激活信标后被置位，使其可在撤离点建筑内直接撤离（见 SixtySecondsRescue）。 */
     public boolean rescueMarked = false;
     /** 绷带缓慢恢复剩余生命值（不使用后重置，无需持久化）。 */
@@ -145,6 +148,7 @@ public class SixtySecondsStatsComponent implements AutoSyncedComponent {
         for (int i = 0; i < extraInventory.size(); i++) {
             extraInventory.set(i, ItemStack.EMPTY);
         }
+        expansionModule = ItemStack.EMPTY;
         rescueMarked = false;
         lastSentHealth = -1;
         lastSentHealthMax = -1;
@@ -221,6 +225,7 @@ public class SixtySecondsStatsComponent implements AutoSyncedComponent {
         for (ItemStack stack : extraInventory) {
             ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, stack);
         }
+        ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, expansionModule);
 
     }
 
@@ -267,6 +272,7 @@ public class SixtySecondsStatsComponent implements AutoSyncedComponent {
         for (int i = 0; i < extraInventory.size(); i++) {
             extraInventory.set(i, ItemStack.OPTIONAL_STREAM_CODEC.decode(buf));
         }
+        expansionModule = ItemStack.OPTIONAL_STREAM_CODEC.decode(buf);
     }
 
     /** 已被上面的紧凑二进制同步取代，仅保留以满足接口（不再被调用）。 */
@@ -300,6 +306,11 @@ public class SixtySecondsStatsComponent implements AutoSyncedComponent {
         tag.putInt("PlayerKills", playerKills);
         tag.putInt("ExtraUnlockedSlots", extraUnlockedSlots);
         writeExtraInventory(tag, registryLookup);
+        if (!expansionModule.isEmpty()) {
+            tag.put("ExpansionModule", expansionModule.save(registryLookup));
+        } else {
+            tag.remove("ExpansionModule");
+        }
         tag.putBoolean("RescueMarked", rescueMarked);
     }
 
@@ -338,17 +349,26 @@ public class SixtySecondsStatsComponent implements AutoSyncedComponent {
         }
         extraUnlockedSlots = tag.contains("ExtraUnlockedSlots") ? tag.getInt("ExtraUnlockedSlots") : 0;
         readExtraInventory(tag, registryLookup);
+        expansionModule = tag.contains("ExpansionModule", net.minecraft.nbt.Tag.TAG_COMPOUND)
+                ? ItemStack.parse(registryLookup, tag.getCompound("ExpansionModule")).orElse(ItemStack.EMPTY)
+                : ItemStack.EMPTY;
         rescueMarked = tag.getBoolean("RescueMarked");
     }
 
     public void writeToNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
         writeExtraInventory(tag, registryLookup);
+        if (!expansionModule.isEmpty()) {
+            tag.put("ExpansionModule", expansionModule.save(registryLookup));
+        }
         // Kept for component-provider compatibility; the save manager uses
         // writeToSyncNbt/readFromSyncNbt for its player snapshots.
     }
 
     public void readFromNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
         readExtraInventory(tag, registryLookup);
+        expansionModule = tag.contains("ExpansionModule", net.minecraft.nbt.Tag.TAG_COMPOUND)
+                ? ItemStack.parse(registryLookup, tag.getCompound("ExpansionModule")).orElse(ItemStack.EMPTY)
+                : ItemStack.EMPTY;
     }
 
     private void writeExtraInventory(CompoundTag tag, HolderLookup.Provider registryLookup) {

@@ -125,6 +125,8 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
         graphics.drawString(this.font, Component.translatable(
                 "gui.sixty_seconds.inventory.equipment"), x + 103, y + 31, MUTED, false);
         graphics.drawString(this.font, Component.translatable(
+                "gui.sixty_seconds.inventory.expansion_module"), x + 103, y + 145, MUTED, false);
+        graphics.drawString(this.font, Component.translatable(
                 "gui.sixty_seconds.inventory.quick_access"), x + 18, y + 180, MUTED, false);
         graphics.drawString(this.font, Component.translatable(
                 "gui.sixty_seconds.inventory.backpack"), x + DIVIDER_X + 10, y + 31, TEXT, false);

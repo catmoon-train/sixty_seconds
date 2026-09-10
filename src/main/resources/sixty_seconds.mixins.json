@@ -24,6 +24,8 @@
     "GlobalTodoMixin",
     "LevelChunkSpawnerWarningMixin",
     "AbstractContainerMenuMixin",
+    "AbstractContainerMenuAddSlotInvoker",
+    "InventoryMenuModuleSlotMixin",
     "PetiteInventoryTaczNbtMixin",
     "PetiteInventoryQuickMoveMixin",
     "PetiteInventorySophisticatedQuickMoveMixin",

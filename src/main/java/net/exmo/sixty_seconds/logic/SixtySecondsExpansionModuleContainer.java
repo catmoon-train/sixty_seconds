@@ -1,0 +1,89 @@
+package net.exmo.sixty_seconds.logic;
+
+import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
+
+/** One-slot container that stores the equipped expansion module on the player component. */
+public final class SixtySecondsExpansionModuleContainer implements Container {
+    private final Player player;
+
+    public SixtySecondsExpansionModuleContainer(Player player) {
+        this.player = player;
+    }
+
+    private SixtySecondsStatsComponent stats() {
+        return SixtySecondsStatsComponent.KEY.get(player);
+    }
+
+    @Override public int getContainerSize() { return 1; }
+    @Override public boolean isEmpty() { return stats().expansionModule.isEmpty(); }
+    @Override public ItemStack getItem(int slot) {
+        return slot == 0 ? stats().expansionModule.copy() : ItemStack.EMPTY;
+    }
+    @Override public ItemStack removeItem(int slot, int amount) {
+        if (slot != 0 || stats().expansionModule.isEmpty()) return ItemStack.EMPTY;
+        ItemStack current = stats().expansionModule;
+        ItemStack result = current.split(amount);
+        if (current.isEmpty()) stats().expansionModule = ItemStack.EMPTY;
+        setChanged();
+        return result;
+    }
+    @Override public ItemStack removeItemNoUpdate(int slot) {
+        if (slot != 0) return ItemStack.EMPTY;
+        ItemStack result = stats().expansionModule.copy();
+        stats().expansionModule = ItemStack.EMPTY;
+        setChanged();
+        return result;
+    }
+    @Override public void setItem(int slot, ItemStack stack) {
+        if (slot != 0) return;
+        SixtySecondsStatsComponent stats = stats();
+        if (SixtySecondsExpansionStorage.isModule(stack)) {
+            ItemStack equipped = stack.copy();
+            // One-time migration from the old component-backed extension.
+            // Never keep two authoritative copies: once a module is equipped,
+            // the legacy list is emptied even if it was already stale.
+            if (!SixtySecondsExpansionStorage.hasContents(equipped)) {
+                NonNullList<ItemStack> contents = SixtySecondsExpansionStorage.read(equipped);
+                int capacity = SixtySecondsExpansionStorage.capacity(equipped);
+                for (int i = 0; i < stats.extraInventory.size(); i++) {
+                    ItemStack legacy = stats.extraInventory.get(i);
+                    if (legacy.isEmpty()) continue;
+                    boolean moved = false;
+                    for (int target = 0; target < capacity; target++) {
+                        if (contents.get(target).isEmpty()) {
+                            contents.set(target, legacy.copy());
+                            moved = true;
+                            break;
+                        }
+                    }
+                    if (!moved && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+                        serverPlayer.drop(legacy.copy(), false);
+                    }
+                }
+                SixtySecondsExpansionStorage.write(equipped, contents);
+            }
+            for (int i = 0; i < stats.extraInventory.size(); i++) {
+                stats.extraInventory.set(i, ItemStack.EMPTY);
+            }
+            stats.expansionModule = equipped;
+        } else {
+            stats.expansionModule = ItemStack.EMPTY;
+        }
+        setChanged();
+    }
+    @Override public void setChanged() {
+        player.getInventory().setChanged();
+        stats().sync();
+    }
+    @Override public void clearContent() {
+        stats().expansionModule = ItemStack.EMPTY;
+        setChanged();
+    }
+    @Override public void startOpen(Player player) { }
+    @Override public void stopOpen(Player player) { }
+    @Override public boolean stillValid(Player player) { return player == this.player; }
+}

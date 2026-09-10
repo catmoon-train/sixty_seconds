@@ -1,7 +1,11 @@
 package net.exmo.sixty_seconds.menu;
 
+import com.sighs.petiteinventory.api.ItemArea;
+import com.sighs.petiteinventory.api.PetiteInventoryApi;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.exmo.sixty_seconds.logic.SixtySecondsExtraInventory;
+import net.exmo.sixty_seconds.logic.SixtySecondsExpansionModuleContainer;
+import net.exmo.sixty_seconds.logic.SixtySecondsExpansionStorage;
 import net.exmo.sixty_seconds.logic.SixtySecondsInventoryLimit;
 import net.exmo.sixty_seconds.registry.ModMenuTypes;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -36,6 +40,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
     private final BackpackContainer backpack;
     /** The server-authoritative number of extension slots in this menu. */
     private final int unlockedExtraSlots;
+    private final SixtySecondsExpansionModuleContainer moduleContainer;
 
     public SpecialInventoryMenu(int id, Inventory inventory) {
         this(id, inventory, getUnlockedExtraSlots(inventory.player));
@@ -44,8 +49,9 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
     public SpecialInventoryMenu(int id, Inventory inventory, int unlockedExtraSlots) {
         super(ModMenuTypes.SPECIAL_INVENTORY.get(), id);
         this.player = inventory.player;
-        this.backpack = new BackpackContainer(player);
         this.unlockedExtraSlots = clampUnlockedExtraSlots(unlockedExtraSlots);
+        this.backpack = new BackpackContainer(player, this.unlockedExtraSlots);
+        this.moduleContainer = new SixtySecondsExpansionModuleContainer(player);
 
         // The old inventory limiter uses barrier stacks as temporary locks.
         // They are not real items and must not occupy the 27 base backpack
@@ -85,6 +91,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
                     44 + (i / 2) * 38, slot));
         }
         addSlot(new PlayerSlot(inventory, 40, 139, 120));
+        addSlot(new ExpansionModuleSlot(moduleContainer, 139, 158));
     }
 
     /** Factory used by NeoForge's menu packet; the count is sent by the server. */
@@ -97,8 +104,8 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
     }
 
     public static int getUnlockedExtraSlots(Player player) {
-        return clampUnlockedExtraSlots(
-                SixtySecondsStatsComponent.KEY.get(player).extraUnlockedSlots);
+        return clampUnlockedExtraSlots(SixtySecondsExpansionStorage.capacity(
+                SixtySecondsStatsComponent.KEY.get(player).expansionModule));
     }
 
     private static int clampUnlockedExtraSlots(int slots) {
@@ -138,6 +145,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
         if (index < 0 || index >= slots.size()) return ItemStack.EMPTY;
         Slot source = slots.get(index);
         if (!source.hasItem() || !source.mayPickup(player)) return ItemStack.EMPTY;
+        if (source instanceof ExpansionModuleSlot) return ItemStack.EMPTY;
         ItemStack original = source.getItem().copy();
         ItemStack moving = source.getItem();
         boolean moved;
@@ -197,29 +205,40 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
         BackpackSlot(BackpackContainer container, int index, int x, int y) {
             super(container, index, x, y);
         }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return !SixtySecondsExpansionStorage.isModule(stack)
+                    && !(stack.getItem() instanceof net.exmo.sixty_seconds.content.item.SixtySecondsBackpackItem);
+        }
     }
 
     /** Maps menu backpack index 0..53 to vanilla 9..35 and extra 0..26. */
     private static final class BackpackContainer implements Container {
         private static final int VANILLA_MAIN_SIZE = 27;
-        private static final int TOTAL_SIZE = VANILLA_MAIN_SIZE + SixtySecondsExtraInventory.SIZE;
 
         private final Player player;
         private final SixtySecondsExtraInventory.ContainerView extra;
+        private final int extensionSize;
 
-        BackpackContainer(Player player) {
+        BackpackContainer(Player player, int extensionSize) {
             this.player = player;
             this.extra = new SixtySecondsExtraInventory.ContainerView(player);
+            this.extensionSize = extensionSize;
+        }
+
+        private int totalSize() {
+            return VANILLA_MAIN_SIZE + extensionSize;
         }
 
         @Override
         public int getContainerSize() {
-            return TOTAL_SIZE;
+            return totalSize();
         }
 
         @Override
         public boolean isEmpty() {
-            for (int i = 0; i < TOTAL_SIZE; i++) {
+            for (int i = 0; i < totalSize(); i++) {
                 if (!getItem(i).isEmpty()) {
                     return false;
                 }
@@ -229,7 +248,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
 
         @Override
         public ItemStack getItem(int slot) {
-            if (slot < 0 || slot >= TOTAL_SIZE) {
+            if (slot < 0 || slot >= totalSize()) {
                 return ItemStack.EMPTY;
             }
             return slot < VANILLA_MAIN_SIZE
@@ -239,7 +258,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
 
         @Override
         public ItemStack removeItem(int slot, int amount) {
-            if (slot < 0 || slot >= TOTAL_SIZE) {
+            if (slot < 0 || slot >= totalSize()) {
                 return ItemStack.EMPTY;
             }
             return slot < VANILLA_MAIN_SIZE
@@ -249,7 +268,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
 
         @Override
         public ItemStack removeItemNoUpdate(int slot) {
-            if (slot < 0 || slot >= TOTAL_SIZE) {
+            if (slot < 0 || slot >= totalSize()) {
                 return ItemStack.EMPTY;
             }
             return slot < VANILLA_MAIN_SIZE
@@ -259,7 +278,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
 
         @Override
         public void setItem(int slot, ItemStack stack) {
-            if (slot < 0 || slot >= TOTAL_SIZE) {
+            if (slot < 0 || slot >= totalSize()) {
                 return;
             }
             // A Slot may pass a mutable stack object that is still used by
@@ -267,10 +286,62 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
             // owned copy so one click cannot mutate two views of the item.
             ItemStack owned = stack.isEmpty() ? ItemStack.EMPTY : stack.copy();
             if (slot < VANILLA_MAIN_SIZE) {
+                // A footprint is never allowed to be split across the
+                // native and module-backed halves. If PetiteInventory's
+                // anchor is on the last native row and its footprint would
+                // cross the seam, route the complete stack into the module.
+                // This is done at the authoritative container boundary, so
+                // it also applies to shift-click and server automation.
+                if (routeCrossBoundaryToModule(slot, owned)) {
+                    return;
+                }
                 player.getInventory().setItem(9 + slot, owned);
             } else {
                 extra.setItem(slot - VANILLA_MAIN_SIZE, owned);
             }
+        }
+
+        private boolean routeCrossBoundaryToModule(int slot, ItemStack stack) {
+            if (stack.isEmpty() || extensionSize <= 0) return false;
+            ItemArea area = PetiteInventoryApi.getItemArea(stack);
+            int width = Math.max(1, area.width());
+            int height = Math.max(1, area.height());
+            int row = slot / 9;
+            int col = slot % 9;
+            boolean crosses = false;
+            for (int dy = 0; dy < height; dy++) {
+                for (int dx = 0; dx < width; dx++) {
+                    if (row + dy >= 3) {
+                        crosses = true;
+                    }
+                }
+            }
+            if (!crosses) return false;
+            int target = findModuleAnchor(width, height);
+            if (target < 0) return true;
+            player.getInventory().setItem(9 + slot, ItemStack.EMPTY);
+            extra.setItem(target - VANILLA_MAIN_SIZE, stack);
+            return true;
+        }
+
+        private int findModuleAnchor(int width, int height) {
+            int rows = extensionSize / 9;
+            for (int row = 0; row + height <= rows; row++) {
+                for (int col = 0; col + width <= 9; col++) {
+                    int anchor = row * 9 + col;
+                    boolean free = true;
+                    for (int dy = 0; dy < height && free; dy++) {
+                        for (int dx = 0; dx < width; dx++) {
+                            if (!extra.getItem(anchor + dy * 9 + dx).isEmpty()) {
+                                free = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (free) return VANILLA_MAIN_SIZE + anchor;
+                }
+            }
+            return -1;
         }
 
         @Override

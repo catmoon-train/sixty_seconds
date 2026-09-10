@@ -3,6 +3,8 @@ package net.exmo.sixty_seconds.integration;
 import com.sighs.petiteinventory.config.ItemSizeRule;
 import com.sighs.petiteinventory.config.ItemSizeRuleCache;
 import com.sighs.petiteinventory.platform.inventory.ItemInventoryService;
+import com.sighs.petiteinventory.event.InventoryEvents;
+import com.sighs.petiteinventory.service.AdmissionResult;
 import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.weights.SixtySecondsWeightCalc;
 import net.exmo.sixty_seconds.weights.SixtySecondsWeightConfig;
@@ -10,6 +12,8 @@ import net.exmo.sixty_seconds.weights.SixtySecondsWeightConfigStore;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerPlayer;
+import net.exmo.sixty_seconds.logic.SixtySecondsInventoryLimit;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -18,6 +22,7 @@ import java.util.Map;
 
 /** Installs 60 Seconds' weight table directly into PetiteInventory's cache. */
 public final class PetiteInventoryIntegration {
+    private static boolean admissionHookInstalled;
     private PetiteInventoryIntegration() {
     }
 
@@ -28,12 +33,31 @@ public final class PetiteInventoryIntegration {
      * PetiteInventory's own config file.
      */
     public static void installWeightRules() {
+        installAdmissionOverride();
         // PetiteInventory may finish loading its persisted rules after the
         // common setup queue.  Rebuild the cache here instead of relying on a
         // one-shot flag, then install our exact entries last so an old
         // 1*1 rule can never shadow the weight table.
         ItemSizeRuleCache.loadAllRule();
         installCurrentRules();
+    }
+
+    /**
+     * During house searching, PetiteInventory must defer to vanilla admission.
+     * Otherwise its InventoryMixin rejects a pickup before PlayerInventory can
+     * see the free hotbar slot, even though the 60s multi-cell rule is off.
+     */
+    private static void installAdmissionOverride() {
+        if (admissionHookInstalled) return;
+        admissionHookInstalled = true;
+        // PetiteInventory's own runtime runs at priority 100. Run after it
+        // so DEFER_TO_VANILLA cannot be overwritten by its admission result.
+        InventoryEvents.BUS.subscribe(InventoryEvents.Admission.class, -100, admission -> {
+            if (admission.player() instanceof ServerPlayer player
+                    && SixtySecondsInventoryLimit.isPetiteInventoryDisabled(player)) {
+                admission.handled(AdmissionResult.DEFER_TO_VANILLA);
+            }
+        });
     }
 
     /** Applies the 60 Seconds rules to PetiteInventory's already-loaded cache. */

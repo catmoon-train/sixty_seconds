@@ -85,7 +85,8 @@ public final class SixtySecondsInventoryLimit {
                 allowed = (position == FamilyPosition.FATHER) ? DAY_ALLOWED_SLOTS : NON_FATHER_DAY_SLOTS;
             }
             // 加上已解锁的额外槽位（最多 18 格额外解锁，总计不超过 36 格）
-            int extra = SixtySecondsStatsComponent.KEY.get(player).extraUnlockedSlots;
+            int extra = SixtySecondsExpansionStorage.capacity(
+                    SixtySecondsStatsComponent.KEY.get(player).expansionModule);
             allowed = Math.min(allowed + extra, LAST_MAIN_SLOT + 1);
             enforce(player, allowed);
         }
