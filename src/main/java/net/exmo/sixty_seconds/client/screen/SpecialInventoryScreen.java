@@ -131,8 +131,8 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
      */
     private void drawExactLeftSlotGuides(GuiGraphics graphics, int x, int y) {
         int[][] fixed = {
-                {110, 45}, {142, 45}, {110, 79}, {142, 79},
-                {142, 112}, {142, 146}
+                {112, 47}, {144, 47}, {112, 80}, {144, 80},
+                {144, 114}, {144, 148}
         };
         for (int[] cell : fixed) {
             drawExactSlotGuide(graphics, x + cell[0], y + cell[1]);
@@ -200,7 +200,7 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
         double load = SixtySecondsWeightCalc.computeLoad(this.menu.getPlayer(), config);
         double max = SixtySecondsTraitSystem.traitMaxLoad(this.menu.getPlayer(), config.maxLoad);
         float ratio = (float) Math.max(0.0, Math.min(1.0, load / Math.max(0.01, max)));
-        int barX = x + 18;
+        int barX = x + 12;
         int barY = y + 237;
         int barW = 162;
         graphics.drawString(this.font, Component.translatable(

@@ -288,15 +288,19 @@ public class SupplyBoxBlockEntity extends BlockEntity {
                 int ticks = computeSearchTicks(lootStack, wcfg, m);
                 candidates.add(SixtySecondsLootMagnifierItem.create(level, lootStack, ticks));
             }
-            // Pack by the real PetiteInventory rectangles instead of picking
-            // random anchor cells.  This prevents two magnifiers from
-            // overlapping and keeps every hidden loot item inside the box.
+            // Place large rectangles first, then choose a random valid anchor
+            // for each one.  This keeps the result varied while ensuring that
+            // a later item cannot make an earlier large item overflow.
+            candidates.sort((left, right) -> Integer.compare(
+                    footprintArea(right), footprintArea(left)));
             boolean[][] occupied = new boolean[SupplySearchMenu.CONTAINER_ROWS][9];
             for (ItemStack magnifier : candidates) {
                 ItemArea area = PetiteInventoryApi.getItemArea(magnifier);
                 int width = Math.max(1, area.width());
                 int height = Math.max(1, area.height());
-                int anchor = findSearchAnchor(occupied, width, height);
+                List<Integer> anchors = findSearchAnchors(occupied, width, height);
+                int anchor = anchors.isEmpty()
+                        ? -1 : anchors.get(level.random.nextInt(anchors.size()));
                 if (anchor < 0) {
                     // The loot has already been claimed, so never silently
                     // delete an item that cannot fit the visual container.
@@ -313,8 +317,14 @@ public class SupplyBoxBlockEntity extends BlockEntity {
         setChanged();
     }
 
-    private int findSearchAnchor(boolean[][] occupied, int width, int height) {
-        if (width > 9 || height > SupplySearchMenu.CONTAINER_ROWS) return -1;
+    private static int footprintArea(ItemStack stack) {
+        ItemArea area = PetiteInventoryApi.getItemArea(stack);
+        return Math.max(1, area.width()) * Math.max(1, area.height());
+    }
+
+    private List<Integer> findSearchAnchors(boolean[][] occupied, int width, int height) {
+        List<Integer> anchors = new ArrayList<>();
+        if (width > 9 || height > SupplySearchMenu.CONTAINER_ROWS) return anchors;
         for (int row = 0; row + height <= SupplySearchMenu.CONTAINER_ROWS; row++) {
             for (int col = 0; col + width <= 9; col++) {
                 boolean free = true;
@@ -326,10 +336,10 @@ public class SupplyBoxBlockEntity extends BlockEntity {
                         }
                     }
                 }
-                if (free) return row * 9 + col;
+                if (free) anchors.add(row * 9 + col);
             }
         }
-        return -1;
+        return anchors;
     }
 
     private void markSearchArea(boolean[][] occupied, int anchor, int width, int height) {

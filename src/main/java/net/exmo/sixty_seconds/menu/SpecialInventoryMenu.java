@@ -89,12 +89,12 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
                 default -> EquipmentSlot.FEET;
             };
             addSlot(new EquipmentPlayerSlot(inventory, 36 + (3 - i),
-                    i % 2 == 0 ? 110 : 142,
-                    45 + (i / 2) * 34, slot));
+                    i % 2 == 0 ? 112 : 144,
+                    47 + (i / 2) * 33, slot));
         }
-        addSlot(new PlayerSlot(inventory, 40, 142, 112));
+        addSlot(new PlayerSlot(inventory, 40, 144, 114));
         this.moduleSlot = (ExpansionModuleSlot) addSlot(
-                new ExpansionModuleSlot(moduleContainer, 142, 146));
+                new ExpansionModuleSlot(moduleContainer, 144, 148));
     }
 
     /** Factory used by NeoForge's menu packet; the count is sent by the server. */

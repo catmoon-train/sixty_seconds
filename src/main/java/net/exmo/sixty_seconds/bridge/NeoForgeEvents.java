@@ -255,22 +255,7 @@ public final class NeoForgeEvents {
         // 服务器即将关闭：立即保存当前对局进度，避免退出存档后进度丢失
         ServerLevel level = event.getServer().getLevel(Level.OVERWORLD);
         if (level != null) {
-            // RUNNING may already be cleared during single-player logout.
-            // Preserve an unfinished round until the next server process
-            // resumes it; a STOPPING component is excluded because it may be
-            // the result of an explicit /60s stop command, which already
-            // deleted the previous snapshot.
-            net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent game =
-                    net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent.KEY.get(level);
-            net.exmo.sixty_seconds.state.SixtySecondsState.Data data =
-                    net.exmo.sixty_seconds.state.SixtySecondsState.get(level);
-            boolean unfinishedRound = game.getGameStatus() ==
-                    net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent.GameStatus.STARTING
-                    || game.getGameStatus() ==
-                    net.exmo.sixty_seconds.bridge.SixtySecGameWorldComponent.GameStatus.ACTIVE;
-            if (unfinishedRound && data.phase != net.exmo.sixty_seconds.SixtySecondsPhase.FINISHED) {
-                net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.save(level);
-            }
+            net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.saveIfUnfinished(level);
         }
         // 星图「已发现建筑」登记同步落盘（等待在途异步写结束，保证退出前写完）
         net.exmo.sixty_seconds.lostcities.SixtySecondsDiscoveredBuildings.saveAllNow();

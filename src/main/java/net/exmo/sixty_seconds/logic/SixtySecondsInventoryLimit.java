@@ -65,7 +65,7 @@ public final class SixtySecondsInventoryLimit {
             // closes, otherwise items placed in the custom inventory appear
             // to have no backing slots and are dropped on the next tick.
             if (data.phase == SixtySecondsPhase.DAY
-                    && !SixtySecondsSearchZones.isInSearchZone(player)) {
+                    && SixtySecondsDailyEvents.isPlayerInShelter(player)) {
                 clearMainBarriers(player);
                 continue;
             }

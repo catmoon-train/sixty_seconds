@@ -131,11 +131,13 @@ public final class SixtySecondsSaveManager {
     /** Save before an integrated server tears down its runtime components. */
     public static void saveIfUnfinished(ServerLevel level) {
         ServerLevel main = mainLevel(level);
-        SixtySecGameWorldComponent game = SixtySecGameWorldComponent.KEY.get(main);
         SixtySecondsState.Data data = SixtySecondsState.get(main);
-        boolean unfinished = game.getGameStatus() == SixtySecGameWorldComponent.GameStatus.STARTING
-                || game.getGameStatus() == SixtySecGameWorldComponent.GameStatus.ACTIVE;
-        if (unfinished && data.phase != SixtySecondsPhase.FINISHED) {
+        // The integrated server can clear the runtime GameStatus before the
+        // logout event reaches this method.  The persisted phase is the
+        // authoritative indication that a round is still resumable.
+        boolean unfinished = data.phase == SixtySecondsPhase.PREPARATION
+                || data.phase == SixtySecondsPhase.DAY;
+        if (unfinished) {
             save(main);
         }
     }
