@@ -524,7 +524,7 @@ public final class SixtySecondsBalance {
 
     // ── 物资箱搜刮形式：容器形式（放大镜逐个搜刮，越重越久；见 SupplySearchMenu）──
     /** 容器形式下箱内格子数（9×3）。 */
-    public static final int SUPPLY_SEARCH_CONTAINER_SIZE = 27;
+    public static final int SUPPLY_SEARCH_CONTAINER_SIZE = 54;
     /** 普通物资箱一次性最多刷出的放大镜（战利品）数量。 */
     public static final int SUPPLY_SEARCH_NORMAL_MAX = 3;
     /** 高级物资箱一次性最多刷出的放大镜（战利品）数量。 */

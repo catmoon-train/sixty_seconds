@@ -2,6 +2,8 @@ package net.exmo.sixty_seconds.client.screen;
 
 import com.sighs.petiteinventory.client.ClientInventoryContext;
 import com.sighs.petiteinventory.client.ScreenLayoutSettings;
+import com.sighs.petiteinventory.api.ItemArea;
+import com.sighs.petiteinventory.api.PetiteInventoryApi;
 import net.exmo.sixty_seconds.SixtySecondsBalance;
 import net.exmo.sixty_seconds.bridge.client.SixtySecBridgeClient;
 import net.exmo.sixty_seconds.bridge.fabric.ClientPlayNetworking;
@@ -31,15 +33,15 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
 
     public SupplySearchScreen(SupplySearchMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
-        this.imageHeight = 168;
-        this.inventoryLabelY = 74;
+        this.imageHeight = 114 + SupplySearchMenu.CONTAINER_ROWS * 18;
+        this.inventoryLabelY = 74 + (SupplySearchMenu.CONTAINER_ROWS - 3) * 18;
         this.titleLabelY = 6;
     }
 
     @Override
     protected void init() {
-        this.imageHeight = 168;
-        this.inventoryLabelY = 74;
+        this.imageHeight = 114 + SupplySearchMenu.CONTAINER_ROWS * 18;
+        this.inventoryLabelY = 74 + (SupplySearchMenu.CONTAINER_ROWS - 3) * 18;
         // House searching uses the legacy layout.  PetiteInventory resumes
         // after the player has returned to the shelter.
         ScreenLayoutSettings.setEnabled(this, !SixtySecBridgeClient.shouldDisablePetiteInventory());
@@ -51,8 +53,9 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         int x = this.leftPos;
         int y = this.topPos;
-        graphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, 71);
-        graphics.blit(TEXTURE, x, y + 71, 0, 126, this.imageWidth, 96);
+        graphics.blit(TEXTURE, x, y, this.imageWidth, this.imageHeight,
+                0, 0, this.imageWidth, this.imageHeight,
+                this.imageWidth, this.imageHeight);
     }
 
     @Override
@@ -85,12 +88,18 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
         long now = this.minecraft.level == null ? 0 : this.minecraft.level.getGameTime();
         float progress = (float) (now - searchStart.get(slot.index)) / searchDuration.get(slot.index);
         progress = Math.max(0f, Math.min(1f, progress));
+        ItemArea area = PetiteInventoryApi.getItemArea(slot.getItem());
+        int width = Math.max(1, area.width());
+        int height = Math.max(1, area.height());
         int x = this.leftPos + slot.x;
         int y = this.topPos + slot.y;
-        graphics.fill(x, y, x + 16, y + 16, 0x80000000);
-        int barW = Math.round(14 * progress);
-        graphics.fill(x + 1, y + 13, x + 15, y + 15, 0xFF222222);
-        graphics.fill(x + 1, y + 13, x + 1 + barW, y + 15, 0xFF3FC46B);
+        int pixelWidth = width * 18;
+        int pixelHeight = height * 18;
+        graphics.fill(x, y, x + pixelWidth, y + pixelHeight, 0x80000000);
+        int barW = Math.round((pixelWidth - 2) * progress);
+        int barY = y + pixelHeight - 4;
+        graphics.fill(x + 1, barY, x + pixelWidth - 1, barY + 3, 0xFF222222);
+        graphics.fill(x + 1, barY, x + 1 + barW, barY + 3, 0xFF3FC46B);
     }
 
     private Slot getSlotAt(double mouseX, double mouseY) {

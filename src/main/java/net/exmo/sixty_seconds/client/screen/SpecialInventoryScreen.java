@@ -29,8 +29,10 @@ import net.minecraft.world.entity.player.Inventory;
 public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInventoryMenu> {
     private static final ResourceLocation TEXTURE =
             SixtySeconds.id("textures/gui/special_inventory_v2.png");
-    private static final int TEXTURE_WIDTH = 1432;
-    private static final int TEXTURE_HEIGHT = 1072;
+    // Keep these equal to the actual PNG dimensions.  The UI is then scaled
+    // as a complete 360x270 canvas instead of cropping the right/bottom edge.
+    private static final int TEXTURE_WIDTH = 1448;
+    private static final int TEXTURE_HEIGHT = 1086;
 
     // PetiteInventory uses 18-pixel cells.  The PNG is rendered at 360x270 so
     // all nine columns and all five rows remain inside the metal right bay.
@@ -99,6 +101,7 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
         graphics.blit(TEXTURE, x, y, this.imageWidth, this.imageHeight,
                 0, 0, TEXTURE_WIDTH, TEXTURE_HEIGHT,
                 TEXTURE_WIDTH, TEXTURE_HEIGHT);
+        drawExactLeftSlotGuides(graphics, x, y);
 
         // This is only an empty-cell backdrop.  Item footprints and occupied
         // cells are rendered by PetiteInventory from the real Slot list.
@@ -119,6 +122,29 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
                 x + 18, y + 40, x + 96, y + 177,
                 58, 0.0F, mouseX, mouseY, this.menu.getPlayer());
         drawExchangeButton(graphics, x, y, mouseX, mouseY);
+    }
+
+    /**
+     * The artwork is decorative, while these guides are drawn from the same
+     * logical coordinates as the server menu.  They make the real clickable
+     * 18-pixel cells unambiguous even when a resource-pack texture is scaled.
+     */
+    private void drawExactLeftSlotGuides(GuiGraphics graphics, int x, int y) {
+        int[][] fixed = {
+                {103, 44}, {139, 44}, {103, 82}, {139, 82},
+                {139, 120}, {139, 158}
+        };
+        for (int[] cell : fixed) {
+            drawExactSlotGuide(graphics, x + cell[0], y + cell[1]);
+        }
+        for (int col = 0; col < 9; col++) {
+            drawExactSlotGuide(graphics, x + 14 + col * 18, y + 194);
+        }
+    }
+
+    private void drawExactSlotGuide(GuiGraphics graphics, int x, int y) {
+        graphics.fill(x, y, x + 18, y + 18, 0x2810151A);
+        graphics.renderOutline(x, y, 18, 18, 0x9AB88D4A);
     }
 
     private void drawTextLabels(GuiGraphics graphics, int x, int y) {

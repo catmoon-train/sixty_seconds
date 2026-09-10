@@ -1,6 +1,8 @@
 package net.exmo.sixty_seconds.content.item;
 
 import net.exmo.sixty_seconds.SixtySecondsBalance;
+import com.sighs.petiteinventory.api.ItemArea;
+import com.sighs.petiteinventory.api.PetiteInventoryApi;
 import net.exmo.sixty_seconds.registry.ModItems;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -50,6 +52,9 @@ public class SixtySecondsLootMagnifierItem extends Item {
         CompoundTag root = new CompoundTag();
         root.put("Loot", loot.save(level.registryAccess()));
         root.putInt("SearchTicks", searchTicks);
+        ItemArea area = PetiteInventoryApi.getItemArea(loot);
+        root.putInt("AreaWidth", Math.max(1, area.width()));
+        root.putInt("AreaHeight", Math.max(1, area.height()));
         mag.set(DataComponents.CUSTOM_DATA, CustomData.of(root));
         return mag;
     }

@@ -21,10 +21,12 @@ import net.exmo.sixty_seconds.weights.SixtySecondsWeightConfig;
 import net.exmo.sixty_seconds.weights.SixtySecondsWeightConfigStore;
 import net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem;
 import net.exmo.sixty_seconds.content.block.SupplyBoxBlock;
+import net.exmo.sixty_seconds.menu.SupplySearchMenu;
+import com.sighs.petiteinventory.api.ItemArea;
+import com.sighs.petiteinventory.api.PetiteInventoryApi;
 import net.minecraft.core.NonNullList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -278,23 +280,66 @@ public class SupplyBoxBlockEntity extends BlockEntity {
                     : (advanced ? SixtySecondsBalance.SUPPLY_SEARCH_ADVANCED_MAX
                     : SixtySecondsBalance.SUPPLY_SEARCH_NORMAL_MAX);
             int n = Math.min(loot.size(), max);
-            List<Integer> slots = new ArrayList<>();
-            for (int i = 0; i < searchItems.size(); i++) {
-                slots.add(i);
-            }
-            for (int i = slots.size() - 1; i > 0; i--) {
-                int j = level.random.nextInt(i + 1);
-                Collections.swap(slots, i, j);
-            }
             SixtySecondsWeightConfig wcfg = SixtySecondsWeightConfigStore.get(level.getServer());
             double m = SixtySecondsTraitSystem.lootSearchMultiplier(player);
+            List<ItemStack> candidates = new ArrayList<>();
             for (int k = 0; k < n; k++) {
                 ItemStack lootStack = loot.get(k);
                 int ticks = computeSearchTicks(lootStack, wcfg, m);
-                searchItems.set(slots.get(k), SixtySecondsLootMagnifierItem.create(level, lootStack, ticks));
+                candidates.add(SixtySecondsLootMagnifierItem.create(level, lootStack, ticks));
+            }
+            // Pack by the real PetiteInventory rectangles instead of picking
+            // random anchor cells.  This prevents two magnifiers from
+            // overlapping and keeps every hidden loot item inside the box.
+            boolean[][] occupied = new boolean[SupplySearchMenu.CONTAINER_ROWS][9];
+            for (ItemStack magnifier : candidates) {
+                ItemArea area = PetiteInventoryApi.getItemArea(magnifier);
+                int width = Math.max(1, area.width());
+                int height = Math.max(1, area.height());
+                int anchor = findSearchAnchor(occupied, width, height);
+                if (anchor < 0) {
+                    // The loot has already been claimed, so never silently
+                    // delete an item that cannot fit the visual container.
+                    ItemStack lootStack = SixtySecondsLootMagnifierItem.getLoot(level, magnifier);
+                    if (!player.getInventory().add(lootStack)) {
+                        player.drop(lootStack, false);
+                    }
+                    continue;
+                }
+                searchItems.set(anchor, magnifier);
+                markSearchArea(occupied, anchor, width, height);
             }
         }
         setChanged();
+    }
+
+    private int findSearchAnchor(boolean[][] occupied, int width, int height) {
+        if (width > 9 || height > SupplySearchMenu.CONTAINER_ROWS) return -1;
+        for (int row = 0; row + height <= SupplySearchMenu.CONTAINER_ROWS; row++) {
+            for (int col = 0; col + width <= 9; col++) {
+                boolean free = true;
+                for (int dy = 0; dy < height && free; dy++) {
+                    for (int dx = 0; dx < width; dx++) {
+                        if (occupied[row + dy][col + dx]) {
+                            free = false;
+                            break;
+                        }
+                    }
+                }
+                if (free) return row * 9 + col;
+            }
+        }
+        return -1;
+    }
+
+    private void markSearchArea(boolean[][] occupied, int anchor, int width, int height) {
+        int row = anchor / 9;
+        int col = anchor % 9;
+        for (int dy = 0; dy < height; dy++) {
+            for (int dx = 0; dx < width; dx++) {
+                occupied[row + dy][col + dx] = true;
+            }
+        }
     }
 
     /** 左键搜刮读条完成后由服务端揭示：把放大镜替换为真实战利品（仅当仍是放大镜且玩家在范围内）。 */

@@ -28,6 +28,7 @@
     "InventoryMenuModuleSlotMixin",
     "VanillaPickupDuringSearchMixin",
     "PetiteInventoryTaczNbtMixin",
+    "PetiteInventoryMagnifierAreaMixin",
     "PetiteInventoryQuickMoveMixin",
     "PetiteInventorySophisticatedQuickMoveMixin",
     "PetiteInventoryPlaceItemPayloadMixin",

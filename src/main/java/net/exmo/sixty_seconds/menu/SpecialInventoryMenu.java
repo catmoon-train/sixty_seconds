@@ -52,7 +52,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
         super(ModMenuTypes.SPECIAL_INVENTORY.get(), id);
         this.player = inventory.player;
         this.unlockedExtraSlots = clampUnlockedExtraSlots(unlockedExtraSlots);
-        this.backpack = new BackpackContainer(player, this.unlockedExtraSlots);
+        this.backpack = new BackpackContainer(this, player, this.unlockedExtraSlots);
         this.moduleContainer = new SixtySecondsExpansionModuleContainer(player);
 
         // The old inventory limiter uses barrier stacks as temporary locks.
@@ -73,7 +73,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
                 if (backpackIndex >= visibleBackpackSlots) {
                     break;
                 }
-                addSlot(new BackpackSlot(backpack, backpackIndex,
+                addSlot(new BackpackSlot(this, backpack, backpackIndex,
                         190 + col * 18, 39 + row * 18));
             }
         }
@@ -164,7 +164,178 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
                 return;
             }
         }
+        if (!player.level().isClientSide
+                && clickType == ClickType.PICKUP
+                && slotId >= PLAYER_MAIN_START && slotId < extraEnd()) {
+            int anchor = findBackpackAnchor(slotId);
+            if (handleBackpackPickup(anchor, button, player)) {
+                broadcastChanges();
+            }
+            // Backpack clicks are handled transactionally above.  Never let
+            // vanilla perform a second one-cell mutation afterward.
+            return;
+        }
         super.clicked(slotId, button, clickType, player);
+    }
+
+    /**
+     * Maps a visible cell back to the anchor of the item whose footprint
+     * covers it.  PetiteInventory does this on the client; the server must do
+     * the same mapping before accepting a click, otherwise a small item can
+     * overwrite an invisible cell of a larger item.
+     */
+    private int findBackpackAnchor(int cell) {
+        if (cell < PLAYER_MAIN_START || cell >= extraEnd()) {
+            return cell;
+        }
+        for (int anchor = PLAYER_MAIN_START; anchor < extraEnd(); anchor++) {
+            ItemStack existing = slots.get(anchor).getItem();
+            if (existing.isEmpty()) continue;
+            if (footprintContains(anchor, existing, cell)) {
+                return anchor;
+            }
+        }
+        return cell;
+    }
+
+    private boolean footprintContains(int anchor, ItemStack stack, int cell) {
+        ItemArea area = PetiteInventoryApi.getItemArea(stack);
+        int width = Math.max(1, area.width());
+        int height = Math.max(1, area.height());
+        int anchorRow = anchor / 9;
+        int anchorCol = anchor % 9;
+        int cellRow = cell / 9;
+        int cellCol = cell % 9;
+        return cellRow >= anchorRow && cellRow < anchorRow + height
+                && cellCol >= anchorCol && cellCol < anchorCol + width;
+    }
+
+    private boolean handleBackpackPickup(int anchor, int button, Player player) {
+        if (anchor < PLAYER_MAIN_START || anchor >= extraEnd()) {
+            return false;
+        }
+        Slot target = slots.get(anchor);
+        ItemStack existing = target.getItem();
+        ItemStack carried = getCarried();
+
+        if (carried.isEmpty()) {
+            if (existing.isEmpty() || !target.mayPickup(player)) {
+                return true;
+            }
+            int amount = button == 1 ? (existing.getCount() + 1) / 2 : existing.getCount();
+            ItemStack taken = existing.copyWithCount(amount);
+            existing.shrink(amount);
+            target.setByPlayer(existing.isEmpty() ? ItemStack.EMPTY : existing);
+            setCarried(taken);
+            return true;
+        }
+
+        if (!target.mayPlace(carried)) {
+            return true;
+        }
+        if (!existing.isEmpty()) {
+            if (!ItemStack.isSameItemSameComponents(existing, carried)) {
+                // Swapping two different footprints without knowing the
+                // carried stack's original anchor is unsafe.  Require the
+                // player to pick the destination up first instead of
+                // allowing vanilla to create an overlap during the swap.
+                return true;
+            }
+            int amount = button == 1 ? 1 : carried.getCount();
+            int max = Math.min(target.getMaxStackSize(), existing.getMaxStackSize());
+            amount = Math.min(amount, Math.max(0, max - existing.getCount()));
+            if (amount <= 0) return true;
+            existing.grow(amount);
+            target.setByPlayer(existing);
+            carried.shrink(amount);
+            setCarried(carried);
+            return true;
+        }
+
+        int amount = button == 1 ? 1 : carried.getCount();
+        ItemStack placed = carried.copyWithCount(amount);
+        if (!canPlaceBackpackAt(anchor, placed)) {
+            return true;
+        }
+        target.setByPlayer(placed);
+        carried.shrink(amount);
+        setCarried(carried);
+        return true;
+    }
+
+    private boolean canPlaceBackpackAt(int anchor, ItemStack stack) {
+        if (stack.isEmpty() || anchor < PLAYER_MAIN_START || anchor >= extraEnd()) {
+            return false;
+        }
+        if (SixtySecondsExpansionStorage.isModule(stack)
+                || stack.getItem() instanceof net.exmo.sixty_seconds.content.item.SixtySecondsBackpackItem) {
+            return false;
+        }
+        ItemStack existing = slots.get(anchor).getItem();
+        if (!existing.isEmpty()
+                && !ItemStack.isSameItemSameComponents(existing, stack)) {
+            return false;
+        }
+        ItemArea area = PetiteInventoryApi.getItemArea(stack);
+        int width = Math.max(1, area.width());
+        int height = Math.max(1, area.height());
+        if (width > 9) return false;
+
+        int row = anchor / 9;
+        if (row < 3 && row + height > 3) {
+            // A footprint crossing the native/component seam is moved as a
+            // complete rectangle into the expansion grid.
+            return findFreeBackpackAnchor(EXTRA_START, extraEnd(),
+                    width, height, -1) >= 0
+                    || isFootprintFreeAt(anchor, width, height, anchor,
+                    PLAYER_MAIN_START, extraEnd());
+        }
+        return isFootprintFreeAt(anchor, width, height, anchor,
+                PLAYER_MAIN_START, extraEnd());
+    }
+
+    private int findFreeBackpackAnchor(int rangeStart, int rangeEnd,
+                                       int width, int height, int ignoredAnchor) {
+        if (width < 1 || height < 1 || width > 9) return -1;
+        for (int anchor = rangeStart; anchor < rangeEnd; anchor++) {
+            int row = anchor / 9;
+            int col = anchor % 9;
+            if (col + width > 9 || anchor + (height - 1) * 9 >= rangeEnd) continue;
+            boolean free = true;
+            for (int dy = 0; dy < height && free; dy++) {
+                for (int dx = 0; dx < width; dx++) {
+                    int cell = anchor + dy * 9 + dx;
+                    if (cell < rangeStart || cell >= rangeEnd
+                            || isBackpackCellOccupied(cell, ignoredAnchor)) {
+                        free = false;
+                        break;
+                    }
+                }
+            }
+            if (free) return anchor;
+        }
+        return -1;
+    }
+
+    private boolean isFootprintFreeAt(int anchor, int width, int height,
+                                      int ignoredAnchor, int rangeStart, int rangeEnd) {
+        int row = anchor / 9;
+        int col = anchor % 9;
+        if (anchor < rangeStart || anchor >= rangeEnd
+                || col + width > 9
+                || anchor + (height - 1) * 9 >= rangeEnd) {
+            return false;
+        }
+        for (int dy = 0; dy < height; dy++) {
+            for (int dx = 0; dx < width; dx++) {
+                int cell = anchor + dy * 9 + dx;
+                if (cell < rangeStart || cell >= rangeEnd
+                        || isBackpackCellOccupied(cell, ignoredAnchor)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
@@ -258,7 +429,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
                         || logical >= extraEnd()) {
                     return false;
                 }
-                if (isBackpackCellOccupied(logical, anchor)) return false;
+            if (isBackpackCellOccupied(logical, anchor)) return false;
             }
         }
         return anchorRow + height <= (extraEnd() + 8) / 9;
@@ -276,7 +447,8 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
             int col = other % 9;
             int logicalRow = logical / 9;
             int logicalCol = logical % 9;
-            if (logicalRow >= row && logicalRow < row + height
+            if (other != ignoredAnchor
+                    && logicalRow >= row && logicalRow < row + height
                     && logicalCol >= col && logicalCol < col + width) {
                 return true;
             }
@@ -315,14 +487,19 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
     }
 
     private static final class BackpackSlot extends Slot {
-        BackpackSlot(BackpackContainer container, int index, int x, int y) {
+        private final SpecialInventoryMenu owner;
+        private final int logicalIndex;
+
+        BackpackSlot(SpecialInventoryMenu owner, BackpackContainer container,
+                     int index, int x, int y) {
             super(container, index, x, y);
+            this.owner = owner;
+            this.logicalIndex = index;
         }
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            return !SixtySecondsExpansionStorage.isModule(stack)
-                    && !(stack.getItem() instanceof net.exmo.sixty_seconds.content.item.SixtySecondsBackpackItem);
+            return owner.canPlaceBackpackAt(logicalIndex, stack);
         }
     }
 
@@ -331,10 +508,12 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
         private static final int VANILLA_MAIN_SIZE = 27;
 
         private final Player player;
+        private final SpecialInventoryMenu owner;
         private final SixtySecondsExtraInventory.ContainerView extra;
         private final int extensionSize;
 
-        BackpackContainer(Player player, int extensionSize) {
+        BackpackContainer(SpecialInventoryMenu owner, Player player, int extensionSize) {
+            this.owner = owner;
             this.player = player;
             this.extra = new SixtySecondsExtraInventory.ContainerView(player);
             this.extensionSize = extensionSize;
@@ -408,8 +587,14 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
                 if (routeCrossBoundaryToModule(slot, owned)) {
                     return;
                 }
+                if (!owned.isEmpty() && !owner.canPlaceBackpackAt(slot, owned)) {
+                    return;
+                }
                 player.getInventory().setItem(9 + slot, owned);
             } else {
+                if (!owned.isEmpty() && !owner.canPlaceBackpackAt(slot, owned)) {
+                    return;
+                }
                 extra.setItem(slot - VANILLA_MAIN_SIZE, owned);
             }
         }
@@ -430,28 +615,23 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
                 }
             }
             if (!crosses) return false;
-            int target = findModuleAnchor(width, height);
-            if (target < 0) return true;
+            int target = findModuleAnchor(slot, width, height);
+            if (target < 0) return false;
             player.getInventory().setItem(9 + slot, ItemStack.EMPTY);
             extra.setItem(target - VANILLA_MAIN_SIZE, stack);
             return true;
         }
 
-        private int findModuleAnchor(int width, int height) {
+        private int findModuleAnchor(int ignoredAnchor, int width, int height) {
             int rows = extensionSize / 9;
             for (int row = 0; row + height <= rows; row++) {
                 for (int col = 0; col + width <= 9; col++) {
                     int anchor = row * 9 + col;
-                    boolean free = true;
-                    for (int dy = 0; dy < height && free; dy++) {
-                        for (int dx = 0; dx < width; dx++) {
-                            if (!extra.getItem(anchor + dy * 9 + dx).isEmpty()) {
-                                free = false;
-                                break;
-                            }
-                        }
+                    if (owner.isFootprintFreeAt(VANILLA_MAIN_SIZE + anchor,
+                            width, height, ignoredAnchor,
+                            VANILLA_MAIN_SIZE, VANILLA_MAIN_SIZE + extensionSize)) {
+                        return VANILLA_MAIN_SIZE + anchor;
                     }
-                    if (free) return VANILLA_MAIN_SIZE + anchor;
                 }
             }
             return -1;
