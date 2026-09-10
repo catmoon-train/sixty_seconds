@@ -107,11 +107,11 @@ public final class SixtySecondsWeightCalc {
     public static double computeLoad(Player player, SixtySecondsWeightConfig cfg) {
         double load = 0;
         Inventory inv = player.getInventory();
-        for (ItemStack stack : inv.items) load += weighted(stack, cfg, false);
-        for (ItemStack stack : inv.armor) load += weighted(stack, cfg, false);
-        for (ItemStack stack : inv.offhand) load += weighted(stack, cfg, false);
+        for (ItemStack stack : inv.items) load += weighted(player, stack, cfg, false);
+        for (ItemStack stack : inv.armor) load += weighted(player, stack, cfg, false);
+        for (ItemStack stack : inv.offhand) load += weighted(player, stack, cfg, false);
         for (ItemStack stack : SixtySecondsExtraInventory.slots(player)) {
-            load += weighted(stack, cfg, false);
+            load += weighted(player, stack, cfg, false);
         }
         /*
         // 特殊物品栏的扩展背包格不属于 vanilla Inventory，单独计入负重。
@@ -122,19 +122,23 @@ public final class SixtySecondsWeightCalc {
         return load;
     }
 
-    private static double weighted(ItemStack stack, SixtySecondsWeightConfig cfg, boolean inBackpack) {
+    private static double weighted(Player player, ItemStack stack, SixtySecondsWeightConfig cfg,
+            boolean inBackpack) {
         if (stack.isEmpty()) return 0;
         double mult = inBackpack ? cfg.backpackMultiplier : cfg.handMultiplier;
+        double traitMult = net.exmo.sixty_seconds.traits.SixtySecondsTraitSystem
+                .itemWeightMultiplier(player);
         if (stack.getItem() instanceof SixtySecondsBackpackItem) {
-            double self = unitWeight(stack, cfg) * mult;
+            double self = unitWeight(stack, cfg) * mult * traitMult;
             double inner = 0;
             ItemContainerContents contents = stack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
             for (ItemStack innerStack : contents.nonEmptyStream().toList()) {
                 // 装在背包里的物品更轻：实际重量 = 基础重量 ÷ backpackMultiplier
-                inner += unitWeight(innerStack, cfg) / cfg.backpackMultiplier * innerStack.getCount();
+                inner += unitWeight(innerStack, cfg) / cfg.backpackMultiplier * innerStack.getCount()
+                        * traitMult;
             }
             return self + inner;
         }
-        return unitWeight(stack, cfg) * mult * stack.getCount();
+        return unitWeight(stack, cfg) * mult * stack.getCount() * traitMult;
     }
 }

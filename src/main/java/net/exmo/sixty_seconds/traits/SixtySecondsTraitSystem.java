@@ -355,15 +355,12 @@ public final class SixtySecondsTraitSystem {
         return has(p, "slow_healer") && p.level().getRandom().nextDouble() < 0.5;
     }
 
-    public static int backpackSlotBonus(Player p) {
-        int b = 0;
-        if (has(p, "organized")) {
-            b += 2;
-        }
-        if (has(p, "stingy")) {
-            b -= 2;
-        }
-        return Math.max(0, b);
+    /** Final per-item weight multiplier applied after hand/backpack weight rules. */
+    public static double itemWeightMultiplier(Player p) {
+        double multiplier = 1.0D;
+        if (has(p, "organized")) multiplier -= 0.15D;
+        if (has(p, "stingy")) multiplier += 0.15D;
+        return multiplier;
     }
 
     // ───────────────────────── 重置 ─────────────────────────
