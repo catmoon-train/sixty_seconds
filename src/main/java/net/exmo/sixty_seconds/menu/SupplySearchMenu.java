@@ -18,7 +18,8 @@ import net.minecraft.world.item.ItemStack;
  * 客户端构造时用一个空的同尺寸列表，物品由服务端通过菜单槽位同步下发。
  */
 public class SupplySearchMenu extends AbstractContainerMenu {
-    public static final int CONTAINER_ROWS = 6;
+    /** The supply-box layout is intentionally the original 27-slot, three-row layout. */
+    public static final int CONTAINER_ROWS = 3;
     public static final int CONTAINER_COLS = 9;
     public static final int CONTAINER_SIZE = CONTAINER_ROWS * CONTAINER_COLS;
 
@@ -36,7 +37,7 @@ public class SupplySearchMenu extends AbstractContainerMenu {
             }
         }
         // 玩家背包
-        int playerInventoryY = 84 + (CONTAINER_ROWS - 3) * 18;
+        int playerInventoryY = 84;
         int hotbarY = playerInventoryY + 58;
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 9; c++) {

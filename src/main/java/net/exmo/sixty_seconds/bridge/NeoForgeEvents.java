@@ -289,6 +289,9 @@ public final class NeoForgeEvents {
     @SubscribeEvent
     public static void onLeave(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
+            // In singleplayer this callback is earlier than server shutdown;
+            // save while the round component is still ACTIVE.
+            net.exmo.sixty_seconds.logic.SixtySecondsSaveManager.saveIfUnfinished(player.serverLevel());
             ServerPlayConnectionEvents.Handler handler = new ServerPlayConnectionEvents.Handler(player);
             for (ServerPlayConnectionEvents.Disconnect listener : ServerPlayConnectionEvents.DISCONNECT.invokers()) {
                 listener.onPlayDisconnect(handler, player.getServer());

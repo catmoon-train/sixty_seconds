@@ -131,14 +131,14 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
      */
     private void drawExactLeftSlotGuides(GuiGraphics graphics, int x, int y) {
         int[][] fixed = {
-                {103, 44}, {139, 44}, {103, 82}, {139, 82},
-                {139, 120}, {139, 158}
+                {110, 45}, {142, 45}, {110, 79}, {142, 79},
+                {142, 112}, {142, 146}
         };
         for (int[] cell : fixed) {
             drawExactSlotGuide(graphics, x + cell[0], y + cell[1]);
         }
         for (int col = 0; col < 9; col++) {
-            drawExactSlotGuide(graphics, x + 14 + col * 18, y + 194);
+            drawExactSlotGuide(graphics, x + 11 + col * 18, y + 201);
         }
     }
 

@@ -79,7 +79,7 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
         }
         // Hotbar, placed below the equipment column by the client layout.
         for (int col = 0; col < 9; col++) {
-            addSlot(new PlayerSlot(inventory, col, 14 + col * 18, 194));
+            addSlot(new PlayerSlot(inventory, col, 11 + col * 18, 201));
         }
         for (int i = 0; i < 4; i++) {
             EquipmentSlot slot = switch (i) {
@@ -89,12 +89,12 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
                 default -> EquipmentSlot.FEET;
             };
             addSlot(new EquipmentPlayerSlot(inventory, 36 + (3 - i),
-                    i % 2 == 0 ? 103 : 139,
-                    44 + (i / 2) * 38, slot));
+                    i % 2 == 0 ? 110 : 142,
+                    45 + (i / 2) * 34, slot));
         }
-        addSlot(new PlayerSlot(inventory, 40, 139, 120));
+        addSlot(new PlayerSlot(inventory, 40, 142, 112));
         this.moduleSlot = (ExpansionModuleSlot) addSlot(
-                new ExpansionModuleSlot(moduleContainer, 139, 158));
+                new ExpansionModuleSlot(moduleContainer, 142, 146));
     }
 
     /** Factory used by NeoForge's menu packet; the count is sent by the server. */

@@ -33,15 +33,15 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
 
     public SupplySearchScreen(SupplySearchMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
-        this.imageHeight = 114 + SupplySearchMenu.CONTAINER_ROWS * 18;
-        this.inventoryLabelY = 74 + (SupplySearchMenu.CONTAINER_ROWS - 3) * 18;
+        this.imageHeight = 168;
+        this.inventoryLabelY = 74;
         this.titleLabelY = 6;
     }
 
     @Override
     protected void init() {
-        this.imageHeight = 114 + SupplySearchMenu.CONTAINER_ROWS * 18;
-        this.inventoryLabelY = 74 + (SupplySearchMenu.CONTAINER_ROWS - 3) * 18;
+        this.imageHeight = 168;
+        this.inventoryLabelY = 74;
         // House searching uses the legacy layout.  PetiteInventory resumes
         // after the player has returned to the shelter.
         ScreenLayoutSettings.setEnabled(this, !SixtySecBridgeClient.shouldDisablePetiteInventory());
@@ -53,9 +53,11 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         int x = this.leftPos;
         int y = this.topPos;
-        graphics.blit(TEXTURE, x, y, this.imageWidth, this.imageHeight,
-                0, 0, this.imageWidth, this.imageHeight,
-                this.imageWidth, this.imageHeight);
+        // generic_54.png is a 256x256 atlas.  The original chest screen uses
+        // these two source rectangles; blitting the whole atlas would stretch
+        // the texture and shift every slot.
+        graphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, 71);
+        graphics.blit(TEXTURE, x, y + 71, 0, 126, this.imageWidth, 96);
     }
 
     @Override
@@ -80,14 +82,9 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
     @Override
     protected void renderSlot(GuiGraphics graphics, Slot slot) {
         super.renderSlot(graphics, slot);
-        if (slot.index >= SupplySearchMenu.CONTAINER_SIZE
-                || !SixtySecondsLootMagnifierItem.isMagnifier(slot.getItem())
-                || !searchStart.containsKey(slot.index)) {
+        if (slot.index >= SupplySearchMenu.CONTAINER_SIZE || slot.getItem().isEmpty()) {
             return;
         }
-        long now = this.minecraft.level == null ? 0 : this.minecraft.level.getGameTime();
-        float progress = (float) (now - searchStart.get(slot.index)) / searchDuration.get(slot.index);
-        progress = Math.max(0f, Math.min(1f, progress));
         ItemArea area = PetiteInventoryApi.getItemArea(slot.getItem());
         int width = Math.max(1, area.width());
         int height = Math.max(1, area.height());
@@ -95,11 +92,26 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
         int y = this.topPos + slot.y;
         int pixelWidth = width * 18;
         int pixelHeight = height * 18;
-        graphics.fill(x, y, x + pixelWidth, y + pixelHeight, 0x80000000);
-        int barW = Math.round((pixelWidth - 2) * progress);
-        int barY = y + pixelHeight - 4;
-        graphics.fill(x + 1, barY, x + pixelWidth - 1, barY + 3, 0xFF222222);
-        graphics.fill(x + 1, barY, x + 1 + barW, barY + 3, 0xFF3FC46B);
+        // One real stack is stored only at the anchor slot.  This outline
+        // shows its complete footprint without creating visual ItemStack
+        // copies in the covered cells.
+        if (width > 1 || height > 1) {
+            graphics.renderOutline(x, y, pixelWidth, pixelHeight, 0xC0B88D4A);
+        }
+        if (SixtySecondsLootMagnifierItem.isMagnifier(slot.getItem())
+                && searchStart.containsKey(slot.index)) {
+            long now = this.minecraft.level == null ? 0 : this.minecraft.level.getGameTime();
+            float progress = (float) (now - searchStart.get(slot.index)) / searchDuration.get(slot.index);
+            progress = Math.max(0f, Math.min(1f, progress));
+            // The bar belongs to the bottom edge of the complete magnifier
+            // footprint, not to the bottom of the 27-slot window.
+            int barW = Math.round((pixelWidth - 2) * progress);
+            graphics.fill(x + 1, y + pixelHeight - 4,
+                    x + pixelWidth - 1, y + pixelHeight - 1, 0xFF222222);
+            graphics.fill(x + 1, y + pixelHeight - 4,
+                    x + 1 + Math.min(pixelWidth - 2, barW), y + pixelHeight - 1,
+                    0xFF3FC46B);
+        }
     }
 
     private Slot getSlotAt(double mouseX, double mouseY) {
@@ -108,7 +120,32 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
         for (int i = this.menu.slots.size() - 1; i >= 0; i--) {
             Slot slot = this.menu.getSlot(i);
             if (x >= slot.x && x < slot.x + 16 && y >= slot.y && y < slot.y + 16) {
-                return slot;
+                if (slot.hasItem()) {
+                    return slot;
+                }
+                // Keep looking: this can be an empty physical cell covered
+                // by a multi-cell stack anchored at an earlier slot.
+            }
+        }
+        // A multi-cell item has one authoritative slot at its top-left
+        // anchor.  Resolve clicks on its covered cells back to that anchor.
+        int col = (int) Math.floor((x - 8) / 18.0);
+        int row = (int) Math.floor((y - 18) / 18.0);
+        if (col >= 0 && col < SupplySearchMenu.CONTAINER_COLS
+                && row >= 0 && row < SupplySearchMenu.CONTAINER_ROWS) {
+            int clickedCell = row * SupplySearchMenu.CONTAINER_COLS + col;
+            for (int i = 0; i < SupplySearchMenu.CONTAINER_SIZE; i++) {
+                ItemStack stack = this.menu.getSlot(i).getItem();
+                if (stack.isEmpty()) continue;
+                ItemArea area = PetiteInventoryApi.getItemArea(stack);
+                int w = Math.max(1, area.width());
+                int h = Math.max(1, area.height());
+                int anchorRow = i / SupplySearchMenu.CONTAINER_COLS;
+                int anchorCol = i % SupplySearchMenu.CONTAINER_COLS;
+                if (anchorCol <= col && col < anchorCol + w
+                        && anchorRow <= row && row < anchorRow + h) {
+                    return this.menu.getSlot(i);
+                }
             }
         }
         return null;

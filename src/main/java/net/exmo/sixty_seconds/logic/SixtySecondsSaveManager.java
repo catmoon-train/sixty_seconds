@@ -1,6 +1,7 @@
 package net.exmo.sixty_seconds.logic;
 
 import net.exmo.sixty_seconds.SixtySecondsMod;
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.SixtySecondsPhase;
 import net.exmo.sixty_seconds.bridge.GameUtils;
 import net.exmo.sixty_seconds.bridge.SixtySecGameTimeComponent;
@@ -119,9 +120,23 @@ public final class SixtySecondsSaveManager {
             ServerLevel main = mainLevel(level);
             SavedGame snap = buildSnapshot(main);
             writeSnapshot(main, snap);
+            SixtySeconds.LOGGER.info("[60s] Saved round progress: day={}, phase={}, file={}",
+                    snap.dayNumber, snap.phase, savePath(main));
         } catch (Exception e) {
             System.err.println("[SixtySecondsSaveManager] 保存失败: " + e);
             e.printStackTrace();
+        }
+    }
+
+    /** Save before an integrated server tears down its runtime components. */
+    public static void saveIfUnfinished(ServerLevel level) {
+        ServerLevel main = mainLevel(level);
+        SixtySecGameWorldComponent game = SixtySecGameWorldComponent.KEY.get(main);
+        SixtySecondsState.Data data = SixtySecondsState.get(main);
+        boolean unfinished = game.getGameStatus() == SixtySecGameWorldComponent.GameStatus.STARTING
+                || game.getGameStatus() == SixtySecGameWorldComponent.GameStatus.ACTIVE;
+        if (unfinished && data.phase != SixtySecondsPhase.FINISHED) {
+            save(main);
         }
     }
 
