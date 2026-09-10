@@ -24,7 +24,7 @@ public final class OceanSeabedRuins {
     private OceanSeabedRuins() {
     }
 
-    public static final int TEMPLATE_COUNT = 20;
+    public static final int TEMPLATE_COUNT = 21;
     /** 城市建筑网格间距（方块）。调小以在海床更密集地出现废墟城市（110 → 56，密度约 4 倍）。 */
     public static final int SPACING = 56;
 
@@ -99,8 +99,50 @@ public final class OceanSeabedRuins {
             case 17 -> bridgeSpan(p, o, rng);
             case 18 -> cistern(p, o, rng);
             case 19 -> cathedral(p, o, rng);
+            case 20 -> cityCore(p, o, rng);
             default -> warehouseBlock(p, o, rng);
         }
+    }
+
+    /** 稀有的海底城市核心：可进入的中央广场、四座塔楼和高密度物资区。 */
+    private static void cityCore(Placer p, BlockPos o, RandomSource rng) {
+        int radius = 12;
+        pad(p, o, radius, radius);
+
+        // 挖出城市内部的水体，形成可以游入的半开放城市空间。
+        box(p, o, -radius + 1, -radius + 1, radius - 1, radius - 1, 0, 4,
+                Blocks.AIR.defaultBlockState());
+
+        // 外墙和四个入口。
+        walls(p, o, radius, radius, 0, 2, PRISM);
+        for (int y = 0; y <= 2; y++) {
+            set(p, o, 0, y, -radius, Blocks.AIR.defaultBlockState());
+            set(p, o, 0, y, radius, Blocks.AIR.defaultBlockState());
+            set(p, o, -radius, y, 0, Blocks.AIR.defaultBlockState());
+            set(p, o, radius, y, 0, Blocks.AIR.defaultBlockState());
+        }
+
+        // 中央广场、十字街道和城市中心灯塔。
+        for (int dx = -8; dx <= 8; dx++) {
+            for (int dz = -2; dz <= 2; dz++) {
+                set(p, o, dx, 0, dz, STONE_BRICK);
+                set(p, o, dz, 0, dx, STONE_BRICK);
+            }
+        }
+        col(p, o, 0, 0, 1, 4, PRISM);
+        set(p, o, 0, 5, 0, Blocks.SEA_LANTERN.defaultBlockState());
+
+        // 四角残存塔楼，作为远距离可见的探索地标。
+        int[] corners = {-9, 9};
+        for (int dx : corners) {
+            for (int dz : corners) {
+                col(p, o, dx, dz, 0, 5, DPRISM);
+                set(p, o, dx, 6, dz, Blocks.SEA_LANTERN.defaultBlockState());
+            }
+        }
+
+        // 城市核心比普通遗迹提供更多物资，且保留随机类别/锁定/高级箱机制。
+        scatterBoxes(p, o, rng, 10, 12);
     }
 
     private static void domedHabitat(Placer p, BlockPos o, RandomSource rng) {
