@@ -145,10 +145,24 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
 
     @Override
     public void clicked(int slotId, int button, ClickType clickType, Player player) {
-        if (slotId >= 0 && slotId < slots.size() && slots.get(slotId) == moduleSlot
-                && ExpansionModuleSlot.handleClick(this, moduleSlot, button, clickType, player)) {
-            broadcastChanges();
+        // Do not let the client run AbstractContainerMenu's local prediction
+        // for the component-backed backpack.  PetiteInventory may also try
+        // to predict a multi-cell click, which used to result in the same
+        // stack being written to the expansion component while it remained
+        // on the cursor.  The packet is still sent by AbstractContainerScreen
+        // after this method returns; the server executes the real click and
+        // sends the authoritative result back to the client.
+        if (player.level().isClientSide
+                && slotId >= 0 && slotId < slots.size()
+                && slots.get(slotId) != moduleSlot) {
             return;
+        }
+        if (slotId >= 0 && slotId < slots.size() && slots.get(slotId) == moduleSlot
+                ) {
+            if (ExpansionModuleSlot.handleClick(this, moduleSlot, button, clickType, player)) {
+                broadcastChanges();
+                return;
+            }
         }
         super.clicked(slotId, button, clickType, player);
     }
@@ -163,25 +177,111 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
         ItemStack moving = source.getItem();
         boolean moved;
         if (index >= EXTRA_START && index < extraEnd()) {
-            moved = moveItemStackTo(moving, PLAYER_MAIN_START, PLAYER_MAIN_END, false)
+            moved = moveIntoBackpack(moving, PLAYER_MAIN_START, PLAYER_MAIN_END)
                     || moveItemStackTo(moving, hotbarStart(), hotbarEnd(), false);
         } else if (index >= PLAYER_MAIN_START && index < PLAYER_MAIN_END) {
             // Never include the source main-inventory range in its own target.
-            moved = moveItemStackTo(moving, EXTRA_START, extraEnd(), false)
+            moved = moveIntoBackpack(moving, EXTRA_START, extraEnd())
                     || moveItemStackTo(moving, hotbarStart(), hotbarEnd(), false);
         } else if (index >= hotbarStart() && index < hotbarEnd()) {
             // Never include the source hotbar range in its own target.
-            moved = moveItemStackTo(moving, EXTRA_START, extraEnd(), false)
-                    || moveItemStackTo(moving, PLAYER_MAIN_START, PLAYER_MAIN_END, false);
+            moved = moveIntoBackpack(moving, EXTRA_START, extraEnd())
+                    || moveIntoBackpack(moving, PLAYER_MAIN_START, PLAYER_MAIN_END);
         } else {
-            moved = moveItemStackTo(moving, EXTRA_START, extraEnd(), false)
-                    || moveItemStackTo(moving, PLAYER_MAIN_START, PLAYER_MAIN_END, false)
+            moved = moveIntoBackpack(moving, EXTRA_START, extraEnd())
+                    || moveIntoBackpack(moving, PLAYER_MAIN_START, PLAYER_MAIN_END)
                     || moveItemStackTo(moving, hotbarStart(), hotbarEnd(), false);
         }
         if (!moved) return ItemStack.EMPTY;
-        if (moving.isEmpty()) source.setByPlayer(ItemStack.EMPTY);
-        else source.setChanged();
+        // ContainerView#getItem returns an owned copy when the backpack is
+        // module-backed.  Calling only setChanged() would therefore leave
+        // the original source stack untouched after a partial merge and
+        // duplicate the transferred items on the next sync.
+        source.setByPlayer(moving.isEmpty() ? ItemStack.EMPTY : moving);
         return original;
+    }
+
+    /**
+     * Moves a stack into the backpack while respecting PetiteInventory's
+     * footprint.  Only the anchor cell stores the stack; the other cells are
+     * occupied logically by its ItemArea and must remain empty in storage.
+     */
+    private boolean moveIntoBackpack(ItemStack moving, int start, int end) {
+        if (moving.isEmpty() || start >= end) return false;
+
+        // First merge into existing stacks.  Merging does not need a new
+        // footprint because the destination already owns one.
+        boolean moved = false;
+        for (int i = start; i < end && !moving.isEmpty(); i++) {
+            Slot target = slots.get(i);
+            ItemStack existing = target.getItem();
+            if (existing.isEmpty()
+                    || !ItemStack.isSameItemSameComponents(existing, moving)
+                    || !target.mayPlace(moving)) {
+                continue;
+            }
+            int max = Math.min(target.getMaxStackSize(), existing.getMaxStackSize());
+            int amount = Math.min(moving.getCount(), Math.max(0, max - existing.getCount()));
+            if (amount <= 0) continue;
+            existing.grow(amount);
+            target.setByPlayer(existing);
+            moving.shrink(amount);
+            moved = true;
+        }
+        if (moving.isEmpty()) return true;
+
+        ItemArea area = PetiteInventoryApi.getItemArea(moving);
+        int width = Math.max(1, area.width());
+        int height = Math.max(1, area.height());
+        for (int anchor = start; anchor < end; anchor++) {
+            if (!fitsBackpackArea(anchor, start, end, width, height)) continue;
+            Slot target = slots.get(anchor);
+            if (!target.mayPlace(moving) || !target.getItem().isEmpty()) continue;
+
+            target.setByPlayer(moving.copy());
+            moving.setCount(0);
+            return true;
+        }
+        return moved;
+    }
+
+    private boolean fitsBackpackArea(int anchor, int rangeStart, int rangeEnd,
+                                     int width, int height) {
+        if (anchor < rangeStart || anchor >= rangeEnd || width > 9) return false;
+        int anchorRow = anchor / 9;
+        int anchorCol = anchor % 9;
+        for (int dy = 0; dy < height; dy++) {
+            for (int dx = 0; dx < width; dx++) {
+                int col = anchorCol + dx;
+                int logical = anchor + dy * 9 + dx;
+                if (col >= 9 || logical < rangeStart || logical >= rangeEnd
+                        || logical >= extraEnd()) {
+                    return false;
+                }
+                if (isBackpackCellOccupied(logical, anchor)) return false;
+            }
+        }
+        return anchorRow + height <= (extraEnd() + 8) / 9;
+    }
+
+    /** Checks logical occupancy, including the invisible cells of existing footprints. */
+    private boolean isBackpackCellOccupied(int logical, int ignoredAnchor) {
+        for (int other = PLAYER_MAIN_START; other < extraEnd(); other++) {
+            ItemStack existing = slots.get(other).getItem();
+            if (existing.isEmpty()) continue;
+            ItemArea area = PetiteInventoryApi.getItemArea(existing);
+            int width = Math.max(1, area.width());
+            int height = Math.max(1, area.height());
+            int row = other / 9;
+            int col = other % 9;
+            int logicalRow = logical / 9;
+            int logicalCol = logical % 9;
+            if (logicalRow >= row && logicalRow < row + height
+                    && logicalCol >= col && logicalCol < col + width) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -384,4 +484,5 @@ public class SpecialInventoryMenu extends AbstractContainerMenu {
             return true;
         }
     }
+
 }

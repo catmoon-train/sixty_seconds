@@ -14,6 +14,10 @@ public abstract class PetiteInventoryClientGridMixin {
     @Inject(method = "isClientGridSlot", at = @At("HEAD"), cancellable = true, remap = false)
     private static void sixtySeconds$disableGridDuringSearch(Slot slot,
                                                                CallbackInfoReturnable<Boolean> cir) {
+        // Keep PetiteInventory's grid calculation and rendering active.  The
+        // custom menu disables only its own client-side inventory mutation;
+        // this hook must still be available for multi-cell highlighting and
+        // click mapping.
         if (SixtySecBridgeClient.shouldDisablePetiteInventory()) {
             cir.setReturnValue(false);
         }

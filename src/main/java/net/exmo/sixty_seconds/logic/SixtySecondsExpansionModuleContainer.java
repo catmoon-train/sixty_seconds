@@ -1,5 +1,6 @@
 package net.exmo.sixty_seconds.logic;
 
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -41,11 +42,19 @@ public final class SixtySecondsExpansionModuleContainer
         if (slot != 0) return ItemStack.EMPTY;
         ItemStack result = stats().expansionModule.copy();
         stats().expansionModule = ItemStack.EMPTY;
+        SixtySeconds.LOGGER.info(
+                "[60s][ExpansionDebug] module container removeItemNoUpdate: player={}, removed={}, "
+                        + "componentAfter=EMPTY",
+                player.getGameProfile().getName(), describe(result));
         setChanged();
         return result;
     }
     @Override public void setItem(int slot, ItemStack stack) {
         if (slot != 0) return;
+        SixtySeconds.LOGGER.info(
+                "[60s][ExpansionDebug] module container setItem: player={}, incoming={}, "
+                        + "componentBefore={}",
+                player.getGameProfile().getName(), describe(stack), describe(stats().expansionModule));
         SixtySecondsStatsComponent stats = stats();
         if (SixtySecondsExpansionStorage.isModule(stack)) {
             ItemStack equipped = stack.copy();
@@ -79,6 +88,13 @@ public final class SixtySecondsExpansionModuleContainer
         } else {
             stats.expansionModule = ItemStack.EMPTY;
         }
+        SixtySeconds.LOGGER.info(
+                "[60s][ExpansionDebug] module container setItem finished: player={}, "
+                        + "componentAfter={}, capacity={}, hasContents={}, extraInventoryNonEmpty={}",
+                player.getGameProfile().getName(), describe(stats.expansionModule),
+                SixtySecondsExpansionStorage.capacity(stats.expansionModule),
+                SixtySecondsExpansionStorage.hasContents(stats.expansionModule),
+                stats.extraInventory.stream().anyMatch(item -> !item.isEmpty()));
         setChanged();
     }
     @Override public void setChanged() {
@@ -92,4 +108,13 @@ public final class SixtySecondsExpansionModuleContainer
     @Override public void startOpen(Player player) { }
     @Override public void stopOpen(Player player) { }
     @Override public boolean stillValid(Player player) { return player == this.player; }
+
+    private static String describe(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) {
+            return "EMPTY";
+        }
+        return stack.getItem() + "x" + stack.getCount()
+                + "[cap=" + SixtySecondsExpansionStorage.capacity(stack)
+                + ",contents=" + SixtySecondsExpansionStorage.hasContents(stack) + "]";
+    }
 }

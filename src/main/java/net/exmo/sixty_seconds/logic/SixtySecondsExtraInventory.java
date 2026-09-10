@@ -1,5 +1,6 @@
 package net.exmo.sixty_seconds.logic;
 
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.component.SixtySecondsStatsComponent;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
@@ -62,8 +63,15 @@ public final class SixtySecondsExtraInventory {
         public ItemStack removeItem(int slot, int amount) {
             if (slot < 0 || slot >= SIZE) return ItemStack.EMPTY;
             NonNullList<ItemStack> items = items();
+            ItemStack before = items.get(slot).copy();
+            boolean backed = moduleBacked();
             ItemStack result = items.get(slot).split(amount);
-            if (moduleBacked()) saveModule(items);
+            if (backed) saveModule(items);
+            SixtySeconds.LOGGER.info(
+                    "[60s][ExpansionDebug] ExtraInventory.removeItem: player={}, side={}, "
+                            + "extraIndex={}, amount={}, moduleBacked={}, before={}, removed={}, after={}",
+                    player.getGameProfile().getName(), player.level().isClientSide ? "client" : "server",
+                    slot, amount, backed, describe(before), describe(result), describe(items.get(slot)));
             setChanged();
             return result;
         }
@@ -72,9 +80,16 @@ public final class SixtySecondsExtraInventory {
         public ItemStack removeItemNoUpdate(int slot) {
             if (slot < 0 || slot >= SIZE) return ItemStack.EMPTY;
             NonNullList<ItemStack> items = items();
+            ItemStack before = items.get(slot).copy();
+            boolean backed = moduleBacked();
             ItemStack result = items.get(slot).copy();
             items.set(slot, ItemStack.EMPTY);
-            if (moduleBacked()) saveModule(items);
+            if (backed) saveModule(items);
+            SixtySeconds.LOGGER.info(
+                    "[60s][ExpansionDebug] ExtraInventory.removeItemNoUpdate: player={}, side={}, "
+                            + "extraIndex={}, moduleBacked={}, before={}, removed={}, after=EMPTY",
+                    player.getGameProfile().getName(), player.level().isClientSide ? "client" : "server",
+                    slot, backed, describe(before), describe(result));
             setChanged();
             return result;
         }
@@ -83,8 +98,20 @@ public final class SixtySecondsExtraInventory {
         public void setItem(int slot, ItemStack stack) {
             if (slot < 0 || slot >= SIZE) return;
             NonNullList<ItemStack> items = items();
+            ItemStack before = items.get(slot).copy();
+            boolean backed = moduleBacked();
+            SixtySeconds.LOGGER.info(
+                    "[60s][ExpansionDebug] ExtraInventory.setItem: player={}, side={}, "
+                            + "extraIndex={}, moduleBacked={}, before={}, incoming={}",
+                    player.getGameProfile().getName(), player.level().isClientSide ? "client" : "server",
+                    slot, backed, describe(before), describe(stack));
             items.set(slot, stack.isEmpty() ? ItemStack.EMPTY : stack.copy());
-            if (moduleBacked()) saveModule(items);
+            if (backed) saveModule(items);
+            SixtySeconds.LOGGER.info(
+                    "[60s][ExpansionDebug] ExtraInventory.setItem finished: player={}, "
+                            + "extraIndex={}, after={}, moduleComponent={}",
+                    player.getGameProfile().getName(), slot, describe(items.get(slot)),
+                    describe(SixtySecondsStatsComponent.KEY.get(player).expansionModule));
             setChanged();
         }
 
@@ -120,6 +147,11 @@ public final class SixtySecondsExtraInventory {
         @Override
         public boolean stillValid(Player player) {
             return true;
+        }
+
+        private static String describe(ItemStack stack) {
+            if (stack == null || stack.isEmpty()) return "EMPTY";
+            return stack.getItem() + "x" + stack.getCount();
         }
     }
 }

@@ -1,6 +1,7 @@
 package net.exmo.sixty_seconds.mixin;
 
 import com.sighs.petiteinventory.platform.PlaceItemPayload;
+import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.menu.SpecialInventoryMenu;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,6 +21,12 @@ public abstract class PetiteInventoryPlaceItemPayloadMixin {
             PlaceItemPayload payload, IPayloadContext context, CallbackInfo ci) {
         if (context.player() != null
                 && context.player().containerMenu instanceof SpecialInventoryMenu) {
+            SixtySeconds.LOGGER.warn(
+                    "[60s][ExpansionDebug] PetiteInventory PlaceItemPayload intercepted while "
+                            + "SpecialInventoryMenu is open: player={}, payloadSlot={}, payloadItem={}, "
+                            + "menu={}",
+                    context.player().getGameProfile().getName(), payload.slotIndex(),
+                    payload.itemStack(), context.player().containerMenu.getClass().getSimpleName());
             ci.cancel();
         }
     }
