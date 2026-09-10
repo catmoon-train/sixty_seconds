@@ -92,8 +92,11 @@ public class SupplySearchScreen extends AbstractContainerScreen<SupplySearchMenu
         ItemArea area = PetiteInventoryApi.getItemArea(slot.getItem());
         int width = Math.max(1, area.width());
         int height = Math.max(1, area.height());
-        int x = this.leftPos + slot.x;
-        int y = this.topPos + slot.y;
+        // AbstractContainerScreen already translates the pose to leftPos/topPos
+        // before calling renderSlot.  Adding them here again moves the bar and
+        // footprint toward the screen's lower-right corner.
+        int x = slot.x;
+        int y = slot.y;
         int pixelWidth = width * 18;
         int pixelHeight = height * 18;
         // One real stack is stored only at the anchor slot.  This outline
