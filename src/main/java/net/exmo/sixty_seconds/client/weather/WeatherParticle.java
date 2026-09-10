@@ -11,6 +11,7 @@ import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
+import net.minecraft.core.BlockPos;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -53,6 +54,13 @@ public class WeatherParticle extends TextureSheetParticle {
     @Override
     public void tick() {
         super.tick();
+        BlockPos particlePos = BlockPos.containing(this.x, this.y, this.z);
+        if (!this.level.getBlockState(particlePos)
+                .getCollisionShape(this.level, particlePos).isEmpty()
+                || (this.age & 3) == 0 && !this.level.canSeeSky(particlePos)) {
+            this.remove();
+            return;
+        }
         if (this.age < 6) {
             this.alpha = this.baseAlpha * (this.age / 6.0F);
         } else if (this.age > this.lifetime - 8) {

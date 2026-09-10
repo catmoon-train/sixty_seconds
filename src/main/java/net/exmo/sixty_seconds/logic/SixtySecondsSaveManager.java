@@ -146,6 +146,15 @@ public final class SixtySecondsSaveManager {
         // 重载世界后，若存在存档且当前没有进行中的游戏，自动重开并恢复上一局
         if (!SixtySecondsMod.RUNNING
                 && hasSave(main) && !resumeTriggered) {
+            // A world component can retain ACTIVE/STOPPING until the next
+            // server tick after a single-player restart.  That stale runtime
+            // flag must not prevent the external resume snapshot from
+            // starting a new server-side game loop.
+            SixtySecGameWorldComponent game = SixtySecGameWorldComponent.KEY.get(main);
+            if (game.isRunning()) {
+                game.setGameStatus(SixtySecGameWorldComponent.GameStatus.INACTIVE);
+                game.gameMode = null;
+            }
             resume(main);
         }
         // 离线玩家（建图时尚未上线）的恢复缓存

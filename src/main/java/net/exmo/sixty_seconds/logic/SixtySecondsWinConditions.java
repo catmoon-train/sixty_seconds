@@ -33,6 +33,12 @@ public final class SixtySecondsWinConditions {
         if (data.phase != SixtySecondsPhase.DAY) {
             return;
         }
+        // Disconnecting from a single-player world is not a game-over
+        // condition.  Wait for the player to return so the save manager can
+        // resume the unfinished round.
+        if (level.players().isEmpty()) {
+            return;
+        }
         if (level.getGameTime() % 20 != 0) {
             return;
         }

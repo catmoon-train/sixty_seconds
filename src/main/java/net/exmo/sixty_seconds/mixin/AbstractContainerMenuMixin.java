@@ -1,6 +1,5 @@
 package net.exmo.sixty_seconds.mixin;
 
-import net.exmo.sixty_seconds.SixtySeconds;
 import net.exmo.sixty_seconds.SixtySecondsMod;
 import net.exmo.sixty_seconds.logic.SixtySecondsInventoryLimit;
 import net.exmo.sixty_seconds.menu.ExpansionModuleSlot;
@@ -26,11 +25,6 @@ public class AbstractContainerMenuMixin {
         if (slotIndex >= 0 && slotIndex < menu.slots.size()) {
             Slot slot = menu.getSlot(slotIndex);
             if (slot instanceof ExpansionModuleSlot moduleSlot) {
-                SixtySeconds.LOGGER.info(
-                        "[60s][ExpansionDebug] AbstractContainerMenu.doClick reached: player={}, "
-                                + "menu={}, slotIndex={}, button={}, clickType={}, carried={}, stored={}",
-                        player.getGameProfile().getName(), menu.getClass().getSimpleName(), slotIndex,
-                        button, clickType, moduleSlot.getItem(), menu.getCarried());
                 if (ExpansionModuleSlot.handleClick(menu, moduleSlot, button, clickType, player)) {
                     menu.broadcastChanges();
                     ci.cancel();

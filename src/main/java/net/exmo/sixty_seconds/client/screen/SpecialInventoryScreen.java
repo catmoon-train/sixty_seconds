@@ -12,8 +12,11 @@ import net.exmo.sixty_seconds.weights.SixtySecondsWeightConfig;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
@@ -38,6 +41,10 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
     private static final int BAG_Y = 39;
     private static final int BAG_CELL = 18;
     private static final int BAG_COLUMNS = 9;
+    private static final int EXCHANGE_BUTTON_X = 103;
+    private static final int EXCHANGE_BUTTON_Y = 217;
+    private static final int EXCHANGE_BUTTON_WIDTH = 75;
+    private static final int EXCHANGE_BUTTON_HEIGHT = 14;
 
     private static final int GRID_BACKGROUND = 0xD9162028;
     private static final int GRID_EDGE = 0x8053636D;
@@ -111,6 +118,7 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
         InventoryScreen.renderEntityInInventoryFollowsMouse(graphics,
                 x + 18, y + 40, x + 96, y + 177,
                 58, 0.0F, mouseX, mouseY, this.menu.getPlayer());
+        drawExchangeButton(graphics, x, y, mouseX, mouseY);
     }
 
     private void drawTextLabels(GuiGraphics graphics, int x, int y) {
@@ -134,6 +142,30 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
                 "gui.sixty_seconds.inventory.slots", 27 + this.menu.unlockedExtraSlots()),
                 x + WIDTH - 114, y + 31, MUTED, false);
         drawWeight(graphics, x, y);
+    }
+
+    private void drawExchangeButton(GuiGraphics graphics, int x, int y,
+                                    int mouseX, int mouseY) {
+        int bx = x + EXCHANGE_BUTTON_X;
+        int by = y + EXCHANGE_BUTTON_Y;
+        boolean hovered = isExchangeButton(mouseX, mouseY, x, y);
+        graphics.fillGradient(bx, by, bx + EXCHANGE_BUTTON_WIDTH,
+                by + EXCHANGE_BUTTON_HEIGHT, 0xD81A1008, 0xD820140A);
+        graphics.renderOutline(bx, by, EXCHANGE_BUTTON_WIDTH,
+                EXCHANGE_BUTTON_HEIGHT, hovered ? 0xFFD4AF37 : 0xFF8B6914);
+        graphics.drawCenteredString(this.font,
+                Component.translatable(
+                        "message.sixty_seconds.sixty_seconds.coin_exchange_button"),
+                bx + EXCHANGE_BUTTON_WIDTH / 2,
+                by + (EXCHANGE_BUTTON_HEIGHT - 8) / 2 + 1,
+                hovered ? 0xFFFFF4DC : 0xFFC8B898);
+    }
+
+    private boolean isExchangeButton(double mouseX, double mouseY, int x, int y) {
+        return mouseX >= x + EXCHANGE_BUTTON_X
+                && mouseX < x + EXCHANGE_BUTTON_X + EXCHANGE_BUTTON_WIDTH
+                && mouseY >= y + EXCHANGE_BUTTON_Y
+                && mouseY < y + EXCHANGE_BUTTON_Y + EXCHANGE_BUTTON_HEIGHT;
     }
 
     private void drawWeight(GuiGraphics graphics, int x, int y) {
@@ -175,9 +207,18 @@ public class SpecialInventoryScreen extends AbstractContainerScreen<SpecialInven
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        return super.mouseClicked(
-                this.leftPos + (mouseX - this.leftPos) / this.uiScale,
-                this.topPos + (mouseY - this.topPos) / this.uiScale, button);
+        double logicalMouseX = this.leftPos
+                + (mouseX - this.leftPos) / this.uiScale;
+        double logicalMouseY = this.topPos
+                + (mouseY - this.topPos) / this.uiScale;
+        if (button == 0 && isExchangeButton(logicalMouseX, logicalMouseY,
+                this.leftPos, this.topPos)) {
+            Minecraft.getInstance().getSoundManager().play(
+                    SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+            Minecraft.getInstance().setScreen(new TokenExchangeScreen());
+            return true;
+        }
+        return super.mouseClicked(logicalMouseX, logicalMouseY, button);
     }
 
     @Override
