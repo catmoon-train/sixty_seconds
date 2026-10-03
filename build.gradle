@@ -133,10 +133,16 @@ dependencies {
         compileOnly "maven.modrinth:the-lost-cities:${lostcities_version}"
     }
 
-    // PetiteInventory 前置：编译期引用其 API
-    def petiteInventoryLocalJars = fileTree(dir: 'run/mods', include: ['PetiteInventory-*.jar'])
-    if (!petiteInventoryLocalJars.isEmpty()) {
+    // PetiteInventory 前置：编译期引用其 API。
+    def petiteInventoryLocalJar = file("run/mods/PetiteInventory-neoforge-${minecraft_version}-${petiteinventory_version}.jar")
+    def petiteInventoryLocalJars = petiteInventoryLocalJar.exists()
+            ? files(petiteInventoryLocalJar)
+            : fileTree(dir: 'run/mods', include: ['PetiteInventory-*.jar'])
+
+    if (!petiteInventoryLocalJars.isEmpty() && !project.hasProperty('petiteInventoryFromMaven')) {
         compileOnly petiteInventoryLocalJars
+    } else {
+        compileOnly "maven.modrinth:petite-inventory:${petiteinventory_version}"
     }
 }
 
