@@ -2726,7 +2726,13 @@ public class SimpleQuestMinigameScreen extends Screen {
         int left=panelLeft(),top=panelTop(),cs=35,ox=left+(PANEL_W-mineW*cs)/2,oy=top+40;
         int cx=(mx-ox)/cs,cy=(my-oy)/cs;
         if(cx<0||cx>=mineW||cy<0||cy>=mineH)return;
-        if(btn==1){if(mineRevealed[cy][cx]==0&&mineFlags[cy][cx]==0){mineFlags[cy][cx]=1;minesLeft--;}}
+        if(btn==1){
+            // 右键切换旗标：已插旗再右键取消（剩余雷数同步恢复）；已翻开的格子不响应
+            if(mineRevealed[cy][cx]==0){
+                if(mineFlags[cy][cx]==0){mineFlags[cy][cx]=1;minesLeft--;}
+                else{mineFlags[cy][cx]=0;minesLeft++;}
+            }
+        }
         else{if(mineFlags[cy][cx]==1||mineRevealed[cy][cx]==1)return;revealMine(cy,cx);}
     }
     private void revealMine(int y,int x){

@@ -13,6 +13,7 @@
     "SixtySecondsMobPeacefulMixin",
     "SixtySecondsCakeBlockMixin",
     "SixtySecondsHealMixin",
+    "SixtySecondsItemStackAdventureUseMixin",
     "LostCityChunkFixerMixin",
     "LostCityDamageAreaMixin",
     "LostCityProfileMixin",
