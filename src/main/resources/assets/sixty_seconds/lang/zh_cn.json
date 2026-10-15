@@ -4297,4 +4297,7 @@
   "building.sixty_seconds.sixty_seconds.scattered_hideout_1": "幸存者藏身处",
   "building.sixty_seconds.sixty_seconds.scattered_treehouse_1": "树屋",
   "building.sixty_seconds.sixty_seconds.villager_1": "村舍",
-  "building.sixty_seconds.sixty_seconds.common_empty": "空置地块"}
+  "building.sixty_seconds.sixty_seconds.common_empty": "空置地块",
+  "key.sixty_seconds.team_ping": "队伍信号",
+  "message.sixty_seconds.sixty_seconds.npc.sell_no_item": "你出售的 %s 数量不足，至少还需 %s 个。",
+  "message.sixty_seconds.sixty_seconds.npc.sold": "已收购 %s ×%s，支付 %s 游戏币。"}
