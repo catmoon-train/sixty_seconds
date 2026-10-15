@@ -349,18 +349,38 @@ public class SixtySecondsConfig {
         return r;
     }
 
-    /** 相邻建筑最小间距下限 = 模板最大边长（X / Z 取大，仅防止建筑互相覆盖）。 */
+    /**
+     * 相邻队伍的最小中心间距下限。
+     * <p><b>必须按「一队的完整占位」= 住宅 ∪ 庇护所 的合并包围盒计算</b>，而不能各自取两个模板的最大边长。
+     * 庇护所常被登记在远离住宅处（兜底布局把它放在住宅右侧 {@code RW+16} 起步，玩家用 {@code /60s area}
+     * 登记时也可能隔着上百格），两者相距往往远超模板自身尺寸。旧实现只取单个模板边长，算出的 spacing
+     * 严重小于「住宅+庇护所」的实际跨度，于是本队庇护所越过网格边界<b>插进邻队的住宅</b>；
+     * 而 clones 按队序拼接（队1住宅晚于队0庇护所），会被邻队后建的住宅整片覆盖掏空，
+     * 表现为「65s 结束没被传送进庇护所、补给箱出现在初始房子里」。
+     */
     private int minTeamSpacing() {
-        int maxExtent = 0;
+        int minX = Integer.MAX_VALUE, maxX = Integer.MIN_VALUE;
+        int minZ = Integer.MAX_VALUE, maxZ = Integer.MIN_VALUE;
+        boolean any = false;
         if (residentialTemplate != null) {
-            maxExtent = Math.max(maxExtent, Math.abs(residentialTemplate.max.x - residentialTemplate.min.x));
-            maxExtent = Math.max(maxExtent, Math.abs(residentialTemplate.max.z - residentialTemplate.min.z));
+            minX = Math.min(minX, Math.min(residentialTemplate.min.x, residentialTemplate.max.x));
+            maxX = Math.max(maxX, Math.max(residentialTemplate.min.x, residentialTemplate.max.x));
+            minZ = Math.min(minZ, Math.min(residentialTemplate.min.z, residentialTemplate.max.z));
+            maxZ = Math.max(maxZ, Math.max(residentialTemplate.min.z, residentialTemplate.max.z));
+            any = true;
         }
         if (shelterTemplate != null) {
-            maxExtent = Math.max(maxExtent, Math.abs(shelterTemplate.max.x - shelterTemplate.min.x));
-            maxExtent = Math.max(maxExtent, Math.abs(shelterTemplate.max.z - shelterTemplate.min.z));
+            minX = Math.min(minX, Math.min(shelterTemplate.min.x, shelterTemplate.max.x));
+            maxX = Math.max(maxX, Math.max(shelterTemplate.min.x, shelterTemplate.max.x));
+            minZ = Math.min(minZ, Math.min(shelterTemplate.min.z, shelterTemplate.max.z));
+            maxZ = Math.max(maxZ, Math.max(shelterTemplate.min.z, shelterTemplate.max.z));
+            any = true;
         }
-        return maxExtent;
+        if (!any) {
+            return 0;
+        }
+        // 包围盒含端点（方块数 = 差 + 1），再 +1 留一格净空，避免两队边界严丝合缝贴上
+        return Math.max(maxX - minX, maxZ - minZ) + 2;
     }
 
     public boolean isComplete() {

@@ -266,7 +266,7 @@ public final class SixtySecondsArena {
                     + " (night-raid anchor defaults to null, can only return via their own shelter door). Suggest binding more exit doors in the exploration zone.",
                     exitDoorBindings.size(), teams);
         }
-        warnOverlappingShelters(config, shelterOffsets);
+        warnOverlappingShelters(config, shelterOffsets, residentialOffsets);
         // 全局先净空、后克隆（原因见上）
         List<WorkItem> work = new ArrayList<>(clearance.size() + clones.size());
         work.addAll(clearance);
@@ -335,11 +335,18 @@ public final class SixtySecondsArena {
     }
 
     /**
-     * 锚定模式下两队的出口门可能挨得太近，导致两座避难所（含净空环带）在探索区里叠在一起——
-     * 后建的会覆盖先建的，两队共用一堵墙甚至互相打通。这是地图配置问题（门该拉开到大于避难所模板尺寸），
-     * 建图不中止，但必须在日志里点名，否则现象是「某队的避难所莫名少了半间房」，极难排查。
+     * 建图前体检两类「建筑互相覆盖」的区域配置问题。地图配置问题一律<b>不中止</b>建图，
+     * 但必须在日志里点名，否则现象是「某队的避难所莫名少了半间房」「65s 结束没被传送进避难所」，极难排查。
+     * <ol>
+     *   <li><b>避难所 ↔ 避难所</b>：锚定模式下两队出口门挨得太近，两座避难所（含净空环带）叠在一起，
+     *       后建的覆盖先建的，两队共用一堵墙甚至互相打通。</li>
+     *   <li><b>避难所 ↔ 住宅</b>（致命，旧版漏检）：本队避难所落到邻队住宅里。clones 按队序拼接
+     *       （队1住宅晚于队0避难所），邻队的住宅会把本队避难所整片覆盖掏空；而本队的避难所出生点
+     *       恰恰落在那片区域 → 65s 结束"传送进避难所"却停在一栋房子里，补给箱也生成在那里。</li>
+     * </ol>
      */
-    private static void warnOverlappingShelters(SixtySecondsConfig config, List<BlockPos> shelterOffsets) {
+    private static void warnOverlappingShelters(SixtySecondsConfig config, List<BlockPos> shelterOffsets,
+            List<BlockPos> residentialOffsets) {
         BoundingBox template = config.shelterTemplate.toBox();
         for (int a = 0; a < shelterOffsets.size(); a++) {
             for (int b = a + 1; b < shelterOffsets.size(); b++) {
@@ -350,13 +357,35 @@ public final class SixtySecondsArena {
                 AABB baseB = boxOf(template, shelterOffsets.get(b));
                 if (baseA.inflate(CLEAR_MARGIN).intersects(baseB.inflate(CLEAR_MARGIN))) {
                     SixtySeconds.LOGGER.warn("[60s] Team {} and team {} shelter placements overlap (exit doors closer than the shelter template):"
-                            + " later one overwrites earlier. Move these two exploration-zone exit doors apart by more than shelter template size + {} clearance.",
+                                    + " later one overwrites earlier. Move these two exploration-zone exit doors apart by more than shelter template size + {} clearance.",
                             a + 1, b + 1, CLEAR_MARGIN);
                 } else if (baseA.inflate(100).intersects(baseB)) {
-                    // 未重叠但间距不足 100 格（anchor 模式跟随出口门，无法自动校正，仅报警）。
-                    SixtySeconds.LOGGER.error("[60s] Team {} and team {} shelter placements are closer than 100 blocks; generation will be incomplete.",
+                    // 未重叠、两队也不会互相覆盖（网格间距已由 minTeamSpacing() 按「住宅∪避难所」合并占位自适应，
+                    // 保证几何不重叠），仅提示两队避难所靠得比推荐的 100 格近；想拉大直接调 teamGridSpacing。
+                    // 旧措辞 "generation will be incomplete" 会误导排查——建图实际是完整的。
+                    SixtySeconds.LOGGER.warn("[60s] Team {} and team {} shelters are closer than the recommended 100 blocks"
+                                    + " (no overlap — grid spacing is derived from each team's full footprint)."
+                                    + " Raise teamGridSpacing if you want them further apart.",
                             a + 1, b + 1);
                 }
+            }
+        }
+        // 避难所 ↔ 住宅：跨队互吞。网格间距已由 minTeamSpacing() 按「住宅∪避难所」合并包围盒自适应，
+        // 但让玩家手动登记的区域仍可能互相穿插（或兜底布局算错），必须在建图前拦下并点名。
+        BoundingBox resTemplate = config.residentialTemplate.toBox();
+        int count = Math.min(shelterOffsets.size(), residentialOffsets.size());
+        for (int a = 0; a < count; a++) {
+            AABB shelterA = boxOf(template, shelterOffsets.get(a));
+            for (int b = 0; b < count; b++) {
+                AABB resB = boxOf(resTemplate, residentialOffsets.get(b));
+                if (!shelterA.intersects(resB)) {
+                    continue;
+                }
+                SixtySeconds.LOGGER.error("[60s] CRITICAL: team {}'s shelter {} overlaps team {}'s residential {} —"
+                                + " the later-built residential OVERWRITES the earlier shelter, so that team's 65s"
+                                + " teleport lands inside this house and its supply chests spawn there."
+                                + " Raise teamGridSpacing, or keep a team's shelter+residential inside one grid cell.",
+                        a + 1, shelterA, b + 1, resB);
             }
         }
     }
