@@ -89,6 +89,17 @@ import net.exmo.sixty_seconds.network.OpenPowerPanelS2CPacket;
 import net.exmo.sixty_seconds.network.OpenRadioChannelS2CPacket;
 import net.exmo.sixty_seconds.network.OpenRandomSupplyBoxConfigS2CPacket;
 import net.exmo.sixty_seconds.network.OpenWeightConfigS2CPacket;
+import net.exmo.sixty_seconds.network.ComponentSyncS2CPacket;
+import net.exmo.sixty_seconds.network.CreateClientMarkingAreaPacket;
+import net.exmo.sixty_seconds.network.SixtySecondsGunShootC2SPacket;
+import net.exmo.sixty_seconds.bridge.event.OpenPhoneDialScreen;
+import net.exmo.sixty_seconds.bridge.event.ClientGunFire;
+import net.exmo.sixty_seconds.client.ComponentSyncClient;
+import net.exmo.sixty_seconds.client.ClientMarkingAreaManager;
+import net.exmo.sixty_seconds.client.screen.minigame.PhoneDialScreen;
+import net.minecraft.client.CameraType;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.exmo.sixty_seconds.client.WeightConfigClient;
 import net.exmo.sixty_seconds.client.screen.WeightConfigScreen;
 import net.exmo.sixty_seconds.client.screen.SixtySecondsTraitScreen;
@@ -178,6 +189,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import net.exmo.sixty_seconds.client.weather.WeatherTheme;
 import net.exmo.sixty_seconds.client.weather.WeatherThemes;
 import net.exmo.sixty_seconds.weather.ClientWeatherState;
+import net.exmo.sixty_seconds.network.WeatherS2CPacket;
 import net.exmo.sixty_seconds.weather.WeatherVisualConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -285,7 +297,36 @@ public final class SixtySecondsClient {
             StarMapHud.register();
             AreaMapManager.register();
             AreaMapHud.register();
-            ClientPlayNetworking.registerGlobalReceiver(VehicleCameraS2CPacket.ID, new VehicleCameraS2CPacket.ClientReceiver());
+            // 电话拨号界面：公共物品类通过 OpenPhoneDialScreen 钩子打开（避免服务端加载客户端类）
+            OpenPhoneDialScreen.EVENT.register((stack, hand) ->
+                    Minecraft.getInstance().setScreen(new PhoneDialScreen(stack, hand)));
+            // 车辆摄像机切换：接收器必须在客户端类注册，不能写在 payload 里
+            // （payload 类在专用服务端注册时也会被加载，内嵌客户端类会导致 dist 崩溃）
+            ClientPlayNetworking.registerGlobalReceiver(VehicleCameraS2CPacket.ID, (payload, context) ->
+                    context.client().execute(() -> {
+                        if (payload.thirdPerson()) {
+                            Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
+                        } else {
+                            Minecraft.getInstance().options.setCameraType(CameraType.FIRST_PERSON);
+                        }
+                    }));
+            // CCA 组件同步：接收逻辑在客户端类（ComponentSyncClient），payload 只保留编解码
+            ClientPlayNetworking.registerGlobalReceiver(ComponentSyncS2CPacket.ID, (payload, context) ->
+                    context.client().execute(() -> ComponentSyncClient.handle(payload)));
+            // 标记弹区域：服务端广播 → 客户端创建粒子区域（收包 + tick 都在客户端侧）
+            ClientPlayNetworking.registerGlobalReceiver(CreateClientMarkingAreaPacket.ID, (payload, context) ->
+                    context.client().execute(() -> {
+                        if (context.client().level != null) {
+                            ClientMarkingAreaManager.createMarkingArea(context.client().level,
+                                    payload.position(), payload.radius(), payload.durationTicks());
+                        }
+                    }));
+            // 枪械客户端开火：发送 C2S 的逻辑在客户端类，公共物品类只调用 ClientGunFire 钩子
+            ClientGunFire.EVENT.register((gun, user, stack) -> {
+                HitResult result = gun.getGunTarget(user, gun.range());
+                int targetId = result instanceof EntityHitResult ehr ? ehr.getEntity().getId() : -1;
+                ClientPlayNetworking.send(new SixtySecondsGunShootC2SPacket(targetId));
+            });
             ClientPlayNetworking.registerGlobalReceiver(OpenRadioChannelS2CPacket.ID, (payload, context) ->
                     context.client().execute(() -> context.client().setScreen(new RadioChannelScreen(payload.currentChannel()))));
             ClientPlayNetworking.registerGlobalReceiver(ShowCustomNewspaperPacket.ID, (payload, context) ->
@@ -433,6 +474,7 @@ public final class SixtySecondsClient {
         if (client.level != null) {
             SixtySecGameWorldComponent.KEY.get(client.level).clientTick();
         }
+        ClientMarkingAreaManager.tick(); // 标记弹粒子区域推进/过期
         WeatherParticleSpawner.tick(client);
         // 潜水艇：把空格(上浮)/左 Ctrl(下潜) 通过网络包发给服务端。
         // 注意：不能直接 sub.setAscending(...) —— entityData 由服务端权威持有，
@@ -736,5 +778,14 @@ public final class SixtySecondsClient {
                 context.client().execute(() -> context.client().setScreen(new DismantleScreen(payload))));
         ClientPlayNetworking.registerGlobalReceiver(GunTracerS2CPacket.ID, (payload, context) ->
                 context.client().execute(() -> GunTracerRenderer.onPacket(payload)));
+        // 主题化天气同步：接收逻辑在客户端（写 ClientWeatherState 槽位），payload 只保留编解码
+        ClientPlayNetworking.registerGlobalReceiver(WeatherS2CPacket.TYPE, (payload, context) ->
+                context.client().execute(() -> {
+                    if (payload.forced()) {
+                        ClientWeatherState.setPreview(payload.weatherId());
+                    } else {
+                        ClientWeatherState.setEvent(payload.weatherId());
+                    }
+                }));
     }
 }

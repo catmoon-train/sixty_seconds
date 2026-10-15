@@ -12,8 +12,7 @@ import net.exmo.sixty_seconds.logic.GunTracers;
 import net.exmo.sixty_seconds.logic.SixtySecondsDefenseSystem;
 import net.exmo.sixty_seconds.logic.SixtySecondsHealthSystem;
 import net.exmo.sixty_seconds.logic.SixtySecondsWhisperSystem;
-import net.exmo.sixty_seconds.network.SixtySecondsGunShootC2SPacket;
-import net.exmo.sixty_seconds.bridge.fabric.ClientPlayNetworking;
+import net.exmo.sixty_seconds.bridge.event.ClientGunFire;
 import net.exmo.sixty_seconds.bridge.fabric.PlayerLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -147,7 +146,9 @@ public class SixtySecondsGunItem extends Item implements SixtySecItemProperties.
             }
             HitResult result = getGunTarget(user, range);
             int targetId = result instanceof EntityHitResult ehr ? ehr.getEntity().getId() : -1;
-            ClientPlayNetworking.send(new SixtySecondsGunShootC2SPacket(targetId));
+            // 客户端开火：命中计算与 C2S 发包在客户端钩子（ClientGunFire，由 SixtySecondsClient 注册），
+            // 公共物品类不直接调用客户端发包桥（服务端代码不应发客户端包）
+            ClientGunFire.EVENT.invoker().fire(this, user, stack);
             user.setXRot(user.getXRot() - 3.0F); // 后坐力
             if (hasScope) {
                 net.exmo.sixty_seconds.bridge.client.ScopeOverlayRenderer.setInScopeView(false);

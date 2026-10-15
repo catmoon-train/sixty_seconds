@@ -9,7 +9,11 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+/** 客户端实体模型：仅客户端存在，专用服务端不会加载。 */
+@OnlyIn(Dist.CLIENT)
 public class WheelchairEntityModel extends EntityModel<WheelchairEntity> {
 	// This layer location should be baked with EntityRendererProvider.Context in
 	// the entity renderer and passed into this model's constructor

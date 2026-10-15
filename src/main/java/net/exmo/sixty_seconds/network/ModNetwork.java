@@ -169,16 +169,9 @@ public final class ModNetwork {
     }
 
     private static void handleS2C(CustomPacketPayload payload, IPayloadContext ctx) {
-        ctx.enqueueWork(() -> {
-            if (payload instanceof ComponentSyncS2CPacket sync) {
-                ComponentSyncS2CPacket.handleClient(sync);
-                return;
-            }
-            if (payload instanceof WeatherS2CPacket weather) {
-                WeatherS2CPacket.handleClient(weather);
-                return;
-            }
-            ClientPlayNetworking.dispatch(payload);
-        });
+        // 客户端接收逻辑一律经 ClientPlayNetworking 分发表，由客户端类注册
+        // （SixtySecondsClient / TeamPingClientHandler / SixtySecondsHelicopterClient /
+        //   SixtySecondsEndGameClient / ComponentSyncClient 等），不写在 payload 里
+        ctx.enqueueWork(() -> ClientPlayNetworking.dispatch(payload));
     }
 }
