@@ -33,9 +33,22 @@ public final class ComponentSyncClient {
         if (key.isWorldAttached()) {
             provider = mc.level;
         } else {
+            // 玩家/实体组件：目标玩家不在本客户端世界里时<b>直接跳过</b>。
+            // 旧实现此处回退到 mc.level（ClientLevel），而这类组件并未在 ClientLevel 注册，
+            // CCA 会抛 IllegalStateException: Cannot create ... for ClientLevel；
+            // 异常冒泡到 NetworkRegistry 就变成每收到一个同步包刷一条 ERROR。
             Player target = mc.level.getPlayerByUUID(payload.entityId());
-            provider = target != null ? target : mc.level;
+            if (target == null) {
+                return;
+            }
+            provider = target;
         }
-        key.applyFromPacket(provider, payload.data(), mc.player);
+        try {
+            key.applyFromPacket(provider, payload.data(), mc.player);
+        } catch (Exception | LinkageError e) {
+            // 兜底：组件未在客户端注册（仅服务端组件等）时静默跳过，不让异常冒泡刷 ERROR
+            net.exmo.sixty_seconds.SixtySeconds.LOGGER.debug(
+                    "[60s] component_sync not applied for {}: {}", payload.keyId(), e);
+        }
     }
 }
